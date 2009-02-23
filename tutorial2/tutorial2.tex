@@ -1,0 +1,227 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+%e.g.  \textcolor{red,green,blue}{text}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Tutorial 2}
+
+\section*{Using the GENESIS Shell for\\Multi-compartment Modeling and Simulation}
+
+In this second of two introductory tutorials you will be guided through a brief session using the \href{../genesis-shell/genesis-shell.pdf}{GENESIS shell}. In this tutorial it is assumed that you are familiar with the contents of \href{../tutorial1/tutorial1.pdf}{Tutorial 1} and the links it contains. You will be shown how to use basic features of the GENESIS shell to create, explore, and run a realistic multi-compartment model neuron. For example:
+\begin{verbatim}
+    ndf_load cells/purkinje/edsjb1994.ndf
+    run /Purkinje 0.1
+\end{verbatim}
+
+\subsection*{Import Model}
+
+A large number of predefined model neurons come bundled with the GENESIS distribution. The command
+\begin{verbatim}
+    genesis > show_library
+\end{verbatim}
+lists the available model libraries. Example library files can be found with
+\begin{verbatim}
+    genesis > show_library ndf examples
+\end{verbatim}
+You can display the contents of the single cell library with
+\begin{verbatim}
+    genesis > show_library ndf cells
+\end{verbatim}
+which returns in part
+\begin{verbatim}
+    ---
+    ndf_library:
+     cells:
+       ...
+       - purkinje/
+       ...
+\end{verbatim}
+This indicates the existence of a directory in the library where one or more Purkinje cell models are stored.
+
+The contents of the {\it purkinje} directory can be displayed with
+\begin{verbatim}
+    genesis > show_library ndf cells/purkinje
+    ---
+    ndf_library:
+     cells/purkinje:
+       - edsjb1994.ndf
+       - edsjb1994_partitioned.ndf
+\end{verbatim}
+
+To run one of these models the model description file (NDF) must first be loaded into the GENESIS shell.  (To learn more about the NDF format see  \href{../ndf-format/ndf-format.pdf}{Introduction to the NDF File Format}.) For example, to load the multicompartment De Schutter and Bower Purkinje cell model referenced above, enter
+\begin{verbatim}
+    ndf_load cells/purkinje/edsjb1994.ndf
+\end{verbatim}
+This command results in the complete Purkinje cell model being made available to the GENESIS shell.
+
+Note that currently it is not advisable to load more than one model at a time into the GENESIS shell. To change to a different model requires exiting the shell, restarting GENESIS, and loading the new model (see the \href{../Introduction to the GENESIS Shell}).
+
+\subsection*{Explore Model}
+
+To determine the name of a model that has been loaded and made available to the GENESIS shell (i.e. the name located at the root node of the element hierarchy tree), enter, for example 
+\begin{verbatim}
+    genesis > list_elements
+    ---
+    - /Purkinje
+\end{verbatim}
+We can then determine the child elements of {\tt /Purkinje} with
+\begin{verbatim}
+    genesis > list_elements /Purkinje
+    ---
+    - /Purkinje/segments
+\end{verbatim}
+A list of all segments in the model can then be generated with another {\tt list\_elements} command
+\begin{verbatim}
+    genesis > list_elements /Purkinje/segments
+    ---
+    - /Purkinje/segments/soma
+    - /Purkinje/segments/main[0]
+    . . .
+    - /Purkinje/segments/b3s46[15]
+\end{verbatim}
+Choosing one of the segments at random (here, for example {\tt /Purkinje/segments/b3s45[10]}), we can generate a list of the elements that are associated with the given segment either by using the full pathname
+\begin{verbatim}
+    genesis > list_elements /Purkinje/segments/b3s45[10]
+    ---
+    - /Purkinje/segments/b3s45[10]/cat
+    - /Purkinje/segments/b3s45[10]/cap
+    - /Purkinje/segments/b3s45[10]/kc
+    - /Purkinje/segments/b3s45[10]/k2
+    - /Purkinje/segments/b3s45[10]/km
+    - /Purkinje/segments/b3s45[10]/ca_pool
+    - /Purkinje/segments/b3s45[10]/stellate
+    - /Purkinje/segments/b3s45[10]/Purkinje_spine_0
+\end{verbatim}
+or by making the chosen element the current working element via the {\tt ce} (change working element) command. We can then check what the current working element is with the {\tt pwe} (print working element) command
+\begin{verbatim}
+    genesis > ce b3s45[10]
+    genesis > pwe
+    /Purkinje/segments/b3s45[10]
+    genesis > list_elements .
+    ---
+    - /Purkinje/segments/b3s45[10]/cat
+    . . .
+    - /Purkinje/segments/b3s45[10]/Purkinje_spine_0
+\end{verbatim}
+The ability to change the current working element allows us to either check the value of the model parameters associated with the current working element (such as {\tt RM} or {\tt CM}) via the command {\tt show\_model\_parameters} or change default parameter values via the {\tt set\_model\_parameter} command, e.g.
+\begin{verbatim}
+    genesis > pwe
+    /Purkinje/segments/b3s45[10]
+    genesis > show_model_parameters .
+    ---
+    UNDER CONSTRUCTION
+    genesis > set_model_parameter RM 2.0
+    genesis > show_model_parameters RM
+    UNDER CONSTRUCTION
+    genesis > show_model_parameters .
+    UNDER CONSTRUCTION
+\end{verbatim}
+
+Note that:
+\begin{itemize}
+
+\item The {\tt ce} command will accept either the full path name\\(e.g. {\tt  /Purkinje/segments/b3s45[10]}) to a segment or just the segment name itself (as given in the above example).  Parameter values associated with a given element can be changed using either the full path name or making the given segment the current working element (as with the above example).
+
+\item In the GENESIS shell the commands {\tt .} and {\tt ..} operate in the same way as when employed to traverse the Unix file system (see \\\href{../unix-linux-introduction/unix-linux-introduction.pdf}{Introduction to Unix and the Linux graphical desktop}). The {\tt ..} operator may be chained, e.g. {\tt ../../../}
+
+\item Also remember that in the GENESIS documentation, an elipsis ($\ldots$) indicates missing lines.
+
+\end{itemize}
+
+Another Purkinje cell in the NDF library {\it cells/purkinje} is {\tt edsjb1994\_partitioned.ndf}. This model is identical to edsjb1994.ndf with the exception that its morphology has been repartitioned. It is simple to delete the current model and load the repartitioned version
+\begin{verbatim}
+    genesis > delete /Purkinje
+        delete: /Purkinje
+    genesis > ndf_load cells/purkinje/edsjb1994_partitioned.ndf
+\end{verbatim}
+We can now ask for a summary of the morphology
+\begin{verbatim}
+    genesis > morphology_summarize /Purkinje
+\end{verbatim}
+which generates the following output
+\begin{verbatim}
+    Number of segments: 4548
+    Number of segments without parents: 1
+    Number of segment tips: 1474
+\end{verbatim}
+We can also list the segments in {\it /Purkinje/segments}
+\begin{verbatim}
+    genesis > list_elements /Purkinje/segments
+    ---
+    - /Purkinje/segments/soma
+    - /Purkinje/segments/main
+    - /Purkinje/segments/branches
+    - /Purkinje/segments/branchlets
+\end{verbatim}
+or find the nine segments in the main dendrite ({\it /Purkinje/segments/main}), e.g.
+\begin{verbatim}
+    genesis > list_elements /Purkinje/segments/main
+    ---
+    - /Purkinje/segments/main/main[0]
+    - /Purkinje/segments/main/main[1]
+    . . . 
+    - /Purkinje/segments/main/main[8]
+\end{verbatim}
+and so on for the branches (``{\tt list\_elements /Purkinje/segments/branches}'') and branchlets (``{\tt list\_elements /Purkinje/segments/branchlets}'').
+
+It is also possible to list the location of the spine heads in the dendritic morphology
+\begin{verbatim}
+    genesis > morphology_list_spine_heads /Purkinje
+\end{verbatim}
+\marginpar{\textcolor{red}{Hugo, make sure the `serials' are not appended to the list when using the morphology\_list\_spine\_heads command}}
+This generates considerable output that locates each dendritic spine head in the element hierarchy
+\begin{verbatim}
+    tips:
+      name: Purkinje
+      names:
+        - /Purkinje/segments/b0s01[1]/Purkinje_spine_0/head
+        - /Purkinje/segments/b0s01[2]/Purkinje_spine_0/head
+        . . .
+        - /Purkinje/segments/b3s46[15]/Purkinje_spine_0/head
+\end{verbatim}
+
+\subsection*{Save Model}
+
+UNDER CONSTRUCTION
+
+\subsection*{Define Simulation Constants}
+
+UNDER CONSTRUCTION
+
+\subsection*{Define Simulation Inputs}
+
+UNDER CONSTRUCTION
+
+\subsection*{Define Simulation Outputs}
+
+UNDER CONSTRUCTION
+
+\subsection*{Check Simulation}
+
+UNDER CONSTRUCTION
+
+\subsection*{Run Simulation}
+
+To run a simulation for 10\,s we can use the same command as used for the simple one compartment model in \href{../tutorial1/tutorial1.pdf}{Tutorial 1}
+\begin{verbatim}
+    genesis > run /Purkinje 10.00
+\end{verbatim}
+
+\subsection*{Reset Simulation}
+
+UNDER CONSTRUCTION
+
+\subsection*{Save Model State}
+
+UNDER CONSTRUCTION
+
+\subsection*{Check Simulation Output}
+
+UNDER CONSTRUCTION
+
+
+\end{document}
