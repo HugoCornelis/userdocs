@@ -1,0 +1,89 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+%e.g.  \textcolor{red,green,blue}{text}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{\setcounter{equation}{5}}
+
+\section*{GENESIS: Documentation}
+
+\section*{Further Details of the Hodgkin-Huxley Model}
+
+In their model, Hodgkin and Huxley represented the rate of change of the potassium activation variable $n$ as a rate equation for a first-order kinetic process:
+
+\begin{equation}
+		\frac{d n}{d t} = \alpha_n(V) \; (1-n) - \beta_n(V) \; n.
+\label{eq:eq6}		
+\end{equation}
+
+The modern interpretation of this equation is that the opening of a $K$ channel involves the motion of four physical gates between ``permissive" and ``non-permissive" states. If all gates are in the permissive state, then the channel is open, and ions are allowed to flow. In a population of channels, $n$ is the fraction of gates that are open. Thus, the conductance of these of channels is proportional to the fourth power of $n$. Here, $\alpha_n$ is the voltage-dependent rate constant for transitions to the permissive state, and $\beta_n$ is the rate constant for transitions to the non-permissive state. By comparison with Eq.\,\href{../introduction-compneurosci-1/introduction-compneurosci-1.pdf}{4}, we can see that
+\begin{equation}
+	\alpha_n(V) = \frac{n_{\infty}(V)}{\tau_n(V)}
+\label{eq:eq7}		
+\end{equation}
+\begin{equation}
+	\beta_n(V) = \frac{1 - n_{\infty}(V)}{\tau_n(V)}
+\label{eq:eq8}		
+\end{equation}
+Likewise, the $Na$ activation and inactivation variables obey the equations
+\begin{equation}
+	\frac{d m}{d t} = \alpha_m(V) \; (1-m) - \beta_m(V) \; m
+\label{eq:eq9}		
+\end{equation}
+\begin{equation}
+	\frac{d h}{d t} = \alpha_h(V) \; (1-h) - \beta_h(V) \; h
+\label{eq:eq10}	
+\end{equation}
+with similar relationships between the rate constants and the activation variables and their time constants.
+
+From their voltage clamp measurements of the activation variables and their time constants, Hodgkin and Huxley were able to make the empirical fits:
+
+\begin{equation}
+	\alpha_n(V) = \frac{0.01 (10-V)}{exp(\frac{10-V}{10}) - 1}
+\label{eq:eq11}	
+\end{equation}
+
+\begin{equation}
+	\beta_n(V) = 0.125\; exp(-V/80)
+\label{eq:eq12}	
+\end{equation}
+
+\begin{equation}
+	\alpha_m(V) = \frac{0.1 (25-V)}{exp(\frac{25-V}{10}) - 1}
+\label{eq:eq13}	
+\end{equation}
+
+\begin{equation}
+	\beta_m(V) = 4 \; exp(-V/18)
+\label{eq:eq14}	
+\end{equation}
+
+\begin{equation}
+	\alpha_h(V) = 0.07 \; exp(-V/20)
+\label{eq:eq15}		
+\end{equation}
+
+\begin{equation}
+	\beta_h(V) = \frac{1}{exp(\frac{30-V}{10}) + 1}
+\label{eq:eq16}		
+\end{equation}
+
+Here voltages are measured with respect to a resting potential of zero (rather than the actual value of about -70 mV), and are given in $mV$. With these expressions for the rate constants, one can numerically solve Eqs.~\ref{eq:eq6},~\ref{eq:eq9}, and~\ref{eq:eq10} for the time dependence of the activation variables, and use these in~\href{../introduction-compneurisci-1/introduction-compneurosci-1.pdf} {Eqs. 2} and~\href{../introduction-compneurisci-1/introduction-compneurosci-1.pdf} {5} to solve for the conductances. These can then be used in \href{../introduction-compneurisci-1/introduction-compneurosci-1.pdf}{Eq. 1} to solve for the time behavior of the membrane potential.
+
+As the Traub hippocampal pyramidal cell model shows, there are many other varieties of voltage-activated conductances found in neurons, in addition to those found in the squid giant axon. Most of these can be modeled using variations of the Hodgkin-Huxley model, with a similar notation, but with different values of the parameters and different values of the exponents for activation and inactivation. Some modelers use equations similar to Eqs.~\ref{eq:eq11}--\ref{eq:eq16}, and others use expressions for the steady-state activation and time constant, which can be related to these by Eqs.~\ref{eq:eq7} and~\ref{eq:eq8}.
+
+\subsection*{Further Reading}
+
+It is well worth reading the original paper:
+
+\begin{quote}
+Hodgkin, A. and Huxley, A. (1952). A quantitative description of membrane current and its application to conduction and excitation in nerve, {\it J. Physiol. (London)} {\bf 117}: 500--544.
+\end{quote}
+
+For the details of implementing models of ionic conductances see (UNDER CONSTRUCTION). 
+
+\end{document}
