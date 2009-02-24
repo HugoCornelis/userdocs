@@ -3,6 +3,7 @@
 \usepackage{color}
 %e.g.  \textcolor{red,green,blue}{text}
 \usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
 
 \begin{document}
 
@@ -11,7 +12,7 @@
 
 \subsection*{Reverse engineering the brain}
 
-Here, we introduce ways that computer simulation can be used as a tool for understanding the brain. Suggested background readings include Chapters 2 (link), 3 (link), and 4 (link) of`{\it\,The Book of GENESIS: Exploring Realistic Neural Models with the GEneral NEural SImulation System} (commonly called "the BoG"). 
+Here, we introduce ways that computer simulation can be used as a tool for understanding the brain. Suggested background readings include \href{../bog-ch2/bog-ch2.pdf}{Chapters 2}, \href{../bog-ch3/bog-ch3.pdf}{3}, and \href{../bog-ch4/bog-ch4.pdf}{4} of`{\it\,The Book of GENESIS: Exploring Realistic Neural Models with the GEneral NEural SImulation System} (commonly called``the BoG''). 
 %You can download or read the free internet edition at http://www.genesis-sim.org/GENESIS/iBoG/iBoGpdf. We won't have time to use the GENESIS simulator in this course during the short unit on realistic neural modeling, but I'll use slides and video clips of GENESIS simulations to illustrate some general ideas about this type of modeling.
 
 The problem has been described as reverse engineering the brain \ref{Bower, 1995}. As an analogy, suppose that we found an alien computer that was recovered from a crashed UFO. We'd like to understand how it works and learn what we can of its advanced technology.
@@ -119,7 +120,7 @@ Here is a circuit diagram for a generic neural compartment.
   \centering
  \includegraphics[scale=0.5]{figs/compt.eps}
 %  \caption{}
-  \label{fig:compartments}
+  \label{fig:compt}
 \end{figure}
 
 $V_m$ represents the membrane potential at a point inside the compartment, relative to the ``ground" symbol outside the cell. The membrane capacitance $C_m$ can be charged or discharged as current flows into or out of the compartment, changing the value of $V_m$. This current can come from adjacent compartments, from the passage of ions through ion channels, or from a current $I_{inject}$ injected through a probe inserted into the compartment. Adjacent compartments have membrane potentials $V_m'$ and $V_m''$, and the difference in potential across the axial resistances $R_a$ and $R_a'$ can cause current to enter or leave the compartment. The ``leakage resistance" $R_m$ and its associated equilibrium potential $E_m$ represent the passive channels, and the resistor with the arrow through it represents one of the possible variable conductances that are specific to a particular ion or combination of ions. By convention, these are represented by a conductance $G_k$, rather than a resistance, $1/G_k$. Each one of these conductances has an associated equilibrium potential represented by the battery labeled $E_k$. The equilibrium potential (reversal potential) is the value of $V_m$ at which there is no net flow of the ion through the conductance. The values of the different $E_k$'s are calculated from the Nernst equation, where the Nernst potential of an ion of charge $z$, across a membrane, is determined by the concentration ratio in and outside the cell:
@@ -189,7 +190,7 @@ The diagram below illustrates the ionic basis of the neuron membrane potential.
   \label{fig:ionflow}
 \end{figure}
 
-It is known that the concentration of sodium ions is greater outside the cell, so they have a tendency to enter. The concentration of potassium ions is greater on the inside, so they tend to leave. Metabolic processes within the cell called ionic pumps maintain this balance of concentrations by ``pumping'' ions across the cell membrane. With this difference in ionic concentrations,  when the cell is at rest the interior of the cell is polarized to a membrane potential of about 70 mV negative to the outside. Because of the higher exterior concentration of sodium, it has an equilibrium potential (reversal potential) of about 45 mV positive with respect to the cell, meaning that it will tend to enter the cell as long as the membrane potential is less than $E_{Na}$. Likewise, this competition betweem osmotic and electrostatic forces means that potassium will tend to leave the cell unless the membrane potential falls below $E_K$. Note that these equilibrium potentials can be calculated from the Nernst equation, and the rest potential from the Goldman equation.
+It is known that the concentration of sodium ions is greater outside the cell, so they have a tendency to enter. The concentration of potassium ions is greater on the inside, so they tend to leave. Metabolic processes within the cell called ionic pumps maintain this balance of concentrations by ``pumping'' ions across the cell membrane. With this difference in ionic concentrations,  when the cell is at rest the interior of the cell is polarized to a membrane potential of about 70\,mV negative to the outside. Because of the higher exterior concentration of sodium, it has an equilibrium potential (reversal potential) of about 45\,mV positive with respect to the cell, meaning that it will tend to enter the cell as long as the membrane potential is less than $E_{Na}$. Likewise, this competition betweem osmotic and electrostatic forces means that potassium will tend to leave the cell unless the membrane potential falls below $E_K$. Note that these equilibrium potentials can be calculated from the Nernst equation, and the rest potential from the Goldman equation.
 
 Hodgkin and Huxley quantitatively explained the process by which depolarization of the cell (an increase in $V_m$) causes $Na$-selective channels to open, allowing $Na$ ions to enter. This raises the potential, further increasing the conduction of the $Na$ channels, and causes the neuron to fire an action potential. Eventually, the $Na$ channels inactivate, and $K$-selective channels begin to open, causing a flow of charge out of the cell, ending or repolarizing the action potential.
 
@@ -208,7 +209,7 @@ The equation for $I_{in} - I_{out}$ is similar to the one for the``generic compa
 
 The hard part was to model the time and voltage dependence of the $Na$ and $K$ conductances. As you learned previously, the solution was to perform a series of voltage clamp experiments measuring both the total current and the current when the $Na$ conductance was disabled. They did this with an current injection probe, a current recording probe, and a feedback circuit or ``voltage clamp'' to insure that the injection probe applied just the right amount of current to hold the membrane potential at the desired value. They eliminated the sodium current by replacing the sea water with a solution containing choline instead of sodium chloride. Modern experiments use a puffer fish neurotoxin, tetrodotoxin (TTX) to block sodium channels.
 
-By performing the experiments with different values of the clamp voltage, they were able to determine the time dependence and equilibrium value of the conductances at different membrane voltages. Here's a figure from one of their 1952 papers that shows the behavior of the $K$ conductance when the voltage is stepped to 25 mV above the rest potential and then brought back down to the rest potential. For different clamping voltages, they found different values of the maxium conductance, and different time behaviors.
+By performing the experiments with different values of the clamp voltage, they were able to determine the time dependence and equilibrium value of the conductances at different membrane voltages. Here's a figure from one of their 1952 papers that shows the behavior of the $K$ conductance when the voltage is stepped to 25\,mV above the rest potential and then brought back down to the rest potential. For different clamping voltages, they found different values of the maxium conductance, and different time behaviors.
 
 \begin{figure}[h]
   \centering
@@ -249,6 +250,6 @@ Their fit for the $Na$ conductance was a little different, because they found th
 \label{eq:eq5}		
 \end{equation}
 
-Here, $m$ is the activation variable for $Na$, and $h$ is called the``inactivation variable" since it becomes smaller when $m$ becomes larger. The terminology is a little confusing though, because the conductance is large when the ``inactivation" is large. $m$ and $h$ obey equations just like the ones for $n$, but their steady state values and time constants have different voltage dependences. If you would like more information about the details of the model, see the optional material on Further Details of the Hodgkin-Huxley Model (link to G3\_DetailsoftheHHModel).\
+Here, $m$ is the activation variable for $Na$, and $h$ is called the``inactivation variable" since it becomes smaller when $m$ becomes larger. The terminology is a little confusing though, because the conductance is large when the ``inactivation" is large. $m$ and $h$ obey equations just like the ones for $n$, but their steady state values and time constants have different voltage dependences. If you would like more information about the details of the model, see \href{../hh-model-details/hh-model-details.pdf}{Further Details of the Hodgkin-Huxley Model}.
 
 \end{document}
