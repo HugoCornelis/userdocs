@@ -1,0 +1,117 @@
+Monotone installation on the Mac
+
+first you need to download monotone. Me and hugo are currently using version 0.40.
+
+http://monotone.ca/downloads/0.40/monotone-0.40.dmg
+
+First generate your monotone key using this command:
+
+
+*mtn genkey allan.coop@gmail.com
+
+*And whatever email address you want to use.
+
+It will put it in your .monotone directory in your home folder.
+
+You need to initialize the database first to create the repository file userdocs.mtn. 
+
+mtn --db=userdocs.mtn db init
+
+This file can them be referenced with:
+
+--db=userdocs.mtn
+
+Then to make a workspace enter this command.
+Issue this command:
+
+*mtn --db=userdocs.mtn --branch="0" setup userdocs*
+
+This is going to create a workspace directory with the _MTN folder that has all of the options present.
+Set up folders in here for the document source files.
+When in here do an: *
+mtn ls unknown*
+
+This will show you all the files that aren't tracked by monotone, the files you added should show up. Now you have to add them via:
+
+*mtn add --unknown*
+
+now the mtn ls unknown will show nothing. Now that you've added you can do a checkin via:
+
+*mtn ci*
+
+while in the directory. It will come up with a prompt asking you for a revision message (ex. "I added explanations for querying a model") and when you save it, it will check in the code to the file you indicated in --db=userdocs.mtn.
+
+once you do this get me your key via this command:
+
+
+*mtn --db=userdocs.mtn pubkey allan.coop@gmail.com > me.pubkey*
+
+then just send me the me.pubkey.
+
+
+Set up automatic login with monotone
+~/.monotone/monotonerc:
+function get_passphrase(keypair_id)
+ return "<passphrase here>"
+end
+
+You can automate the synchronization of the local data base with the monotone repository by placing an executable file (userdocs-sync) in a bin directory in neurospaces_project/userdocs/source/snapshots/0 
+The executable contains:
+
+neurospaces_sync --enable userdocs --regex userdocs --verbose
+
+We can query the monotone data base to determine which new files are available for addition to the monotone repository:
+
+biad-1292-496:0 adcmobile$ mtn ls unknown
+bin
+bog-ch2
+bog-ch3
+bog-ch4
+hh-model-details
+introduction-compneurosci-2
+
+Prepare to add the unknown files to the repository:
+
+biad-1292-496:0 adcmobile$ mtn add bin/ bog-ch{2,3,4} hh-model-details/ introduction-compneurosci-2/
+mtn: adding bin to workspace manifest
+mtn: adding bog-ch2 to workspace manifest
+mtn: adding bog-ch3 to workspace manifest
+mtn: adding bog-ch4 to workspace manifest
+mtn: adding hh-model-details to workspace manifest
+mtn: adding introduction-compneurosci-2 to workspace manifest
+biad-1292-496:0 adcmobile$ mtn ls unknownbin/userdocs-sync
+bog-ch2/NewDocument.tex
+bog-ch2/descriptor.yml
+bog-ch2/figs
+bog-ch3/NewDocument.tex
+bog-ch3/descriptor.yml
+bog-ch3/figs
+bog-ch4/NewDocument.tex
+bog-ch4/descriptor.yml
+bog-ch4/figs
+hh-model-details/descriptor.yml
+hh-model-details/figs
+hh-model-details/hh-model-details.tex
+introduction-compneurosci-2/NewDocument.tex
+introduction-compneurosci-2/descriptor.yml
+introduction-compneurosci-2/figs
+introduction-compneurosci-2/introduction-compneurosci-2.tex
+
+biad-1292-496:0 adcmobile$ mtn add --unknown
+Generates a lot of output
+
+We can check to see if this has been successful with
+
+biad-1292-496:0 adcmobile$ mtn ls unknown
+
+Which should return nothing if the operation was successful
+
+We can then check these unknown files in (ci) to the repository
+
+biad-1292-496:0 adcmobile$ mtn ci
+
+We can then synchronize the local data base with the monotone repository:
+
+biad-1292-496:0 adcmobile$ bin/userdocs-sync 
+
+

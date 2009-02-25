@@ -17,7 +17,7 @@ The image of the pyramidal cell from the CA3 region of the hippocampus that we l
 
 \begin{figure}[h]
   \centering
- \includegraphics[scale=0.4]{figures/BoGfig5_1s.eps}
+ \includegraphics[scale=0.4]{figs/BoGfig5_1s.eps}
   \caption{(A) Cerebellar Purkinje cell; (B) spinal cord motoneuron; (C) neostriatal spiny neuron; (D) locust interneurons}
   \label{fig:neurons}
 \end{figure}
@@ -48,7 +48,7 @@ There are four main steps to perform in order to build a realistic model neuron,
 \item Connect to other cells in a network, or provide artificial inputs to simulate the in-vivo inputs to the neuron.
 \end{enumerate}
 
-Step 2 is difficult. Chapter 5 of {\it The Book of GENESIS} (``the BoG"), gives some useful information for answering the two questions. This chapter (Segev, 2005) is also very mathematical, and it is easy to get lost in the equations and forget what they are used for. You should read it in order to get an overview of the theory of passive propagation in dendrites. It is important to remember that there are three things that can be measured experimentally and are related to the parameters needed for a model:
+Step 2 is difficult. \href{../bog-ch5/bog-ch5.pdf}{Chapter 5} of {\it The Book of GENESIS} (``the BoG"), gives some useful information for answering the two questions. This chapter (Segev, 2005) is also very mathematical, and it is easy to get lost in the equations and forget what they are used for. You should read it in order to get an overview of the theory of passive propagation in dendrites. It is important to remember that there are three things that can be measured experimentally and are related to the parameters needed for a model:
 
 \begin{enumerate}
 \item The attentuation of voltage with distance, and the ``space constant" or ``length constant", lambda ($\lambda$).
@@ -62,7 +62,7 @@ This slide gives a summary of the electrical properties of a uniform section of 
 
 \begin{figure}[h]
   \centering
- \includegraphics[scale=0.4]{figures/dendrite_section2.eps}
+ \includegraphics[scale=0.4]{figs/dendrite_section2.eps}
   %\caption{enumerate}
   \label{fig:dendrite2}
 \end{figure}
@@ -71,7 +71,7 @@ The conducting cytoplasm inside the neuron, the insulating neural membrane, and 
 
 \begin{figure}[h]
   \centering
- \includegraphics[scale=0.5]{figures/HHcompt.eps}
+ \includegraphics[scale=0.5]{figs/HHcompt.eps}
   %\caption{enumerate}
   \label{fig:dendrite}
   \begin{displaymath}
@@ -90,13 +90,13 @@ For a piece of dendrite or a compartment of length $l$ and diameter $d$ we then 
 
 \textcolor{red}{WARNING:} Many treatments of the passive properties of neural tissue use the symbols $R_m$, $R_a$, and $C_m$ for the specific resistances and capacitance, instead of this notation with $R_M$, $R_A$, and $C_M$. Also, many textbooks and journal papers define the resistance and capacitance in terms of that for a unit length of cable having a specified diameter.
 
-Sections 5.3 through 5.5 in BoG Chapter 5 describes how sections of dendrite can be modeled using the one-dimensional cable equation. For some additional background with more details than are given in this lecture, see the Digression on Cable Theory of Passive Propagation in Dendrites (make link to ??).
+Sections 5.3 through 5.5 in BoG \href{../bog-ch5/bog-ch5.pdf}{Chapter 5} describes how sections of dendrite can be modeled using the one-dimensional cable equation. For some additional background with more details than are given in this lecture, see the \href{../cable-theory}{Digression on Cable Theory of Passive Propagation in Dendrites}.
 
 The relationships between the original neuron and a cable model or a compartmental models are shown in BoG Figure 5.4:
 
 \begin{figure}[h]
   \centering
- \includegraphics[scale=0.4]{figures/BoGfig5_4s.eps}
+ \includegraphics[scale=0.4]{figs/BoGfig5_4s.eps}
   %\caption{enumerate}
   \label{fig:equivcable}
 \end{figure}
@@ -109,7 +109,7 @@ This result is useful for determining the length of the compartments that are us
 
 \subsection*{Determining values of $C_M$, $R_M$, and $R_A$}
 
-Usually one assumes that the values of $C_M$, $R_M$, and $R_A$ are the same in all compartments, as they are intrinsic properties of the neural membrane and cytoplasm. $C_M$ depends on the intrinsic properties of the thickness and dielectric constant of the membrane, and is usually close to 0.01 $F/m^2$.
+Usually one assumes that the values of $C_M$, $R_M$, and $R_A$ are the same in all compartments, as they are intrinsic properties of the neural membrane and cytoplasm. $C_M$ depends on the intrinsic properties of the thickness and dielectric constant of the membrane, and is usually close to 0.01\,$F/m^2$.
 
 Part A of the figure above shows a current injection pulse being injected into the soma of the neuron, and the meaured change in membrane potential. Can you guess why it is a hyperpolarizing pulse, and not a depolarizing one?
 
@@ -135,18 +135,18 @@ This can be illustrated with the GENESIS Cable tutorial simulation, which allows
 \centering
 \begin{minipage}{0.5\textwidth}
 %{\bf\sf\large A.}
- \centerline{\includegraphics[scale=0.38]{figures/cable1-inj5.eps}}
+ \centerline{\includegraphics[scale=0.38]{figs/cable1-inj5.eps}}
   %\caption{}
   \end{minipage}
 \begin{minipage}{0.45\textwidth}
 %{\bf\sf\large B.}
- \centerline{\includegraphics[scale=0.3]{figures/cable2-inj5.eps}}
+ \centerline{\includegraphics[scale=0.3]{figs/cable2-inj5.eps}}
   %\caption{}
   \end{minipage}
   \label{fig:cableinj}
 \end{figure}
 
-Note that the log plot in the lower right graph above becomes linear at longer times, when the term in the series with the largest time constant dominates. From the slope of this line, you should be able to calculate that the membrane time constant $\tau_m$ is about 10 $msec$, which is the value of $R_M\cdot C_M$. These plots will also let you calculate the voltage attenuation with distance, and compare it with the predicted results for an infinitely long cable using the value of the space constant $\lambda$ and the parameter values that are shown above.
+Note that the log plot in the lower right graph above becomes linear at longer times, when the term in the series with the largest time constant dominates. From the slope of this line, you should be able to calculate that the membrane time constant $\tau_m$ is about 10\,$msec$, which is the value of $R_M\cdot C_M$. These plots will also let you calculate the voltage attenuation with distance, and compare it with the predicted results for an infinitely long cable using the value of the space constant $\lambda$ and the parameter values that are shown above.
 
 The input resistance of a neuron at the point of a current injection pulse is given by Ohm's law from the change in membrane potential after it has reached a steady state
 
@@ -156,18 +156,18 @@ The input resistance of a neuron at the point of a current injection pulse is gi
 
 What is the input resistance of this cable, as measured at the soma? This is another measureable quantity that can help to provide values for $R_M$ and $R_A$. If we were dealing with a neuron that could be modeled as a single soma compartment, then the input resistance would simply be given by the membrane resistance, $R_{in} = R_m = R_M/$area. When there are other compartments, then the axial resistances and membrane resistances of these compartments also add to the resistive load, and the expression becomes more complicated. For a simple model with a few compartments, circuit theory can be used to calculate $R_{in}$ in terms of $R_M$, $R_A$, and the compartment dimensions. BoG Section 5.4.4 gives the result for an infinite cable (Equation 5.24) and a finite cable (Equation 5.26), and discusses conditions under which a branched dendritic structure can be approximated by a single finite cable. This is useful when constructing simple ``ball and stick" models of neurons with a soma having the appropriate surface area of the actual cell soma, connected to a linear chain of cylindrical dendrite compartments. These are designed to provide a ``collapsed dentritic tree" or ``equivalent cable'' with the same passive properties of a much more detailed model made from a reconstruction of a measured cell morpholgy.
 
-However, this is not of much help when dealing with a detailed morphologically accurate model, such as the De Schutter and Bower (1994) Purkinje cell model. The figure below shows a run of the GENESIS Purkinje cell tutorial simulation, with a current injection pulse applied to the soma. The plots were performed in overlay mode to show the results of both a depolarizing pulse of 1 nA, and a hyperpolarizing pulse of -1nA.
+However, this is not of much help when dealing with a detailed morphologically accurate model, such as the De Schutter and Bower (1994) Purkinje cell model. The figure below shows a run of the GENESIS Purkinje cell tutorial simulation, with a current injection pulse applied to the soma. The plots were performed in overlay mode to show the results of both a depolarizing pulse of 1\,nA, and a hyperpolarizing pulse of -1\,nA.
 
 \begin{figure}[h]
   \centering
- \includegraphics[scale=0.38]{figures/purk_inj5.eps}
+ \includegraphics[scale=0.38]{figs/purk_inj5.eps}
   %\caption{enumerate}
   \label{fig:purkinj5}
 \end{figure}
 
 Now, is it clear why hyperpolarizing pulses are used? The depolarizing pulse causes the the voltage-activated channels to open, causing the cell to fire. The hyperpolarizing pulse deactivates the channels, and allows one to see the passive properties. (Even this may not be enough to completely get rid of the effects of active channels. Often one applies channel blockers to block any channels that are active at low membrane potentials.) What is the input resistance of this neuron? When fitting parameters for a model of this complexity, it is common to inject current pulses of various amplitudes into the neuron being modeled while recording the membrane potential. The simulation is then run under similar conditions, and automated parameter searches are performed to adjust $C_M$, $R_M$, and $R_A$ to give the best fit of the simulated $V_m$ with the experimental results.
 
-Further details of the process of constructing realistic single cell models are given in a downloadable tutorial paper by Jaeger (2005) (make link).
+Further details of the process of constructing realistic single cell models are given in a tutorial paper by \href{../jaeger-tutorial/jaeger-turotial.pdf}{Jaeger (2005)}.
 
 \subsection*{Modeling Synapses}
 
@@ -175,7 +175,7 @@ The next step is to model synaptically (chemically) activated channels. The vari
 
 \begin{figure}[h]
   \centering
- \includegraphics[scale=0.5]{figures/syncond.eps}
+ \includegraphics[scale=0.5]{figs/syncond.eps}
   %\caption{enumerate}
   \label{fig:purkinj5}
 \end{figure}
@@ -205,7 +205,7 @@ If we were interested in understanding the details of axonal propagation we coul
 
 \begin{figure}[h]
   \centering
- \includegraphics[scale=0.5]{figures/syn-connect.eps}
+ \includegraphics[scale=0.5]{figs/syn-connect.eps}
   %\caption{enumerate}
   \label{fig:synconnect}
 \end{figure}
