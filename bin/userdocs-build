@@ -1,0 +1,70 @@
+#!/usr/bin/perl -w
+#!/usr/bin/perl -w -d:ptkdb
+#
+
+
+use strict;
+
+
+use YAML;
+
+
+sub build_document
+{
+    my $document = shift;
+
+    $document = m((.*)/(.*));
+
+    my $directory = $directory;
+
+#     my $filename = $2;
+
+    chdir $directory;
+
+    my $filenames
+	= [
+	   map
+	   {
+	       chomp; $_
+	   }
+	   `find . -name "*.tex"`,
+	  ];
+
+    foreach my $filename (@$filenames)
+    {
+	system "latex '$filename'";
+
+	system "latex '$filename'";
+
+	system "latex2html -nodiscard -mkdir -dir html '$filename'";
+    }
+
+    chdir '..';
+}
+
+
+sub main
+{
+    my $source = '.';
+
+    my $tag = $ARGV[0];
+
+    if (!defined $tag)
+    {
+	die "$0: please give a tag value on the command line";
+    }
+
+    my $documents_yaml = `userdocs-tag-filter 2>&1 "$tag"`;
+
+    my $documents = Load($documents_yaml);
+
+    foreach my $document (@$documents)
+    {
+	build_document($document);
+    }
+}
+
+
+main();
+
+
