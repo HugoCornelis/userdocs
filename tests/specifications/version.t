@@ -8,7 +8,7 @@ my $test
     = {
        command_definitions => [
 			       {
-				command => './VERSION',
+				command => './bin/userdocs-version',
 				command_tests => [
 						  {
 						   # $Format: "description => \"Does the version information match with ${package}-${label} ?\","$

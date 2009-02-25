@@ -2,7 +2,9 @@
 
 SUBDIRS =
 
-dist_bin_SCRIPTS = bin/userdocs-sync
+dist_bin_SCRIPTS = \
+	bin/userdocs-sync \
+	bin/userdocs-version
 
 RELEASE_MAJOR=`release-extract --major`
 RELEASE_MINOR=`release-extract --minor`
