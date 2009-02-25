@@ -21,20 +21,17 @@ sub tag_filter
 
     # convert the tags to a hash with true values
 
-    my $tags_array = $descriptor->{tags};
+    my $tags = $descriptor->{tags};
 
-    my $tags_hash
-	= {
-	   map
-	   {
-	       $_ => 1;
-	   }
-	   @$tags_array,
-	  };
+    foreach (@$tags)
+    {
+	if (/$tag/i)
+	{
+	    return 1;
+	}
+    }
 
-    # return true if tag exists in hash
-
-    return $tags_hash->{$tag};
+    return 0;
 }
 
 
