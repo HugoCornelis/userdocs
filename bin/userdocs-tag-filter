@@ -51,11 +51,16 @@ sub main
 
     my $all_documentation_descriptors
 	= [
+	   map { chomp; $_ }
 	   `find $source -name "descriptor.yml"`,
 	  ];
 
     my $all_documentation_tag_filtered
 	= [
+	   map
+	   {
+	       s(/descriptor.yml$)()i; $_;
+	   }
 	   grep
 	   {
 	       tag_filter($_, $tag);
