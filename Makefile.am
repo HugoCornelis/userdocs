@@ -40,3 +40,8 @@ html-upload-prepare:
 html-upload: html-upload-prepare
 	scp -pr html/htdocs/* hcornelis,neurospaces@web.sourceforge.net:/home/groups/n/ne/neurospaces/htdocs/
 
+website-prepare:
+	userdocs-build-levels $(srcdir)
+
+website-upload: website
+
