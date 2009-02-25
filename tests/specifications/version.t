@@ -8,17 +8,8 @@ my $test
     = {
        command_definitions => [
 			       {
-				arguments => [
-					      'VERSION',
-					     ],
-				command => 'cat',
+				command => './VERSION',
 				command_tests => [
-						  {
-						   description => "Is neurospaces startup successful ?",
-						   read => 'neurospaces ',
-						   timeout => 3,
-						   write => undef,
-						  },
 						  {
 						   # $Format: "description => \"Does the version information match with ${package}-${label} ?\","$
 description => "Does the version information match with userdocs-docs-1 ?",
