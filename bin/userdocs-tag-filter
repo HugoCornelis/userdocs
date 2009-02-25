@@ -1,0 +1,72 @@
+#!/usr/bin/perl -w
+#!/usr/bin/perl -w -d:ptkdb
+#
+
+
+use strict;
+
+
+use YAML;
+
+
+sub tag_filter
+{
+    my $filename = shift;
+
+    my $tag = shift;
+
+    # load the descriptor
+
+    my $descriptor = YAML::LoadFile($filename);
+
+    # convert the tags to a hash with true values
+
+    my $tags_array = $descriptor->{tags};
+
+    my $tags_hash
+	= {
+	   map
+	   {
+	       $_ => 1;
+	   }
+	   @$tags_array,
+	  };
+
+    # return true if tag exists in hash
+
+    return $tags_hash->{$tag};
+}
+
+
+sub main
+{
+    my $source = '.';
+
+    my $tag = $ARGV[0];
+
+    if (!defined $tag)
+    {
+	die "$0: please give a tag value on the command line";
+    }
+
+    my $all_documentation_descriptors
+	= [
+	   `find $source -name "descriptor.yml"`,
+	  ];
+
+    my $all_documentation_tag_filtered
+	= [
+	   grep
+	   {
+	       tag_filter($_, $tag);
+	   }
+	   @$all_documentation_descriptors,
+	  ];
+
+    print Dump($all_documentation_tag_filtered);
+}
+
+
+main();
+
+

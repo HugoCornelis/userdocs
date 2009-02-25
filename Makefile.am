@@ -4,6 +4,7 @@ SUBDIRS =
 
 dist_bin_SCRIPTS = \
 	bin/userdocs-sync \
+	bin/userdocs-tag-filter \
 	bin/userdocs-version
 
 RELEASE_MAJOR=`release-extract --major`
@@ -41,7 +42,7 @@ html-upload: html-upload-prepare
 	scp -pr html/htdocs/* hcornelis,neurospaces@web.sourceforge.net:/home/groups/n/ne/neurospaces/htdocs/
 
 website-prepare:
-	userdocs-build-levels $(srcdir)
+#	userdocs-build-levels $(srcdir) html/htdocs/neurospaces_project/userdocs
 
 website-upload: website
 
