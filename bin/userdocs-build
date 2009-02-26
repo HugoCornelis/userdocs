@@ -13,9 +13,9 @@ sub build_document
 {
     my $document = shift;
 
-    $document = m((.*)/(.*));
+#     $document = m((.*)/(.*));
 
-    my $directory = $directory;
+    my $directory = $document;
 
 #     my $filename = $2;
 
@@ -32,11 +32,31 @@ sub build_document
 
     foreach my $filename (@$filenames)
     {
-	system "latex '$filename'";
+	if ($filename =~ /\.tex$/)
+	{
+	    $filename =~ m((.*)\.tex$);
 
-	system "latex '$filename'";
+	    my $filename_base = $1;
 
-	system "latex2html -nodiscard -mkdir -dir html '$filename'";
+	    system "latex '$filename'";
+
+	    system "makeindex -c '$filename_base'";
+
+	    system "bibtex '$filename_base'";
+
+	    system "latex '$filename'";
+	    system "latex '$filename'";
+
+	    system "dvips '$filename_base.dvi' -o '$filename_base.ps'";
+
+	    mkdir 'html';
+
+	    system "latex2html -nodiscard -mkdir -dir html '$filename'";
+	}
+	else
+	{
+	    print "$0: unknown file type for $filename";
+	}
     }
 
     chdir '..';
