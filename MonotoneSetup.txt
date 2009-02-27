@@ -1,6 +1,6 @@
 Monotone installation on the Mac
 
-first you need to download monotone. Me and hugo are currently using version 0.40.
+first you need to download monotone. Hugo and I are currently using version 0.40.
 
 http://monotone.ca/downloads/0.40/monotone-0.40.dmg
 
@@ -70,7 +70,7 @@ bog-ch4
 hh-model-details
 introduction-compneurosci-2
 
-Prepare to add the unknown files to the repository:
+Prepare to add the unknown files to the local workspace:
 
 biad-1292-496:0 adcmobile$ mtn add bin/ bog-ch{2,3,4} hh-model-details/ introduction-compneurosci-2/
 mtn: adding bin to workspace manifest
@@ -115,3 +115,24 @@ We can then synchronize the local data base with the monotone repository:
 biad-1292-496:0 adcmobile$ bin/userdocs-sync 
 
 
+Procedure for syncing with repository (use at the end of each day/documentation writing session
+
+biad-1292-496:0 adcmobile$ mtn ls unknown
+Generates bunch of output
+
+mtn add --unknown
+Add files to the monotone workspace
+
+mtn ls missing
+Check to find files that have been deleted or moved
+
+mtn drop --missing
+Drop missing files from monotone workspace
+
+mtn ci
+Check in changes to monotone workspace
+
+./bin/userdocs-sync
+Update monotone repository
+
+Add comments of changes to the monotone repository log file

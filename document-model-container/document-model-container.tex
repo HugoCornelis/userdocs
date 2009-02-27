@@ -1,0 +1,48 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+%e.g.  \textcolor{red,green,blue}{text}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+\section*{The Model Container}
+
+The Model Container is used as an abstraction layer on top of a simulator and deals with biological entities and end-user concepts instead of mathematical equations. It provides a solver independent internal storage format for models that allows user independent optimizations of the numerical core. By 'containing' the biological model, the Model Container makes the implementation of the numerical core independent of software implementation.
+
+The Model Container API abstracts away all the mathematical and computational details of the simulator. Optimized to store large models in little memory--it stores neuronal models in a fraction of the memory that would be used by conventional simulators--and provides automatic partitioning of the model such that simulations can be run in parallel. From the modeler's perspective, the Model Container will be able to import and export NeuroML files to facilitate model exchange and ideas.
+
+\subsubsection*{Features}
+
+\begin{itemize}
+
+\item Covers models from the network level down to the level of mechanism. A Perl interface converts and imports GENESIS .p and SWC morphology files. These conversions are done on an ``as needed just in time'' basis. (For example, it can reproduce an exact match with the \href{../document-purkinje-cell-model/document-purkinje-cell-model.pdf}{Purkinje cell model}).
+
+\item Defines models in a purely declarative, extensible language.
+
+\item Keeps and maintains a conceptual 'algorithmic' representation of a model, as well as an expanded representation of the model.
+
+\item Knows about biological entities like cells, populations and projections (note that for some simulators such entities can be commands instead of biological entities).
+
+\item Annotates the structures and concepts of the model with biological, physical, and mathematical quantities.
+
+\item Supports setup of the most complicated mathematical solvers. In principle, it is capable of supporting the transparent setup of multiscale models and simulations.
+
+\item Gives different views of the same network model. These views are visualized in the GUI.
+
+\item Knows about specific parameters vs. actual parameters, e.g. specific membrane capacitance vs. scaled membrane capacitance. The biological objects in the model container generally rely on the parent, children, and siblings of the model hierarchy to infer a number of their own properties.
+
+\item Provides for arbitrary nesting of network models, including nesting of projections and populations.
+
+\item Allows inspection of the connectivity of a network model in an intuitive way.
+
+\item Stores very large models in little memory, needed for full model inspection and automated validation (the more complicated the model the more efficient the compression scheme (from the theoretical perspective the compressed image scales logarithmically with the original)).
+
+\item Can save and reload connections between components. Costly computation of connections required to be done only once.
+    
+\end{itemize}
+    
+\end{document}
