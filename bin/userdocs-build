@@ -21,41 +21,117 @@ sub build_document
 
     chdir $directory;
 
-    my $filenames
-	= [
-	   map
-	   {
-	       chomp; $_
-	   }
-	   `find . -name "*.tex"`,
-	  ];
+    # if we find a makefile
 
-    foreach my $filename (@$filenames)
+    if (-f 'Makefile')
     {
-	if ($filename =~ /\.tex$/)
+	# that is what we use
+
+	system "make";
+    }
+    else
+    {
+	# find relevant source files
+
+	my $filenames
+	    = [
+	       map
+	       {
+		   chomp; $_
+	       }
+	       `ls *.tex`,
+	      ];
+
+	# loop over source files
+
+	foreach my $filename (@$filenames)
 	{
-	    $filename =~ m((.*)\.tex$);
+	    # for latex sources
 
-	    my $filename_base = $1;
+	    if ($filename =~ /\.tex$/)
+	    {
+		# prepare output: general latex processing
 
-	    system "latex '$filename'";
+		$filename =~ m((.*)\.tex$);
 
-	    system "makeindex -c '$filename_base'";
+		my $filename_base = $1;
 
-	    system "bibtex '$filename_base'";
+		system "latex '$filename'";
 
-	    system "latex '$filename'";
-	    system "latex '$filename'";
+		system "makeindex -c '$filename_base'";
 
-	    system "dvips '$filename_base.dvi' -o '$filename_base.ps'";
+		system "bibtex '$filename_base'";
 
-	    mkdir 'html';
+		system "latex '$filename'";
+		system "latex '$filename'";
 
-	    system "latex2html -nodiscard -mkdir -dir html '$filename'";
-	}
-	else
-	{
-	    print "$0: unknown file type for $filename";
+		# generate ps output
+
+		{
+		    mkdir "output_ps";
+
+		    chdir "output_ps";
+
+		    system "dvips '../$filename_base.dvi' -o '$filename_base.ps'";
+
+		    chdir "..";
+		}
+
+		# generate pdf output
+
+		{
+		    mkdir "output_pdf";
+
+		    chdir "output_pdf";
+
+		    system "ps2pdf '../output_ps/$filename_base.ps' '$filename_base.pdf'";
+
+		    chdir "..";
+		}
+
+		# generate html output
+
+		{
+		    mkdir 'output_html';
+
+		    chdir "output_html";
+
+		    # read latex source
+
+		    use IO::File;
+
+		    my $source_file = IO::File->new("<../$filename");
+
+		    my $source_text = join "", <$source_file>;
+
+		    $source_file->close();
+
+		    # convert pdf links to html links
+
+		    $source_text =~ s(\\href\{../([^}])*\.pdf)(\\href\{../$1.html)g;
+
+		    # write converted source
+
+		    $source_file = IO::File->new(">$filename");
+
+		    print $source_file $source_text;
+
+		    $source_file->close();
+
+		    # generate html output
+
+		    system "htlatex '$filename'";
+
+		    chdir "..";
+		}
+	    }
+
+	    # else unknown source file type
+
+	    else
+	    {
+		print "$0: unknown file type for $filename";
+	    }
 	}
     }
 

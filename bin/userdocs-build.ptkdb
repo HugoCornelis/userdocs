@@ -1,7 +1,23 @@
-$files = {};
+$files = {
+           '_<bin/userdocs-build' => [
+                                       {
+                                         'expr' => undef,
+                                         'value' => '1',
+                                         'text' => '		    mkdir "output_ps";
+',
+                                         'fname' => 'bin/userdocs-build',
+                                         'type' => 'user',
+                                         'line' => '71'
+                                       }
+                                     ]
+         };
 $expr_list = [
                {
                  'expr' => '$document',
+                 'depth' => -1
+               },
+               {
+                 'expr' => '`pwd`',
                  'depth' => -1
                }
              ];
