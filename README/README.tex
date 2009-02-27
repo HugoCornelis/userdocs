@@ -14,11 +14,11 @@
 \subsection*{README}
 
 
-This directory structure contains GENESIS documentation source material. Each uniquely named folder/directory contains a single file of the level 1-7 documents in the GENESIS documentation database. Each directory also contains a subdirectory ``{\tt figs}'' that holds any figures the given source document may contain.
+This directory structure contains GENESIS documentation source material. Each uniquely named folder/directory contains a single file that is associated with one of the seven level of GENESIS documentation. Each directory also contains a subdirectory ``{\tt figs}'' that holds any figures required by the given source document.
 
 New tags may be created just by adding them to the {\tt descriptor.yml} file in a document directory. 
 
-Pre-existing tags include:
+Recommended tags include:
 \begin{verbatim}
   tags:
     - genesis3
@@ -69,7 +69,7 @@ Each directory/file is tagged on the basis of content:
 
 \end{enumerate}
 
-The {\tt contents-level1} \ldots {\tt contents-level7} directories each contain a list of the documentation to be found at the given level. These content indexes also provide direct links to all documents tagged for the given level of documentation.
+Each of the directories {\tt contents-level1}\ldots {\tt contents-level7} contains a list of the documentation to be found at the given level. These content indexes provide direct links to all documents tagged for the given level of documentation.
 
 \subsection*{Make a New Document}
 
@@ -77,7 +77,7 @@ The directory {\tt NewDocument} can be found in the parent directory of the dire
 
 \begin{enumerate}
 
-\item To make a new document, copy and paste the {\tt NewDocument} directory into the directory where you found it and rename it with an unique identifier. The directory and the document source file it contains should be given the same name, e.g. the directory containing this document is called {\tt README} and the documentation file it contains is a \LaTeX\, file (this file) called {\tt README.tex}.
+\item To make a new document, copy (and paste) the {\tt NewDocument} directory into the directory where you found it and rename the directory with an unique identifier. The directory and the document source file it contains should be given the same name, e.g. the directory containing this document is called {\tt README} and the documentation file it contains is a \LaTeX\, file (this file) called {\tt README.tex}.
 
 \item A descriptor file (descriptor.yml) contains tags that identify and define the status of the documentation file. The default contents of this file include:
 \begin{verbatim}
