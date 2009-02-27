@@ -108,7 +108,7 @@ sub build_document
 
 		    # convert pdf links to html links
 
-		    $source_text =~ s(\\href\{../([^}])*\.pdf)(\\href\{../$1.html)g;
+		    $source_text =~ s(\\href\{\.\./([^}]*)\.pdf)(\\href\{../$1.html)g;
 
 		    # write converted source
 
@@ -158,6 +158,19 @@ sub main
     {
 	build_document($document);
     }
+
+    foreach my $document (@$documents)
+    {
+	prepare_publish_document($document);
+    }
+}
+
+
+sub prepare_publish_document
+{
+    my $document = shift;
+
+    
 }
 
 
