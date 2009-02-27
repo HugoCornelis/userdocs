@@ -673,9 +673,9 @@ html-upload: html-upload-prepare
 	scp -pr html/htdocs/* hcornelis,neurospaces@web.sourceforge.net:/home/groups/n/ne/neurospaces/htdocs/
 
 website-prepare:
-	userdocs-build level1
+	userdocs-build level2
 
-website-upload: website
+website-upload: website-prepare html-upload
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

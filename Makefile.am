@@ -44,6 +44,13 @@ html-upload: html-upload-prepare
 
 website-prepare:
 	userdocs-build level1
+	userdocs-build level2
+	userdocs-build level3
+	userdocs-build level4
+	userdocs-build level5
+	userdocs-build level6
+	userdocs-build level7
 
-website-upload: website
+website-upload: website-prepare html-upload
+
 
