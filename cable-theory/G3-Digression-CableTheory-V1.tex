@@ -1,0 +1,80 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+%e.g.  \textcolor{red,green,blue}{text}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+\section*{Passive Propagation in Dendrites: A Digression on Cable Theory}
+
+We would like to understand and make some quantitative predictions about the attenuation of post-synaptic potentials as they propagate through a length of dendrite towards the soma. So far, we haven't said anything about the length of the neural compartments that we use when we model a section of dendrite. When we approximate the continous dendrite with discrete compartments, how many should we use in order to have a relatively smooth variation in membrane potential from one compartment to the next?
+
+If we consider a length of dendrite as a chain of linked compartments that are represented by the generic compartment diagram, we can see that a PSP propagating from one compartment to another must flow through the axial resistance $R_a$, and can be reduced as current is shunted off to ground as it flows through the membrane resistance $R_m$. (If there are conducting ion channels, the conductance $G_k$ can further affect the PSP.) So, we would expect that the attenuation of a PSP will be least when $R_a$ is small and $R_m$ is large, and that it should be possible to calculate the attentuation from a knowledge of these quantities.
+
+\subsection*{Some History}
+
+In 1855, Prof. William Thompson (Lord Kelvin) presented to the Royal Society a theoretical analysis of attentuation of signals in the transatlantic telephone cable that was then being planned. An undersea cable is similar to a nerve fiber. It has a conducting core covered with an insulating sheath, and is surrounded by sea water. As the insulation is not perfect, there will be a finite leakage resistance through the insulation. The main quantitative difference is that the core of the cable is made of copper, which is a much better conductor than the salt solution inside a neuron, and the cable covering is a much better insulator than the cell membrane. As a result, signals in the cable may travel for many miles without significant attenuation.
+
+In the 1940's, Hodgkin and others applied cable theory to nerve fibers. Many papers by Wilfred Rall in the 1960's and 1970's made further application of cable theory to the analysis of PSPs in dendrites.
+
+\subsection*{Some Notation}
+
+So far, we haven't said much about the units used to express the quantities $R_m$, $R_a$, $C_m$, $V_m$, etc. that appear in the neural compartment diagram (make link) and the differential equation for $V_m$ (make link).
+
+Physicists and engineers like to use SI (MKS) units of {\it ohms} ($\Omega$),  {\it farads} ($F$),  {\it volts} {$V$}, and  {\it meters} ($m$) for describing resistance, capacitance, voltage, and length. Neurophysiologists are more likely to prefer  {\it kilohms} ($K\Omega$),  {\it microfarads} ($\mu F$),  {\it millivolts} ($mV$), and either  {\it centimeters} ($cm$) or  {\it micrometers} ($\mu m$). \textcolor{red}{Importantly, {\bf GENESIS uses SI units}}.
+
+The problem with using any of these units for resistance and capacitance is that $R_m$, $C_m$, and $R_a$ will depend on the dimensions of the section of dendrite that is represented by the neural compartment. In order to specify parameters that are independent of the cell dimensions, {\it specific units} are used. For a cylindrical compartment, the membrane resistance is inversely proportional to the area of the cylinder, so we define a {\it specific membrane resistance} $R_M$, which has units of $ohms\cdot m^2$. The membrane capacitance is proportional to the area, so it is expressed in terms of a {\it specific membrane capacitance} $C_M$, with units of $farads/m^2$. Compartments are connected to each other through their axial resistances $R_a$. The axial resistance of a cylindrical compartment is proportional to its length and inversely proportional to its cross-sectional area. Therefore, we define the {\it specific axial resistance} $R_A$ to have units of $ohms/m$.
+
+For a piece of dendrite or a compartment of length $l$ and diameter $d$ we then have
+
+\begin{displaymath}
+	R_{m} = \frac{R_M}{\pi l d},\; C_{m} = \pi l d C_M,\; R_{a}= \frac{4 l R_A}{\pi d^{2}}.
+\end{displaymath}
+
+Note the membrane time constant $R_m\cdot C_m$ is also equal to $R_M\cdot C_M$, so that it is independent of the dimensions of the membrane.
+
+\textcolor{red}{WARNING:} Many treatments of the passive properties of neural tissue use the symbols $R_m$, $R_a$, and $C_m$ for the specific resistances and capacitance, instead of this notation with $R_M$, $R_A$, and $C_M$. Also, many textbooks and journal papers define the resistance and capacitance in terms of that for a unit length of cable having a specified diameter, where
+
+\begin{displaymath}
+	R_m = r_m/l, C_m = c_ml, R_a = r_al.
+\end{displaymath}
+
+Although this notation is convenient and widely used, it obscures the fact that $r_m$ and $r_a$ depend on the dendrite diameter. In your reading, you should be aware of the units that are being used.
+
+\subsection*{Results and Consequences}
+
+Linear cable theory assumes that the cable (or neural fiber) has a constant diameter and leakage resistance. Thus, it applies to passive membrane properties, as when PSPs propagate through a uniform section of dendrite that has no time or voltage dependent conductances. When $R_m$ is much greater than $R_a$, as is typically the case, the current flow is essentially one-dimensional, along the length of the cable. Under these conditions, there are exact mathematical solutions for the voltage as a function of time and position along the cable. With the additional simplifying assumptions that a constant, or very slowly varying, voltage $V_0$ is applied to one end of a very long cable, there is a simple solution to the cable equation for the voltage at a distance $x$:
+
+
+\begin{displaymath}
+	V(x) = V_0 e^{-x/\lambda}, \mbox{ where } \lambda = \sqrt{(d/4)R_M/R_A}
+\end{displaymath}
+
+The quantity ``lambda" ($\lambda$) in this equation is called the ``space constant" (or ``length constant"), and represents the distance at which the voltage will have decreased to $1/e$, or about 37\,\%, of its original value.
+
+The GENESIS Neuron tutorial simulation uses values of $R_M$ = 5\,$K\Omega\cdot$cm$^2$ and $R_A = 0.025\,K\Omega$/cm, with a dendrite diameter of 0.0002\,cm (2 $\mu m$) and a length of 0.01\,cm for each compartment. You should be able to show that the space constant is then 0.1\,cm and that and the attenuation over the length of seven compartments (0.07\,cm) is $e^{-0.7}$ = 0.497.
+
+Note the the space constant depends on the square root of the radius. Thus, large diameter axons are best for propagation of action potentials over large distances. The space constant also influences spatial summation. Spatially separated synaptic inputs will combine differently in small diameter dendrites than in ones with larger diameters. The giant axon of the squid has a diameter of about 1 mm. How much larger would the space constant be for the squid, if it had the same values of $R_M$ and $R_A$ as used in the Neuron tutorial?
+
+If the leakage resistance varies with time and voltage, as when there are active channels present, then one must solve the equations for $V_m$ numerically, dividing the dendrite into finite compartments. Nevertheless, the space constant is a useful quantity for giving a rough idea of the attenuation.
+
+As the length of a compartment approaches zero, the behavior of this ``lumped parameter" model approaches that of a continous cable. In practice, we want to have only ``small" jumps in $V_m$ from one compartment to the next, approximating the smooth variation of a continous medium. But, we don't want to make the compartments any smaller than we have to in order to obtain reasonably accurate results. Experience with compartmental simulations suggests that good results can usually be obtained when the compartment length is less than 1/20 of the space constant.
+
+\subsection*{For Further Study}
+
+The help menus for the GENESIS Neuron and Cable tutorial simulations suggest some experiments and exercises involving passive propagation in dendrites. Chapters \href{../bog-ch5/bog-ch5.pdf}{5} and \href{../bog-ch6/bog-ch6.pdf}{6} of The Book of GENESIS provide further details and give additional theoretical background. Other chapters describe the process of creating simulations of multicompartmental neurons and of networks, such as the Traub model and Piriform Cortex model described in these lectures. You can read more about the application of cable theory to dendrites in:
+
+\begin{quote}
+Rall, W. and Agmon-Snir, H. (1998) Cable Theory for Dendritic Neurons, in C. Koch and I. Segev (eds.) {\it Methods in Neuronal Modeling}, second edn, MIT Press, Cambridge, MA, Chapter 2, pp. 27--92.
+
+Jack, J. J. B., Noble, D. and Tsien, R. W. (1975) {\it Electric Current Flow in Excitable Cells}, Calderon Press, Oxford.
+
+Rall, W. (1977) Cable Theory for Neurons, in E. R. Kandel, J. M. Brookhardt and V. B. Mountcastle (eds), 
+
+{\it Handbook of Physiology: The Nervous System}, Vol. 1, Williams and Wilkins, Baltimore, Chapter 3, pp. 39--98.
+\end{quote}
+\end{document}
