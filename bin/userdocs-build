@@ -124,6 +124,7 @@ sub build_document
 
 		{
 		    mkdir 'output_html';
+		    mkdir 'output_html/figures';
 
 		    if ($option_verbose)
 		    {
@@ -146,6 +147,10 @@ sub build_document
 
 		    $source_text =~ s(\\href\{\.\./([^}]*)\.pdf)(\\href\{../$1.html)g;
 
+		    # convert eps links to png links
+
+		    $source_text =~ s(\\includegraphics\{figures/([^}]*)\.eps)(\\href\{figures/$1.png)g;
+
 		    # write converted source
 
 		    $source_file = IO::File->new(">$filename");
@@ -153,6 +158,10 @@ sub build_document
 		    print $source_file $source_text;
 
 		    $source_file->close();
+
+		    # copy figures
+
+		    system "cp -rp ../figures/* figures/";
 
 		    # generate html output
 
