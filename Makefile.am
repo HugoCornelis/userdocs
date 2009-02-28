@@ -43,13 +43,7 @@ html-upload: html-upload-prepare
 	scp -pr html/htdocs/* hcornelis,neurospaces@web.sourceforge.net:/home/groups/n/ne/neurospaces/htdocs/
 
 website-prepare:
-	userdocs-build level1
-	userdocs-build level2
-	userdocs-build level3
-	userdocs-build level4
-	userdocs-build level5
-	userdocs-build level6
-	userdocs-build level7
+	userdocs-build --tags level1 --tags level2 --tags level3 --tags level4 --tags level5 --tags level6 --tags level7 --verbose
 
 website-upload: website-prepare html-upload
 
