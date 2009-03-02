@@ -57,14 +57,87 @@ This creates a workspace directory on your local machine where you put the sourc
 \end{verbatim}
 By default, the workspace directory {\tt 0} contains a folder named {\tt \_MTN}. This is part of the monotone version control system and contains information concerning monotone's version control management.
 
+The command
+\begin{verbatim}
+    mtn --db=userdocs.mtn pubkey <identifier> > me.pubkey
+\end{verbatim}
+will place a copy of your public key in the file indicated in {\tt --db=userdocs.mtn}.
 \end{enumerate}
+An automatic login can be set up with monotone by making an executable file containing the following code:
+\begin{verbatim}
+    ~/.monotone/monotonerc:
+        function get_password(keypair_id)
+        return <password here>
+        end
+
+\end{verbatim}
+
+
+\begin{figure}[h]
+  \centering
+ \includegraphics[scale=0.6]{figures/monotone.eps}
+%  \caption{}
+  \label{fig:ca3smaller}
+\end{figure}
 
 \subsection*{Monotone Workflow Examples}
 
-The following sections give example workflows for monotone use.
+The following sections give example workflows for monotone use. They may be consulted on the basis of the above figure. This figure shows the relationship between a local workspace, its associated monotone repository, and how after an initial ``check in'' (ci), a document can be ``pushed'' to the monotone server database that forms a monotone repository. Note that documents are private to the local account until they are pushed to the monotone server.
+
+Once a document is located on the monotone server repository, it is available to be published as part of the GENESIS documentation.
 
 \subsection*{Updating the Local Workspace}
+Updating your local workspace begins with determining which files are registered with monotone. To do this your local monotone repository can be queried to generate a list of any new files that may have been added to your local work space since the last update
+\begin{verbatim}
+    mtn ls unknown
+\end{verbatim}
+This command generates a list of all files in your local workspace that are not known to monotone. To have any files that this command lists added to your local repository, enter:
+\begin{verbatim}
+    mtn add --unknown
+\end{verbatim}
+Reissuing the ``{\tt mtn ls unknown}'' command should now result in no output. The files that have been registered with monotone can now be added to your local repository with the following command:
+\begin{verbatim}
+    mtn ci
+\end{verbatim}
+where {\tt ci} stands for ``check in''. Monotone responds by opening the log file indicated in {\tt .\,--db=userdocs.mtn} where the nature of the changes or revision to the document(s) that are being checked in can be recorded.
 
 \subsection*{Synchronizing the Local Workspace with the Monotone Repository}
+
+The following procedure is suggested for syncing with repository at the end of each day and/or documentation writing session.
+
+\begin{verbatim}
+    mtn ls unknown
+        . . .
+    mtn add --unknown
+\end{verbatim}
+These commands add the files discovered in your local workspace to your local monotone repository. That this has occurred correctly can be checked with
+\begin{verbatim}
+    mtn ls known .
+\end{verbatim}
+This command should generate the same list of file names as that returned by the ``{\tt mtn ls unknown}'' command. Note the period ``{\tt .}'' which is part of the command syntax.
+
+You can then check for files in you local workspace that have been deleted or moved
+\begin{verbatim}
+    mtn ls missing
+\end{verbatim}
+You can then drop any missing files from your local repository by entering:
+\begin{verbatim}
+    mtn drop --missing
+\end{verbatim}
+and then check in the changes to the monotone repository on the server with
+\begin{verbatim}
+    mtn ci
+\end{verbatim}
+You can automate the synchronization of your local data base with the monotone repository on the server by placing an executable file (named for example,\,{\it userdocs-sync}) in a bin directory in your local work space, e.g. {\it neurospaces\_project/userdocs/source/snapshots/0/bin}. 
+The executable contains:
+\begin{verbatim}
+    neurospaces\_sync --enable userdocs --regex userdocs --verbose
+\end{verbatim}
+and issuing the command
+\begin{verbatim}
+./bin/userdocs-sync
+\end{verbatim}
+updates the monotone repository on the server. Once this has been done, the files are available for other registered users to pull down to their own local monotone repository to check them out to their local workspace.
+
 
 \end{document}
