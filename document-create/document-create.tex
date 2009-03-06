@@ -1,0 +1,137 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+\subsection*{Introduction}
+
+The GENESIS documentation system is fully automated with versioning under the control of \href{http://monotone.ca/}{monotone}. To learn more about monotone and its use by GENESIS see \href{../document-versionctrl}{Version Control} and to learn more about the levels of GENESIS documentation see \href{../document-overview}{Documentation Overview}. This document assumes that you are familiar with that material.
+
+Here, we introduce some of the flexibility, features and requirements of the GENESIS documentation system. We describe the location of source files within this system and how to create a new document. To learn how to add a new document to the GENESIS version control system see \href{../document-versionctrl}{Version Control}. Once a document is under version control and identified with the correct tags (see below) it can be automatically published to be available for other members of the GENESIS community.
+
+\subsection*{Location of GENESIS Documentation}
+
+The documents that make up the GENESIS documentation system are located in your local workspace, which can be found at the default location
+\begin{verbatim}
+    ~/neurospaces_project/userdocs/source/snapshots/0
+\end{verbatim}
+The source materials for individual GENESIS documents can be found in uniquely named folders/directories located in your local workspace. One of the directories in the workspace should be named\,{\it NewDocument}. This directory and the files it contains provide a template for a generic GENESIS document. The files included by default are\,{\it descriptor.yml} and\,{\it NewDocument.tex}, and a sub-directory named\,{\it figures}.
+
+\subsubsection*{The Default YML Descriptor File}
+
+The default contents of the YML file\,{\it descriptor.yml} include:
+
+\begin{verbatim}
+---
+description: Briefly describe file contents here. 
+tags:
+  - genesis3
+  - level2
+  - draft
+\end{verbatim}
+
+\begin{itemize}
+
+\item {\tt ---} The three dashes on the first line of the file descriptor.yml are part of the Y Markup Language (YML) syntax for automated software engineering (see \href{http://fdik.org/yml/}{http://fdik.org/yml/}). {\bf Note:} The meaning of the white space/indents in the\,{\it descriptor.yml} file is defined for YML.  
+
+\item {\tt description:} The default file description ``Briefly describe file contents here.'' should be replaced with a short description of the subject matter of the documentation file. It is recommended that this file description is less than 80 characters on a single line.
+
+\item {\tt tags:} List of any tags used to identify the current document. The default tags include {\tt -\,genesis3}, {\tt -\,level2}, and {\tt -\,draft}. These tags indicate that the document is part of the GENESIS 3 documentation system at the level of User Guides and Documentation (level\,2), and that it is an as yet unpublished document.
+
+For a document to be publishable, i.e. viewable with a browser, the {\tt -\,draft} tag must be replaced with the {\tt -\,published} tag. Note that a document cannot be published to be browser viewable in the absence of the {\tt -\,published} tag. New tags may be created just by adding them to this file, but see below for recommended tags.  Note that the tagging system is case insensitive to avoid tag duplication.
+
+Importantly, each of the directories {\tt contents-level1}\,\ldots {\tt contents-level7} in your default workspace contains a list of the documentation to be found at the given level. These content indexes are generated automatically during a GENESIS installation or a {\tt userdocs} module installation or update. They provide direct links to all documents tagged for the given level of documentation.
+
+\end{itemize}
+
+\subsubsection*{The Default Documentation Source File}
+
+Source files for the GENESIS documentation system are currently produced with the \LaTeX\,typesetting package (see \href{http://www.latex-project.org/}{www.latex-project.org}). It is planned that Microsoft Word ({\tt .doc} format) and OpenOffice ({\tt .odt}, ODF format) file formats will also be automatically recognized by the GENESIS documentation system.
+
+The default \LaTeX\, documentation source file\,{\it NewDocument.tex} in the {\it NewDocument} folder can be compiled to produce a readable PDF file. It gives help and examples for colorizing text and generating hyperlinks to local and remote documentation.
+
+\subsubsection*{The Figures Folder}
+
+This directory contains any figures that your new document source file may include.
+ 
+\section*{Create a New Document}
+
+There are three simple steps to the creation of a new document within the GENESIS documentation system.
+
+\begin{enumerate}
+
+\item {\bf Make a new document template:} Copy the\,{\it NewDocument} folder to the name of the new document you want to make. Change the name of the \LaTeX\,\,\,file\,{\it NewDocument.tex} inside the renamed folder to the name of your new document. To do this replace the\,{\it NewDocument} part of the default source file name with the new name you have just given to the\,{\it NewDocument} folder.
+
+This will result in both the documentation directory and the source file having the same name (with the exception of the {\tt .tex} extension of the source file). For example, the name of the directory containing this document is {\it document-create} and the name of the source file it contains is\,{\it document-create.tex}.
+
+Importantly, the names of the descriptor file\,{\it descriptor.yml} and the directory\,{\it figures} located in the document folder are required by the GENESIS documentation system and should not be changed.
+
+\item {\bf Update the descriptor.yml file:} Each directory/file in the GENESIS documentation system is tagged on the basis of its content, for example:
+
+\begin{enumerate}
+
+\item  {\bf The GENESIS version:} This tags the version of GENESIS that the content of the document refers to, e.g. {\tt -\,genesis3}.
+
+\item {\bf Level of the GENESIS document:} This must be one of the seven levels of the GENESIS documentation system, which include:
+
+\href{../contents-level1/contents-level1.pdf}{{\tt - level1}} (introductory documentation)
+
+\href{../contents-level2/contents-level2.pdf}{{\tt - level2}} (user/developer documentation)
+
+\href{../contents-level3/contents-level3.pdf}{{\tt - level3}} (autogenerated documentation)
+
+\href{../contents-level4/contents-level4.pdf}{{\tt - level4}} (autogenerated technical documentation)
+
+\href{../contents-level5/contents-level5.pdf}{{\tt - level5}} (autogenerated algorithm documentation)
+
+\href{../contents-level6/contents-level6.pdf}{{\tt - level6}} (autogenerated api documentation)
+
+\href{../contents-level7/contents-level7.pdf}{{\tt - level7}} (inline source code documentation)
+
+For more on the levels of the GENESIS documentation system see the \href{../document-overview/document-overview.pdf}{Documentation Overview}.
+
+\item {\bf Flag document status:} For a given document to be part of the documentation version control system, it must be in a documentation folder along with a {\tt descriptor.yml} file that contains one of either the {\tt -\,draft} or {\tt -\,published} tags. Absence of the {\tt -\,published} tag will prevent publication of the document to a browser.
+
+Recommended tags for the descriptor file include:
+\begin{verbatim}
+  tags:
+    - genesis2
+    - genesis3
+    - level1
+    - level2
+    - level3
+    - level4
+    - level5
+    - level6
+    - level7
+    - meta
+    - create
+    - introduction
+    - tutorial
+    - document
+    - draft
+    - published
+\end{verbatim}
+
+Remember that the interpretation of the\,{\it descriptor.yml} file by the GENESIS documentation system is sensitive to white space and indents.
+ 
+\end{enumerate}
+
+\item {\bf Update the\,{\it figures} folder:} Place any figures or images, etc that your source document file contains in the\,{\it figures} directory.
+
+\end{enumerate}
+
+\subsection*{Document Version Tracking and Control}
+
+To learn more about document version tracking and control in the GENESIS Documentation System, see \href{../document-versionctrl/document-versionctrl.pdf}{Document Version Control}.
+
+\subsection*{Document Publication}
+
+To learn more about the automated publication of documents in the GENESIS Documentation System, see \href{../document-publication/document-publication.pdf}{Document Publication}.
+
+
+\end{document}

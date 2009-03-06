@@ -28,6 +28,7 @@ Monotone can be obtained by downloading the package appropriate for your computi
 %On the monotone home page select the Mac OS X packaged link and download the DMG file.
 
 \subsection*{Initializing Monotone}
+
 Once the appropriate monotone package has been downloaded and installed on your computer, monotone must  initialized by performing the following steps (commands in the monospaced {\tt typewriter} font should be entered from a Terminal command line prompt):
 
 \begin{enumerate}
@@ -71,23 +72,45 @@ An automatic login can be set up with monotone by making an executable file cont
         end
 
 \end{verbatim}
+Further information and help about using monotone, for example resolving conflicts between documents, can be found at:
 
+\href{http://monotone.ca/monotone.html}{http://monotone.ca/monotone.html}.
+
+\section*{GENESIS and the Monotone Version Control System}
+
+Installation and maintenance of the GENESIS documentation system is fully automated with \href{../document-versionctrl/document-versionctrl.pdf}{document versioning} under the control of \href{http://monotone.ca/}{monotone}. 
+
+\subsection*{Overview}
+
+In its simplest form, the GENESIS documentation version control system can be seen as having three levels (see figure in \href{../document-versionctrl}{Version Control}):
+\begin{enumerate}
+
+\item {\bf The local documentation workspace:} Exists at a specified location within the GENESIS developers installation on your local machine. The contents of this workspace are private to the local filesystem.
+
+\item {\bf The private document repository:} Provides the first step in document publication. Documentation version control is initiated by checking documents in your local workspace into the document repository on your local machine.
+
+\item {\bf The public document repository:} Pushing documents from your local repository to the publicly accessible repository makes all documentation in your local repository available (i) for publication on the GENESIS website and (ii) to become part of the GENESIS documentation system that can optionally be downloaded as part of a GENESIS installation. It also allows other members of your development team to work simultaneously on documentation.
+
+\end{enumerate}
 
 \begin{figure}[h]
   \centering
  \includegraphics[scale=0.6]{figures/monotone.eps}
 %  \caption{}
-  \label{fig:ca3smaller}
+  \label{fig:monotone}
 \end{figure}
+
+The components of the monotone version control system are illustrated in the above figure. It shows the relationship between a local workspace, its associated monotone repository, and how after an initial ``check in'' ({\it ci}), a document can be ``pushed'' to the monotone server database that forms a monotone repository. Note that documents are private to your local account until they are pushed to the monotone server. At this point they become available to other registered users of the monotone system.
+
+Once a document is located on the monotone server repository, it is available to be published as part of the GENESIS documentation system. This means that it will be automatically incorporated and downloaded as part of the {\it userdocs} module when GENESIS is installed or updated.
 
 \subsection*{Monotone Workflow Examples}
 
-The following sections give example workflows for monotone use. They may be consulted on the basis of the above figure. This figure shows the relationship between a local workspace, its associated monotone repository, and how after an initial ``check in'' (ci), a document can be ``pushed'' to the monotone server database that forms a monotone repository. Note that documents are private to the local account until they are pushed to the monotone server.
-
-Once a document is located on the monotone server repository, it is available to be published as part of the GENESIS documentation.
+The following sections give some example workflows for monotone use. 
 
 \subsection*{Updating the Local Workspace}
-Updating your local workspace begins with determining which files are registered with monotone. To do this your local monotone repository can be queried to generate a list of any new files that may have been added to your local work space since the last update
+
+Updating your local workspace begins with determining which files are registered with monotone. This is done by querying your local monotone repository. This generates a list of any new files that may have been added to your local work space since the last update
 \begin{verbatim}
     mtn ls unknown
 \end{verbatim}
@@ -110,7 +133,7 @@ The following procedure is suggested for syncing with repository at the end of e
         . . .
     mtn add --unknown
 \end{verbatim}
-These commands add the files discovered in your local workspace to your local monotone repository. That this has occurred correctly can be checked with
+These commands add any new files discovered in your local workspace to your local monotone repository. That this has occurred correctly can be checked with
 \begin{verbatim}
     mtn ls known .
 \end{verbatim}
@@ -120,7 +143,7 @@ You can then check for files in you local workspace that have been deleted or mo
 \begin{verbatim}
     mtn ls missing
 \end{verbatim}
-You can then drop any missing files from your local repository by entering:
+You can then drop any files missing from your local workspace repository by entering:
 \begin{verbatim}
     mtn drop --missing
 \end{verbatim}
@@ -128,8 +151,8 @@ and then check in the changes to the monotone repository on the server with
 \begin{verbatim}
     mtn ci
 \end{verbatim}
-You can automate the synchronization of your local data base with the monotone repository on the server by placing an executable file (named for example,\,{\it userdocs-sync}) in a bin directory in your local work space, e.g. {\it neurospaces\_project/userdocs/source/snapshots/0/bin}. 
-The executable contains:
+You can automate the synchronization of your local data base (i.e. a push and a pull) with the monotone repository on the server by placing an executable file (named for example,\,{\it userdocs-sync}) in a bin directory in your local work space, e.g. {\it neurospaces\_project/userdocs/source/snapshots/0/bin}. 
+The executable contains the command sequence:
 \begin{verbatim}
     neurospaces\_sync --enable userdocs --regex userdocs --verbose
 \end{verbatim}
@@ -137,7 +160,7 @@ and issuing the command
 \begin{verbatim}
 ./bin/userdocs-sync
 \end{verbatim}
-updates the monotone repository on the server. Once this has been done, the files are available for other registered users to pull down to their own local monotone repository to check them out to their local workspace.
+simultaneously updates the monotone repository on the server and transfers any updates to documentation on the server to your local monotone repository. Once this has been done, the files that have been pushed to the monotone server are available for other registered users to pull down to their own local monotone repository and to check them out ({\it co}) to their local workspace.
 
 
 \end{document}
