@@ -6,7 +6,13 @@
 use strict;
 
 
+use Getopt::Long;
+
 use YAML;
+
+
+my $option_verbose;
+my $option_tags = [];
 
 
 sub build_document
@@ -18,6 +24,11 @@ sub build_document
     my $directory = $document;
 
 #     my $filename = $2;
+
+    if ($option_verbose)
+    {
+	print "$0: entering $directory\n";
+    }
 
     chdir $directory;
 
@@ -70,9 +81,19 @@ sub build_document
 		{
 		    mkdir "output_ps";
 
+		    if ($option_verbose)
+		    {
+			print "$0: entering output_ps\n";
+		    }
+
 		    chdir "output_ps";
 
 		    system "dvips '../$filename_base.dvi' -o '$filename_base.ps'";
+
+		    if ($option_verbose)
+		    {
+			print "$0: leaving output_ps\n";
+		    }
 
 		    chdir "..";
 		}
@@ -82,9 +103,19 @@ sub build_document
 		{
 		    mkdir "output_pdf";
 
+		    if ($option_verbose)
+		    {
+			print "$0: entering output_pdf\n";
+		    }
+
 		    chdir "output_pdf";
 
 		    system "ps2pdf '../output_ps/$filename_base.ps' '$filename_base.pdf'";
+
+		    if ($option_verbose)
+		    {
+			print "$0: leaving output_pdf\n";
+		    }
 
 		    chdir "..";
 		}
@@ -93,6 +124,12 @@ sub build_document
 
 		{
 		    mkdir 'output_html';
+		    mkdir 'output_html/figures';
+
+		    if ($option_verbose)
+		    {
+			print "$0: entering output_html\n";
+		    }
 
 		    chdir "output_html";
 
@@ -110,6 +147,10 @@ sub build_document
 
 		    $source_text =~ s(\\href\{\.\./([^}]*)\.pdf)(\\href\{../$1.html)g;
 
+		    # convert eps links to png links
+
+		    $source_text =~ s(\\includegraphics\{figures/([^}]*)\.eps)(\\href\{figures/$1.png)g;
+
 		    # write converted source
 
 		    $source_file = IO::File->new(">$filename");
@@ -118,9 +159,18 @@ sub build_document
 
 		    $source_file->close();
 
+		    # copy figures
+
+		    system "cp -rp ../figures/* figures/";
+
 		    # generate html output
 
 		    system "htlatex '$filename'";
+
+		    if ($option_verbose)
+		    {
+			print "$0: leaving output_html\n";
+		    }
 
 		    chdir "..";
 		}
@@ -135,31 +185,70 @@ sub build_document
 	}
     }
 
+    if ($option_verbose)
+    {
+	print "$0: leaving $directory\n";
+    }
+
     chdir '..';
 }
 
 
 sub main
 {
-    my $source = '.';
+    read_cmd_line();
 
-    my $tag = $ARGV[0];
+    # get all documents from the command line
 
-    if (!defined $tag)
+    my $documents
+	= {
+	   map
+	   {
+	       $_ => 1,
+	   }
+	   @ARGV,
+	  };
+
+    # get all documents selected by tags
+
+    foreach my $tag (@$option_tags)
     {
-	die "$0: please give a tag value on the command line";
+	my $documents_yaml = `userdocs-tag-filter 2>&1 "$tag"`;
+
+	$documents
+	    = {
+	       %$documents,
+	       map
+	       {
+		   $_ => 1,
+	       }
+	       @{ Load($documents_yaml) },
+	      };
     }
 
-    my $documents_yaml = `userdocs-tag-filter 2>&1 "$tag"`;
+    # make sure document names are 'compliant'
 
-    my $documents = Load($documents_yaml);
+    map
+    {
+	s(/$)();
+    }
+	keys %$documents;
 
-    foreach my $document (@$documents)
+    # prepare directory structure
+
+    `mkdir -p html/htdocs/neurospaces_project/userdocs/`;
+
+    if (!scalar keys %$documents)
+    {
+	print "$0: no documents to build\n";
+    }
+
+    foreach my $document (keys %$documents)
     {
 	build_document($document);
     }
 
-    foreach my $document (@$documents)
+    foreach my $document (keys %$documents)
     {
 	prepare_publish_document($document);
     }
@@ -176,6 +265,11 @@ sub prepare_publish_document
 
 #     my $filename = $2;
 
+    if ($option_verbose)
+    {
+	print "$0: entering $directory\n";
+    }
+
     chdir $directory;
 
     # if we find a makefile
@@ -186,6 +280,9 @@ sub prepare_publish_document
 
 	system "make prepare_publish_document";
     }
+
+    # no makefile
+
     else
     {
 	# find relevant output containing generated files
@@ -201,13 +298,77 @@ sub prepare_publish_document
 	{
 	    # put it in the place for publication.
 
+	    mkdir "../html/htdocs/neurospaces_project/userdocs/$directory";
+
 	    #! note: -pr for BSD (MAC) compatibility.
 
-	    system "cp -pr '$output' '../html/htdocs/neurospaces_project/userdocs/$directory'";
+	    system "cp -pr $output/* '../html/htdocs/neurospaces_project/userdocs/$directory'";
+
+	    if ($?)
+	    {
+		print "$0: cp '$output' failed for $directory (error code $?)\n";
+	    }
 	}
     }
 
+    if ($option_verbose)
+    {
+	print "$0: leaving $directory\n";
+    }
+
     chdir '..';
+}
+
+
+sub read_cmd_line
+{
+    my $option_help = 0;
+    my $option_version;
+
+    my $result
+	= GetOptions(
+		     "help!" => \$option_help,
+		     "tags=s" => $option_tags,
+		     "verbose+" => \$option_verbose,
+		     "version" => \$option_version,
+		    );
+
+    if (!$result)
+    {
+	die "$0: *** Error: Error in option processing";
+    }
+
+    if ($option_version)
+    {
+    }
+
+    # reporting options
+
+    if ($option_help)
+    {
+	$0 =~ m(.*/(.*));
+
+	my $program_name = $1;
+
+	print
+	    "
+
+$program_name: build documentation and prepare them for web
+publication.  Arguments on the command line are taken as documents
+that need to be build.  If no arguments are given, all documents will
+be build.
+
+options:
+    --help            print usage information.
+    --tags            process the documents with these tags, multiple tags options may be given.
+    --version         give version information.
+    --v|verbose       tell what is being done, specify multiple times to get more feedback.
+
+";
+
+	exit 1;
+    }
+
 }
 
 
