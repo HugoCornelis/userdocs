@@ -1,0 +1,250 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+\section*{A Simple Scheduler in Perl}
+
+\subsection*{Introduction}
+
+Both the\,{\it model-container} and the mathematical solver\,{\it heccer} are stand-alone GENESIS modules. They need to be glued together and activated correctly, such that they can work together on a single simulation before they are useful. This is exactly what the Simple Scheduler in Perl (SSP) does. It is currently the standard scheduler for GENESIS. SSP exploits the sophistication of the Perl scripting language to load software modules on demand, and activate them from a configuration file. It achieves this by loading dynamically those software modules referenced in its configuration. Because the SSP scheduler does not have any computational load, its implementation is very simple and highly configurable. Other configurations will connect SSP to other modeling services or solvers.
+
+In summary:
+
+\begin{itemize}
+\item SSP glues other software components together.
+\item SSP synchronizes the activities of other components during a simulation.
+\item SSP is configurable. 
+\end{itemize}
+
+\subsection*{The SSP Configuration File}
+
+Below is a typical configuration file for SSP. It first configures SSP to use the\,{\it model-container} for internal storage of biological models. It then instructs SSP to load a model called \,{\it cells/tensizesp.ndf}, and to instantiate a solver called\,{\it heccer} for that part of the model ({\it /tensizesp}). The simulation of the model is run using the\,{\it apply} entry in the configuration file.
+
+Note that the order in the configuration file below is alphabetical, not chronological. Thus, entries may specified in any order.
+
+\begin{verbatim}
+  --- !!perl/hash:SSP
+  apply:
+    simulation:
+      - arguments:
+          - 10
+          - 1
+        method: steps
+      - arguments:
+          - 0.1
+        method: advance
+  models:
+    - modelname: /tensizesp
+      solverclass: heccer
+  name: tensizesp
+  services:
+    neurospaces:
+      initializers:
+        - arguments:
+            -
+              - ./example
+              - -P
+              - tests/cells/tensizesp.ndf
+          method: read
+      module_name: Neurospaces
+  solverclasses:
+    heccer:
+      module_name: Heccer
+      service_name: neurospaces
+\end{verbatim}
+
+Below is a slightly enhanced SSP configuration file that performs several tasks and shows how to:
+
+\begin{itemize}
+\item Pass specific options to\,{\it heccer} which will then give a small report after every update time step during the simulation.
+\item Increment the time step to a new value. 
+\item Specify the output classes and actual outputs of the simulation. These outputs are written to a file in the file system (here, in this case using a default filename).
+\end{itemize}
+
+\begin{verbatim}
+  --- !!perl/hash:SSP
+  apply:
+    simulation:
+      - arguments:
+          - 1000
+          - 1
+        method: steps
+      - arguments:
+          - 0.1
+        method: advance
+  models:
+    - modelname: /pool1_feedback1
+      solverclass: heccer
+  name: pool1_feedback1
+  outputclasses:
+    double_2_ascii:
+      constructor: Heccer::Output
+      module_name: Heccer
+  outputs:
+    - component_name: '/pool1_feedback1/segments/main[0]'
+      field: Vm
+      outputclass: double_2_ascii
+    - component_name: '/pool1_feedback1/segments/main[0]/Ca_pool'
+      field: Ca
+      outputclass: double_2_ascii
+  services:
+    neurospaces:
+      initializers:
+        - arguments:
+            -
+              - ./tests/perl/pool1-feedback1
+              - -P
+              - tests/cells/pool1_feedback1.ndf
+          method: read
+      module_name: Neurospaces
+  solverclasses:
+    heccer:
+      constructor_settings:
+        configuration:
+          reporting:
+            granularity: 100
+            tested_things: 6225920
+        dStep: 1e-06
+      module_name: Heccer
+      service_name: neurospaces
+\end{verbatim}
+
+\subsection*{Working with SSP}
+
+SSP is started using the command ``{\tt ssp}''. In the absence of any options a description of how to use the module is generated along with a list of options recognized at startup.
+
+The comand ``{\tt ssp\_directory}'' calls SSP for each schedule in a given directory, with the options ``{\tt set-name}'' and ``{\tt set-outputclass-filename}'' (see below).
+
+\subsection*{Starting SSP}
+
+When starting SSP, you must specify a schedule template (a filename) for SSP to read. SSP will then read the file, modify it according to command line options, convert it to a real schedule, and then execute the schedule. Currently, the most important options are:
+\begin{itemize}
+\item[ ]{\tt set-name}
+
+Overwrite the schedule name with the name of the file that contains the schedule
+\item[ ]{\tt set-outputclass-filename}
+
+Overwrite the outputclass filename with something derived from the name of the file that contains the schedule.
+\end{itemize}
+Both of these options allow a user to track the correspondence between the schedule filename, the internal schedule name, and the filename of the simulation output file.
+
+\subsection*{SSP Schedules}
+
+A schedule is a hierarchical enumeration of ``keys'' that tell SSP to do certain things. Amongst other contents, a SSP schedule must define:
+\begin{itemize}
+\item What external modules must be loaded by SSP
+\item How to link these modules together (if required).
+\item How to activate the listed modules
+\item What the outputs of a schedule are.
+\item How to finish a simulation and clean up.
+\end{itemize}
+If some of these are not defined in the schedule, SSP will assume defaults.
+
+There is one special key {\tt description}. It is available at all levels of the hierarchy, but is ignored by SSP. This allows the inclusion of comments in a SSP file.
+
+The SSP schedules are in \href{http://fdik.org/yml/}{YAML} format. The basics of this format are that it uses dashes for an order sensitive enumeration of items, and it uses colons for an order insensitive enumeration of key--value pairs. Each entry is newline terminated.
+
+SSP relies on external ``services'' and ``engines''. In computational neuroscience parlance, the engines are solvers, and the services contain the model that needs to be computed by the solvers. So SSP tells the engines when to do something, but the services tell the engines what has to be done. Currently the services are information services, but that is subject to change (e.g. it is currently unclear if a discrete event scheduler must be specified as a service or as an engine, from semantics it is the former, from software architecture it is the latter).
+
+\subsection*{Important Keys}
+
+We now give a non-exhaustive list of keys (about 70\% of the currently defined SSP keys are covered here).
+
+\subsubsection*{\tt apply}
+
+Contains a set of subkeys that define how to run a schedule. Each subkey contains an array of `methods' that have to be executed. The most important subkey is called {\tt simulation}, which defines the method to use to run the simulation and the number of update steps to perform during the simulation. 
+\begin{verbatim}
+    simulation:
+      - arguments:
+          - 1000
+          - 1
+        description: run 1000 steps of the simulation.
+        method: steps
+      - arguments:
+          - 0.1
+        description: advance the simulation by 0.1s.
+        method: advance
+\end{verbatim}
+
+\subsubsection*{\tt services}
+
+    Contains a definition of all the services, and the method to instantiate these services. For the neurospaces service, the most important methods are 'read', to read a model specified in a neurospaces description file, and 'load', to load a model specified in an external format (only Genesis .p files are supported at present). Additional options like e.g. a shrinkage correction factor, or a spines distribution definition, can be specified overhere. 
+
+\subsubsection*{\tt solverclasses}
+
+    The solver classes, and their relationship to the services. E.g. this key tells ssp to load in the heccer module, and, whenever it is used, it must talk to neurospaces to figure out what needs to be simulated. Solver specific settings, e.g. the time step, are specified overhere. 
+
+\subsubsection*{\tt models}
+
+    An enumeration of the parts of the model to simulate, and what solverclasses to use for this part of the model. Model parts not listed are not simulated. For each entry of the enumeration, i.e. for each part of the model that will be simulated, you have the possibility to set a number of parameters, right before the engines get to see the model. The subkeys in an entry of the enumeration to do that are: 
+
+\begin{itemize}
+
+\item[ ] {\tt granular\_parameters}
+
+Allows parameters to be set at a granular level, i.e. the level of the model that the engines will get to see. For example: 
+
+\begin{verbatim}
+    granular_parameters:
+      - component_name: /Purkinje/segments/soma
+        description: current injection into the somatic compartment.
+        field: INJECT
+        value: 0.2e-9
+\end{verbatim}
+
+\item[ ]{\tt conceptual\_parameters}
+
+Allows parameters to be set at a conceptual level. The modeling service is responsible for propagating new values to all levels in the granular representation of the model. For example:
+
+\begin{verbatim}
+    conceptual_parameters:
+      - component_name: spinyd::gaba::/Purk_GABA
+        description: endogenous activity
+        field: FREQUENCY
+        value: 0.5
+      - component_name: spine::/Purk_spine/head/par
+        description: endogenous activity
+        field: FREQUENCY
+        value: 13
+\end{verbatim}
+When using GENESIS as the modeling service, the difference between {\tt granular\_parameters} and {\tt conceptual\_parameters} is inferred by the difference in addressing the components in the model. For example, the separator ``{\tt /}'' is used for addressing components at the granular level, whereas, the separator ``{\tt ::}'' is used to go throught the levels of the conceptual representation of the model.
+
+\end{itemize}
+
+\subsubsection*{\tt outputclasses}
+
+The output classes specify the type of outputs. Internally, output classes are the same as solver classes, but they come in a separate key for interfacing with other software. Options for the output class can be specified overhere ??? (e.g. a filename for output). 
+
+\subsubsection*{\tt outputs}
+
+The actual outputs of the simulation are defined here. This key is an enumeration of elements and fields that are present in the model. The addressing scheme to get to these fields and elements is defined by the model service. So for GENESIS, ``{\tt /}'' is the element separator, and ``{\tt -$>$}'' is the field separator. 
+
+\subsubsection*{\tt name}
+
+The internal name of the schedule. It is a good idea to maintain a clear correspondence between the internal name and the filename of the schedule. 
+
+\subsubsection*{\tt version}
+
+Defines the version number the schedule complies to. If omitted its value is ``{\tt 0}'', the current schedule protocol version at this time. 
+
+\subsection*{Creating and Changing SSP Schedules}
+
+The best way to create a new SSP schedule, is to modify an exising one to your needs. Small Perl scripts can be used to generate multiple SSP schedules for batch mode simulations. For example:
+
+\begin{verbatim}
+   ssp_directory > schedules.out 2>&1 --schedules-directory schedules/ --verbose &
+\end{verbatim}
+The progress of multiple simulations can then be monitored with:
+
+\begin{verbatim}
+   tail -f schedules.out
+\end{verbatim}
+SSP schedules are specified in \href{http://www.yaml.org/}{YAML} format, an easy to understand format for na\"{i}ve computer users. As white space is  used to structure the content of information, YAML is white space sensitive. Indentation is used to define the hierarchical depth of an entry, while newlines are used to terminate an entry. This results in a very easy to understand format. All the examples given above employ YAML syntax. Importantly, by far the majority of scripting languages have built-in support for YAML data structures. 
+
+\end{document}

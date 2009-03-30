@@ -1,0 +1,405 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Introduction}
+
+\section*{GENESIS Developer Installation}
+
+\subsection*{Introduction}
+
+The federated development of GENESIS software components proceeds via a software buildbot machine that houses a \href{http://monotone.ca/}{\it monotone} server that is connectible over the internet. This allows source code changes to be properly merged using the functions available in\,{\it monotone}, regardless of the location where the changes have been made (at home, in your office, on the airplane). The build mechanism will always build the most up to date version of the code.
+
+There are several prerequisites to the construction of a GENESIS development environment. These include:
+
+\begin{itemize}
+
+\item {\bf Required tools:}\,{\it gdb},\,{\it gcc}, and\,{\it (x)emacs} with the\,{\it elisp} packages. Note that the GENESIS \href{../document-ndf-file-format/document-ndf-file-format.pdf}{NDF file format} has a special\,{\it elisp} package for use with\,{\it (x)emacs}.
+\item {\bf Version control:} Monotone is used as a statically linked binary (currently version 0.40). As it is a distributed version control system, developers can use,\,{\it monotone} to maintain and exchange their code repositories and executables. Monotone installation is supported by the\,{\it installer} module. 
+\item {\bf  The\,{\it installer}:} Can optionally be used to do initial directory layout. Importantly, the\,{\it installer} requires the correct directory layout.
+
+\end{itemize}
+
+\subsection*{Where to find GENESIS}
+
+The easiest way to get the latest version of the GENESIS source code is via the {\it installer} (see following sections.)
+
+Source code for GENESIS can be found at:
+
+\href{http://sourceforge.net/project/showfiles.php?group_id=162899}{http://sourceforge.net/project/showfiles.php?group\_id=162899}
+
+\subsection*{Basic Directory Layout}
+
+\begin{itemize}
+
+\item Create a directory {\it $\sim$/neurospaces\_project} in your home directory.
+\item Create the directory {\it $\sim$/neurospaces\_project/MTN} to contain all\,{\it monotone} repositories accessible to the\,{\it installer}.
+\item Every software module has its own subdirectory. For example, the\,{\it installer} directory ({\it $\sim$§/neurospaces\_project/installer}):
+
+\begin{quote}
+
+\item {\it $\sim$/neurospaces\_project/installer/docs} contains documentation not included in the distribution. 
+
+\item {\it $\sim$/neurospaces\_project/installer/source/snapshots/0} is the local workspace under\,{\it monotone} control, contains the source code you are working on. 
+
+\item {\it $\sim$/neurospaces\_project/installer/snapshots/0/\_MTN} location of directory with the\,{\it monotone} options specific to the source code.
+
+\item {\it $\sim$/neurospaces\_project/installer/source/snapshots/0/installed} optionally contains a locally installed version of the module.
+
+\item {\it $\sim$/neurospaces\_project/installer/source/snapshots/patches} contains diffs/patches to your code, available on your local machine.
+
+\end{quote}
+
+\end{itemize}
+You can then go to the directory of each individual software component, configure, compile, check, and install the given module. For example, a simple build for the modules\,{\it model\_container},\,{\it heccer},\,{\it ssp}, and\,{\it studio} on a developer machine can be done with:  
+\begin{verbatim}
+   neurospaces_build --developer --regex 'model-container|heccer|ssp|studio'
+\end{verbatim}
+and to include running tests via the check target of the makefiles:
+\begin{verbatim}
+   neurospaces_build --check --developer --regex 'model-container|heccer|ssp|studio'
+\end{verbatim}
+However, an\,{\it installer} has built that automates these actions while respecting the dependencies between the different modules (ie. each of the mentioned steps is done for each module in the correct order).
+
+\subsection*{The\,{\it installer} Module}
+
+This module provides developer utilities that comply with GENESIS development standards. The most important one is the\,{\it neurospaces\_build} script used for automated software installation and maintenance of a set of software modules. Because this script has many options, most common operations are provided using frontends. Other scripts are related to version identification of the software, and source code documentation comments.
+
+Some of the utilities currently depend on\,{\it monotone} for source code version control due to their configuration. However, it is possible to work with other version control systems. 
+
+\subsubsection*{{\it installer} Utilities}
+
+The main driver script performs various build operations:
+\begin{quote}
+\item {\it neurospaces\_build}
+\end{quote}
+Do ``{\tt neurospaces\_build --help}'' to see how it works.\\Also look at \href{}{Release Procedure}. 
+
+\subsubsection*{Other utilities}
+
+These take optional arguments of ``{\tt --regex}'' to select the modules they will operate on, and ``{\tt --verbose}'' to run the command in a more verbose mode. 
+
+\begin{quote}
+\item {\it neurospaces\_packages}: Show the modules that are enabled on your local machine.
+\item {\it neurospaces\_versions}: Shows which versions of the GENESIS modules are installed. 
+
+\item {\it neurospaces\_pull}: Download the source code from a repository.
+\item {\it neurospaces\_status}: Check for local source code modification (no network required).
+\item {\it neurospaces\_sync}: Synchronize local source code modification with a repository.
+\item {\it neurospaces\_update}: Updates local source code using the repositories stored locally on your machine (i.e. it is a local operation). 
+
+\item {\it neurospaces\_install}: Install the simulator software.
+\item {\it neurospaces\_uninstall}: Uninstall the simulator software including the installer scripts. To reinstall, ``{\tt cd}'' to the installer source code directory and run ``{\tt make \&\& sudo make install}'').
+\item {\it neurospaces\_check}: Check for correctness of the installed software. This can be time consuming and generates considerable output, particularly in the ``{\tt --verbose}'' mode.
+\item {\it neurospaces\_clean}: Clean source code directories. 
+
+\item {\it neurospaces\_docs}: Build documentation on your local machine.
+\item {\it neurospaces\_website\_prepare}: Prepare a version of the website on your local machine, and optionally upload it. 
+
+\item {\it neurospaces\_cron}: Provides a cron job based tester script.
+
+\item {\it neurospaces\_download}: Download the simulator from a central archive. 
+ 
+ \end{quote}
+
+For updating of version keywords the following are invoked automatically by the\,{\it neurospaces\_build} script:
+
+\begin{quote}
+\item {\it release\_extract}: Extract release information from a\,{\it monotone} repository. When a Tag is set, that will be the result, otherwise the SHA of the current base revision will be the result.
+\item {\it release\_expand}: Do keyword expansion, see the manpage in the source for more details. 
+\end{quote}
+
+Other:
+\begin{quote}
+\item {\it mcad2doxy}: Convert obsoleted {\it multicad} documentation to \href{}{doxygen} format. This has been used to convert \href{}{Heccer} developer documentation to doxygen format. Other modules will follow. 
+\end{quote}
+
+\section*{Installing GENESIS on a Unix System}
+
+Because GENESIS is compliant with the CBI simulator architecture, it consists of many independent software modules. To facilitate the installation of these modules, an installer has been written.
+
+Prior to installing GENESIS modules on your local computer you will need to install the necessary software dependencies.
+
+\subsection*{Software Dependencies}
+
+These are divided into two categories:
+\begin{enumerate}
+\item {\bf Binary dependencies:}
+\begin{enumerate}
+\item {\bf A compiler, and a makefile system:} See the \href{http://www.gnu.org/}{GNU} website. Most Linux distributions come with these installed.
+\item {\bf \href{http://www.gtk.org/}{GTK+}:} Available for all common Linux distributions.
+\item {\bf \href{http://simpledirectorylisting.net/}{SDL2} for visualization functions:} For most systems there are prebuilt packages available. Note that SDL2 is required, SDL1 does not suffice.
+\item {\bf \href{www.graphviz.org}{Graphviz}:} For Redhat users: if you install this from an RPM, be sure to know what you are doing.
+\item {\bf  \href{http://www.python.org/}{Python} and  \href{http://www.perl.org/}{Perl} developer packages:} For example, the file Python.h must be installed. Note, it is often distributed in a separate\,{\it rpm} or\,{\it deb} file. 
+\end{enumerate}
+
+\item {\bf Perl dependencies:}
+
+All the following dependencies are available from \href{http://search.cpan.org/}{CPAN}. You can install them with a command line such as:
+\begin{verbatim}
+   sudo perl -MCPAN -e 'install Mail::Sender'
+\end{verbatim}
+where {\tt Mail::Sender} should be replaced with the appropriate module name. Also remove the parentheses and anything they contain, e.g.
+\begin{verbatim}
+   sudo perl -MCPAN -e 'install Glib'
+\end{verbatim}
+not
+\begin{verbatim}
+   sudo perl -MCPAN -e 'install Glib (Gtk2)'
+\end{verbatim}
+
+\begin{itemize}
+\item {\bf Mail::Sender}
+\item {\bf Clone}
+\item {\bf Expect::Simple}
+\item {\bf YAML}
+\item {\bf File::Find::Rule}
+\item {\bf Digest::SHA}
+\item {\bf Data::Utilities} 
+\end{itemize}
+
+\begin{itemize}
+\item {\bf ExtUtils::Depends (Gtk2)}
+\item {\bf ExtUtils::PkgConfig (Gtk2)}
+\item {\bf Glib (Gtk2)}
+\item {\bf Cairo (Gtk2)}
+\item {\bf Gtk2}
+\end{itemize}
+
+\begin{itemize}
+\item {\bf Bundle::CPAN} (SDL uses\,{\it Build.pl}, so make sure you have the latest version.) 
+\end{itemize}
+
+\begin{itemize}
+\item {\bf Redhat based systems:} The following\,{\it rpm}s have been successfully downloaded and installed:
+
+\begin{itemize}
+\item {\it SDL\_gfx-2.0.13-1.i386.rpm}
+\item {\it SDL\_gfx-debuginfo-2.0.13-1.i386.rpm}
+\item {\it SDL\_gfx-demos-2.0.13-1.i386.rpm}
+\item {\it SDL\_gfx-devel-2.0.13-1.i386.rpm}
+\item {\it SDL\_image-1.2.5-1.i386.rpm}
+\item {\it SDL\_image-devel-1.2.5-1.i386.rpm}
+\item {\it SDL\_mixer-1.2.7-1.i386.rpm}
+\item {\it SDL\_mixer-devel-1.2.7-1.i386.rpm}
+\item {\it SDL\_net-1.2.6-1.i386.rpm}
+\item {\it SDL\_net-devel-1.2.6-1.i386.rpm}
+\item {\it SDL\_Perl-2.1.3.tar.gz}
+\item {\it SDL\_ttf-2.0.8-1.i386.rpm}
+\item {\it SDL\_ttf-devel-2.0.8-1.i386.rpm}
+\end{itemize}
+
+\item {\bf Debian based systems (includes Ubuntu):} Debian files equivalent to the above {\it rpm} files are included in the standard \href{http://www.debian.org/}{Debian} repositories.
+\item {\it SDL} and  {\it GraphViz} are only required for the {\tt Neurospaces Studio}.
+\end{itemize}
+\end{enumerate}
+
+For some Linux distributions (???) these modules may be installed automatically with a \href{../document-prerequisite-script/document-prerequisite-script.pdf}{\it Prerequisite Script} which provides an optional installer script for prerequisites and automated testing.
+
+\subsection*{Linux Installation}
+
+In summary, first install the {\it installer} module manually (see above), then to download and install the available GENESIS modules enter:
+\begin{verbatim}
+   neurospaces_build --download-server downloads.sourceforge.net --src-tag build-25 --src-dir <path-to-a-directory-for-unpacking> --regex 'heccer|ssp|studio|model-container' --verbose
+\end{verbatim}
+To check the installation, enter:
+\begin{verbatim}
+   neurospaces_build --check --no-install --src-tag build-25 --src-dir <path-to-a-directory-for-unpacking> --regex 'heccer|ssp|studio|model-container' --verbose
+\end{verbatim}
+Or download, install, and check with a single command:
+\begin{verbatim}
+   neurospaces_build --download-server downloads.sourceforge.net --src-tag build-25 --src-dir <path-to-a-directory-for-unpacking> --check --regex 'heccer|ssp|studio|model-container' --verbose
+\end{verbatim}
+
+Alternatively, we now give a full example that shows how to set up the\,{\it installer} repository on your local machine, check out the code and then use the\,{\it installer} to install all the currently available modules:
+
+\begin{verbatim}
+   ~ $ mkdir neurospaces_project/
+   ~ $ cd neurospaces_project/
+   neurospaces_project $ mkdir MTN
+   neurospaces_project $ cd MTN/
+   MTN $ mtn --db=installer.mtn db init
+   MTN $ mtn --db=installer.mtn pull virtual2.cbi.utsa.edu:4696 "*"
+    mtn: doing anonymous pull; use -kKEYNAME if you need authentication
+    mtn: connecting to virtual2.cbi.utsa.edu:4696
+    mtn: first time connecting to server virtual2.cbi.utsa.edu:4696
+    mtn: I'll assume it's really them, but you might want to double-check
+    mtn: their key's fingerprint: cbc91b2ec1d19e95f64cb164cc2166f4bdfe7bf4
+    mtn: warning: saving public key for cbiadmin@utsa.edu to database
+    mtn: finding items to synchronize:
+    mtn:  bytes in | bytes out | certs in | revs in
+    mtn:   549.1 k |       510 |  754/754 | 183/183
+    mtn: successful exchange with virtual2.cbi.utsa.edu:4696
+
+   MTN $ cd ../
+   neurospaces_project $ mkdir installer/
+   neurospaces_project $ mkdir installer/source
+   neurospaces_project $ mkdir installer/source/snapshots/
+   neurospaces_project $ mkdir installer/source/snapshots/0
+   neurospaces_project $ cd installer/source/snapshots/0/
+   0 $ mtn --db ~/neurospaces_project/MTN/installer.mtn --branch 0 co .
+   0 $ ls
+     aclocal.m4  bin/  configure*  configure.ac  COPYING  docs/  INSTALL
+     install-sh*  license.txt  Makefile.am  Makefile.in  missing* 
+     _MTN/  release-expand.config*  tests/  tests.config  TODO.txt
+
+   $ ./configure 
+    checking for a BSD-compatible install... /usr/bin/install -c
+    checking whether build environment is sane... yes
+    checking for gawk... gawk
+    checking whether make sets $(MAKE)... yes
+    find: tests/data: No such file or directory
+    configure: creating ./config.status
+    config.status: creating Makefile
+
+   0 $ make
+    make[1]: Entering directory `/local_home/hugo/neurospaces_project/installer/source/snapshots/0'
+    make[1]: Nothing to be done for `all-am'.
+    make[1]: Leaving directory `/local_home/hugo/neurospaces_project/installer/source/snapshots/0'
+
+   0 $ sudo make install
+    make[1]: Entering directory `/local_home/hugo/neurospaces_project/installer/source/snapshots/0'
+    make[2]: Entering directory `/local_home/hugo/neurospaces_project/installer/source/snapshots/0'
+    test -z "/usr/local/bin" || mkdir -p -- "/usr/local/bin"
+    /usr/bin/install -c 'bin/mcad2doxy' '/usr/local/bin/mcad2doxy'
+    /usr/bin/install -c 'bin/neurospaces_build' '/usr/local/bin/neurospaces_build'
+    /usr/bin/install -c 'bin/neurospaces_status' '/usr/local/bin/neurospaces_status'
+    /usr/bin/install -c 'bin/neurospaces_versions' '/usr/local/bin/neurospaces_versions'
+    /usr/bin/install -c 'bin/release-expand' '/usr/local/bin/release-expand'
+    /usr/bin/install -c 'bin/release-extract' '/usr/local/bin/release-extract'
+    test -z "/usr/local/neurospaces/installer" || mkdir -p -- "/usr/local/neurospaces/installer"
+    /local_home/hugo/neurospaces_project/installer/source/snapshots/0/install-sh -c -m 644 'tests/introduction.html' '/usr/local/neurospaces/installer/tests/introduction.html'
+    /local_home/hugo/neurospaces_project/installer/source/snapshots/0/install-sh -c -m 644 'tests/specifications/global.t' '/usr/local/neurospaces/installer/tests/specifications/global.t'
+    /local_home/hugo/neurospaces_project/installer/source/snapshots/0/install-sh -c -m 644 'tests/specifications/downloads.t' '/usr/local/neurospaces/installer/tests/specifications/downloads.t'
+    /local_home/hugo/neurospaces_project/installer/source/snapshots/0/install-sh -c -m 644 'tests/specifications/developer.t' '/usr/local/neurospaces/installer/tests/specifications/developer.t'
+    /local_home/hugo/neurospaces_project/installer/source/snapshots/0/install-sh -c -m 644 'tests/specifications/strings/neurospaces_build--no-compile--no-configure--no-install--regex-installer--dry-run--developer--verbose--verbose--verbose.txt' '/usr/local/neurospaces/installer/tests/specifications/strings/neurospaces_build--no-compile--no-configure--no-install--regex-installer--dry-run--developer--verbose--verbose--verbose.txt'
+    /local_home/hugo/neurospaces_project/installer/source/snapshots/0/install-sh -c -m 644 'tests/specifications/strings/neurospaces_build--tag-build-10--no-compile--no-configure--no-install--regex-installer--dry-run--developer--verbose--verbose--verbose.txt' '/usr/local/neurospaces/installer/tests/specifications/strings/neurospaces_build--tag-build-10--no-compile--no-configure--no-install--regex-installer--dry-run--developer--verbose--verbose--verbose.txt'
+    make[2]: Leaving directory `/local_home/hugo/neurospaces_project/installer/source/snapshots/0'
+    make[1]: Leaving directory `/local_home/hugo/neurospaces_project/installer/source/snapshots/0'
+
+   0 $ neurospaces_build --repo-pull virtual2.cbi.utsa.edu --repo-co --directories-create --verbose --developer --regex 'heccer|model-container|ssp'
+   
+\end{verbatim}
+
+\subsection*{Linux Installation Details}
+
+This section is based on\,{\it installer-build-13.tar.gz}. Installation takes the following steps:
+
+\begin{enumerate}
+\item {\bf Install the installer:}
+\begin{verbatim}
+   $ mkdir tmp ; cd tmp
+   $ mv <path to your installer module> tmp/installer-build-13.tar.gz
+   $ tar xfz installer-build-13.tar.gz
+   $ cd installer-build-13
+   $ ./configure
+   $ make
+   $ make check 
+   $ sudo make install 
+\end{verbatim}
+Now the\,{\it installer} has been installed. 
+
+\item {\bf Make a directory to contain downloaded modules:}
+\begin{verbatim}
+   $ mkdir $HOME/automated
+\end{verbatim}
+
+\item {\bf Download and install any other modules:}
+
+This is done automatically by the GENESIS\,{\it installer}. Use the following command line to install version {\tt des-10} of all modules:
+\begin{verbatim}
+   neurospaces_build --download-server downloads.sourceforge.net --regex 'model-container|heccer|ssp|studio' --src-tag des-10 --src-dir $HOME/automated
+\end{verbatim}
+To select individual modules, use the {\tt --regex} option, e.g. to install only {\it heccer}, enter:
+\begin{verbatim}
+   neurospaces_build --download-server downloads.sourceforge.net --regex heccer --src-tag des-10 --src-dir $HOME/automated
+\end{verbatim}
+Currently, not all modules are available for download. So always use the option {\tt --regex 'model-container|heccer|ssp|studio'}.
+
+If you don't trust what is going to happen, first use the {\tt --verbose option} (repeat it three times, see following command) and the {\tt --dry-run} option and pipe to {\it less} (or {\it more}):
+\begin{verbatim}
+   neurospaces_build --download-server downloads.sourceforge.net --src-tag des-10 --src-dir $HOME/automated --verbose --verbose --verbose --dry-run | less
+\end{verbatim}
+Now go for a coffee.  
+
+\item {\bf Test modules with the {\tt --check option}}:
+\begin{verbatim}
+   neurospaces_build --download-server downloads.sourceforge.net --src-tag des-10 --src-dir $HOME/automated --check
+\end{verbatim}
+Now go for another coffee (for about an hour this time). All modules will be tested. This takes some time. 
+
+If you have installed everything, and just want to test the installation, omit the download options:
+\begin{verbatim}
+   neurospaces_build --src-tag des-10 --src-dir $HOME/automated --check
+\end{verbatim}
+\end{enumerate}
+
+\subsection*{Macintosh Installation}
+\begin{enumerate}
+\item {\bf Install Xcode Tools:} If Xcode Tools are not installed on your Mac obtain them from Disk\,2 of the Mac installer set of DVDs. The package is called\,{\it XcodeTools.mpkg}.
+
+\item {\bf Install required packages from the CPAN archives:} This can be done by entering the following at a terminal prompt:
+\begin{verbatim}
+   $ sudo perl -MCPAN -e shell
+\end{verbatim}
+Then at the {\tt cpan>} prompt enter:
+\begin{verbatim}
+   cpan> force install Clone
+   . . . 
+
+   cpan> force install Data
+   . . . 
+
+   cpan> force install Data:Comparator
+   . . . 
+
+   cpan> force install File::Find::Rule
+    . . .
+
+   cpan> force install Digest::SHA
+   . . . 
+   
+\end{verbatim}
+
+\item Once these packages have been successfully installed, exit\,{\it cpan} and login as root with:
+\begin{verbatim}
+   $ sudo /bin/bash
+\end{verbatim}
+Enter password, then:
+\begin{verbatim}
+   bash-3.2# cd /var/root/.cpan/build
+   bash-3.2# ls
+    Clone-0.31          File-Find-Rule-0.30   Text-Glob-0.08
+    Data-Utilities-0.04 Number-Compare-0.01   YAML-0.68
+    Digest-SHA-5.47     Text-Editor-Easy-0.01 xisofs-1.3
+\end{verbatim}
+
+\item Then {\tt cd} to each of the directories in {\it ./cpan/build} and do a {\it make\,install} of the required packages:
+\begin{verbatim}
+   bash-3.2# cd Data-Utilities-0.04/
+   bash-3.2# make install
+   bash-3.2# cd ../Clone-0.31/
+   bash-3.2# make install
+   bash-3.2# cd ../Data-Utilities-0.04/
+   bash-3.2# make install
+   bash-3.2# cd File-Find-Rule-0.30/
+   bash-3.2# make install
+   bash-3.2# cd ../Text-Glob-0.08/
+   bash-3.2# make install
+   bash-3.2# cd Number-Compare-0.01/
+   bash-3.2# make install
+   bash-3.2# cd ../YAML-0.68/
+   bash-3.2# make install
+   bash-3.2# cd ../Digest-SHA-5.47/
+   bash-3.2# make install
+\end{verbatim}
+
+\end{enumerate}
+
+\subsection*{Microsoft Windows Installation}
+
+\end{document}

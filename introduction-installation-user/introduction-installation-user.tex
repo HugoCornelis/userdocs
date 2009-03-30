@@ -1,0 +1,135 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Introduction}
+
+\section*{GENESIS User Installation}
+
+\subsection*{Introduction}
+
+All GENESIS modules can be downloaded and installed by themselves, based on autotools (see below). 
+
+Note that to install GENESIS on your local computer you must have root privileges. This means that you must be able to log onto your computer as the root user. If you are unable to do this talk to your systems administrator about installing GENESIS.
+
+The remainder of this installation guide assumes that you can log in as root to the computer where you want to install GENESIS. Note that you may want to consult with your systems administrator for help with installing the required software dependencies. 
+
+% Note that it is a requirement that the {\it Model Container} be installed prior to {\it Heccer}.
+
+\subsection*{Software Dependencies}
+
+The software dependencies required on your local computer prior to installing GENESIS  are divided into two categories:
+\begin{enumerate}
+\item {\bf Binary dependencies:}
+\begin{enumerate}
+\item {\bf A compiler, and a makefile system:} See the \href{http://www.gnu.org/}{GNU} website. Most Linux distributions come with these installed.
+\item {\bf \href{http://www.gtk.org/}{GTK+}:} Available for all common Linux distributions.
+\item {\bf \href{http://simpledirectorylisting.net/}{SDL2} for visualization functions:} For most systems there are prebuilt packages available. Note that SDL2 is required, SDL1 does not suffice.
+\item {\bf \href{www.graphviz.org}{Graphviz}:} For Redhat users: if you install this from an RPM, be sure to know what you are doing.
+\item {\bf  \href{http://www.python.org/}{Python} and  \href{http://www.perl.org/}{Perl} developer packages:} For example, the file Python.h must be installed. Note, it is often distributed in a separate\,{\it rpm} or\,{\it deb} file. 
+\end{enumerate}
+
+\item {\bf Perl dependencies:}
+
+All the following dependencies are available from \href{http://search.cpan.org/}{CPAN}. You can install them with a command line such as:
+\begin{verbatim}
+   sudo perl -MCPAN -e 'install Mail::Sender'
+\end{verbatim}
+where {\tt Mail::Sender} should be replaced with the appropriate module name. Also remove the parentheses and anything they contain, e.g.
+\begin{verbatim}
+   sudo perl -MCPAN -e 'install Glib'
+\end{verbatim}
+not
+\begin{verbatim}
+   sudo perl -MCPAN -e 'install Glib (Gtk2)'
+\end{verbatim}
+
+\begin{quote}
+\item {\tt Mail::Sender}
+\item {\tt Clone}
+\item {\tt Expect::Simple}
+\item {\tt YAML}
+\item {\tt File::Find::Rule}
+\item {\tt Digest::SHA}
+\item {\tt Data::Utilities} 
+
+\item {\tt ExtUtils::Depends (Gtk2)}
+\item {\tt ExtUtils::PkgConfig (Gtk2)}
+\item {\tt Glib (Gtk2)}
+\item {\tt Cairo (Gtk2)}
+\item {\tt Gtk2}
+
+\item {\tt Bundle::CPAN} (SDL uses\,{\it Build.pl}, so make sure you have the latest version.) 
+\end{quote}
+{\bf Redhat based systems:} The following\,{\it rpm}s have been successfully downloaded and installed:
+
+\begin{quote}
+\item {\tt SDL\_gfx-2.0.13-1.i386.rpm}
+\item {\tt SDL\_gfx-debuginfo-2.0.13-1.i386.rpm}
+\item {\tt SDL\_gfx-demos-2.0.13-1.i386.rpm}
+\item {\tt SDL\_gfx-devel-2.0.13-1.i386.rpm}
+\item {\tt SDL\_image-1.2.5-1.i386.rpm}
+\item {\tt SDL\_image-devel-1.2.5-1.i386.rpm}
+\item {\tt SDL\_mixer-1.2.7-1.i386.rpm}
+\item {\tt SDL\_mixer-devel-1.2.7-1.i386.rpm}
+\item {\tt SDL\_net-1.2.6-1.i386.rpm}
+\item {\tt SDL\_net-devel-1.2.6-1.i386.rpm}
+\item {\tt SDL\_Perl-2.1.3.tar.gz}
+\item {\tt SDL\_ttf-2.0.8-1.i386.rpm}
+\item {\tt SDL\_ttf-devel-2.0.8-1.i386.rpm}
+\end{quote}
+{\bf Debian based systems (includes Ubuntu):} Debian files equivalent to the above {\it rpm} files are included in the standard \href{http://www.debian.org/}{Debian} repositories.
+ {\bf SDL and GraphViz: } Only required for the {\tt Studio} module.
+\end{enumerate}
+
+\subsection*{Where to find GENESIS}
+
+%The easiest way to get the latest version of the GENESIS source code is via the {\it installer} (see following sections.)
+
+Source code for GENESIS can be found at:
+
+\href{http://sourceforge.net/project/showfiles.php?group_id=162899}{http://sourceforge.net/project/showfiles.php?group\_id=162899}.
+
+\subsection*{Installing GENESIS on a Unix-Based System}
+
+\subsubsection*{Basic Directory Layout and Installation Procedure}
+
+Installation of the GENESIS software platform on a local Unix-based system or under OS X (Macintosh) consists of the following three basic steps. 
+
+\begin{enumerate}
+
+\item Create a directory {\it $\sim$/neurospaces\_project} in your home directory. 
+
+\item Inside the {\it $\sim$/neurospaces\_project} directory create a folder for each software module you would like to install. The folder names of common modules currently include:
+
+\begin{enumerate}
+\item {\bf GENESIS Shell:} \href{../introduction-shell/introduction-shell.pdf}{gshell}
+\item {\bf Model Container:} \href{../document-model-container/document-model-container.pdf}{model-container}
+\item {\bf Numerical Solver:} \href{../document-heccer/document-heccer.pdf}{heccer}
+\item {\bf Simple Scheduler in Perl:} \href{../document-ssp/document-ssp.pdf}{ssp}
+\item {\bf Studio Manager:} \href{../document-studio/document-studio.pdf}{studio}
+\item {\bf Project Browser:} \href{../document-project-browser/document-project-browser.pdf}{project-browser}
+\end{enumerate}
+
+\item Go to each directory (a--f) in the given order and enter the following commands at the terminal prompt:
+\begin{verbatim}
+   $ ./autogen.sh
+   $ ./configure
+   $ make
+   $ sudo make install
+   $ make check
+\end{verbatim}
+The ``{\tt make check}'' command is run in each directory to confirm correct installation of individual GENESIS modules.
+
+\end{enumerate}
+You should now be able to invoke the GENESIS shell with the following command:
+
+\begin{verbatim}
+   $ genesis-g3
+\end{verbatim}
+
+\end{document}

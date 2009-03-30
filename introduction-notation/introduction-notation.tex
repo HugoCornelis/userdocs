@@ -1,0 +1,42 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Introduction}
+
+\section*{Documentation Notation}
+
+GENESIS has a defined set of notations that aim to increase the readability and simplify the intended meaning of documentation for users and developers. These notations are primarily employed in the user tutorials and are defined here.
+
+\begin{itemize}
+
+\item {\bf Single Line Input:} At various points in tutorial documentation you will be instructed to enter GENESIS commands through the keyboard. This will be indicated by showing the text to be entered in a monospaced ``{\tt typewriter}'' font. For clarity this text is enclosed within quotes. Note that only the text within the quotes should be entered, not the quotes themselves.
+
+\item {\bf Single Line Output:} Single lines of GENESIS output are given in the same monospaced {\tt typewriter} font employed for command entry, but without surrounding quotes.
+
+\item {\bf Multi-Line Input and Output:} Multiple lines of GENESIS input or output are defined by their context and presented as blocks of the monospaced {\tt typewriter} font. They are typically either formated and/or indented e.g.
+
+\begin{verbatim}
+    create cell /neuron
+    create segment /neuron/soma
+    set_model_parameter /neuron/soma Vm_init -0.068
+    set_runtime_parameter /neuron/soma INJECT 2e-9
+    add_output /neuron/soma Vm
+    run /neuron 0.1
+    simulation_state_save /neuron
+    sh cat /tmp/output
+\end{verbatim}
+
+\item {\bf Text Replacement:} Text included within {\tt <angle brackets>} should be replaced with a specific user-supplied name or string.
+
+\item {\bf File Names and Directory Paths:} These are indicated in {\it italics}.
+
+\item {\bf Missing Text:} Missing text is indicated with an ellipses (\ldots).
+
+\end{itemize}
+
+\end{document}
