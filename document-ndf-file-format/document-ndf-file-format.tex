@@ -1,0 +1,289 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{lineno}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+\section*{The Neurospaces Description Format}
+%To validate such a file type ``{\tt neurospaces  <path>/filename.ndf}'', a command that can be issued from the GENESIS (or UNIX, see $\underline{\mbox{here}}$) shell command line prompt.  The named script file is parsed and tested for coherence of the file syntax. After a model has been set up by creating a NDF file, it is a good idea to run this command. 
+
+The Neurospaces Description Format or NDF file format is a declarative ASCII text file format indicated by the {\tt .ndf} file name extension. It has been developed to integrate and extend the previous GENESIS {\tt .p} and {\tt .g} declarative file formats. NDF files are purely declarative in nature such that they may be stored in a model database. In a NDF file, a model exists as a hierarchy of tokens, each representing a biological component. Each component is a physical process and can have parameters and shared variables. 
+
+\subsection*{Overview of a NDF File}
+\label{sec:overview-ndf-file}
+%We now introduce the basic parts of a simple NDF file that defines a single compartment neuron containing classical Hodgkin-Huxley descriptions of $Na$ and $K$ channels.
+A NDF file contains four sections. These sections are not necessarily
+filled, but they must be present in the given order.  A NDF file has
+the following general form which we describe below.
+
+\begin{center}
+ \begin{linenumbers}
+ % \begin{boxedminipage}{13cm}
+\begin{verbatim}
+    #!/usr/local/bin/neurospacesparse
+    //-*- NEUROSPACES -*-
+
+    // default location for file comments
+
+    NEUROSPACES NDF
+
+    IMPORT
+        FILE <namespace> "<directorypath>/<filename.ndf>"
+         . . . <other files may be imported as required>
+    END IMPORT
+
+    PRIVATE_MODELS
+        ALIAS <namespace>::/<source label> <target label> END ALIAS
+            . . . <other aliases may be defined as required>
+    END PRIVATE_MODELS
+
+    PUBLIC_MODELS
+        CELL <morphology name>
+            SEGMENT_GROUP segments
+                . . . <morphological details>
+            END SEGMENT_GROUP
+        END CELL
+    END PUBLIC_MODELS
+\end{verbatim}
+%  \end{boxedminipage}
+\end{linenumbers}
+\end{center}
+
+\subsubsection*{Header Section}
+The header, which runs from lines 1--6 must always be present and must always start with the
+interpreter sequence giving the system specific absolute path to the
+NMC executable:
+\begin{verbatim}
+    #!/usr/local/bin/neurospacesparse
+\end{verbatim}
+This is followed by two declarations on separate lines. 
+\begin{verbatim}
+    //-*- NEUROSPACES -*-
+    
+    NEUROSPACES NDF
+    \end{verbatim}
+The first declaration (line 2) flags an appropriate major mode and keyword highlighting for Emacs and
+XEmacs editors\footnote{The Neurospaces Emacs major mode is bundled
+  with the NMC package.}, the second (line 6) identifies the type
+of file, here a NDF file.
+
+\subsubsection*{Import Section}
+This section (lines 8--11) declares dependencies on other NDF files with the {\tt  FILE} keyword, e.g.
+\begin{verbatim}
+    IMPORT
+        FILE <namespace> "<path>/<fname>.ndf"
+    END IMPORT
+\end{verbatim}
+
+To simplify model development, GENESIS allows construction of NDF files
+that define different components of a model.  These files may be thought of as
+\emph{library} files.  To expedite model development, all NDF files
+can be shared by being imported into other NDF files.
+
+\subsubsection*{Private Model Section}
+These are models (lines 13--16) that are private to the NDF file that contains them.
+They may depend on imported public models of other files or be hard
+coded.
+
+\subsubsection*{Public Model Section}
+These models (lines 18--24) are visible to the NDF files into which they are
+imported.  Typically, for example, a neuron morphology would be
+located here.  Public models may depend on private models or be hard
+coded.
+
+\subsection*{Summary}
+One important feature of a NDF file is that it can contain either a single model or a library of models that represent different levels of neuronal morphology and/or electrophysiological function. This supports the modular construction of a model as a NDF file can depend on other NDF files, i.e. the models declared in a NDF file can be ``private'' to that file, or ``public'' and available to other NDF files. 
+
+As an example, if a first file is dependent on a second file, only the public files of the second file can be reused to build more complicated models in the first file. This mechanism prevents the use of certain (private) components, while allowing reuse of other (public) components.
+
+
+%\subsection*{Running a Simulation}
+%The building blocks used to create simulations under GENESIS are referred to as elements. Elements are created from templates called "objects". The simulator comes with a number of basic objects. To list the available objects type
+
+%    listobjects
+
+%To get more information on a particular objects type
+
+%    showobject name
+
+%where "name" is replaced by any name from the object list.
+
+%The compartment object is commonly used in GENESIS simulations to construct parts of neurons. As we will be using this object, try the command showobject compartment at this time. There are a few commonly used objects which are documented more thoroughly with the GENESIS help command. In order to obtain a detailed description of the equivalent circuit for the compartment object, type
+
+%    help compartment
+
+%(HINT: You may pipe these commands into more to prevent the output from scrolling off the top of the screen.) For example.
+
+%    help compartment | more
+
+%Creating Elements
+
+%To create an Element from an Object description you use the create command. Try typing the create command without arguments
+
+%    create
+
+%This gives a usage statement which gives the proper syntax for using this command. Most commands will produce a usage statement if invoked without arguments, or if followed with the option -usage or -help. In the case of the create command the usage statement looks like
+
+%    usage: create object name -autoindex [object-specific-options]
+
+%In this exercise we will create a simple passive compartment. In order to keep track of the many elements that go into a simulation, each element must be given a name. To create a compartment with the name soma type
+
+%    create compartment /soma
+
+%Elements are maintained in a hierarchy much like that used to maintain files in the UNIX operating system. In this case, /soma is a pathname which indicates that the soma is to be placed at the root or top of the hierarchy.
+
+%We will eventually build a fairly realistic neuron called /cell with a soma, dendrites, channels and an axon. It would be a good idea to organize these components into a hierarchy of elements such as /cell/soma, /cell/dend, /cell/dend/Ex\_channel, and so on. If we do this, we need to create the appropriate type of element for /cell. GENESIS has a neutral object for this sort of use. An element of this type is an empty element that performs no actions and is used chiefly as a parent element for a hierarchy of child elements.
+
+%To start the construction of our cell, give the commands
+
+%    create neutral /cell
+%    create compartment /cell/soma
+
+%As we no longer need our original element /soma, we may delete it with the command delete.
+
+%    delete /soma
+
+%Examining Elements
+
+%The commands for maintaining elements within their hierarchy are very much like those used to maintain files in the UNIX operating system. In that spirit, the commands for moving about within the GENESIS element hierarchy are similar to their UNIX counterparts. For example, to list the elements in the current level of the hierarchy use the le (list elements) command
+
+%    le
+
+%You should see several items listed including the newly created cell.
+
+%Each element contains data fields which contain the values of parameters and state variables used by the element. To show the contents of these data fields use the showfield command.
+
+%    showfield /cell *
+
+%This will display the names and contents of the data fields of the "cell". The "*" indicates that you wish to display all the data fields associated with the element. To display the contents of a particular field, type
+
+%    showfield /cell/soma Rm
+
+%To display an extended listing of the element contents including a description of the object associated with the element, type
+
+%   showfield /cell/soma **
+
+%Moving About in the Hierarchy
+
+%When working in GENESIS you are always located at a particular element within the hierarchy which is referred to as the "working element". This location is used as a default for many commands which require path specifications. For example, the le command used above normally takes a path argument. When the path argument is omitted the working element is used and thus all elements located under the working element are listed. To move about in the hierarchy use the ce (change element) command. To change the current working element to the newly create soma, type
+
+%    ce /cell/soma
+
+%Now you can repeat the show command used above omitting the explicit reference to the /cell/soma pathname.
+
+%    showfield *
+
+%This should display the contents of the /cell/soma data fields. You may find the current working element by using the pwe (print working element) command. Try giving the command:
+
+%    pwe
+
+%Note the analogy between these commands and the UNIX commands ls, cd, and pwd. By analogy with UNIX, GENESIS uses the symbols "." to refer to the working element, and ".." to refer to the element above it in the hierarchy. Try using these with the le, ce, and showfield commands. Likewise, GENESIS has pushe and pope commands to correspond to the UNIX pushd and popd commands. These provide a convenient method of changing to a new working element and returning to the previous one. Try the sequence of commands
+
+%    pushe /cell
+%    pwe
+%    pope
+%    pwe
+
+%Modifying Elements
+
+%The contents of the element data fields can be changed using the setfield command. To set the transmembrane resistance of your cell type
+
+%    setfield /cell/soma Rm 10
+
+%You can set multiple fields in a single command as in
+
+%    setfield /cell/soma Cm 2 Em 25 inject 5
+
+%Now if you do a showfield command on the element you should see the new values appearing in the data fields.
+
+%    showfield /cell/soma *
+
+%State variables are automatically updated by the elements when they are "run" during a simulation. For instance the Vm field is a state variable which, while you can change it, will be updated by the element automatically, replacing your value.
+
+%Running a Simulation
+
+%Before running a simulation the elements must be placed in a known initial state. This is done using the reset command, which should be performed prior to all simulation runs.
+
+%    reset
+
+%If you now show the value of the compartment voltage Vm you will see that it has been reset to the value given by the parameter Em.
+
+%     showfield /cell/soma *
+
+%To run a simulation use the step command, which causes the simulator to advance a given number of simulation steps.
+
+%    step 10
+
+%Displaying the Vm field now shows that the simulator actually did something and the value has changed from its initial value due to the current injection.
+
+%    showfield /cell/soma Vm
+
+%Adding Graphics
+
+%Some people find that graphics are more effective than endless columns of numbers in monitoring the course of a simulation. With that in mind we will attempt to add a graph to the simulation which will display the voltage trajectory of your cell. Graphics are implemented using graphical objects from the XODUS library which are manipulated using the same techniques described above. The "form" is the graphical object which is used as a container for all other graphical items. Thus, before making a graph we need to make a form to put it in which we will arbitrarily name /data.
+
+%    create xform /data
+
+%You may have noticed that nothing much seemed to happen. By default, forms are hidden when first created. To reveal the newly created form use the command
+
+%    xshow /data
+
+%An empty box should appear somewhere on your screen. To create a graph in this form with the name voltage use the command
+
+%    create xgraph /data/voltage
+
+%Note that the graph was created beneath the form in the element hierarchy. This is quite important, as the hierarchy is used to define the nesting of the displayed graphical elements.
+
+%Linking Elements
+
+%Now you have a cell with a soma, and a graph, but you need some way of passing information from one to the other.
+
+%Inter-element communication within GENESIS is achieved through a system of links called messages. Messages allow one element to access the data fields of another element. For example to cause the graph to display the voltage of the cell you must first pass a message from the cell to the graph indicating that you would like a particular data field to be plotted. This is done using the command
+
+%    addmsg /cell/soma /data/voltage PLOT Vm *volts *red
+
+%The first two arguments give it the source and destination elements. The third argument tells it what type of message you are sending. In this case the message is a request to plot the contents of the fourth argument which is the name of the data field in the cell which you wish to be plotted. The last two arguments give the label and color to be used in plotting this field. You can now run the simulation and view the results in the graph.
+
+%    reset
+%    step 100
+
+%Note that to plot another field in the same graph, just send another message
+
+%    addmsg /cell/soma /data/voltage PLOT inject *current *blue
+%    reset
+%    step 100
+
+%and you are displaying current and voltage.
+
+%Adding Buttons to a Form
+
+%The xbutton graphical element is often used to invoke a function when a mouse button is clicked. Give the command
+
+%    create xbutton /data/RESET -script reset
+
+%This should cause a bar labeled RESET to appear within the "data" form below the "voltage" graph. When the mouse is moved so that the cursor is within the bar and the left mouse button is clicked, the function following the argument -script is invoked. Now add another button to the form with the command
+
+%    create xbutton /data/RUN -script "step 100"
+
+%In this case, the function to be executed has a parameter (the number of steps), so "step 100" must be enclosed in quotes so that the argument of -script will be treated as a single string.
+
+%At this stage, you have a complete GENESIS simulation which may be run by clicking the left mouse button on the bar labeled RESET and then on the one labeled RUN. To terminate the simulation and leave GENESIS, type either quit or exit. If you like, you may implement one of these commands with a button also.
+
+%At this time, you should use an editor to create a script containing the GENESIS commands which were used to construct this simulation. The script should begin with
+
+%//genesis
+
+%and the filename should have the extension ".g". For example, if the script were named tutorial1.g, you could create the objects and set up the messages with the GENESIS command
+
+%    tutorial1
+
+%If you have exited GENESIS and are back at the unix prompt, you may run GENESIS and bring up the simulation with the single command
+
+%    genesis tutorial1
+
+\end{document}

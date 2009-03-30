@@ -1,0 +1,158 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Introduction}
+
+\section*{The Prerequisite Script}
+
+The purpose of this script is to install the independent software packages required to run the GENESIS system software.
+
+The script installs a \href{http://www.centos.org/docs/5/html/yum/}{\it yum} repository for the \href{http://www.graphviz.org/}{graphviz} software, sets up the \href{http://dag.wieers.com/rpm/}{DAG} repositories, and pulls down the \href{http://monotone.ca/}{monotone} binary. The purpose of this script is for use in an automated testing environment. Currently, it has only been tested on CentOS 5 (i386). However, it should work on any recent Fedora derivative, including: Fedora, CentOS, and RedHat Enterprise 5.
+
+Note that currently all values are hard coded, including architecture and distribution information.
+
+\subsection{Prerequisite Script Details}
+
+\begin{verbatim}
+#!/usr/bin/perl -w
+use strict;
+####################################################################
+### install.pl
+### GENESIS prereqisite installer
+### pulls packages from various repositories online in preparation
+### for installing the GENESIS neural simulator
+####################################################################
+
+my @mypackages = (
+                'perl',
+                'gcc',
+                'SDL_gfx',
+                'SDL_gfx-debuginfo',
+                'SDL_gfx-demos',
+                'SDL_gfx-devel',
+                'SDL_image',
+                'SDL_image-devel',
+                'SDL_mixer',
+                'SDL_mixer-devel',
+                'SDL_net',
+                'SDL_net-devel',
+                'SDL_Perl',
+                'SDL_ttf',
+                'SDL_ttf-devel',
+                'graphviz',
+                'graphvis-perl',
+                'wget');
+
+my @modules = ( 
+                'Bundle::CPAN',
+                'Clone',
+                'Expect::Simple',
+                'YAML',
+                'File::Find::Rule',
+                'Digest::SHA',
+                'Data::Utilities',
+                'File::chdir',
+                'ExtUtils::Depends',
+                'ExtUtils::PkgConfig',
+                'Glib',
+                'Cairo',
+                'Gtk2');
+
+my $loginname = getlogin();
+if ($< != 0) { die("This script should be run as root.\n"); }
+
+print("Installing graphviz repo files.");
+
+open( OUTFILE, '>/etc/yum.repos.d/graphviz-rhel.repo');
+print OUTFILE qq(
+[graphviz-stable]
+name=Graphviz - RHEL \$releasever - \$basearch
+baseurl=http://www.graphviz.org/pub/graphviz/stable/redhat/el\$releasever/\$basearch/os/
+enabled=1
+gpgcheck=0
+
+[graphviz-stable-source]
+name=Graphviz - RHEL \$releasever - Source
+baseurl=http://www.graphviz.org/pub/graphviz/stable/SRPMS/
+enabled=0
+gpgcheck=0
+
+[graphviz-stable-debuginfo]
+name=Graphviz - RHEL - Debug
+baseurl=http://www.graphviz.org/pub/graphviz/stable/redhat/el\$releasever/\$basearch/debug/
+enabled=0
+gpgcheck=0
+
+[graphviz-snapshot]
+name=Graphviz - RHEL \$releasever - \$basearch
+baseurl=http://www.graphviz.org/pub/graphviz/development/redhat/el\$releasever/\$basearch/os/
+enabled=0
+gpgcheck=0
+
+[graphviz-snapshot-source]
+name=Graphviz - RHEL \$releasever - Source
+baseurl=http://www.graphviz.org/pub/graphviz/development/SRPMS/
+enabled=0
+gpgcheck=0
+
+[graphviz-snapshot-debuginfo]
+name=Graphviz - RHEL - Debug
+baseurl=http://www.graphviz.org/pub/graphviz/development/redhat/el\$releasever/\$basearch/debug/
+enabled=0
+gpgcheck=0
+);
+print ("Installing DAG gpg key and repo files\n");
+system("rpm -Uhv http://apt.sw.be/redhat/el5/en/i386/rpmforge/RPMS/rpmforge-release-0.3.6-1.el5.rf.i386.rpm");
+
+#this next part is here because vmware restore seems to mess up yum metadata
+system("yum clean all -y");
+
+# I had problems installing gcc if the rest of the packages weren't up to date
+#Should have just updated what it needed, but whatever...
+print "Updating all current packages.\n";
+system("yum update -y");
+
+#install rpms first to make sure compiler is present for CPAN
+for my $mypackage (@mypackages) {
+        print "Installing RPM: $mypackage\n";
+        system("yum install -y $mypackage");
+}
+
+use CPAN;
+for my $mod (@modules) {
+        print "Installing Module: $mod\n";
+# Use this if you don't expect any test failures
+#        system("perl -MCPAN -e \'install $mod \'");
+# I usually get some test failures which can break the whole thing, so I use
+        system("perl -MCPAN -e \'force install $mod \'");
+
+        #CPAN docs say this should work, but it doesn't seem to
+        #my $obj=CPAN::Shell->expand('Module',("$mod"));
+        #$obj->install;
+}
+
+#Setup monotone repositories using the binary files from the monotone project
+
+system("wget http://www.monotone.ca/downloads/0.41/mtn-0.41-linux-x86.bz2");
+system("bzip2 -d mtn-0.41-linux-x86.bz2");
+system("mv mtn-0.41-linux-x86 /usr/local/bin/mtn");
+system("chmod u+x /usr/local/bin/mtn");
+system("mkdir ~/mtn");
+system("mtn db init --db ~/mtn/neurospaces.mtn");
+system("mtn --db=~/mtn/neurospaces.mtn pull virtual2.cbi.utsa.edu:4696 \"*\"");
+system("mtn --db=~/mtn/neurospaces.mtn --branch=0 co ~/neurospaces-installer-mtn");
+
+chdir("$ENV{HOME}/neurospaces-installer-mtn");
+system("./configure");
+system("make");
+system("make install");
+system("sudo neurospaces_build --download-server downloads.sourceforge.net --check --regex 'model-container|heccer|ssp' --src-tag python-5 --src-dir /tmp/neurospaces/downloads --verbose --verbose --verbose >& output.out &");
+system("tail -f output.out");
+\end{verbatim}
+
+\end{document}
