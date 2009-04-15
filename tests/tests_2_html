@@ -603,7 +603,48 @@ options :
 		    {
 			my $alternatives = $read->{alternatives};
 
-			$read = "----- OR:\n" . join "\n----- OR:\n", @$alternatives;
+			if ($alternatives)
+			{
+			    $read = "----- OR:\n" . join "\n----- OR:\n", @$alternatives;
+			}
+			elsif ($read->{application_output_file})
+			{
+			    my $output = "application_output_file: $read->{application_output_file}\n";
+
+			    if (defined $read->{expected_output_file})
+			    {
+				$output .= "expected_output_file: $read->{expected_output_file}\n";
+			    }
+			    elsif (defined $read->{expected_output})
+			    {
+				$output .= "$read->{expected_output}";
+			    }
+			    else
+			    {
+				die "$0: unknown read specification";
+			    }
+
+			    $read = $output;
+			}
+			elsif ($read->{shell})
+			{
+			    $read = "shell: $read->{shell}\n";
+			}
+			else
+			{
+			    die "$0: unknown read specification";
+			}
+		    }
+
+		    # do some simple replacements for entities
+
+		    #t see also http://www.w3schools.com/tags/ref_entities.asp
+
+		    if ($read)
+		    {
+			$read =~ s/</&lt;/g;
+			$read =~ s/>/&gt;/g;
+			$read =~ s/&/&amp;/g;
 		    }
 
 		    $source->{"$entries. Expected output "} = $read;
