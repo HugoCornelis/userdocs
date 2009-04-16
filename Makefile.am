@@ -2,15 +2,17 @@
 
 SUBDIRS =
 
+dist_bin_SCRIPTS = \
+	bin/userdocs-build \
+	bin/userdocs-sync \
+	bin/userdocs-tag-filter \
+	bin/userdocs-version
+
 dist_noinst_SCRIPTS = \
 	MonotoneSetup.txt \
 	NewDocument/NewDocument.tex \
 	README/README.tex \
 	backward-compatibility/backward-compatibility.tex \
-	bin/userdocs-build \
-	bin/userdocs-sync \
-	bin/userdocs-tag-filter \
-	bin/userdocs-version \
 	bog-ch2/bog-ch2.pdf \
 	bog-ch3/bog-ch3.pdf \
 	bog-ch4/bog-ch4.pdf \
