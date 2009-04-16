@@ -73,7 +73,6 @@ test: check
 
 html-upload-prepare:
 	( cd tests && ./tests_2_html --introduction introduction.html )
-	$(RM) -fr html/htdocs/neurospaces_project/userdocs/
 	$(srcdir)/install-sh -d html
 	$(srcdir)/install-sh -d html/htdocs
 	$(srcdir)/install-sh -d html/htdocs/neurospaces_project
@@ -84,9 +83,11 @@ html-upload-prepare:
 html-upload: html-upload-prepare
 	scp -pr html/htdocs/* hcornelis,neurospaces@web.sourceforge.net:/home/groups/n/ne/neurospaces/htdocs/
 
+website-clean:
+	$(RM) -fr html/htdocs/neurospaces_project/userdocs/
+
 website-prepare:
 	userdocs-build --tags level1 --tags level2 --tags level3 --tags level4 --tags level5 --tags level6 --tags level7 --verbose
 
-website-upload: website-prepare html-upload
-
+website-upload: website-clean website-prepare html-upload
 
