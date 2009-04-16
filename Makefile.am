@@ -3,20 +3,22 @@
 SUBDIRS =
 
 dist_bin_SCRIPTS = \
+	bin/userdocs-build \
+	bin/userdocs-sync \
+	bin/userdocs-tag-filter \
+	bin/userdocs-version
+
+dist_noinst_SCRIPTS = \
 	MonotoneSetup.txt \
 	NewDocument/NewDocument.tex \
 	README/README.tex \
 	backward-compatibility/backward-compatibility.tex \
-	bin/userdocs-build \
-	bin/userdocs-sync \
-	bin/userdocs-tag-filter \
-	bin/userdocs-version \
 	bog-ch2/bog-ch2.pdf \
 	bog-ch3/bog-ch3.pdf \
 	bog-ch4/bog-ch4.pdf \
 	bog-ch5/bog-ch5.pdf \
 	bog-ch6/bog-ch6.pdf \
-	cable-theory/cable-theory.tex \
+	cable-theory/G3-Digression-CableTheory-V1.tex \
 	contents-level1/contents-level1.tex \
 	contents-level2/contents-level2.tex \
 	contents-level3/contents-level3.tex \
@@ -24,27 +26,27 @@ dist_bin_SCRIPTS = \
 	contents-level5/contents-level5.tex \
 	contents-level6/contents-level6.tex \
 	contents-level7/contents-level7.tex \
-	create-document/create-document.tex \
+	document-create/document-create.tex \
 	document-homepage/document-homepage.tex \
 	document-model-container/document-model-container.tex \
-	document-neurospaces-studio/document-neurospaces-studio.tex \
 	document-overview/document-overview.tex \
 	document-project-browser-screenshots/document-project-browser-screenshots.tex \
 	document-project-browser/document-project-browser.tex \
 	document-publication/document-publication.tex \
 	document-purkinje-cell-model/document-purkinje-cell-model.tex \
+	document-studio/document-studio.tex \
 	document-versionctrl/document-versionctrl.tex \
 	genesis-overview/genesis-overview.tex \
 	hh-model-details/hh-model-details.tex \
-	installation/installation.tex \
 	introduction-compneurosci-1/introduction-compneurosci-1.tex \
 	introduction-compneurosci-2/introduction-compneurosci-2.tex \
-	introduction-document-system/introduction-document-system.tex \
+	introduction-installation-developer/introduction-installation-developer.tex \
+	introduction-installation-user/introduction-installation-user.tex \
+	introduction-shell-tokens/introduction-shell-tokens.tex \
 	introduction-unix-linux/introduction-unix-linux.tex \
 	release-expand.config \
-	shell-basics/shell-basics.tex \
 	tests.config \
-	tutorial-jaeger/tutorial-jaeger.tex \
+	tutorial-jaeger/tutorial-jaeger.pdf \
 	tutorial1/tutorial1.tex \
 	tutorial2/tutorial2.tex
 
