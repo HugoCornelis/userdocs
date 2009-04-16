@@ -13,20 +13,18 @@ A step by step validation procedure for the RTXI ``injector'' module. This proce
 
 \subsection*{Validation Procedure}
 
-\subsubsection*{Activation of stimulus signal}
+\subsubsection*{Activate the stimulus signal}
 
 \begin{enumerate}
 	\item Start a terminal window.
-	\item In the terminal window enter {\tt rtxi}.
-	\item From the RTXI {\bf Control} drop-down menu select {\bf Plugin Loader}.
+	\item At the terminal window prompt enter {\tt rtxi}.
+	\item From the RTXI {\bf \underline Control} drop-down menu select {\bf Plugin Loader}.
 	\item From the {\bf Open File} dialog box select {\bf injector.so}.
 	\item In the new {\bf Open File} dialog box go to {\tt /home/Suterlab}.
 
 	\begin{enumerate}
-		\item Select {\bf Desktop}.
-		\item Select {\bf dynamic--clamp}.
-		\item Select {\bf stim-src}.
-		\item Select validation input file {\tt Offset400.txt}.
+		\item Select the folder {\bf Desktop/dynamic--clamp/stim-src}.
+		\item Select and open the validation input file {\tt Offset400.txt}.
 	\end{enumerate}
 
 	\item In the Injector control window popup
@@ -41,39 +39,42 @@ A step by step validation procedure for the RTXI ``injector'' module. This proce
 \end{enumerate}
 The square pulse waveform read from the input file ({\tt Offset400.txt}) is now being generated internally within RTXI by the {\tt injector.so} plugin.
 
-\subsubsection*{Visualizing the internally generated signal}
+\subsubsection*{Visualize the internally generated signal}
 
 \begin{enumerate}
-	\item From the RTXI {\bf Control} drop-down menu select {\bf Oscilloscope}. (The oscilloscope 
+	\item From the RTXI {\bf \underline Control} drop-down menu select {\bf Oscilloscope}. (The oscilloscope 
 		window should appear.)
-	\item Right click on the oscilloscope window, select {\bf Properties}.
-	\item In the oscilloscope properties dialog box set the {\bf Channel} drop-down boxes to the values:
+	\item Right click on the {\bf Oscilloscope} window, select {\bf Properties}.
+	\item In the {\bf Oscilloscope Properties} dialog box set the {\bf Channel} drop-down boxes to the values:
 		\begin{tabular}{ l c r }
 			 {\bf Injector2} & {\bf Output} & {\bf GoutGABA}
 		 \end{tabular}
 	\item Click the {\bf Active} button at right hand end of the {\bf Channel} boxes.
  	\item Set the {\bf Display Properties Scale} to 200\,mV/div.
- \item Click the {\bf Apply} button at the bottom left of the oscilloscope properties dialog box.
+ \item Click the {\bf Apply} button at the bottom left of the {\bf Oscilloscope Properties} dialog box.
 
 \end{enumerate}
-You should now see the generated square-pulse  with an amplitude of 2 divisions on the RTXI oscilloscope screen. The amplitude is equivalent to 400\,mV (see the scale in the bottom left of the oscilloscope window). Each pulse is 1\,ms in duration to give 5 pulses per 5\,ms division (Scale on bottom right hand side of the oscilloscope window gives the absolute duration of the window).
+You should now see the generated square-pulse  with an amplitude of 2 divisions on the RTXI oscilloscope screen. The amplitude is equivalent to 400\,mV (see the scale in the bottom left of the oscilloscope window). Each pulse is 1\,ms in duration to give 5 pulses per 5\,ms division (Scale on bottom right hand side of the oscilloscope window gives the absolute temporal duration of the oscilloscope window).
 
 \subsubsection*{Connect internally generated RTXI signal to the DAQ output}
 
 \begin{enumerate}
-	\item Select {\bf Connector} from the RTXI {\bf Control} drop-down menu.
-	\item In the {\bf Connector} dialog box set the {\bf Output Block} to {\bf Injector2}, the {\bf Input Block} 
-		to the DAQ board name (here {\bf NI\,PCIe--6251\,14}), and the {\bf Channel} to {\bf Analog 
-		Output 0}.
-	\item Click the right facing arrow ``$==>$'' to connect the RTXI output block to the DAQ board input block.
+	\item From the RTXI {\bf \underline Control} drop-down menu select {\bf Connector}.
+	\item In the {\bf Connector Panel} dialog box set the {\bf Output Block} to {\bf Injector2} and the {\bf 
+		Channel} to {\bf GoutGABA}.
+	\item In the {\bf Connector Panel} dialog box set the {\bf Input Block} to the DAQ board name (here 
+		{\bf NI\,PCIe--6251\,14}), and the {\bf Channel} to {\bf Analog Output 0}.
+	\item Click the right facing arrow ``$==>$'' to connect the RTXI output block to the DAQ board input 
+		block.
 \end{enumerate}
 
 \subsubsection*{Enable the analog output of the DAQ}
 
 \begin{enumerate}
-	\item From the RTXI {\bf Control} drop-down menu select {\bf System Control}  and check the {\bf 
-		Device} is the DAQ board (here {\bf NI\,PCIe--6251\,14}).
-	\item Set the {\bf Analog Channel} to {\bf Output channel number 0}.
+	\item From the RTXI {\bf \underline Control} drop-down menu select {\bf System Control}  and check 
+		the {\bf  Device} is the DAQ board (here {\bf NI\,PCIe--6251}).
+	\item In the {\bf System Control} panel set the {\bf Analog Channel} to {\bf Output} channel number 
+		{\bf 0}.
 	\item Click the {\bf Active} button on the right hand side.
 	\item Click the {\bf Apply} button at the bottom left hand side of the panel.
 	\item Configure the hardware oscilloscope to 5\,ms and 200\,mV.
@@ -82,8 +83,8 @@ You should now see the generated square-pulse  with an amplitude of 2 divisions 
 \subsubsection*{Configure RTXI software oscilloscope to monitor incoming signal}
 
 \begin{enumerate}
-	\item From the RTXI {\bf Control} drop-down menu select {\bf Oscilloscope}.
-	\item Right click on the oscilloscope panel and select {\bf Oscilloscope Properties}.
+	\item From the RTXI {\bf \underline Control} drop-down menu select {\bf Oscilloscope}.
+	\item Right click on the oscilloscope window and select the oscilloscope {\bf Properties}.
 	\item Select:
 		\begin{tabular}{ l c r }
 			{\bf NI\,PCIe--6251\,14} & {\bf Output} & {\bf Analog Input 0}
@@ -98,7 +99,7 @@ You should now see the generated square-pulse  with an amplitude of 2 divisions 
 
 \begin{enumerate}
 	\item From the RTXI {\bf Control} drop-down menu select {\bf System Control}
-	\item Select {\bf Device  NI\,PCIe--6251\,14} board.
+	\item Select {\bf Device  NI\,PCIe--6251}.
 	\item Select: {\bf Analog Input Channel Input 0}.
 	\item Click {\bf Active} button at right hand end.
 	\item Click {\bf Apply} button at bottom left hand side of panel.
