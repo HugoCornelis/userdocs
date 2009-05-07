@@ -1,0 +1,52 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+\section*{\it autogen}
+
+This document provides an overview of how the GENESIS build system is set up for development via an {\it autogen.sh} script and monotone.
+
+\subsection*{Introduction}
+
+Developing software with autotools across different system types and autotools versions can cause incompatibility problems. To prevent these problems from pestering developers, GENESIS implements an {\it autogen.sh} script which will automatically generate the necessary compilation files.
+
+\subsection*{\it autogen.sh}
+
+In each package you will find a script titled {\it autogen.sh} which is typically composed of four autotools commands (see \href{http://www.gnu.org/software/autoconf/}{http://www.gnu.org/software/autoconf/} or your {\it man} or {\it info} pages for more information about these commands):
+\begin{itemize}
+	\item {\it aclocal}
+	\item {\it autoconf}
+	\item {\it autoheader}
+	\item {\it automake -a --foreign}
+\end{itemize}
+Note that the {\it autoheader} command is not found in packages that contain only scripting code, for example {\it ssp} and the {\it gshell}.
+
+Running the {\it  autogen.sh} script automatically generates the following files:
+\begin{itemize}
+	\item {\it aclocal.m4}
+	\item {\it autom4ne.cache}
+	\item {\it config.guess}
+	\item {\it config.log}
+	\item {\it config.status}
+	\item {\it config.sub}
+	\item {\it depcomp}
+	\item {\it install-sh}
+	\item {\it missing}
+	\item {\it ylwrap}
+
+	\item {\it Makefile.in}
+	\item {\it configure}
+\end{itemize}
+% Running the {\it configure} script then generates the {\it Makefile} for the given software component.
+
+{\it Autogen.sh} generates an intermediate file called {\it Makefile.in} for each {\it Makefile.am} that is expected to produce the {\it Makefile} used to compile a part of the project in a directory. Successful execution of {\it autogen.sh} generates a script file named {\it configure}. The {\it configure} script is used to create the {\it Makefile}(s) called via the {\it make} command at the top level of a package's source code.
+
+Note that automatically generated files are not tracked in the GENESIS projects monotone repositories. The reason for this is that tracking files which change from system to system is wasteful and will ultimately frustrate forced document merge operations. 
+
+\end{document}

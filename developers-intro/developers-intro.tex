@@ -46,8 +46,6 @@ The following steps should be performed on your developer machine each time you 
 
 Use the command line arguments ``{\tt --enable your-software --regex your-software}'' to limit the operations given below to only the software component named, here as an example we use ``{\tt your-software}''. 
 
-{\bf NOTE:} To maintain font size and avoid text running off a printed page, in some examples given below we have replaced the argument string ``{\tt --enable your-software --regex your-software}' with an ``{\tt --arguments}'' flag. This flag should be replaced by the argument string when running the command. You will be warned for each case when this replacement is necessary. 
-
 \begin{itemize}
 	\item {\bf Add the new software component to the configuration of the {\it neurospaces\_build} script:} As an example, for the component named {\tt your-software}, you would add the following code block to the configuration file
 	\begin{footnotesize}
@@ -74,11 +72,9 @@ Use the command line arguments ``{\tt --enable your-software --regex your-softwa
 	\end{verbatim}
 	
 	\item {\bf Create the monotone repository:}
-	
-	{\bf WARNING:} In the following command replace ``{\tt --arguments}'' with ``{\tt --enable your-software --regex your-software}''.
-
 	\begin{verbatim}
-	   genesis > neurospaces_build --arguments --developer --repo-co
+	   genesis > neurospaces_build --enable your-software \
+	      --regex your-software --developer --repo-co
 	\end{verbatim}
 
 	\item {\bf Populate the project with files:} Use monotone to {\it checkin} your modifications.
@@ -97,28 +93,24 @@ Use the command line arguments ``{\tt --enable your-software --regex your-softwa
 	
 	\item {\bf Create the correct directory layout:}
 	\begin{verbatim}
-	   genesis > neurospaces_create_directories
+	genesis > neurospaces_create_directories
 	\end{verbatim}
 
 	\item {\bf Pull the repository from the server:} You can also create a new repository locally if needed.
-	
-	{\bf WARNING:} In the following command replace {\tt --arguments} with ``{\tt --enable your-software --regex your-software}''.
-
 	\begin{verbatim}
-	   genesis > neurospaces_pull --arguments
+	genesis > neurospaces_pull --enable your-software \
+	   --regex your-software
 	\end{verbatim}
 	
 	\item {\bf Update local source code with the latest source in the local repository, keeping local changes if any:}
-	
-	{\bf WARNING:} In the following command replace {\tt --arguments} with ``{\tt --enable your-software --regex your-software}''.
-
 	\begin{verbatim}
-	   genesis > neurospaces_update --arguments
+	genesis > neurospaces_update --enable your-software \
+	   --regex your-software
 	\end{verbatim}
 	
 	\item {\bf Recompile all software components, and link them against each other:} 
 	\begin{verbatim}
-	   genesis > neurospaces_install --configure
+	genesis > neurospaces_install --configure
 	\end{verbatim}
 	The {\tt --configure} argument enables configuration, which is needed for a new software component.
 \end{itemize}
