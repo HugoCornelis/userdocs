@@ -1,0 +1,118 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+\section*{Introduction to GENESIS for Developers}
+
+The documentation linked to here is for GENESIS users who want to contribute to the development of extended functionality of the GENESIS simulation platform, rather than for those users who want to do scientific simulations. (Although a single individual may want to do both.) Developer documentation provides links to more technical documentation supporting software development. It is assumed that you are familiar with the monotone version control software used by GENESIS (for more information see \href{../document-versionctrl/document-versionctrl.tex}{Version Control}). Links to the more general user documentation can be found at the \href{../document-homepage/document-homepage.tex}{documentation home page}. 
+%The documentation linked to here is for the use by people who are involved in the development and extension of GENESIS functionality.
+
+\subsection*{Becoming a GENESIS Developer}
+
+In principle anyone can become a GENESIS developer, all that is required is a desire to focus on tool and documentation development rather than model building and simulation. There are at least two ways to be a GENESIS  developer:
+
+\begin{itemize}
+	\item {\bf Member of the GENESIS Developers Federation:} To become a GENESIS developer send a request to 
+	\href{mailto:genesis@genesis-sim.org}{genesis@genesis-sim.org}. You will be registered as a GENESIS developer 
+	and receive a key that will allow you to pull and push documentation and code to the GENESIS repositories. To learn more 
+	about these GENESIS repositories and version control see \href{../document-versionctrl/document-versionctrl.tex}{here}.
+	
+	\item {\bf Independent Developer:} GENESIS is structured in such a way that it is possible to download the code from:\\
+	\href{\href{http://sourceforge.net/project/showfiles.php?group_id=162899}{http://sourceforge.net/project/showfiles.php?group
+	\_id=162899}}{\href{http://sourceforge.net/project/showfiles.php?group_id=162899}{http://sourceforge.net/project/showfiles.php?group\_id=162899}}).\\
+	You can then proceed entirely independently with your own code and documentation development. To do this see the 
+	\href{../introduction-installation-developer}{developer installation} documentation. It describes how to set up your own 
+	choice of version control and associated file repositories.
+
+\end{itemize}
+
+\section*{Creating a New Software Component}
+
+GENESIS contains many software components. The source code of the most important ones are publicly available from a central repository. (The server {\tt virtual2 at cbi} is coded as the default server in the {\it InstallerPackage}. This default can be overwritten using command line options.) Other software components can be made available from other sources. The installer package, when configured correctly, automatically incorporates software components from geographically distributed sources.
+
+New software components can be added to the configuration of the {\it neurospaces\_build} script of the {\it InstallerPackage}. All the other tools of the {\it InstallerPackage}, such as tools to compile and install, tools to synchronize the source code with remote servers, and tools to generate and publish documentation on a website will work with the new configuration.
+
+For smooth integration with the GENESIS installer, it is a requirement that the top level source directory of the new component contains a {\it configure} script, and a {\it Makefile} with the targets {\it clean}, {\it check}, {\it dist}, {\it distcheck}, {\it install}, {\it uninstall}, {\it docs}, {\it html-upload-prepare}, {\it html-upload}, and {\it dist-keywords}.
+
+\subsubsection*{Creating a new software component}
+
+The following steps should be performed on your developer machine each time you wish to start development of a new software component.
+
+Use the command line arguments ``{\tt --enable your-software --regex your-software}'' to limit the operations given below to only the software component named, here as an example we use ``{\tt your-software}''. 
+
+\begin{itemize}
+	\item {\bf Add the new software component to the configuration of the {\it neurospaces\_build} script:} As an example, for the component named {\tt your-software}, you would add the following code block to the configuration file
+	\begin{footnotesize}
+	\begin{verbatim}
+	'your-software' => {
+	   './configure' => ['--with-delete-operation'],
+	   directory => "$ENV{HOME}/neurospaces_project/your-software/source/snapshots/0",
+	   disabled => 0,
+	   order => 1,
+	   target_name => 'your-software',
+	   version_control => {
+	      port_number => 4693,
+	      repository => "$ENV{HOME}/neurospaces_project/MTN/your-software.mtn",
+	   },
+},
+	\end{verbatim}
+	\end{footnotesize}
+	This code block includes the directory name where sources are to be found, the build order, and version control information 
+	(note that the server port number cannot be changed at anytime).
+
+	\item {\bf Create the correct directory layout:}
+	\begin{verbatim}
+		genesis > neurospaces_create_directories
+	\end{verbatim}
+	
+	\item {\bf Create the monotone repository:}
+	\begin{verbatim}
+	   genesis > neurospaces_build --enable your-software \
+	      --regex your-software --developer --repo-co
+	\end{verbatim}
+
+	\item {\bf Populate the project with files:} Use monotone to {\it checkin} your modifications.
+
+	\item {\bf Configure your new monotone server:} Use the information in the configuration of the new software component.
+	
+	\item {\bf Synchronize your local monotone repository:} Use {\it neurospaces\_sync} to synchronize with the server repository.
+	
+\end{itemize} 
+
+\subsubsection*{Pushing a new software component to other computers}
+
+\begin{itemize}
+
+	\item {\bf Get a version of the installer package that contains configuration for the new software component.}
+	
+	\item {\bf Create the correct directory layout:}
+	\begin{verbatim}
+	genesis > neurospaces_create_directories
+	\end{verbatim}
+
+	\item {\bf Pull the repository from the server:} You can also create a new repository locally if needed.
+	\begin{verbatim}
+	genesis > neurospaces_pull --enable your-software \
+	   --regex your-software
+	\end{verbatim}
+	
+	\item {\bf Update local source code with the latest source in the local repository, keeping local changes if any:}
+	\begin{verbatim}
+	genesis > neurospaces_update --enable your-software \
+	   --regex your-software
+	\end{verbatim}
+	
+	\item {\bf Recompile all software components, and link them against each other:} 
+	\begin{verbatim}
+	genesis > neurospaces_install --configure
+	\end{verbatim}
+	The {\tt --configure} argument enables configuration, which is needed for a new software component.
+\end{itemize}
+
+\end{document}
