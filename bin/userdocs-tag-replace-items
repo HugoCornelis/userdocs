@@ -147,7 +147,7 @@ sub main
 
 	    #! assertion allows '"' to be escaped with a backslash
 
-	    while ($content =~ m/% start: $program_name $tag(.*\n)*% end: $program_name $tag\n/gs)
+	    if ($content =~ m/% start: $program_name $tag(.*\n)*% end: $program_name $tag\n/)
 	    {
 		my $position = pos($content);
 
@@ -158,7 +158,7 @@ sub main
 
 		# replace the next line with the new text
 
-		$content =~ s/\G% start: $program_name $tag\s*\n(.*\n)*% end: $program_name $tag\s*\n/% start: $program_name $tag\n$replacement\n% end: $program_name $tag\n/;
+		$content =~ s/% start: $program_name $tag\s*\n(.*\n)*% end: $program_name $tag[^\n]*\n/% start: $program_name $tag\n$replacement% end: $program_name $tag\n/g;
 
 		if ($option_verbose)
 		{
