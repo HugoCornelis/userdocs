@@ -1,0 +1,194 @@
+#!/usr/bin/perl -w
+#!/usr/bin/perl -w -d:ptkdb
+#
+
+
+use strict;
+
+
+use Getopt::Long;
+
+use YAML;
+
+
+my $program_name = $0;
+
+$program_name =~ s/.*\///;
+
+
+# parse options
+
+my $option_help;
+my $option_remove;
+my $option_verbose;
+
+
+sub read_cmd_line
+{
+    my $result
+	= GetOptions
+	    (
+	     "help!" => \$option_help,
+	     "remove!" => \$option_remove,
+	     "v|verbose+" => \$option_verbose,
+	    );
+
+    if ($option_help)
+    {
+	print
+	    "
+$0: replace tags with the itemized contents in a set of documents.
+
+$0 <options> <tag> <document1> ...
+
+options :
+    help            print usage information.
+    remove          remove content between delimiters.
+    verbose         set verbosity level.
+";
+
+	exit 1;
+    }
+
+}
+
+
+sub tag_expander
+{
+    my $tag = shift;
+
+    # expand the tag to its contents
+
+    undef $/;
+
+    my $result = YAML::Load(`userdocs-tag-filter '$tag'`);
+
+    # return result
+
+    return $result;
+}
+
+
+sub main
+{
+    read_cmd_line();
+
+    my $tag = shift @ARGV;
+
+    my $files = [ @ARGV, ];
+
+    if (!defined $tag)
+    {
+	die "$0: please give a tag value on the command line";
+    }
+
+    if (!@$files)
+    {
+	die "$0: please give a couple of filenames on the command line";
+    }
+
+    my $replacement;
+
+    # if have to remove
+
+    if ($option_remove)
+    {
+	$replacement = '';
+    }
+
+    # else
+
+    else
+    {
+	# expand the tag to its items
+
+	my $items = tag_expander($tag);
+
+	my $items_expanded
+	    = [
+	       map
+	       {
+		   "\\item \\href{../$_/$_.pdf}{\\bf \\underline{$_}}\n\n";
+	       }
+	       @$items,
+	      ];
+
+	my $items_expanded_text = join "", @$items_expanded;
+
+	$replacement = "\\begin{itemize}\n\n$items_expanded_text\n\\end{itemize}\n\n";
+    }
+
+    # loop over all files
+
+    foreach my $file (@$files)
+    {
+	if ($option_verbose)
+	{
+	    print STDERR "Expanding in $file\n";
+	}
+
+	my $content;
+
+	{
+	    # slurp content
+
+	    open my $descriptor, $file
+		or die $!;
+	    undef $/;
+	    $content = <$descriptor>;
+	    close $descriptor;
+	}
+
+	if ($content)
+	{
+	    my $old_content = $content;
+
+	    # loop over source text
+
+	    #! assertion allows '"' to be escaped with a backslash
+
+	    while ($content =~ m/% start: $program_name $tag(.*\n)*% end: $program_name $tag\n/gs)
+	    {
+		my $position = pos($content);
+
+		if ($option_verbose)
+		{
+		    print STDERR "For $file: found $program_name $tag, expanding ... \n";
+		}
+
+		# replace the next line with the new text
+
+		$content =~ s/\G% start: $program_name $tag\s*\n(.*\n)*% end: $program_name $tag\s*\n/% start: $program_name $tag\n$replacement\n% end: $program_name $tag\n/;
+
+		if ($option_verbose)
+		{
+		    print STDERR "For $file: new content at position $position is $replacement\n";
+		}
+
+		pos($content) = $position;
+	    }
+
+	    if ($option_verbose)
+	    {
+		print STDERR "Done for $file\n";
+	    }
+
+	    # if something has changed
+
+	    if ($old_content ne $content)
+	    {
+		# replace the file
+
+		open my $descriptor, ">$file"
+		    or die $!;
+		print $descriptor $content;
+		close $descriptor;
+	    }
+	}
+    }
+}
+
+
+main();
+
+

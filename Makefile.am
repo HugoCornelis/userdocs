@@ -6,6 +6,7 @@ dist_bin_SCRIPTS = \
 	bin/userdocs-build \
 	bin/userdocs-sync \
 	bin/userdocs-tag-filter \
+	bin/userdocs-tag-replace-items \
 	bin/userdocs-version
 
 dist_noinst_SCRIPTS = \
