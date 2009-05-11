@@ -215,6 +215,8 @@ sub main
     {
 	my $documents_yaml = `userdocs-tag-filter 2>&1 "$tag"`;
 
+	#t grep only those that have a 'published' tag
+
 	$documents
 	    = {
 	       %$documents,
