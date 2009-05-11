@@ -1,0 +1,179 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+\section*{\it InstallerPackage}
+
+Provides developer utilities that comply with GENESIS development standards. The most important one is the {\it neurospaces\_build} script used for automated software installation and maintenance on a set of software packages. Because this script has many options, most common operations are provided using frontends. Other scripts are related to version identification of the software, and source code documentation comments.
+
+Some of the utilities currently depend on monotone for source code version control due to their configuration. It is possible to work with other version control systems.
+
+\subsection*{Utilities}
+
+\subsubsection*{Main driver script}
+
+\begin{itemize}
+	\item {\it neurospaces\_build}\,\,\,Perform various build operations, do ``{\tt neurospaces\_build --help}'' to see how it works. 
+\end{itemize} 
+
+Also look at \href{../releaseprocedure/releaseprocedure.tex}{ReleaseProcedure}.
+
+\subsubsection*{Other utilities}
+
+These utilities take optional arguments of ``{\tt --regex}'' to select what packages they operate on, and ``{\tt --verbose}'' to run the command in a more verbose mode. 
+\begin{itemize}
+	\item {\it neurospaces\_packages}\,\,\,Show what packages are enabled on your local machine.
+	\item {\it neurospaces\_versions}\,\,\,Shows what versions of the GENESIS packages are installed.
+	\item {\it neurospaces\_create\_directories}\,\,\,Create the correct directory layout required for GENESIS development. 
+\end{itemize}
+\begin{itemize}
+	\item {\it neurospaces\_serve}\,\,\,Starts serving the source code repositories such that other people can {\it pull} and {\it sync} to your machine (note that this locks all your databases).
+	\item {\it neurospaces\_pull}\,\,\,Download the source code from a repository.
+	\item {\it neurospaces\_status}\,\,\,Check for local source code modification (no network required).
+	\item {\it neurospaces\_sync}\,\,\,Synchronize local source code modification with a repository.
+	\item {\it neurospaces\_update}\,\,\,Makes the local source code up to date using the repositories locally stored on your PC (so this is a local operation). 
+\end{itemize}
+\begin{itemize}
+	\item {\it neurospaces\_configure}\,\,\,(Re)configures the simulator software (requires packages to be installed already).
+	\item {\it neurospaces\_install}\,\,\,Install the simulator software.
+	\item {\it neurospaces\_uninstall}\,\,\,Uninstalls the simulator software (including the installer scripts, to reinstall you will have to go to the installer source code directory and run ``{\tt make \&\& sudo make install}'').
+	\item {\it neurospaces\_check}\,\,\,Check for correctness of the installed software.
+	\item {\it neurospaces\_clean}\,\,\,Clean source code directories. 
+\end{itemize}
+\begin{itemize}
+	\item {\it neurospaces\_docs}\,\,\,Builds documentation on your local machine.
+	\item {\it neurospaces\_website\_prepare}\,\,\,Prepare a version of the website on your local PC, and optionally upload it. 
+\end{itemize}
+\begin{itemize}
+	\item {\it neurospaces\_cron}\,\,\,A {\it cron} job based tester script. 
+\end{itemize}
+
+\subsubsection*{Soon also}
+
+\begin{itemize}
+	\item {\it neurospaces\_download}\,\,\,Download the simulator from a central archive.
+\end{itemize}
+For updating of version keywords the following are invoked automatically by the {\it neurospaces\_build} script:
+\begin{itemize}
+	\item {\it release\_extract}\,\,\,Extract release information from a monotone repository. When a Tag is set, that will be the result, otherwise the SHA of the current base revision will be the result.
+	\item {\it release\_expand}\,\,\,Do keyword expansion, see the {\it manpage} in the source for more details. 
+\end{itemize}
+
+\subsubsection*{Other}
+
+\begin{itemize}
+	\item {\it mcad2doxy}\,\,\,Convert obsoleted multicad documentation to {\it doxygen} format, this has been used to convert the 
+	{\tt Heccer} developer documentation to {\it doxygen} format. Other packages will follow. 
+\end{itemize}
+
+\subsubsection*{Examples}
+
+See also \href{../installing-from-scratch/installing-from-scratch.tex}{InstallingFromScratch}.
+
+Steps in building a release for the example {\it my-software} package (see also \href{../release-procedure/release-procedure.tex}{ReleaseProcedure}).
+
+\begin{enumerate}
+
+\item {\bf Tag the code:} The GENESIS convention for creating these tags, which must be unique, is to concatenate an identifier from the name of the lab of origin, the purpose and/or type of software (e.g. build, passive, active, python, userdocs, des, network, i64, purkinje, integration, pools, etc), with an appended numerical identifier. Here, for example we use the generic tag ``{\tt mylab-mysoftware-vnum}''.
+\begin{verbatim}
+genesis > neurospaces_build --tag mylab-mysoftware-vnum --verbose \
+   --verbose --verbose --no-compile --no-configure --no-install \
+   --regex my-software --developer
+\end{verbatim}
+
+\item {\bf Build the release for the tagged code:}
+\begin{verbatim}
+genesis > neurospaces_build --dist --verbose --verbose --verbose \
+   --no-compile --no-configure --no-install --regex my-software \
+   --developer
+\end{verbatim}
+
+\item {\bf Or with one command line:}
+\begin{verbatim}
+genesis > neurospaces_build --tag mylab-mysoftware-vnum --dist \
+   --verbose --verbose --verbose --no-compile --no-configure \
+   --no-install --regex my-software --developer
+\end{verbatim}
+
+\item {\bf Upload the tarballs:}
+\begin{verbatim}
+genesis > neurospaces_build --src-tag mylab-mysoftware-vnum \
+   --upload-server ftp://upload.sourceforge.net/incoming \
+   --verbose --verbose --verbose --no-compile --no-configure \
+   --no-install --regex my-software --developer
+\end{verbatim}
+Do not forget to edit release notes, tag the files as ``Any'', ``Source.gz'', etc. Due to the crappy sourceforge interfaces, this has to be done manually (anyone have any ideas?).
+
+\end{enumerate}
+
+\subsubsection*{Other Examples}
+
+\begin{enumerate}
+\item {\bf Find out what packages are known:}
+\begin{verbatim}
+genesis > neurospaces_build --help-packages
+\end{verbatim}
+
+\item {\bf Find out what operations on those packages are known:}
+\begin{verbatim}
+genesis > neurospaces_build --help-operations
+\end{verbatim}
+
+\item {\bf Find out what actions are taken by default:}
+\begin{verbatim}
+genesis > neurospaces_build --help
+\end{verbatim}
+and inspect the flags at the end of the output. At this time, {\tt --configure}, {\tt --compile}, and {\tt --install} are the default actions. 
+
+\item {\bf Find how operations are mapped to the packages:}
+\begin{verbatim}
+genesis > neurospaces_build --help-all
+\end{verbatim}
+
+\item {\bf Find out what actions are taken after options have been given:} For example
+\begin{verbatim}
+genesis > neurospaces_build --distcheck --help
+\end{verbatim}
+enables the {\it distcheck} target of the makefiles, in addition to the default actions. 
+
+\item {\bf Find out what shell commands will be run after options have been given, without really running the commands:}
+\begin{verbatim}
+genesis > neurospaces_build --verbose --distcheck --dry-run --developer
+\end{verbatim}
+
+\item {\bf Uninstall 4 packages on your developer machine:}
+\begin{verbatim}
+genesis > neurospaces_build --verbose --verbose --verbose \
+   --no-compile --no-configure --uninstall \
+   --regex '(my-software|heccer|ssp|studio)' --developer
+\end{verbatim}
+
+\item {\bf Build checked releases for four packages:}
+\begin{verbatim}
+genesis > neurospaces_build --verbose --verbose --verbose \
+   --no-compile --no-configure --no-install --distcheck 
+   --regex '(my-software|heccer|ssp|studio)' --developer
+\end{verbatim}
+
+\item {\bf After a modification of the installer package, reinstall it:}
+\begin{verbatim}
+genesis > neurospaces_build --enable installer --regex installer \
+   --developer --verbose --verbose --verbose
+\end{verbatim}
+
+\item {\bf Releasing the installer package on sourceforge:}
+\begin{verbatim}
+genesis > neurospaces_build --tag build-25 --dist --src-tag build-25 \
+   --upload-server ftp://upload.sourceforge.net/incoming \
+   --enable installer --regex '(installer)' --developer --verbose
+\end{verbatim}
+
+\end{enumerate}
+
+\end{document}

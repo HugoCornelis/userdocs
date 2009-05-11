@@ -29,6 +29,7 @@ The default contents of the YML file\,{\it descriptor.yml} include:
 ---
 description: Briefly describe file contents here. 
 tags:
+  - fname <file name>
   - genesis3
   - level2
   - draft
@@ -40,7 +41,7 @@ tags:
 
 \item {\tt description:} The default file description ``Briefly describe file contents here.'' should be replaced with a short description of the subject matter of the documentation file. It is recommended that this file description is less than 80 characters on a single line.
 
-\item {\tt tags:} List of any tags used to identify the current document. The default tags include {\tt -\,genesis3}, {\tt -\,level2}, and {\tt -\,draft}. These tags indicate that the document is part of the GENESIS 3 documentation system at the level of User Guides and Documentation (level\,2), and that it is an as yet unpublished document.
+\item {\tt tags:} List of any tags used to identify the current document. The default tags include {\tt fname}, {\tt -\,genesis3}, {\tt -\,level2}, and {\tt -\,draft}. These tags give the title of the document as seen in the documentation system, indicate that the document is part of the GENESIS 3 documentation system at the level of User Guides and Documentation (level\,2), and that it is an as yet unpublished document.
 
 For a document to be publishable, i.e. viewable with a browser, the {\tt -\,draft} tag must be replaced with the {\tt -\,published} tag. Note that a document cannot be published to be browser viewable in the absence of the {\tt -\,published} tag. New tags may be created just by adding them to this file, but see below for recommended tags.  Note that the tagging system is case insensitive to avoid tag duplication.
 
@@ -73,6 +74,8 @@ Importantly, the names of the descriptor file\,{\it descriptor.yml} and the dire
 \item {\bf Update the descriptor.yml file:} Each directory/file in the GENESIS documentation system is tagged on the basis of its content, for example:
 
 \begin{enumerate}
+
+\item {\bf Documentation file name:}  This tag is followed on the same line by the name of the documentation file. The document name is independent of and should be more human readable than the actual name of the document file it describes.
 
 \item  {\bf The GENESIS version:} This tags the version of GENESIS that the content of the document refers to, e.g. {\tt -\,genesis3}.
 
