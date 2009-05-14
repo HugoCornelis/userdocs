@@ -158,9 +158,15 @@ The executable contains the command sequence:
 \end{verbatim}
 and issuing the command
 \begin{verbatim}
-./bin/userdocs-sync
+   userdocs-sync
 \end{verbatim}
 simultaneously updates the monotone repository on the server and transfers any updates to documentation on the server to your local monotone repository. Once this has been done, the files that have been pushed to the monotone server are available for other registered users to pull down to their own local monotone repository and to check them out ({\it co}) to their local workspace.
 
+\subsection*{File Recovery}
+
+The latest version of a file can be recovered with the following command
+\begin{verbatim}
+   mtn revert <file name>
+\end{verbatim}
 
 \end{document}

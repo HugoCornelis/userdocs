@@ -16,7 +16,7 @@ The script installs a \href{http://www.centos.org/docs/5/html/yum/}{\it yum} rep
 
 Note that currently all values are hard coded, including architecture and distribution information.
 
-\subsection{Prerequisite Script Details}
+\subsection*{Prerequisite Script Details}
 
 \begin{verbatim}
 #!/usr/bin/perl -w
@@ -72,7 +72,8 @@ open( OUTFILE, '>/etc/yum.repos.d/graphviz-rhel.repo');
 print OUTFILE qq(
 [graphviz-stable]
 name=Graphviz - RHEL \$releasever - \$basearch
-baseurl=http://www.graphviz.org/pub/graphviz/stable/redhat/el\$releasever/\$basearch/os/
+baseurl=http://www.graphviz.org/pub/graphviz/stable/redhat/ \
+   el\$releasever/\$basearch/os/
 enabled=1
 gpgcheck=0
 
@@ -84,13 +85,15 @@ gpgcheck=0
 
 [graphviz-stable-debuginfo]
 name=Graphviz - RHEL - Debug
-baseurl=http://www.graphviz.org/pub/graphviz/stable/redhat/el\$releasever/\$basearch/debug/
+baseurl=http://www.graphviz.org/pub/graphviz/stable/redhat/el \
+   $releasever/\$basearch/debug/
 enabled=0
 gpgcheck=0
 
 [graphviz-snapshot]
 name=Graphviz - RHEL \$releasever - \$basearch
-baseurl=http://www.graphviz.org/pub/graphviz/development/redhat/el\$releasever/\$basearch/os/
+baseurl=http://www.graphviz.org/pub/graphviz/development/redhat/el \
+   $releasever/\$basearch/os/
 enabled=0
 gpgcheck=0
 
@@ -102,12 +105,14 @@ gpgcheck=0
 
 [graphviz-snapshot-debuginfo]
 name=Graphviz - RHEL - Debug
-baseurl=http://www.graphviz.org/pub/graphviz/development/redhat/el\$releasever/\$basearch/debug/
+baseurl=http://www.graphviz.org/pub/graphviz/development/redhat \
+   el$releasever/\$basearch/debug/
 enabled=0
 gpgcheck=0
 );
 print ("Installing DAG gpg key and repo files\n");
-system("rpm -Uhv http://apt.sw.be/redhat/el5/en/i386/rpmforge/RPMS/rpmforge-release-0.3.6-1.el5.rf.i386.rpm");
+system("rpm -Uhv http://apt.sw.be/redhat/el5/en/i386/rpmforge/RPMS/ \
+   rpmforge-release-0.3.6-1.el5.rf.i386.rpm");
 
 #this next part is here because vmware restore seems to mess up yum metadata
 system("yum clean all -y");
@@ -145,13 +150,16 @@ system("chmod u+x /usr/local/bin/mtn");
 system("mkdir ~/mtn");
 system("mtn db init --db ~/mtn/neurospaces.mtn");
 system("mtn --db=~/mtn/neurospaces.mtn pull virtual2.cbi.utsa.edu:4696 \"*\"");
-system("mtn --db=~/mtn/neurospaces.mtn --branch=0 co ~/neurospaces-installer-mtn");
+system("mtn --db=~/mtn/neurospaces.mtn --branch=0 \
+   co ~/neurospaces-installer-mtn");
 
 chdir("$ENV{HOME}/neurospaces-installer-mtn");
 system("./configure");
 system("make");
 system("make install");
-system("sudo neurospaces_build --download-server downloads.sourceforge.net --check --regex 'model-container|heccer|ssp' --src-tag python-5 --src-dir /tmp/neurospaces/downloads --verbose --verbose --verbose >& output.out &");
+system("sudo neurospaces_build --download-server downloads.sourceforge.net \
+   --check --regex 'model-container|heccer|ssp' --src-tag python-5 --src-dir \
+   /tmp/neurospaces/downloads --verbose --verbose --verbose >& output.out &");
 system("tail -f output.out");
 \end{verbatim}
 
