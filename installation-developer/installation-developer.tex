@@ -12,13 +12,13 @@
 
 \subsection*{Introduction}
 
-The federated development of GENESIS software components proceeds via a software buildbot machine that houses a \href{http://monotone.ca/}{\it monotone} server that is connectible over the internet. This allows source code changes to be properly merged using the functions available in\,{\it monotone}, regardless of the location where the changes have been made (at home, in your office, on the airplane). The build mechanism will always build the most up to date version of the code.
+The federated development of GENESIS software components proceeds via a software buildbot machine that houses a \href{http://monotone.ca/}{monotone} server that is connectible over the internet. This allows source code changes to be properly merged using the functions available in\,{\it monotone}, regardless of the location where the changes have been made (at home, in your office, on the airplane). The build mechanism will always build the most up to date version of the code.
 
 There are several prerequisites to the construction of a GENESIS development environment. These include:
 
 \begin{itemize}
 
-\item {\bf Required tools:}\,{\it gdb},\,{\it gcc}, and\,{\it (x)emacs} with the\,{\it elisp} packages. Note that the GENESIS \href{../document-ndf-file-format/document-ndf-file-format.pdf}{NDF file format} has a special\,{\it elisp} package for use with\,{\it (x)emacs}.
+\item {\bf Required tools:}\,{\it gdb},\,{\it gcc}, and\,{\it (x)emacs} with the\,{\it elisp} packages. Note that the GENESIS \href{../ndf-file-format/ndf-file-format.pdf}{NDF file format} has a special\,{\it elisp} package for use with\,{\it (x)emacs}.
 \item {\bf Version control:} Monotone is used as a statically linked binary (currently version 0.40). As it is a distributed version control system, developers can use,\,{\it monotone} to maintain and exchange their code repositories and executables. Monotone installation is supported by the\,{\it installer} module. 
 \item {\bf  The\,{\it installer}:} Can optionally be used to do initial directory layout. Importantly, the\,{\it installer} requires the correct directory layout.
 
@@ -61,7 +61,8 @@ You can then go to the directory of each individual software component, configur
 \end{verbatim}
 and to include running tests via the check target of the makefiles:
 \begin{verbatim}
-   neurospaces_build --check --developer --regex 'model-container|heccer|ssp|studio'
+   neurospaces_build --check --developer \
+      --regex 'model-container|heccer|ssp|studio'
 \end{verbatim}
 However, an\,{\it installer} has built that automates these actions while respecting the dependencies between the different modules (ie. each of the mentioned steps is done for each module in the correct order).
 
@@ -77,7 +78,7 @@ The main driver script performs various build operations:
 \begin{quote}
 \item {\it neurospaces\_build}
 \end{quote}
-Do ``{\tt neurospaces\_build --help}'' to see how it works.\\Also look at \href{}{Release Procedure}. 
+Do ``{\tt neurospaces\_build --help}'' to see how it works.\\Also look at \href{../release-procedure/release-procedure.pdf}{Release Procedure}. 
 
 \subsubsection*{Other utilities}
 
@@ -115,7 +116,7 @@ For updating of version keywords the following are invoked automatically by the\
 
 Other:
 \begin{quote}
-\item {\it mcad2doxy}: Convert obsoleted {\it multicad} documentation to \href{}{doxygen} format. This has been used to convert \href{}{Heccer} developer documentation to doxygen format. Other modules will follow. 
+\item {\it mcad2doxy}: Convert obsoleted {\it multicad} documentation to \href{http://www.stack.nl/~dimitri/doxygen/}{Doxygen} format. This has been used to convert \href{../heccer/heccer.pdf}{Heccer} developer documentation to Doxygen format. Other modules will follow. 
 \end{quote}
 
 \section*{Installing GENESIS on a Unix System}
@@ -198,21 +199,27 @@ not
 \end{itemize}
 \end{enumerate}
 
-For some Linux distributions (???) these modules may be installed automatically with a \href{../document-prerequisite-script/document-prerequisite-script.pdf}{\it Prerequisite Script} which provides an optional installer script for prerequisites and automated testing.
+For some Linux distributions (???) these modules may be installed automatically with a \href{../prerequisite-script/prerequisite-script.pdf}{\it Prerequisite Script} which provides an optional installer script for prerequisites and automated testing.
 
 \subsection*{Linux Installation}
 
 In summary, first install the {\it installer} module manually (see above), then to download and install the available GENESIS modules enter:
 \begin{verbatim}
-   neurospaces_build --download-server downloads.sourceforge.net --src-tag build-25 --src-dir <path-to-a-directory-for-unpacking> --regex 'heccer|ssp|studio|model-container' --verbose
+   neurospaces_build --download-server downloads.sourceforge.net \
+      --src-tag build-25 --src-dir <path-to-a-directory-for-unpacking> \
+      --regex 'heccer|ssp|studio|model-container' --verbose
 \end{verbatim}
 To check the installation, enter:
 \begin{verbatim}
-   neurospaces_build --check --no-install --src-tag build-25 --src-dir <path-to-a-directory-for-unpacking> --regex 'heccer|ssp|studio|model-container' --verbose
+   neurospaces_build --check --no-install --src-tag build-25 \
+      --src-dir <path-to-a-directory-for-unpacking> \
+      --regex 'heccer|ssp|studio|model-container' --verbose
 \end{verbatim}
 Or download, install, and check with a single command:
 \begin{verbatim}
-   neurospaces_build --download-server downloads.sourceforge.net --src-tag build-25 --src-dir <path-to-a-directory-for-unpacking> --check --regex 'heccer|ssp|studio|model-container' --verbose
+   neurospaces_build --download-server downloads.sourceforge.net \
+      --src-tag build-25 --src-dir <path-to-a-directory-for-unpacking> \
+      --check --regex 'heccer|ssp|studio|model-container' --verbose
 \end{verbatim}
 
 Alternatively, we now give a full example that shows how to set up the\,{\it installer} repository on your local machine, check out the code and then use the\,{\it installer} to install all the currently available modules:
@@ -257,31 +264,63 @@ Alternatively, we now give a full example that shows how to set up the\,{\it ins
     config.status: creating Makefile
 
    0 $ make
-    make[1]: Entering directory `/local_home/hugo/neurospaces_project/installer/source/snapshots/0'
+    make[1]: Entering directory `/local_home/hugo/neurospaces_project/  \
+       installer/source/snapshots/0'
     make[1]: Nothing to be done for `all-am'.
-    make[1]: Leaving directory `/local_home/hugo/neurospaces_project/installer/source/snapshots/0'
+    make[1]: Leaving directory `/local_home/hugo/neurospaces_project/  \
+       installer/source/snapshots/0'
 
    0 $ sudo make install
-    make[1]: Entering directory `/local_home/hugo/neurospaces_project/installer/source/snapshots/0'
-    make[2]: Entering directory `/local_home/hugo/neurospaces_project/installer/source/snapshots/0'
+    make[1]: Entering directory `/local_home/hugo/neurospaces_project/ \
+       installer/source/snapshots/0'
+    make[2]: Entering directory `/local_home/hugo/neurospaces_project/ \
+       installer/source/snapshots/0'
     test -z "/usr/local/bin" || mkdir -p -- "/usr/local/bin"
     /usr/bin/install -c 'bin/mcad2doxy' '/usr/local/bin/mcad2doxy'
-    /usr/bin/install -c 'bin/neurospaces_build' '/usr/local/bin/neurospaces_build'
-    /usr/bin/install -c 'bin/neurospaces_status' '/usr/local/bin/neurospaces_status'
-    /usr/bin/install -c 'bin/neurospaces_versions' '/usr/local/bin/neurospaces_versions'
+    /usr/bin/install -c 'bin/neurospaces_build' '/usr/local/bin/ \
+       neurospaces_build'
+    /usr/bin/install -c 'bin/neurospaces_status' '/usr/local/bin/ \
+       neurospaces_status'
+    /usr/bin/install -c 'bin/neurospaces_versions' '/usr/local/bin/ \
+       neurospaces_versions'
     /usr/bin/install -c 'bin/release-expand' '/usr/local/bin/release-expand'
     /usr/bin/install -c 'bin/release-extract' '/usr/local/bin/release-extract'
-    test -z "/usr/local/neurospaces/installer" || mkdir -p -- "/usr/local/neurospaces/installer"
-    /local_home/hugo/neurospaces_project/installer/source/snapshots/0/install-sh -c -m 644 'tests/introduction.html' '/usr/local/neurospaces/installer/tests/introduction.html'
-    /local_home/hugo/neurospaces_project/installer/source/snapshots/0/install-sh -c -m 644 'tests/specifications/global.t' '/usr/local/neurospaces/installer/tests/specifications/global.t'
-    /local_home/hugo/neurospaces_project/installer/source/snapshots/0/install-sh -c -m 644 'tests/specifications/downloads.t' '/usr/local/neurospaces/installer/tests/specifications/downloads.t'
-    /local_home/hugo/neurospaces_project/installer/source/snapshots/0/install-sh -c -m 644 'tests/specifications/developer.t' '/usr/local/neurospaces/installer/tests/specifications/developer.t'
-    /local_home/hugo/neurospaces_project/installer/source/snapshots/0/install-sh -c -m 644 'tests/specifications/strings/neurospaces_build--no-compile--no-configure--no-install--regex-installer--dry-run--developer--verbose--verbose--verbose.txt' '/usr/local/neurospaces/installer/tests/specifications/strings/neurospaces_build--no-compile--no-configure--no-install--regex-installer--dry-run--developer--verbose--verbose--verbose.txt'
-    /local_home/hugo/neurospaces_project/installer/source/snapshots/0/install-sh -c -m 644 'tests/specifications/strings/neurospaces_build--tag-build-10--no-compile--no-configure--no-install--regex-installer--dry-run--developer--verbose--verbose--verbose.txt' '/usr/local/neurospaces/installer/tests/specifications/strings/neurospaces_build--tag-build-10--no-compile--no-configure--no-install--regex-installer--dry-run--developer--verbose--verbose--verbose.txt'
-    make[2]: Leaving directory `/local_home/hugo/neurospaces_project/installer/source/snapshots/0'
-    make[1]: Leaving directory `/local_home/hugo/neurospaces_project/installer/source/snapshots/0'
+    test -z "/usr/local/neurospaces/installer" || mkdir -p -- "/usr/local/ \
+       neurospaces/installer"
+    /local_home/hugo/neurospaces_project/installer/source/snapshots/0/ \
+       install-sh -c -m 644 'tests/introduction.html' '/usr/local/neurospaces/ \
+       installer/tests/introduction.html'
+    /local_home/hugo/neurospaces_project/installer/source/snapshots/0/ \
+       install-sh -c -m 644 'tests/specifications/global.t' '/usr/local/neurospaces/ \
+       installer/tests/specifications/global.t'
+    /local_home/hugo/neurospaces_project/installer/source/snapshots/0/ \
+       install-sh -c -m 644 'tests/specifications/downloads.t' '/usr/local/ \
+       neurospaces/installer/tests/specifications/downloads.t'
+    /local_home/hugo/neurospaces_project/installer/source/snapshots/0/ \
+    install-sh -c -m 644 'tests/specifications/developer.t' '/usr/local/ \
+    neurospaces/installer/tests/specifications/developer.t'
+    /local_home/hugo/neurospaces_project/installer/source/snapshots/0/ \
+       install-sh -c -m 644 'tests/specifications/strings/neurospaces_build \
+       --no-compile--no-configure--no-install--regex-installer--dry-run \
+       --developer--verbose--verbose--verbose.txt' '/usr/local/neurospaces/ \
+       installer/tests/specifications/strings/neurospaces_build--no-compile \
+       --no-configure--no-install--regex-installer--dry-run--developer \
+       --verbose--verbose--verbose.txt'
+    /local_home/hugo/neurospaces_project/installer/source/snapshots/0/ \
+       install-sh -c -m 644 'tests/specifications/strings/neurospaces_build \
+       --tag-build-10--no-compile--no-configure--no-install--regex-installer \
+       --dry-run--developer--verbose--verbose--verbose.txt' '/usr/local/ \
+       neurospaces/installer/tests/specifications/strings/neurospaces_build \
+       --tag-build-10--no-compile--no-configure--no-install--regex-installer \
+       --dry-run--developer--verbose--verbose--verbose.txt'
+    make[2]: Leaving directory `/local_home/hugo/neurospaces_project/ \
+       installer/source/snapshots/0'
+    make[1]: Leaving directory `/local_home/hugo/neurospaces_project/ 
+       installer/source/snapshots/0'
 
-   0 $ neurospaces_build --repo-pull virtual2.cbi.utsa.edu --repo-co --directories-create --verbose --developer --regex 'heccer|model-container|ssp'
+   0 $ neurospaces_build --repo-pull virtual2.cbi.utsa.edu --repo-co \
+      --directories-create --verbose --developer \
+      --regex 'heccer|model-container|ssp'
    
 \end{verbatim}
 
@@ -312,23 +351,29 @@ Now the\,{\it installer} has been installed.
 
 This is done automatically by the GENESIS\,{\it installer}. Use the following command line to install version {\tt des-10} of all modules:
 \begin{verbatim}
-   neurospaces_build --download-server downloads.sourceforge.net --regex 'model-container|heccer|ssp|studio' --src-tag des-10 --src-dir $HOME/automated
+   neurospaces_build --download-server downloads.sourceforge.net \
+      --regex 'model-container|heccer|ssp|studio' --src-tag des-10 \
+      --src-dir $HOME/automated
 \end{verbatim}
 To select individual modules, use the {\tt --regex} option, e.g. to install only {\it heccer}, enter:
 \begin{verbatim}
-   neurospaces_build --download-server downloads.sourceforge.net --regex heccer --src-tag des-10 --src-dir $HOME/automated
+   neurospaces_build --download-server downloads.sourceforge.net \
+      --regex heccer --src-tag des-10 --src-dir $HOME/automated
 \end{verbatim}
 Currently, not all modules are available for download. So always use the option {\tt --regex 'model-container|heccer|ssp|studio'}.
 
 If you don't trust what is going to happen, first use the {\tt --verbose option} (repeat it three times, see following command) and the {\tt --dry-run} option and pipe to {\it less} (or {\it more}):
 \begin{verbatim}
-   neurospaces_build --download-server downloads.sourceforge.net --src-tag des-10 --src-dir $HOME/automated --verbose --verbose --verbose --dry-run | less
+   neurospaces_build --download-server downloads.sourceforge.net \
+      --src-tag des-10 --src-dir $HOME/automated --verbose --verbose \
+      --verbose --dry-run | less
 \end{verbatim}
 Now go for a coffee.  
 
 \item {\bf Test modules with the {\tt --check option}}:
 \begin{verbatim}
-   neurospaces_build --download-server downloads.sourceforge.net --src-tag des-10 --src-dir $HOME/automated --check
+   neurospaces_build --download-server downloads.sourceforge.net \
+      --src-tag des-10 --src-dir $HOME/automated --check
 \end{verbatim}
 Now go for another coffee (for about an hour this time). All modules will be tested. This takes some time. 
 
