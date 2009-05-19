@@ -13,7 +13,7 @@ dist_noinst_SCRIPTS = \
 	MonotoneSetup.txt \
 	NewDocument/NewDocument.tex \
 	README/README.tex \
-autogen/autogen.tex \
+	autogen/autogen.tex \
 	backward-compatibility/backward-compatibility.tex \
 	bog-ch2/bog-ch2.pdf \
 	bog-ch3/bog-ch3.pdf \
@@ -32,42 +32,38 @@ autogen/autogen.tex \
 	contents-level7/contents-level7.tex \
 	developers-intro/developers-intro.tex \
 	document-create/document-create.tex \
-	document-homepage/document-homepage.tex \
-	document-model-container/document-model-container.tex \
-	document-overview/document-overview.tex \
-	document-project-browser-screenshots/document-project-browser-screenshots.tex \
-	document-project-browser/document-project-browser.tex \
-	document-publication/document-publication.tex \
-	document-purkinje-cell-model/document-purkinje-cell-model.tex \
-	document-studio/document-studio.tex \
-	document-versionctrl/document-versionctrl.tex \
+	documentation-homepage/documentation-homepage.tex \
+	documentation-overview/documentation-overview.tex \
+	studio/studio.tex \
+	version-control/version-control.tex \
 	g2-gap-junction \
 	genesis-overview/genesis-overview.tex \
 	gshell/gshell.tex \
 	heccer/heccer.tex
 	hh-model-details/hh-model-details.tex \
+	installation-developer/installation-developer.tex \
+	installation-user/installation-user.tex \
 	installerpackage/installerpackage.tex \
-	introduction-compneurosci-1/introduction-compneurosci-1.tex \
-	introduction-compneurosci-2/introduction-compneurosci-2.tex \
-	introduction-installation-developer/introduction-installation-developer.tex \
-	introduction-installation-user/introduction-installation-user.tex \
-	introduction-shell-tokens/introduction-shell-tokens.tex \
-	introduction-unix-linux/introduction-unix-linux.tex \
 	model-container/model-container.tex \
 	ndf-file-format/ndf-file-format.tex \
 	notation/notation.tex \
 	pclamp/pclamp.tex \
 	prerequisite/prerequisite.tex \
+	project-browser/project-browser.tex \
+	project-browser-screenshots/project-browser-screenshots.tex \
+	publication/publication.tex \
 	purkinje-cell-model/purkinje-cell-model.tex \
 	release-expand.config \
 	reserved-words/reserved-words.tex \
 	rtxi-injector-validation/rtxi-injector-validation.tex \
+	shell-tokens/shell-tokens.tex \
 	ssp/ssp.tex \
 	studio/studio.tex
 	tests.config \
 	tutorial-jaeger/tutorial-jaeger.pdf \
 	tutorial1/tutorial1.tex \
 	tutorial2/tutorial2.tex \
+	unix-linux/unix-linux.tex \
 	work-flow/work-flow.tex
 
 RELEASE_MAJOR=`release-extract --major`
