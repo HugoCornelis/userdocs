@@ -13,6 +13,7 @@ dist_noinst_SCRIPTS = \
 	MonotoneSetup.txt \
 	NewDocument/NewDocument.tex \
 	README/README.tex \
+autogen/autogen.tex \
 	backward-compatibility/backward-compatibility.tex \
 	bog-ch2/bog-ch2.pdf \
 	bog-ch3/bog-ch3.pdf \
@@ -20,6 +21,8 @@ dist_noinst_SCRIPTS = \
 	bog-ch5/bog-ch5.pdf \
 	bog-ch6/bog-ch6.pdf \
 	cable-theory/cable-theory.tex \
+	compneurosci-1/compneurosci-1.tex \
+	compneurosci-2/compneurosci-2.tex \
 	contents-level1/contents-level1.tex \
 	contents-level2/contents-level2.tex \
 	contents-level3/contents-level3.tex \
@@ -27,6 +30,7 @@ dist_noinst_SCRIPTS = \
 	contents-level5/contents-level5.tex \
 	contents-level6/contents-level6.tex \
 	contents-level7/contents-level7.tex \
+	developers-intro/developers-intro.tex \
 	document-create/document-create.tex \
 	document-homepage/document-homepage.tex \
 	document-model-container/document-model-container.tex \
@@ -37,19 +41,34 @@ dist_noinst_SCRIPTS = \
 	document-purkinje-cell-model/document-purkinje-cell-model.tex \
 	document-studio/document-studio.tex \
 	document-versionctrl/document-versionctrl.tex \
+	g2-gap-junction \
 	genesis-overview/genesis-overview.tex \
+	gshell/gshell.tex \
+	heccer/heccer.tex
 	hh-model-details/hh-model-details.tex \
+	installerpackage/installerpackage.tex \
 	introduction-compneurosci-1/introduction-compneurosci-1.tex \
 	introduction-compneurosci-2/introduction-compneurosci-2.tex \
 	introduction-installation-developer/introduction-installation-developer.tex \
 	introduction-installation-user/introduction-installation-user.tex \
 	introduction-shell-tokens/introduction-shell-tokens.tex \
 	introduction-unix-linux/introduction-unix-linux.tex \
+	model-container/model-container.tex \
+	ndf-file-format/ndf-file-format.tex \
+	notation/notation.tex \
+	pclamp/pclamp.tex \
+	prerequisite/prerequisite.tex \
+	purkinje-cell-model/purkinje-cell-model.tex \
 	release-expand.config \
+	reserved-words/reserved-words.tex \
+	rtxi-injector-validation/rtxi-injector-validation.tex \
+	ssp/ssp.tex \
+	studio/studio.tex
 	tests.config \
 	tutorial-jaeger/tutorial-jaeger.pdf \
 	tutorial1/tutorial1.tex \
-	tutorial2/tutorial2.tex
+	tutorial2/tutorial2.tex \
+	work-flow/work-flow.tex
 
 RELEASE_MAJOR=`release-extract --major`
 RELEASE_MINOR=`release-extract --minor`

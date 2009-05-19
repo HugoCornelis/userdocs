@@ -12,19 +12,19 @@
 
 The optimization of a neuronal solver ultimately focuses on accuracy and performance. Transforming complex biological parameters into precomputed tables and optimizing for a high CPU cache hit ratio are the most important features for a good solver, and gives the solver a performance boost of about a factor four to six.
 
-Heccer is a fast compartmental solver, that is based on {\it hsolve} of the GENESIS simulator. To find out more about the numerical principles implemented in Heccer see \href{}{here}. The efficiency of Heccer is explained in \href{}{??}.
+Heccer is a fast compartmental solver, that is based on {\it hsolve} of the GENESIS simulator. To find out more about the numerical principles implemented in Heccer see \href{}{??}. The efficiency of Heccer is explained in \href{}{??}.
 
 Heccer can be instantiated from C, or from Perl (or other scripting languages). It is also possible to link Heccer directly to Matlab. Heccer comes with Swig interface definitions, such that linking Heccer to any other technologies should be easy.
 
 Adding new channel types to Heccer can be done using callouts. The callout mechanism allows for general user extensions that contribute a current or conductance at a particular time in a simulation. Heccer automatically integrates this contribution into the membrane potential.
 
-The source code of Heccer contains inline developer documentation. As yet, there is no stable API but the \href{}{Swig} interfaces for Heccer are not expected to change much. If you are interested in this, look at \href{}{a simple example} for driving Heccer from perl, and \href{}{another example} with active channels and a calcium pool. Heccer is currently capable of simulating Purkinje cells (see the \href{}{Purkinje cell model}), and, at first evaluation, runs slightly faster than {\it hsolve} (It is difficult to assess why exactly: while the {\it hsolve} implementation is much more optimized than Heccer's, the Heccer design is slightly better optimized than {\it hsolve}'s.).
+The source code of Heccer contains inline developer documentation. As yet, there is no stable API but the \href{http://www.swig.org/}{SWIG} interfaces for Heccer are not expected to change much. If you are interested in this, look at \href{}{a simple example} for driving Heccer from perl, and \href{}{another example} with active channels and a calcium pool. Heccer is currently capable of simulating Purkinje cells (see the \href{../purkinje-cell-model/purkinje-cell-model.pdf}{Purkinje cell model}), and, at first evaluation, runs slightly faster than {\it hsolve} (It is difficult to assess why exactly: while the {\it hsolve} implementation is much more optimized than Heccer's, the Heccer design is slightly better optimized than {\it hsolve}'s.).
 
 \subsection*{Heccer Features}
 
 \begin{itemize}
 
-\item Can be driven from C, Perl, SSP, and fetches the model parameters from the \href{../document-model-container}{Model Container}.
+\item Can be driven from C, Perl, SSP, and fetches the model parameters from the \href{../model-container/model-container.pdf}{Model Container}.
 \item Computes the behaviour of single neurons.
 \item Integrates Hodgkin-Huxley-like channels.
 \item Integrates exponentially decaying calcium concentrations and Nernst potentials. Interfaces will be provided for more elaborate calcium models.

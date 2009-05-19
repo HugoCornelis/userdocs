@@ -10,7 +10,7 @@
 
 \section*{Introduction to GENESIS for Developers}
 
-The documentation linked to here is for GENESIS users who want to contribute to the development of extended functionality of the GENESIS simulation platform, rather than for those users who want to do scientific simulations. (Although a single individual may want to do both.) Developer documentation provides links to more technical documentation supporting software development. It is assumed that you are familiar with the monotone version control software used by GENESIS (for more information see \href{../document-versionctrl/document-versionctrl.tex}{Version Control}). Links to the more general user documentation can be found at the \href{../document-homepage/document-homepage.tex}{documentation home page}. 
+The documentation linked to here is for GENESIS users who want to contribute to the development of extended functionality of the GENESIS simulation platform, rather than for those users who want to do scientific simulations. (Although a single individual may want to do both.) Developer documentation provides links to more technical documentation supporting software development. It is assumed that you are familiar with the monotone version control software used by GENESIS (for more information see \href{../version-control/version-control.pdf}{Version Control}). Links to the more general user documentation can be found at the \href{../documentation-homepage/documentation-homepage.pdf}{documentation home page}. 
 %The documentation linked to here is for the use by people who are involved in the development and extension of GENESIS functionality.
 
 \subsection*{Becoming a GENESIS Developer}
@@ -21,13 +21,12 @@ In principle anyone can become a GENESIS developer, all that is required is a de
 	\item {\bf Member of the GENESIS Developers Federation:} To become a GENESIS developer send a request to 
 	\href{mailto:genesis@genesis-sim.org}{genesis@genesis-sim.org}. You will be registered as a GENESIS developer 
 	and receive a key that will allow you to pull and push documentation and code to the GENESIS repositories. To learn more 
-	about these GENESIS repositories and version control see \href{../document-versionctrl/document-versionctrl.tex}{here}.
+	about these GENESIS repositories and version control see \href{../version-control/version-control.pdf}{version control}.
 	
 	\item {\bf Independent Developer:} GENESIS is structured in such a way that it is possible to download the code from:\\
-	\href{\href{http://sourceforge.net/project/showfiles.php?group_id=162899}{http://sourceforge.net/project/showfiles.php?group
-	\_id=162899}}{\href{http://sourceforge.net/project/showfiles.php?group_id=162899}{http://sourceforge.net/project/showfiles.php?group\_id=162899}}).\\
+	\href{http://sourceforge.net/project/showfiles.php?group_id=162899}{http://sourceforge.net/project/showfiles.php?group\_id=162899}.\\
 	You can then proceed entirely independently with your own code and documentation development. To do this see the 
-	\href{../introduction-installation-developer}{developer installation} documentation. It describes how to set up your own 
+	\href{../installation-developer/installation-developer.pdf}{developer installation} documentation. It describes how to set up your own 
 	choice of version control and associated file repositories.
 
 \end{itemize}
@@ -81,6 +80,29 @@ Configuration is normally processed as follows:
 The merging algorithm is defined in the \href{http://search.cpan.org/dist/Data-Utilities/}{Data-Utilities package}, available from \href{http://www.cpan.org/}{CPAN}.
 
 There is a default configuration available in the configurator package (UNDER CONSTRUCTION). 
+
+\section*{Build Procedure}
+
+You can go to the directory of each individual software component, configure, compile, check and install the package. The {\tt InstallerPackage} has built in support to automate these actions, while respecting the dependencies between the packages (ie. each of the mentioned steps is done for each package in the correct order).
+
+Examples:
+
+\begin{itemize}
+
+\item {\bf A simple build for packages model\_container, heccer, ssp, studio on a developer machine:}
+\begin{verbatim}
+neurospaces_build --developer \
+   --regex 'model-container|heccer|ssp|studio'
+\end{verbatim}
+
+\item {\bf Run tests via the check target of the makefiles on a developer machine:}
+\begin{verbatim}
+neurospaces_build --check --developer \
+   --regex 'model-container|heccer|ssp|studio'
+\end{verbatim}
+\end{itemize}
+
+For more information, see the details of the \href{../installerpackage/installerpackage.pdf}{InstallerPackage}. 
 
 \section*{Creating a New Software Component}
 
@@ -177,7 +199,7 @@ We now explain how to {\it checkout} code manually when not using the installer.
 
 \subsubsection*{Serving your source code}
 
-If you want someone else to {\it sync} their code with what you have on your laptop, you can conveniently convert your laptop to a source code server using the command {\it neurospaces\_serve} (see the \href{../installerpackage/installerpackage.tex}{InstallerPackage}). Other people can now connect to your laptop using, for example
+If you want someone else to {\it sync} their code with what you have on your laptop, you can conveniently convert your laptop to a source code server using the command {\it neurospaces\_serve} (see the \href{../installerpackage/installerpackage.pdf}{InstallerPackage}). Other people can now connect to your laptop using, for example
 \begin{verbatim}
    neurospaces_sync --repo-sync <ip-address-of-your-laptop>
 \end{verbatim}
@@ -279,7 +301,7 @@ If this is successful it will indicate that a packet has been read. You can stor
 
 \section*{Accessing the Neurospaces Repository from the {\it InstallerPackage}}
 
-The \href{../genesis-repository/genesis-repository.tex}{GENESIS Repository} is accessible from the \href{../installerpackage/installerpackage.tex}{InstallerPackage}. Important for this feature to work is to have the correct directory layout on your \href{../developermachine/developermachine.tex}{DeveloperMachine}.
+The \href{../genesis-repository/genesis-repository.pdf}{GENESIS Repository} is accessible from the \href{../installerpackage/installerpackage.pdf}{InstallerPackage}. Important for this feature to work is to have the correct directory layout on your \href{../developer-machine/developer-machine.pdf}{DeveloperMachine}.
 
 In summary, what you want to do is pull the set of default packages from the server(s):
 \begin{verbatim}
@@ -292,7 +314,7 @@ This command has options that inhibit the default actions of configuration, comp
    neurospaces_build --repo-pull virtual2.cbi.utsa.edu \
       --repo-co --verbose --developer --directories-create
 \end{verbatim}
-There are developer friendly frontends to the {\it neurospaces\_build} script in the \href{../installerpackage/installerpackage.tex}{InstallerPackage}:
+There are developer friendly frontends to the {\it neurospaces\_build} script in the \href{../installerpackage/installerpackage.pdf}{InstallerPackage}:
 \begin{itemize}
 \item {\it neurospaces\_serve}\,\,\,Starts serving the source code repositories such that other people can {\it pull} and {\it sync} to your machine (note that this locks all your databases).
 \item {\it neurospaces\_pull}\,\,\,Download the source code from a repository.
