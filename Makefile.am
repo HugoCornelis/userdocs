@@ -32,11 +32,15 @@ dist_noinst_SCRIPTS = \
 	contents-level7/contents-level7.tex \
 	developers-intro/developers-intro.tex \
 	document-create/document-create.tex \
-	documentation-homepage/documentation-homepage.tex \
-	documentation-overview/documentation-overview.tex \
-	studio/studio.tex \
-	version-control/version-control.tex \
-	g2-gap-junction \
+	document-homepage/document-homepage.tex \
+	#document-model-container/document-model-container.tex \
+	document-overview/document-overview.tex \
+	document-project-browser-screenshots/document-project-browser-screenshots.tex \
+	document-project-browser/document-project-browser.tex \
+	document-publication/document-publication.tex \
+	document-purkinje-cell-model/document-purkinje-cell-model.tex \
+	document-studio/document-studio.tex \
+	document-versionctrl/document-versionctrl.tex \
 	genesis-overview/genesis-overview.tex \
 	gshell/gshell.tex \
 	heccer/heccer.tex
