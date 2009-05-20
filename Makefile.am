@@ -29,7 +29,7 @@ dist_noinst_SCRIPTS = \
 	contents-level7/contents-level7.tex \
 	document-create/document-create.tex \
 	document-homepage/document-homepage.tex \
-	document-model-container/document-model-container.tex \
+	#document-model-container/document-model-container.tex \
 	document-overview/document-overview.tex \
 	document-project-browser-screenshots/document-project-browser-screenshots.tex \
 	document-project-browser/document-project-browser.tex \
