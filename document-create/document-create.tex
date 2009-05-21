@@ -23,13 +23,13 @@ The source materials for individual GENESIS documents can be found in uniquely n
 
 \subsubsection*{The Default YML Descriptor File}
 
-The default contents of the YML file\,{\it descriptor.yml} include:
+The name of the descriptor file\,{\it descriptor.yml} should not be changed. The default contents of this file include:
 
 \begin{verbatim}
 ---
 description: Briefly describe file contents here. 
+document name: Insert a user readable file name here.  
 tags:
-  - fname <file name>
   - genesis3
   - level2
   - draft
@@ -37,15 +37,17 @@ tags:
 
 \begin{itemize}
 
-\item {\tt ---} The three dashes on the first line of the file descriptor.yml are part of the Y Markup Language (YML) syntax for automated software engineering (see \href{http://fdik.org/yml/}{http://fdik.org/yml/}). {\bf Note:} The meaning of the white space/indents in the\,{\it descriptor.yml} file is defined for YML.  
+\item {\tt ---} The three dashes on the first line of the file {\tt descriptor.yml} are part of the Y Markup Language (YML) syntax for automated software engineering (see \href{http://fdik.org/yml/}{http://fdik.org/yml/}). {\bf Note:} The meaning of the white space/indents in the\,{\it descriptor.yml} file is defined for YML.  
 
 \item {\tt description:} The default file description ``Briefly describe file contents here.'' should be replaced with a short description of the subject matter of the documentation file. It is recommended that this file description is less than 80 characters on a single line.
 
-\item {\tt tags:} List of any tags used to identify the current document. The default tags include {\tt fname}, {\tt -\,genesis3}, {\tt -\,level2}, and {\tt -\,draft}. These tags give the title of the document as seen in the documentation system, indicate that the document is part of the GENESIS 3 documentation system at the level of User Guides and Documentation (level\,2), and that it is an as yet unpublished document.
+\item {\tt document name:} Provide a document name which gives the title of the documentation file. This name is used as a link to the given file in the GENESIS documentation system. This name is independent of and should be more human readable than the actual name of the document file it identifies.
+
+\item {\tt tags:} List of any tags used to identify the current document. The default tags include {\tt -\,genesis3}, {\tt -\,level2}, and {\tt -\,draft}. These tags indicate that the document is part of the GENESIS 3 documentation system at the level of User Guides and Documentation (level\,2), and that it is an as yet unpublished document.
 
 For a document to be publishable, i.e. viewable with a browser, the {\tt -\,draft} tag must be replaced with the {\tt -\,published} tag. Note that a document cannot be published to be browser viewable in the absence of the {\tt -\,published} tag. New tags may be created just by adding them to this file, but see below for recommended tags.  Note that the tagging system is case insensitive to avoid tag duplication.
 
-Importantly, each of the directories {\tt contents-level1}\,\ldots {\tt contents-level7} in your default workspace contains a list of the documentation to be found at the given level. These content indexes are generated automatically during a GENESIS installation or a {\tt userdocs} module installation or update. They provide direct links to all documents tagged for the given level of documentation.
+Importantly, each of the directories {\tt contents-level1}\,\ldots {\tt contents-level7} in your default workspace contains a list of the documentation to be found at the given level. These content indices are generated automatically during a GENESIS installation, a {\tt userdocs} module installation, or an update. They provide direct links to all documents tagged for the given level of documentation.
 
 \end{itemize}
 
@@ -53,11 +55,11 @@ Importantly, each of the directories {\tt contents-level1}\,\ldots {\tt contents
 
 Source files for the GENESIS documentation system are currently produced with the \LaTeX\,typesetting package (see \href{http://www.latex-project.org/}{www.latex-project.org}). It is planned that Microsoft Word ({\tt .doc} format) and OpenOffice ({\tt .odt}, ODF format) file formats will also be automatically recognized by the GENESIS documentation system.
 
-The default \LaTeX\, documentation source file\,{\it NewDocument.tex} in the {\it NewDocument} folder can be compiled to produce a readable PDF file. It gives help and examples for colorizing text and generating hyperlinks to local and remote documentation.
+The default \LaTeX\, documentation source file\,{\it NewDocument.tex} in the {\it NewDocument} folder can be compiled to produce a readable PDF file. It gives help and examples for colorizing text, generating hyperlinks to local and remote documentation, and how to insert a figure into your documentation.
 
 \subsubsection*{The Figures Folder}
 
-This directory contains any figures that your new document source file may include.
+This directory contains any figures that your new document source file may include. The name of this folder should not be changed.
  
 \section*{Create a New Document}
 
@@ -69,13 +71,11 @@ There are three simple steps to the creation of a new document within the GENESI
 
 This will result in both the documentation directory and the source file having the same name (with the exception of the {\tt .tex} extension of the source file). For example, the name of the directory containing this document is {\it document-create} and the name of the source file it contains is\,{\it document-create.tex}.
 
-Importantly, the names of the descriptor file\,{\it descriptor.yml} and the directory\,{\it figures} located in the document folder are required by the GENESIS documentation system and should not be changed.
+Importantly, remember that the names of the descriptor file\,{\it descriptor.yml} and the directory\,{\it figures} located in the document folder are required by the GENESIS documentation system and should not be changed.
 
 \item {\bf Update the descriptor.yml file:} Each directory/file in the GENESIS documentation system is tagged on the basis of its content, for example:
 
 \begin{enumerate}
-
-\item {\bf Documentation file name:}  This tag is followed on the same line by the name of the documentation file. The document name is independent of and should be more human readable than the actual name of the document file it describes.
 
 \item  {\bf The GENESIS version:} This tags the version of GENESIS that the content of the document refers to, e.g. {\tt -\,genesis3}.
 

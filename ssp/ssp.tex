@@ -12,7 +12,7 @@
 
 \subsection*{Introduction}
 
-Both the\,{\it model-container} and the mathematical solver\,{\it heccer} are stand-alone GENESIS modules. They need to be glued together and activated correctly, such that they can work together on a single simulation before they are useful. This is exactly what the Simple Scheduler in Perl (SSP) does. It is currently the standard scheduler for GENESIS. SSP exploits the sophistication of the Perl scripting language to load software modules on demand, and activate them from a configuration file. It achieves this by loading dynamically those software modules referenced in its configuration. Because the SSP scheduler does not have any computational load, its implementation is very simple and highly configurable. Other configurations will connect SSP to other modeling services or solvers.
+Both the \href{../model-container/model-container.tex}{\it model-container} and the mathematical solver \href{../heccer/heccer.tex}{\it heccer} are stand-alone GENESIS modules. To be useful, these modules must be `glued' together and activated correctly, such that they can work together in co-ordination on a single simulation. This is exactly what the Simple Scheduler in Perl (SSP) does. It is currently the standard scheduler for GENESIS. SSP exploits the sophistication of the Perl scripting language to load software modules on demand, and activate them from a configuration file. It achieves this by loading dynamically those software modules referenced in its configuration. Because the SSP scheduler does not have any computational load, its implementation is very simple and highly configurable. Other configurations will connect SSP to other modeling services or solvers.
 
 In summary:
 
