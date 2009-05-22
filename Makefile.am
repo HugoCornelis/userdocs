@@ -43,7 +43,8 @@ dist_noinst_SCRIPTS = \
 	document-versionctrl/document-versionctrl.tex \
 	genesis-overview/genesis-overview.tex \
 	gshell/gshell.tex \
-	heccer/heccer.tex
+	gui/gui.tex \
+	heccer/heccer.tex \
 	hh-model-details/hh-model-details.tex \
 	installation-developer/installation-developer.tex \
 	installation-user/installation-user.tex \
@@ -62,7 +63,7 @@ dist_noinst_SCRIPTS = \
 	rtxi-injector-validation/rtxi-injector-validation.tex \
 	shell-tokens/shell-tokens.tex \
 	ssp/ssp.tex \
-	studio/studio.tex
+	studio/studio.tex \
 	tests.config \
 	tutorial-jaeger/tutorial-jaeger.pdf \
 	tutorial1/tutorial1.tex \
