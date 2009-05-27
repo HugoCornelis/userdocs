@@ -1,0 +1,208 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+\section*{Neurospaces Tester}
+
+The Neurospaces tester framework provides a general purpose framework for regressing testing.
+
+It provides for:
+\begin{itemize}
+\item Testing the output and behavior of both simple and complex applications.
+\item A human readable report of the tests performed, a description of the errors (if any), and configuration options and environment.
+\item Testing application command line options.
+\item Testing communication over file descriptors with an application, and testing of the behaviour of an application.
+\item Dynamic reconfiguration and recompilation of the tested software.
+\item Testing the consistency of the source code.
+\item Built in support for application specific libraries.
+\item Interaction with the environment, including environment variables.
+\item Running the application in a {\it chrooted} environment.
+\item Conversion of the test cases to {\tt html}. 
+\end{itemize}
+
+Despite the wealth of functionality, using and configuring the tester is quite simple (see below for more). The latest version of the tester framework can be found in the {\it ModelContainer} package at the \href{http://www.neurospaces.org/}{Neurospaces website}. The same framework is used for regression testing of all GENESIS related software.
+
+The Neurospaces tester is written in \href{http://www.perl.org/}{Perl}. Knowledge of Perl is not necessary to be able to work with the tester. Basic knowledge of Perl might be handy, and is now explained.
+
+\subsection*{Tester Calling}
+
+The most convenient way to call the tester is by doing ``{\tt make check}''. For GENESIS software packages, this calls {\tt tests/neurospaces\_harness}, a Perl script that runs all the {\tt TesterSpecifications} found in {\it tests/specifications}.
+
+\begin{itemize}
+\item {\it neurospaces\_harness}: Runs all test specifications found in the specifications directory. A test specification ends in the suffix {\tt .t}.
+\item {\tt --regex:} This option runs those test specifications that match with the given regular expression. For example
+\begin{verbatim}
+   neurospaces_harness --regex convertors
+\end{verbatim}
+runs all tests whose pathnames match with {\tt convertors}.
+\item {\tt  --numerical-compare:} Enables numerical comparisons for numerical output.
+\item {\tt --randomize-order:} Randomizes the order of the tests before executing them.
+\item {\tt --timeout-multiplier:} Multiplies all timeout values with the given constant.
+\item {\tt --timings:} Adds timing information to the test report.
+\end{itemize}
+    
+\subsection*{Tester Configuration}
+
+The Neurospaces tester needs to know certain things about your machine before tests can be executed. These things are in the tester configuration file, named {\it tests.config}, located in your current directory.
+
+It is normal that a software package has multiple {\it tests.config} files, e.g. in several directories.
+
+The config file defines a Perl hash (we plan to also support \href{http://www.json.org/}{JSON}). In the test specifications, this hash is available in the variable {\tt main::config}. So to access the {\tt core\_directory} entry in the hash, you have
+\begin{verbatim}
+   $main::config->{core\_directory}
+\end{verbatim}
+Here is an example:
+
+\begin{verbatim}
+#!/usr/bin/perl -w
+
+use strict;
+
+my $package_name = "heccer";
+my $package_label = "build-8";
+my $package_version = "build-8-0";
+
+my $monotone_id = `mtn automate get_current_revision_id`;
+chomp $monotone_id;
+
+my $config
+    = {
+         core_directory => './',
+         description => 'Configure the tester when run from this directory',
+         outputs_dir => './tests/html',
+         package => {
+            label => $package_label,
+            name => $package_name,
+            version => $package_version,
+            version_control_id => $monotone_id,
+         },
+         tests_directory => './tests/specifications',
+      };
+
+return $config;
+\end{verbatim}
+
+\subsubsection*{Details}
+
+\begin{itemize}
+\item {\tt core\_directory:} The directory with the source code of your package. Tests can use this directory to read files.
+\item {\bf description:} A short description of the tests.
+\item {\tt outputs\_dir:} Defines the directory where the htmlified test specifications are located (generated using {\it tests\_2\_html}).
+\item {\tt package:} Contains package version information.
+\item {\tt tests\_dir:} Contains the directory where to search for test specifications with the {\tt .t} suffix. 
+\end{itemize}
+
+\subsection*{Tester Specifications}
+
+A tester specification is contained in a file with a name that has a suffix of {\tt .t}. The tester specification tells the tester what application to run, with what command line, command line options, and under what environment. It is possible to change directory before the application gets executed, or to change to a {\it chrooted} environment by using shell pipelines.
+
+After running the application, the tester communicates with the application over {\it stdin/stdout/stderr} (general socket communication under development). The output read from {\it stdout/sterr} is checked with expected output (literal output or regular expressions), and mismatches are reported.
+
+Multiple writes to and reads from the application are possible.
+
+If, for whatever reason, the same application is started in more than one test specification, the running application is `recycled' (unless the {\tt side\_effects} option is used, see below).
+
+If there was configuration in effect for an application specific library, the library is checked for changes after a test has been performed. Changes to the library are not allowed.
+
+\subsubsection*{Test Specifications}
+
+A test specification is a file with Perl code that returns a Perl hash (as noted above, we plan to also support \href{http://www.json.org/}{JSON}):
+
+\begin{verbatim}
+#!/usr/bin/perl -w
+use strict;
+my $test
+    = {
+. . .
+. . . 
+      };
+
+return $test;
+
+\end{verbatim}
+The content of the hash ref encodes all the tests in the specification. The following example is taken from the {\tt Model Container} software package:
+
+\begin{verbatim}
+#!/usr/bin/perl -w
+#
+use strict;
+my $test
+    = {
+         command_definitions => [
+         {
+            arguments => [
+               -q',
+            ],
+            command => './neurospacesparse',
+            command_tests => [
+               {
+                  description => "Is neurospaces startup successful ?",
+                  read => 'neurospaces ',
+                  timeout => 3,
+                  write => undef,
+               },
+               {
+                  description => "Does the version information match with \
+                     model-container-build-8 ?",
+                  read => "model-container-build-8",
+                  write => "version",
+               },
+            ],
+               description => "check version information",
+               },
+            ],
+            description => "run-time versioning",
+            name => 'version.t',
+         };
+return $test;
+\end{verbatim}
+A test specification contains the following keys/values:
+\begin{itemize}
+\item {\tt comment} A general purpose comment, e.g. this test is broken because $\ldots$.
+\item {\tt description} Describes the purpose of the test in a few words (not an entire paragraph).
+\item {\tt name} Must be the same as the filename, e.g. {\it version.t}.
+\item {\tt command\_definitions} An array ref with hash refs. Each hash ref contains the tests for one application run. See below. 
+\end{itemize}
+
+\subsubsection*{Command Definitions}
+
+\begin{enumerate}
+\item Arguments and command keys are the shell command line to run, and to connect {\it stdin} and {\it stdout}.
+\item  {\tt command\_tests} See below.
+\item {\tt description} Gives the purpose of the test in a few words (not a paragraph). 
+\end{enumerate}
+
+\subsubsection*{Command Tests}
+
+The {\tt description} key is mandatory, the other keys are optional.
+
+\begin{enumerate}
+\item {\tt description} Describes the purpose of the test in a few words (not an entire paragraph).
+\item {\tt read} Expected output from the application.
+\begin{itemize}
+\item If it is a string, it is taken as (a part of the) output to be expected literally.
+\item If it is an array, the first element in the array should be {\tt -re}, while the second element can be a regular expression that is matched against the real output of the application.
+\item If it is a hash, the hash must contain alternative keys that enumerate alternatives for the expected output in an array.
+\end{itemize}
+\item {\tt write} Writes output to {\it stdin} of the application before any output is generated.
+\item {\tt comment} A text comment.
+\item {\tt side\_effects} Avoids recycling of application commands, even if the options are the same.
+\item {\tt preparation} and {\tt reparation} Two commands to bring the application environment into a particalur state and restore the previous state after the test has been performed. Do not use this to change the application state, use the {\tt write} key for that.
+\item {\tt disabled} Explains why a test has been disabled. Omitting this key or setting this key to a false value or the emtpy string, enables the test.
+\end{enumerate}
+   
+\subsection*{Tester HTML}
+
+UNDER CONSTRUCTION 
+
+\subsection*{Tester Tutorial}
+
+UNDER CONSTRUCTION 
+
+\end{document}

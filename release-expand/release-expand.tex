@@ -1,0 +1,226 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+\section*{ReleaseExpand}
+
+The {\it release-expand} utility does keyword expansion in text files. Keywords and replacement texts are both customizable via a configuration file.
+
+Below is the man page of release-expand.
+
+\section*{Details}
+
+\begin{enumerate}
+\item[] RELEASE-EXPAND(1) User Contributed Perl Documentation
+\end{enumerate}
+
+\subsection*{NAME}
+
+\begin{enumerate}
+   \item[] {\it release-expand}--expand keywords before building a release distribution.
+\end{enumerate}
+
+\subsection*{SYNOPSIS}
+
+\begin{enumerate}
+
+   \item[]{\it release-expand} options:
+
+   \item[]{\bf $<$package$>$}
+
+   \item[]{\bf $<$major$>$}
+
+   \item[]{\bf $<$minor$>$}
+
+   \item[]{\bf $<$micro$>$}
+
+   \item[]{\bf $<$label$>$}
+
+   \item[]{\bf $<$email$>$}
+    
+\end{enumerate}
+
+\subsection*{DESCRIPTION}
+
+\begin{enumerate}
+
+    \item[]{\it release-expand} is a keyword expander for arbitrary source code. 
+
+    \item[]{It is intended to be used before building a distribution, to expand keywords, and optionally before a {\it commit} to a repository under version control, to remove keywords. The advantage is that it is programming language independent, there is
+    one single clear definition of each keyword, and it allows for user extension. The idea is taken from the user extensible keyword
+    expansion mechanism that was implemented in the \href{http://prcs.sourceforge.net/}{prcs} version control system.}
+
+\end{enumerate}
+
+\subsection*{USAGE}
+
+\begin{enumerate}
+
+\item[]{\bf Source file keywords:}
+
+\begin{enumerate}
+\item[] In your source files, insert text of the following form, possibly in comments:
+\begin{verbatim}
+$Format:
+<text-with-keywords>
+$ 
+\end{verbatim}
+\item[] The keywords have the format {\tt \${keyword-name}}, the rest of the text is arbitrary, but starts and ends with a dollar sign. 
+\end{enumerate}
+
+\item[]{\bf Specifying your keywords:}
+
+\begin{enumerate}
+\item[]By default the following keywords are known: 
+
+{\tt package major minor micro label email}
+
+\item[]There is an implicit assumption that the {\tt label} keyword is a concatenation of {\tt major}, {\tt minor}, and {\tt micro}, with dashes in between. 
+
+\item[]Additional keywords can be added in the config file if needed. Beware that at the time of writing, these additional keywords can not be overriden from the command line.
+
+\end{enumerate}
+
+\item[]{\bf Specifying your source files}
+
+\begin{enumerate}
+\item[] Not all files are checked for keyword expansion. The files that need keyword expansion must be specified in the config file. 
+\end{enumerate}
+
+\item[]{\bf Config file:}
+
+\begin{enumerate}
+
+\item[] The config file is named {\it release-expand.config} and is found in the current directory. It has the following format:
+
+\begin{verbatim}        
+#!/usr/bin/perl -w 
+my $config
+   = {
+      files => [
+         '/configure.ac', `./heccer.c', `./glue/configure.ac', \
+            `./glue/swig/perl/configure.ac', `./test-dist', \
+            `./tests/code/configure.ac', `./tests/library/version.t', 
+      ],
+      labels => {
+         package => ", major => ", minor => ", micro => ", \
+            label => ", email => ",
+      },
+   }; 
+return $config; 
+\end{verbatim}
+
+The {\tt files} section enumerates the files for which keyword expansion is needed. The {\tt labels} section enumerates the keywords and their values. 
+
+You can add custom keywords, e.g. 
+\begin{verbatim}
+   labels => {
+      website => Õhttp://www.neurospaces.orgÕ, optimization => Õ-O2Õ, 
+   }, 
+\end{verbatim}
+
+\item[] The values of the default keywords are replaced by the command line arguments before the expansion algorithm starts.
+
+\end{enumerate}
+
+\item[]{\bf How keyword expansion works:}
+
+\begin{enumerate}
+
+All the files enumarated in the config file, are checked for occurence of the sequence {\tt \$Format: $\ldots$ \$}. This sequence must occur on one single line in the source file. 
+
+The expansion algorithm will replace the next full line in the file with the text after the colon, with keywords expanded as appropriate. 
+
+An example:
+
+In a C source file, you have the comment: 
+
+\begin{verbatim}
+   // $Format: " static char pcVersion=\"${label}\";"$ 
+\end{verbatim}
+
+and you use the following command line:
+ 
+\begin{verbatim}
+   ./release-expand neurospaces 1 10 pre-release \
+      1-10-pre-release `hugo\.cornelis\@gmail\.com'
+\end{verbatim}
+
+On expansion the line following this comment line will expand to: 
+\begin{verbatim}
+   static char pcVersion="1-10-pre-release"; 
+\end{verbatim}
+
+In your {\it configure.ac} file, you have the line: 
+
+\begin{verbatim}
+   $Format: "AM_INIT_AUTOMAKE(${package}, ${label})"$ 
+\end{verbatim}
+
+Again using the command line from above, this would give: 
+\begin{verbatim}
+   AM_INIT_AUTOMAKE(neurospaces, 1-10-pre-release) 
+\end{verbatim}
+\end{enumerate}
+\end{enumerate}
+
+\subsection*{OPTIONS}
+
+\begin{enumerate}
+\item[] The following options are supported: 
+
+\begin{enumerate}
+\item[] -v, --verbose
+\begin{enumerate}
+\item[] Verbose. 
+\end{enumerate}
+
+\item[] -h, --help
+\begin{enumerate}
+\item[] Give help page. 
+\end{enumerate}
+
+\item[] -r, --remove
+\begin{enumerate}
+\item[] Remove keyword expansions, and replace them with an empty line. Use this before {\it checkin} to a version control repository, to avoid generating artificial differences between different versions of your code. This avoids merge conflicts. 
+\end{enumerate}
+\end{enumerate}
+\end{enumerate}
+
+\subsection*{BUGS}
+\begin{enumerate}
+\item[] Mixing different quoting styles may give problems. 
+\end{enumerate}
+
+\subsection*{SEE ALSO}
+
+\begin{enumerate}
+\item[] prcs(1) 
+\end{enumerate}
+
+\subsection*{AUTHOR}
+
+\begin{enumerate}
+\item[] Hugo Cornelis $<$hugo.cornelis@gmail.com$>$ 
+\end{enumerate}
+
+\subsection*{COPYRIGHT}
+
+\begin{enumerate}
+\item[] Copyright (c) 2007--2008. Hugo Cornelis. All rights reserved. 
+
+\item[] This program is free software; you can redistribute it and/or modify it under the same terms as Perl itself. 
+
+\item[] See $<$http://www.perl.com/perl/misc/Artistic.html$>$
+
+\end{enumerate}
+
+\noindent perl v5.8.7 2009-04-30 RELEASE-EXPAND(1) 
+
+\end{document}
