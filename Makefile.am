@@ -51,6 +51,7 @@ dist_noinst_SCRIPTS = \
 	installerpackage/installerpackage.tex \
 	model-container/model-container.tex \
 	ndf-file-format/ndf-file-format.tex \
+	neurospaces-tester/neurospaces-tester.tex \
 	notation/notation.tex \
 	pclamp/pclamp.tex \
 	prerequisite/prerequisite.tex \
@@ -58,6 +59,7 @@ dist_noinst_SCRIPTS = \
 	project-browser-screenshots/project-browser-screenshots.tex \
 	publication/publication.tex \
 	purkinje-cell-model/purkinje-cell-model.tex \
+	release-expand/release-expand.tex \
 	release-expand.config \
 	reserved-words/reserved-words.tex \
 	rtxi-injector-validation/rtxi-injector-validation.tex \

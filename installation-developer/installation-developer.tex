@@ -19,8 +19,8 @@ There are several prerequisites to the construction of a GENESIS development env
 \begin{itemize}
 
 \item {\bf Required tools:}\,{\it gdb},\,{\it gcc}, and\,{\it (x)emacs} with the\,{\it elisp} packages. Note that the GENESIS \href{../ndf-file-format/ndf-file-format.pdf}{NDF file format} has a special\,{\it elisp} package for use with\,{\it (x)emacs}.
-\item {\bf Version control:} Monotone is used as a statically linked binary (currently version 0.40). As it is a distributed version control system, developers can use,\,{\it monotone} to maintain and exchange their code repositories and executables. Monotone installation is supported by the\,{\it installer} module. 
-\item {\bf  The\,{\it installer}:} Can optionally be used to do initial directory layout. Importantly, the\,{\it installer} requires the correct directory layout.
+\item {\bf Version control:} Monotone is used as a statically linked binary (currently version 0.40). As it is a distributed version control system, developers can use,\,{\it monotone} to maintain and exchange their code repositories and executables. Monotone installation is supported by the\,{\it Installer Package} module. 
+\item {\bf  The\,{\it installer}:} Can optionally be used to do initial directory layout. Importantly, the\,{\it installer} requires the correct directory layout. See the script {\it neurospaces\_create\_directories}.
 
 \end{itemize}
 
@@ -38,23 +38,153 @@ Source code for GENESIS can be found at:
 
 \item Create a directory {\it $\sim$/neurospaces\_project} in your home directory.
 \item Create the directory {\it $\sim$/neurospaces\_project/MTN} to contain all\,{\it monotone} repositories accessible to the\,{\it installer}.
-\item Every software module has its own subdirectory. For example, the\,{\it installer} directory ({\it $\sim$§/neurospaces\_project/installer}):
+\item Every software module has its own subdirectory. For example, the\,{\it installer} directory ({\it $\sim$/neurospaces\_project/installer}):
 
-\begin{quote}
+\begin{enumerate}
 
-\item {\it $\sim$/neurospaces\_project/installer/docs} contains documentation not included in the distribution. 
+\item[] {\it $\sim$/neurospaces\_project/installer/docs} contains documentation not included in the distribution. 
 
-\item {\it $\sim$/neurospaces\_project/installer/source/snapshots/0} is the local workspace under\,{\it monotone} control, contains the source code you are working on. 
+\item[] {\it $\sim$/neurospaces\_project/installer/source/snapshots/0} is the local workspace under\,{\it monotone} control, contains the source code you are working on. 
 
-\item {\it $\sim$/neurospaces\_project/installer/snapshots/0/\_MTN} location of directory with the\,{\it monotone} options specific to the source code.
+\item[] {\it $\sim$/neurospaces\_project/installer/snapshots/0/\_MTN} location of directory with the\,{\it monotone} options specific to the source code.
 
-\item {\it $\sim$/neurospaces\_project/installer/source/snapshots/0/installed} optionally contains a locally installed version of the module.
+\item[] {\it $\sim$/neurospaces\_project/installer/source/snapshots/0/installed} optionally contains a locally installed version of the module.
 
-\item {\it $\sim$/neurospaces\_project/installer/source/snapshots/patches} contains diffs/patches to your code, available on your local machine.
+\item[] {\it $\sim$/neurospaces\_project/installer/source/snapshots/patches} contains diffs/patches to your code, available on your local machine.
 
-\end{quote}
+\end{enumerate}
 
+\item The {\it InstallerPackage} knows how to work with the directory hierarchy given above. The following provides a full example:
+
+\begin{enumerate}
+\item It sets up the installer repository on your local machine.
+\item Checks out the code.
+\item Uses the installer to install all the currently available packages.
+\begin{verbatim}
+[10:54] (0,2) ~ $ mkdir neurospaces_project/
+[10:54] (0,2) ~ $ cd neurospaces_project/
+[10:55] (0,2) neurospaces_project $ mkdir MTN
+[10:57] (0,2) neurospaces_project $ cd MTN/
+[10:57] (0,2) MTN $ mtn --db=neurospaces-developer.mtn db init
+[11:00] (0,2) MTN $ mtn --db=neurospaces-developer.mtn \
+   pull virtual2.cbi.utsa.edu:4696 "*"
+mtn: doing anonymous pull; use -kKEYNAME if you need authentication
+mtn: connecting to virtual2.cbi.utsa.edu:4696
+mtn: first time connecting to server virtual2.cbi.utsa.edu:4696
+mtn: I'll assume it's really them, but you might want to double-check
+mtn: their key's fingerprint: cbc91b2ec1d19e95f64cb164cc2166f4bdfe7bf4
+mtn: warning: saving public key for cbiadmin@utsa.edu to database
+mtn: finding items to synchronize:
+mtn:  bytes in | bytes out | certs in | revs in
+mtn:   549.1 k |       510 |  754/754 | 183/183
+mtn: successful exchange with virtual2.cbi.utsa.edu:4696
+
+[11:00] (0,2) MTN $ cd ../
+[11:00] (0,2) neurospaces_project $ mkdir installer/
+[11:00] (0,2) neurospaces_project $ mkdir installer/source
+[11:00] (0,2) neurospaces_project $ mkdir installer/source/snapshots/
+[11:00] (0,2) neurospaces_project $ mkdir installer/source/snapshots/0
+[11:00] (0,2) neurospaces_project $ cd installer/source/snapshots/0/
+[11:00] (0,2) 0 $ mtn --db ~/neurospaces_project/MTN/installer.mtn \
+   --branch 0 co .
+[11:01] (0,2) 0 $ ls
+   itemizeaclocal.m4  bin/  configure*  configure.ac  COPYING  docs/ 
+   INSTALL  install-sh*  license.txt  Makefile.am  Makefile.in  missing* 
+   _MTN/  release-expand.config*  tests/  tests.config  TODO.txt
+
+[11:01] (0,2) 0 $ ./configure 
+checking for a BSD-compatible install... /usr/bin/install -c
+checking whether build environment is sane... yes
+checking for gawk... gawk
+checking whether make sets $(MAKE)... yes
+find: tests/data: No such file or directory
+configure: creating ./config.status
+config.status: creating Makefile
+
+[11:08] (0,2) 0 $ make
+make[1]: Entering directory `/local_home/hugo/neurospaces_project/  \
+   installer/source/snapshots/0'
+make[1]: Nothing to be done for `all-am'.
+make[1]: Leaving directory `/local_home/hugo/neurospaces_project/  \
+   installer/source/snapshots/0'
+
+[11:08] (0,2) 0 $ sudo make install
+make[1]: Entering directory `/local_home/hugo/neurospaces_project/ \
+   installer/source/snapshots/0'
+make[2]: Entering directory `/local_home/hugo/neurospaces_project/ \
+   installer/source/snapshots/0'
+test -z "/usr/local/bin" || mkdir -p -- "/usr/local/bin"
+   /usr/bin/install -c 'bin/mcad2doxy' '/usr/local/bin/mcad2doxy'
+   /usr/bin/install -c 'bin/neurospaces_build' \
+      '/usr/local/bin/neurospaces_build'
+   /usr/bin/install -c 'bin/neurospaces_status' \
+      '/usr/local/bin/neurospaces_status'
+   /usr/bin/install -c 'bin/neurospaces_versions' \
+      '/usr/local/bin/neurospaces_versions'
+   /usr/bin/install -c 'bin/release-expand' \
+      '/usr/local/bin/release-expand'
+   /usr/bin/install -c 'bin/release-extract' \
+      '/usr/local/bin/release-extract'
+test -z "/usr/local/neurospaces/installer" || \
+   mkdir -p -- "/usr/local/neurospaces/installer"
+   /local_home/hugo/neurospaces_project/installer/source/ \
+      snapshots/0/install-sh -c -m 644 \
+      'tests/introduction.html' \
+      '/usr/local/neurospaces/installer/tests/introduction.html'
+   /local_home/hugo/neurospaces_project/installer/source/ \
+      snapshots/0/install-sh -c -m 644 \
+      'tests/specifications/global.t' \
+      '/usr/local/neurospaces/installer/tests/specifications/global.t'
+   /local_home/hugo/neurospaces_project/installer/source/ \
+      snapshots/0/install-sh -c -m 644 \
+      'tests/specifications/downloads.t' \
+      '/usr/local/neurospaces/installer/tests/specifications/downloads.t'
+   /local_home/hugo/neurospaces_project/installer/source/ \
+      snapshots/0/install-sh -c -m 644 \
+      'tests/specifications/developer.t' \
+      '/usr/local/neurospaces/installer/tests/specifications/developer.t'
+   /local_home/hugo/neurospaces_project/installer/source/ \
+      snapshots/0/install-sh -c -m 644 \
+      'tests/specifications/strings/ \
+      neurospaces_build--no-compile --no-configure --no-install \
+         --regex-installer --dry-run --developer --verbose --verbose \
+         -- verbose.txt' '/usr/local/neurospaces/installer/tests/ \
+         specifications/strings/neurospaces_build --no-compile \
+         --no-configure --no-install --regex-installer --dry-run \
+         --developer --verbose --verbose--verbose.txt'
+   /local_home/hugo/neurospaces_project/installer/source/ \
+      snapshots/0/install-sh -c -m 644 'tests/specifications/strings \
+      /neurospaces_build --tag-build-10 --no-compile --no-configure \
+      --no-install --regex-installer --dry-run --developer --verbose \
+      --verbose--verbose.txt' '/usr/local/neurospaces/installer/tests/ \
+      specifications/strings/neurospaces_build --tag-build-10 \
+      --no-compile --no-configure --no-install --regex-installer \
+      --dry-run --developer --verbose --verbose --verbose.txt'
+make[2]: Leaving directory `/local_home/hugo/neurospaces_project/ \
+   installer/source/snapshots/0'
+make[1]: Leaving directory `/local_home/hugo/neurospaces_project/ \
+   installer/source/snapshots/0'
+
+[11:08] (0,2) 0 $ neurospaces_packages
+/usr/local/bin/neurospaces_build:
+   enabled packages in order of build:
+      - installer
+      - model-container
+      - heccer
+      - ssp
+      - studio
+      - ns-genesis-SLI
+      - gshell
+      - userdocs
+
+[11:08] (0,2) 0 $ neurospaces_pull
+[11:08] (0,2) 0 $ neurospaces_update
+[11:08] (0,2) 0 $ neurospaces_install
+[11:08] (0,2) 0 $ neurospaces_check
+\end{verbatim}
+\end{enumerate}
 \end{itemize}
+
 You can then go to the directory of each individual software component, configure, compile, check, and install the given module. For example, a simple build for the modules\,{\it model\_container},\,{\it heccer},\,{\it ssp}, and\,{\it studio} on a developer machine can be done with:  
 \begin{verbatim}
    neurospaces_build --developer --regex 'model-container|heccer|ssp|studio'
@@ -446,5 +576,65 @@ Enter password, then:
 \end{enumerate}
 
 \subsection*{Microsoft Windows Installation}
+
+UNDER CONSTRUCTION
+
+\section*{Accessing the Version Control Repository from the {\it Installer Package}}
+
+The version control repository is accessible from the {\it InstallerPackage}. Important for this feature to work is to have the correct directory layout on your developer machine.
+
+In summary, what you want to do is this: {\it pull} the set of default packages from the servers:
+\begin{verbatim}
+   neurospaces_build --repo-pull virtual2.cbi.utsa.edu --repo-co \
+      --verbose --developer --directories-create --no-configure --no-compile --no-install
+\end{verbatim}
+This command has options that inhibit the default actions of configuration, compilation and installation. If you also want to compile and install in just one run, simply omit those options:
+
+\begin{verbatim}
+   neurospaces_build --repo-pull virtual2.cbi.utsa.edu --repo-co \
+      --verbose --developer --directories-create
+\end{verbatim}
+
+There are developer friendly frontends to the {\it neurospaces\_build} script in the {\it InstallerPackage}:
+\begin{itemize}
+\item {\bf neurospaces\_serve:} Starts serving the source code repositories such that other people can {\it pull} and {\it sync} to your machine (note that this locks all your databases).
+\item {\bf neurospaces\_pull:} Download the source code from a repository.
+\item {\bf neurospaces\_status:} Check for local source code modification (no network required).
+\item {\bf neurospaces\_sync:} Synchronize local source code modification with a repository.
+\item {\bf neurospaces\_update:} Makes the local source code up to date using the repositories locally stored on your computer (so this is a local operation). 
+\end{itemize}
+
+\section*{Details}
+
+\begin{itemize}
+
+\item {\bf Pulling to your local repository:}
+\begin{verbatim}
+   neurospaces_build --repo-pull virtual2.cbi.utsa.edu \
+      --no-configure --no-install --no-compile --verbose \
+      --developer --regex 'heccer|model-container|ssp'
+\end{verbatim}
+
+\item {\bf Checkout from your local repository:}
+\begin{verbatim}
+   neurospaces_build --repo-co --no-configure --no-install \
+      --no-compile --verbose --developer \
+      --regex 'heccer|model-container|ssp'
+\end{verbatim}
+
+\item {\bf When you start from scratch it is useful to create the workspace directories:}
+\begin{verbatim}
+   neurospaces_build --repo-co --no-configure --no-install \
+      --no-compile --verbose --developer \
+      --regex 'heccer|model-container|ssp' --directories-create
+\end{verbatim}
+
+\item {\bf Combining everything for the set of default packages, including compilation and installation:}
+\begin{verbatim}
+   neurospaces_build --repo-pull virtual2.cbi.utsa.edu \
+      --repo-co --verbose --developer --directories-create
+\end{verbatim}
+
+\end{itemize}
 
 \end{document}
