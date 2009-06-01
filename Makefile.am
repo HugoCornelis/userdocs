@@ -33,14 +33,13 @@ dist_noinst_SCRIPTS = \
 	developers-intro/developers-intro.tex \
 	document-create/document-create.tex \
 	#document-homepage/document-homepage.tex \
-	#document-model-container/document-model-container.tex \
 	document-overview/document-overview.tex \
 	document-project-browser-screenshots/document-project-browser-screenshots.tex \
-	document-project-browser/document-project-browser.tex \
-	document-publication/document-publication.tex \
-	document-purkinje-cell-model/document-purkinje-cell-model.tex \
-	document-studio/document-studio.tex \
-	document-versionctrl/document-versionctrl.tex \
+	project-browser/project-browser.tex \
+	publication/publication.tex \
+	purkinje-cell-model/document-purkinje-cell-model.tex \
+	studio/studio.tex \
+	version-control/version-control.tex \
 	genesis-overview/genesis-overview.tex \
 	gshell/gshell.tex \
 	gui/gui.tex \
@@ -48,7 +47,7 @@ dist_noinst_SCRIPTS = \
 	hh-model-details/hh-model-details.tex \
 	installation-developer/installation-developer.tex \
 	installation-user/installation-user.tex \
-	installerpackage/installerpackage.tex \
+	installer-package/installer-package.tex \
 	model-container/model-container.tex \
 	ndf-file-format/ndf-file-format.tex \
 	neurospaces-tester/neurospaces-tester.tex \

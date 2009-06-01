@@ -586,7 +586,8 @@ The version control repository is accessible from the {\it InstallerPackage}. Im
 In summary, what you want to do is this: {\it pull} the set of default packages from the servers:
 \begin{verbatim}
    neurospaces_build --repo-pull virtual2.cbi.utsa.edu --repo-co \
-      --verbose --developer --directories-create --no-configure --no-compile --no-install
+      --verbose --developer --directories-create --no-configure \
+      --no-compile --no-install
 \end{verbatim}
 This command has options that inhibit the default actions of configuration, compilation and installation. If you also want to compile and install in just one run, simply omit those options:
 

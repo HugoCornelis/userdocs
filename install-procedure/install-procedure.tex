@@ -1,0 +1,93 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+\section*{Install Procedure}
+In this documentation we assume that the target computer has all dependencies installed (see for \href{../installation-developer/installation-developer.tex}{developers} and \href{../installation-user/installation-user.tex}{users}). You can the proceed by downloading the packages from \href{http://sourceforge.net/project/showfiles.php?group_id=162899}{sourceforge}. The download can be automated by the \href{../installer-package/installer-package.tex}{\tt InstallerPackage}. Alternatively, you can checkout the code from the \href{http://monotone.ca/}{monontone} \href{../developers-intro/developers-intro.tex}{repositories}.
+
+All GENESIS packages can be downloaded and installed by themselves, based on \href{http://www.gnu.org/software/autoconf/}{autotools} (``{\tt ./configure}'', ``{\tt make}'', ``{\tt sudo make install}''). There is a small issue with the {\tt Heccer} package as its compilation depends on the {\tt Model Container} being installed.
+
+The order of installation is:
+\begin{enumerate}
+\item \href{../installer-package/installer-package.tex}{\bf Installer:} An optional module that provides developer utilities complying with GENESIS development standards..
+\item \href{../model-container/model-container.tex}{\bf NMC:} The {\tt Model Container} provides a highly optimized solver independent internal storage format for models.
+\item \href{../heccer/heccer.tex}{\bf Heccer:} The numerical solver.
+\item \href{../ssp/ssp.tex}{\bf SSP:} The Simple Scheduler in Perl is currently the standard scheduler for GENESIS.
+\item \href{../studio/studio.tex}{\bf Studio:} GUI front-end to the {\tt Model Container} that enables browsing and visualization of a model.
+\item \href{../project-browser/project-browser}{\bf Project Browser:} Browse projects, inspect and compare simulation results or other data over a web interface. 
+\end{enumerate} 
+
+The easiest way to do an installation is to use the package {\it installer}, see below.
+
+\subsection*{For a user}
+
+Using the {\it install} script of the \href{../installer-package/installer-package.tex}{\tt InstallerPackage}:
+
+\begin{itemize}
+\item Install the common GENESIS packages (at this moment, the {\tt model container}, {\tt heccer}, {\tt ssp} and the {\tt studio}), from  \href{http://sourceforge.net/project/showfiles.php?group_id=162899}{sourceforge}, distribution {\tt python-7}\,\,\,({\it gshell\,})--all other modules {\tt python-5}.
+
+{\bf Important Note:} Please, modify {\tt python-n} to be the latest release available for download:
+\begin{verbatim}
+neurospaces_build --download-server downloads.sourceforge.net \
+   --src-tag python-7 --src-dir  /tmp/neurospaces/downloads \
+   --verbose --verbose --verbose
+\end{verbatim}
+Add a couple of {\tt --verbose} options to see what is going on. 
+
+\item To uninstall you can use the same command line, and use the {\tt --uninstall} option:
+\begin{verbatim}
+neurospaces_build --download-server downloads.sourceforge.net \
+   --src-tag build-37 --src-dir /tmp/neurospaces/downloads --verbose \
+   --verbose --verbose --uninstall --no-configure --no-compile \
+   --no-install
+\end{verbatim}
+{\bf Note:} You must add the {\tt --no-compile} option to avoid breakages due to compilation dependencies between packages. 
+
+\item If sources are still in your filesystem after a previous download:
+\begin{verbatim}
+neurospaces_build --no-compile --uninstall --src-tag python-7 \
+   --src-dir /tmp/neurospaces/downloads --verbose --verbose --verbose
+\end{verbatim}
+{\bf Note:} You must add the {\tt --no-compile} option to avoid breakages due to compilation dependencies between packages. 
+
+\item For each of the above command lines, it is possible to select individual packages using the {\tt --regex} options. The default value is {\tt --regex 'model-container|heccer|ssp|studio'}. 
+
+\end{itemize}
+
+\subsection*{For a developer}
+
+Using the {\it install} script of the {\tt InstallerPackage}:
+\begin{enumerate}
+\item Understand how and why the script works for a regular user.
+\item Use the following commands:
+
+\item[] {\bf Download, install, check:}
+\begin{verbatim}
+neurospaces_build --download-server downloads.sourceforge.net \
+   --check --regex 'model-container|heccer|ssp|studio' --src-tag python-7 \
+   --src-dir /tmp/neurospaces/downloads --verbose --verbose --verbose
+\end{verbatim}
+
+\item[]{\bf Uninstall:}
+\begin{verbatim}
+neurospaces_build --no-compile --uninstall \
+   --regex 'model-container|heccer|ssp|studio' --src-tag python-7 \
+   --src-dir /tmp/neurospaces/downloads --verbose --verbose \
+   --verbose
+\end{verbatim}
+
+\item[]{\bf Reinstall the things you were working on/developing:}
+\begin{verbatim}
+neurospaces_build --regex 'model-container|heccer|ssp|studio' \
+   --verbose --verbose --developer --verbose
+\end{verbatim}
+
+\end{enumerate}
+
+\end{document}
