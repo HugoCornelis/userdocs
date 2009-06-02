@@ -8,10 +8,19 @@
 
 \section*{GENESIS: Documentation}
 
-\section*{Install Procedure}
 In this documentation we assume that the target computer has all dependencies installed (see for \href{../installation-developer/installation-developer.tex}{developers} and \href{../installation-user/installation-user.tex}{users}). You can the proceed by downloading the packages from \href{http://sourceforge.net/project/showfiles.php?group_id=162899}{sourceforge}. The download can be automated by the \href{../installer-package/installer-package.tex}{\tt InstallerPackage}. Alternatively, you can checkout the code from the \href{http://monotone.ca/}{monontone} \href{../developers-intro/developers-intro.tex}{repositories}.
 
 All GENESIS packages can be downloaded and installed by themselves, based on \href{http://www.gnu.org/software/autoconf/}{autotools} (``{\tt ./configure}'', ``{\tt make}'', ``{\tt sudo make install}''). There is a small issue with the {\tt Heccer} package as its compilation depends on the {\tt Model Container} being installed.
+
+\subsubsection*{Structure and Configuration of a GENESIS Target Computer}
+
+\begin{itemize}
+\item {\bf Required packages for a base installation:} Perl.
+\item TargetConfiguration in {\it /etc}.
+\item Follows autotools conventions (binaries, library archives, etc). 
+\end{itemize}
+
+\section*{Install Procedure}
 
 The order of installation is:
 \begin{enumerate}
