@@ -34,12 +34,6 @@ dist_noinst_SCRIPTS = \
 	document-create/document-create.tex \
 	#document-homepage/document-homepage.tex \
 	document-overview/document-overview.tex \
-	document-project-browser-screenshots/document-project-browser-screenshots.tex \
-	project-browser/project-browser.tex \
-	publication/publication.tex \
-	purkinje-cell-model/document-purkinje-cell-model.tex \
-	studio/studio.tex \
-	version-control/version-control.tex \
 	genesis-overview/genesis-overview.tex \
 	gshell/gshell.tex \
 	gui/gui.tex \
@@ -70,6 +64,7 @@ dist_noinst_SCRIPTS = \
 	tutorial1/tutorial1.tex \
 	tutorial2/tutorial2.tex \
 	unix-linux/unix-linux.tex \
+	version-control/version-control.tex \
 	work-flow/work-flow.tex
 
 RELEASE_MAJOR=`release-extract --major`
