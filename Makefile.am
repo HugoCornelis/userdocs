@@ -20,7 +20,7 @@ dist_noinst_SCRIPTS = \
 	bog-ch4/bog-ch4.pdf \
 	bog-ch5/bog-ch5.pdf \
 	bog-ch6/bog-ch6.pdf \
-	cable-theory/cable-theory.tex \
+	#cable-theory/cable-theory.tex \
 	compneurosci-1/compneurosci-1.tex \
 	compneurosci-2/compneurosci-2.tex \
 	contents-level1/contents-level1.tex \

@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl -w  
 #!/usr/bin/perl -w -d:ptkdb
 #
 
@@ -60,6 +60,7 @@ sub tag_expander
     # expand the tag to its contents
 
     undef $/;
+
 
     my $result = YAML::Load(`userdocs-tag-filter '$tag'`);
 
