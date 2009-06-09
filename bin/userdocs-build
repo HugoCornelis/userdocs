@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl -w 
 #!/usr/bin/perl -w -d:ptkdb
 #
 
@@ -215,8 +215,16 @@ sub main
     {
 	my $documents_yaml = `userdocs-tag-filter 2>&1 "$tag"`;
 
-	#t grep only those that have a 'published' tag
+	# get only documents with a publish tag
+	my $published_docs_yaml = get_published($documents_yaml);
 
+	my $yamldata = Load($published_docs_yaml);
+
+	if(!defined $yamldata)
+	{
+	  next;
+	}
+	
 	$documents
 	    = {
 	       %$documents,
@@ -224,7 +232,7 @@ sub main
 	       {
 		   $_ => 1,
 	       }
-	       @{ Load($documents_yaml) },
+	       @{ $yamldata  },
 	      };
     }
 
@@ -254,6 +262,72 @@ sub main
     {
 	prepare_publish_document($document);
     }
+}
+
+
+
+sub get_published
+{
+  my $documents = shift;
+
+  my @docs = split(/\n/,$documents);
+
+  shift @docs;
+
+  my @published_documents;
+
+  push(@published_documents,"---");
+
+  my $desciptorfile;
+
+  foreach (@docs)
+  {
+
+
+    $desciptorfile = substr($_,2) . "/descriptor.yml";
+
+    my $yaml_name = $_;
+
+
+
+    if(-e $desciptorfile)
+    {
+
+
+      my $descriptor = YAML::LoadFile($desciptorfile);
+
+      # convert the tags to a hash with true values
+      my $tags = $descriptor->{tags};
+
+      my $ispublished = 0;
+
+
+
+      foreach (@$tags)
+      {
+	if (/publish/i)
+	{
+	  $ispublished = 1;
+	}
+      }
+
+
+	
+      if($ispublished)
+      {
+	push(@published_documents,$yaml_name);
+      }
+
+    }
+    else
+    {
+      next;
+    }
+
+  }
+
+  return join("\n", @published_documents) . "\n";
+
 }
 
 
