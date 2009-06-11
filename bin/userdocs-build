@@ -147,6 +147,8 @@ sub build_document
 
 		    $source_text =~ s(\\href\{\.\./([^}]*)\.pdf)(\\href\{../$1.html)g;
 
+		    $source_text =~ s(\\href\{\.\./([^}]*)\.tex)(\\href\{../$1.html)g;
+
 		    # convert eps links to png links
 
 		    $source_text =~ s(\\includegraphics\{figures/([^}]*)\.eps)(\\href\{figures/$1.png)g;
@@ -166,6 +168,7 @@ sub build_document
 		    # generate html output
 
 		    system "htlatex '$filename'";
+
 
 		    if ($option_verbose)
 		    {
@@ -192,6 +195,8 @@ sub build_document
 
     chdir '..';
 }
+
+
 
 
 sub main
