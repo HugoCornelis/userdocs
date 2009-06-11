@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w  
+#!/usr/bin/perl -w
 #!/usr/bin/perl -w -d:ptkdb
 #
 
@@ -12,6 +12,7 @@ use YAML;
 
 
 my $program_name = $0;
+
 
 $program_name =~ s/.*\///;
 
@@ -128,7 +129,8 @@ sub main
     {
 	if ($option_verbose)
 	{
-	    print STDERR "Expanding in $file\n";
+	    print STDERR "---------------------------------------------------------------------\n";
+	    print STDERR "Expanding in \"$file\"\n";
 	}
 
 	my $content;
@@ -175,6 +177,7 @@ sub main
 	    if ($option_verbose)
 	    {
 		print STDERR "Done for $file\n";
+		print STDERR "---------------------------------------------------------------------\n\n";
 	    }
 
 	    # if something has changed

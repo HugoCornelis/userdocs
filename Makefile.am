@@ -81,6 +81,9 @@ dist-keywords:
 clean-local:
 	find $(srcdir) -type d -exec chmod -R u+w \{\} \;
 	$(RM) -fr `find $(srcdir) -name _Inline`
+	$(RM) -rf */output_html/*
+	$(RM) -rf */output_pdf/*
+	$(RM) -rf */output_ps/*
 #	$(RM) -fr $(srcdir)/hierarchy/output
 #	$(RM) -rf $(top_srcdir)/docs/html
 
