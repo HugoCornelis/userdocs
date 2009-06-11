@@ -220,7 +220,7 @@ sub main
     {
 	my $documents_yaml = `userdocs-tag-filter 2>&1 "$tag"`;
 
-	# get only documents with a publish tag
+	# get only documents with a published tag
 	my $published_docs_yaml = get_published($documents_yaml);
 
 	my $yamldata = Load($published_docs_yaml);
@@ -310,7 +310,7 @@ sub get_published
 
       foreach (@$tags)
       {
-	if (/publish/i)
+	if (/published/i)
 	{
 	  $ispublished = 1;
 	}
