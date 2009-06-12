@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w 
+#!/usr/bin/perl -w
 #!/usr/bin/perl -w -d:ptkdb
 #
 
@@ -61,6 +61,8 @@ sub build_document
 
 	    if ($filename =~ /\.tex$/)
 	    {
+		chdir "output";
+
 		# prepare output: general latex processing
 
 		$filename =~ m((.*)\.tex$);
@@ -79,20 +81,20 @@ sub build_document
 		# generate ps output
 
 		{
-		    mkdir "output_ps";
+		    mkdir "ps";
 
 		    if ($option_verbose)
 		    {
-			print "$0: entering output_ps\n";
+			print "$0: entering ps\n";
 		    }
 
-		    chdir "output_ps";
+		    chdir "ps";
 
 		    system "dvips '../$filename_base.dvi' -o '$filename_base.ps'";
 
 		    if ($option_verbose)
 		    {
-			print "$0: leaving output_ps\n";
+			print "$0: leaving ps\n";
 		    }
 
 		    chdir "..";
@@ -101,20 +103,20 @@ sub build_document
 		# generate pdf output
 
 		{
-		    mkdir "output_pdf";
+		    mkdir "pdf";
 
 		    if ($option_verbose)
 		    {
-			print "$0: entering output_pdf\n";
+			print "$0: entering pdf\n";
 		    }
 
-		    chdir "output_pdf";
+		    chdir "pdf";
 
-		    system "ps2pdf '../output_ps/$filename_base.ps' '$filename_base.pdf'";
+		    system "ps2pdf '../ps/$filename_base.ps' '$filename_base.pdf'";
 
 		    if ($option_verbose)
 		    {
-			print "$0: leaving output_pdf\n";
+			print "$0: leaving pdf\n";
 		    }
 
 		    chdir "..";
@@ -123,15 +125,15 @@ sub build_document
 		# generate html output
 
 		{
-		    mkdir 'output_html';
-		    mkdir 'output_html/figures';
+		    mkdir 'html';
+		    mkdir 'html/figures';
 
 		    if ($option_verbose)
 		    {
-			print "$0: entering output_html\n";
+			print "$0: entering html\n";
 		    }
 
-		    chdir "output_html";
+		    chdir "html";
 
 		    # read latex source
 
@@ -172,11 +174,13 @@ sub build_document
 
 		    if ($option_verbose)
 		    {
-			print "$0: leaving output_html\n";
+			print "$0: leaving html\n";
 		    }
 
 		    chdir "..";
 		}
+
+		chdir "..";
 	    }
 
 	    # else unknown source file type
@@ -195,8 +199,6 @@ sub build_document
 
     chdir '..';
 }
-
-
 
 
 sub main
@@ -218,16 +220,13 @@ sub main
 
     foreach my $tag (@$option_tags)
     {
-	my $documents_yaml = `userdocs-tag-filter 2>&1 "$tag"`;
+	local $/;
 
-	# get only documents with a published tag
-	my $published_docs_yaml = get_published($documents_yaml);
+	my $documents_tag = Load(`userdocs-tag-filter 2>&1 "$tag" "published"`);
 
-	my $yamldata = Load($published_docs_yaml);
-
-	if(!defined $yamldata)
+	if (!scalar @$documents_tag)
 	{
-	  next;
+	    next;
 	}
 	
 	$documents
@@ -237,7 +236,7 @@ sub main
 	       {
 		   $_ => 1,
 	       }
-	       @{ $yamldata  },
+	       @{ $documents_tag  },
 	      };
     }
 
@@ -267,72 +266,6 @@ sub main
     {
 	prepare_publish_document($document);
     }
-}
-
-
-
-sub get_published
-{
-  my $documents = shift;
-
-  my @docs = split(/\n/,$documents);
-
-  shift @docs;
-
-  my @published_documents;
-
-  push(@published_documents,"---");
-
-  my $desciptorfile;
-
-  foreach (@docs)
-  {
-
-
-    $desciptorfile = substr($_,2) . "/descriptor.yml";
-
-    my $yaml_name = $_;
-
-
-
-    if(-e $desciptorfile)
-    {
-
-
-      my $descriptor = YAML::LoadFile($desciptorfile);
-
-      # convert the tags to a hash with true values
-      my $tags = $descriptor->{tags};
-
-      my $ispublished = 0;
-
-
-
-      foreach (@$tags)
-      {
-	if (/published/i)
-	{
-	  $ispublished = 1;
-	}
-      }
-
-
-	
-      if($ispublished)
-      {
-	push(@published_documents,$yaml_name);
-      }
-
-    }
-    else
-    {
-      next;
-    }
-
-  }
-
-  return join("\n", @published_documents) . "\n";
-
 }
 
 
@@ -370,7 +303,7 @@ sub prepare_publish_document
 
 	my $outputs
 	    = [
-	       'output_html',
+	       'output/html',
 	      ];
 
 	# loop over source files

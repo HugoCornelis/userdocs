@@ -13,26 +13,63 @@ sub tag_filter
 {
     my $filename = shift;
 
-    my $tag = shift;
+    my $selector_tags = shift;
 
-    # load the descriptor
+    # default result: not selected
+
+    my $result = 0;
+
+    # convert the selected tags to a hash with false values
+
+    my $selected_tags
+	= {
+	   map
+	   {
+	       $_ => 0,
+	   }
+	   @$selector_tags,
+	  };
+
+    # load the document descriptor
 
     my $descriptor = YAML::LoadFile($filename);
 
-    # convert the tags to a hash with true values
+    # loop over document tags
 
     my $tags = $descriptor->{tags};
 
     foreach (@$tags)
     {
-	if (/$tag/i)
-	{
+	# set the selected tag
 
-	    return 1;
-	}
+	$selected_tags->{$_} = 1;
     }
 
-    return 0;
+    # if all selected flags are true
+
+    my $sum = 0;
+
+    map
+    {
+	$sum += $_
+    }
+	values %$selected_tags;
+
+    if (scalar keys %$selected_tags eq $sum)
+    {
+	# the document is selected
+
+	return 1;
+    }
+
+    # if there is one selector flag false
+
+    else
+    {
+	# the document must be filtered
+
+	return 0;
+    }
 }
 
 
@@ -40,16 +77,19 @@ sub main
 {
     my $source = '.';
 
-    my $tag = $ARGV[0];
+    my $selected_tags = [ @ARGV, ];
 
-    if (!defined $tag)
+    if (!defined $selected_tags)
     {
 	die "$0: please give a tag value on the command line";
     }
 
     my $all_documentation_descriptors
 	= [
-	   map { chomp; $_ }
+	   map
+	   {
+	       chomp; $_
+	   }
 	   `find $source -name "descriptor.yml"`,
 	  ];
 
@@ -61,7 +101,7 @@ sub main
 	   }
 	   grep
 	   {
-	       tag_filter($_, $tag);
+	       tag_filter($_, $selected_tags);
 	   }
 	   @$all_documentation_descriptors,
 	  ];
