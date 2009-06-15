@@ -69,7 +69,14 @@ sub copy_document
 		# copy source files
 
 		system "cp $filename output/";
-		system "cp -rp figures/* output/figures/";
+
+		if(-d "figures" && -e "figures/*")
+		{
+
+		  system "cp -rp figures/* output/figures/";
+
+		}
+
 	    }
 
 	    # else unknown source file type
