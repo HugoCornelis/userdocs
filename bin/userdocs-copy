@@ -64,16 +64,16 @@ sub copy_document
 		# create workspace directories for generating output
 
 		mkdir "output";
-		mkdir 'output/figures';
+		#mkdir 'output/figures';
 
 		# copy source files
 
 		system "cp $filename output/";
 
-		if(-d "figures" && -e "figures/*")
+		if(-d "figures")
 		{
 
-		  system "cp -rp figures/* output/figures/";
+		  system "cp -rfp figures output/";
 
 		}
 

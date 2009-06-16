@@ -71,6 +71,61 @@ sub tag_expander
 }
 
 
+
+
+
+sub update_links
+{
+  my @items = @_;
+  my $item;
+  my $descriptorfile;
+
+  my @updated_links;
+
+  foreach $item (@items)
+  {
+
+    if($item =~ m/\\href\{\.\.\/(.*\/).*.pdf\}{/)
+    {
+
+      $descriptorfile = $1 . "descriptor.yml";
+      
+      if(-e $descriptorfile)
+      {
+
+	my $descriptor = YAML::LoadFile($descriptorfile);
+
+	if(!defined $descriptor)
+	{
+
+	  print "Error: $descriptorfile contains invalid YAML\n";
+	  next;
+
+	}
+
+	my $document_name = $descriptor->{'document name'};
+
+	$item =~ s({\\bf \\underline{.*}})({\\bf \\underline{$document_name}})g;
+
+	push(@updated_links,$item);
+	
+      }
+      else
+      {
+
+	print "Error: $descriptorfile doesn't exist\n";
+	next;
+
+      }
+
+    }
+
+  }
+
+  return  join "", @updated_links;
+
+}
+
 sub main
 {
     read_cmd_line();
@@ -118,7 +173,8 @@ sub main
 	       @$items,
 	      ];
 
-	my $items_expanded_text = join "", @$items_expanded;
+	#my $items_expanded_text = join "", @$items_expanded;
+	my $items_expanded_text = update_links(@$items_expanded);
 
 	$replacement = "\\begin{itemize}\n\n$items_expanded_text\n\\end{itemize}\n\n";
     }
