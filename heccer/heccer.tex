@@ -18,13 +18,13 @@ Heccer can be instantiated from C, or from Perl (or other scripting languages). 
 
 Adding new channel types to Heccer can be done using callouts. The callout mechanism allows for general user extensions that contribute a current or conductance at a particular time in a simulation. Heccer automatically integrates this contribution into the membrane potential.
 
-The source code of Heccer contains inline developer documentation. As yet, there is no stable API but the \href{http://www.swig.org/}{SWIG} interfaces for Heccer are not expected to change much. If you are interested in this, look at \href{}{a simple example} for driving Heccer from perl, and \href{}{another example} with active channels and a calcium pool. Heccer is currently capable of simulating Purkinje cells (see the \href{../purkinje-cell-model/purkinje-cell-model.pdf}{Purkinje cell model}), and, at first evaluation, runs slightly faster than {\it hsolve} (It is difficult to assess why exactly: while the {\it hsolve} implementation is much more optimized than Heccer's, the Heccer design is slightly better optimized than {\it hsolve}'s.).
+The source code of Heccer contains inline developer documentation. As yet, there is no stable API but the \href{http://www.swig.org/}{SWIG} interfaces for Heccer are not expected to change much. If you are interested in this, look at \href{}{a simple example} for driving Heccer from perl, and \href{}{another example} with active channels and a calcium pool. Heccer is currently capable of simulating Purkinje cells (see the \href{../purkinje-cell-model/purkinje-cell-model.tex}{Purkinje cell model}), and, at first evaluation, runs slightly faster than {\it hsolve} (It is difficult to assess why exactly: while the {\it hsolve} implementation is much more optimized than Heccer's, the Heccer design is slightly better optimized than {\it hsolve}'s.).
 
 \subsection*{Heccer Features}
 
 \begin{itemize}
 
-\item Can be driven from C, Perl, SSP, and fetches the model parameters from the \href{../model-container/model-container.pdf}{Model Container}.
+\item Can be driven from C, Perl, SSP, and fetches the model parameters from the \href{../model-container/model-container.tex}{Model Container}.
 \item Computes the behaviour of single neurons.
 \item Integrates Hodgkin-Huxley-like channels.
 \item Integrates exponentially decaying calcium concentrations and Nernst potentials. Interfaces will be provided for more elaborate calcium models.

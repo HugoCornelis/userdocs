@@ -11,7 +11,7 @@
 
 \section*{Using the GENESIS Shell for\\Multi-compartment Modeling and Simulation}
 
-In this second of two introductory tutorials you will be guided through a brief session using the \href{../gshell/gshell.pdf}{GENESIS shell}. In this tutorial it is assumed that you are familiar with the contents of \href{../tutorial1/tutorial1.pdf}{Tutorial 1} and the links it contains. You will be shown how to use basic features of the GENESIS shell to create, explore, and run a realistic multi-compartment model neuron. For example:
+In this second of two introductory tutorials you will be guided through a brief session using the \href{../gshell/gshell.tex}{GENESIS shell}. In this tutorial it is assumed that you are familiar with the contents of \href{../tutorial1/tutorial1.tex}{Tutorial 1} and the links it contains. You will be shown how to use basic features of the GENESIS shell to create, explore, and run a realistic multi-compartment model neuron. For example:
 \begin{verbatim}
     ndf_load cells/purkinje/edsjb1994.ndf
     run /Purkinje 0.1
@@ -52,13 +52,13 @@ The contents of the {\it purkinje} directory can be displayed with
        - edsjb1994_partitioned.ndf
 \end{verbatim}
 
-To run one of these models the model description file (NDF) must first be loaded into the GENESIS shell.  (To learn more about the NDF format see  \href{../ndf-file-format/ndf-file-format.pdf}{Introduction to the NDF File Format}.) For example, to load the multicompartment De Schutter and Bower Purkinje cell model referenced above, enter
+To run one of these models the model description file (NDF) must first be loaded into the GENESIS shell.  (To learn more about the NDF format see  \href{../ndf-file-format/ndf-file-format.tex}{Introduction to the NDF File Format}.) For example, to load the multicompartment De Schutter and Bower Purkinje cell model referenced above, enter
 \begin{verbatim}
     ndf_load cells/purkinje/edsjb1994.ndf
 \end{verbatim}
 This command results in the complete Purkinje cell model being made available to the GENESIS shell.
 
-Note that currently it is not advisable to load more than one model at a time into the GENESIS shell. To change to a different model requires exiting the shell, restarting GENESIS, and loading the new model (see the \href{../gshell/gshell.pdf}{Introduction to the GENESIS Shell}).
+Note that currently it is not advisable to load more than one model at a time into the GENESIS shell. To change to a different model requires exiting the shell, restarting GENESIS, and loading the new model (see the \href{../gshell/gshell.tex}{Introduction to the GENESIS Shell}).
 
 \subsection*{Explore Model}
 
@@ -126,7 +126,7 @@ Note that:
 
 \item The {\tt ce} command will accept either the full path name\\(e.g. {\tt  /Purkinje/segments/b3s45[10]}) to a segment or just the segment name itself (as given in the above example).  Parameter values associated with a given element can be changed using either the full path name or making the given segment the current working element (as with the above example).
 
-\item In the GENESIS shell the commands {\tt .} and {\tt ..} operate in the same way as when employed to traverse the Unix file system (see \\\href{../unix-linux/unix-linux.pdf}{Introduction to Unix and the Linux graphical desktop}). The {\tt ..} operator may be chained, e.g. {\tt ../../../}
+\item In the GENESIS shell the commands {\tt .} and {\tt ..} operate in the same way as when employed to traverse the Unix file system (see \\\href{../unix-linux/unix-linux.tex}{Introduction to Unix and the Linux graphical desktop}). The {\tt ..} operator may be chained, e.g. {\tt ../../../}
 
 \item Also remember that in the GENESIS documentation, an elipsis ($\ldots$) indicates missing lines.
 
@@ -206,7 +206,7 @@ UNDER CONSTRUCTION
 
 \subsection*{Run Simulation}
 
-To run a simulation for 10\,s we can use the same command as used for the simple one compartment model in \href{../tutorial1/tutorial1.pdf}{Tutorial 1}
+To run a simulation for 10\,s we can use the same command as used for the simple one compartment model in \href{../tutorial1/tutorial1.tex}{Tutorial 1}
 \begin{verbatim}
     genesis > run /Purkinje 10.00
 \end{verbatim}
