@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl -w 
 #!/usr/bin/perl -w -d:ptkdb
 #
 
@@ -150,6 +150,25 @@ sub build_document
 		    $source_text =~ s(\\href\{\.\./([^}]*)\.pdf)(\\href\{../$1.html)g;
 
 		    $source_text =~ s(\\href\{\.\./([^}]*)\.tex)(\\href\{../$1.html)g;
+
+
+
+		    #remove any of the links to itself if it's a contents file.
+
+		    if( $filename =~ m/contents-level[1234567]/)
+		    {
+
+		      my @name = split(/\./,$filename);
+
+		      $source_text =~ s(\\item \\href\{\.\.\/\.\/$name[0]\/.*\.html\}\{\\bf \\underline\{.*\}\})( )g;
+
+		    }
+
+	
+
+		    # If we have nothign but whitespace in between the itemize tags, remove
+		    # the whole line. 
+		    $source_text =~ s(\\begin\{itemize\}\s+\\end\{itemize\})( )g;
 
 		    # convert eps links to png links
 
