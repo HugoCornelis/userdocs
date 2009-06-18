@@ -1,5 +1,5 @@
-#!/usr/bin/perl -w
 #!/usr/bin/perl -w -d:ptkdb
+#!/usr/bin/perl -w 
 #
 
 
@@ -151,6 +151,21 @@ sub build_document
 
 		    $source_text =~ s(\\href\{\.\./([^}]*)\.tex)(\\href\{../$1.html)g;
 
+
+
+		    #remove any of the links to itself if it's a contents file.
+
+		    if( $filename =~ m/contents-level[1234567]/)
+		    {
+
+		      my @name = split(/\./,$filename);
+
+		      $source_text =~ s(\\item \\href\{.*$name[0]\.*\}\})()g;
+
+		    }
+
+
+	
 		    # convert eps links to png links
 
 		    $source_text =~ s(\\includegraphics\{figures/([^}]*)\.eps)(\\href\{figures/$1.png)g;
