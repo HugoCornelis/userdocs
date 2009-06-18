@@ -160,12 +160,16 @@ sub build_document
 
 		      my @name = split(/\./,$filename);
 
-		      $source_text =~ s(\\item \\href\{.*$name[0]\.*\}\})()g;
+		      $source_text =~ s(\\item \\href\{\.\.\/\.\/$name[0]\/.*\.html\}\{\\bf \\underline\{.*\}\})( )g;
 
 		    }
 
-
 	
+
+		    # If we have nothign but whitespace in between the itemize tags, remove
+		    # the whole line. 
+		    $source_text =~ s(\\begin\{itemize\}\s+\\end\{itemize\})( )g;
+
 		    # convert eps links to png links
 
 		    $source_text =~ s(\\includegraphics\{figures/([^}]*)\.eps)(\\href\{figures/$1.png)g;
