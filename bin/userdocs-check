@@ -1,0 +1,54 @@
+#!/usr/bin/perl -w 
+
+
+
+use YAML;
+
+
+
+
+
+
+
+sub main
+{
+
+  my $all_documentation_descriptors
+    = [
+       map
+       {
+	 chomp; $_
+       }
+       `find . -name "descriptor.yml"`,
+      ];
+
+
+  
+  foreach (@$all_documentation_descriptors)
+  {
+
+    print "Checking $_ :\t";
+
+    my $descriptor = YAML::LoadFile($_);
+
+    if(defined $descriptor)
+    {
+
+      print "is valid\n";
+
+    }
+    else
+    {
+
+      print "contains malformed YAML\n";
+
+    }
+
+  }
+
+}
+
+
+
+
+main()
