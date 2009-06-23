@@ -1,54 +1,63 @@
-#!/usr/bin/perl -w 
+#!/usr/bin/perl -w
+#!/usr/bin/perl -w -d:ptkdb
+#
 
+
+use strict;
 
 
 use YAML;
 
 
 
-
-
+$SIG{__WARN__} = sub { die $_[0] };
 
 
 sub main
 {
 
-  my $all_documentation_descriptors
-    = [
-       map
-       {
-	 chomp; $_
-       }
-       `find . -name "descriptor.yml"`,
-      ];
+    my $all_documentation_descriptors
+	= [
+	   map
+	   {
+	       chomp; $_
+	   }
+	   `find . -name "descriptor.yml"`,
+	  ];
 
-
-  
-  foreach (@$all_documentation_descriptors)
-  {
-
-    print "Checking $_ :\t";
-
-    my $descriptor = YAML::LoadFile($_);
-
-    if(defined $descriptor)
+    foreach (@$all_documentation_descriptors)
     {
 
-      print "is valid\n";
+	print "Checking $_ :\t";
+
+	eval
+	{
+	    my $descriptor = YAML::LoadFile($_);
+
+	    if (defined $descriptor)
+	    {
+
+		print "is valid\n";
+
+	    }
+	    else
+	    {
+
+		print "is empty\n";
+	    }
+	};
+
+	if ($@)
+	{
+	    print "contains malformed YAML ($@)\n";
+
+	}
 
     }
-    else
-    {
-
-      print "contains malformed YAML\n";
-
-    }
-
-  }
 
 }
 
 
-
-
 main()
+
+
