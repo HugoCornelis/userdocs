@@ -11,6 +11,151 @@
 
 \subsection*{Backward Compatibility}
 
-UNDER CONSTRUCTION
+GENESIS is backward compatible with \href{http://genesis-sim.org/GENESIS/genesis-ftp/}{GENESIS Release 2.3} for all functionality of \href{http://genesis-sim.org/GENESIS/illtuts/purkinje.html}{Tutorial 9--The Purkinje Tutorial}. In doing this, backward compatibility supports the major functionalities of the GENESIS Script Language Interface.
+
+\subsection*{Scope}
+
+Importantly, backward compatibility is provided to enable GENESIS 2 scripts to be used in association with the reconfigured GENESIS. It is not designed to extend a pre-existing GENESIS 2 script with new functionality provided by GENESIS 3. Although this may be possible is some cases, the results are not currently guaranteed. Contact \href{http://genesis-sim.org/contact}{GENESIS Support} if you require further details.
+
+\subsection*{New Graphic Functionality}
+
+Functionality for the graphical objects of the XODUS library is now provided by the \href{../studio/studio.tex}{Studio} and \href{../project-browser/project-browser.tex}{Project Browser} in conjunction with the new GENESIS \href{../gui/gui.tex}{GUI}.
+
+\subsection*{Application}
+
+Backward compatibility is provided by \href{../nssli/nssli.tex}{NSSLI} (the Neurospaces Scripting Language Interface).
+
+\subsection*{Functional and Unit Regression Tests}
+
+Regression test specification for backward compatibility can be found \href{http://neurospaces.sourceforge.net/neurospaces_project/ns-sli/tests/html/index.html}{here}.
+
+\subsection*{Recognized GENESIS 2 Commands}
+
+\begin{tabular}{l l l l}
+
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.1}{abort}                          & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.2}{abs}                        & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.3}{acos}              & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.4}{addaction}          \\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.5}{addalias	}		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.6}{addclass}		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.7}{addescape}	& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.8}{addfield}		\\         
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.9}{addforwmsg}		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.10}{addglobal}		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.11}{addmsg} 	& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.12}{addmsgdef}	\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.13}{addobject}		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.14}{addtask}		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.15}{argc} 		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.16}{arglist}		\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.17}{argv}			& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.19}{asin}			& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.20}{atan} 		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.21}{call}			\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.23}{cd}				& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.24}{ce}			& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.26}{check} 	& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.27}{chr}			\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.28}{clearerrors}		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.29}{closefile}		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.31}{copy} 		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.32}{cos}			\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.33}{countchar}		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.34}{countelementlist}& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.35}{cpu}		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.36}{create}		\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.37}{createmap}		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.38}{debug}		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.39}{delete}	& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.40}{deleteaction}	\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.41}{deleteall}		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.42}{deleteclass}	& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.43}{deletefield}	& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.44}{deleteforwmsg}\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.45}{deletemsg} 		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.46}{deletemsgdef}	& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.47}{deletetasks}& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.48}{disable}		\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.49}{echo}			& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.51}{el} 			& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.52}{enable} 	& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.53}{enddump} 	\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.54}{eof}  			& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.55}{exists} 		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.56}{exit} 		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.57}{exp}			\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.60}{findchar} 		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.61}{findsolvefield} 	& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.62}{floatformat} & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.63}{flushfile}		\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.64}{gaussian} 		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.67}{getarg} 		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.68}{getclock}	& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.69}{getdate} 		\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.70}{getdefault} 		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.71}{getelementlist}	& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.73}{getfield}	& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.74}{getfieldnames}	\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.75}{getglobal} 		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.76}{getmsg} 		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.78}{getpath} 	& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.81}{getstat} 		\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.86}{h} 				& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.87}{help} 			& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.88}{initdump} 	& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.94}{input} 		\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.95}{isa} 			& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.96}{le}			& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.97}{listcommands} & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.98}{listescape} 	\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.99}{listfiles} 			& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.100}{listglobals} 	& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.101}{listobjects}& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.102}{log} 		\\
+ \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.103}{logfile} 		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.104}{max} 		& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.105}{maxerrors}& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.106}{maxwarnings}\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.107}{min}                       & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.108}{move}                  & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.109}{msgsubstitute}& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.110}{notes}\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.111}{objsubstitute}       & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.112}{openfile}             & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.119}{pope}        & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.120}{position}	\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.121}{pow}                      & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.122}{printargs}             & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.123}{printenv}  & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.124}{pushe} 		\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.125}{putevent}              & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.126}{pwe}                     & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.127}{quit}          & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.128}{rand} 		\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.130}{randseed}            & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.131}{readcell}              & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.132}{readfile}    & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.133}{reclaim} 	\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.135}{resched}              & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.136}{reset}                     & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.138}{restore}    & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.140}{round} 		\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.141}{save}                    & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.143}{setclock}               & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.144}{setdefault}& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.145}{setenv} 		\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.146}{setfield}                & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.147}{setfieldprot}         & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.148}{setglobal}  &\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.152}{setprompt} 	\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.153}{setrand}               & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.157}{setupalpha}         & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.161}{sh}               & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.163}{showclocks}  \\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.164}{showcommand}& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.165}{showfield}             & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.166}{showmsg}  & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.167}{showobject}   \\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.168}{showsched}       & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.169}{showstat}               & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.170}{silent}         & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.171}{simdump} 	\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.172}{simobjdump}     & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.173}{simundump}          & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.174}{sin}             & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.176}{sqrt} 		\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.177}{stack}                  & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.178}{step}                        & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.179}{stop}          & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.180}{strcat} 		\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.181}{strcmp}                & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.182}{strlen}                     & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.183}{strncmp}    & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.184}{strsub} 		\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.185}{substituteinfo}    & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.186}{substring}              & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.187}{swapdump}& \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.190}{tan} 	\\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.191}{trunc}                   & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.192}{tweakalpha}         & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.193}{tweaktau}    & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.194}{useclock} \\
+\href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.195}{version}              & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.201}{where}                    & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.203}{writefile}      &   \\
+\end{tabular}
+ 
+\subsection*{Unrecognized Commands}
+
+The following commands are not backward compatible with GENESIS 2. There are typically three reasons for this:
+\begin{enumerate}
+\item Commands are obsolete.
+\item Equivalent commands are implemented in the Model Container.
+\item Commands are associated with GENESIS 2 network implementation and control. 
+\end{enumerate}
+
+\begin{tabular}{l l l l}
+asciidata 			& callfunc 	& cellsheet 			& convert                             \\
+egg 				& file2tab 		& fileconnect 			& gen2spk                           \\
+genesis 			& getenv 		& getparamGA 			& getsolvechildname	\\
+getsolvecompname	& getsyncount	& getsyndest 			& getsynindex			\\
+getsynsrc 			& initparamBF	& initparamCG 			& initparamGA			\\
+initparamSA 		& initparamSS	& planarconnect 		& planardelay			\\
+planardelay2		& planarweight	& planarweight2 		& plane				\\
+randcoord 		& relposition	& resetsynchanbuffers	& rotcoord				\\
+scaletabchan 		& setmethod	& setparamGA 			& setpostscript			\\
+setrandfield 		& setsearch	& setupNaCa 			& setupgate			\\
+setupghk 			& setuptau	& shapematch 			& spkcmp				\\
+syndelay 			& tab2file		& volumeconnect 		& volumedelay			\\
+volumedelay2 		& volumeweight& volumeweight2 		& writecell				\\
+xcolorscale 		& xgetstat 		& xps 				& xsimplot				\\
+\end{tabular}
+
+\subsection*{Model Container Functions for Backward Compatibility}
+
+The following commands are implemented in the Model Container:
+
+\begin{tabular}{l l l l}
+addjob 		& debugfunc 	& deletejob 	& error				\\
+gctrace 		& getenv 		& gftrace 		& listactions			\\
+listclasses		& mkdir 		& setmethod	& set\_nsintegrator\_verbose\_level	\\
+setpriority 		& showjobs 	& tset		&  					\\
+\end{tabular}
+
+\subsection*{Regression Tests of Specific Functionality}
+   \begin{itemize}
+      \item[]{\bf list\_objects}
+      \item[]{\bf copy}
+      \item[]{\bf copy2}
+      \item[]{\bf copy3}
+      \item[]{\bf copy4}
+      \item[]{\bf foreachloop}
+      \item[]{\bf forendloop}
+      \item[]{\bf function\_iftest}
+      \item[]{\bf ifelse}
+      \item[]{\bf setfield}
+%      \item[]{\bf test1}
+   \end{itemize}
+   
+\subsection*{Regression Tests of GENESIS 2 Functionality in Heccer}
+
+Regression tests of of the following functions in the Model Container can be found at \href{http://neurospaces.sourceforge.net/neurospaces_project/ns-sli/tests/html/specifications/heccer/main.html}{here}.
+
+   \begin{itemize}
+     \item[]{\bf c1c2p2}
+     \item[]{\bf channel1-nernst1}
+     \item[]{\bf channel2-nernst1	}
+     \item[]{\bf double}
+     \item[]{\bf heccerreset}
+     \item[]{\bf kc}
+     \item[]{\bf passive}
+     \item[]{\bf pool-feedback}
+     \item[]{\bf pool-nernst}
+     \item[]{\bf pools}
+     \item[]{\bf springmass}
+     \item[]{\bf table-kc}
+     \item[]{\bf table-kdr}
+     \item[]{\bf tables}
+   \end{itemize}
+   
+\subsection*{Regression Tests of Tools}
+   \begin{itemize}
+     \item[]{\bf asc\_file}
+     \item[]{\bf Purkinje Cell Model}
+     \item[]{\bf readcell}
+     \item[]{\bf Simplifying a Model with the Model Container}
+   \end{itemize}
+   
+\subsection*{Further Documentation}
+
+Further documentation is available in \href{../tests-backward compatibility/tests-backward compatibility.tex}{Regression Testing of Backward Compatibility}. For the output of regression testing of backward compatibility see \href{http://neurospaces.sourceforge.net/neurospaces_project/ns-sli/tests/html/index.html}{here}.
 
 \end{document}
