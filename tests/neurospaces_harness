@@ -564,21 +564,23 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 		}
 		else
 		{
-		    print "*** Test : $description\n";
+		    print "*** Test: $description\n";
 
 		    if ($description =~ /startup successful \?$/)
 		    {
 			if (!$test_startup)
 			{
-			    print "*** Skipped : not testing startup tests on a recycled command ($description)\n";
+			    print "*** Skipped: not testing startup tests on a recycled command ($description)\n";
 
 			    next;
 			}
 		    }
 
-		    # set read and write strings
+		    # set read, wait and write strings
 
 		    my $read = $command_test->{read};
+
+		    my $wait = $command_test->{wait};
 
 		    my $write = $command_test->{write};
 
@@ -599,9 +601,18 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 
 		    if (defined $write)
 		    {
-			print "*** Write : $write\n";
+			print "*** Write: $write\n";
 
 			$exp->send("$write\n");
+		    }
+
+		    # wait
+
+		    if ($wait)
+		    {
+			print "*** Wait: $wait\n";
+
+			select(undef, undef, undef, $wait);
 		    }
 
 		    # read
@@ -705,19 +716,14 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 				    $error = 'expected_output does not match application_output';
 				}
 
-				#t mando, why is this needed?? if the
-				#t application generates a file that we
-				#t use for testing, we remove it here,
-				#t but may be that the application still
-				#t needs it.
-
-				#
-				# clean up the generated files
-				#
-
+				
 # 				print `pwd`;
 
-				`rm -f $application_output_file`;
+				#
+				# Might want to check the file the application outputs
+				# so comment this out. 
+
+				#`rm -f $application_output_file`;
 			    }
 			    elsif ($read->{shell})
 			    {
