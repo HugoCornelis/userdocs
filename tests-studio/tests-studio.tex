@@ -9,57 +9,51 @@
 
 \section*{GENESIS: Documentation}
 
-\section*{New Document}
+\section*{Studio Regression Tests}
 
-The two above headings are included in all documentation by default. The {\bf Documetnation} identifier may be replaced by a descriptor of the type of documentation you have developed, for example {\bf Introduction} or {\bf Tutorial}, etc. The {\bf New Document} heading should be replaced with the title of your document. Note that in your document all text below the {\bf New Document} heading should be replaced with your own content.
+The GENESIS {\bf Studio} provides a GUI front-end to the \href{../model-container/model-container.tex}{\bf Model Container} that supports browsing and visualization of a model loaded into the \href{../gshell/gshell.tex}{\bf G-Shell}. Note that the {\bf Studio} is not a graphical editor or construction kit.
 
-\subsection*{Help with \LaTeX\,Documentation}
+For more details see the \href{../model-container/model-container.tex}{\bf Studio} documentation.
 
-\subsubsection*{Text color}
+\subsection*{Obtaining Regression Test Specifications}
 
-Text in your document can be colorized  with the command
-\begin{verbatim}
-    \textcolor{red}{text}
-\end{verbatim}
-for example \textcolor{red}{\bf This is IMPORTANT}, green and blue are also recognized arguments.
+This \href{http://neurospaces.sourceforge.net/neurospaces_project/studio/tests/html/index.html}{\bf link} accesses all regression test specifications for the {\bf Studio}.
 
-\subsubsection*{Hyperlinks}
+\subsection*{Regression Test Documentation}
 
-Local hyperlinks are produced with the command
-\begin{verbatim}
-   \href{../NewDocument/NewDocument.tex}{NewDocument}}
-\end{verbatim}
-for example \href{../NewDocument/NewDocument.tex}{NewDocument} references this document.
-Note that these links may not work in your \LaTeX\,{\tt pdf} file viewer, but should be testable with the \href{http://get.adobe.com/reader/}{Acrobat Reader} or \href{http://www.adobe.com/products/acrobatpro/tryout.html}{Acrobat Professional} packages.
+{\bf Studio} regression test documentation includes:
+\begin{itemize}
+\item The startup command.
+\item The input to the test.
+\item The expected output of the test.
+\end{itemize}
+The regression tests give a good overview of {\bf Studio} functionality.
 
+\subsection*{Scope of Regression Tests}
 
-Remote hyperlinks use the same command in a slightly different way
-\begin{verbatim}
-    \href{http://www.genesis-sim.org/documentation}{GENESIS Documentation}
-\end{verbatim}
-for example see \href{http://www.genesis-sim.org/documentation}{GENESIS Documentation}. Note that these links do not wrap automatically at the end of a line even outside of the {\tt verbatim} environment.
+Regression tests cover the following major functionalities of the {\bf Studio}:
+\begin{itemize}
 
-\subsubsection*{Figures}
+\item[]\href{http://neurospaces.sourceforge.net/neurospaces_project/neurospaces/tests/html/specifications/main.html}{\bf Specifications}
 
-Figures can easily be added with the following code:
+Source code extensions; general syntax of NDF library files; file loading; command line switches; environment variables; error conditions;  algorithms, biolevels and biogroup definitions; meshing algorithms; partitioning; coordinates and coordinate caching;  segment linearization, morphology branchpoints, indexing, and structure analysis; internal data structures; parameter calculations on existing models; parameter operations and caching; reducing model parameters; networks and nesting of networks; projection query caching; context operations, wildcard matching and expansion; connections and solvers; model partitioning; automatically inferred and hard-coded channel type parameters;  generic pools and gates from multiple models; operations on symbol table components; model export in a variety of export formats.
 
-\begin{verbatim}
-\begin{figure}[h]
-   \centering
-   \includegraphics[scale=0.6]{figures/dummyfig.eps}
-   \caption{{\bf A Dummy Figure:} Example of Latex code to incorporate
-      a figure into documentation.}
-   \label{fig:df-1}
-\end{figure}
-\end{verbatim}
+\item[]\href{http://neurospaces.sourceforge.net/neurospaces_project/neurospaces/tests/html/specifications/algorithms/main.html}{\bf Algorithms}
 
-\begin{figure}[h]
-  \centering
-   \includegraphics[scale=0.5]{figures/dummyfig.eps}
-\caption{{\bf A Dummy Figure:} Example of \LaTeX\,\,\,code \
-   to incorporate a figure into documentation.}
-  \label{fig:df-1}
-\end{figure}
+Grid, inserter, and spine algorithms.
 
+\item[]\href{http://neurospaces.sourceforge.net/neurospaces_project/neurospaces/tests/html/specifications/code/main.html}{\bf C Code}
+
+Symbol allocation and alias creation; biolevels and biogroups, parameter and symbol types. 
+
+\item[]\href{http://neurospaces.sourceforge.net/neurospaces_project/neurospaces/tests/html/specifications/convertors/main.html}{\bf Morphology convertsion utilities}
+
+\item[]\href{http://neurospaces.sourceforge.net/neurospaces_project/neurospaces/tests/html/specifications/parameters/main.html}{\bf Segment parameter calculations and error signaling}
+
+\item[]\href{http://neurospaces.sourceforge.net/neurospaces_project/neurospaces/tests/html/specifications/perl/main.html}{\bf Perl bindings}
+
+\item[]\href{http://neurospaces.sourceforge.net/neurospaces_project/neurospaces/tests/html/specifications/python/main.html}{\bf Python bindings}
+
+\end{itemize}
 
 \end{document}
