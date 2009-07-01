@@ -9,38 +9,50 @@
 
 \section*{GENESIS: Documentation}
 
-\section*{GENESIS 2 Backward Compatibility Tests}
+\section*{GENESIS 2 Backward Compatibility Regression Tests}
 
-GENESIS is backward compatible with \href{http://genesis-sim.org/GENESIS/genesis-ftp/}{GENESIS Release 2.3} for all functionality of the original Purkinje cell research scripts that provide the basis of the \href{http://genesis-sim.org/GENESIS/illtuts/purkinje.html}{Tutorial 9--Purkinje Tutorial}. In doing this, backward compatibility supports the major functionalities of the GENESIS Script Language Interface.
+GENESIS is backward compatible with \href{http://genesis-sim.org/GENESIS/genesis-ftp/}{\bf GENESIS Release 2.3} for all functionality of the original Purkinje cell research scripts that provide the basis of the \href{http://genesis-sim.org/GENESIS/illtuts/purkinje.html}{\bf Tutorial 9--Purkinje Tutorial}. In doing this, backward compatibility supports the major functionalities of the GENESIS Script Language Interpreter.
 
-Functionality for the graphical objects of the XODUS library is now provided by the \href{../studio/studio.tex}{Studio} and \href{../project-browser/project-browser.tex}{Project Browser} in conjunction with the new GENESIS \href{../gui/gui.tex}{GUI}.
+Functionality for the graphical objects of the XODUS library is now provided by the \href{../studio/studio.tex}{\bf Studio} and \href{../project-browser/project-browser.tex}{\bf Project\,Browser} in conjunction with the new \href{../gui/gui.tex}{\bf GENESIS\,GUI}.
 
-Backward compatibility is provided by the \href{../nssli/nssli.tex}{Neurospaces Scripting Language Interface} (NSSLI).
+Backward compatibility is provided by the \href{../nssli/nssli.tex}{\bf Neurospaces\,Scripting\,Language\,Interpreter} (NS-SLI).
 
-For more details see \href{../backward-compatibility}{Backward Compatibility}.
+For more details see the \href{../backward-compatibility}{\bf Backward\,Compatibility} documentation.
 
-\subsection*{Obtaining Test Specifications}
+\subsection*{Obtaining Regression Test Specifications}
 
-This \href{http://neurospaces.sourceforge.net/neurospaces_project/ns-sli/tests/html/index.html}{link} accesses all test specifications for the GENESIS 2 backward compatibility bridge for GENESIS (the NSSLI).
+This \href{http://neurospaces.sourceforge.net/neurospaces_project/ns-sli/tests/html/index.html}{\bf link} accesses all regression test specifications for the GENESIS 2 backward compatibility bridge for GENESIS (the NS-SLI).
 
-\subsection*{Test Documentation}
+\subsection*{Regression Test Documentation}
 
-Backward compatibility test documentation includes:
+Backward compatibility regression test documentation includes:
 \begin{itemize}
-\item The command to start a given test within the NSSLI backward compatibility environment.
+\item The command to start a given test within the NS-SLI backward compatibility environment.
 \item The input to the test.
 \item The expected output of the test.
 \end{itemize}
-The tests give a good idea of what backward compatibility means, i.e. running GENESIS 2 scripts without modification. Testing is conducted at both the level of user experienced functionality and low-level unit tests. Integration tests between the GENESIS 2 SLI, the Model Container, and Heccer are also provided.
+The regression tests give a good idea of what backward compatibility means, i.e. running GENESIS 2 scripts without modification. Testing is conducted at both the level of user experienced functionality and low-level unit tests. Integration tests between the GENESIS 2 SLI, the \href{../model-container/model-container.tex}{\bf Model\,Container} and \href{../heccer/heccer.tex}{\bf Heccer} are also performed.
 
-\subsection*{Scope of Tests}
+\subsection*{Scope of Regression Tests}
 
-Backward compatibility tests cover four major areas:
-\begin{enumerate}
-\item Specifications.
-\item Recognized GENESIS 2 functions.
-\item Heccer functionality in backward compatibility.
-\item Tools.
-\end{enumerate}
+Regression tests cover the following major functionalities of backward compatibility:
+\begin{itemize}
+\item[]\href{http://neurospaces.sourceforge.net/neurospaces_project/ns-sli/tests/html/specifications/main.html}{\bf Specifications}
+
+Purkinje cell model simplification.
+
+\item[]\href{http://neurospaces.sourceforge.net/neurospaces_project/ns-sli/tests/html/specifications/core/main.html}{\bf GENESIS 2 Functions}
+
+All available GENESIS objects; compartment creation, field setting and copying; simple startup and clock setting; simple functions containing ifelse control structures; simple if else statements.
+
+\item[]\href{http://neurospaces.sourceforge.net/neurospaces_project/ns-sli/tests/html/specifications/heccer/main.html}{\bf Heccer}
+
+Creation of a neutral object with a child compartment; channel and Nernst equation integration; gate tabulation and pool integration; synaptic equations.
+
+\item[]\href{http://neurospaces.sourceforge.net/neurospaces_project/ns-sli/tests/html/specifications/tools/main.html}{\bf Tools}
+
+The {\it asc\_file} object; Purkinje cell model; {\it readcell} parameters and coordinates; model simplification with the {\bf Model Container}.
+
+\end{itemize}
 
 \end{document}

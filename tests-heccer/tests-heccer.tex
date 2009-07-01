@@ -1,0 +1,53 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+\section*{Heccer Regression Tests}
+
+Heccer is a fast compartmental solver, that is based on {\it hsolve} of the GENESIS simulator.
+
+For more details see the \href{../heccer/heccer.tex}{\bf Heccer} documentation.
+
+\subsection*{Obtaining Regression Test Specifications}
+
+This \href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/index.html}{\bf link} accesses all regression test specifications for {\bf Heccer}.
+
+\subsection*{Regression Test Documentation}
+
+{\bf Heccer} regression test documentation includes:
+\begin{itemize}
+\item The startup command.
+\item The input to the test.
+\item The expected output of the test.
+\end{itemize}
+The regression tests give a good overview of {\bf Heccer} functionality and test code gives a good idea of how to use {\bf Heccer} from the Unix command line. Regression tests consist mainly of user experienced functionality (i.e. not low level unit tests). Single executables are run with a hard-coded model and the generated output is checked.
+
+See the \href{../ssp/ssp.tex}{\bf SSP} package for integration tests with GENESIS.
+
+\subsection*{Scope of Regression Tests}
+
+The first two suites of regression tests check C code bindings to Heccer, whereas, the second two test suites check the equivalent Perl bindings to Heccer. Regression tests cover the following major functionalities:
+\begin{itemize}
+\item[]\href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/specifications/main.html}{\bf Model specification}
+
+Internal and external addressing of variables and external callouts; check for illegal parameters; options; serialization; synaptic channels; pool integration; table sharing and gate tabulation; Nernst potentials; passive models; voltage and current clamp circuitry.
+
+\item[]\href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/specifications/active/main.html}{\bf Active single compartment and channel interactions.}
+
+\item[]\href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/specifications/glue/swig/perl/main.html}{\bf Active model}
+
+Perl bindings to Heccer for both pool integration and gate tabulation for a passive model.
+
+\item[]\href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/specifications/glue/swig/perl/active/main.html}{\bf Perl bindings to Heccer for a single active compartment}
+\end{itemize}
+
+\end{document}
+
+\end{document}
