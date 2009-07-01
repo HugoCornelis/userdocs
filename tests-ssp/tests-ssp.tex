@@ -9,57 +9,59 @@
 
 \section*{GENESIS: Documentation}
 
-\section*{New Document}
+\section*{SSP Regression Tests}
 
-The two above headings are included in all documentation by default. The {\bf Documetnation} identifier may be replaced by a descriptor of the type of documentation you have developed, for example {\bf Introduction} or {\bf Tutorial}, etc. The {\bf New Document} heading should be replaced with the title of your document. Note that in your document all text below the {\bf New Document} heading should be replaced with your own content.
+The Simple Scheduler in Perl ({\bf SSP}) integrates activation of the \href{../model-container/model-container/.tex}{\bf Model Container} and \href{../heccer/heccer.tex}{\bf Heccer} during a simulation.
 
-\subsection*{Help with \LaTeX\,Documentation}
+For more details see the \href{../ssp/ssp.tex}{\bf SSP} documentation.
 
-\subsubsection*{Text color}
+\subsection*{Obtaining Regression Test Specifications}
 
-Text in your document can be colorized  with the command
-\begin{verbatim}
-    \textcolor{red}{text}
-\end{verbatim}
-for example \textcolor{red}{\bf This is IMPORTANT}, green and blue are also recognized arguments.
+This \href{http://neurospaces.sourceforge.net/neurospaces_project/studio/tests/html/index.html}{\bf link} accesses all regression test specifications for {\bf SSP}.
 
-\subsubsection*{Hyperlinks}
+\subsection*{Regression Test Documentation}
 
-Local hyperlinks are produced with the command
-\begin{verbatim}
-   \href{../NewDocument/NewDocument.tex}{NewDocument}}
-\end{verbatim}
-for example \href{../NewDocument/NewDocument.tex}{NewDocument} references this document.
-Note that these links may not work in your \LaTeX\,{\tt pdf} file viewer, but should be testable with the \href{http://get.adobe.com/reader/}{Acrobat Reader} or \href{http://www.adobe.com/products/acrobatpro/tryout.html}{Acrobat Professional} packages.
+{\bf SSP} regression test documentation includes:
+\begin{itemize}
+\item The startup command.
+\item The input to the test.
+\item The expected output of the test.
+\end{itemize}
+The regression tests give a good overview of {\bf SSP} functionality. They consist of either {\bf SSP} stand-alone or integration tests with either {\bf Heccer} alone or with {\bf Heccer} and the {\bf Model Container}.
 
+\subsection*{Scope of Regression Tests}
 
-Remote hyperlinks use the same command in a slightly different way
-\begin{verbatim}
-    \href{http://www.genesis-sim.org/documentation}{GENESIS Documentation}
-\end{verbatim}
-for example see \href{http://www.genesis-sim.org/documentation}{GENESIS Documentation}. Note that these links do not wrap automatically at the end of a line even outside of the {\tt verbatim} environment.
+Regression tests cover the following major functionalities of {\bf SSP}:
+\begin{itemize}
 
-\subsubsection*{Figures}
+\item[]\href{http://neurospaces.sourceforge.net/neurospaces_project/ssp/tests/html/specifications/builtins/main.html}{\bf Built-ins}
 
-Figures can easily be added with the following code:
+Cell built-in schedule; cell built-in schedule applied to the Purkinje cell model.
 
-\begin{verbatim}
-\begin{figure}[h]
-   \centering
-   \includegraphics[scale=0.6]{figures/dummyfig.eps}
-   \caption{{\bf A Dummy Figure:} Example of Latex code to incorporate
-      a figure into documentation.}
-   \label{fig:df-1}
-\end{figure}
-\end{verbatim}
+\item[]\href{http://neurospaces.sourceforge.net/neurospaces_project/ssp/tests/html/specifications/integration/main.html}{Integration}
 
-\begin{figure}[h]
-  \centering
-   \includegraphics[scale=0.5]{figures/dummyfig.eps}
-\caption{{\bf A Dummy Figure:} Example of \LaTeX\,\,\,code \
-   to incorporate a figure into documentation.}
-  \label{fig:df-1}
-\end{figure}
+{\bf Heccer} aggregator options and related high-level gate tabulation interfacing; simple passive model; active model in passive testing mode; perfect clamp; pool integration; Purkinje model; spiking behavior; synaptic channels; raw gate tabulation calculations and high-level interfacing. 
 
+\item[]\href{http://neurospaces.sourceforge.net/neurospaces_project/ssp/tests/html/specifications/integration/active/main.html}{Active Models}
+
+Single and multiple active compartments; interaction between regular HH channels; 
+
+\item[]\href{http://neurospaces.sourceforge.net/neurospaces_project/ssp/tests/html/specifications/integration/heccer/main.html}{\bf Heccer}
+
+Simple passive model testing; pool integration.
+
+\item[]\href{http://neurospaces.sourceforge.net/neurospaces_project/ssp/tests/html/specifications/integration/segments/main.html}{Segments}
+
+Purkinje cell segments.
+
+\item[]\href{http://neurospaces.sourceforge.net/neurospaces_project/ssp/tests/html/specifications/optimization/main.html}{Optimization}
+
+Various duplicate tests repeated with the {\it -\,-\,optimize} flag.
+
+\item[]\href{http://neurospaces.sourceforge.net/neurospaces_project/ssp/tests/html/specifications/ssp/main.html}{\bf SSP}
+
+Command line switches; run-time versioning.
+
+\end{itemize}
 
 \end{document}
