@@ -75,7 +75,10 @@ sub tag_filter
 
 sub main
 {
-    my $source = '.';
+    #t this should come from a query using neurospaces_build because
+    #t it is the only one that knows about the project layout.
+
+    my $userdocs_source = "$ENV{HOME}/neurospaces_project/userdocs/source/snapshots/0";
 
     my $selected_tags = [ @ARGV, ];
 
@@ -90,7 +93,7 @@ sub main
 	   {
 	       chomp; $_
 	   }
-	   `find $source -name "descriptor.yml"`,
+	   `find $userdocs_source -name "descriptor.yml"`,
 	  ];
 
     my $all_documentation_tag_filtered
