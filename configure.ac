@@ -33,6 +33,11 @@ AM_INIT_AUTOMAKE(userdocs, docs-1)
 
 # determine the test library to install
 
+dnl USERDOCS_FILES=`find . -name "*.tex" && find . -name "*.pdf" && find . -name "*.txt" | perl -pe 's/\n/ /g' `
+dnl AC_SUBST(USERDOCS_FILES)
+
+# determine the test library to install
+
 TEST_SPECIFICATION_FILES=`/bin/echo -n "tests/introduction.html " && find tests/specifications -name "*.t" && find tests/specifications/strings -name "*.txt" && find tests/data -name "*.yml" | perl -pe 's/\n/ /g' `
 AC_SUBST(TEST_SPECIFICATION_FILES)
 
