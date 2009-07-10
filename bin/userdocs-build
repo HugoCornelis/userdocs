@@ -1,5 +1,5 @@
-#!/usr/bin/perl -w 
-#!/usr/bin/perl -w -d:ptkdb
+#!/usr/bin/perl -w
+#!/usr/bin/perl -w -d:ptkdb 
 #
 
 
@@ -329,18 +329,23 @@ sub prepare_publish_document
 
 	foreach my $output (@$outputs)
 	{
+
+	    my @tmp = split(/\//,$directory);
+
+	    my $target_directory = $tmp[-1];
+
 	    if ($option_verbose)
 	    {
-		print "$0: copying files for $directory to html/htdocs/neurospaces_project/userdocs/$directory\n";
+		print "$0: copying files for $directory to html/htdocs/neurospaces_project/userdocs/$target_directory\n";
 	    }
 
 	    # put it in the place for publication.
 
-	    mkdir "../html/htdocs/neurospaces_project/userdocs/$directory";
+	    mkdir "../html/htdocs/neurospaces_project/userdocs/$target_directory";
 
 	    #! note: -pr for BSD (MAC) compatibility.
 
-	    system "cp -pr $output/* '../html/htdocs/neurospaces_project/userdocs/$directory'";
+	    system "cp -pr $output/* '../html/htdocs/neurospaces_project/userdocs/$target_directory'";
 
 	    if ($?)
 	    {
