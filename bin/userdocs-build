@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl -w 
 #!/usr/bin/perl -w -d:ptkdb 
 #
 
@@ -66,6 +66,40 @@ sub build_document
 		# prepare output: general latex processing
 
 		$filename =~ m((.*)\.tex$);
+
+
+		#
+		# Remove references to self, as well as any empty itemize blocks
+		# since the itemize blocks kill the cron job. After we remove
+		# the references we resave the file.
+		#
+		if( $filename =~ m/contents-level[1234567]/)
+		{
+
+		  # read latex source
+
+		  use IO::File;
+
+		  my $source_file = IO::File->new("<../$filename");
+
+		  my $source_text = join "", <$source_file>;
+
+		  $source_file->close();
+
+		  my @name = split(/\./,$filename);
+
+		  $source_text =~ s(\\item \\href\{\.\.\/\.\/$name[0]\/.*\.\w+\}\{\\bf \\underline\{.*\}\})( )g;
+
+		  # If we have nothign but whitespace in between the itemize tags, remove
+		  # the whole line.
+		  $source_text =~ s(\\begin\{itemize\}\s+\\end\{itemize\})( )g;
+		  
+		  open(OUTPUT,">$filename");
+		
+		  print OUTPUT $source_text;
+		  close(OUTPUT);
+
+		}
 
 		my $filename_base = $1;
 
@@ -155,20 +189,20 @@ sub build_document
 
 		    #remove any of the links to itself if it's a contents file.
 
-		    if( $filename =~ m/contents-level[1234567]/)
-		    {
+# 		    if( $filename =~ m/contents-level[1234567]/)
+# 		    {
 
-		      my @name = split(/\./,$filename);
+# 		      my @name = split(/\./,$filename);
 
-		      $source_text =~ s(\\item \\href\{\.\.\/\.\/$name[0]\/.*\.html\}\{\\bf \\underline\{.*\}\})( )g;
+# 		      $source_text =~ s(\\item \\href\{\.\.\/\.\/$name[0]\/.*\.html\}\{\\bf \\underline\{.*\}\})( )g;
 
-		    }
+# 		    }
 
 	
 
-		    # If we have nothign but whitespace in between the itemize tags, remove
-		    # the whole line. 
-		    $source_text =~ s(\\begin\{itemize\}\s+\\end\{itemize\})( )g;
+# 		    # If we have nothign but whitespace in between the itemize tags, remove
+# 		    # the whole line.
+# 		    $source_text =~ s(\\begin\{itemize\}\s+\\end\{itemize\})( )g;
 
 		    # convert eps links to png links
 
