@@ -72,6 +72,15 @@ Regression test specification for backward compatibility can be found \href{http
 \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.191}{trunc}                   & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.192}{tweakalpha}         & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.193}{tweaktau}    & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.194}{useclock} \\
 \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.195}{version}              & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.201}{where}                    & \href{http://genesis-sim.org/GENESIS/Hyperdoc/Manual-25.html#ss25.203}{writefile}      &   \\
 \end{tabular}
+
+The following commands are also recognized but exhibit a reduced functionality:
+
+\begin{tabular}{l l l l}
+addjob 		& debugfunc 	& deletejob 	& error				\\
+gctrace 		& getenv 		& gftrace 		& listactions			\\
+listclasses		& mkdir 		& setmethod	& 	\\
+setpriority		& showjobs 	& tset		&  					\\
+\end{tabular}
  
 \subsection*{Unrecognized Commands}
 
@@ -97,17 +106,6 @@ setupghk 			& setuptau	& shapematch 			& spkcmp				\\
 syndelay 			& tab2file		& volumeconnect 		& volumedelay			\\
 volumedelay2 		& volumeweight& volumeweight2 		& writecell				\\
 xcolorscale 		& xgetstat 		& xps 				& xsimplot				\\
-\end{tabular}
-
-\subsection*{Model Container Functions for Backward Compatibility}
-
-The following commands are implemented in the Model Container:
-
-\begin{tabular}{l l l l}
-addjob 		& debugfunc 	& deletejob 	& error				\\
-gctrace 		& getenv 		& gftrace 		& listactions			\\
-listclasses		& mkdir 		& setmethod	& set\_nsintegrator\_verbose\_level	\\
-setpriority 		& showjobs 	& tset		&  					\\
 \end{tabular}
 
 \subsection*{Regression Tests of Specific Functionality}

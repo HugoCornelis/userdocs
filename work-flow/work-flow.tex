@@ -10,17 +10,43 @@
 
 \section*{Workflow Overview}
 
-The typical workflow within GENESIS has four basic steps. It is followed, for example, by the \href{../gshell/gshell.tex}{\bf G-Shell} and tutorial documentation.
+The relationship between experiment and simulation in computational neuroscience is illustrated in the figure below.  
+
+\begin{figure}[h]
+   \centering
+   \includegraphics[scale=0.4]{figures/Exp-Sim-8.eps}
+%   \caption{{\bf A Dummy Figure:} Example of Latex code to incorporate
+%      a figure into documentation.}
+   \label{fig:df-1}
+\end{figure}
+
+Conducting experiments and running simulations are two iterative processes connected by a feedback loop that uses interpretation of results to design new experimental setups and model constructions. GENESIS supports the lower loop within the system as shown above.
+
+\subsection*{GENESIS User Workflow}
+
+As the following figure illustrates, the typical workflow within GENESIS has five basic steps. 
+
+\begin{figure}[h]
+   \centering
+   \includegraphics[scale=0.5]{figures/workflow.eps}
+%   \caption{{\bf A Dummy Figure:} Example of Latex code to incorporate
+%      a figure into documentation.}
+   \label{fig:df-1}
+\end{figure}
+
+This workflow provides an organizing principle that guides the user experience of GENESIS, for example, the \href{../gui/gui.tex}{\bf GUI} and tutorial documentation.
 
 \begin{enumerate}
 
-\item {\bf Model operations:} Simple models can be created directly within the {\bf G-Shell} by entering commands. More complex models can be imported into the {\bf G-Shell} from either the GENESIS model libraries or from external model libraries. The command line based \href{../studio/studio.tex}{\bf Studio} can then be used to explore, check, and and the model.
+\item {\bf Construct model:} Simple models can be created directly within the {\bf G-Shell} by entering commands. More complex models can be imported into the {\bf G-Shell} from either the GENESIS model libraries or from external model libraries. The command line based \href{../studio/studio.tex}{\bf Studio} can then be used to explore, check, and save the model.
 
-\item {\bf Characterize simulation:} For example,  the \href{../project-browser/project-browser.tex}{\bf Project\,Browser} can be used to configure the simulation update time step or the model parameter values specific to a given simulation, the stimulus parameters for a given simulation run or  `experiment', and/or the variables to be stored for subsequent analysis.
+\item {\bf Design experiment:}  Set model parameter values specific to a given simulation, the stimulus parameters for a given simulation run or  `experiment', and/or the variables to be stored for subsequent analysis.
 
-\item  {\bf Simulate:} Check, run, reset simulation, and save model state. Flush output to raw result storage for subsequent data analysis. A model can be saved at any simulation time step to allow it to be imported into a subsequent GENESIS session for further development and exploration.
+\item  {\bf Run simulation:} Configure, check, run, reset simulation, and save model state. The model state can be saved at any simulation time step to allow it to be imported into a subsequent GENESIS session. Output is flushed to raw result storage for subsequent data analysis. 
 
-\item {\bf Process output:}  Check simulation output and the validity of results to determine whether simulation output exists in the correct locations. Output can be analyzed either within GENESIS or piped to external applications such as \href{http://www.mathworks.com/}{Matlab}, \href{http://www.mathworks.com/}{xmgrace}, or \href{http://www.wolfram.com/}{Mathematica}.
+\item {\bf Output:}  Check simulation output and the validity of results to determine whether simulation output exists in the correct locations. Output can be analyzed either within GENESIS or piped to external applications such as \href{http://www.mathworks.com/}{Matlab}, \href{http://www.mathworks.com/}{xmgrace}, or \href{http://www.wolfram.com/}{Mathematica}.
+
+\item {\bf Iterators:} Close the loop between output of results and model construction in the GENESIS users workflow. Iterators connect experimental results and model output and include for example, automated construction of simulations and batch files, static parameter searching, and active parameter searching using the dynamic clamp. 
 
 \end{enumerate}
 
