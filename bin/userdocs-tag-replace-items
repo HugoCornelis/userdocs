@@ -1,5 +1,5 @@
-#!/usr/bin/perl -w 
 #!/usr/bin/perl -w -d:ptkdb
+#!/usr/bin/perl -w
 #
 
 
@@ -152,12 +152,12 @@ sub update_links
 	}
 
 
-	#t TODO: This code is supposed to replace the filename with 
-	#t the human readable name for the contents pages. For some reason it doesn't work
-	#t anymore. Need to find out the cause since this code is still valid.
+	# NOTE: This line is used to change the filename to the human readable name
+	# , the previous regex was underline{.*} which worked, then for some reason
+	# it stopped working so I changed it to .+, now it works again. 
 	my $document_name = $descriptor->{'document name'};
 
-	$item =~ s({\\bf \\underline{.*}})({\\bf \\underline{$document_name}})g;
+	$item =~ s({\\bf \\underline{.+}})({\\bf \\underline{$document_name}})g;
 
 	push(@updated_links,$item);
 	
