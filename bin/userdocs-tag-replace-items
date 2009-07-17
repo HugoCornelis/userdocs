@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl -w 
 #!/usr/bin/perl -w -d:ptkdb
 #
 
@@ -22,6 +22,54 @@ $program_name =~ s/.*\///;
 my $option_help;
 my $option_remove;
 my $option_verbose;
+
+
+
+
+#
+# args ($path)
+#
+# shortens the full paths returned by the descriptor
+# finds.
+sub get_relative_path
+{
+  my $path = shift;
+
+  my @tmp = split(/\//,$path);
+
+  my $relative_path = $tmp[-1];
+
+  return $relative_path;
+
+}
+
+
+
+#
+# args (@paths)
+#
+# converts an array of absolute paths to relative ones.
+#
+sub get_relative_paths
+{
+
+  my $fullpaths = shift;
+  my @relative_paths;
+
+  my $path;
+  foreach (@$fullpaths)
+  {
+
+    $path = get_relative_path($_);
+
+    push(@relative_paths,$path)
+
+  }
+
+  return @relative_paths;
+
+}
+
 
 
 sub read_cmd_line
@@ -103,6 +151,10 @@ sub update_links
 
 	}
 
+
+	#t TODO: This code is supposed to replace the filename with 
+	#t the human readable name for the contents pages. For some reason it doesn't work
+	#t anymore. Need to find out the cause since this code is still valid.
 	my $document_name = $descriptor->{'document name'};
 
 	$item =~ s({\\bf \\underline{.*}})({\\bf \\underline{$document_name}})g;
@@ -161,6 +213,12 @@ sub main
 
 	my $items = tag_expander($tag);
 
+
+	# This is to convert the full pathnames returned
+	# in tag_expander to relative ones since it breaks
+	# the links.
+	my @items_relative = get_relative_paths($items);
+
 	my $items_expanded
 	    = [
 	       #t grep only those that have a 'published' tag
@@ -170,7 +228,7 @@ sub main
 		   "\\item \\href{../$_/$_.pdf}{\\bf \\underline{$_}}\n\n";
 	       }
 	       sort
-	       @$items,
+	       @items_relative,
 	      ];
 
 	#my $items_expanded_text = join "", @$items_expanded;

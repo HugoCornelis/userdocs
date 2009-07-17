@@ -1,5 +1,5 @@
-#!/usr/bin/perl -w 
-#!/usr/bin/perl -w -d:ptkdb 
+#!/usr/bin/perl -w  
+#!/usr/bin/perl -w -d:ptkdb
 #
 
 
@@ -13,6 +13,8 @@ use YAML;
 
 my $option_verbose;
 my $option_tags = [];
+
+
 
 
 sub build_document
@@ -188,6 +190,7 @@ sub build_document
 
 
 		    #remove any of the links to itself if it's a contents file.
+		    #X this has been moved up earlier in the code
 
 # 		    if( $filename =~ m/contents-level[1234567]/)
 # 		    {
