@@ -1,5 +1,5 @@
 #!/usr/bin/perl -w
-#!/usr/bin/perl -w -d:ptkdb
+#!/usr/bin/perl -w  -d:ptkdb 
 #
 
 
@@ -178,6 +178,8 @@ sub update_links
 
 }
 
+
+
 sub main
 {
     read_cmd_line();
@@ -277,8 +279,10 @@ sub main
 		}
 
 		# replace the next line with the new text
+		#X removed a \s* at the end of $tag, removed a newline from the end of the wildcard .*
+		#$content =~ s/% start: $program_name $tag\s*\n(.*\n)*% end: $program_name $tag[^\n]*\n/% start: $program_name $tag\n$replacement% end: $program_name $tag\n/g;
 
-		$content =~ s/% start: $program_name $tag\s*\n(.*\n)*% end: $program_name $tag[^\n]*\n/% start: $program_name $tag\n$replacement% end: $program_name $tag\n/g;
+		$content =~ s(% start: $program_name $tag(.*\n)*% end: $program_name $tag\n)(% start: $program_name $tag\n$replacement% end: $program_name $tag\n)g;
 
 		if ($option_verbose)
 		{
@@ -304,7 +308,10 @@ sub main
 		    or die $!;
 		print $descriptor $content;
 		close $descriptor;
+
+
 	    }
+
 	}
     }
 }

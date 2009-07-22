@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w  
+#!/usr/bin/perl -w 
 #!/usr/bin/perl -w -d:ptkdb
 #
 
@@ -92,10 +92,11 @@ sub build_document
 
 		  $source_text =~ s(\\item \\href\{\.\.\/\.\/$name[0]\/.*\.\w+\}\{\\bf \\underline\{.*\}\})( )g;
 
-		  # If we have nothign but whitespace in between the itemize tags, remove
+		  # If we have nothing but whitespace in between the itemize tags, remove
 		  # the whole line.
 		  $source_text =~ s(\\begin\{itemize\}\s+\\end\{itemize\})( )g;
-		  
+
+
 		  open(OUTPUT,">$filename");
 		
 		  print OUTPUT $source_text;
@@ -191,21 +192,22 @@ sub build_document
 
 		    #remove any of the links to itself if it's a contents file.
 		    #X this has been moved up earlier in the code
+		    #XX readded this code because the previous code doesn't seem to be getting triggered.
 
-# 		    if( $filename =~ m/contents-level[1234567]/)
-# 		    {
+#  		    if( $filename =~ m/contents-level[1234567]/)
+#  		    {
 
-# 		      my @name = split(/\./,$filename);
+#  		      my @name = split(/\./,$filename);
 
-# 		      $source_text =~ s(\\item \\href\{\.\.\/\.\/$name[0]\/.*\.html\}\{\\bf \\underline\{.*\}\})( )g;
+#  		      $source_text =~ s(\\item \\href\{\.\.\/\.\/$name[0]\/.*\.html\}\{\\bf \\underline\{.*\}\})( )g;
 
-# 		    }
+#  		    }
 
 	
 
 # 		    # If we have nothign but whitespace in between the itemize tags, remove
 # 		    # the whole line.
-# 		    $source_text =~ s(\\begin\{itemize\}\s+\\end\{itemize\})( )g;
+ 		    $source_text =~ s(\\begin\{itemize\}\s+\\end\{itemize\})( )g;
 
 		    # convert eps links to png links
 
@@ -323,6 +325,70 @@ sub main
 	prepare_publish_document($document);
     }
 }
+
+
+
+# 
+# ($contents_page_text)
+#
+sub update_links
+{
+  my $tmp = shift;
+  my @items = split(/\n/,$tmp);
+  my $item;
+  my $descriptorfile;
+
+  my @updated_links;
+
+  foreach $item (@items)
+  {
+
+    if($item =~ m/\\href\{\.\.\/(.*\/).*.pdf\}{/)
+    {
+
+      $descriptorfile = $1 . "descriptor.yml";
+      
+      if(-e $descriptorfile)
+      {
+
+	my $descriptor = YAML::LoadFile($descriptorfile);
+
+	if(!defined $descriptor)
+	{
+
+	  print "Error: $descriptorfile contains invalid YAML\n";
+	  next;
+
+	}
+
+
+	# NOTE: This line is used to change the filename to the human readable name
+	# , the previous regex was underline{.*} which worked, then for some reason
+	# it stopped working so I changed it to .+, now it works again. 
+	my $document_name = $descriptor->{'document name'};
+
+	$item =~ s({\\bf \\underline{.+}})({\\bf \\underline{$document_name}})g;
+
+	push(@updated_links,$item);
+	
+      }
+      else
+      {
+
+	print "Error: $descriptorfile doesn't exist\n";
+	next;
+
+      }
+
+    }
+
+  }
+
+  return  join "", @updated_links;
+
+}
+
+
 
 
 sub prepare_publish_document
