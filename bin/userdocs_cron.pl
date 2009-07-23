@@ -52,6 +52,12 @@ system "make website-prepare -C ~/neurospaces_project/userdocs/source/snapshots/
 
 #system "cat /tmp/userdocs_make.output |  mail -s \"userdocs has been built on darwin\" sysadminspam@gmail.com";
 
+
+# now do a link check.
+system "mkdir ~/neurospaces_project/userdocs/source/snapshots/0/html/htdocs/neurospaces_project/userdocs/webcheck";
+
+system "webcheck -o ~/neurospaces_project/userdocs/source/snapshots/0/html/htdocs/neurospaces_project/userdocs/webcheck ~/neurospaces_project/userdocs/source/snapshots/0/html/htdocs/neurospaces_project/userdocs/";
+
 my $text = `cat /tmp/userdocs_make.output`;
 
 try_to_mail_status("sysadminspam@gmail.com",
