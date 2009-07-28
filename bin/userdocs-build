@@ -192,26 +192,20 @@ sub build_document
 		    #
 		    # since the bog links are not html they need to stay as pdf.
 		    # This just changes them back. 
-		    # X still implementing this, doesn't seem to work correctly yet, difficult to debug
-		    # X since it takes a while for the code to get here.
-		    #
-		    #if($filename =~ m/contents-level1/)
-		    #{
-		    #  $source_text =~ s(\\href\{\.\./(bog-ch\d)\.html)(\\href\{../$1.pdf)g;
-		    #}
+		    $source_text =~ s(\\href\{\.\./bog-ch\d/(bog-ch\d)\.html)(\\href\{../$1/$1.pdf)g;
 
 		    #remove any of the links to itself if it's a contents file.
 		    #X this has been moved up earlier in the code
 		    #XX readded this code because the previous code doesn't seem to be getting triggered.
 
-#  		    if( $filename =~ m/contents-level[1234567]/)
-#  		    {
+#   		    if( $filename =~ m/contents-level1/)
+#   		    {
 
-#  		      my @name = split(/\./,$filename);
+#   		      my @name = split(/\./,$filename);
 
-#  		      $source_text =~ s(\\item \\href\{\.\.\/\.\/$name[0]\/.*\.html\}\{\\bf \\underline\{.*\}\})( )g;
+#   		      $source_text =~ s(\\item \\href\{\.\.\/\.\/$name[0]\/.*\.html\}\{\\bf \\underline\{.*\}\})( )g;
 
-#  		    }
+#   		    }
 
 	
 

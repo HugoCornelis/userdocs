@@ -119,6 +119,7 @@ website-prepare:
 website-upload: website-clean website-prepare html-upload
 
 webcheck:
+	rm -rf html/htdocs/neurospaces_project/userdocs/webcheck
 	mkdir html/htdocs/neurospaces_project/userdocs/webcheck
 	webcheck -o html/htdocs/neurospaces_project/userdocs/webcheck html/htdocs/neurospaces_project/userdocs
 
