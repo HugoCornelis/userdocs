@@ -314,6 +314,10 @@ sub main
 
     `mkdir -p html/htdocs/neurospaces_project/userdocs/`;
 
+    # copy over the bog-ch files since they're PDFs and don't need any processing. 
+    # Should make these directories respect the tag system.
+    system "cp -pr bog-ch* 'html/htdocs/neurospaces_project/userdocs'";
+
     if (!scalar keys %$documents)
     {
 	print "$0: no documents to build\n";
@@ -453,6 +457,7 @@ sub prepare_publish_document
 	    #! note: -pr for BSD (MAC) compatibility.
 
 	    system "cp -pr $output/* '../html/htdocs/neurospaces_project/userdocs/$target_directory'";
+
 
 	    if ($?)
 	    {
