@@ -1,5 +1,5 @@
-#!/usr/bin/perl -w 
 #!/usr/bin/perl -w -d:ptkdb
+#!/usr/bin/perl -w 
 #
 
 
@@ -90,7 +90,7 @@ sub build_document
 
 		  my @name = split(/\./,$filename);
 
-		  $source_text =~ s(\\item \\href\{\.\.\/\.\/$name[0]\/.*\.\w+\}\{\\bf \\underline\{.*\}\})( )g;
+		  $source_text =~ s(\\item \\href\{\.\.\/$name[0]\/$name[0]\.\w+\}\{\\bf \\underline\{.*\}\})( )g;
 
 		  # If we have nothing but whitespace in between the itemize tags, remove
 		  # the whole line.
