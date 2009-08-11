@@ -1,0 +1,36 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+\section*{The GENESIS System}
+
+\subsection*{\bf repo-genesis3.cbi.utsa.edu}
+
+\begin{itemize}
+
+\item {\bf monotone repository:} Serves the \href{http://www.monotone.ca/}{monotone} repositories for the GENESIS project. Uses a port for each package to be served over the Internet.
+
+\item {\bf Automated tester:} A {\it cronjob} which performs a test of all packages available over the repository.  It takes at least 45 minutes to complete the tests. To serve tester output over the internet a directory owned by the non-privileged user that the {\it cronjob} runs as must be configured to be served over the internet. 
+
+\item {\bf Xrefactory cross references:} A {\it cronjob} which builds a set of html pages built in \href{http://www.xref-tech.com/xrefactory/main.html}{Xrefactory} that lists function references.  Requires Xrefactory with a configuration file that has been specifically configured for the GENESIS project directory tree. 
+
+\end{itemize}
+
+\subsection*{\bf darwin.cbi.utsa.edu}
+
+\begin{itemize}
+
+\item {\bf genesis-sim.org website:} The website for GENESIS uses the \href{http://drupal.org/}{Drupal CMS} which requires \href{http://www.php.net/}{php5} and a \href{http://www.mysql.com/}{MYSQL} database.
+
+\item {\bf Automated user documentation:} Builds the \href{../documentation-overview/documentation-overview.tex}{GENESIS Documentation System} and puts it on a link available from the GENESIS website.  Uses {\it htlatex} and is very resource intensive.  It will take at least 20 minutes to build.
+
+\end{itemize}
+
+\end{document}
