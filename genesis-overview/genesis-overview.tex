@@ -59,7 +59,7 @@ The Data/Control schema illustrated above was developed into a software architec
 \end{figure}
 Ideally, this architecture makes the underlying applications look to the user like a single system. This is achieved by recruiting different modules to provide the model building tools and simulator functionality required at the different stages of a project.
 
-In summary, the CBI architecture provides a template for federated software development that, at its core, contains a CBI compliant simulator (the Model Container, Controller, and Solver located in the dashed box in the high level block diagram--above). It is the modularity of the architecture that simplifies connection to independent applications indirectly related to model construction and instantiation. In doing this it shares a number of ideas with the well-known three tier architectures paradigm (make link). The distinguishing feature of the CBI architecture is that the back-end comprises numerical solvers rather than relational databases.
+In summary, the CBI architecture provides a template for federated software development that, at its core, contains a CBI compliant simulator (the {\tt Model\,Container}, Simulation Controller ({\tt SSP}), and Solver ({\tt Heccer}), located in the dashed box in the high level block diagram--above). It is the modularity of the architecture that simplifies connection to independent applications indirectly related to model construction and instantiation. In doing this it shares a number of ideas with the well-known three tier architectures paradigm (make link). The distinguishing feature of the CBI architecture is that the back-end comprises numerical solvers rather than relational databases.
 
 The CBI compliant simulator indicated in the previous figure is expanded in the following figure to illustrate the key components. Data layers in the CBI architecture correspond to high-level data associated with biological concepts and extend to low level data such as numerical values employed by the solvers. The benefit of this layering of data is that it allows the mathematical and biological aspects of a model to be distinguished and separated by specific Data and Function bindings.
 
@@ -93,31 +93,24 @@ The CBI architecture provides three significant advantages for software developm
 The recently developed CBI simulator architecture is an open framework that also provides a general context for ongoing GENESIS development. The architecture focuses users on the need to conceive, organize, execute and evaluate simulations, while allowing the development of new tools to support simulation based education, collaboration, and publication. The GENESIS modules that have been implemented, tested, and that are currently compliant with the CBI architecture include:
 
 \begin{enumerate}
-\item \href{../document-model-container/document-model-container.tex}{\bf The Model Container:} Middle-ware dealing with biological entities and end-user concepts instead of mathematical equations. It is a declarative model container that generates highly efficient data structures implementing biological structures and components in a uniform data model across different levels of scale. When linked to a user interface it provides an efficient way to construct, inspect, and validate models.
+\item \href{../model-container/model-container.tex}{\bf {\tt Model\,Container}:} Middle-ware dealing with biological entities and end-user concepts instead of mathematical equations. It is a declarative model container that generates highly efficient data structures implementing biological structures and components in a uniform data model across different levels of scale. When linked to a user interface it provides an efficient way to construct, inspect, and validate models.
 
-\item \href{../document-heccer/document-heccer.tex}{\bf Heccer:} A fast compartmental solver based on the GENESIS {\it hsolve} routine. The design flexibility of the architecture allows Heccer to be instantiated from from C, Perl, or other scripting languages.
+\item \href{../heccer/heccer.tex}{\bf {\tt Heccer}:} A fast compartmental solver based on the GENESIS {\it hsolve} routine. The design flexibility of the architecture allows Heccer to be instantiated from from C, Perl, or other scripting languages.
 
-\item \href{../document-ssp/document-ssp.tex}{\bf Simple Scheduler in Perl:} SSP builds simulation control files and can be constructed to bind the Model Container and Heccer and activate them correctly, such that they work together on a single simulation.
+\item {\bf \href{../project-browser/project-browser.tex}{\tt Project Browser}:} A tool for inspection of projects and simulation results.
+
+\item \href{../ssp/ssp.tex}{\bf {\tt Simple\,Scheduler\,in\,Perl}:} {\tt SSP} builds simulation control files and can be constructed to bind the {\tt Model\,Container} and {\tt Heccer} and activate them correctly, such that they work together on a single simulation.
+
+\item \href{../studio/studio.tex}{\bf {\tt Studio}:} Provides tools for graphical browsing and command line usage.
 \end{enumerate}
-
-\noindent Other modules in development include:
-
-\begin{enumerate}
-\item {\bf Neurospaces Studio:} Provides tools for graphical browsing and command line usage.
-%\item {\bf Geometry Library:} A general purpose library containing essential geometrical operators not commonly found in other geometrical libraries.
-%\item {\bf Reconstruct Interface:} Supports conversion of contours exported by the Reconstruct software to the GENESIS declarative script file format (NDF).
-\item {\bf Project Browser:} A tool for inspection of projects and simulation results.
-\end{enumerate}
-
-The documentation you can find $\underline{\mbox{here}}$ provides more detailed description of the function and use of these components.
 
 \subsection*{Planned External Interfaces for GENESIS}
 
-Using the CBI architecture, GENESIS is being developed with the necessary interfaces that will, in principle, allow any simulation system to use its features. The figure below shows the multiple external interfaces to GENESIS that will be possible with the new architecture.
+Using the CBI architecture, GENESIS is being developed with the necessary interfaces that will, in principle, allow any simulation system to use its features. The figure below shows the multiple external interfaces to GENESIS that are planned for the new architecture.
 
 \begin{figure}[h]
   \centering
- \includegraphics[scale=0.35]{figures/G3-Interfaces.eps}
+ \includegraphics[scale=1.25]{figures/G3-Interfaces.eps}
   %\caption{enumerate}
   \label{fig:g3interfaces}
 \end{figure}
