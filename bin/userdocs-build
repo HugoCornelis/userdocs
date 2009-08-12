@@ -234,6 +234,12 @@ sub build_document
 		    system "htlatex '$filename'";
 
 
+	            # copy any pdfs to top level.
+	            # NOTE: should have the build function read in the descriptor files for 
+	            # these situations. 
+
+	            system "mv -f figures/*.pdf .";
+	    
 		    if ($option_verbose)
 		    {
 			print "$0: leaving html\n";
@@ -354,6 +360,9 @@ sub update_links
     if($item =~ m/\\href\{\.\.\/(.*\/).*.pdf\}{/)
     {
 
+      # chop should be safe here since it cuts off the "/"
+      my $item_name = chop($1);
+
       $descriptorfile = $1 . "descriptor.yml";
       
       if(-e $descriptorfile)
@@ -370,14 +379,24 @@ sub update_links
 	}
 
 
-	# NOTE: This line is used to change the filename to the human readable name
-	# , the previous regex was underline{.*} which worked, then for some reason
-	# it stopped working so I changed it to .+, now it works again. 
 	my $document_name = $descriptor->{'document name'};
+       
 
 	$item =~ s({\\bf \\underline{.+}})({\\bf \\underline{$document_name}})g;
 
 	push(@updated_links,$item);
+
+
+	#NOTE: if we see the pdf tag we need to make sure that the link in the contents page
+	# stays pdf and not html, so here it is changed back so that the links work correctly. 
+	if( defined $descriptor->{pdf} )
+	{
+
+	  $item =~ s(\\item \\href\{\.\.\/$item_name\/$item_name\.\w+\})(\\item \\href\{\.\.\/$item_name\/$item_name\.pdf\})g;
+
+
+	}
+
 	
       }
       else
