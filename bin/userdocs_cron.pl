@@ -52,6 +52,9 @@ system "make website-prepare -C ~/neurospaces_project/userdocs/source/snapshots/
 
 #system "cat /tmp/userdocs_make.output |  mail -s \"userdocs has been built on darwin\" sysadminspam@gmail.com";
 
+# TODO: Would be a good idea to make this destination directory on the copy configurable.
+system "rm -rf ~/public_html/userdocs";
+system "cp -rf ~/neurospaces_project/userdocs/source/snapshots/0/html/htdocs/neurospaces_project/userdocs/ ~/public_html/userdocs";
 
 # now do a link check.
 system "make webcheck -C ~/neurospaces_project/userdocs/source/snapshots/0/";
