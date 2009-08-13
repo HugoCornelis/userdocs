@@ -77,12 +77,6 @@ sub build_document
 
 		$filename =~ m((.*)\.tex$);
 
-
-		if($filename =~ m/CNS/)
-		  {
-		    my $gh = 1 + 1;
-		  }
-
 		#
 		# Remove references to self, as well as any empty itemize blocks
 		# since the itemize blocks kill the cron job. After we remove
