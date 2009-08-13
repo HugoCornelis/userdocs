@@ -1,5 +1,5 @@
+#!/usr/bin/perl -w
 #!/usr/bin/perl -w -d:ptkdb
-#!/usr/bin/perl -w 
 #
 
 
@@ -196,10 +196,7 @@ sub build_document
 		    $source_file->close();
 
 		    # update html links to their proper file types.
-		    if( $filename =~ m/contents-level1/)
-		      {
-			my $i = 1 + 1;
-		      }
+
 		    my $source_html = update_html($descriptor,$source_text);
 
 		    # write converted source
@@ -294,7 +291,7 @@ sub update_html
   # here we handle special cases for pdf files. Since several files in the 
   # documentation can be pdf we need to check all of the published docs
   # for the pdf tag. Operation is a bit expensive.
-  #
+  # NOTE: Duplicates some code from userdocs-tag-replace-items
   my $pdf_text = `userdocs-tag-filter 2>&1 pdf published`;
   my $published_pdfs = Load($pdf_text);
 
