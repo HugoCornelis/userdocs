@@ -1,5 +1,5 @@
-#!/usr/bin/perl -w 
 #!/usr/bin/perl -w -d:ptkdb
+#!/usr/bin/perl -w 
 #
 
 
@@ -195,46 +195,18 @@ sub build_document
 
 		    $source_file->close();
 
-		    # convert pdf links to html links
-
-
-		    $source_text =~ s(\\href\{\.\./([^}]*)\.pdf)(\\href\{../$1.html)g;
-
-		    $source_text =~ s(\\href\{\.\./([^}]*)\.tex)(\\href\{../$1.html)g;
-
-		    #
-		    # since the bog links are not html they need to stay as pdf.
-		    # This just changes them back. 
-		    $source_text =~ s(\\href\{\.\./bog-ch\d/(bog-ch\d)\.html)(\\href\{../$1/$1.pdf)g;
-
-		    #remove any of the links to itself if it's a contents file.
-		    #X this has been moved up earlier in the code
-		    #XX readded this code because the previous code doesn't seem to be getting triggered.
-
-#   		    if( $filename =~ m/contents-level1/)
-#   		    {
-
-#   		      my @name = split(/\./,$filename);
-
-#   		      $source_text =~ s(\\item \\href\{\.\.\/\.\/$name[0]\/.*\.html\}\{\\bf \\underline\{.*\}\})( )g;
-
-#   		    }
-
-	
-
-# 		    # If we have nothign but whitespace in between the itemize tags, remove
-# 		    # the whole line.
- 		    $source_text =~ s(\\begin\{itemize\}\s+\\end\{itemize\})( )g;
-
-		    # convert eps links to png links
-
-		    $source_text =~ s(\\includegraphics\{figures/([^}]*)\.eps)(\\href\{figures/$1.png)g;
+		    # update html links to their proper file types.
+		    if( $filename =~ m/contents-level1/)
+		      {
+			my $i = 1 + 1;
+		      }
+		    my $source_html = update_html($descriptor,$source_text);
 
 		    # write converted source
 
 		    $source_file = IO::File->new(">$filename");
 
-		    print $source_file $source_text;
+		    print $source_file $source_html;
 
 		    $source_file->close();
 
@@ -245,15 +217,6 @@ sub build_document
 		    # generate html output
 
 		    system "htlatex '$filename'";
-
-
-		    if(tag_defined($descriptor,'pdf'))
-		    {
-		      # copy any pdfs to top level. 
-		      # should probably handle this in a more clean way
-		      # instead if requiring the file to be in the figures directory.
-		      system "mv -f figures/*.pdf .";
-		    }
 
 		    if ($option_verbose)
 		    {
@@ -282,6 +245,121 @@ sub build_document
 
     chdir '..';
 }
+
+
+
+
+#
+# Function to update any links in the html that it ouput
+# to the userdocs system. Handles special cases.
+#
+sub update_html
+{
+  my $descriptor = shift;
+  my $source_text = shift;
+
+  print "--- Updating html links ---\n";
+
+  $source_text =~ s(\\href\{\.\./([^}]*)\.pdf)(\\href\{../$1.html)g;
+
+  $source_text =~ s(\\href\{\.\./([^}]*)\.tex)(\\href\{../$1.html)g;
+
+  #
+  # since the bog links are not html they need to stay as pdf.
+  # This just changes them back. 
+  #$source_text =~ s(\\href\{\.\./bog-ch\d/(bog-ch\d)\.html)(\\href\{../$1/$1.pdf)g;
+
+  #remove any of the links to itself if it's a contents file.
+  #X this has been moved up earlier in the code
+  #XX readded this code because the previous code doesn't seem to be getting triggered.
+
+  #   		    if( $filename =~ m/contents-level1/)
+  #   		    {
+  
+  #   		      my @name = split(/\./,$filename);
+
+  #   		      $source_text =~ s(\\item \\href\{\.\.\/\.\/$name[0]\/.*\.html\}\{\\bf \\underline\{.*\}\})( )g;
+  
+  #   		    }
+
+  # 		    # If we have nothign but whitespace in between the itemize tags, remove
+  # 		    # the whole line.
+  $source_text =~ s(\\begin\{itemize\}\s+\\end\{itemize\})( )g;
+
+  # convert eps links to png links
+
+  $source_text =~ s(\\includegraphics\{figures/([^}]*)\.eps)(\\href\{figures/$1.png)g;
+
+
+  # here we handle special cases for pdf files. Since several files in the 
+  # documentation can be pdf we need to check all of the published docs
+  # for the pdf tag. Operation is a bit expensive.
+  #
+  my $pdf_text = `userdocs-tag-filter 2>&1 pdf published`;
+  my $published_pdfs = Load($pdf_text);
+
+  my @published_pdfs_relative = get_relative_paths($published_pdfs);
+
+  my $pdf;
+  foreach $pdf (@published_pdfs_relative)
+  {
+
+    $source_text =~ s(\\href\{\.\./$pdf/$pdf\.html)(\\href\{../$pdf/$pdf.pdf)g;
+
+
+  }
+
+
+  return $source_text;
+
+}
+
+
+#
+# args ($path)
+#
+# shortens the full paths returned by the descriptor
+# finds.
+sub get_relative_path
+{
+  my $path = shift;
+
+  my @tmp = split(/\//,$path);
+
+  my $relative_path = $tmp[-1];
+
+  return $relative_path;
+
+}
+
+
+
+#
+# args (@paths)
+#
+# converts an array of absolute paths to relative ones.
+#
+sub get_relative_paths
+{
+
+  my $fullpaths = shift;
+  my @relative_paths;
+
+  my $path;
+  foreach (@$fullpaths)
+  {
+
+    $path = get_relative_path($_);
+
+    push(@relative_paths,$path)
+
+  }
+
+  return @relative_paths;
+
+}
+
+
 
 
 
@@ -369,7 +447,7 @@ sub main
 
     # copy over the bog-ch files since they're PDFs and don't need any processing. 
     # Should make these directories respect the tag system.
-    system "cp -pr bog-ch* 'html/htdocs/neurospaces_project/userdocs'";
+    #system "cp -pr bog-ch* 'html/htdocs/neurospaces_project/userdocs'";
 
     if (!scalar keys %$documents)
     {
