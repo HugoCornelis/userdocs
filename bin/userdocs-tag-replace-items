@@ -1,5 +1,5 @@
-#!/usr/bin/perl -w
-#!/usr/bin/perl -w  -d:ptkdb 
+#!/usr/bin/perl -w 
+#!/usr/bin/perl -w -d:ptkdb 
 #
 
 
@@ -126,8 +126,14 @@ sub tag_expander
 #
 sub update_links
 {
-  my $tmp = shift;
-  my @items = split(/\n/,$tmp);
+ 
+  # Commented this since the previous method worked
+  # fine, this one caused only the first entry in the array
+  # to be processed.
+  #my $tmp = shift;
+  #my @items = split(/\n/,$tmp);
+
+  my @items = @_;
   my $item;
   my $descriptorfile;
 
@@ -140,7 +146,8 @@ sub update_links
     {
 
       # chop should be safe here since it cuts off the "/"
-      my $item_name = chop($1);
+      my $item_name = $1;
+      chop($item_name);
 
       $descriptorfile = $1 . "descriptor.yml";
       
@@ -165,16 +172,6 @@ sub update_links
 
 	push(@updated_links,$item);
 
-
-	#NOTE: if we see the pdf tag we need to make sure that the link in the contents page
-	# stays pdf and not html, so here it is changed back so that the links work correctly. 
-	if( defined $descriptor->{pdf} )
-	{
-
-	  $item =~ s(\\item \\href\{\.\.\/$item_name\/$item_name\.\w+\})(\\item \\href\{\.\.\/$item_name\/$item_name\.pdf\})g;
-
-
-	}
 
 	
       }
@@ -249,7 +246,7 @@ sub main
 	       @items_relative,
 	      ];
 
-	#my $items_expanded_text = join "", @$items_expanded;
+	#my $items_expanded_text = join "", @$items_expanded
 	my $items_expanded_text = update_links(@$items_expanded);
 
 	$replacement = "\\begin{itemize}\n\n$items_expanded_text\n\\end{itemize}\n\n";
