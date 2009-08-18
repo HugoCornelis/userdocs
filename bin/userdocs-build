@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl -w 
 #!/usr/bin/perl -w -d:ptkdb
 #
 
@@ -34,11 +34,25 @@ sub build_document
 
     chdir $directory;
 
-    
+
     # Load the descriptor for special parameters if present.
 
     my $descriptor = YAML::LoadFile('descriptor.yml');
 
+
+
+    # Note: Thi tag handles special cases for pdf.
+    # Should expand it to allow maybe a "filetype" attribute
+    # to check for so that it can copy over other file types.
+    if(tag_defined($descriptor,'pdf'))
+    {
+      system "mkdir -p output/ps";
+      system "mkdir -p output/pdf";
+      system "mkdir -p output/html";
+      system "cp *.pdf output/html";
+      system "cp *.pdf output/ps";
+      system "cp *.pdf output/pdf";
+    }
 
     # if we find a makefile
 
@@ -67,6 +81,7 @@ sub build_document
 	{
 
 
+
 	    # for latex sources
 
 	    if ($filename =~ /\.tex$/)
@@ -80,7 +95,7 @@ sub build_document
 		#
 		# Remove references to self, as well as any empty itemize blocks
 		# since the itemize blocks kill the cron job. After we remove
-		# the references we resave the file.
+		# the references and resave the file.
 		#
 		if( $filename =~ m/contents-level[1234567]/)
 		{
@@ -219,9 +234,8 @@ sub build_document
 
 		chdir "..";
 	    }
-
+	    
 	    # else unknown source file type
-
 	    else
 	    {
 		print "$0: unknown file type for $filename";
@@ -365,9 +379,9 @@ sub tag_defined
   my $descriptor = shift;
   my $tag = shift;
 
-  my @tags = $descriptor->{tags};
+  my $tags = $descriptor->{tags};
 
-  foreach (@tags)
+  foreach (@$tags)
   {
 
     if( $tag eq $_ )
@@ -438,7 +452,7 @@ sub main
 
     # copy over the bog-ch files since they're PDFs and don't need any processing. 
     # Should make these directories respect the tag system.
-    #system "cp -pr bog-ch* 'html/htdocs/neurospaces_project/userdocs'";
+    system "cp -pr bog-ch* 'html/htdocs/neurospaces_project/userdocs'";
 
     if (!scalar keys %$documents)
     {
@@ -447,6 +461,7 @@ sub main
 
     foreach my $document (keys %$documents)
     {
+
 
 	build_document($document);
     }
