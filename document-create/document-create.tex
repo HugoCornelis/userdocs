@@ -60,6 +60,33 @@ The default \LaTeX\, documentation source file\,{\it NewDocument.tex} in the {\i
 \subsubsection*{The Figures Folder}
 
 This directory contains any figures that your new document source file may include. The name of this folder should not be changed.
+
+\section*{Incorporate a Pre-existing Document}
+
+The GENESIS Document System recognizes a number of different file formats. The purpose is to allow preexisting documentation to be directly included without having first to be converted to the \LaTeX\,format.
+
+To incorporate a pre-existing document into the GENESIS Document System:
+
+\begin{enumerate}
+
+\item Include a tag in the {\it descriptor.yml} file in the document directory. Currently, the following file format tags are recognized (Note. No tag is necessary for  \LaTeX\,files as the .tex file name suffix is the default for the GENESIS Documentation System):
+
+\begin{itemize}
+
+\item[]{\bf - eps} Encapsulated postscript.
+\item[]{\bf - html} Hypertext markup language.
+\item[]{\bf - pdf} Portable document format.
+\item[]{\bf - png} Portable network graphics.
+\item[]{\bf - ps} Postscript.
+
+\end{itemize}
+
+\item Place the document file in the document directory (NOT the {\it figures} directory).
+
+Incorporation of pre-existing documentation in one of the above formats is the only time that the document directory name and the document name do not have to match (see further below). Note that with document incorporation (c.f. creation) the document to be included is located in the document directory and not the {\it figures} directory.
+
+\end{enumerate}
+
  
 \section*{Create a New Document}
 
