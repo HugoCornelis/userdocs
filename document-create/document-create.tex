@@ -61,7 +61,7 @@ The default \LaTeX\, documentation source file\,{\it NewDocument.tex} in the {\i
 
 This directory contains any figures that your new document source file may include. The name of this folder should not be changed.
 
-\section*{Incorporate a Pre-existing Document}
+\section*{Incorporate a Pre-existing Document, File, or Video}
 
 The GENESIS Document System recognizes a number of different file formats. The purpose is to allow preexisting documentation to be directly included without having first to be converted to the \LaTeX\,format.
 
@@ -81,12 +81,31 @@ To incorporate a pre-existing document into the GENESIS Document System:
 
 \end{itemize}
 
-\item Place the document file in the document directory (NOT the {\it figures} directory).
-
-Incorporation of pre-existing documentation in one of the above formats is the only time that the document directory name and the document name do not have to match (see further below). Note that with document incorporation (c.f. creation) the document to be included is located in the document directory and not the {\it figures} directory.
+\item Place the document file in the document directory (NOT the {\it figures} sub-directory).
 
 \end{enumerate}
 
+It is also possible to incorporate audio files and videos as part of documentation. The recognized audio file format tags include:
+
+\begin{itemize}
+
+\item[]{\bf - wav} Microsoft .wav file format.
+\item[]{\bf - mp3} Digital audio encoding format.
+
+\end{itemize}
+
+To incorporate video into a GENESIS document: 
+
+\begin{enumerate}
+
+\item Create an account with a video sharing website, e.g. \href{http://www.youtube.com/create_account}{YouTube}.
+\item Upload your video(s).
+\item Embed a link to the video(s) into the document describing their contents. See \href{../NewDocument/NewDocument.tex}{New Document}, for further details.
+
+
+\end{enumerate}
+
+Incorporation of pre-existing documentation in one of the above formats is the only time that the document directory name and the document name do not have to match (see further below). Note that with document incorporation (c.f. creation) the document to be included is located in the document directory and NOT the {\it figures} directory.
  
 \section*{Create a New Document}
 
@@ -170,6 +189,14 @@ Recommended tags for the descriptor file include:
     - draft
     - published
     - local
+    - eps
+    - html
+    - pdf
+    - png
+    - ps
+    - wav
+    - mp3
+    
 \end{verbatim}
 
 Remember that the interpretation of the\,{\it descriptor.yml} file by the GENESIS documentation system is sensitive to white space and indents.
