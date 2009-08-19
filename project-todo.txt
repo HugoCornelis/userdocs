@@ -4,15 +4,70 @@
 ** Performance benchmarks for purkinje cell
 G2, NS-SLI, SSP, gshell.
 ** Twitter account by Mando
-** Assemble a list of G3 capabilities
-** Release plan: alpha, beta, full release
-** Create an integrated installation tar ball or so.
+** construct a test report for beta-testers
+*** automated testing
+**** How many test failure have been reported.
+*** manual testing (only if the automated testing gives problems)
+**** ls /usr/local/neurospaces/models/library/tests/cells/singlep.ndf
+**** heccer --version
+**** ssp --version
+**** ssp --cell tests/cells/singlep.ndf --dump
+**** neurospaces --version
+**** neurospaces --query cells/purkinje/edsjb1994.ndf
+***** segmentcount /Purkinje
+***** quit
+**** neurospaces --gui cells/purkinje/edsjb1994.ndf
+**** ns-sli
+***** quit
+**** genesis-g3 --version
+**** genesis-g3
+***** list components
+***** list commands
+***** help command sli_load
+**** userdocs-version
+** Document that describes the release
+*** Assemble a list of G3 capabilities
+**** assemble them from each of the components
+*** Make statements about
+**** backward compatibility
+***** clarify the level of backward compatibility 
+***** emphasize on commitment of backward compatibility
+***** explain policies for feature requests
+***** does rallpacks
+***** does the purkinje cell and its various stimulation protocols
+***** please try your simulations and report problems
+**** NeuroML support
+**** PyNN support
+***** placeholder for an interface to PyNN through the pynn_load command
+*** Installation
+**** Compile a list of dependencies
+**** Create an integrated installation tar ball or so.
+**** add deb and rpm packages
+http://www.artificialworlds.net/blog/2007/02/22/creating-deb-and-rpm-packages/
+**** Release plan: alpha, beta, full release
+**** synchronize userdocs and wiki installation docs
+*** mailing lists, discussion boards and other genesis related systems
+**** what are they used for?
+**** what do we want them to be used for? why?
+**** Add hg repository
+**** Add bulletin boards and mailing lists
+**** Add NS related systems
+***** www.neurospaces.org
+***** blog
+*** alpha: Mid-October
+*** beta1: Mid-January
+*** beta2: Mid-March
+*** full: Mid-July
 ** Documentation
-** TODOs based on user workflow
-** TODOs based on CBI architecture components (go through TODO.txt files)
-** Go through wiki and compare with userdocs documentation
-** GUI TODOs for single neuron modeling
-** Compile a list of dependencies
+** TODOs
+*** Integrate this TODO list with the roadmap of the genesis grant
+*** based on user workflow
+*** TODOs based on CBI architecture components (go through TODO.txt files)
+**** Configurator
+**** Dash
+**** Peccer / Thredder
+*** Go through wiki and compare with userdocs documentation
+*** GUI TODOs for single neuron modeling
 ** test on different architectures
 *** compile a list of architectures we can test.
 *** compile a list of architectures we want to test on.
@@ -20,55 +75,22 @@ G2, NS-SLI, SSP, gshell.
 ** add rallpacks
 ** test interfacing with neuroconstruct
 ** correct bad links reported by webcheck
-** construct a test report for beta-testers
-*** How many test failure have been reported.
-** add deb and rpm packages
-http://www.artificialworlds.net/blog/2007/02/22/creating-deb-and-rpm-packages/
-** Document that describes the release
-*** placeholder for an interface to PyNN through the pynn_load command
-** Integrate this TODO list with the roadmap of the genesis grant
-** Go through todo packages
-*** Configurator
-*** Dash
-*** Peccer / Thredder
 ** Readline for the model-container
 ** ns-sli showfield command
 ** setup bug / todo tracker, feature tracker and dependency tracker
-** correct installation documentation
-*** relate to rpm/debian packaging
-*** synchronize userdocs and wiki installation docs
 ** add meshing function
 *** call neuroconstruct ?
 *** call cvapp ?
 *** other ?
-** rationalize all mailing lists and discussion boards.
-*** what are they used for?
-*** what do we want them to be used for? why?
-** genesis_systems list
-*** Add hg repository
-*** Add bulletin boards and mailing lists
-*** Add NS related systems
-**** www.neurospaces.org
-**** blog
 ** Add hg operations to neurospaces_build script
 ** Distinguish between userdocs_cron.pl and userdocs_cron.
 ** Add act_on_selection to the system
 *** userdocs file selection
 *** source code file selection
-** Initiate the construction of a system for the automated inclusion of output of commands in the documentation.
+** construct a script for the automated inclusion of output of commands in the documentation.
 *** Is this related to release-expand
 Also inserts texts in existing documents.
 ** create a structure for progress reports to the supplement
-** Make statements about
-*** NeuroML support
-*** PyNN support
-*** backward compatibility
-**** clarify the level of backward compatibility 
-**** emphasize on commitment of backward compatibility
-**** explain policies for feature requests
-**** does rallpacks
-**** does the purkinje cell and its various stimulation protocols
-**** please try your simulations and report problems
 ** Integrate 'mtn clone' into the installer scripts
 ** Add network modeling support
 *** DES
