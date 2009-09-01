@@ -1,5 +1,5 @@
-#!/usr/bin/perl -w 
-#!/usr/bin/perl -w -d:ptkdb 
+#!/usr/bin/perl -w
+#!/usr/bin/perl -w -d:ptkdb  
 #
 
 
@@ -166,7 +166,7 @@ sub update_links
 
 
 	my $document_name = $descriptor->{'document name'};
-       
+
 
 	$item =~ s({\\bf \\underline{.+}})({\\bf \\underline{$document_name}})g;
 
@@ -187,7 +187,26 @@ sub update_links
 
   }
 
-  return  join "", @updated_links;
+
+  # Sort the links on the contents pages by the document name. 
+   my @updated_links_sorted = sort{
+     my $atmp = $a;
+     $atmp =~ s(\\item \\href{../.*/.*}{\\bf \\underline{(.*)}}\n\n)($1)g;
+     my $btmp = $b;
+     $btmp =~ s(\\item \\href{../.*/.*}{\\bf \\underline{(.*)}}\n\n)($1)g;
+
+     lc($atmp) cmp lc($btmp)
+
+   }@updated_links;
+
+   return @updated_links_sorted;
+
+
+}
+
+
+sub compare
+{
 
 }
 
