@@ -49,12 +49,13 @@ dist_noinst_SCRIPTS = \
 	notation/notation.tex \
 	pclamp/pclamp.tex \
 	prerequisite/prerequisite.tex \
-	project-browser/project-browser.tex \
 	project-browser-screenshots/project-browser-screenshots.tex \
+	project-browser/project-browser.tex \
+	project-todo/project-todo.tex \
 	publication/publication.tex \
 	purkinje-cell-model/purkinje-cell-model.tex \
-	release-expand/release-expand.tex \
 	release-expand.config \
+	release-expand/release-expand.tex \
 	reserved-words/reserved-words.tex \
 	rtxi-injector-validation/rtxi-injector-validation.tex \
 	shell-tokens/shell-tokens.tex \
