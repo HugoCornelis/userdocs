@@ -127,14 +127,17 @@ source code.
 
 
 \subsection{Documentation For Users}
-Basic tutorials:
+
+Allan, can you fill this is?
+
 \begin{itemize}
+\item Basic tutorials: Tutorials for the rallpacks (passive models and
+  axon models).
+\item Basic tutorials: Tutorials for single cell model simulations.
 \item FAQ: to explain what GENESIS 3 is, its relationship with the CBI
   architecture, with MOOSE, Neuroconstruct and Neurospaces.  To
   explain what the discriminators are with other simulators, and that
   it is still backwards compatible with GENESIS 2.
-\item Tutorials for the rallpacks (passive models and axon models).
-\item Tutorials for single cell model simulations.
 \end{itemize}
 
 The tutorials are based on the GENESIS 2 tutorials and demonstrate the
@@ -146,20 +149,22 @@ features of GENESIS 3 such as the project browser.
 Some features of the compartmental solver are not documented yet, and
 for completeness we briefly mention them overhere.  These include:
 \begin{itemize}
-\item Total cumulative currents of user-tagged channels of a dendritic
-  subtree.
-\item Total instantaneous inhibitory and excitatory current.
-\item Soma-dendrite current during action potentials.
-\item Average membrane potential of a dendritic subtree.
+\item Calculation of the total instantaneous cumulative currents of
+  user-tagged channels of a dendritic subtree.
+\item Calculation of the total instantaneous inhibitory and excitatory
+  current.
+%\item Soma-dendrite current during action potentials.
+%\item Average membrane potential of a dendritic subtree.
 \end{itemize}
 
 
 \subsection{GENESIS 3 technical documentation}
-The technical documentation outlines the specifics of the NDF file
-format.  Examples are given for a simple Hodgkin-Huxley model and for
-a model with Ca pools.  The technical documentation describes the use
-of the GENESIS 3 simulator from a UNIX shell command line.
-
+The technical documentation describes the use of the GENESIS 3
+simulator from a UNIX shell command line and from the GENESIS 3 shell.
+It also outlines the NDF file format.  Examples are given for a simple
+Hodgkin-Huxley model and for a model with Ca pools.  Technical
+documentation bridges between user documentation and developer
+documentation.
 
 \subsection{Documentation For Developers}
 
@@ -169,10 +174,11 @@ simulator.  This documentation is not included in the alpha release,
 but instead made available over the internet.
 
 \begin{itemize}
-\item I will start updating a blog on a daily to weekly basis.  The
-  blog can be found at http://neurospaces.blogspot.com/.  The blog
-  will show developers and users the parts of the GENESIS 3 simulator
-  we are working on, and give a demonstration of progress.
+\item A blog is updated on a daily to weekly basis.  The blog can be
+  found at http://neurospaces.blogspot.com/.  The blog details ideas
+  and vision and it shows developers and users the parts of the
+  GENESIS 3 simulator we are working on, with a demonstration of
+  progress.
 \item The Neurospaces wiki
   (http://code.google.com/p/neurospaces/wiki/Index) documents a number
   of technical aspects of the software.  Currently the installation
@@ -180,14 +186,14 @@ but instead made available over the internet.
 \item The APIs of software modules such as Heccer and the model
   container are documented in the source code.  Doxygen is a tool to
   convert such inline documents to HTML.  These HTML pages are
-  published on the GENESIS website (www.genesis-sim.org ?).
+  published on the GENESIS website
+  (http://www.neurospaces.org/doxygen-menu.html).
 \item The latest version of the source code and its full history are
   made available on a daily basis.  The Neurospaces wiki documents how
-  to use this source code repository.  Importantly, the repository
-  allows developers to make changes independently, even when their
-  laptop is physically disconnected from the internet.  Specialized
-  freely available technology is used to synchronize such distributed
-  software development.
+  to use this source code repository.  The technology used allows
+  developers to make changes independently, even from a disconnected
+  laptop.  Specialized freely available technology is used to
+  synchronize such distributed software development.
 \end{itemize}
 
 An experimental feature is the use of a community tool to document
@@ -197,61 +203,62 @@ user requirements and user workflows.
 \item A project planning tool documents user workflows through the
   software system, and establishes a relationship between them and the
   technical aspects of their implementation.  Xplanner (available from
-  www.xplanner.org) is used for this purpose.
+  www.xplanner.org) will be used for this purpose.
 \end{itemize}
 
 
 \section{Installation and Testing}
 
 The GENESIS 3 simulator uses tools of professional quality for
-automated installation, testing and reporting tool.  An outline of the
-use of these tools can be found on the Neurospaces wiki.  Briefly, the
+automated installation, testing and reporting.  An outline of the use
+of these tools can be found on the Neurospaces wiki.  Briefly, the
 installation tool allows to install and upgrade source code, and to
 synchronize distributed development.  It also allows research groups
-to start their own independent development.
+to start their own development projects that can optionally be
+integrated with GENESIS 3.
 
-The test framework is a higly dynamic environment for independent
+The test framework is a higly dynamic environment for stand-alone
 software component testing and software component integration testing.
-It compares test specifications as expected output with the output
-produced by an external software application.
+It compares test specifications and expected output with the output
+produced by the software applications.
 
 The test specifications are included in the alpha release and can be
-exported to HTML and mirrored on a web server.  Currently the
-Neurospaces sourceforge website serves this purpose for the tests of
-the GENESIS 3 simulator.  The testing tool is integrated with the
-installation procedure.  The Neurospaces wiki documents how to setup a
-buildbot based on the installation script ('neurospaces\_build').
+exported to HTML and mirrored on a web server.  The Neurospaces
+website has an HTML version of all tests.  The testing tool is
+integrated with the installation procedure.  The Neurospaces wiki
+documents how to setup a testbot based on the installation scripts
+('neurospaces\_build' and 'neurospaces\_cron').
 
-The CBI hosts an functional simulator server accessible over a web
-browser.  The server hosts a simulation project that demonstrates the
-capabilities of the project browser using the Purkinje cell model.
-The simulator server is linked through the GENESIS website.
+%The CBI hosts an functional simulator server accessible over a web
+%browser.  The server hosts a simulation project that demonstrates the
+%capabilities of the project browser using the Purkinje cell model.
+%The simulator server is linked through the GENESIS website.
 
 
 \section{Next Release}
 
-The next release is planned for July 2009.
+The next release is planned for October 2009.
 
-\subsection{Threading}
+%\subsection{Threading}
 
-Parallelization is built into the design of GENESIS 3.  The next
-release of GENESIS 3 will have support for multi threading for
-enhanced simulation performance on multi core CPUs.
+%Parallelization is built into the design of GENESIS 3.  The next
+%release of GENESIS 3 will have support for multi threading for
+%enhanced simulation performance on multi core CPUs.
 
-\subsection{Cluster computing support}
+%\subsection{Cluster computing support}
 
-Running neuroscience simulations on clusters requires the use of MPI
-technology.  We are currently evaluating the Music API for MPI based
-implementation of the GENESIS 3 simulator such that simulations can be
-run on cluster computers.
+%Running neuroscience simulations on clusters requires the use of MPI
+%technology.  We are currently evaluating the Music API for MPI based
+%implementation of the GENESIS 3 simulator such that simulations can be
+%run on cluster computers.
 
-\subsection{Python}
+%\subsection{Python}
 
-The current implementation has minimal support for the Python
-scripting language.  The Python functions are available over the
-GENESIS 3 shell, but are not mature.  In the next release we will
-provide improved Python bindings for better integration with other
-simulators.
+%The current implementation has minimal support for the Python
+%scripting language.  The Python functions are available over the
+%GENESIS 3 shell, but are not mature.  In the next release we will
+%provide improved Python bindings for better integration with other
+%simulators.
 
 
 
