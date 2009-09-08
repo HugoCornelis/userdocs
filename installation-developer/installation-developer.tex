@@ -67,17 +67,17 @@ Source code for GENESIS can be found at:
 [10:57] (0,2) neurospaces_project $ cd MTN/
 [10:57] (0,2) MTN $ mtn --db=neurospaces-developer.mtn db init
 [11:00] (0,2) MTN $ mtn --db=neurospaces-developer.mtn \
-   pull virtual2.cbi.utsa.edu:4696 "*"
+   pull repo-genesis3.cbi.utsa.edu:4696 "*"
 mtn: doing anonymous pull; use -kKEYNAME if you need authentication
-mtn: connecting to virtual2.cbi.utsa.edu:4696
-mtn: first time connecting to server virtual2.cbi.utsa.edu:4696
+mtn: connecting to repo-genesis3.cbi.utsa.edu:4696
+mtn: first time connecting to server repo-genesis3.cbi.utsa.edu:4696
 mtn: I'll assume it's really them, but you might want to double-check
 mtn: their key's fingerprint: cbc91b2ec1d19e95f64cb164cc2166f4bdfe7bf4
 mtn: warning: saving public key for cbiadmin@utsa.edu to database
 mtn: finding items to synchronize:
 mtn:  bytes in | bytes out | certs in | revs in
 mtn:   549.1 k |       510 |  754/754 | 183/183
-mtn: successful exchange with virtual2.cbi.utsa.edu:4696
+mtn: successful exchange with repo-genesis3.cbi.utsa.edu:4696
 
 [11:00] (0,2) MTN $ cd ../
 [11:00] (0,2) neurospaces_project $ mkdir installer/
@@ -360,17 +360,17 @@ Alternatively, we now give a full example that shows how to set up the\,{\it ins
    neurospaces_project $ mkdir MTN
    neurospaces_project $ cd MTN/
    MTN $ mtn --db=installer.mtn db init
-   MTN $ mtn --db=installer.mtn pull virtual2.cbi.utsa.edu:4696 "*"
+   MTN $ mtn --db=installer.mtn pull repo-genesis3.cbi.utsa.edu:4696 "*"
     mtn: doing anonymous pull; use -kKEYNAME if you need authentication
-    mtn: connecting to virtual2.cbi.utsa.edu:4696
-    mtn: first time connecting to server virtual2.cbi.utsa.edu:4696
+    mtn: connecting to repo-genesis3.cbi.utsa.edu:4696
+    mtn: first time connecting to server repo-genesis3.cbi.utsa.edu:4696
     mtn: I'll assume it's really them, but you might want to double-check
     mtn: their key's fingerprint: cbc91b2ec1d19e95f64cb164cc2166f4bdfe7bf4
     mtn: warning: saving public key for cbiadmin@utsa.edu to database
     mtn: finding items to synchronize:
     mtn:  bytes in | bytes out | certs in | revs in
     mtn:   549.1 k |       510 |  754/754 | 183/183
-    mtn: successful exchange with virtual2.cbi.utsa.edu:4696
+    mtn: successful exchange with repo-genesis3.cbi.utsa.edu:4696
 
    MTN $ cd ../
    neurospaces_project $ mkdir installer/
@@ -448,7 +448,7 @@ Alternatively, we now give a full example that shows how to set up the\,{\it ins
     make[1]: Leaving directory `/local_home/hugo/neurospaces_project/ 
        installer/source/snapshots/0'
 
-   0 $ neurospaces_build --repo-pull virtual2.cbi.utsa.edu --repo-co \
+   0 $ neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu --repo-co \
       --directories-create --verbose --developer \
       --regex 'heccer|model-container|ssp'
    
@@ -585,14 +585,14 @@ The version control repository is accessible from the {\it InstallerPackage}. Im
 
 In summary, what you want to do is this: {\it pull} the set of default packages from the servers:
 \begin{verbatim}
-   neurospaces_build --repo-pull virtual2.cbi.utsa.edu --repo-co \
+   neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu --repo-co \
       --verbose --developer --directories-create --no-configure \
       --no-compile --no-install
 \end{verbatim}
 This command has options that inhibit the default actions of configuration, compilation and installation. If you also want to compile and install in just one run, simply omit those options:
 
 \begin{verbatim}
-   neurospaces_build --repo-pull virtual2.cbi.utsa.edu --repo-co \
+   neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu --repo-co \
       --verbose --developer --directories-create
 \end{verbatim}
 
@@ -611,7 +611,7 @@ There are developer friendly frontends to the {\it neurospaces\_build} script in
 
 \item {\bf Pulling to your local repository:}
 \begin{verbatim}
-   neurospaces_build --repo-pull virtual2.cbi.utsa.edu \
+   neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu \
       --no-configure --no-install --no-compile --verbose \
       --developer --regex 'heccer|model-container|ssp'
 \end{verbatim}
@@ -632,7 +632,7 @@ There are developer friendly frontends to the {\it neurospaces\_build} script in
 
 \item {\bf Combining everything for the set of default packages, including compilation and installation:}
 \begin{verbatim}
-   neurospaces_build --repo-pull virtual2.cbi.utsa.edu \
+   neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu \
       --repo-co --verbose --developer --directories-create
 \end{verbatim}
 

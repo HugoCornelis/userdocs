@@ -106,7 +106,7 @@ For more information, see the details of the \href{../installerpackage/installer
 
 \section*{Creating a New Software Component}
 
-GENESIS contains many software components. The source code of the most important ones are publicly available from a central repository. (The server {\tt virtual2 at cbi} is coded as the default server in the {\it InstallerPackage}. This default can be overwritten using command line options.) Other software components can be made available from other sources. The installer package, when configured correctly, automatically incorporates software components from geographically distributed sources.
+GENESIS contains many software components. The source code of the most important ones are publicly available from a central repository. (The server {\tt repo-genesis3 at cbi} is coded as the default server in the {\it InstallerPackage}. This default can be overwritten using command line options.) Other software components can be made available from other sources. The installer package, when configured correctly, automatically incorporates software components from geographically distributed sources.
 
 New software components can be added to the configuration of the {\it neurospaces\_build} script of the {\it InstallerPackage}. All the other tools of the {\it InstallerPackage}, such as tools to compile and install, tools to synchronize the source code with remote servers, and tools to generate and publish documentation on a website will work with the new configuration.
 
@@ -242,7 +242,7 @@ Gui development                                             & gui               
 
 \noindent Code can be pulled from the monotone server into your local working repository with the command
 \begin{verbatim}
-   mtn --db=myrepo.mtn pull virtual2.cbi.utsa.edu:<port#> ``*''
+   mtn --db=myrepo.mtn pull repo-genesis3.cbi.utsa.edu:<port#> ``*''
 \end{verbatim}
 The ``*'' argument pulls all branches from the server into your local repository. To {\it pull} a specific branch see the following section. It's important that each server be synchronized with it's own local repository. Once the code has been pulled you can checkout one of the branches into your working directory with the command
 \begin{verbatim}
@@ -253,9 +253,9 @@ The ``*'' argument pulls all branches from the server into your local repository
 
 To synchronize your monotone repository to the remote server you'll need to use the {\it sync} command with the proper address of the server (as listed in the above table).
 \begin{verbatim}
-   mtn --db=myrepo.mtn sync virtual2.cbi.utsa.edu:<port#> "*" 
+   mtn --db=myrepo.mtn sync repo-genesis3.cbi.utsa.edu:<port#> "*" 
 \end{verbatim}
-Now all changes, including logs will be on both the client and server repositories. Note in order to perform this operation you need to be given write access to the repositories on the GENESIS server repository {\tt virtual2}.
+Now all changes, including logs will be on both the client and server repositories. Note in order to perform this operation you need to be given write access to the repositories on the GENESIS server repository {\tt repo-genesis3}.
 
 \subsection*{Branches}
 
@@ -305,13 +305,13 @@ The \href{../genesis-repository/genesis-repository.tex}{GENESIS Repository} is a
 
 In summary, what you want to do is pull the set of default packages from the server(s):
 \begin{verbatim}
-   neurospaces_build --repo-pull virtual2.cbi.utsa.edu \
+   neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu \
       --repo-co --verbose --developer --directories-create \
       --no-configure --no-compile --no-install
 \end{verbatim}
 This command has options that inhibit the default actions of configuration, compilation, and installation. If you also want to compile and install in just one run, simply omit those options:
 \begin{verbatim}
-   neurospaces_build --repo-pull virtual2.cbi.utsa.edu \
+   neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu \
       --repo-co --verbose --developer --directories-create
 \end{verbatim}
 There are developer friendly frontends to the {\it neurospaces\_build} script in the \href{../installerpackage/installerpackage.tex}{InstallerPackage}:
@@ -328,7 +328,7 @@ There are developer friendly frontends to the {\it neurospaces\_build} script in
 \begin{itemize}
 \item {\bf Pull to your local repository:}
 \begin{verbatim}
-neurospaces_build --repo-pull virtual2.cbi.utsa.edu \
+neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu \
    --no-configure --no-install --no-compile --verbose --developer \
    --regex 'heccer|model-container|ssp'
 \end{verbatim}
@@ -349,7 +349,7 @@ neurospaces_build --repo-co --no-configure \
 
 \item {\bf Combine everything for the set of default packages, including compilation and installation:}
 \begin{verbatim}
-neurospaces_build --repo-pull virtual2.cbi.utsa.edu \
+neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu \
    --repo-co --verbose --developer --directories-create
 \end{verbatim}
 
