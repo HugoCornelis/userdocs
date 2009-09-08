@@ -12,9 +12,9 @@ my $test
 				command_tests => [
 						  {
 						   # $Format: "description => \"Does the version information match with ${package}-${label} ?\","$
-description => "Does the version information match with userdocs-userdocs-5 ?",
+description => "Does the version information match with userdocs-userdocs-6 ?",
 						   # $Format: "read => \"${package}-${label}\","$
-read => "userdocs-userdocs-5",
+read => "userdocs-userdocs-6",
 						   write => "version",
 						  },
 						 ],
