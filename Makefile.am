@@ -21,7 +21,6 @@ dist_noinst_SCRIPTS = \
 	bog-ch4/bog-ch4.pdf \
 	bog-ch5/bog-ch5.pdf \
 	bog-ch6/bog-ch6.pdf \
-	#cable-theory-disgression/cable-theory-disgression.tex \
 	compneurosci-1/compneurosci-1.tex \
 	compneurosci-2/compneurosci-2.tex \
 	contents-level1/contents-level1.tex \
@@ -33,8 +32,8 @@ dist_noinst_SCRIPTS = \
 	contents-level7/contents-level7.tex \
 	developers-intro/developers-intro.tex \
 	document-create/document-create.tex \
-	document-homepage/document-homepage.tex \
-	document-overview/document-overview.tex \
+	documentation-homepage/documentation-homepage.tex \
+	documentation-overview/documentation-overview.tex \
 	genesis-overview/genesis-overview.tex \
 	gshell/gshell.tex \
 	gui/gui.tex \
@@ -48,7 +47,7 @@ dist_noinst_SCRIPTS = \
 	neurospaces-tester/neurospaces-tester.tex \
 	notation/notation.tex \
 	pclamp/pclamp.tex \
-	prerequisite/prerequisite.tex \
+	prerequisite-script/prerequisite-script.tex \
 	project-browser-screenshots/project-browser-screenshots.tex \
 	project-browser/project-browser.tex \
 	project-todo/project-todo.tex \
@@ -67,7 +66,9 @@ dist_noinst_SCRIPTS = \
 	tutorial2/tutorial2.tex \
 	unix-linux/unix-linux.tex \
 	version-control/version-control.tex \
-	work-flow/work-flow.tex
+	workflow-genesis/workflow-genesis.tex
+
+#cable-theory-disgression/cable-theory-disgression.tex
 
 RELEASE_MAJOR=`release-extract --major`
 RELEASE_MINOR=`release-extract --minor`
