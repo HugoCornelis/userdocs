@@ -19,248 +19,168 @@
 
 \section*{GENESIS: Documentation}
 
-\section*{TODO List}
+\section{The TODO and the DONE List}
 
-This document gives an overview of priorities for official releases of
-the GENESIS 3 simulator.  Items required for proper functioning of the
-simulator appear in this document as TODO items, and they disappear
-when they have been implemented.  We are currently working on the
-first alpha release of GENESIS 3.0.
+This document contains a list of functions and descriptions that need
+to be implemented or incorporated in the software or software
+infrastructure.  The level of detail of the descriptions can vary
+between items.  Some item is described, and sometimes a checklist is
+given that can be checked by inserting the word 'DONE' into this
+document.
 
-Feedback is always appreciated.
+Overtime this document can grow because people add new functions that
+await implementation, and it can be consolidated by moving items that
+have been completed from the TODO list to the DONE list.  Some
+functions are related to maintenance and they never disappear (such as
+Packaging and Distribution).
+
+The growing DONE list gives a tangible measure of project progress.
 
 
-\section{Outline of Priorities}
+\section{TODO List}
 
-The first alpha release of GENESIS 3 will have a focus on single cell
-modeling.  Single cell simulations include simulations based on
-complex morphologies, active channels, current injection, voltage and
-dynamic clamp, synaptic and endogenous stimulation.  Output can be
-membrane potentials, currents or ion concentrations.  The G-Tube, the
-official GENESIS 3 GUI, is an integral part of the alpha release.
-Other GUIs for model exploration and result visualization are not
-included, and undocumented (e.g. the Neurospaces studio and the
-Neurospaces project-browser)\footnote{These modules are candidates to
-  be incorporated into the G-Tube for a next release.}.
+\subsection{Packaging and Distribution}
 
-The most important functions of GENESIS 3 for single cell modeling
-are:
+Packaging involves the creation of tarballs with source code to the
+creation of binary packages for different OSs.
+
+For packaging and distribution of the alpha release of GENESIS 3.0,
+each software component must contain the following makefile targets:
 
 \begin{itemize}
-\item The GENESIS 3 shell for user interaction with model and
-  simulation, including functions such as model construction, model
-  exploration, input and output configuration, and running a
-  simulation.
-\item The G-Tube that offers the same functions as the GENESIS 3 shell
-  from a GUI.
-\item A morphology structure analyzer accessible from the project
-  browser and the command line.
-\item Installation documentation, and documentation for single neuron
-  simulations.
-\end{itemize}
-
-To foster community building, also included are:
-\begin{itemize}
-\item User and developers documentation.
-\item A twitter page that describes events important to GENESIS
-  developments.
-\item A blog and wiki to reach out to users and developers, and
-  describes procedures for other developers to step in.
+\item 'dist': for creation of the tarball with source code.
+\item 'pkg-deb': for creation of a binary archive for debian based
+  Linux distributions (including Ubuntu).
+\item 'pkg-rpm': for creation of a binary archive for rpm based Linux
+  distributions (such as Redhat and Fedora).
 \end{itemize}
 
 
-\section{Functionality for the alpha release}
+\subsection{Benchmarking}
 
-\subsection{Two Scripting Interfaces}
-
-GENESIS 3 comes with two shells.  One offers backward compatibility.
-The second shell replaces the first one and has the advantages that it
-offers better performance and integrates with the GENESIS 3 GUI.
-
-\subsubsection{NS-SLI}
-The GENESIS 2 backward compatibility module of GENESIS 3 (NS-SLI)
-currently includes:
-\begin{itemize}
-\item A framework that allows to fill in most common core GENESIS 2
-  functions.  These functions include the creation of model elements,
-  seting their fields, and adding messages to connect model elements.
-\item NS-SLI supports simulating complex morphologies.
-\item NS-SLI supports tabulated channels.
-\item NS-SLI supports calcium pools and nernst functions.
-\item NS-SLI supports the ascii out element.
-\end{itemize}
-
-The publicly availabe Purkinje cell scripts of the
-De~Schutter~and~Bower model are supported by the NS-SLI module.
-
-Models created from GENESIS 2 scripts can be exported to the GENESIS 3
-NDF modeling format.
-
-
-\subsubsection{GENESIS 3 Shell}
-
-The GENESIS 3 command shell is a simple replacement for the GENESIS 2
-SLI.  The GENESIS 3 command shell allows the user to define simple
-models from scratch and save them to declarative model definition
-files.  Building complex models is supported by glueing together
-existing declarative model definition files.
-
-The GENESIS 3 command shell that will be shipped with the alpha
-release, has all functions needed to instantiate and run single cell
-models.  The shell talks directly to the model container and SSP, and
-the model container and SSP talk to the compartmental solver (Heccer)
-as required.
-
-The GENESIS 3 shell can import and combine models from GENESIS 2
-scripts, NDF files, SWC morphologies and Perl or Python scripts.
-
-It is also possible to export the models to NDF files, and to export
-configurations to SSP files.  This facilitates batch simulations for
-research projects.
-
-
-\section{Included Documentation}
-
-The included documentation describes tutorials, gives technical
-descriptions of commands, and documents the layout and APIs of the
-source code.
-
-
-\subsection{Documentation For Users}
-
-Allan, can you fill this in?
+Test the performance of the Purkinje cell in each of the following
+environments:
 
 \begin{itemize}
-\item Basic tutorials: Tutorials for the rallpacks (passive models and
-  axon models).
-\item Basic tutorials: Tutorials for single cell model simulations.
-\item FAQ: to explain what GENESIS 3 is, its relationship with the CBI
-  architecture, with MOOSE, Neuroconstruct and Neurospaces.  To
-  explain what the discriminators are with other simulators, and that
-  it is still backwards compatible with GENESIS 2.
-\end{itemize}
-
-The tutorials are based on the GENESIS 2 tutorials and demonstrate the
-use of the NS-SLI to run simulations based on GENESIS 2 SLI scripts.
-They also show how the model programmed into the script can be
-exported to declarative NDF files for use with the more advanced
-features of GENESIS 3 such as the project browser.
-
-Some features of the compartmental solver are not documented yet, and
-for completeness we briefly mention them overhere.  These include:
-\begin{itemize}
-\item Calculation of the total instantaneous cumulative currents of
-  user-tagged channels of a dendritic subtree.
-\item Calculation of the total instantaneous inhibitory and excitatory
-  current.
-%\item Soma-dendrite current during action potentials.
-%\item Average membrane potential of a dendritic subtree.
+\item GENESIS 2 (old GENESIS 2 enviroment).
+\item NS-SLI (GENESIS 3 - GENESIS 2 backward compatibility).
+\item SSP (GENESIS 3 batch simulation environment).
+\item gshell (GENESIS 3 interactive simulation environment).
 \end{itemize}
 
 
-\subsection{GENESIS 3 technical documentation}
-The technical documentation describes the use of the GENESIS 3
-simulator from a UNIX shell command line and from the GENESIS 3 shell.
-It also outlines the NDF file format.  Examples are given for a simple
-Hodgkin-Huxley model and for a model with Ca pools.  Technical
-documentation bridges between user documentation and developer
-documentation.
+\subsection{Report Document for Testers}
 
-\subsection{Documentation For Developers}
+Construct a report document with instructions for alpha and beta
+testers.  The instructions consist of installation instructions and a
+questionnaire about basic application functionality.
 
-The developer documentation is meant for people who are interested in
-software development or other technical aspects of the GENESIS 3
-simulator.  This documentation is not included in the alpha release,
-but instead made available over the internet.
 
+\subsection{Release Notes}
+
+** Document that describes the release
+*** Compile a list of G3 capabilities
+**** compile them from each of the components
+*** Make statements about
+**** backward compatibility
+***** clarify the level of backward compatibility 
+***** emphasize on commitment of backward compatibility
+***** explain policies for feature requests
+***** rallpacks
+***** does the purkinje cell and its various stimulation protocols
+***** please try your simulations and report problems
+**** NeuroML support
+**** PyNN support
+***** placeholder for an interface to PyNN through the pynn\_load command
+*** Installation
+**** Compile a list of dependencies
+**** Create an integrated installation tar ball or so.
+**** add deb and rpm packages
+http://www.artificialworlds.net/blog/2007/02/22/creating-deb-and-rpm-packages/
+**** Release plan: alpha, beta, full release
+**** synchronize userdocs and wiki installation docs
+*** mailing lists, discussion boards and other genesis related systems
+**** what are they used for?
+**** what do we want them to be used for? why?
+**** Add hg repository
+**** Add bulletin boards and mailing lists
+**** Add NS related systems
+***** www.neurospaces.org
+***** blog
+*** alpha: Mid-October
+*** beta1: Mid-January
+*** beta2: Mid-March
+*** full: Mid-July
+
+
+\subsection{Level 4 Documentation: Technical Specifications}
+
+For each software component a set of (html) documents must be
+generated that specify the capabilities of the component.  For Unix
+shell scripts, technical specifications can be generated from the
+usage messages generated by a '--help' argument.
+
+\subsection{Level 3-7 Documentation: Creation Guide}
+
+An outline of how Level 3-7 documentation is created and included in
+the appropriate locations is required.
+
+
+\subsection{Document Dependencies}
+
+Perl dependencies:
 \begin{itemize}
-\item A blog is updated on a daily to weekly basis.  The blog can be
-  found at http://neurospaces.blogspot.com/.  The blog details ideas
-  and vision and it shows developers and users the parts of the
-  GENESIS 3 simulator we are working on, with a demonstration of
-  progress.
-\item The Neurospaces wiki
-  (http://code.google.com/p/neurospaces/wiki/Index) documents a number
-  of technical aspects of the software.  Currently the installation
-  and test procedure is documented from a developers viewpoint.
-\item The APIs of software modules such as Heccer and the model
-  container are documented in the source code.  Doxygen is a tool to
-  convert such inline documents to HTML.  These HTML pages are
-  published on the GENESIS website
-  (http://www.neurospaces.org/doxygen-menu.html).
-\item The latest version of the source code and its full history are
-  made available on a daily basis.  The Neurospaces wiki documents how
-  to use this source code repository.  The technology used allows
-  developers to make changes independently, even from a disconnected
-  laptop.  Specialized freely available technology is used to
-  synchronize such distributed software development.
+\item YAML
+\item Clone
+\item Data::Utilities
 \end{itemize}
 
-An experimental feature is the use of a community tool to document
-user requirements and user workflows.
+
+\subsection{Progress Reports to the Supplement}
+
+
+\subsection{Add Network Modeling Support}
+
+Because this is an important function, it requires substantial
+development on one software component, and also impacts other software
+components.
 
 \begin{itemize}
-\item A project planning tool documents user workflows through the
-  software system, and establishes a relationship between them and the
-  technical aspects of their implementation.  Xplanner (available from
-  www.xplanner.org) will be used for this purpose.
+\item DES
+  \begin{itemize}
+  \item instantiation of DES queuer stand-alone (DONE)
+  \item instantiation of DES distributor stand-alone (DONE)
+  \item tests of DES stand-alone (DONE)
+  \end{itemize}
+\item model-container
+  \begin{itemize}
+  \item instantiation of projections / connections by model-container (DONE)
+  \item inspection of projections / connections by model-container API (DONE)
+  \end{itemize}
+\item SSP
+  \begin{itemize}
+  \item instantiation of DES queuer from ssp (partial)
+  \item instantiation of DES distributor from ssp (partial)
+  \item translation of model-container connections to DES connections (partial)
+  \item tests for ssp
+  \end{itemize}
+\item gshell
+  \begin{itemize}
+  \item add integration commands to gshell
+  \item tests for gshell
+  \end{itemize}
+\item backward compatibility
+  \begin{itemize}
+  \item integration of planar / volume connect command
+  \item tests for backward compatibility
+  \end{itemize}
 \end{itemize}
 
 
-\section{Installation and Testing}
+\section{DONE List}
 
-The GENESIS 3 simulator uses tools of professional quality for
-automated installation, testing and reporting.  An outline of the use
-of these tools can be found on the Neurospaces wiki.  Briefly, the
-installation tool allows to install and upgrade source code, and to
-synchronize distributed development.  It also allows research groups
-to start their own development projects that can optionally be
-integrated with GENESIS 3.
-
-The test framework is a higly dynamic environment for stand-alone
-software component testing and software component integration testing.
-It compares test specifications and expected output with the output
-produced by the software applications.
-
-The test specifications are included in the alpha release and can be
-exported to HTML and mirrored on a web server.  The Neurospaces
-website has an HTML version of all tests.  The testing tool is
-integrated with the installation procedure.  The Neurospaces wiki
-documents how to setup a testbot based on the installation scripts
-('neurospaces\_build' and 'neurospaces\_cron').
-
-%The CBI hosts an functional simulator server accessible over a web
-%browser.  The server hosts a simulation project that demonstrates the
-%capabilities of the project browser using the Purkinje cell model.
-%The simulator server is linked through the GENESIS website.
-
-
-\section{Next Release}
-
-The next release is planned for October 2009.
-
-%\subsection{Threading}
-
-%Parallelization is built into the design of GENESIS 3.  The next
-%release of GENESIS 3 will have support for multi threading for
-%enhanced simulation performance on multi core CPUs.
-
-%\subsection{Cluster computing support}
-
-%Running neuroscience simulations on clusters requires the use of MPI
-%technology.  We are currently evaluating the Music API for MPI based
-%implementation of the GENESIS 3 simulator such that simulations can be
-%run on cluster computers.
-
-%\subsection{Python}
-
-%The current implementation has minimal support for the Python
-%scripting language.  The Python functions are available over the
-%GENESIS 3 shell, but are not mature.  In the next release we will
-%provide improved Python bindings for better integration with other
-%simulators.
-
-
+\subsection{Monotone Clone Operation Integration with the Installer Scripts}
+Integrate 'mtn clone' into the installer scripts (DONE).
 
 \end{document}
 
