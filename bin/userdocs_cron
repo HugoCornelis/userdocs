@@ -1,238 +1,26 @@
-#!/usr/bin/perl -w 
-#!/usr/bin/perl -w -d:ptkdb
-#
+#!/usr/bin/perl
 
 
-use strict;
-
-
-use Getopt::Long;
-
-use YAML;
-
-my $sendto_email = "mandorodriguez\@gmail.com";
-my $sendfrom_email = "userdocs\@genesis-sim.org";
-
-
-my $userdocs_directory = "$ENV{HOME}/neurospaces_project/userdocs/source/snapshots/0";
-
-my $output_directory = "/tmp";
-
-my $output_filename = "userdocs_cron.stdout";
-
-
-
-
-
-
-
-sub check_and_prepare
-{
-    # check if the installer is ok
-
-  my $output_path = $output_directory . "/" . $output_filename;
-
-    system "mkdir >> $output_path 2>&1 -p $userdocs_directory";
-
-    chdir($userdocs_directory);
-
-    # we assume that there is already an installer repository
-
-    #t wrong assumption
-
-    system "mtn >> $output_path 2>&1 co --db ~/neurospaces_project/MTN/userdocs.mtn --branch 0 .";
-
-    # install the installer
-
-    #install_installer();
-
-}
-
-
-sub check_user_id
-{
-    # get effective user id
-
-
-    my $num_id = $>;
-
-
-    # convert to ascii representation
-
-    my $passwd_database = [ `cat /etc/passwd`, ];
-
-    # split into fields
-
-    my $records = [ map { [ split ":", $_ ], } @$passwd_database, ];
-
-    # only those records with the numerical id under which this script runs
-
-    $records = [ grep { $_->[2] == $num_id } @$records, ];
-
-    # if not exactly one record left
-
-    if (scalar @$records ne 1)
-    {
-	report_error("check_user_id()", "$0 cannot determine username under which we are running");
-
-	
-	# just to make sure that this script stops we die
-
-	die "check_user_id()" . "$0 cannot determine username under which we are running";
-    }
-
-    # get name of this user
-
-    my $fields = $records->[0];
-
-    my $label_id = $fields->[0];
-
-    # if matches with neurospaces
-
-    #t switched off for convenience, although should make it to the real thing again.
-
-    if (1 || $label_id =~ /neurospaces/)
-    {
-	# ok, continue
-    }
-
-    # else
-
-    else
-    {
-	report_error("check_user_id()", 
-		     "$0 must not be executed by a regular user (now running as unprivileged user $label_id)");
-
-
-	# just to make sure that this script stops we die
-
-	die "check_user_id()" . "$0 must not be executed by a regular user";
-    }
-}
-
-
-sub main
-{
-
-  {
-    my $result
-      = GetOptions
-	(
-	 "outputdir=s" => \$output_directory,
-	);
-
-  }
-
-
-  #
-  # for some reason when perl executes it uses a different PATH variable
-  # during a cronjob.
-  # which leaves out /usr/local/bin and prevents it from executing some
-  # commands. This is a hacky way around that. 
-  #
-  # note: didn't have the desired effect, however may be needed for users with
-  # a different cron path since '/usr/local/bin' is usually not included by default.
-  #
-  $ENV{PATH} .= ':/bin:/usr/bin:/usr/local/bin';
-
-
-    # this script can only be run by a user whose name matches 'neurospaces'
-
-    check_user_id();
-
-    # unlink the output file
-
-    unlink($output_filename);
-
-    chdir($output_directory);
-
-    # preparatory startup procedure to check this system
-
-    check_and_prepare();
-
-    # prepare an initial directory layout
-
-    try_to("neurospaces_create_directories");
-
-    # pull code from the repositories
-
-    try_to("neurospaces_pull --regex userdocs");
-
-    # update the source code in the worspaces
-
-    try_to("neurospaces_update --regex userdocs");
-
-    # loop over all the configurations we want to test
-
-    foreach my $configuration (1)
-    {
-	#t insert configuration options in the configurator package
-
-	# configure all packages
-
-	try_to("neurospaces_configure --regex userdocs");
-
-	# clean
-
-
-	# uninstall again
-
-	build_userdocs();
-
-
-    }
-
-    #copy_tests(); #copy our individual test output files to the output directory
-
-    #cleanup(); #clean up after the tests.
-
-    try_to_mail_status("userdocs_cron finished",
-		"Check for your output on the host machine here " . $output_directory . "/" . $output_filename);
-
-    #t remove the entire neurospaces_project directory ?
-
-#     try_to("rm -fr $ENV{HOME}/neurospaces_project");
-}
-
-
-sub build_userdocs
-{
-    chdir($userdocs_directory);
-    try_to("make clean && make website-clean");
-
-    try_to("./autogen.sh && ./configure && make website-prepare");
-}
-
-
-sub report_error
-{
-    my $command = shift;
-
-    my $error_code = shift;
-
-    try_to_mail_status("userdocs_cron error", "$0: $command returned $error_code");
-
-    die "$0: $command returned $error_code";
-}
-
-
-
-#
-# This will actually send mail.
-#
-# args ($subject,$message)
-#
+#                                                                                                          
+# args ($sendto_email,$sendfrom_email,$subject,$message)                                                   
 sub try_to_mail_status
 {
     my $subject;
     my $message;
+    my $sendto_email;
+    my $sendfrom_email;
 
-    ($subject,$message) = @_;
+    if($sendto_email eq "")
+    {
+	return;
+    }
 
-    #todo figure out why I can't put the output of
-    # `which sendmail` into a variable and put it in 
-    # place of the /usr/sbin/sendmail. A user may have 
-    # a different sendmail path.
+    ($sendto_email,$sendfrom_email,$subject,$message) = @_;
+
+    #todo figure out why I can't put the output of                                                          
+    # `which sendmail` into a variable and put it in                                                        
+    # place of the /usr/sbin/sendmail. A user may have                                                      
+    # a different sendmail path.                                                                            
 
     open(MAIL, "|/usr/sbin/sendmail -oi -t");
     print MAIL "From: $sendfrom_email\n";
@@ -244,103 +32,43 @@ sub try_to_mail_status
 }
 
 
+$ENV{HOME}='/home/genesis';
+$ENV{PATH} .= ':/bin:/usr/bin:/usr/local/bin';
 
 
-#
-#
-#
-sub copy_tests
-{
+system "neurospaces_pull --regex userdocs"; 
 
-  if($output_directory eq "/tmp")
-  {
-    # if deault no need to do anything.
-    return;
-  }
+system "neurospaces_update --regex userdocs"; 
 
+system "neurospaces_configure --regex userdocs";
 
-  # clean out the old tests
-  system "rm -f $output_directory/text_*";
+system "neurospaces_install --regex userdocs";
 
+system "make clean -C ~/neurospaces_project/userdocs/source/snapshots/0/";
 
+system "make website-clean -C ~/neurospaces_project/userdocs/source/snapshots/0/";
 
+system "make website-prepare -C ~/neurospaces_project/userdocs/source/snapshots/0/ > /tmp/userdocs_make.output";
 
-  # copy over the new ones.
-  system "mv -f /tmp/text_* $output_directory";
+#system "cat /tmp/userdocs_make.output |  mail -s \"userdocs has been built on darwin\" sysadminspam@gmail.com";
 
+# TODO: Would be a good idea to make this destination directory on the copy configurable.
+system "rm -rf ~/public_html/userdocs";
+system "cp -rf ~/neurospaces_project/userdocs/source/snapshots/0/html/htdocs/neurospaces_project/userdocs/ ~/public_html/userdocs";
 
-  system "rm -f /tmp/neurospaces_cron.stdout";
+# now do a link check.
+system "make webcheck -C ~/neurospaces_project/userdocs/source/snapshots/0/";
 
-}
+my $text = `cat /tmp/userdocs_make.output`;
 
-
-#
-# try to clean up some files out of the /tmp directory
-#
-#t This should be done in a preparation/repairation phase
-#t within neurospaces_harness.
-#t
-#t cleanup of output files should always be optional.
-sub cleanup
-{
-
-  print "Cleaning generate files out of /tmp\n";
-
-  #t maybe make @trash a list that read in from 
-  #t a trash configuration file. 
-  my @trash = ("output",
-	    "OutputGenerator",
-	    "output_spike",
-	    "output_spike_source",
-	    "output_vm",
-	    "output_vm_source",
-	    "purk_test_soma",
-	    "purk_test_soma_aggregators",
-	    "state",
-	    "neurospaces",
-	    "a2",
-	    "*.ndf",
-	    "current_schedule",
-	    "state",
-	    "heccer",
-	    "morphology2ndf.yml",
-	    );
+try_to_mail_status("sysadminspam@gmail.com",
+		   "userdocs@darwin.cbi.utsa.edu",
+		   "Userdocs has been built on darwin.",
+		   "Userdocs has finished building.\n\n" . $text);
 
 
-  my $item;
-  foreach $item (@trash)
-  {
-    my $trashfile = "/tmp/" . $item;
-    system "rm -rf $trashfile";
-
-  }
-
-  print "Done with cleanup.\n";
-
-}
+system "rm -f /tmp/userdocs_make.output";
 
 
-
-
-
-sub try_to
-{
-    my $command = shift;
-
-    print "---\n";
-    print "$0: trying to $command\n";
-
-    my $output_path = $output_directory . "/" . $output_filename;
-    system "$command >>$output_path 2>&1";
-
-    if ($?)
-    {
-	report_error($command, $?);
-	
-    }
-}
-
-
-main();
 
 
