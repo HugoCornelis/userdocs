@@ -24,17 +24,15 @@
 This document contains a list of functions and descriptions that need
 to be implemented or incorporated in the software or software
 infrastructure.  The level of detail of the descriptions can vary
-between items.  Some item is described, and sometimes a checklist is
-given that can be checked by inserting the word 'DONE' into this
-document.
+between items.  After an item is described, it can be followed by a
+checklist with information of the level of implementation.  For
+example, subitems in the checklist can be marked with the word 'DONE'.
 
-Overtime this document can grow because people add new functions that
-await implementation, and it can be consolidated by moving items that
-have been completed from the TODO list to the DONE list.  Some
-functions are related to maintenance and they never disappear (such as
-Packaging and Distribution).
-
-The growing DONE list gives a tangible measure of project progress.
+This document can grow when people add new functions that await
+implementation, and it can be consolidated by moving items that have
+been completed from the TODO list to the DONE list.  Some functions
+are related to maintenance and they never disappear (such as Packaging
+and Distribution).  They can be marked with 'WORKING'.
 
 
 \section{TODO List}
@@ -78,40 +76,52 @@ questionnaire about basic application functionality.
 
 \subsection{Release Notes}
 
-** Document that describes the release
-*** Compile a list of G3 capabilities
-**** compile them from each of the components
-*** Make statements about
-**** backward compatibility
-***** clarify the level of backward compatibility 
-***** emphasize on commitment of backward compatibility
-***** explain policies for feature requests
-***** rallpacks
-***** does the purkinje cell and its various stimulation protocols
-***** please try your simulations and report problems
-**** NeuroML support
-**** PyNN support
-***** placeholder for an interface to PyNN through the pynn\_load command
-*** Installation
-**** Compile a list of dependencies
-**** Create an integrated installation tar ball or so.
-**** add deb and rpm packages
-http://www.artificialworlds.net/blog/2007/02/22/creating-deb-and-rpm-packages/
-**** Release plan: alpha, beta, full release
-**** synchronize userdocs and wiki installation docs
-*** mailing lists, discussion boards and other genesis related systems
-**** what are they used for?
-**** what do we want them to be used for? why?
-**** Add hg repository
-**** Add bulletin boards and mailing lists
-**** Add NS related systems
-***** www.neurospaces.org
-***** blog
-*** alpha: Mid-October
-*** beta1: Mid-January
-*** beta2: Mid-March
-*** full: Mid-July
-
+\begin{itemize}
+\item Document that describes the release
+\begin{itemize}
+\item Compile a list of G3 capabilities, compile them from each of the components
+\item Statements about
+\begin{itemize}
+\item backward compatibility
+\begin{itemize}
+\item clarify the level of backward compatibility 
+\item emphasize on commitment of backward compatibility
+\item explain policies for feature requests
+\item rallpacks
+\item does the purkinje cell and its various stimulation protocols
+\item please try your simulations and report problems
+\end{itemize}
+\item NeuroML support
+\item PyNN support, placeholder for an interface to PyNN through the
+  pynn\_load command
+\end{itemize}
+\item Installation
+\begin{itemize}
+\item Compile a list of dependencies
+\item Create an integrated installation tar ball or so.
+\item add deb and rpm packages
+% (http://www.artificialworlds.net/blog/2007/02/22/creating-deb-and-rpm-packages/).
+\item Release plan: alpha, beta, full release
+\item synchronize userdocs and wiki installation docs
+\end{itemize}
+\item mailing lists, discussion boards and other genesis related systems
+\begin{itemize}
+\item what are they used for?
+\item what do we want them to be used for? why?
+\item Add hg repository
+\item Add bulletin boards and mailing lists
+\item Add NS related systems
+\begin{itemize}
+\item www.neurospaces.org
+\item blog
+\end{itemize}
+\end{itemize}
+\item alpha: Mid-October
+\item beta1: Mid-January
+\item beta2: Mid-March
+\item full: Mid-July
+\end{itemize}
+\end{itemize}
 
 \subsection{Level 4 Documentation: Technical Specifications}
 
@@ -138,6 +148,8 @@ Perl dependencies:
 
 \subsection{Progress Reports to the Supplement}
 
+Every three months a report about progress on the work of the
+administrative supplement must be submitted to NIH.
 
 \subsection{Add Network Modeling Support}
 
@@ -176,6 +188,94 @@ components.
   \end{itemize}
 \end{itemize}
 
+
+\subsection{Unify the Methods of Handling of Inputs to a Model}
+
+There are several fundamentally different ways to specify inputs to a
+simulated model from the gshell.  For example, a voltage clamp
+protocol is specified by creating input objects (pclamp object).  A
+current injection and endogeneous stimulation is specified by setting
+parameters.
+
+\subsection{GUI: Construct Model}
+
+\begin{itemize}
+\item Import from External Library:
+  \begin{itemize}
+  \item displaying ndf library is working
+  \item Get the gui read from external libraries on the net.
+  \item Add support for different file types like swc.
+  \end{itemize}
+\item Load Tutorial: display a list of clickable tutorial links and
+  have the gui open them ia web browser of html widget.
+\item Load Project: Get gui to load a project based on a yaml file
+  which includes all relevant input and result files.
+\item Create Model: Create interface to allow a user to create a
+  simple model via text and/or graphics.
+\item Explore Model: Create a graphics widget which displays the
+  morphology when clicking "explore model"
+\item Save Model: Get save model to work properly (save a project file
+  as well as all included files)
+\end{itemize}
+
+\subsection{GUI: Design Experiment}
+\begin{itemize}
+\item Choose Inputs: create a menu of selectable inputs from the loaded model.
+\item Choose Outputs: create a menu of selectable outputs from the loaded model.
+\end{itemize}
+
+\subsection{GUI: Run Simulation}
+\begin{itemize}
+\item CHECK: appears to be working.
+\item RUN: appears to be working.      
+\item STOP: Get "stop" simulation to properly work (not sure how this
+  will work since the gshell is stop and wait).
+\item RESET: Get reset functionality to work.
+\item SAVE: Save model state.
+\item LOAD: Get gui to load a previous save state.
+\item Runtime Option: create a menu for adding runtime options.
+\end{itemize}
+
+\subsection{GUI: Output}
+\begin{itemize}
+\item Plot: Get plot to take parameters from the simulation to fill in
+  the legend, X and Y axis as well as the title of a graph.
+\item Studio: Remove Studio from output menu? Same functionality will be in "Explore Model."
+\item Matlab: Create export menu/functionality for matlab.
+\item xmgrace:Create export menu/functionality for xmgrace.
+\item Mathematica: create export menu/functionality for Mathematica.
+\end{itemize}
+
+
+\subsection{GUI: Iterators}
+Add menus/functionality to the iterator menu.
+
+Put a couple of iterator scripts of the purkinje cell comparison and
+the mutual information projects in a directory.  The Iterators menu
+lists all the scripts found in this directory, clicking on one of them
+runs the appropriate script.  The script generates ssp configuration
+files that can be loaded into the GUI.
+
+
+\subsection{GUI: Other}
+\begin{itemize}
+\item Finish yaml loader to load the clickable graphic complete with
+  roll overs dynamically.
+\item Have the gui use a "project" file which will track various
+  aspects of a users project.
+\item Get "compileall" script to work and make python byte code for
+  various distros.
+\item Have gui track Workflow state and guide user accordingly.
+\item Screenshot functionality for plot and explore model.
+\end{itemize}
+
+\subsection{gshell}
+Implement the ssp\_save and ssp\_load commands.
+
+\subsection{model-container}
+Complete the implementation of the ndf\_save command.  Add tests for
+saving a full model, saving a library of models and saving a
+modularized part of a model.
 
 \section{DONE List}
 
