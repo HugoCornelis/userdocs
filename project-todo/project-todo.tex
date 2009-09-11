@@ -6,16 +6,6 @@
 \usepackage[colorlinks=true]{hyperref}
 \usepackage{scrtime}
 
-\setlength{\textwidth}{15.7cm}
-\setlength{\textheight}{22cm}
-
-\setlength{\oddsidemargin}{0pt}
-
-\setlength{\topmargin}{0cm}
-\setlength{\headheight}{1cm}
-\setlength{\headsep}{0.5cm}
-\setlength{\topskip}{0cm}
-
 \begin{document}
 
 \section*{GENESIS: Documentation}
@@ -27,7 +17,7 @@ to be implemented or incorporated in the software or software
 infrastructure.  The level of detail of the descriptions can vary
 between items.  After an item is described, it can be followed by a
 checklist with information of the level of implementation.  For
-example, subitems in the checklist can be marked with the word 'DONE'.
+example, subitems in the checklist can be marked with the word `DONE'.
 
 This document can grow when people add new functions that await
 implementation, and it can be consolidated by moving items that have
@@ -46,20 +36,20 @@ This TODO list was built on \today, \thistime.
 Packaging involves the creation of tarballs with source code to the
 creation of binary packages for different OSs.
 
-For packaging and distribution of the alpha release of GENESIS 3.0,
+For packaging and distribution of the alpha release of GENESIS\,3.0,
 each software component must implement the following makefile targets:
 
 \begin{itemize}
-\item 'dist': for creation of the tarball with source code.
-\item 'pkg-deb': for creation of a binary archive for debian based
+\item {\it dist}: for creation of the tarball with source code.
+\item {\it pkg-deb}: for creation of a binary archive for debian based
   Linux distributions (including Ubuntu).
-\item 'pkg-rpm': for creation of a binary archive for rpm based Linux
+\item {\it pkg-rpm}: for creation of a binary archive for rpm based Linux
   distributions (such as Redhat and Fedora).
 \item MAC .dmg file.
 \end{itemize}
 
 An additional package must be created that has all other software
-components of GENESIS 3 for dependencies.
+components of GENESIS\,3 for dependencies.
 
 {
   \vspace{5mm}
@@ -83,10 +73,10 @@ Test the performance of the Purkinje cell in each of the following
 environments:
 
 \begin{itemize}
-\item GENESIS 2 (old GENESIS 2 enviroment).
-\item NS-SLI (GENESIS 3 - GENESIS 2 backward compatibility).
-\item SSP (GENESIS 3 batch simulation environment).
-\item gshell (GENESIS 3 interactive simulation environment).
+\item GENESIS\,2 (old GENESIS\,2 enviroment).
+\item NS-SLI (GENESIS\,3--GENESIS\,2 backward compatibility).
+\item SSP (GENESIS\,3 batch simulation environment).
+\item G-Shell (GENESIS\,3 interactive simulation environment).
 \end{itemize}
 
 {
@@ -180,9 +170,9 @@ scripts:
   cell scripts still need validation.
 \item Rallpacks: for benchmarking it would be useful to implement
   scripts for the rallpack standard.  To show the relationships
-  between the different GENESIS 3 interfaces, it is useful to
+  between the different GENESIS\,3 interfaces, it is useful to
   implement these scripts in the different interfaces currently
-  available (Perl, Python, SLI, NDF, Heccer, gshell).
+  available (Perl, Python, NS-SLI, NDF, Heccer, G-Shell).
 
   For visibility and good integration with the rest of the system, it
   would be best to integrate these scripts with the regression tester,
@@ -190,7 +180,7 @@ scripts:
   \begin{itemize}
   \item Rallpack 1: Passive unbranched cable.
   \item Rallpack 2: Branched cable.
-  \item Rallpack 3: Squid axon / Active cable.
+  \item Rallpack 3: Squid axon/Active cable.
   \item Integrate with Tests.
   \end{itemize}
 \end{itemize}
@@ -213,49 +203,49 @@ scripts:
 \subsection{Release Notes}
 
 \begin{itemize}
-\item Document that describes the release
+\item Document that describes the release.
   \begin{itemize}
-  \item Compile a list of G3 capabilities, compile them from each of the components
-  \item Statements about
+  \item Compile a list of G-3 capabilities, compile them from each of the components.
+  \item Statements about:
     \begin{itemize}
-    \item backward compatibility
+    \item Backward compatibility.
       \begin{itemize}
-      \item clarify the level of backward compatibility 
-      \item emphasize on commitment of backward compatibility
-      \item explain policies for feature requests
-      \item rallpacks
-      \item does the purkinje cell and its various stimulation protocols
+      \item Clarify the level of backward compatibility. 
+      \item Emphasize on commitment of backward compatibility.
+      \item explain policies for feature requests.
+      \item Rallpacks.
+      \item Does the purkinje cell and its various stimulation protocols.
       \item please try your simulations and report problems
       \end{itemize}
-    \item NeuroML support
+    \item NeuroML support.
     \item PyNN support, placeholder for an interface to PyNN through the
-      pynn\_load command
+      {\it pynn\_load} command
     \end{itemize}
-  \item Installation
+  \item Installation.
     \begin{itemize}
-    \item Compile a list of dependencies
+    \item Compile a list of dependencies.
     \item Create an integrated installation tar ball or so.
-    \item add deb and rpm packages
+    \item add deb and rpm packages.
       % (http://www.artificialworlds.net/blog/2007/02/22/creating-deb-and-rpm-packages/).
-    \item Release plan: alpha, beta, full release
-    \item synchronize userdocs and wiki installation docs
+    \item Release plan: alpha, beta, full release.
+    \item Synchronize userdocs and wiki installation docs.
     \end{itemize}
-  \item mailing lists, discussion boards and other genesis related systems
+  \item Mailing lists, discussion boards and other genesis related systems.
     \begin{itemize}
-    \item what are they used for?
-    \item what do we want them to be used for? why?
-    \item Add hg repository
-    \item Add bulletin boards and mailing lists
-    \item Add NS related systems
+    \item What are they used for?
+    \item What do we want them to be used for? Why?
+    \item Add {\ hg} repository.
+    \item Add bulletin boards and mailing lists.
+    \item Add NS related systems.
       \begin{itemize}
       \item www.neurospaces.org
-      \item blog
+      \item Blog.
       \end{itemize}
     \end{itemize}
-  \item alpha: Mid-October
-  \item beta1: Mid-January
-  \item beta2: Mid-March
-  \item full: Mid-July
+  \item alpha: Mid-October.
+  \item beta1: Mid-January.
+  \item beta2: Mid-March.
+  \item full: Mid-July.
   \end{itemize}
 \end{itemize}
 
@@ -324,24 +314,24 @@ components.
   \end{itemize}
 \item model-container
   \begin{itemize}
-  \item instantiation of projections / connections by model-container (DONE)
-  \item inspection of projections / connections by model-container API (DONE)
+  \item instantiation of projections/connections by model-container (DONE)
+  \item inspection of projections/connections by model-container API (DONE)
   \end{itemize}
 \item SSP
   \begin{itemize}
-  \item instantiation of DES queuer from ssp (partial)
-  \item instantiation of DES distributor from ssp (partial)
+  \item instantiation of DES queuer from SSP (partial)
+  \item instantiation of DES distributor from SSP (partial)
   \item translation of model-container connections to DES connections (partial)
-  \item tests for ssp
+  \item tests for SSP
   \end{itemize}
-\item gshell
+\item G-Shell
   \begin{itemize}
-  \item add integration commands to gshell
-  \item tests for gshell
+  \item add integration commands to G-Shell
+  \item tests for G-Shell
   \end{itemize}
 \item backward compatibility
   \begin{itemize}
-  \item integration of planar / volume connect command
+  \item integration of planar/volume connect command
   \item tests for backward compatibility
   \end{itemize}
 \end{itemize}
@@ -367,20 +357,20 @@ components.
 \begin{itemize}
 \item Import from External Library:
   \begin{itemize}
-  \item displaying ndf library is working
-  \item Get the gui read from external libraries on the net.
-  \item Add support for different file types like swc.
+  \item Displaying NDF library is working.
+  \item Get the GUI read from external libraries on the net.
+  \item Add support for different file types like SWC.
   \end{itemize}
-\item Load Tutorial: display a list of clickable tutorial links and
-  have the gui open them ia web browser of html widget.
-\item Load Project: Get gui to load a project based on a yaml file
+\item Load Tutorial: Display a list of clickable tutorial links and
+  have the GUI open them in a web browser of html widget.
+\item Load Project: Get GUI to load a project based on a yaml file
   which includes all relevant input and result files.
 \item Create Model: Create interface to allow a user to create a
   simple model via text and/or graphics.
 \item Explore Model: Create a graphics widget which displays the
-  morphology when clicking "explore model"
+  morphology when clicking ``explore model".
 \item Save Model: Get save model to work properly (save a project file
-  as well as all included files)
+  as well as all included files).
 \end{itemize}
 
 {
@@ -421,13 +411,13 @@ components.
 
 \subsection{GUI: Run Simulation}
 \begin{itemize}
-\item CHECK: appears to be working.
-\item RUN: appears to be working.      
-\item STOP: Get "stop" simulation to properly work (not sure how this
-  will work since the gshell is stop and wait).
+\item CHECK: Appears to be working.
+\item RUN: Appears to be working.      
+\item STOP: Get ``stop" simulation to properly work (not sure how this
+  will work since the G-Shell is stop and wait).
 \item RESET: Get reset functionality to work.
 \item SAVE: Save model state.
-\item LOAD: Get gui to load a previous save state.
+\item LOAD: Get GUI to load a previous save state.
 \item Runtime Option: create a menu for adding runtime options.
 \end{itemize}
 
@@ -450,10 +440,10 @@ components.
 \begin{itemize}
 \item Plot: Get plot to take parameters from the simulation to fill in
   the legend, X and Y axis as well as the title of a graph.
-\item Studio: Remove Studio from output menu? Same functionality will be in "Explore Model."
+\item Studio: Remove Studio from output menu? Same functionality will be in ``Explore Model."
 \item Matlab: Create export menu/functionality for matlab.
-\item xmgrace:Create export menu/functionality for xmgrace.
-\item Mathematica: create export menu/functionality for Mathematica.
+\item xmgrace: Create export menu/functionality for xmgrace.
+\item Mathematica: Create export menu/functionality for Mathematica.
 \end{itemize}
 
 {
@@ -477,7 +467,7 @@ Add menus/functionality to the iterator menu.
 Put a couple of iterator scripts of the purkinje cell comparison and
 the mutual information projects in a directory.  The Iterators menu
 lists all the scripts found in this directory, clicking on one of them
-runs the appropriate script.  The script generates ssp configuration
+runs the appropriate script.  The script generates SSP configuration
 files that can be loaded into the GUI.
 
 {
@@ -499,11 +489,11 @@ files that can be loaded into the GUI.
 \begin{itemize}
 \item Finish yaml loader to load the clickable graphic complete with
   roll overs dynamically.
-\item Have the gui use a "project" file which will track various
+\item Have the GUI use a `project' file which will track various
   aspects of a users project.
-\item Get "compileall" script to work and make python byte code for
+\item Get {\it compileall} script to work and make python byte code for
   various distros.
-\item Have gui track Workflow state and guide user accordingly.
+\item Have GUI track Workflow state and guide user accordingly.
 \item Screenshot functionality for plot and explore model.
 \end{itemize}
 
@@ -522,9 +512,9 @@ files that can be loaded into the GUI.
 }
 
 
-\subsection{gshell}
+\subsection{G-Shell}
 \begin{itemize}
-\item Implement the ssp\_save and ssp\_load commands.
+\item Implement the {\it ssp\_save} and {\it ssp\_load} commands.
 \item Complete the link with python.
 \end{itemize}
 
@@ -544,7 +534,7 @@ files that can be loaded into the GUI.
 
 
 \subsection{model-container}
-Complete the implementation of the ndf\_save command.  Add tests for
+Complete the implementation of the {\it ndf\_save} command.  Add tests for
 saving a full model, saving a library of models and saving a
 modularized part of a model.
 
@@ -568,7 +558,7 @@ modularized part of a model.
 For each software component a set of (html) documents must be
 generated that specify the capabilities of the component.  For Unix
 shell scripts, technical specifications can be generated from the
-usage messages generated by a '--help' argument.
+usage messages generated by a `--help' argument.
 
 
 \subsection{Level 3-7 Documentation: Creation Guide}
@@ -581,6 +571,8 @@ the appropriate locations is required.  A level 2 document.
 
 Tag all the documentation with keywords to define flows through the
 documentation and ease browsing and reading of related documents.
+
+Should be provided via a browser-based framework to give `professional' look to documentation. See Documentation Framing (following).
 
 
 \subsection{Documentation Framing}
@@ -602,15 +594,15 @@ First move conceptualized items from the supplement to this TODO list.
 \subsection{Unify the Methods of Handling of Inputs to a Model}
 
 There are several fundamentally different ways to specify inputs to a
-simulated model from the gshell.  For example, a voltage clamp
+simulated model from the G-Shell.  For example, a voltage clamp
 protocol is specified by creating input objects (pclamp object).  A
 current injection and endogeneous stimulation is specified by setting
 parameters.
 
 
-\subsection{Announce GENESIS 3 alpha1}
+\subsection{Announce GENESIS\,3 alpha1}
 
-Compose an announcement of the GENESIS 3 alpha1 release to the
+Compose an announcement of the GENESIS\,3 alpha1 release to the
 connectionist, compneuro and genesis-users email lists.  Signed with
 Allan Coop, Hugo Cornelis, Mando Rodriguez, Dave Beeman, James Bower.
 
@@ -618,12 +610,12 @@ Allan Coop, Hugo Cornelis, Mando Rodriguez, Dave Beeman, James Bower.
 \section{DONE List}
 
 \subsection{Monotone Clone Operation Integration with the Installer Scripts}
-Integrate 'mtn clone' into the installer scripts (DONE).
+Integrate `mtn clone' into the installer scripts (DONE).
 
 \subsection{Convert Developer Documentation to Doxygen}
 
 \begin{itemize}
-\item Finish mcad2doxy convertor (DONE).
+\item Finish {\it mcad2doxy} convertor (DONE).
 \item Convert and Check Output (DONE).
 \item Configure and Makefile Integration (DONE).
 \end{itemize}
@@ -631,16 +623,11 @@ Integrate 'mtn clone' into the installer scripts (DONE).
 \subsection{Backwards Compatibility for Single Neurons}
 
 \begin{itemize}
-\item Ca pools (DONE)
-\item Ascii out (DONE)
-\item readcell (DONE)
-\item hsolve (DONE)
+\item Ca pools (DONE).
+\item {\it ascii\_out} (DONE).
+\item {\it readcell} (DONE).
+\item {\it hsolve} (DONE).
 \end{itemize}
 
 
 \end{document}
-
-%%% Local Variables: 
-%%% mode: latex
-%%% TeX-master: t
-%%% End: 
