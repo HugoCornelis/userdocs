@@ -70,6 +70,12 @@ environments:
 \end{itemize}
 
 
+\subsection{Installation documentation}
+
+Consolidate and correct the installation documentation for software
+developers.
+
+
 \subsection{Report Document for Testers}
 
 Construct a report document with instructions for alpha and beta
@@ -77,53 +83,79 @@ testers.  The instructions consist of installation instructions and a
 questionnaire about basic application functionality.
 
 
+\subsection{Demonstration Scripts}
+
+The following scripts have been selected for use as demonstration
+scripts:
+
+\begin{itemize}
+\item Purkinje Cell Scripts from Erik De Schutter: some of the scripts
+  are used for regression tests (and work correctly).  Other Purkinje
+  cell scripts still need validation.
+\item Rallpacks: for benchmarking it would be useful to implement
+  scripts for the rallpack standard.  To show the relationships
+  between the different GENESIS 3 interfaces, it is useful to
+  implement these scripts in the different interfaces currently
+  available (Perl, Python, SLI, NDF, Heccer, gshell).
+
+  For visibility and good integration with the rest of the system, it
+  would be best to integrate these scripts with the regression tester,
+  such that they are validated and documented on a daily basis.
+  \begin{itemize}
+  \item Rallpack 1: Passive unbranched cable.
+  \item Rallpack 2: Branched cable.
+  \item Rallpack 3: Squid axon / Active cable.
+  \item Integrate with Tests.
+  \end{itemize}
+\end{itemize}
+
 \subsection{Release Notes}
 
 \begin{itemize}
 \item Document that describes the release
-\begin{itemize}
-\item Compile a list of G3 capabilities, compile them from each of the components
-\item Statements about
-\begin{itemize}
-\item backward compatibility
-\begin{itemize}
-\item clarify the level of backward compatibility 
-\item emphasize on commitment of backward compatibility
-\item explain policies for feature requests
-\item rallpacks
-\item does the purkinje cell and its various stimulation protocols
-\item please try your simulations and report problems
-\end{itemize}
-\item NeuroML support
-\item PyNN support, placeholder for an interface to PyNN through the
-  pynn\_load command
-\end{itemize}
-\item Installation
-\begin{itemize}
-\item Compile a list of dependencies
-\item Create an integrated installation tar ball or so.
-\item add deb and rpm packages
-% (http://www.artificialworlds.net/blog/2007/02/22/creating-deb-and-rpm-packages/).
-\item Release plan: alpha, beta, full release
-\item synchronize userdocs and wiki installation docs
-\end{itemize}
-\item mailing lists, discussion boards and other genesis related systems
-\begin{itemize}
-\item what are they used for?
-\item what do we want them to be used for? why?
-\item Add hg repository
-\item Add bulletin boards and mailing lists
-\item Add NS related systems
-\begin{itemize}
-\item www.neurospaces.org
-\item blog
-\end{itemize}
-\end{itemize}
-\item alpha: Mid-October
-\item beta1: Mid-January
-\item beta2: Mid-March
-\item full: Mid-July
-\end{itemize}
+  \begin{itemize}
+  \item Compile a list of G3 capabilities, compile them from each of the components
+  \item Statements about
+    \begin{itemize}
+    \item backward compatibility
+      \begin{itemize}
+      \item clarify the level of backward compatibility 
+      \item emphasize on commitment of backward compatibility
+      \item explain policies for feature requests
+      \item rallpacks
+      \item does the purkinje cell and its various stimulation protocols
+      \item please try your simulations and report problems
+      \end{itemize}
+    \item NeuroML support
+    \item PyNN support, placeholder for an interface to PyNN through the
+      pynn\_load command
+    \end{itemize}
+  \item Installation
+    \begin{itemize}
+    \item Compile a list of dependencies
+    \item Create an integrated installation tar ball or so.
+    \item add deb and rpm packages
+      % (http://www.artificialworlds.net/blog/2007/02/22/creating-deb-and-rpm-packages/).
+    \item Release plan: alpha, beta, full release
+    \item synchronize userdocs and wiki installation docs
+    \end{itemize}
+  \item mailing lists, discussion boards and other genesis related systems
+    \begin{itemize}
+    \item what are they used for?
+    \item what do we want them to be used for? why?
+    \item Add hg repository
+    \item Add bulletin boards and mailing lists
+    \item Add NS related systems
+      \begin{itemize}
+      \item www.neurospaces.org
+      \item blog
+      \end{itemize}
+    \end{itemize}
+  \item alpha: Mid-October
+  \item beta1: Mid-January
+  \item beta2: Mid-March
+  \item full: Mid-July
+  \end{itemize}
 \end{itemize}
 
 \subsection{Level 4 Documentation: Technical Specifications}
@@ -139,15 +171,21 @@ An outline of how Level 3-7 documentation is created and included in
 the appropriate locations is required.
 
 
-\subsection{Document Dependencies}
+\subsection{Find out about Dependencies}
 
-Perl dependencies:
 \begin{itemize}
-\item YAML
-\item Clone
-\item Data::Utilities
+\item Perl dependencies:
+  \begin{itemize}
+  \item YAML
+  \item Clone
+  \item Data::Utilities
+  \end{itemize}
+\item GUI dependencies:
+  \begin{itemize}
+  \item wxWidgets
+  \item pyYAML
+  \end{itemize}
 \end{itemize}
-
 
 \subsection{Progress Reports to the Supplement}
 
@@ -288,6 +326,24 @@ modularized part of a model.
 
 \subsection{Monotone Clone Operation Integration with the Installer Scripts}
 Integrate 'mtn clone' into the installer scripts (DONE).
+
+\subsection{Convert Developer Documentation to Doxygen}
+
+\begin{itemize}
+\item Finish mcad2doxy convertor (DONE).
+\item Convert and Check Output (DONE).
+\item Configure and Makefile Integration (DONE).
+\end{itemize}
+
+\subsection{Backwards Compatibility for Single Neurons}
+
+\begin{itemize}
+\item Ca pools (DONE)
+\item Ascii out (DONE)
+\item readcell (DONE)
+\item hsolve (DONE)
+\end{itemize}
+
 
 \end{document}
 
