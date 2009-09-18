@@ -1,0 +1,106 @@
+-*- outline -*-
+
+Target Examples for NNMDS
+
+* Query of unit information
+A user wants to combine three different models.  He loads the three
+models into a nnmds user environment (this could be a directory in a
+filesystem with three files, one for each model).
+
+The XPATH expression /**/unit shows all elements that contain unit
+information of the models.
+
+* A GUI for model construction
+
+** XML format
+
+<parameter>
+  <conductance>
+    <value>5</value>
+    <unit>Siemens</unit>
+  </conductance>
+</parameter>
+
+GUI shows label widget with name 'conductance', followed by an edit
+box with the (editable) value '5', followed with a drop down box with
+from 'nano Siemens' to 'Siemens'.
+
+** Changing values
+
+Changing the value of the drop down, automatically scales the
+conductance value.
+
+Changing the (global) GUI preferences of what units should be used for
+conductances, changes the value of the drop down.
+
+** Preference system
+
+*** Hints given by a model
+
+The model can have an XML element that hints at preferences for a GUI
+how to display certain parameter types.
+
+<unit_systems>
+  <reference>SI</reference>
+  <GUI>
+    <conductance>milliSiemens</conductance>
+  </GUI>
+</unit_systems>
+
+*** GUI Preferences
+
+The global preferences of what units a GUI should use, can have the
+exact same XML format as the format in the model.  This format can
+also be used for other software modules (eg. a model search and mining
+engine).
+
+** Extension by Defining new Parameters
+
+When a user invents a new parameter with name 'new_parameter' the
+scheme is updated in an intuitive way:
+
+<parameter>
+  <new_parameter>
+    <value>5</value>
+    <unit>Siemens</unit>
+  </new_parameter>
+</parameter>
+
+<unit_systems>
+  <reference>SI</reference>
+  <GUI>
+    <new_parameter>milliSiemens</new_parameter>
+  </GUI>
+</unit_systems>
+
+The GUI displays this in the same way as for 'conductance'.
+
+** Model validation
+
+Model validation can only be done by running a simulation and checking
+its output.  The XML syntax can be validated, but some elements can be
+unknown to the simulator used.
+
+* A user wants to compare a model with experimental data
+** The experimental data consists of fMRI data
+*** expresses activation levels of brain regions
+** The model
+*** is in SI units.
+*** describes a hierarchical network
+**** two populations: inhibitory + excitatory
+**** feedback connected (think of one-excitatory-to-one-inhibitory connected)
+*** poissonian activation of excitatory neurons
+*** assume expresses oscillatory behaviour in a region of interest
+*** what is the summed activity of all the
+**** inhibitory neurons within a defined region of interest?
+**** excitatory neurons within a defined region of interest?
+**** what is the average frequency of one oscillator within the region of interest?
+**** what is the average frequency of all the oscillators in the region of interest?
+
+* Database Interfacing
+** Cerebellar Cortex Network Model based on data coming from a Database
+*** Experimental Volume Estimation
+*** Experimental Cell Counts
+*** Other Parameters
+** What is the best XML representation for this?
+
