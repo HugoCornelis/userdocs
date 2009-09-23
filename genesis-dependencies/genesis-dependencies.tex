@@ -9,9 +9,12 @@
 
 \section*{GENESIS: Documentation}
 
-\section*{Dependencies}
+\section*{Developer Dependencies}
 
-\subsection*{Programs}
+This is a general list of dependencies for configuring a PC for
+GENESIS 3 software development.
+
+\subsection*{Required Programs}
 
 \begin{itemize}
    \item {\it automake}
@@ -23,7 +26,7 @@
    \item {\it swig}
 \end{itemize} 
 
-\subsection*{Libraries}
+\subsection*{Required Libraries}
 
 \begin{itemize}
    \item {\it libcurses-dev}
@@ -33,12 +36,24 @@
    \item {\it python-dev} (for your python version) 
 \end{itemize} 
 
-\subsection*{perl}
+\subsection*{Required Perl Modules}
+
+The following perl modules are required.  If you are using Linux, they
+are likely available as packages for your Linux distribution or vendor.
 
 \begin{itemize}
-   \item YAML
-   \item LWP::Simple
-   \item Expect (IO::Pty)
+\item CPAN
+\item YAML
+\item Parse::RecDescent
+\item Inline (including Inline::C)
+\item ExtUtils::Embed
+\item LWP::Simple
+\item Expect (including IO::Pty and IO::Tty)
+\item Test::More
+\item Clone
+\item Data::Utilities
+\item File::Find::Rule
+\item Digest::SHA
 \end{itemize}
 
 \end{document}
