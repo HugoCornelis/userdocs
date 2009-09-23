@@ -142,3 +142,8 @@ docs-level7:
 
 docs: docs-level1 docs-level2 docs-level3 docs-level4 docs-level5 docs-level6 docs-level7
 
+TMP_DIR = tmp
+
+# Create a deb package
+pkg-deb: dist
+	nspkg-deb $(TMP_DIR) $(PACKAGE) $(VERSION)
