@@ -1,0 +1,54 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+\section*{G-Tube}
+
+G-Tube is a GUI implemented in Python which simplifies the use of GENESIS. It is currently under development so functionality is limited. Bugs and feature requests should be reported to the authors to ensure users are satisfied with the end result.
+Details
+
+\subsection*{Dependencies}
+
+To install G-Tube you need the following packages installed on your machine.
+
+\begin{itemize}
+   \item {\href{http://python.org/download/}{\bf Python 2.5:}} You can check the version you have installed with
+   
+   ``{\tt python -V}''
+   
+   \item {\bf wxPython:} Version 2.8 or higher from:   
+   \begin{itemize}
+      \item \href{http://www.wxpython.org/download.php}{\bf wxPython site}
+      \item Direct link to \href{https://sourceforge.net/projects/wxpython/files/}{Sourceforge}
+   \end{itemize}
+   \item \href{http://pyyaml.org/ }{\bf PyYAML}:
+\end{itemize}
+
+\subsection*{Building wxPython from source}
+
+To use wxPython you must first build wxWidgets, which is included with the wxPython source tarball. To build wxWidgets you'll need the following libraries installed. To compile you'll need {\it g++}.
+
+\begin{itemize}
+   \item {\it zlib-dev}
+   \item {\it libjpeg-dev}
+   \item {\it libpng-dev}
+   \item {\it libtiff-dev}
+   \item {\it libgtk-dev}
+\end{itemize}
+
+    If you want 3D bindings you'll need: 
+
+\begin{itemize}
+   \item {\it libglut-dev}
+\end{itemize}
+
+Once wxWidgets is built be sure to run {\it ldconfig}. After building and setting up wxWidgets go into the wxPython directory and use the python script {\it setup.py} to build and install the wxPython bindings.
+
+\end{document}
