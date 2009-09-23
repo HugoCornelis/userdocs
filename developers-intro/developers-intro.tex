@@ -24,7 +24,7 @@ In principle anyone can become a GENESIS developer, all that is required is a de
 	about these GENESIS repositories and version control see \href{../version-control/version-control.tex}{version control}.
 	
 	\item {\bf Independent Developer:} GENESIS is structured in such a way that it is possible to download the code from:\\
-	\href{http://sourceforge.net/project/showfiles.php?group_id=162899}{http://sourceforge.net/project/showfiles.php?group\_id=162899}.\\
+	\href{http://sourceforge.net/projects/neurospaces/files/}{http://sourceforge.net/projects/neurospaces/files/}\\
 	You can then proceed entirely independently with your own code and documentation development. To do this see the 
 	\href{../installation-developer/installation-developer.tex}{developer installation} documentation. It describes how to set up your own 
 	choice of version control and associated file repositories.
@@ -102,7 +102,7 @@ neurospaces_build --check --developer \
 \end{verbatim}
 \end{itemize}
 
-For more information, see the details of the \href{../installerpackage/installerpackage.tex}{InstallerPackage}. 
+For more information, see the details of the \href{../installer-package/installer-package.tex}{InstallerPackage}. 
 
 \section*{Creating a New Software Component}
 
@@ -199,7 +199,7 @@ We now explain how to {\it checkout} code manually when not using the installer.
 
 \subsubsection*{Serving your source code}
 
-If you want someone else to {\it sync} their code with what you have on your laptop, you can conveniently convert your laptop to a source code server using the command {\it neurospaces\_serve} (see the \href{../installerpackage/installerpackage.tex}{InstallerPackage}). Other people can now connect to your laptop using, for example
+If you want someone else to {\it sync} their code with what you have on your laptop, you can conveniently convert your laptop to a source code server using the command {\it neurospaces\_serve} (see the \href{../installer-package/installer-package.tex}{InstallerPackage}). Other people can now connect to your laptop using, for example
 \begin{verbatim}
    neurospaces_sync --repo-sync <ip-address-of-your-laptop>
 \end{verbatim}
@@ -299,9 +299,9 @@ Send the repository owner your public key for write access. To perform this you 
 \end{verbatim}
 If this is successful it will indicate that a packet has been read. You can store several keys in a file this way with the number of successful packets read in being given. 
 
-\section*{Accessing the Neurospaces Repository from the {\it InstallerPackage}}
+\section*{Accessing the GENESIS Repository from the {\it InstallerPackage}}
 
-The \href{../genesis-repository/genesis-repository.tex}{GENESIS Repository} is accessible from the \href{../installerpackage/installerpackage.tex}{InstallerPackage}. Important for this feature to work is to have the correct directory layout on your \href{../developer-machine/developer-machine.tex}{DeveloperMachine}.
+The \href{../genesis-repository/genesis-repository.tex}{GENESIS Repository} is accessible from the \href{../installer-package/installer-package.tex}{InstallerPackage}. Important for this feature to work is to have the correct directory layout on your \href{../developer-machine/developer-machine.tex}{DeveloperMachine}.
 
 In summary, what you want to do is pull the set of default packages from the server(s):
 \begin{verbatim}
@@ -314,7 +314,7 @@ This command has options that inhibit the default actions of configuration, comp
    neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu \
       --repo-co --verbose --developer --directories-create
 \end{verbatim}
-There are developer friendly frontends to the {\it neurospaces\_build} script in the \href{../installerpackage/installerpackage.tex}{InstallerPackage}:
+There are developer friendly frontends to the {\it neurospaces\_build} script in the \href{../installer-package/installer-package.tex}{InstallerPackage}:
 \begin{itemize}
 \item {\it neurospaces\_serve}\,\,\,Starts serving the source code repositories such that other people can {\it pull} and {\it sync} to your machine (note that this locks all your databases).
 \item {\it neurospaces\_pull}\,\,\,Download the source code from a repository.
