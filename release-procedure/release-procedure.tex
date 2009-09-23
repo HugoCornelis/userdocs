@@ -10,7 +10,7 @@
 
 \section*{Release Procedure}
 
-After putting a tag on the code, you first must check if the package can be built from the tarball. The autotools distcheck target does this (see below). An additional check is to build the tarball, put it somewhere on your filesystem, and then build the check target from the tarball. 
+After putting a tag on the code, you first must check if the package can be built from the tarball. The autotools {\it distcheck} target does this (see below). An additional check is to build the tarball, put it somewhere on your filesystem, and then build the {\it check} target from the tarball. 
 
 For example, first build the tarball and put it somewhere on your filesystem (e.g. {\it /tmp}):
 \begin{verbatim}
@@ -45,9 +45,9 @@ The {\tt --verbose} option is there to let you know what is going on during this
 
 The same procedure is used to build a release of either individual or all packages. An official public release is made available for download on \href{http://sourceforge.net/projects/neurospaces/}{sourceforge}. Intermediate releases are for internal use only.
 
-Because official releases are built using automake's distcheck target, they must pass the tests of the package (on the machine used for the build). So they are considered to be alpha releases (ie. internally well tested).
+Because official releases are built using automake's {\it distcheck} target, they must pass the tests of the package (on the machine used for the build). So they are considered to be alpha releases (ie. internally well tested).
 
-The release procedure normally checks for package correctness using the automake distcheck target, meaning that both install and uninstall targets work and are each other's complement. Official releases must always succeed on this target. Intermediate releases can fail.
+The release procedure normally checks for package correctness using the automake {\it distcheck} target, meaning that both install and uninstall targets work and are each other's complement. Official releases must always succeed on this target. Intermediate releases can fail.
 
 \subsection*{Details of the Release Procedure}
 
