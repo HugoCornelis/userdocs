@@ -8,9 +8,16 @@
 
 \section*{GENESIS: Documentation}
 
-\section*{\it InstallerPackage}
+\section*{\it The Developer Package}
 
-The {\tt Installer} package provides developer utilities that comply with GENESIS development standards. The most important one is the {\it neurospaces\_build} script used for automated software installation and maintenance on a set of software packages. Because this script has many options, most common operations are provided using frontends. Other scripts are related to version identification of the software, and source code documentation comments.
+The {\tt Developer} package provides developer utilities that comply
+with GENESIS development standards. The most important one is the {\it
+  neurospaces\_build} script used for automated software installation
+and maintenance on a configurable set of software packages.  Because
+this script has many options, most common operations are provided
+using frontends.  Other scripts are related to version identification
+of the software, source code documentation comments, testing, and
+release management.
 
 Some of the utilities currently depend on \href{http://monotone.ca}{monotone} for source code version control due to their configuration. It is possible to work with other version control systems.
 
@@ -26,7 +33,7 @@ Some of the utilities currently depend on \href{http://monotone.ca}{monotone} fo
 	   to see how it works. 
 \end{itemize} 
 
-Also look at \href{../release-procedure/release-procedure.tex}{ReleaseProcedure}.
+%Also look at \href{../release-procedure/release-procedure.tex}{ReleaseProcedure}.
 
 \subsubsection*{Other utilities}
 
@@ -84,36 +91,41 @@ For updating of version keywords the following are invoked automatically by the 
 
 \subsubsection*{Examples}
 
-See also \href{../installing-from-scratch/installing-from-scratch.tex}{InstallingFromScratch}.
+See also
+\href{../installation-developer/installation-developer.tex}{installing
+  from scratch}.
 
-Steps in building a release for the example {\it my-software} package (see also \href{../release-procedure/release-procedure.tex}{ReleaseProcedure}).
+Steps in building a release for the example {\it your-software}
+package (see also \href{../developers-intro/developers-intro.tex}{the
+  sections on creating new software components in the developers
+  introduction}).
 
 \begin{enumerate}
 
 \item {\bf Tag the code:} The GENESIS convention for creating these tags, which must be unique, is to concatenate an identifier from the name of the lab of origin, the purpose and/or type of software (e.g. build, passive, active, python, userdocs, des, network, i64, purkinje, integration, pools, etc), with an appended numerical identifier. Here, for example we use the generic tag ``{\tt mylab-mysoftware-vnum}''.
 \begin{verbatim}
-genesis > neurospaces_build --tag mylab-mysoftware-vnum --verbose \
+$ neurospaces_build --tag mylab-mysoftware-vnum --verbose \
    --verbose --verbose --no-compile --no-configure --no-install \
    --regex my-software --developer
 \end{verbatim}
 
 \item {\bf Build the release for the tagged code:}
 \begin{verbatim}
-genesis > neurospaces_build --dist --verbose --verbose --verbose \
+$ neurospaces_build --dist --verbose --verbose --verbose \
    --no-compile --no-configure --no-install --regex my-software \
    --developer
 \end{verbatim}
 
 \item {\bf Or with one command line:}
 \begin{verbatim}
-genesis > neurospaces_build --tag mylab-mysoftware-vnum --dist \
+$ neurospaces_build --tag mylab-mysoftware-vnum --dist \
    --verbose --verbose --verbose --no-compile --no-configure \
    --no-install --regex my-software --developer
 \end{verbatim}
 
 \item {\bf Upload the tarballs:}
 \begin{verbatim}
-genesis > neurospaces_build --src-tag mylab-mysoftware-vnum \
+$ neurospaces_build --src-tag mylab-mysoftware-vnum \
    --upload-server ftp://upload.sourceforge.net/incoming \
    --verbose --verbose --verbose --no-compile --no-configure \
    --no-install --regex my-software --developer
@@ -127,61 +139,61 @@ Do not forget to edit release notes, tag the files as ``Any'', ``Source.gz'', et
 \begin{enumerate}
 \item {\bf Find out what packages are known:}
 \begin{verbatim}
-genesis > neurospaces_build --help-packages
+$ neurospaces_build --help-packages
 \end{verbatim}
 
 \item {\bf Find out what operations on those packages are known:}
 \begin{verbatim}
-genesis > neurospaces_build --help-operations
+$ neurospaces_build --help-operations
 \end{verbatim}
 
 \item {\bf Find out what actions are taken by default:}
 \begin{verbatim}
-genesis > neurospaces_build --help
+$ neurospaces_build --help
 \end{verbatim}
 and inspect the flags at the end of the output. At this time, {\tt --configure}, {\tt --compile}, and {\tt --install} are the default actions. 
 
 \item {\bf Find how operations are mapped to the packages:}
 \begin{verbatim}
-genesis > neurospaces_build --help-all
+$ neurospaces_build --help-all
 \end{verbatim}
 
 \item {\bf Find out what actions are taken after options have been given:} For example
 \begin{verbatim}
-genesis > neurospaces_build --distcheck --help
+$ neurospaces_build --distcheck --help
 \end{verbatim}
 enables the {\it distcheck} target of the makefiles, in addition to the default actions. 
 
 \item {\bf Find out what shell commands will be run after options have been given, without really running the commands:}
 \begin{verbatim}
-genesis > neurospaces_build --verbose --distcheck --dry-run --developer
+$ neurospaces_build --verbose --distcheck --dry-run --developer
 \end{verbatim}
 
 \item {\bf Uninstall 4 packages on your developer machine:}
 \begin{verbatim}
-genesis > neurospaces_build --verbose --verbose --verbose \
+$ neurospaces_build --verbose --verbose --verbose \
    --no-compile --no-configure --uninstall \
    --regex '(my-software|heccer|ssp|studio)' --developer
 \end{verbatim}
 
 \item {\bf Build checked releases for four packages:}
 \begin{verbatim}
-genesis > neurospaces_build --verbose --verbose --verbose \
+$ neurospaces_build --verbose --verbose --verbose \
    --no-compile --no-configure --no-install --distcheck 
    --regex '(my-software|heccer|ssp|studio)' --developer
 \end{verbatim}
 
-\item {\bf After a modification of the installer package, reinstall it:}
+\item {\bf After a modification of the developer package, reinstall it:}
 \begin{verbatim}
-genesis > neurospaces_build --enable installer --regex installer \
+$ neurospaces_build --enable developer --regex developer \
    --developer --verbose --verbose --verbose
 \end{verbatim}
 
-\item {\bf Releasing the installer package on sourceforge:}
+\item {\bf Releasing the developer package on sourceforge:}
 \begin{verbatim}
-genesis > neurospaces_build --tag build-25 --dist --src-tag build-25 \
+$ neurospaces_build --tag build-25 --dist --src-tag build-25 \
    --upload-server ftp://upload.sourceforge.net/incoming \
-   --enable installer --regex '(installer)' --developer --verbose
+   --enable developer --regex '(developer)' --developer --verbose
 \end{verbatim}
 
 \end{enumerate}
