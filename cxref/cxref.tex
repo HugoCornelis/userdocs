@@ -1,0 +1,72 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+\section*{Xrefactory}
+
+\href{http://www.xref.sk/xrefactory/main.html}{Xrefactory} is a development tool used used with {\it emacs} and {\it xemacs} for source browsing and refactoring of C and C++ code. It can be used to browse and restructure original source code and convert the source code to browsable html pages.
+
+The procedure for generating browsable html source code is now outlined.
+
+\subsection*{xrefrc}
+
+A `recipe' file is typically used to set up a project in Xrefactory. It consists of formatted blocks relevant to a particular project. Each block contains a set of xref flags with their complimentary arguments. 
+
+\begin{verbatim}
+[model-container]
+  //  input files and directories (processed recursively)
+  /local_home/local_home/hugo/neurospaces_project/model-container/source/snapshots/0
+  //  directory where tag files are stored
+  -refs /local_home/local_home/hugo/.xrefs/neurospaces/source/snapshots/0/model-container
+  //  split tag files using first letter
+  -refalphahash
+  //  include directories
+  -I ~/neurospaces_project/model-container/source/snapshots/0
+  -I ~/neurospaces_project/model-container/source/snapshots/0/modules/symbol
+  -I ~/neurospaces_project/model-container/source/snapshots/0/modules/event
+  -I /usr/lib/perl5/5.8.5/i386-linux-thread-multi/CORE
+  -I /usr/lib/perl/5.8.7/CORE
+  -I /
+  //  setting for Emacs compile and run
+  -set compilefile "cc %s"
+  -set compiledir "cc *.c"
+  -set compileproject "
+        cd /local_home/local_home/hugo/neurospaces_project/model-container/source/snapshots/0
+        make
+        "
+  -set run1 "a.out"
+  -set run5 ""  // an empty run; C-F8 will only compile
+  //  set default to run1
+  -set run ${run1}
+  //  HTML configuration
+  -htmlroot=/local_home/local_home/hugo/HTML
+  -htmlgxlist -htmllxlist -htmldirectx -htmllinenums
+  -htmltab=8 -htmllinenumcolor=000000
+  //  pre-processor macros and passes specification
+  -DPRE_PROTO_TRAVERSAL
+  -DUSE_READLINE
+  // found in smart browsing toggle help
+  -storelocalxrefs
+  -prune neurospacesread-*
+\end{verbatim}  
+  
+\subsection*{Generating HTML}
+
+Here is an example of Xrefactory being run from the {\bf NS-SLI} command line showing all the required flags:
+
+\begin{verbatim}
+xref -xrefactory-II -o ~/ns-sliHTML.log -encoding=european -html -htmlgxlist -htmllxlist -htmlfunseparate -htmllinenums -errors -xrefrc ~/.xrefrc -p ns-sli -user 1
+\end{verbatim}
+
+The {\tt -html} tags are required to insure that source code referenced more than once does not produce multiple output pages. The {\tt -xrefrc} file references the recipe file set up for a project (as illustrated above).
+
+The {\bf -p} flag allows you to select a project block from the {\it xrefrc} file. The referenced file contains three projects, so it must be explicitly told which project to build the documents for.
+
+\end{document}
