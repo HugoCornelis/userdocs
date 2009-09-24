@@ -49,21 +49,27 @@ GENESIS contains several software components useful for neural simulations using
 \begin{verbatim}
 $HOME/neurospaces_project/<package-name>/source/ \
    <programming language>/snapshots/<branch name>/
+$
 \end{verbatim}
 
 \item {\bf Other resources are put in other directories:} For example, documents that are not part of the distribution can be put under
 \begin{verbatim}
 $HOME/neurospaces_project/<package-name>/docs/
+$
 \end{verbatim}
 
 \item {\bf Archived patches are located in:}
 \begin{verbatim}
 $HOME/neurospaces_project/<package-name>/source/ \
    <programming language>/patches/ 
+$
 \end{verbatim}
 
 \end{itemize}
-The {\tt InstallerPackage} has built in support for this directory structure when working in developer mode (using its {\tt --developer} option).
+The \href{../developer-package/developer-package.tex}{\tt Developer
+  Package} has built in support for this directory.
+% structure when
+%working in developer mode (using its {\tt --developer} option).
 
 \subsection*{Configuration}
 
@@ -83,32 +89,54 @@ There is a default configuration available in the configurator package (UNDER CO
 
 \section*{Build Procedure}
 
-You can go to the directory of each individual software component, configure, compile, check and install the package. The {\tt InstallerPackage} has built in support to automate these actions, while respecting the dependencies between the packages (ie. each of the mentioned steps is done for each package in the correct order).
+You can go to the directory of each individual software component,
+configure, compile, check and install the package. The
+\href{../developer-package/developer-package.tex}{\tt Developer
+  Package} has built in support to automate these actions, while
+respecting the dependencies between the packages (ie. each of the
+mentioned steps is done for each package in the correct order).
 
 Examples:
 
 \begin{itemize}
 
-\item {\bf A simple build for packages model-container, heccer, ssp, studio on a developer machine:}
+\item {\bf A simple build for packages model-container, heccer, ssp on a developer machine:}
 \begin{verbatim}
-neurospaces_build --developer \
-   --regex 'model-container|heccer|ssp|studio'
+neurospaces_install --regex 'model-container|heccer|ssp
 \end{verbatim}
 
 \item {\bf Run tests via the check target of the makefiles on a developer machine:}
 \begin{verbatim}
-neurospaces_build --check --developer \
-   --regex 'model-container|heccer|ssp|studio'
+neurospaces_check --regex 'model-container|heccer|ssp
 \end{verbatim}
 \end{itemize}
 
-For more information, see the details of the \href{../installer-package/installer-package.tex}{InstallerPackage}. 
+The \href{../developer-package/developer-package.tex}{\tt Developer
+  Package} has many more tools for GENESIS software development.  For
+more information, see the details of the
+\href{../developer-package/developer-package.tex}{\tt Developer
+  Package}.
 
-\section*{Creating a New Software Component}
+\section*{Extending GENESIS Functionality}
 
-GENESIS contains many software components. The source code of the most important ones are publicly available from a central repository. (The server {\tt repo-genesis3 at cbi} is coded as the default server in the {\it InstallerPackage}. This default can be overwritten using command line options.) Other software components can be made available from other sources. The installer package, when configured correctly, automatically incorporates software components from geographically distributed sources.
+GENESIS contains many software components. The source code of the most
+important ones are publicly available from a central repository. (The
+server {\tt repo-genesis3 at cbi} is coded as the default server in
+the \href{../developer-package/developer-package.tex}{\tt Developer
+  Package}. This default can be overwritten using command line
+options.) Other software components can be made available from other
+sources. The developer package, when configured correctly,
+automatically incorporates software components from geographically
+distributed sources.
 
-New software components can be added to the configuration of the {\it neurospaces\_build} script of the {\it InstallerPackage}. All the other tools of the {\it InstallerPackage}, such as tools to compile and install, tools to synchronize the source code with remote servers, and tools to generate and publish documentation on a website will work with the new configuration.
+New software components can be added to the configuration of the {\it
+  neurospaces\_build} script of the
+\href{../developer-package/developer-package.tex}{\tt Developer
+  Package}. All the other tools of the
+\href{../developer-package/developer-package.tex}{\tt Developer
+  Package}, such as tools to compile and install, tools to synchronize
+the source code with remote servers, and tools to generate and publish
+documentation on a website will work with the new configuration.
 
 For smooth integration with the GENESIS installer, it is a requirement that the top level source directory of the new component contains a {\it configure} script, and a {\it Makefile} with the targets {\it clean}, {\it check}, {\it dist}, {\it distcheck}, {\it install}, {\it uninstall}, {\it docs}, {\it html-upload-prepare}, {\it html-upload}, and {\it dist-keywords}.
 
@@ -119,9 +147,12 @@ The following steps should be performed on your developer machine each time you 
 Use the command line arguments ``{\tt --enable your-software --regex your-software}'' to limit the operations given below to only the software component named, here as an example we use ``{\tt your-software}''. 
 
 \begin{itemize}
-	\item {\bf Add the new software component to the configuration of the {\it neurospaces\_build} script:} As an example, for the component named {\tt your-software}, you would add the following code block to the configuration file
-	\begin{footnotesize}
-	\begin{verbatim}
+\item {\bf Add the new software component to the configuration of the
+    {\it neurospaces\_build} script:} As an example, for the component
+  named {\tt your-software}, you would add the following code block to
+  the configuration
+  \begin{footnotesize}
+\begin{verbatim}
 	'your-software' => {
 	   './configure' => ['--with-delete-operation'],
 	   directory => "$ENV{HOME}/neurospaces_project/your-software/source/snapshots/0",
@@ -133,58 +164,88 @@ Use the command line arguments ``{\tt --enable your-software --regex your-softwa
 	      repository => "$ENV{HOME}/neurospaces_project/MTN/your-software.mtn",
 	   },
 },
-	\end{verbatim}
-	\end{footnotesize}
-	This code block includes the directory name where sources are to be found, the build order, and version control information 
-	(note that the server port number cannot be changed at anytime).
+\end{verbatim}
+  \end{footnotesize}
+  This code block includes the directory name where sources are to be
+  found, the build order, and version control information (note that
+  the server port number cannot be changed at anytime).
 
-	\item {\bf Create the correct directory layout:}
-	\begin{verbatim}
+\item {\bf Create the correct directory layout:}
+\begin{verbatim}
 	neurospaces_create_directories
-	\end{verbatim}
-	
-	\item {\bf Create the monotone repository:}
-	\begin{verbatim}
-	neurospaces_build --enable your-software \
-	   --regex your-software --developer --repo-co
-	\end{verbatim}
+\end{verbatim}
+  
+\item {\bf Create the monotone repository:}
+\begin{verbatim}
+	neurospaces_init
+\end{verbatim}
 
-	\item {\bf Populate the project with files:} Use monotone to {\it checkin} your modifications.
+\item {\bf Populate the new project with files:} Use monotone to {\it
+    checkin} your modifications regularly.
 
-	\item {\bf Configure your new monotone server:} Use the information in the configuration of the new software component.
-	
-	\item {\bf Synchronize your local monotone repository:} Use {\it neurospaces\_sync} to synchronize with the server repository.
-	
-\end{itemize} 
+\end{itemize}
 
-\subsubsection*{Pushing a new software component to other computers}
+\subsubsection*{Making the new software component available to others}
+
+Serving the source code over the internet makes it available for
+others.  It is best, although not required, to use a dedicated user on
+your machine to serve the source code.
+
+\begin{itemize}
+\item {\bf Configure your new monotone server:} The information in the
+  configuration of the new software component is used by the {\it
+    neurospaces\_serve} command to make the source code available over
+  the internet.  If you are only serving your own software component,
+  use the ``{\tt --enable your-software --regex your-software}''
+  command line arguments.
+  
+\item {\bf Synchronize your private monotone repository:} After the
+  server has been configured the developer package tools can be used
+  synchronize your private changes with the server, provided all tools
+  have been configured with the updated configuration for
+  'your-software'.  For example, {\it neurospaces\_sync} can be used
+  to synchronize your private repository with the server repository.
+\end{itemize}
+  
+\subsubsection*{Pushing the new software component to other computers}
 
 \begin{itemize}
 
-	\item {\bf Get a version of the installer package that contains configuration for the new software component.}
-	
-	\item {\bf Create the correct directory layout:}
-	\begin{verbatim}
+\item {\bf Get a version of the developer package that contains the
+    configuration for the new software component.}
+  
+\item {\bf Create the correct directory layout:}
+\begin{verbatim}
 	neurospaces_create_directories
-	\end{verbatim}
+\end{verbatim}
 
-	\item {\bf Pull the repository from the server:} You can also create a new repository locally if needed.
-	\begin{verbatim}
+\item {\bf Create the private monotone repository:} This step is
+  optional because the pull operation in the next step will create a
+  new repository for the new software component if required.
+\begin{verbatim}
+	neurospaces_init
+\end{verbatim}
+
+\item {\bf Pull the repository from the server:}
+\begin{verbatim}
 	neurospaces_pull --enable your-software \
 	   --regex your-software
-	\end{verbatim}
-	
-	\item {\bf Update local source code with the latest source in the local repository, keeping local changes if any:}
-	\begin{verbatim}
+\end{verbatim}
+  
+\item {\bf Update local source code with the latest source in the
+    local repository, keeping local changes if any:}
+\begin{verbatim}
 	neurospaces_update --enable your-software \
 	   --regex your-software
-	\end{verbatim}
-	
-	\item {\bf Recompile all software components, and link them against each other:} 
-	\begin{verbatim}
+\end{verbatim}
+  
+\item {\bf Recompile all software components, and link them against
+    each other:}
+\begin{verbatim}
 	neurospaces_install --configure
-	\end{verbatim}
-	The ``{\tt --configure}'' argument enables configuration, which is needed for a new software component.
+\end{verbatim}
+  The ``{\tt --configure}'' argument enables configuration, which is
+  needed for a new software component.
 \end{itemize}
 
 \section*{Using the GENESIS repository for Development}
@@ -199,7 +260,8 @@ We now explain how to {\it checkout} code manually when not using the installer.
 
 \subsubsection*{Serving your source code}
 
-If you want someone else to {\it sync} their code with what you have on your laptop, you can conveniently convert your laptop to a source code server using the command {\it neurospaces\_serve} (see the \href{../installer-package/installer-package.tex}{InstallerPackage}). Other people can now connect to your laptop using, for example
+If you want someone else to {\it sync} their code with what you have on your laptop, you can conveniently convert your laptop to a source code server using the command {\it neurospaces\_serve} (see the \href{../developer-package/developer-package.tex}{\tt Developer
+  Package}). Other people can now connect to your laptop using, for example
 \begin{verbatim}
    neurospaces_sync --repo-sync <ip-address-of-your-laptop>
 \end{verbatim}
@@ -299,60 +361,63 @@ Send the repository owner your public key for write access. To perform this you 
 \end{verbatim}
 If this is successful it will indicate that a packet has been read. You can store several keys in a file this way with the number of successful packets read in being given. 
 
-\section*{Accessing the GENESIS Repository from the {\it InstallerPackage}}
+%\section*{Accessing the GENESIS Repository from the \href{../developer-package/developer-package.tex}{\tt Developer
+%  Package}}
 
-The \href{../genesis-repository/genesis-repository.tex}{GENESIS Repository} is accessible from the \href{../installer-package/installer-package.tex}{InstallerPackage}. Important for this feature to work is to have the correct directory layout on your \href{../developer-machine/developer-machine.tex}{DeveloperMachine}.
+%The \href{../genesis-repository/genesis-repository.tex}{GENESIS Repository} is accessible from the \href{../developer-package/developer-package.tex}{\tt Developer
+%  Package}. Important for this feature to work is to have the correct directory layout on your \href{../developer-machine/developer-machine.tex}{DeveloperMachine}.
 
-In summary, what you want to do is pull the set of default packages from the server(s):
-\begin{verbatim}
-   neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu \
-      --repo-co --verbose --developer --directories-create \
-      --no-configure --no-compile --no-install
-\end{verbatim}
-This command has options that inhibit the default actions of configuration, compilation, and installation. If you also want to compile and install in just one run, simply omit those options:
-\begin{verbatim}
-   neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu \
-      --repo-co --verbose --developer --directories-create
-\end{verbatim}
-There are developer friendly frontends to the {\it neurospaces\_build} script in the \href{../installer-package/installer-package.tex}{InstallerPackage}:
-\begin{itemize}
-\item {\it neurospaces\_serve}\,\,\,Starts serving the source code repositories such that other people can {\it pull} and {\it sync} to your machine (note that this locks all your databases).
-\item {\it neurospaces\_pull}\,\,\,Download the source code from a repository.
-\item {\it neurospaces\_status}\,\,\,Check for local source code modification (no network required).
-\item {\it neurospaces\_sync}\,\,\,Synchronize local source code modification with a repository.
-\item {\it neurospaces\_update}\,\,\,Make the local source code up to date using the repositories locally stored on your PC (so this is a local operation). 
-\end{itemize}
+%In summary, what you want to do is pull the set of default packages from the server(s):
+%\begin{verbatim}
+%   neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu \
+%      --repo-co --verbose --developer --directories-create \
+%      --no-configure --no-compile --no-install
+%\end{verbatim}
+%This command has options that inhibit the default actions of configuration, compilation, and installation. If you also want to compile and install in just one run, simply omit those options:
+%\begin{verbatim}
+%   neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu \
+%      --repo-co --verbose --developer --directories-create
+%\end{verbatim}
+%There are developer friendly frontends to the {\it neurospaces\_build} script in the \href{../developer-package/developer-package.tex}{\tt Developer
+%  Package}:
+%\begin{itemize}
+%\item {\it neurospaces\_serve}\,\,\,Starts serving the source code repositories such that other people can {\it pull} and {\it sync} to your machine (note that this locks all your databases).
+%\item {\it neurospaces\_pull}\,\,\,Download the source code from a repository.
+%\item {\it neurospaces\_status}\,\,\,Check for local source code modification (no network required).
+%\item {\it neurospaces\_sync}\,\,\,Synchronize local source code modification with a repository.
+%\item {\it neurospaces\_update}\,\,\,Make the local source code up to date using the repositories locally stored on your PC (so this is a local operation). 
+%\end{itemize}
 
-\subsection*{Details}
+%\subsection*{Details}
 
-\begin{itemize}
-\item {\bf Pull to your local repository:}
-\begin{verbatim}
-neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu \
-   --no-configure --no-install --no-compile --verbose --developer \
-   --regex 'heccer|model-container|ssp'
-\end{verbatim}
+%\begin{itemize}
+%\item {\bf Pull to your local repository:}
+%\begin{verbatim}
+%neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu \
+%   --no-configure --no-install --no-compile --verbose --developer \
+%   --regex 'heccer|model-container|ssp'
+%\end{verbatim}
 
-\item {\bf Checkout from your local repository:}
-\begin{verbatim}
-neurospaces_build --repo-co --no-configure \
-   --no-install --no-compile --verbose --developer \
-   --regex 'heccer|model-container|ssp'
-\end{verbatim}
+%\item {\bf Checkout from your local repository:}
+%\begin{verbatim}
+%neurospaces_build --repo-co --no-configure \
+%   --no-install --no-compile --verbose --developer \
+%   --regex 'heccer|model-container|ssp'
+%\end{verbatim}
 
-\item {\bf When you start from scratch it is useful to create the workspace directories:}
-\begin{verbatim}
-neurospaces_build --repo-co --no-configure \
-   --no-install --no-compile --verbose --developer \
-   --regex 'heccer|model-container|ssp' --directories-create
-\end{verbatim}
+%\item {\bf When you start from scratch it is useful to create the workspace directories:}
+%\begin{verbatim}
+%neurospaces_build --repo-co --no-configure \
+%   --no-install --no-compile --verbose --developer \
+%   --regex 'heccer|model-container|ssp' --directories-create
+%\end{verbatim}
 
-\item {\bf Combine everything for the set of default packages, including compilation and installation:}
-\begin{verbatim}
-neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu \
-   --repo-co --verbose --developer --directories-create
-\end{verbatim}
+%\item {\bf Combine everything for the set of default packages, including compilation and installation:}
+%\begin{verbatim}
+%neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu \
+%   --repo-co --verbose --developer --directories-create
+%\end{verbatim}
 
-\end{itemize}
+%\end{itemize}
 
 \end{document}
