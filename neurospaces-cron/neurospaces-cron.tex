@@ -1,0 +1,90 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+\section*{The {\it neurospaces\_cron} Script}
+
+This script is part of the \href{../installer-package}{InstallerPackage}, its function is to perform sanity checks for communicating with a NeurospacesRepository, system installation, and running tests to check that software packages are properly working. Here we introduce how to use the script, set up a cronjob, and how to avoid some common pitfalls.
+
+\subsection*{Running {\it neurospaces\_cron}}
+
+The {\it neurospaces\_cron} script can be run by invoking ``{\tt neurospaces\_cron}'' from the command line after installing the neurospaces installer package called {\it developer}. There are command line arguments available to customize aspects of a cronjob, e.g.
+\begin{itemize}
+   \item {\tt --outputdir <absolute path to target directory>:} Set the output directory for cronjob output logs.
+   \item {\tt --config <file name>:} Read a YAML configuration file for setting cronjob parameters.
+\end{itemize}
+However, it is preferable to create a YAML configuration file to set cronjob parameters.
+
+\subsection*{The  {\it neurospaces\_cron} Configuration File}
+
+The  {\it neurospaces\_cron} configuration file is a YAML formatted file containing values that can be set for the following optional parameters:
+\begin{itemize}
+   \item[]{\bf MAILTO:} Email address for recipient of email notifying cronjob completion.
+   \item[]{\bf MAILFROM:} Email address from which cronjob completion email is sent.
+   \item[]{\bf OUTPUTDIR:} Target directory for writing cronjob output log data.
+   \item[]{\bf URL:} http link to serve test harness output.
+   \item[]{\bf DOXYGENOUTPUT:} The local directory that holds doxygen html output.
+   \item[]{\bf DOXYGENURL:} http link to serve doxygen output.
+   \item[]{\bf REGTESTOUTPUT:} The local directory containing output of regression test html.
+   \item[]{\bf REGTESTURL:} http link to serve regression test html output.
+   \item[]{\bf LOGROTATE:} The number of output logs to rotate on successive runs.
+\end{itemize}
+
+\subsubsection*{Example configuration file:}
+
+\begin{verbatim}
+---
+MAILTO: my@email.com
+MAILFROM: g3tester@repo-genesis3.cbi.utsa.edu
+OUTPUTDIR: /var/www/tests
+URL: http://repo-genesis3.cbi.utsa.edu/tests
+DOXYGENOUTPUT: /var/www/doxygen
+DOXYGENURL: http://repo-genesis3.cbi.utsa.edu/doxygen
+REGTESTOUTPUT: /var/www/regtests
+REGTESTURL: http://repo-genesis3.cbi.utsa.edu/regtests
+LOGROTATE: 10
+
+\end{verbatim}
+
+\subsection*{The Cron Job}
+
+Setting up a cronjob typically requires administrator rights. There are several ways to run a cronjob. We now give some of the easiest ways to do this on a Linux based machine.
+
+To automate the running of a cronjob create the directory {\it /etc/cron.d}. A cronjob formatted text file placed in this directory will be picked up by the cron daemon. A typical invocation for {\it neurospaces\_cron} would be with a line like this:
+\begin{verbatim}
+   01 00 * * * g3tester neurospaces_cron
+\end{verbatim}
+This job is set to run at exactly one minute after midnight. To run the job more frequently you could do this:
+\begin{verbatim}
+   01 */8 * * * g3tester neurospaces_cron
+\end{verbatim}
+which would make the cronjob run every eight hours.
+
+Note that {\tt g3tester} is a user set up for permissions to perform a {\tt sudo make install}, and {\tt sudo make uninstall}. To set up a regular user to use sudo, add them to the {\it /etc/sudoers} file (see next section).
+
+\subsection*{The Sudoers File}
+
+The sudoers file grants a particular user the privileges to run a command or set of commands in superuser mode. The file is located at {\it /etc/sudoers}. There are variables in the file which must be set to allow a regular user to perform the {\it neurospaces\_cron} tests as they require GENESIS components to be installed and uninstalled to the system.
+
+To allow the {\tt g3tester} user to perform any command anywhere on the system in superuser mode the following line can be placed into the sudoer's file:
+\begin{verbatim}
+   g3tester ALL=(ALL) ALL
+\end{verbatim}
+This configuration line still results in the system asking for a password, which will stop the cronjob. To prevent this, the ``{\tt NOPASSWD}'' option can be inserted:
+\begin{verbatim}
+   g3tester ALL=(ALL) NOPASSWD: ALL
+\end{verbatim}
+Since it is desirable to restrict a regular user to commands they absolutely need to run, their privileges can be limited to a particular list of command, e.g.
+\begin{verbatim}
+   g3tester ALL=(ALL) NOPASSWD: /usr/bin/make /usr/local/bin/neurospaces_cron
+\end{verbatim}
+This limits the user {\tt g3tester} to executing only the commands {\it neurospaces\_cron} and {\it make}, without requiring a password. More commands can be added as needed simply by appending them to the list with a space delimiter. 
+
+\end{document}
