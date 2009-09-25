@@ -10,7 +10,73 @@
 
 \section*{Release Procedure}
 
-After putting a tag on the code, you first must check if the package can be built from the tarball. The autotools {\it distcheck} target does this (see below). An additional check is to build the tarball, put it somewhere on your filesystem, and then build the {\it check} target from the tarball. 
+A release is a bundle with a consistent set of software packages
+required to use the GENESIS simulator.  Internal releases are built on
+a daily basis, public release are built on a monthly to yearly basis.
+
+A public release has the guarantee that it passes all the regression
+tests.  Internal releases are tested to, but can show minor problems.
+
+Every release is identified with a tag.  The tag (see below for a
+definition) allows to reconstruct the release source code from the
+repositories using the developer package.  This helps in solving
+problems reported by users.
+
+\begin{itemize}
+\item {\bf Define the tag}
+  \begin{itemize}
+  \item In principal, developer tags follow the naming convention:
+\begin{verbatim}
+   <milestone-number>
+\end{verbatim}   
+    So, for example, for the current release, the tag is {\tt des-10}, which is the tenth subrelease after starting development of the {\tt des} milestone.
+  \item Milestone labels point to an important event for development.
+  \item Tag numbers are monotonically increased per milestone.
+  \item Some packages may skip some releases, milestone labels, and/or tag numbers.
+  \item Internally, the development system refers to the milestone labels as `majors', the numbers as `minor's', and for future use, there is also a `micro' number possible.
+  \end{itemize}
+  
+\item {\bf Set the tag using {\it neurospaces\_build}:} Use the options {\tt --tag}, e.g. {\tt neurospaces\_build --tag des-10}. Use additional options to select individual packages if needed.
+\item {\bf Build the tarballs:}
+  \begin{itemize}
+  \item Use the UNIX shell command {\tt neurospaces\_dist}.
+  \item Use additional options such as {\tt --regex} and {\tt
+      --enable} to select individual packages if required.
+  \item Use the {\tt --certification-report} to annotate the {\it
+      monotone} revision with the output of the build (this step is
+    optional).
+  \end{itemize}
+
+\item {\bf Build the OS specific packages:}
+  \begin{itemize}
+  \item Use the UNIX shell command {\tt neurospaces\_release}.
+  \item Use additional options such as {\tt --regex} and {\tt
+      --enable} to select individual packages if required.
+  \item Use the {\tt --certification-report} to annotate the {\it
+      monotone} revision with the output of the build (this step is
+    optional).
+  \end{itemize}
+
+\item {\bf Put the files on an file server.}
+%  \begin{itemize}
+%  \item Currently, only {\it ftp} is supported.
+%  \item If uploading to the \href{http://sourceforge.net/projects/neurospaces/}{sourceforge} server, you have to fill the release notes manually. 
+%  \end{itemize}
+%  Note that the build script by default installs the packages on the developer machine. Use {\tt --no-install} if this is not intended.
+
+\item For examples, see the \href{../developer-package/developer-package.tex}{\tt DeveloperPackage} 
+
+  It might be useful to do ``{\tt make html-upload}'' for some packages after the release, to synchronize the content of the website with the content of the downloadable packages. 
+\end{itemize}
+
+
+\subsection*{Details of the Release Procedure}
+
+After putting a tag on the code, you first must check if the package
+can be built from the tarball. The autotools {\it distcheck} target
+does this (see below). An additional check is to build the tarball,
+put it somewhere on your filesystem, and then build the {\it check}
+target from the tarball.
 
 For example, first build the tarball and put it somewhere on your filesystem (e.g. {\it /tmp}):
 \begin{verbatim}
@@ -48,42 +114,5 @@ The same procedure is used to build a release of either individual or all packag
 Because official releases are built using automake's {\it distcheck} target, they must pass the tests of the package (on the machine used for the build). So they are considered to be alpha releases (ie. internally well tested).
 
 The release procedure normally checks for package correctness using the automake {\it distcheck} target, meaning that both install and uninstall targets work and are each other's complement. Official releases must always succeed on this target. Intermediate releases can fail.
-
-\subsection*{Details of the Release Procedure}
-
-\begin{itemize}
-\item {\bf Define the tag}
-   \begin{itemize}
-   \item In principal, developer tags follow the naming convention:
-\begin{verbatim}
-   <milestone-number>
-\end{verbatim}   
-   So, for example, for the current release, the tag is {\tt des-10}, which is the tenth subrelease after starting development of the {\tt des} milestone.
-   \item Milestone labels point to an important event for development.
-   \item Tag numbers are monotonically increased per milestone.
-   \item Some packages may skip some releases, milestone labels, and/or tag numbers.
-   \item Internally, the development system refers to the milestone labels as `majors', the numbers as `minor's', and for future use, there is also a `micro' number possible.
-   \end{itemize}
-   
-\item {\bf Set the tag using {\it neurospaces\_build}:} Use the options {\tt --tag}, e.g. {\tt neurospaces\_build --tag des-10}. Use additional options to select individual packages if needed.
-\item {\bf Build the tarballs:}
-   \begin{itemize}
-   \item For public alpha releases: {\tt neurospaces\_build --distcheck}.
-   \item For internal releases: {\tt neurospaces\_build --dist} is OK, but make sure you know what you are doing.
-   \item Use additional options to select individual packages if needed.
-   \item Use the {\tt --certification-report} to annotate the {\it monotone} revision with the output of the build, if that is useful.
-   \end{itemize}
-
-\item {\bf Put the files on an file server.}
-\begin{itemize}
-   \item Currently, only {\it ftp} is supported.
-   \item If uploading to the \href{http://sourceforge.net/projects/neurospaces/}{sourceforge} server, you have to fill the release notes manually. 
-\end{itemize}
-Note that the build script by default installs the packages on the developer machine. Use {\tt --no-install} if this is not intended.
-
-\item For examples, see the \href{../installer-package/installer-package.tex}{\tt InstallerPackage} 
-
-It might be useful to do ``{\tt make html-upload}'' for some packages after the release, to synchronize the content of the website with the content of the downloadable packages. 
-\end{itemize}
 
 \end{document}
