@@ -41,7 +41,7 @@ dist_noinst_SCRIPTS = \
 	hh-model-details/hh-model-details.tex \
 	installation-developer/installation-developer.tex \
 	installation-user/installation-user.tex \
-	installer-package/installer-package.tex \
+	developer-package/developer-package.tex \
 	model-container/model-container.tex \
 	ndf-file-format/ndf-file-format.tex \
 	neurospaces-tester/neurospaces-tester.tex \
