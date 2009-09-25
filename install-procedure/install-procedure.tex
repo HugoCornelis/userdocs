@@ -8,31 +8,63 @@
 
 \section*{GENESIS: Documentation}
 
-In this documentation we assume that the target computer has all dependencies installed (see for \href{../installation-developer/installation-developer.tex}{developers} and \href{../installation-user/installation-user.tex}{users}). You can the proceed by downloading the packages from \href{http://sourceforge.net/project/showfiles.php?group_id=162899}{sourceforge}. The download can be automated by the \href{../installer-package/installer-package.tex}{\tt InstallerPackage}. Alternatively, you can checkout the code from the \href{http://monotone.ca/}{monontone} \href{../developers-intro/developers-intro.tex}{repositories}.
+In this documentation we assume that the target computer has all
+dependencies installed (see for
+\href{../installation-developer/installation-developer.tex}{developers}
+and \href{../installation-user/installation-user.tex}{users}). You can
+the proceed by downloading the packages from
+\href{http://sourceforge.net/project/showfiles.php?group_id=162899}{sourceforge}.
+The download can be automated by the
+\href{../developer-package/developer-package.tex}{\tt Developer
+  Package}. Alternatively, you can checkout the code from the
+\href{http://monotone.ca/}{monontone}
+\href{../developers-intro/developers-intro.tex}{repositories}.
 
-All GENESIS packages can be downloaded and installed by themselves, based on \href{http://www.gnu.org/software/autoconf/}{autotools} (``{\tt ./configure}'', ``{\tt make}'', ``{\tt sudo make install}''). There is a small issue with the {\tt Heccer} package as its compilation depends on the {\tt Model Container} being installed.
+All GENESIS packages can be downloaded and installed by themselves,
+based on \href{http://www.gnu.org/software/autoconf/}{autotools}
+(``{\tt ./configure}'', ``{\tt make}'', ``{\tt sudo make install}'').
+%There is a small issue with the {\tt Heccer} package as its
+%compilation depends on the {\tt Model Container} being installed.
 
-\subsubsection*{Structure and Configuration of a GENESIS Target Computer}
+%\subsubsection*{Structure and Configuration of a GENESIS Target Computer}
 
-\begin{itemize}
-\item {\bf Required packages for a base installation:} Perl.
-\item TargetConfiguration in {\it /etc}.
-\item Follows autotools conventions (binaries, library archives, etc). 
-\end{itemize}
+%\begin{itemize}
+%\item {\bf Required packages for a base installation:} Perl.
+%\item TargetConfiguration in {\it /etc}.
+%\item Follows autotools conventions (binaries, library archives, etc). 
+%\end{itemize}
 
-\section*{Install Procedure}
+\section*{Installation Order of Packages}
 
 The order of installation is:
 \begin{enumerate}
-\item \href{../installer-package/installer-package.tex}{\bf Installer:} An optional module that provides developer utilities complying with GENESIS development standards..
-\item \href{../model-container/model-container.tex}{\bf NMC:} The {\tt Model Container} provides a highly optimized solver independent internal storage format for models.
+\item \href{../developer-package/developer-package.tex}{\bf Developer
+    Package:} An optional module that provides developer utilities
+  complying with GENESIS development standards..
+\item \href{../model-container/model-container.tex}{\bf NMC:} The {\tt
+    Model Container} provides a highly optimized solver independent
+  internal storage format for models.
 \item \href{../heccer/heccer.tex}{\bf Heccer:} The numerical solver.
-\item \href{../ssp/ssp.tex}{\bf SSP:} The Simple Scheduler in Perl is currently the standard scheduler for GENESIS.
-\item \href{../studio/studio.tex}{\bf Studio:} GUI front-end to the {\tt Model Container} that enables browsing and visualization of a model.
-\item \href{../project-browser/project-browser}{\bf Project Browser:} Browse projects, inspect and compare simulation results or other data over a web interface. 
+\item \href{../ssp/ssp.tex}{\bf SSP:} The Simple Scheduler in Perl is
+  currently the standard scheduler for GENESIS.
+%\item \href{../studio/studio.tex}{\bf Studio:} GUI front-end to the
+%  {\tt Model Container} that enables browsing and visualization of a
+%  model.
+%\item \href{../project-browser/project-browser}{\bf Project Browser:}
+%  Browse projects, inspect and compare simulation results or other
+%  data over a web interface.
+\item \href{../backward-compatibility/backward-compatibility.tex}{\bf
+    GENESIS 2 Backward Compatibility Module:} is for running GENESIS 2
+  SLI scripts.
+\item \href{../gshell/gshell.tex}{\bf GENESIS 3 Shell:} is for running
+  interactive GENESIS sessions.
+\item \href{../documentation-overview/documentation-overview.tex}{\bf
+    GENESIS Documentation System:} is a modular documentation system
+  suited for maintaining geographically distribution software systems.
 \end{enumerate} 
 
-The easiest way to do an installation is to use the package {\it installer}, see below.
+The easiest way to do an installation is to use the package {\it
+  Developer Package}.
 
 %\subsection*{For a user}
 
