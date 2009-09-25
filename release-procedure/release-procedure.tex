@@ -70,49 +70,4 @@ problems reported by users.
 \end{itemize}
 
 
-\subsection*{Details of the Release Procedure}
-
-After putting a tag on the code, you first must check if the package
-can be built from the tarball. The autotools {\it distcheck} target
-does this (see below). An additional check is to build the tarball,
-put it somewhere on your filesystem, and then build the {\it check}
-target from the tarball.
-
-For example, first build the tarball and put it somewhere on your filesystem (e.g. {\it /tmp}):
-\begin{verbatim}
-   neurospaces_build --developer --verbose --upload-server 
-      file://tmp/uploads --src-tag python-5 --no-configure --no-compile \
-      --no-install --regex studio
-\end{verbatim}
-Then build the {\it check} target from the tarball:
-\begin{verbatim}
-   neurospaces_build --verbose --check --regex studio --src-tag python-5 \
-      --src-dir /tmp/uploads --verbose --verbose --unpack --no-install
-\end{verbatim}
-
-In a one line summary you need to insert a {\tt --tag}, and {\tt --distcheck} the current code, then make them available on \href{http://sourceforge.net/projects/neurospaces/}{sourceforge}. In one line of code:
-\begin{verbatim}
-   neurospaces_build --developer --distcheck --verbose --tag network-5 \
-      --src-tag network-5 --upload-server https://frs.sourceforge.net/uploads \
-      --verbose
-\end{verbatim}
-If you don't want to do the upload, for a single package:
-\begin{verbatim}
-   neurospaces_build --tag network-5 --distcheck --regex 'model-container' \
-      --developer --verbose
-\end{verbatim}
-If that works, you then want to do the upload:
-\begin{verbatim}
-   neurospaces_build --src-tag network-5 --upload-server \
-      https://frs.sourceforge.net/uploads --regex 'model-container' \
-      --developer --verbose
-\end{verbatim}
-The {\tt --verbose} option is there to let you know what is going on during this lengthy command.
-
-The same procedure is used to build a release of either individual or all packages. An official public release is made available for download on \href{http://sourceforge.net/projects/neurospaces/}{sourceforge}. Intermediate releases are for internal use only.
-
-Because official releases are built using automake's {\it distcheck} target, they must pass the tests of the package (on the machine used for the build). So they are considered to be alpha releases (ie. internally well tested).
-
-The release procedure normally checks for package correctness using the automake {\it distcheck} target, meaning that both install and uninstall targets work and are each other's complement. Official releases must always succeed on this target. Intermediate releases can fail.
-
 \end{document}

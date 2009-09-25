@@ -91,86 +91,16 @@ For updating of version keywords the following are invoked automatically by the 
 
 \subsubsection*{Simple Examples}
 
-\begin{itemize}
-\item Uninstall the currently installed software:
-\begin{verbatim}
-$ neurospaces_uninstall
-\end{verbatim}
+The following examples can be used by developers who do not want to
+know about the intricate details of the developer tools.  Most
+developers fall into this category.
 
-\item Pull the default repository to obtain the newest version of the
-  source code in your local repository:
-\begin{verbatim}
-$ neurospaces_pull
-\end{verbatim}
-
-\item Update your local source code from your local repository:
-\begin{verbatim}
-$ neurospaces_update
-\end{verbatim}
-  This command also automatically merges parallel development branches
-  if necessary.
-
-\item Clean up your local workspace:
-\begin{verbatim}
-$ neurospaces_clean
-\end{verbatim}
-
-\item Install the new source code:
-\begin{verbatim}
-$ neurospaces_install
-\end{verbatim}
-\end{itemize}
-
-
-\subsubsection*{Detailed Examples}
-
-See also
-\href{../installation-developer/installation-developer.tex}{developer
-  installation}.
-
-Steps in building a release for the example {\it your-software}
-package (see also \href{../developers-intro/developers-intro.tex}{the
-  sections on creating new software components in the developers
-  introduction}).
+Software developers and laboratories who have added their own private
+software components should be ok after reading this section and can
+skip reading the more detailed sections.
 
 \begin{enumerate}
-
-\item {\bf Tag the code:} The GENESIS convention for creating these tags, which must be unique, is to concatenate an identifier from the name of the lab of origin, the purpose and/or type of software (e.g. build, passive, active, python, userdocs, des, network, i64, purkinje, integration, pools, etc), with an appended numerical identifier. Here, for example we use the generic tag ``{\tt mylab-mysoftware-vnum}''.
-\begin{verbatim}
-$ neurospaces_build --tag mylab-mysoftware-vnum --verbose \
-   --verbose --verbose --no-compile --no-configure --no-install \
-   --regex my-software --developer
-\end{verbatim}
-
-\item {\bf Build the release for the tagged code:}
-\begin{verbatim}
-$ neurospaces_build --dist --verbose --verbose --verbose \
-   --no-compile --no-configure --no-install --regex my-software \
-   --developer
-\end{verbatim}
-
-\item {\bf Or with one command line:}
-\begin{verbatim}
-$ neurospaces_build --tag mylab-mysoftware-vnum --dist \
-   --verbose --verbose --verbose --no-compile --no-configure \
-   --no-install --regex my-software --developer
-\end{verbatim}
-
-\item {\bf Upload the tarballs:}
-\begin{verbatim}
-$ neurospaces_build --src-tag mylab-mysoftware-vnum \
-   --upload-server ftp://upload.sourceforge.net/incoming \
-   --verbose --verbose --verbose --no-compile --no-configure \
-   --no-install --regex my-software --developer
-\end{verbatim}
-Do not forget to edit release notes, tag the files as ``Any'', ``Source.gz'', etc. Due to the crappy sourceforge interfaces, this has to be done manually (anyone have any ideas?).
-
-\end{enumerate}
-
-\subsubsection*{Other Examples}
-
-\begin{enumerate}
-\item {\bf Find out what packages are known:}
+\item {\bf Find out what packages are known by the neurospaces installer:}
 \begin{verbatim}
 $ neurospaces_build --help-packages
 \end{verbatim}
@@ -202,6 +132,132 @@ enables the {\it distcheck} target of the makefiles, in addition to the default 
 $ neurospaces_build --verbose --distcheck --dry-run --developer
 \end{verbatim}
 
+\item Uninstall the currently installed software:
+\begin{verbatim}
+$ neurospaces_uninstall
+\end{verbatim}
+
+\item Pull the default repository to obtain the newest version of the
+  source code in your local repository:
+\begin{verbatim}
+$ neurospaces_pull
+\end{verbatim}
+
+\item Update your local source code from your local repository:
+\begin{verbatim}
+$ neurospaces_update
+\end{verbatim}
+  This command also automatically merges parallel development branches
+  if necessary.
+
+\item Clean up your local workspace:
+\begin{verbatim}
+$ neurospaces_clean
+\end{verbatim}
+
+\item Install the new source code:
+\begin{verbatim}
+$ neurospaces_install
+\end{verbatim}
+
+\end{enumerate}
+
+
+\subsubsection*{More Detailed Examples}
+
+See also
+\href{../installation-developer/installation-developer.tex}{developer
+  installation}.
+
+Steps in building a release for the example {\it your-software}
+package (see also \href{../developers-intro/developers-intro.tex}{the
+  sections on creating new software components in the developers
+  introduction}).
+
+\begin{itemize}
+
+\item {\bf Tag the code:} The GENESIS convention for creating these tags, which must be unique, is to concatenate an identifier from the name of the lab of origin, the purpose and/or type of software (e.g. build, passive, active, python, userdocs, des, network, i64, purkinje, integration, pools, etc), with an appended numerical identifier. Here, for example we use the generic tag ``{\tt mylab-mysoftware-vnum}''.
+\begin{verbatim}
+$ neurospaces_build --tag mylab-mysoftware-vnum --verbose \
+   --verbose --verbose --no-compile --no-configure --no-install \
+   --regex my-software --developer
+\end{verbatim}
+
+\item {\bf Build the release for the tagged code:}
+\begin{verbatim}
+$ neurospaces_build --dist --verbose --verbose --verbose \
+   --no-compile --no-configure --no-install --regex my-software \
+   --developer
+\end{verbatim}
+
+\item {\bf Or with one command line:}
+\begin{verbatim}
+$ neurospaces_build --tag mylab-mysoftware-vnum --dist \
+   --verbose --verbose --verbose --no-compile --no-configure \
+   --no-install --regex my-software --developer
+\end{verbatim}
+
+\item {\bf Upload the tarballs:}
+\begin{verbatim}
+$ neurospaces_build --src-tag mylab-mysoftware-vnum \
+   --upload-server ftp://upload.sourceforge.net/incoming \
+   --verbose --verbose --verbose --no-compile --no-configure \
+   --no-install --regex my-software --developer
+\end{verbatim}
+Do not forget to edit release notes, tag the files as ``Any'', ``Source.gz'', etc. Due to the crappy sourceforge interfaces, this has to be done manually (anyone have any ideas?).
+
+\end{itemize}
+
+
+\subsection*{Some Detailed Examples of the Release Procedure}
+
+After putting a tag on the code, you first must check if the package
+can be built from the tarball. The autotools {\it distcheck} target
+does this (see below). An additional check is to build the tarball,
+put it somewhere on your filesystem, and then build the {\it check}
+target from the tarball.
+
+For example, first build the tarball and put it somewhere on your filesystem (e.g. {\it /tmp/uploads}):
+\begin{verbatim}
+   neurospaces_build --developer --verbose --upload-server 
+      file://tmp/uploads --src-tag python-5 --no-configure --no-compile \
+      --no-install --regex studio
+\end{verbatim}
+Then build the {\it check} target from the tarball:
+\begin{verbatim}
+   neurospaces_build --verbose --check --regex studio --src-tag python-5 \
+      --src-dir /tmp/uploads --verbose --verbose --unpack --no-install
+\end{verbatim}
+
+In a one line summary you need to insert a {\tt --tag}, and {\tt --distcheck} the current code, then make them available on \href{http://sourceforge.net/projects/neurospaces/}{sourceforge}. In one line of code:
+\begin{verbatim}
+   neurospaces_build --developer --distcheck --verbose --tag network-5 \
+      --src-tag network-5 --upload-server https://frs.sourceforge.net/uploads \
+      --verbose
+\end{verbatim}
+If you don't want to do the upload, for a single package:
+\begin{verbatim}
+   neurospaces_build --tag network-5 --distcheck --regex 'model-container' \
+      --developer --verbose
+\end{verbatim}
+If that works, you then want to do the upload:
+\begin{verbatim}
+   neurospaces_build --src-tag network-5 --upload-server \
+      https://frs.sourceforge.net/uploads --regex 'model-container' \
+      --developer --verbose
+\end{verbatim}
+The {\tt --verbose} option is there to let you know what is going on during this lengthy command.
+
+The same procedure is used to build a release of either individual or all packages. An official public release is made available for download on \href{http://sourceforge.net/projects/neurospaces/}{sourceforge}. Intermediate releases are for internal use only.
+
+Because official releases are built using automake's {\it distcheck} target, they must pass the tests of the package (on the machine used for the build). So they are considered to be alpha releases (ie. internally well tested).
+
+The release procedure normally checks for package correctness using the automake {\it distcheck} target, meaning that both install and uninstall targets work and are each other's complement. Official releases must always succeed on this target. Intermediate releases can fail.
+
+
+\subsubsection*{Other Examples}
+
+\begin{itemize}
 \item {\bf Uninstall 4 packages on your developer machine:}
 \begin{verbatim}
 $ neurospaces_build --verbose --verbose --verbose \
@@ -228,7 +284,6 @@ $ neurospaces_build --tag build-25 --dist --src-tag build-25 \
    --upload-server ftp://upload.sourceforge.net/incoming \
    --enable developer --regex '(developer)' --developer --verbose
 \end{verbatim}
-
-\end{enumerate}
+\end{itemize}
 
 \end{document}
