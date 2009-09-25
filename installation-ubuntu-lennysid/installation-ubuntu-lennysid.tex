@@ -1,0 +1,84 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+\section*{Ubuntu Lenny/Sid Developer Installation}
+
+Installing GENESIS on Ubuntu requires executing the following major steps. Note: Installation requires administrator privileges.
+\begin{itemize}
+   \item[] Prepare and upgrade the system software.
+   \item[] Download and install the developer package.
+   \item[] Install the software packages.
+   \item[] Check if the installation was successful. 
+\end{itemize}
+
+\subsection*{Prepare and upgrade the system software}
+
+\begin{itemize}
+   \item[] Install the following packages using the System -$>$ Administration -$>$ Synaptic Package Manager menu.
+      \begin{itemize}
+         \item perl-CPAN (only required to run tests, see below)
+         \item libyaml-perl
+         \item libexpect-perl (and its dependency perl-IO)
+         \item libinline-perl
+         \item autoconf
+         \item automake
+         \item libc6-dev
+         \item libncurses5-dev
+         \item flex
+         \item bison
+         \item libperl-dev
+         \item python-dev
+         \item swig
+         \item libreadline5-dev 
+      \end{itemize}
+   \item[] monotone-0.44 (available as a statically linked binary from \href{http://monotone.ca/}{http://monotone.ca/}) 
+ \end{itemize}
+
+\subsection*{Download and Install the developer package}
+
+\begin{itemize}
+   \item[] Download the latest version of the developer package, available from \href{http://sourceforge.net/projects/neurospaces/files/}{Sourceforge}. It is called {\it developer-release-label.tar.gz}, where {\it release-label} is the current release identifier.
+   \item[] Change to the directory where you downloaded the file.
+   \item[] Unpack the archive by typing ``{\tt tar xfz developer-release-label.tar.gz}''.
+   \item[] Change to the directory with the content of the archive by typing ``{\tt cd developer-release-label}.
+   \item[] Configure by typing ``{\tt ./configure}.
+   \item[] Compile by typing ``{\tt make}''.
+   \item[] Install by typing ``{\tt make install}''. 
+\end{itemize}
+
+\subsection*{Install the software packages}
+
+\begin{itemize}
+   \item[] Use the installer script to create the correct directory layout by typing ``{\tt neurospaces\_create\_directories}''.
+   \item[] Pull the archives of the source code by typing ``{\tt neurospaces\_pull}''.
+   \item[] Update the source code in the working directories by typing ``{\tt neurospaces\_update}''.
+   \item[] Compile and install the software by typing ``{\tt neurospaces\_install}''.
+\end{itemize}
+
+\subsection*{Check if the installation was successful}
+
+This step is optional.
+
+\begin{itemize}
+   \item[] Install the dependencies for running the tests:
+      \begin{itemize}
+         \item perl -MCPAN -e ``{\tt install Test::More}''
+         \item perl -MCPAN -e ``{\tt install Clone}''
+         \item perl -MCPAN -e ``{\tt install Data::Utilities}''
+         \item perl -MCPAN -e ``{\tt install File::Find::Rule}''
+         \item perl -MCPAN -e ``{\tt install Digest::SHA}''
+      \end{itemize}
+      
+   \item[] Run tests of all the packages and save tester output to a file  by typing ``{\tt neurospaces\_check > /tmp/check.out 2 > \&1}''.
+   \item[] Check the output by typing ``{\tt less /tmp/check.out}''. Importantly, search for lines containing the string {\tt error\_count}.
+\end{itemize}
+    
+\end{document}
