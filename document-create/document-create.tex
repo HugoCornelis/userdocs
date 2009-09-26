@@ -7,6 +7,10 @@
 
 \section*{GENESIS: Documentation}
 
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
 \subsection*{Introduction}
 
 The GENESIS documentation system is fully automated with versioning under the control of \href{http://monotone.ca/}{monotone}. To learn more about monotone and its use by GENESIS see \href{../version-control/version-control.tex}{Version Control} and to learn more about the levels of GENESIS documentation see \href{../documentation-overview/documentation-overview.tex}{Documentation Overview}. This document assumes that you are familiar with that material.
@@ -55,7 +59,11 @@ tags:
 
 Source files for the GENESIS documentation system are currently produced with the \LaTeX\,typesetting package (see \href{http://www.latex-project.org/}{www.latex-project.org}). It is planned that Microsoft Word ({\tt .doc} format) and OpenOffice ({\tt .odt}, ODF format) file formats will also be automatically recognized by the GENESIS documentation system.
 
-The default \LaTeX\, documentation source file\,{\it NewDocument.tex} in the {\it NewDocument} folder can be compiled to produce a readable PDF file. It gives help and examples for colorizing text, generating hyperlinks to local and remote documentation, and how to insert a figure into your documentation.
+The default \LaTeX\, documentation source file\,{\it NewDocument.tex} in the {\it NewDocument} folder can be compiled to produce a readable PDF file. It gives help and examples for colorizing text, generating static hyperlinks to local and remote documentation, and how to insert a figure into your documentation.
+
+\subsubsection*{Reference Hyperlinks}
+
+These are created via the tag construct located under the {\bf Related Documentation} heading at the beginning of the {\it NewDocument.tex} file. 
 
 \subsubsection*{The Figures Folder}
 
@@ -109,7 +117,7 @@ Incorporation of pre-existing documentation in one of the above formats is the o
  
 \section*{Create a New Document}
 
-There are three simple steps to the creation of a new document within the GENESIS documentation system.
+There are four simple steps to the creation of a new document within the GENESIS documentation system.
 
 \begin{enumerate}
 
@@ -118,6 +126,21 @@ There are three simple steps to the creation of a new document within the GENESI
 This will result in both the documentation directory and the source file having the same name (with the exception of the {\tt .tex} extension of the source file). For example, the name of the directory containing this document is {\it document-create} and the name of the source file it contains is\,{\it document-create.tex}.
 
 Importantly, remember that the names of the descriptor file\,{\it descriptor.yml} and the directory\,{\it figures} located in the document folder are required by the GENESIS documentation system and should not be changed.
+
+\item {\bf Add reference hyperlinks:} Reference hyperlinks (http redirects) to other related documentation not under the direct control of the GENESIS Documentation System are by default located at the beginning of each document source {\bf .tex} file following the {\bf Related Documentation:} heading. The generation of these links is controlled by a tagging construct which is automatically expanded whenever the document system is rebuilt:
+\begin{verbatim}
+   % start: userdocs-tag-replace-items related-do-nothing
+   % end: userdocs-tag-replace-items related-do-nothing
+\end{verbatim}
+The default tag for the reference hyperlink system is {\tt related-do-nothing}, which allows a document to be created in the absence of any reference hyperlink. 
+
+Each reference hyperlink added to a document requires its own tagging construct and is identified by a tag that replaces the default tag. The replacement tag should have the following form:
+\begin{verbatim}
+   related-<your-tag>
+\end{verbatim}
+where $<$your-tag$>$ is replaced by an identifier you create. This tag must also be placed in the {\it descriptor.yml} file (see next section) for the reference hyperlink to work.
+
+Note that the default reference hyperlink {\tt related-do-nothing} relies on a document called \href{../do-nothing/do-nothing.tex}{\it do-nothing.tex}. 
 
 \item {\bf Update the descriptor.yml file:} Each directory/file in the GENESIS documentation system is tagged on the basis of its content, for example:
 
@@ -142,6 +165,10 @@ Importantly, remember that the names of the descriptor file\,{\it descriptor.yml
 \href{../contents-level7/contents-level7.tex}{{\tt - level7}} (inline source code documentation)
 
 For more on the levels of the GENESIS documentation system see the \href{../documentation-overview/documentation-overview.tex}{Documentation Overview}.
+
+\item {\bf Insert reference hyperlink tags:} If reference hyperlink tags have been inserted into the source document then the same tags must be placed in the {\it descriptor.yml} file.
+
+\item {\bf Flag document origin:} If the document has been created from one located on the \href{http://code.google.com/p/neurospaces/w/list}{Neurospaces wiki} then a {\tt --wiki} tag should be inserted in the {\it descriptor.yml} file.
 
 \item {\bf Flag document status:} For a given document to be part of the documentation version control system and the GENESIS Documentation System, it must be in a documentation folder along with a {\it descriptor.yml} file that contains only one of either the {\tt -\,draft}, {\tt -\,local}, or {\tt -\,published} tags.
 

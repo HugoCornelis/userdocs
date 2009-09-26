@@ -9,9 +9,19 @@
 
 \section*{GENESIS: Documentation}
 
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
 \section*{New Document}
 
-The two above headings are included in all documentation by default. The {\bf Documetnation} identifier may be replaced by a descriptor of the type of documentation you have developed, for example {\bf Introduction} or {\bf Tutorial}, etc. The {\bf New Document} heading should be replaced with the title of your document. Note that in your document all text below the {\bf New Document} heading should be replaced with your own content.
+The three above headings are included in all documentation by default.
+
+\begin{itemize}
+\item[]  {\bf The Documentation Identifier:} This may be replaced by a descriptor of the type of documentation you have developed, for example {\bf Introduction} or {\bf Tutorial}, etc.
+\item[]{\bf Related Documentation Heading:} Followed by a hyperlink list of any related documentation that is not under direct control of the GENESIS Documentation System, e.g. the automatically generated documentation of Levels 3--7.
+\item[] {\bf New Document Heading:} Should be replaced with the title of your document. Note that in your document all text below the {\bf New Document} heading should be replaced with your own content.
+\end{itemize}
 
 \subsection*{Help with \LaTeX\,Documentation}
 
@@ -21,23 +31,31 @@ Text in your document can be colorized  with the command
 \begin{verbatim}
     \textcolor{red}{text}
 \end{verbatim}
-for example \textcolor{red}{\bf This is IMPORTANT}, green and blue are also recognized arguments.
+for example \textcolor{red}{\bf This is IMPORTANT}, \textcolor{green}{green} and \textcolor{blue}{blue} are also recognized arguments.
 
 \subsubsection*{Hyperlinks}
 
-Local hyperlinks are produced with the command
+Two classes of hyperlink exist in the GENESIS Documentation System:
+
+\begin{itemize}
+\item[{\bf A.}]{\bf Static Hyperlinks:} 
+   \begin{itemize}
+      \item{\bf Local links:} These are produced with the command:
 \begin{verbatim}
    \href{../NewDocument/NewDocument.tex}{NewDocument}}
 \end{verbatim}
 for example \href{../NewDocument/NewDocument.tex}{NewDocument} references this document.
 Note that these links may not work in your \LaTeX\,{\tt pdf} file viewer, but should be testable with the \href{http://get.adobe.com/reader/}{Acrobat Reader} or \href{http://www.adobe.com/products/acrobatpro/tryout.html}{Acrobat Professional} packages.
-
-
-Remote hyperlinks use the same command in a slightly different way
+      \item {\bf Remote links:} These use the {\tt href} command in a slightly different way:
 \begin{verbatim}
     \href{http://www.genesis-sim.org/documentation}{GENESIS Documentation}
 \end{verbatim}
 for example see \href{http://www.genesis-sim.org/documentation}{GENESIS Documentation}. Note that these links do not wrap automatically at the end of a line even outside of the {\tt verbatim} environment.
+\end{itemize}
+
+\item[{\bf B.}]{\bf Reference Hyperlinks:} See \href{../document-create/document-create.tex}{Document Creation} for further details on managing reference hyperlinks.
+
+\end{itemize}
 
 \subsubsection*{Figures}
 
