@@ -15,7 +15,7 @@
 
 \section*{Building Debian Packages for GENESIS Components}
 
-This guide describes how to build a \href{http://www.debian.org/doc/manuals/apt-howto/index.en.html#contents}{Debian package} for a \href{../reserved-words/reserved-words.tex}{GENESIS component}. It uses installer scripts included with the \href{../installer-package/installer-package.tex}{\it InstallerPackage}.
+This guide describes how to build a \href{http://www.debian.org/doc/manuals/apt-howto/index.en.html#contents}{Debian package} for a \href{../reserved-words/reserved-words.tex}{GENESIS component}. It uses installer scripts included with the \href{../developer-package/developer-package.tex}{\it DeveloperPackage}.
 
 \subsection*{Dependencies}
 
@@ -61,7 +61,7 @@ The control file is a series of fields which correspond to information about the
 \item {\bf Suggests:} Recommended software.
 \item {\bf Description:} A textual description of the package and its uses. 
 \end{itemize}
-Example taken from the {\it InstallerPackage}:
+Example taken from the {\it DeveloperPackage}:
 \begin{verbatim}
    Source: neurospaces-developer-package
    Section: Science 
@@ -87,7 +87,7 @@ The rules file used in the GENESIS packages is based on an example from Joey Hes
 
 This is a log of the changes made to the package by the maintainer. This file has a particular format that must be followed, otherwise the package build will fail, halting the packaging process.
 
-Example from the {\it InstallerPackage}.
+Example from the {\it DeveloperPackage}.
 \begin{verbatim}
    neurospaces-developer-package (alpha.1) dapper; urgency=low
       * First release packaged for ubuntu
