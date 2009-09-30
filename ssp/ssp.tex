@@ -8,23 +8,27 @@
 
 \section*{GENESIS: Documentation}
 
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
 \section*{A Simple Scheduler in Perl}
 
 \subsection*{Introduction}
 
-Both the \href{../model-container/model-container.tex}{\it model-container} and the mathematical solver \href{../heccer/heccer.tex}{\it heccer} are stand-alone GENESIS modules. To be useful, these modules must be `glued' together and activated correctly, such that they can work together in co-ordination on a single simulation. This is exactly what the Simple Scheduler in Perl (SSP) does. It is currently the standard scheduler for GENESIS. SSP exploits the sophistication of the Perl scripting language to load software modules on demand, and activate them from a configuration file. It achieves this by loading dynamically those software modules referenced in its configuration. Because the SSP scheduler does not have any computational load, its implementation is very simple and highly configurable. Other configurations will connect SSP to other modeling services or solvers.
+Both the \href{../model-container/model-container.tex}{\bf Model Container} and the mathematical solver \href{../heccer/heccer.tex}{\bf Heccer} are stand-alone GENESIS modules. To be useful, these modules must be `glued' together and activated correctly, such that they can work together in co-ordination on a single simulation. This is exactly what the Simple Scheduler in Perl ({\bf SSP}) does. It is currently the standard scheduler for GENESIS. {\bf SSP} exploits the sophistication of the Perl scripting language to load software modules on demand, and activate them from a configuration file. It achieves this by loading dynamically those software modules referenced in its configuration. Because the {\bf SSP} scheduler does not have any computational load, its implementation is very simple and highly configurable. Other configurations will connect {\bf SSP} to other modeling services or solvers.
 
 In summary:
 
 \begin{itemize}
-\item SSP glues other software components together.
-\item SSP synchronizes the activities of other components during a simulation.
-\item SSP is configurable. 
+\item {\bf SSP} glues other software components together.
+\item {\bf SSP} synchronizes the activities of other components during a simulation.
+\item {\bf SSP} is configurable. 
 \end{itemize}
 
 \subsection*{The SSP Configuration File}
 
-Below is a typical configuration file for SSP. It first configures SSP to use the\,{\it model-container} for internal storage of biological models. It then instructs SSP to load a model called \,{\it cells/tensizesp.ndf}, and to instantiate a solver called\,{\it heccer} for that part of the model ({\it /tensizesp}). The simulation of the model is run using the\,{\it apply} entry in the configuration file.
+Below is a typical configuration file for {\bf SSP}. It first configures {\bf SSP} to use the\,{\bf Model Container} for internal storage of biological models. It then instructs {\bf SSP} to load a model called \,{\it cells/tensizesp.ndf}, and to instantiate a solver called\,{\bf Heccer} for that part of the model ({\it /tensizesp}). The simulation of the model is run using the\,{\it apply} entry in the configuration file.
 
 Note that the order in the configuration file below is alphabetical, not chronological. Thus, entries may specified in any order.
 
@@ -59,10 +63,10 @@ Note that the order in the configuration file below is alphabetical, not chronol
       service_name: neurospaces
 \end{verbatim}
 
-Below is a slightly enhanced SSP configuration file that performs several tasks and shows how to:
+Below is a slightly enhanced {\bf SSP} configuration file that performs several tasks and shows how to:
 
 \begin{itemize}
-\item Pass specific options to\,{\it heccer} which will then give a small report after every update time step during the simulation.
+\item Pass specific options to\,{\bf Heccer} which will then give a small report after every update time step during the simulation.
 \item Increment the time step to a new value. 
 \item Specify the output classes and actual outputs of the simulation. These outputs are written to a file in the file system (here, in this case using a default filename).
 \end{itemize}
@@ -117,13 +121,13 @@ Below is a slightly enhanced SSP configuration file that performs several tasks 
 
 \subsection*{Working with SSP}
 
-SSP is started using the command ``{\tt ssp}''. In the absence of any options a description of how to use the module is generated along with a list of options recognized at startup.
+{\bf SSP} is started using the command ``{\tt ssp}''. In the absence of any options a description of how to use the module is generated along with a list of options recognized at startup.
 
-The comand ``{\tt ssp\_directory}'' calls SSP for each schedule in a given directory, with the options ``{\tt set-name}'' and ``{\tt set-outputclass-filename}'' (see below).
+The comand ``{\tt ssp\_directory}'' calls {\bf SSP} for each schedule in a given directory, with the options ``{\tt set-name}'' and ``{\tt set-outputclass-filename}'' (see below).
 
-\subsection*{Starting SSP}
+\subsection*{Starting {\bf SSP}}
 
-When starting SSP, you must specify a schedule template (a filename) for SSP to read. SSP will then read the file, modify it according to command line options, convert it to a real schedule, and then execute the schedule. Currently, the most important options are:
+When starting {\bf SSP}, you must specify a schedule template (a filename) for {\bf SSP} to read. {\bf SSP} will then read the file, modify it according to command line options, convert it to a real schedule, and then execute the schedule. Currently, the most important options are:
 \begin{itemize}
 \item[ ]{\tt set-name}
 
@@ -136,25 +140,25 @@ Both of these options allow a user to track the correspondence between the sched
 
 \subsection*{SSP Schedules}
 
-A schedule is a hierarchical enumeration of ``keys'' that tell SSP to do certain things. Amongst other contents, a SSP schedule must define:
+A schedule is a hierarchical enumeration of ``keys'' that tell {\bf SSP} to do certain things. Amongst other contents, a {\bf SSP} schedule must define:
 \begin{itemize}
-\item What external modules must be loaded by SSP
+\item What external modules must be loaded by {\bf SSP}
 \item How to link these modules together (if required).
 \item How to activate the listed modules
 \item What the outputs of a schedule are.
 \item How to finish a simulation and clean up.
 \end{itemize}
-If some of these are not defined in the schedule, SSP will assume defaults.
+If some of these are not defined in the schedule, {\bf SSP} will assume defaults.
 
-There is one special key {\tt description}. It is available at all levels of the hierarchy, but is ignored by SSP. This allows the inclusion of comments in a SSP file.
+There is one special key {\tt description}. It is available at all levels of the hierarchy, but is ignored by {\bf SSP}. This allows the inclusion of comments in a {\bf SSP} file.
 
-The SSP schedules are in \href{http://fdik.org/yml/}{YAML} format. The basics of this format are that it uses dashes for an order sensitive enumeration of items, and it uses colons for an order insensitive enumeration of key--value pairs. Each entry is newline terminated.
+The {\bf SSP} schedules are in \href{http://fdik.org/yml/}{YAML} format. The basics of this format are that it uses dashes for an order sensitive enumeration of items, and it uses colons for an order insensitive enumeration of key--value pairs. Each entry is newline terminated.
 
-SSP relies on external ``services'' and ``engines''. In computational neuroscience parlance, the engines are solvers, and the services contain the model that needs to be computed by the solvers. So SSP tells the engines when to do something, but the services tell the engines what has to be done. Currently the services are information services, but that is subject to change (e.g. it is currently unclear if a discrete event scheduler must be specified as a service or as an engine, from semantics it is the former, from software architecture it is the latter).
+{\bf SSP} relies on external ``services'' and ``engines''. In computational neuroscience parlance, the engines are solvers, and the services contain the model that needs to be computed by the solvers. So {\bf SSP} tells the engines when to do something, but the services tell the engines what has to be done. Currently the services are information services, but that is subject to change (e.g. it is currently unclear if a discrete event scheduler must be specified as a service or as an engine, from semantics it is the former, from software architecture it is the latter).
 
 \subsection*{Important Keys}
 
-We now give a non-exhaustive list of keys (about 70\% of the currently defined SSP keys are covered here).
+We now give a non-exhaustive list of keys (about 70\% of the currently defined {\bf SSP} keys are covered here).
 
 \subsubsection*{\tt apply}
 
@@ -235,7 +239,7 @@ Defines the version number the schedule complies to. If omitted its value is ``{
 
 \subsection*{Creating and Changing SSP Schedules}
 
-The best way to create a new SSP schedule, is to modify an exising one to your needs. Small Perl scripts can be used to generate multiple SSP schedules for batch mode simulations. For example:
+The best way to create a new {\bf SSP} schedule, is to modify an exising one to your needs. Small Perl scripts can be used to generate multiple {\bf SSP} schedules for batch mode simulations. For example:
 
 \begin{verbatim}
    ssp_directory > schedules.out 2>&1 --schedules-directory schedules/ --verbose &
@@ -245,6 +249,6 @@ The progress of multiple simulations can then be monitored with:
 \begin{verbatim}
    tail -f schedules.out
 \end{verbatim}
-SSP schedules are specified in \href{http://www.yaml.org/}{YAML} format, an easy to understand format for na\"{i}ve computer users. As white space is  used to structure the content of information, YAML is white space sensitive. Indentation is used to define the hierarchical depth of an entry, while newlines are used to terminate an entry. This results in a very easy to understand format. All the examples given above employ YAML syntax. Importantly, by far the majority of scripting languages have built-in support for YAML data structures. 
+{\bf SSP} schedules are specified in \href{http://www.yaml.org/}{YAML} format, an easy to understand format for na\"{i}ve computer users. As white space is  used to structure the content of information, YAML is white space sensitive. Indentation is used to define the hierarchical depth of an entry, while newlines are used to terminate an entry. This results in a very easy to understand format. All the examples given above employ YAML syntax. Importantly, by far the majority of scripting languages have built-in support for YAML data structures. 
 
 \end{document}
