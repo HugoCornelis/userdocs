@@ -15,24 +15,24 @@
 
 \section*{The {\it neurospaces\_cron} Script}
 
-This script is part of the \href{../developer-package}{DeveloperPackage}, its function is to perform sanity checks for communicating with a NeurospacesRepository, system installation, and running tests to check that software packages are properly working. Here we introduce how to use the script, set up a cronjob, and how to avoid some common pitfalls.
+This script is part of the \href{../developer-package}{\it DeveloperPackage}, its function is to perform sanity checks for communicating with a repository, system installation, and running tests to check that software packages are properly working. Here we introduce how to use the script, set up a {\it cron} job, and how to avoid some common pitfalls.
 
 \subsection*{Running {\it neurospaces\_cron}}
 
-The {\it neurospaces\_cron} script can be run by invoking ``{\tt neurospaces\_cron}'' from the command line after installing the neurospaces developer package called {\it developer}. There are command line arguments available to customize aspects of a cronjob, e.g.
+The {\it neurospaces\_cron} script can be run by entering ``{\tt neurospaces\_cron}'' from the command line after installing the Neurospaces developer package called {\it developer}. There are command line arguments available to customize aspects of a {\it cron} job, e.g.
 \begin{itemize}
-   \item {\tt --outputdir <absolute path to target directory>:} Set the output directory for cronjob output logs.
-   \item {\tt --config <file name>:} Read a YAML configuration file for setting cronjob parameters.
+   \item {\tt --outputdir <absolute path to target directory>:} Set the output directory for {\it cron} job output logs.
+   \item {\tt --config <file name>:} Read a YAML configuration file for setting {\it cron} job parameters.
 \end{itemize}
-However, it is preferable to create a YAML configuration file to set cronjob parameters.
+However, it is preferable to create a YAML configuration file to set {\it cron} job parameters.
 
 \subsection*{The  {\it neurospaces\_cron} Configuration File}
 
 The  {\it neurospaces\_cron} configuration file is a YAML formatted file containing values that can be set for the following optional parameters:
 \begin{itemize}
-   \item[]{\bf MAILTO:} Email address for recipient of email notifying cronjob completion.
-   \item[]{\bf MAILFROM:} Email address from which cronjob completion email is sent.
-   \item[]{\bf OUTPUTDIR:} Target directory for writing cronjob output log data.
+   \item[]{\bf MAILTO:} Email address for recipient of email notifying {\it cron} job completion.
+   \item[]{\bf MAILFROM:} Email address from which {\it cron} job completion email is sent.
+   \item[]{\bf OUTPUTDIR:} Target directory for writing {\it cron} job output log data.
    \item[]{\bf URL:} http link to serve test harness output.
    \item[]{\bf DOXYGENOUTPUT:} The local directory that holds doxygen html output.
    \item[]{\bf DOXYGENURL:} http link to serve doxygen output.
@@ -59,9 +59,9 @@ LOGROTATE: 10
 
 \subsection*{The Cron Job}
 
-Setting up a cronjob typically requires administrator rights. There are several ways to run a cronjob. We now give some of the easiest ways to do this on a Linux based machine.
+Setting up a {\it cron} job typically requires administrator rights. There are several ways to run a {\it cron} job. We now give some of the easiest ways to do this on a Linux based machine.
 
-To automate the running of a cronjob create the directory {\it /etc/cron.d}. A cronjob formatted text file placed in this directory will be picked up by the cron daemon. A typical invocation for {\it neurospaces\_cron} would be with a line like this:
+To automate the running of a {\it cron} job create the directory {\it /etc/cron.d}. A {\it cron} job formatted text file placed in this directory will be picked up by the cron daemon. A typical invocation for {\it neurospaces\_cron} would be with a line like this:
 \begin{verbatim}
    01 00 * * * g3tester neurospaces_cron
 \end{verbatim}
@@ -69,7 +69,7 @@ This job is set to run at exactly one minute after midnight. To run the job more
 \begin{verbatim}
    01 */8 * * * g3tester neurospaces_cron
 \end{verbatim}
-which would make the cronjob run every eight hours.
+which would make the {\it cron} job run every eight hours.
 
 Note that {\tt g3tester} is a user set up for permissions to perform a {\tt sudo make install}, and {\tt sudo make uninstall}. To set up a regular user to use sudo, add them to the {\it /etc/sudoers} file (see next section).
 
@@ -81,7 +81,7 @@ To allow the {\tt g3tester} user to perform any command anywhere on the system i
 \begin{verbatim}
    g3tester ALL=(ALL) ALL
 \end{verbatim}
-This configuration line still results in the system asking for a password, which will stop the cronjob. To prevent this, the ``{\tt NOPASSWD}'' option can be inserted:
+This configuration line still results in the system asking for a password, which will stop the {\it cron} job. To prevent this, the ``{\tt NOPASSWD}'' option can be inserted:
 \begin{verbatim}
    g3tester ALL=(ALL) NOPASSWD: ALL
 \end{verbatim}
