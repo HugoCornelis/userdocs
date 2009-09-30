@@ -45,7 +45,7 @@ dist_noinst_SCRIPTS = \
 	model-container/model-container.tex \
 	ndf-file-format/ndf-file-format.tex \
 	neurospaces-tester/neurospaces-tester.tex \
-	notation/notation.tex \
+	#notation/notation.tex \
 	pclamp/pclamp.tex \
 	prerequisite-script/prerequisite-script.tex \
 	project-browser-screenshots/project-browser-screenshots.tex \

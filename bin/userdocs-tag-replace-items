@@ -121,6 +121,36 @@ sub tag_expander
 
 
 
+# A tag to check for in the given descriptor.
+#  arg1 descriptor containing tags
+#  arg2 tag to search for. 
+#
+#  note: duplicated code
+#
+# ($descriptor,$tag)
+#
+sub tag_defined
+{
+  my $descriptor = shift;
+  my $tag = shift;
+
+  my $tags = $descriptor->{tags};
+
+  foreach (@$tags)
+  {
+
+    if( $tag eq $_ )
+    {
+      return 1;
+    }
+  }
+
+  return 0;
+
+}
+
+
+
 # 
 # ($contents_page_text)
 #
@@ -150,7 +180,7 @@ sub update_links
       chop($item_name);
 
       $descriptorfile = $1 . "descriptor.yml";
-      
+
       if(-e $descriptorfile)
       {
 
@@ -164,7 +194,16 @@ sub update_links
 
 	}
 
-
+	#
+	# If the doc is flagged as a draft we skip
+	# to the next item so this doesn't get added to our
+	# updated list.
+	#
+	if( tag_defined($descriptor,'draft') )
+	{
+	  next;
+	}
+	
 	my $document_name = $descriptor->{'document name'};
 
 
