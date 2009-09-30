@@ -22,6 +22,27 @@ AM_INIT_AUTOMAKE(userdocs, userdocs-6)
 
 
 # Checks for programs.
+AC_CHECK_PROGS(LATEX,latex,[
+   echo "Error! latex is not installed!."
+   exit -1
+])
+AC_CHECK_PROGS(MAKEINDEX, makeindex,[
+   echo "Error! makeindex is not installed."
+   exit -1
+])
+AC_CHECK_PROGS(BIBTEX, bibtex,[
+   echo "Error! bibtex is not installed."
+   exit -1
+])
+AC_CHECK_PROGS(DVIPS, dvips,[
+   echo "Error! dvips is not installed."
+   exit -1
+])
+AC_CHECK_PROGS(HTLATEX, htlatex,[
+   echo "Error! htlatex is not installed."
+   exit -1
+])
+
 
 # Checks for options
 
