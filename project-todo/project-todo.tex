@@ -35,6 +35,36 @@ This TODO list was built on \today, \thistime.
 
 \section{TODO List}
 
+\subsection{SSP Optimizer}
+
+The SSP optimizer use the perl Inline module to inline C code with
+perl code.  The Inline module creates a directory hierarchy inside the
+current directory to do its work.  The Inline module must be
+configured to do this in a standard directory, where all users share
+the result.
+
+The installation of SSP must run SSP to do the compilation of the
+optimizer, and install it afterwards.  This is to avoid race
+conditions between simultaneously running ssp processes.
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & Required for alpha1 Release 3.0 \\
+    \hline
+    Time Estimate
+    & 2 days \\
+    \hline
+    Assigned to
+    & Hugo \\
+    \hline
+  \end{tabular}
+}
+
+
 \subsection{Daily Releases and Release Labels}
 
 The installer scripts can update the release labels in the source code
@@ -53,7 +83,7 @@ repository).
   \begin{tabular}{|c|c|}
     \hline
     Notes
-    & Required for alpha1 Release 3.0 \\
+    & \\
     \hline
     Time Estimate
     & 3 days \\
