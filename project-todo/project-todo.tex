@@ -35,6 +35,137 @@ This TODO list was built on \today, \thistime.
 
 \section{TODO List}
 
+\subsection{SSP Optimizer}
+
+The SSP optimizer use the perl Inline module to inline C code with
+perl code.  The Inline module creates a directory hierarchy inside the
+current directory to do its work.  The Inline module must be
+configured to do this in a standard directory, where all users share
+the result.
+
+The installation of SSP must run SSP to do the compilation of the
+optimizer, and install it afterwards.  This is to avoid race
+conditions between simultaneously running ssp processes.
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & Required for alpha1 Release 3.0 \\
+    \hline
+    Time Estimate
+    & 2 days \\
+    \hline
+    Assigned to
+    & Hugo \\
+    \hline
+  \end{tabular}
+}
+
+
+\subsection{Daily Releases and Release Labels}
+
+The installer scripts can update the release labels in the source code
+automatically, and check them in into the source code repositories.
+The checkin should be done on a branch 'dist' to prevent contamination
+of the default '0' branch with versions that reconfigure the software
+with new release labels.
+
+The checkin should be made visible from the repository server (ie. the
+tester should push its changes from its repository to the server
+repository).
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & \\
+    \hline
+    Time Estimate
+    & 3 days \\
+    \hline
+    Assigned to
+    & Hugo \\
+    \hline
+  \end{tabular}
+}
+
+
+\subsection{ns-sli .simrc}
+
+The backward-compatibility module expects the .simrc file in the users
+home directory.  The default place of this file should be a place in
+{\it /usr/local}.
+
+This file may also be renamed to {\it .ns-sli}.
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & Required for alpha1 Release 3.0 \\
+    \hline
+    Time Estimate
+    & 1 day \\
+    \hline
+    Assigned to
+    & Hugo \\
+    \hline
+  \end{tabular}
+}
+
+
+\subsection{gshell python}
+
+Document the python dependencies of the gshell.
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & Required for alpha1 Release 3.0 \\
+    \hline
+    Time Estimate
+    & 1 day \\
+    \hline
+    Assigned to
+    & \\
+    \hline
+  \end{tabular}
+}
+
+
+\subsection{gshell studio}
+
+Disable the studio in the gshell, it should only be loaded on explicit
+request (DONE).
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & Required for alpha1 Release 3.0 \\
+    \hline
+    Time Estimate
+    & 4 hours \\
+    \hline
+    Assigned to
+    & Hugo \\
+    \hline
+  \end{tabular}
+}
+
+
 \subsection{make dist for ns-sli}
 
 Building a tarball of the backward compatibility modules is broken.
@@ -44,6 +175,9 @@ This needs to be fixed before a debian package can be built.
   \vspace{5mm}
   \centering
   \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & Required for alpha1 Release 3.0 \\
     \hline
     Time Estimate
     & 1 day \\
@@ -58,7 +192,7 @@ This needs to be fixed before a debian package can be built.
 \subsection{Repository Server}
 \label{sec:repository-server}
 Monotone sometimes hangs on the repository server.  Upgrade the
-repository server.
+repository server (DONE).
 
 {
   \vspace{5mm}
@@ -123,6 +257,70 @@ script should be used to serve the source code to the outside world.
     \hline
   \end{tabular}
 }
+
+
+
+
+
+\subsection{Fix trash cleanup in automated tester.}
+
+The automated tester (neurospaces\_cron) currently has a problem with 
+not deleting all of the files it generates in /tmp. Over time the 
+``files'' grow and consume large amounts of disk space. The trash file 
+removal must be fixed so that it keeps from contaminating the file system
+further. It must also be improved by making the trash list an configurable 
+input file that can be passed as an argument to the neurospaces\_cron script.
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & Won't take wildcards for file deleting. \\
+    \hline
+    Time Estimate
+    & 1 day \\
+    \hline
+    Assigned to
+    & Mando \\
+    \hline
+  \end{tabular}
+}
+
+
+
+
+\subsection{File permission errors}
+
+Since GENESIS 3 is to be installed on machines for multiple users
+a serious bug must be addressed. Certain programs output to a hardcoded
+filename, such as /tmp/output. When one user starts up a simulation which 
+writes to such a file, it is given permissions for thier user id. If a 
+second user tries to start up a similar simulation, which writes to the 
+same filename, the simulation will fail and GENESIS will bail out with an
+error (as was displayed by the tester). This bottlenecks the number of 
+users that can be using GENESIS 3 at the same time on the same machine.
+
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    &  \\
+    \hline
+    Time Estimate
+    & ??? \\
+    \hline
+    Assigned to
+    & ??? \\
+    \hline
+  \end{tabular}
+}
+
+
 
 \subsection{Packaging and Distribution (for the alpha1 Release)}
 
