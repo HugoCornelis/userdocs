@@ -64,6 +64,54 @@ the tester machine.
 }
 
 
+\subsection{ns-sli showfield}
+
+Implement ns-sli showfield.
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & Required for alpha1 Release 3.0 \\
+    \hline
+    Time Estimate
+    & 1 days \\
+    \hline
+    Assigned to
+    & Mando \\
+    \hline
+  \end{tabular}
+}
+
+
+\subsection{symmetric compartments}
+
+Implement symmetric compartments.  We will have to decide how to do
+this: core implementation, or converting each symmetric compartment to
+two asymmetric compartments.  This will also likely involve core
+design decisions, because the model-container does not distinguish
+between symmetric and asymmetric compartments (only the solvers do).
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & Required for alpha1 Release 3.0 \\
+    \hline
+    Time Estimate
+    & \\
+    \hline
+    Assigned to
+    & Hugo \& Mando \\
+    \hline
+  \end{tabular}
+}
+
+
 \subsection{SSP Optimizer}
 
 The SSP optimizer use the perl Inline module to inline C code with
@@ -454,31 +502,6 @@ environments:
 }
 
 
-
-\subsection{Installation documentation}
-
-Consolidate and correct the installation documentation for software
-developers.
-
-{
-  \vspace{5mm}
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
-    \hline
-    Time Estimate
-    & 3 days, includes installation and uninstall of the software on a laptop \\
-    \hline
-    Assigned to
-    & Allan \\
-    \hline
-  \end{tabular}
-}
-
-
-
 \subsection{Report Document for Testers}
 
 Construct a report document with instructions for alpha and beta
@@ -585,6 +608,7 @@ scripts:
       \begin{itemize}
       \item Clarify the level of backward compatibility. 
       \item Emphasize on commitment of backward compatibility.
+      \item Support of conversions from G2 to G3 for the next two years.
       \item explain policies for feature requests.
       \item Rallpacks.
       \item Does the purkinje cell and its various stimulation protocols.
@@ -1079,6 +1103,29 @@ Allan Coop, Hugo Cornelis, Mando Rodriguez, Dave Beeman, James Bower.
 
 
 \section{DONE List}
+
+\subsection{Installation documentation}
+
+Consolidate and correct the installation documentation for software
+developers.
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & Required for alpha1 Release 3.0 \\
+    \hline
+    Time Estimate
+    & 3 days, includes installation and uninstall of the software on a laptop \\
+    \hline
+    Assigned to
+    & Allan \\
+    \hline
+  \end{tabular}
+}
+
 
 \subsection{Repository Upgrade}
 
