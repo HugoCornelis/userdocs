@@ -35,6 +35,35 @@ This TODO list was built on \today, \thistime.
 
 \section{TODO List}
 
+\subsection{Automated Regression Tester}
+
+After an update of the model-container, monotone reports that there
+are files missing from the local model-container workspace.  This
+inhibits further updates such that the tester starts testing old
+software.  An example monotone checkin that produces this problem is
+the model-container checkin of version
+d4cbeb603334d009ba2797976db15f53db5046fe.  This version contains a
+white-space only change but corrupts the model-container workspace on
+the tester machine.
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & \\
+    \hline
+    Time Estimate
+    & 2 days \\
+    \hline
+    Assigned to
+    & Mando \\
+    \hline
+  \end{tabular}
+}
+
+
 \subsection{SSP Optimizer}
 
 The SSP optimizer use the perl Inline module to inline C code with
