@@ -40,6 +40,19 @@ sub build_document
     my $descriptor = YAML::LoadFile('descriptor.yml');
 
 
+    if(tag_defined($descriptor,'obsolete'))
+    {
+      print "This document is obsolete, skipping.\n";
+
+      if ($option_verbose)
+      {
+	print "$0: leaving $directory\n";
+      }
+
+      chdir '..';
+      return;
+    }
+
 
     # Note: Thi tag handles special cases for pdf.
     # Should expand it to allow maybe a "filetype" attribute
