@@ -112,12 +112,9 @@ It is also possible to incorporate audio files and videos as part of documentati
 To incorporate video into a GENESIS document: 
 
 \begin{enumerate}
-
-\item Create an account with a video sharing website, e.g. \href{http://www.youtube.com/create_account}{YouTube}.
-\item Upload your video(s).
-\item Embed a link to the video(s) into the document describing their contents. See \href{../NewDocument/NewDocument.tex}{New Document}, for further details.
-
-
+   \item Create an account with a video sharing website, e.g. \href{http://www.youtube.com/create_account}{YouTube}.
+   \item Upload your video(s).
+   \item Embed a link to the video(s) into the document describing their contents. See \href{../NewDocument/NewDocument.tex}{New Document}, for further details.
 \end{enumerate}
 
 Incorporation of pre-existing documentation in one of the above formats is the only time that the document directory name and the document name do not have to match (see further below). Note that with document incorporation (c.f. creation) the document to be included is located in the document directory and NOT the {\it figures} directory.
@@ -136,12 +133,12 @@ Importantly, remember that the names of the descriptor file\,{\it descriptor.yml
 
 \item {\bf Add reference hyperlinks:} Reference hyperlinks (http redirects) to other related documentation not under the direct control of the GENESIS Documentation System are by default located at the beginning of each document source {\bf .tex} file following the {\bf Related Documentation:} heading. The generation of these links is controlled by a tagging construct which is automatically expanded whenever the document system is rebuilt:
 \begin{verbatim}
-   % start: userdocs-tag-replace-items related-do-nothing
-   % end: userdocs-tag-replace-items related-do-nothing
+   % start: userdocs-tag-replace-items <related-do-nothing>
+   % end: userdocs-tag-replace-items <related-do-nothing>
 \end{verbatim}
-The default tag for the reference hyperlink system is {\tt related-do-nothing}, which allows a document to be created in the absence of any reference hyperlink. 
+The default tag for the reference hyperlink system is {\tt <related-do-nothing>}, which allows a document to be created and published in the absence of any reference hyperlinks. 
 
-Each reference hyperlink added to a document requires its own tagging construct and is identified by a tag that replaces the default tag. The replacement tag should have the following form:
+More than one reference hyperlink can be added to a document. Each added link requires its own tagging construct and is identified by a tag you create that replaces the default tag. The replacement tag should have the following form:
 \begin{verbatim}
    related-<your-tag-name>
 \end{verbatim}
