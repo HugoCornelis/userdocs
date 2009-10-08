@@ -40,7 +40,7 @@ Some utilities currently depend on \href{http://monotone.ca}{monotone} for sourc
       \end{verbatim}
 describes how the script works and lists default actions and build options. The flags at the end of the output should be inspected.
 
-   \item {\bf In brief:} {\it neurospaces\_build} operates in one of two modes determined by where the script finds the source code. As indicated in the following figure, {\it neurospaces\_build} creates an extensible associative array (hash table) that can be visualized as a matrix of packages (rows) and build operations (columns). The script traverses the matrix by row, i.e. packages first, and performs successive build operations for a given package. The above figure lists the default build options. Options to {\it neurospaces\_build} select or deselect cells in the matrix according to the configuration specified by any options to the {\it neurospaces\_build} command.
+   \item {\bf In brief:} {\it neurospaces\_build} operates in one of two modes determined by where the script finds the source code (``{\tt neurospaces\_build --help}'' gives more details). As indicated in the following figure, {\it neurospaces\_build} creates an extensible associative array (hash table) that can be visualized as a matrix of packages (rows) and build operations (columns). The script traverses the matrix by row, i.e. packages first, and performs successive build operations for a given package. The figure below  lists the default build options. Options to {\it neurospaces\_build} select or deselect cells in the matrix according to the configuration specified by any options to the {\it neurospaces\_build} command.
    
 \begin{figure}[h]
    \centering
@@ -50,9 +50,9 @@ describes how the script works and lists default actions and build options. The 
 %   \label{fig:df-1}
 \end{figure}
    
-   \item {\bf Installation Order of Packages:} This is the package order in the {\it neurospaces\_build} associative array:
+   \item {\bf Installation Order of Components:} This is the left -$>$ right component order in the {\it neurospaces\_build} associative array:
    \begin{enumerate}
-      \item {\it Developer} {\bf Package:} Described in this documentation.
+      \item {\it Developer} {\bf Component:} Described in this documentation.
       \item \href{../model-container/model-container.tex}{\bf Model\,Container:} Provides a highly optimized solver-independent internal storage format for models.
       \item \href{../heccer/heccer.tex}{\bf Heccer:} The current standard numerical solver.
       \item \href{../ssp/ssp.tex}{\bf SSP:} The simple Scheduler in Perl is currently the standard scheduler for GENESIS.
@@ -67,7 +67,7 @@ describes how the script works and lists default actions and build options. The 
 
 \subsubsection*{Front-end {\it Developer} Scripts}
 
-The following utilities take optional arguments of ``{\tt --regex}'' to select the packages they operate on, and ``{\tt --verbose}'' to run the command in a more verbose mode. They follow the order of the \href{../workflow-developer/workflow-developer.tex}{Developer\,Workflow}. The information they return are determined by the configuration of the {\it Developer} script.
+The following utilities take optional arguments of ``{\tt --regex}'' to select the packages they operate on, and ``{\tt --verbose}'' to run the command in a more verbose mode. They follow the order of the \href{../workflow-developer/workflow-developer.tex}{Developer\,Workflow}. The information they return are determined by the configuration of the {\it Developer} package.
 
 {\bf Note:} These {\it Developer} package commands are run from a command line prompt, i.e. outside the GENESIS environment.
 
@@ -114,6 +114,7 @@ The following utilities take optional arguments of ``{\tt --regex}'' to select t
  
    \item {\bf Internal/Public Release:}
    \begin{itemize}
+      \item {\it nspkg-deb}\,\,\,Automated debian package builder.
       \item {\it neurospaces\_packages}\,\,\,Show which packages are enabled on your local machine.
       \item{\bf Simple Example:} This command invokes 
       \begin{verbatim}
@@ -124,7 +125,6 @@ The following utilities take optional arguments of ``{\tt --regex}'' to select t
          \item {\it td-labels}\,\,\,Shows all release labels (major and version numbers).
          \item {\it td-majors}\,\,\,Shows all major release labels.
       \end{itemize}
-      \item {\it nspkg-deb}\,\,\,Automated debian package builder.
 
 For updating of version keywords the following are invoked automatically by the {\it neurospaces\_build} script:
    \begin{itemize}
@@ -141,9 +141,9 @@ For updating of version keywords the following are invoked automatically by the 
 \end{verbatim}
       \item{\bf Detailed Example:} Steps in building a release for the example {\tt <your-software>} package.
       \begin{itemize}
-         \item {\bf Tag the code:} The GENESIS convention for creating these tags, which must be unique, is to concatenate an identifier from the name of the lab of origin, the purpose and/or type of software (e.g. build, passive, active, python, userdocs, des, network, i64, purkinje, integration, pools, etc), with an appended numerical identifier. Here, for example we use the generic tag ``{\tt mylab-mysoftware-vnum}''.
+         \item {\bf Tag the code:} The GENESIS convention for creating these tags, which must be unique, is to concatenate an identifier from the name of the lab of origin, the purpose and/or type of software (e.g. build, passive, active, python, userdocs, des, network, i64, purkinje, integration, pools, etc), with an appended numerical identifier. Here, for example we use the generic tag ``{\tt <mylab-mysoftware-vnum>}''.
 \begin{verbatim}
-   $ neurospaces_build --tag mylab-<mysoftware>-vnum --verbose --verbose --verbose --no-compile --no-configure --no-install --regex <my-software> --developer
+   $ neurospaces_build --tag <mylab-mysoftware-vnum> --verbose --verbose --verbose --no-compile --no-configure --no-install --regex <my-software> --developer
 \end{verbatim}
 
          \item {\bf Build the release for the tagged code:}
@@ -153,12 +153,12 @@ For updating of version keywords the following are invoked automatically by the 
 
          \item {\bf Or with one command line:}
 \begin{verbatim}
-   $ neurospaces_build --tag mylab-<mysoftware>-vnum --dist --verbose --verbose --verbose --no-compile --no-configure --no-install --regex <my-software> --developer
+   $ neurospaces_build --tag <mylab-mysoftware-vnum> --dist --verbose --verbose --verbose --no-compile --no-configure --no-install --regex <my-software> --developer
 \end{verbatim}
 
          \item {\bf Upload the tarballs:}
 \begin{verbatim}
-   $ neurospaces_build --src-tag mylab-<mysoftware>-vnum --upload-server ftp://upload.sourceforge.net/incoming --verbose --verbose --verbose --no-compile --no-configure --no-install --regex <my-software> --developer
+   $ neurospaces_build --src-tag <mylab-mysoftware-vnum> --upload-server ftp://upload.sourceforge.net/incoming --verbose --verbose --verbose --no-compile --no-configure --no-install --regex <my-software> --developer
 \end{verbatim}
 Do not forget to edit release notes, tag the files as ``Any'', ``Source.gz'', etc. Due to the crappy Sourceforge interfaces, this has to be done manually (anyone have any ideas?).
       
@@ -179,7 +179,7 @@ Do not forget to edit release notes, tag the files as ``Any'', ``Source.gz'', et
 
 \subsection*{Detailed Examples of the Release Procedure}
 
-After putting a tag on the code, you first must check if the package can be built from the tarball. The autotools {\it distcheck} target does this (see below). An additional check is to build the tarball, put it somewhere on your filesystem, and then build the {\it check} target from the tarball. For example, first build the tarball and put it somewhere on your filesystem (e.g. {\it /tmp/uploads}):
+After putting a Tag on the code, you first must check if the package can be built from the tarball. The autotools {\it distcheck} target does this (see below). An additional check is to build the tarball, put it somewhere on your filesystem, and then build the {\it check} target from the tarball. For example, first build the tarball and put it somewhere on your filesystem (e.g. {\it /tmp/uploads}):
 \begin{verbatim}
    neurospaces_build --developer --verbose --upload-server --no-install --regex studio
 \end{verbatim}
