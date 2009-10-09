@@ -1,0 +1,25 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Documentation Workflow}
+
+Developers use the \href{http://code.google.com/p/neurospaces/wiki/Index}{Google Neurospaces} site to write documentation. The GENESIS Development Team documentation supervisor visits the site on a regular basis and picks up new \href{http://code.google.com/p/neurospaces/w/list}{wiki pages}.  A \href{../NewDocument/NewDocument.tex}{NewDocument} is \href{../document-create/documernt-create.tex}{created}, and after polishing, is inserted into the GENESIS documentation system.
+
+After a wiki page has been converted, it must be given a ``{\tt G3doc}'' label and the file name it has been converted to must be placed at the head of the wiki page, e.g. ``{\tt G3 doc: <file-name>}'', and a ``{\tt --wiki}'' tag inserted into the {\it descriptor.yml} file associated with the new GENESIS document.
+
+The wiki page is then deprecated  by insertion of the ``{\tt Deprecated}'' label, and the converted pages are translated to html on the GENESIS website. Not all the converted pages need to be fully finished. Changes to the documentation (but not the wiki) automatically propagate to the GENESIS website.
+
+{\bf Note:} As the process of converting wiki pages to GENESIS documentation is manual, it is important to not add new content to a wiki page once either a ``{\tt G3 Doc: <file-name>}'' appears and/or the ``{\tt G3doc}'' label is added. Further additions/changes should only be made directly to the document once it appears in the GENESIS Documentation System.
+\end{document}
