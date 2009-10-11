@@ -90,7 +90,7 @@ currently includes:
   seting their fields, and adding messages to connect model elements.
 \item NS-SLI supports simulating complex morphologies.
 \item NS-SLI supports tabulated channels.
-\item NS-SLI supports calcium pools and nernst functions.
+\item NS-SLI supports calcium pools and Nernst functions.
 \item NS-SLI supports the ascii out element.
 \end{itemize}
 
@@ -109,23 +109,23 @@ models from scratch and save them to declarative model definition
 files.  Building complex models is supported by glueing together
 existing declarative model definition files.
 
-The GENESIS 3 command shell that will be shipped with the alpha
+The GENESIS 3 command shell to be shipped with the alpha
 release, has all functions needed to instantiate and run single cell
-models.  The shell talks directly to the model container and SSP, and
-the model container and SSP talk to the compartmental solver (Heccer)
+models.  The shell talks directly to the {\bf Model\,Container} and {\bf SSP}, and
+the {\bf Model\,Container} and {\bf SSP} talk to the compartmental solver ({\bf Heccer})
 as required.
 
 The GENESIS 3 shell can import and combine models from GENESIS 2
 scripts, NDF files, SWC morphologies and Perl or Python scripts.
 
 It is also possible to export the models to NDF files, and to export
-configurations to SSP files.  This facilitates batch simulations for
+configurations to {\bf SSP} files.  This facilitates batch simulations for
 research projects.
 
 
 \section{Included Documentation}
 
-The included documentation describes tutorials, gives technical
+The included documentation introduces GENESIS 3, describes tutorials, gives technical
 descriptions of commands, and documents the layout and APIs of the
 source code.
 
@@ -135,11 +135,11 @@ source code.
 Allan, can you fill this in?
 
 \begin{itemize}
-\item Basic tutorials: Tutorials for the rallpacks (passive models and
+\item Basic tutorials: Tutorials for the {\it rallpacks} (passive models and
   axon models).
 \item Basic tutorials: Tutorials for single cell model simulations.
 \item FAQ: to explain what GENESIS 3 is, its relationship with the CBI
-  architecture, with MOOSE, Neuroconstruct and Neurospaces.  To
+  architecture, with MOOSE, Neuroconstruct, and Neurospaces.  To
   explain what the discriminators are with other simulators, and that
   it is still backwards compatible with GENESIS 2.
 \end{itemize}
@@ -151,7 +151,7 @@ exported to declarative NDF files for use with the more advanced
 features of GENESIS 3 such as the project browser.
 
 Some features of the compartmental solver are not documented yet, and
-for completeness we briefly mention them overhere.  These include:
+for completeness we briefly mention them here.  These include:
 \begin{itemize}
 \item Calculation of the total instantaneous cumulative currents of
   user-tagged channels of a dendritic subtree.
@@ -187,7 +187,7 @@ but instead made available over the internet.
   (http://code.google.com/p/neurospaces/wiki/Index) documents a number
   of technical aspects of the software.  Currently the installation
   and test procedure is documented from a developers viewpoint.
-\item The APIs of software modules such as Heccer and the model
+\item The APIs of software modules such as {\bf Heccer} and the model
   container are documented in the source code.  Doxygen is a tool to
   convert such inline documents to HTML.  These HTML pages are
   published on the GENESIS website
@@ -216,9 +216,7 @@ user requirements and user workflows.
 The GENESIS 3 simulator uses tools of professional quality for
 automated installation, testing and reporting.  An outline of the use
 of these tools can be found on the Neurospaces wiki.  Briefly, the
-installation tool allows to install and upgrade source code, and to
-synchronize distributed development.  It also allows research groups
-to start their own development projects that can optionally be
+installation tool enable and simplify installation and upgrade of source code, as well as initiation of your own development projects that (optionally) can be
 integrated with GENESIS 3.
 
 The test framework is a higly dynamic environment for stand-alone
@@ -231,7 +229,7 @@ exported to HTML and mirrored on a web server.  The Neurospaces
 website has an HTML version of all tests.  The testing tool is
 integrated with the installation procedure.  The Neurospaces wiki
 documents how to setup a testbot based on the installation scripts
-('neurospaces\_build' and 'neurospaces\_cron').
+({\it neurospaces\_build} and {\it neurospaces\_cron}).
 
 %The CBI hosts an functional simulator server accessible over a web
 %browser.  The server hosts a simulation project that demonstrates the
