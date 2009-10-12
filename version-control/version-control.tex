@@ -122,7 +122,14 @@ This command generates a list of all files in your local workspace that are not 
 \begin{verbatim}
     mtn add --unknown
 \end{verbatim}
-Reissuing the ``{\tt mtn ls unknown}'' command should now result in no output. The files that have been registered with monotone can now be added to your local repository with the following command:
+Reissuing the ``{\tt mtn ls unknown}'' command should now result in no output.
+
+Alternatively, once files have been registered in your local workspace, the following command reports which have been changed since the last code check in (see following):
+\begin{verbatim}
+   mtn ls changed
+\end{verbatim}
+
+The files that have been registered with monotone can now be added to your local repository with the following command:
 \begin{verbatim}
     mtn ci
 \end{verbatim}

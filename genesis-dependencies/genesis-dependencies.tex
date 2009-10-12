@@ -13,9 +13,31 @@
 % start: userdocs-tag-replace-items related-do-nothing
 % end: userdocs-tag-replace-items related-do-nothing
 
+\section*{Software Dependencies for User Installation}
+
+Generally, there are no software dependencies or configuration requirements for installing GENESIS as a user (c.f. a developer, see below). The exception is if you want to verify your installation. As installation testing is performed as a sequence of regression tests you must have specific Perl modules installed on your machine.
+
+If you don't understand the syntax in the following list of Perl modules required for testing a GENESIS installation, you should get your systems administrator to install them. 
+
+\subsection*{Perl Modules Required for User Installation Tests}
+\begin{itemize}
+   \item CPAN
+   \item YAML
+   \item Parse::RecDescent
+   \item Inline (including Inline::C)
+   \item ExtUtils::Embed
+   \item LWP::Simple
+   \item Expect (including IO::Pty and IO::Tty)
+   \item Test::More
+   \item Clone
+   \item Data::Utilities
+   \item File::Find::Rule
+   \item Digest::SHA
+\end{itemize}
+
 \section*{Software Dependencies for Developer Installation}
 
-This is a general list of dependencies for configuring a PC for
+This is a general list of dependencies for configuring a computer for
 GENESIS software development.  Also look at the list of \href{../tested-distributions/tested-distributions.tex}{Tested Operating Systems} to see what distributions have actually
 been tested.
 
@@ -56,18 +78,18 @@ The following perl modules are required.  If you are using Linux, they
 are likely available as packages for your Linux distribution or vendor.
 
 \begin{itemize}
-\item CPAN
-\item YAML
-\item Parse::RecDescent
-\item Inline (including Inline::C)
-\item ExtUtils::Embed
-\item LWP::Simple
-\item Expect (including IO::Pty and IO::Tty)
-\item Test::More
-\item Clone
-\item Data::Utilities
-\item File::Find::Rule
-\item Digest::SHA
+   \item CPAN
+   \item YAML
+   \item Parse::RecDescent
+   \item Inline (including Inline::C)
+   \item ExtUtils::Embed
+   \item LWP::Simple
+   \item Expect (including IO::Pty and IO::Tty)
+   \item Test::More
+   \item Clone
+   \item Data::Utilities
+   \item File::Find::Rule
+   \item Digest::SHA
 \end{itemize}
 
 \end{document}
