@@ -35,6 +35,35 @@ This TODO list was built on \today, \thistime.
 
 \section{TODO List}
 
+\subsection{Model container and readline library}
+
+The model-container does not use the readline library for its
+querymachine.  This function was present in the past and should be
+restored because it helps in querying models via the querymachine
+interface.
+
+There is logic to detect readline in the filesystem present in the
+configure script, but somehow this part of the configuration does not
+propagate through to the compilation phase of the model-container.
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & \\
+    \hline
+    Time Estimate
+    & 1 days \\
+    \hline
+    Assigned to
+    & Mando \\
+    \hline
+  \end{tabular}
+}
+
+
 \subsection{Automated Regression Tester}
 
 After an update of the model-container, monotone reports that there
