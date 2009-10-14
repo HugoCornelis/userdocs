@@ -16,6 +16,10 @@ dist_noinst_SCRIPTS = \
 	README/README.tex \
 	autogen/autogen.tex \
 	backward-compatibility/backward-compatibility.tex \
+	build-debian/build-debian.tex \
+	cable-theory-digression/cable-theory-digression.tex \
+	common-suffixes/common-suffixes.tex \
+	compneurosci-1/compneurosci-1.tex \
 	bog-ch2/bog-ch2.pdf \
 	bog-ch3/bog-ch3.pdf \
 	bog-ch4/bog-ch4.pdf \
@@ -30,43 +34,71 @@ dist_noinst_SCRIPTS = \
 	contents-level5/contents-level5.tex \
 	contents-level6/contents-level6.tex \
 	contents-level7/contents-level7.tex \
-	developers-intro/developers-intro.tex \
+	cxref/cxref.tex \
+	developer-intro/developer-intro.tex \
+	developer-package/developer-package.tex \
+	developer-repository/developer-repository.tex \
+	do-nothing/do-nothing.tex \
 	document-create/document-create.tex \
+	document-notation/document-notation.tex \
 	documentation-homepage/documentation-homepage.tex \
 	documentation-overview/documentation-overview.tex \
+	g2-gap-junction/g2-gap-junction.tex \
+	genesis-dependencies/genesis-dependencies.tex \
+	genesis-installation/genesis-installation.tex \
 	genesis-overview/genesis-overview.tex \
+	genesis-system/genesis-system.tex \
 	gshell/gshell.tex \
 	gui/gui.tex \
+	gtube/gtube.tex \
 	heccer/heccer.tex \
 	hh-model-details/hh-model-details.tex \
-	installation-developer/installation-developer.tex \
-	installation-user/installation-user.tex \
-	developer-package/developer-package.tex \
+	install-procedure/install-procedure.tex
+	installation-debian/installation-debian.tex
+	installation-developer/installation-developer.tex
+	installation-fedora10/installation-fedora10.tex
+	installation-osx/installation-osx.tex
+	installation-ubuntu-lennysid/installation-ubuntu-lennysid.tex
+	installation-user/installation-user.tex	developer-package/developer-package.tex \
+	mercurial-testing/mercurial-testing.tex \
 	model-container/model-container.tex \
 	ndf-file-format/ndf-file-format.tex \
 	neurospaces-tester/neurospaces-tester.tex \
-	#notation/notation.tex \
+	neurospaces-cron/neurospaces-cron.tex \
 	pclamp/pclamp.tex \
-	prerequisite-script/prerequisite-script.tex \
 	project-browser-screenshots/project-browser-screenshots.tex \
 	project-browser/project-browser.tex \
 	project-todo/project-todo.tex \
 	publication/publication.tex \
 	purkinje-cell-model/purkinje-cell-model.tex \
-	release-expand.config \
 	release-expand/release-expand.tex \
+	release-expand.config \
+	release-notes/release-notes.tex \
+	release-procedure/release-procedure.tex \
 	reserved-words/reserved-words.tex \
 	rtxi-injector-validation/rtxi-injector-validation.tex \
 	shell-tokens/shell-tokens.tex \
 	ssp/ssp.tex \
 	studio/studio.tex \
+	tested-distributions/tested-distributions.tex
+	tester-configuration/tester-configuration.tex
+	tests-g2-backward-compatibility/tests-g2-backward-compatibility.tex
+	tests-gshell/tests-gshell.tex \
+	tests-heccer/tests-heccer.tex \
+	tests-model-container/tests-model-container.tex \
+	tests-ssp/tests-ssp.tex \
+	tests-studio/tests-studio.tex \
 	tests.config \
 	tutorial-jaeger/tutorial-jaeger.pdf \
 	tutorial1/tutorial1.tex \
 	tutorial2/tutorial2.tex \
 	unix-linux/unix-linux.tex \
 	version-control/version-control.tex \
-	workflow-genesis/workflow-genesis.tex
+	workflow-developer/workflow-developer.tex \
+	workflow-documentation/workflow-documentation.tex \
+	workflow-intro/workflow-intro.tex \
+	workflow-user-query/workflow-user-query.tex \
+	workflow-user/workflow-user.tex
 
 #cable-theory-disgression/cable-theory-disgression.tex
 
