@@ -15,7 +15,7 @@
 
 \section*{Documentation Workflow}
 
-Developers use the \href{http://code.google.com/p/neurospaces/wiki/Index}{Google Neurospaces} site to write documentation.
+Developers use the \href{http://code.google.com/p/neurospaces/wiki/Index}{Google Neurospaces} site to write documentation. To do this requires a gmail account. You can get a gmail account by going to \href{http://www.google.com/}{http://www.google.com/} and selecting the gmail link at the top of the page. Once you have a gmail account, contact the \href{http://www.genesis-sim.org/contact}{GENESIS Administrator} to request developer access to the wiki.
 \begin{enumerate}
 \item Documentation supervisor visits the \href{http://code.google.com/p/neurospaces/w/list}{wiki pages} and identifies any that are new.
 \item{\bf Create new document:} A \href{../NewDocument/NewDocument.tex}{NewDocument} is \href{../document-create/document-create.tex}{created} and the wiki documentation converted.
@@ -26,6 +26,7 @@ Developers use the \href{http://code.google.com/p/neurospaces/wiki/Index}{Google
 \item A ``{\tt -\,wiki}'' tag must be inserted into the {\it descriptor.yml} file associated with the new GENESIS document.
 \item The wiki page is deprecated by insertion of the ``{\tt Deprecated}'' label.
 \end{itemize}
+\item {\bf Final step:} Add the name of the new document to the {\it Makefile.am} file located in the current branch of your {\it userdocs} repository and perform a ``{\tt mtn ci}'' and ``{\tt userdocs-sync}''
 \end{enumerate}
 
 {\bf Note 1:} Not all the converted pages need to be fully finished.
