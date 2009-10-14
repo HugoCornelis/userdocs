@@ -16,6 +16,10 @@ dist_noinst_SCRIPTS = \
 	README/README.tex \
 	autogen/autogen.tex \
 	backward-compatibility/backward-compatibility.tex \
+	build-debian/build-debian.tex \
+	cable-theory-digression/cable-theory-digression.tex \
+	common-suffixes/common-suffixes.tex \
+	compneurosci-1/compneurosci-1.tex \
 	bog-ch2/bog-ch2.pdf \
 	bog-ch3/bog-ch3.pdf \
 	bog-ch4/bog-ch4.pdf \
@@ -30,13 +34,23 @@ dist_noinst_SCRIPTS = \
 	contents-level5/contents-level5.tex \
 	contents-level6/contents-level6.tex \
 	contents-level7/contents-level7.tex \
+	cxref/cxref.tex \
 	developer-intro/developer-intro.tex \
+	developer-package/developer-package.tex \
+	developer-repository/developer-repository.tex \
+	do-nothing/do-nothing.tex \
 	document-create/document-create.tex \
+	document-notation/document-notation.tex \
 	documentation-homepage/documentation-homepage.tex \
 	documentation-overview/documentation-overview.tex \
+	g2-gap-junction/g2-gap-junction.tex \
+	genesis-dependencies/genesis-dependencies.tex \
+	genesis-installation/genesis-installation.tex \
 	genesis-overview/genesis-overview.tex \
+	genesis-system/genesis-system.tex \
 	gshell/gshell.tex \
 	gui/gui.tex \
+	gtube/gtube.tex \
 	heccer/heccer.tex \
 	hh-model-details/hh-model-details.tex \
 	installation-developer/installation-developer.tex \
@@ -45,7 +59,6 @@ dist_noinst_SCRIPTS = \
 	model-container/model-container.tex \
 	ndf-file-format/ndf-file-format.tex \
 	neurospaces-tester/neurospaces-tester.tex \
-	#notation/notation.tex \
 	pclamp/pclamp.tex \
 	prerequisite-script/prerequisite-script.tex \
 	project-browser-screenshots/project-browser-screenshots.tex \
