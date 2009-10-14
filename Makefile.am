@@ -53,33 +53,52 @@ dist_noinst_SCRIPTS = \
 	gtube/gtube.tex \
 	heccer/heccer.tex \
 	hh-model-details/hh-model-details.tex \
-	installation-developer/installation-developer.tex \
-	installation-user/installation-user.tex \
-	developer-package/developer-package.tex \
+	install-procedure/install-procedure.tex
+	installation-debian/installation-debian.tex
+	installation-developer/installation-developer.tex
+	installation-fedora10/installation-fedora10.tex
+	installation-osx/installation-osx.tex
+	installation-ubuntu-lennysid/installation-ubuntu-lennysid.tex
+	installation-user/installation-user.tex	developer-package/developer-package.tex \
+	mercurial-testing/mercurial-testing.tex \
 	model-container/model-container.tex \
 	ndf-file-format/ndf-file-format.tex \
 	neurospaces-tester/neurospaces-tester.tex \
+	neurospaces-cron/neurospaces-cron.tex \
 	pclamp/pclamp.tex \
-	prerequisite-script/prerequisite-script.tex \
 	project-browser-screenshots/project-browser-screenshots.tex \
 	project-browser/project-browser.tex \
 	project-todo/project-todo.tex \
 	publication/publication.tex \
 	purkinje-cell-model/purkinje-cell-model.tex \
-	release-expand.config \
 	release-expand/release-expand.tex \
+	release-expand.config \
+	release-notes/release-notes.tex \
+	release-procedure/release-procedure.tex \
 	reserved-words/reserved-words.tex \
 	rtxi-injector-validation/rtxi-injector-validation.tex \
 	shell-tokens/shell-tokens.tex \
 	ssp/ssp.tex \
 	studio/studio.tex \
+	tested-distributions/tested-distributions.tex
+	tester-configuration/tester-configuration.tex
+	tests-g2-backward-compatibility/tests-g2-backward-compatibility.tex
+	tests-gshell/tests-gshell.tex \
+	tests-heccer/tests-heccer.tex \
+	tests-model-container/tests-model-container.tex \
+	tests-ssp/tests-ssp.tex \
+	tests-studio/tests-studio.tex \
 	tests.config \
 	tutorial-jaeger/tutorial-jaeger.pdf \
 	tutorial1/tutorial1.tex \
 	tutorial2/tutorial2.tex \
 	unix-linux/unix-linux.tex \
 	version-control/version-control.tex \
-	workflow-genesis/workflow-genesis.tex
+	workflow-developer/workflow-developer.tex \
+	workflow-documentation/workflow-documentation.tex \
+	workflow-intro/workflow-intro.tex \
+	workflow-user-query/workflow-user-query.tex \
+	workflow-user/workflow-user.tex
 
 #cable-theory-disgression/cable-theory-disgression.tex
 
