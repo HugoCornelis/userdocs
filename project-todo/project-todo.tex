@@ -427,6 +427,35 @@ users that can be using GENESIS 3 at the same time on the same machine.
 }
 
 
+\subsection{Source code Configuration}
+
+Fix automake scripts to detect different operating systems 
+and build makefiles accordingly:
+
+
+\begin{itemize}
+\item {\it Fedora 11}: Compensate for libhistory being built into stdio.
+\item {\it BSD}: Not currently supported.
+\item {\it Solaris 10}: Not currently supported.
+\end{itemize}
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & Required for alpha1 Release 3.0 \\
+    \hline
+    Time Estimate
+    & 2 Days\\
+    \hline
+    Assigned to
+    & Mando \\
+    \hline
+  \end{tabular}
+}
+
 
 \subsection{Packaging and Distribution (for the alpha1 Release)}
 
@@ -729,6 +758,9 @@ Compile other dependencies from the NS wiki.
     \hline
   \end{tabular}
 }
+
+
+
 
 
 \subsection{Add Network Modeling Support}
