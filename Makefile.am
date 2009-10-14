@@ -30,7 +30,7 @@ dist_noinst_SCRIPTS = \
 	contents-level5/contents-level5.tex \
 	contents-level6/contents-level6.tex \
 	contents-level7/contents-level7.tex \
-	developers-intro/developers-intro.tex \
+	developer-intro/developer-intro.tex \
 	document-create/document-create.tex \
 	documentation-homepage/documentation-homepage.tex \
 	documentation-overview/documentation-overview.tex \
