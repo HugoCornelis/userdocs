@@ -13,17 +13,18 @@
 
 \section*{Using the GENESIS Shell for\\Single Compartment Modeling and Simulation}
 
-In this first of two introductory tutorials you will be guided through a brief session under GENESIS. You will be shown how to use basic features of the GENESIS simulator to create, run, and explore the output of a simple single compartment model neuron. For example ({\bf Note:} You can not cut and paste the following code and expect it to run as it is just a code ``snippet'', however if that is what you want to do, \href{../example-script1/example-script1.tex}{this script} provides a working example with some documentation):
+In this first of two introductory tutorials you will be guided through a brief session under GENESIS. You will be shown how to use basic features of the GENESIS simulator to create, run, save, and explore the output of a simple single compartment model neuron. For example ({\bf Note:} You can not cut and paste the following code and expect it to run as it is just code ``snippets'', however if that is what you want to do, \href{../example-script1/example-script1.tex}{this script} provides a working example with some documentation):
 
 \begin{verbatim}
-    . . .
     create cell /n
     create segment /n/soma
     set_model_parameter /n/soma Vm_init -0.068
+    . . .
     set_runtime_parameter /n/soma INJECT 2e-9
     add_output /n/soma Vm
     run /n 0.1
     simulation_state_save /n
+    . . . 
     sh cat /tmp/output
     . . . 
 \end{verbatim}
@@ -128,7 +129,20 @@ Saving a model is as simple as issuing the ``{\tt ndf\_save}'' command with an a
 \begin{verbatim}
    genesis > ndf_save /n myneuron.ndf
 \end{verbatim}
-The model is then saved in the \href{../ndf-file-format/ndf-file-format.tex}{NDF format} in the file {\it /tmp/myneuron.ndf}.
+The model is then saved in the \href{../ndf-file-format/ndf-file-format.tex}{NDF format}. The default location for {\it ndf\_save} (as given in the above example) is the directory where you started GENESIS. However, the file can be saved at another location by giving the absolute path, e.g.
+\begin{verbatim}
+   genesis > ndf_save /n /tmp/myneuron.ndf
+\end{verbatim}
+Alternatively, the current model could be saved to {\tt STDOUT} (i.e. it will appear on the screen at the GENESIS prompt) with
+\begin{verbatim}
+   genesis > ndf_save /** STDOUT
+\end{verbatim}
+Here, the construct {\tt /**} is a wild card that expands to describe the current model. It is useful if the name of the model is not known.
+
+Once a model has been saved, the next time GENESIS is run the file can be loaded into the {\bf G-Shell} with, for example,
+\begin{verbatim}
+   genesis > ndf_load /n myneuron.ndf
+\end{verbatim}
 
 \subsection*{Define Simulation Constants}
 
@@ -182,7 +196,13 @@ The simulation can then be continued by entering the {\it run} command again (th
 \begin{verbatim}
     genesis > run /n 1.0
 \end{verbatim}
-
+The default location and file name for simulation output is {\it /tmp/output}. To view simulation output from the {\bf G-Shell} enter
+\begin{verbatim}
+    genesis > echo output follows:\n
+    genesis > sh cat /tmp/output
+\end{verbatim}
+{\bf Note:} With the exception of {\tt cd}, the {\bf G-Shell} recognizes many simple Unix commands when they are prefixed by {\tt sh}.
+    
 \subsection*{Reset Simulation}
 
 At some stage during a GENESIS session you may want to return a simulation to the initial state that existed prior to any {\it run} command being issued. The ``{\tt reset}'' command will set the time step of the simulation to zero and load the initial values for all solved variables, e.g.
