@@ -13,17 +13,19 @@
 
 \section*{Using the GENESIS Shell for\\Single Compartment Modeling and Simulation}
 
-In this first of two introductory tutorials you will be guided through a brief session under GENESIS. You will be shown how to use basic features of the GENESIS simulator to create, run, and explore the output of a simple single compartment model neuron. For example:
+In this first of two introductory tutorials you will be guided through a brief session under GENESIS. You will be shown how to use basic features of the GENESIS simulator to create, run, and explore the output of a simple single compartment model neuron. For example ({\bf Note:} You can not cut and paste the following code and expect it to run as it is just a code ``snippet'', however if that is what you want to do, \href{../example-script1/example-script1.tex}{this script} provides a working example with some documentation):
 
 \begin{verbatim}
-    create cell /neuron
-    create segment /neuron/soma
-    set_model_parameter /neuron/soma Vm_init -0.068
-    set_runtime_parameter /neuron/soma INJECT 2e-9
-    add_output /neuron/soma Vm
-    run /neuron 0.1
-    simulation_state_save /neuron
+    . . .
+    create cell /n
+    create segment /n/soma
+    set_model_parameter /n/soma Vm_init -0.068
+    set_runtime_parameter /n/soma INJECT 2e-9
+    add_output /n/soma Vm
+    run /n 0.1
+    simulation_state_save /n
     sh cat /tmp/output
+    . . . 
 \end{verbatim}
 The second introductory tutorial, which can be found \href{../tutorial2/tutorial2.tex}{here} shows how to import, modify, and run a more complex multi-compartment model neuron. Both tutorials assume that you are familiar with the following topics:
 
@@ -33,9 +35,14 @@ The second introductory tutorial, which can be found \href{../tutorial2/tutorial
 
 \item \href{../reserved-words/reserved-words.tex}{\bf Reserved Words:} Discover the meaning of reserved words such as ``{\tt shell}'', ``{\tt component}'', ``{\tt command}'', ``{\tt token}'', and ``{\tt element}'' associated with GENESIS.
 
-\item \href{../workflow-intro/workflow-intro.tex}{\bf The GENESIS Workflow:} An outline of the recommended workflows within GENESIS. The \href{../workflow-user/workflow-user.tex}{user workflow} is followed by user documentation and tutorials and includes, (1) create/import, explore, save model, (2) define simulation constants, inputs, and outputs, (3) check, run, reset, and save model state, (4) check simulation output, and (5) iterate. The \href{../workflow-developer/workflow-developer.tex}{developer workflow} is followed by developer documentation and includes, (1) write/update code, (2) build/check, (3) regression testing, (4) internal/public release, (5) integrate software components.
+\item \href{../workflow-intro/workflow-intro.tex}{\bf GENESIS Workflows:} An outline of the recommended workflows within GENESIS.
+\begin{itemize}
+\item \href{../workflow-user/workflow-user.tex}{\bf User Workflow:} Followed by user documentation and tutorials and includes, (1) create/import, explore, save model, (2) define simulation constants, inputs, and outputs, (3) check, run, reset, and save model state, (4) check simulation output, and (5) iterate.
+\item \href{../workflow-developer/workflow-developer.tex}{\bf Developer Workflow:} Followed by developers and includes, (1) write/update code, (2) build/check, (3) regression testing, (4) internal/public release, (5) integrate software components.
+\item \href{../workflow-documentation/workflow-documentation.tex}{\bf Documentation Workflow:} Provides a work flow for documentation written by developers.
+\end{itemize}
 
-\item \href{../gshell/gshell.tex}{\bf The GENESIS Interactive Shell:} An introduction to basic features of the GENESIS interactive shell or \href{../gshell/gshell.tex}{\bf G-Shell}.
+\item \href{../gshell/gshell.tex}{\bf The GENESIS Interactive Shell:} An introduction to basic features of the GENESIS interactive shell or {\bf G-Shell}.
 
 \end{itemize}
 
@@ -59,44 +66,44 @@ As the \href{../workflow-user/workflow-user.tex}{GENESIS user workflow} suggests
 
 To keep track of the many elements that go into a simulation each element must be given a name. For example, we can use the {\it create} command to create a ``{\tt cell}'' element within the model hierarchy and assign it a name  
 \begin{verbatim}
-    create cell /neuron
+    create cell /n
 \end{verbatim}
 With the  ``{\tt set\_verbose warnings}'' flag set, the GENESIS shell responds with
 \begin{verbatim}
-    /neuron
+    /n
 \end{verbatim}
 If the ``{\tt set\_verbose information}'' flag is set the GENESIS shell responds with
 \begin{verbatim}
-    create_cell: /neuron
+    create_cell: /n
 \end{verbatim}
 to indicate the successful creation of the named element.
 
-Elements are maintained in a hierarchy similar to that used to maintain files in the UNIX operating system. In the example above, {\it /neuron} is a pathname which indicates that the segment is to be placed at the root or top of the model element hierarchy.
+Elements are maintained in a hierarchy similar to that used to maintain files in the UNIX operating system. In the example above, {\it /n} is a pathname which indicates that the segment is to be placed at the root or top of the model element hierarchy.
 
 Similarly, we could add a segment to the cell element we have just created
 \begin{verbatim}
-    genesis > create segment /neuron/soma
-        create_segment: /neuron/soma
+    genesis > create segment /n/soma
+        create_segment: /n/soma
 \end{verbatim}
 Alternatively, we could delete the entire cell with 
 \begin{verbatim}
-    genesis > delete /neuron
-        delete: /neuron
+    genesis > delete /n
+        delete: /n
 \end{verbatim}
 
 Note that the {\it create} command only operates on single elements, whereas, the {\it delete} command removes all elements in the hierarchy from the last element named in the path.
 
 \subsubsection*{Setting element values}
 
-Once the element {\it /neuron/soma} exists, we can set (1) morphological  parameters of the segment such as the diameter ({\tt DIA}) and length ({\tt LENGTH}), (2) passive parameters such as  the membrane resistance ($R_M$), axial resistance ($R_A$), membrane capacitance ($C_M$), and the leak conductance ($E_{leak}$), and (3) initialize segment parameter values such as the initial membrane potential ($Vm_{init}$), e.g.
+Once the element {\it /n/soma} exists, we can set (1) morphological  parameters of the segment such as the diameter ({\tt DIA}) and length ({\tt LENGTH}), (2) passive parameters such as  the membrane resistance ($R_M$), axial resistance ($R_A$), membrane capacitance ($C_M$), and the leak conductance ($E_{leak}$), and (3) initialize segment parameter values such as the initial membrane potential ($Vm_{init}$), e.g.
 \begin{verbatim}
-    genesis > set_model_parameter /neuron/soma DIA 2e-5
-    genesis > set_model_parameter /neuron/soma LENGTH 4.47e-5
-    genesis > set_model_parameter /neuron/soma CM 0.0164
-    genesis > set_model_parameter /neuron/soma RM 1.500
-    genesis > set_model_parameter /neuron/soma RA 2.50
-    genesis > set_model_parameter /neuron/soma ELEAK -0.080
-    genesis > set_model_parameter /neuron/soma Vm_init -0.0680
+    genesis > set_model_parameter /n/soma DIA 2e-5
+    genesis > set_model_parameter /n/soma LENGTH 4.47e-5
+    genesis > set_model_parameter /n/soma CM 0.0164
+    genesis > set_model_parameter /n/soma RM 1.500
+    genesis > set_model_parameter /n/soma RA 2.50
+    genesis > set_model_parameter /n/soma ELEAK -0.080
+    genesis > set_model_parameter /n/soma Vm_init -0.0680
 \end{verbatim}
 
 Importantly, remember that GENESIS assumes parameter values are in SI units, which in the case of $C_M$ is Farads$\cdot$m$^{-2}$ ($F/m^2$) and for $R_M$ and $R_A$ Amperes$\cdot$m$^{-2}$ ($A/m^2$).
@@ -105,13 +112,13 @@ Importantly, remember that GENESIS assumes parameter values are in SI units, whi
 
 In the case of our simple single compartment cell, the model is most easily explored by checking parameter values. It is particularly useful to check them at this stage in the work flow, to ensure that they have been correctly set. For example to check {\tt CM}
 \begin{verbatim}
-    genesis > show_parameter /neuron/soma CM
+    genesis > show_parameter /n/soma CM
         value = 0.0164
 \end{verbatim}
 
 We now also demonstrate a powerful new feature of GENESIS. That is, although we have set only the model parameters {\tt RM} and {\tt CM}, we can query our model for the membrane time constant {\tt TAU} (from $\tau$ = {\tt RM}$\cdot${\tt CM}). This is possible as, through the \href{../model-container/model-container.tex}{Model Container}, the GENESIS shell is aware of neuronal morphology, membrane, and intracellular parameters. The Model Container can infer a number of properties about an element and it will calculate and provide derived parameter values when the GENESIS shell is queried. This is made possible by the hierarchical relations maintained by the Model Container between an element and its parents, children, and sibling's parameters. For example,
 \begin{verbatim}
-    genesis > show_parameter /neuron/soma TAU
+    genesis > show_parameter /n/soma TAU
         value = 0.0246
 \end{verbatim}
 
@@ -119,7 +126,7 @@ We now also demonstrate a powerful new feature of GENESIS. That is, although we 
 
 Saving a model is as simple as issuing the ``{\tt ndf\_save}'' command with an associated model and file name, e.g. for our example
 \begin{verbatim}
-   genesis > ndf_save /neuron myneuron.ndf
+   genesis > ndf_save /n myneuron.ndf
 \end{verbatim}
 The model is then saved in the \href{../ndf-file-format/ndf-file-format.tex}{NDF format} in the file {\it /tmp/myneuron.ndf}.
 
@@ -127,7 +134,7 @@ The model is then saved in the \href{../ndf-file-format/ndf-file-format.tex}{NDF
 
 The GENESIS shell distinguishes between model parameters such as those used to build our simple single compartment model, i.e. those generated above by the {\it create} command, and parameters that do not alter the model but only affect model behavior at run-time during a simulation, e.g. the duration and/or magnitude of a stimulus or the duration of a simulation. Here, for example, we can set the run-time activity of our model neuron by setting the magnitude of the current to be injected at the soma, e.g. 
 \begin{verbatim}
-    genesis > set_runtime_parameter /neuron/soma INJECT 2e-9
+    genesis > set_runtime_parameter /n/soma INJECT 2e-9
 \end{verbatim}
 This will apply a 2\,nA current injection to the soma for the duration of the simulation. We can check that this parameter has been correctly set with
 \begin{verbatim}
@@ -136,7 +143,7 @@ This will apply a 2\,nA current injection to the soma for the duration of the si
 which returns
 \begin{verbatim}
     runtime_parameters:
-       - component_name: /neuron/soma
+       - component_name: /n/soma
          field: INJECT
          value: 2e-9
          value_type: number
@@ -150,7 +157,7 @@ Simulation inputs typically involve synaptic activation. However, as in this int
 
 Having created a passive neuron, we can now define the output, typically the membrane potential ($V_m$)
 \begin{verbatim}
-   genesis > add_output /neuron/soma Vm
+   genesis > add_output /n/soma Vm
 \end{verbatim}
 By default, simulation output is placed in the file {\it /tmp/output}, where it can be viewed following termination of the simulation with
 \begin{verbatim}
@@ -162,25 +169,25 @@ This will list the contents of the output file at the GENESIS shell prompt.
 
 After a simulation has been set up it is a good idea to check its integrity to ensure that the software modules required to run the simulation will be correctly recruited at run-time. For our simple passive neuron model this is done with 
 \begin{verbatim}
-    genesis > check /neuron
+    genesis > check /n
 \end{verbatim}
 
 \subsection*{Run Simulation}
 
 To run our single compartment model for 10 ms enter
 \begin{verbatim}
-    genesis > run /neuron 0.01
+    genesis > run /n 0.01
 \end{verbatim}
 The simulation can then be continued by entering the {\it run} command again (this time for 1\,s cf. the previous 10 ms)
 \begin{verbatim}
-    genesis > run /neuron 1.0
+    genesis > run /n 1.0
 \end{verbatim}
 
 \subsection*{Reset Simulation}
 
 At some stage during a GENESIS session you may want to return a simulation to the initial state that existed prior to any {\it run} command being issued. The ``{\tt reset}'' command will set the time step of the simulation to zero and load the initial values for all solved variables, e.g.
 \begin{verbatim}
-    genesis > reset /neuron
+    genesis > reset /n
 \end{verbatim}
 
 \subsection*{Save Model State}
@@ -189,7 +196,7 @@ There are several commands associated with the ability to start, stop, or contin
 
 It may also be convenient to start a simulation from a predefined state. To do this, the state of the simulation is saved to a file name of your choosing. For example,
 \begin{verbatim}
-    genesis > simulation_state_save /neuron <file name>
+    genesis > simulation_state_save /n <file name>
 \end{verbatim}
 saves the state of the model following the last update time step of a run to a file with the given name. A simulation can then be initiated from this saved state with the command 
 \begin{verbatim}

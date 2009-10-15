@@ -15,7 +15,7 @@
 
 \section*{Developer Installation Mac OSX}
 
-The procedure for the installation of GENESIS on a Mac OSX is similar to that for a Linux build on a regular PC. The major difference is that it requires build tools for the Mac. These are somewhat hidden on disk 2 of the Mac OS installation disks. Installation requires administrator privileges. Note that  some installation must be done from the terminal. This can be found in the Applications --$>$ Utilities folder. For regular use of GENESIS it is convenient to place a Terminal in the Doc for easy access.
+The procedure for the installation of GENESIS on a Mac OSX is similar to that for a Linux build on a regular PC. The major difference is that it requires build tools for the Mac. These are somewhat hidden on disk 2 of the Mac OS installation disks. Installation requires administrator privileges. ({\bf Note:} Some installation must be done from the Terminal). If you do not have administrator privileges you should contact your system administrator for help. The Terminal can be found in the Applications --$>$ Utilities folder. For regular use of GENESIS it is convenient to place a Terminal in the dock for easy access.
 Installation requires executing the following major steps:
 \begin{itemize}
    \item[] Prepare and upgrade the system software.
@@ -29,7 +29,9 @@ Installation requires executing the following major steps:
 Install the following packages:
 \begin{itemize}
    \item[]\href{http://monotone.ca/}{\bf monotone-0.40:} (or higher).
-   \item[]{\bf Xcode:} The Apple Development Toolset. Xcode is available on disk 2 of Mac OSX under optional install. It is also available from the \href{http://developer.apple.com/technology/xcode.html}{Apple Developer Website}. In the latter case  you will need a valid Apple ID to log in and access the developer page. Note: It is not recommended that the compilers available from macports are used for installation.
+   \item[]{\bf Xcode:} The Apple Development Toolset. Xcode is available on disk 2 of Mac OSX under optional install. It is also available from the \href{http://developer.apple.com/technology/xcode.html}{Apple Developer Website}. In the latter case  you will need a valid Apple ID to log in and access the developer page.
+   
+   {\bf WARNING:} The compilers available from macports should NOT be used for installation.
    \item[]Install the following perl dependencies via CPAN:
       \begin{itemize}
          \item YAML
@@ -43,9 +45,25 @@ Install the following packages:
    \end{itemize}
    
 \subsection*{Download and Install the developer package}
-
 \begin{itemize}
-   \item[] Download the latest version of the {\it DeveloperPackage} ({\bf Note:} Just download package, do not unpack during download as OSX will unpack the package into a directory with the package name), available from \href{http://sourceforge.net/projects/neurospaces/files/}{Sourceforge}. It is called {\it developer-release-label.tar.gz}, where {\it release-label} is the current release identifier.
+   \item[] Prior to installing the {\it DeveloperPackage} you should check which Perl libraries OSX uses:
+   \begin{verbatim}
+   which perl
+   \end{verbatim}
+   This should return
+   \begin{verbatim}
+   /usr/bin/perl
+   \end{verbatim}
+   If the response is:
+   \begin{verbatim}
+   /opt/local/bin/perl
+   \end{verbatim}
+  there is a macports installation of Perl (see warning above against using macports compilers). This is most easily corrected with the following command:
+   \begin{verbatim}
+   mv /opt/local/bin/perl /opt/local/bin/perl-macports
+   \end{verbatim}
+   If you do not make this change, running GENESIS may result in a bus error as the correct Perl libraries will not be found.   
+   \item[] Download the latest version of the {\it DeveloperPackage}, available from \href{http://sourceforge.net/projects/neurospaces/files/}{Sourceforge}.  It is called {\it developer-release-label.tar.gz}, where {\it release-label} is the current release identifier. ({\bf Note:} If downloading via your browser, do not unpack the package during the download as it will be placed into its own subdirectory).
    \item[] Change to the directory where you downloaded the file.
    \item[] Unpack archive: ``{\tt tar xfz developer-release-label.tar.gz}''.
    \item[] Change to the directory with the content of the archive: ``{\tt cd developer-release-label}''.
