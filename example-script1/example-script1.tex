@@ -1,0 +1,83 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{New Document}
+
+Here is a
+complete simple example with arbitrary values:
+
+#!/usr/local/bin/genesis-g3
+#!
+
+create cell /n
+create segment /n/soma
+
+set_model_parameter /n/soma Vm_init -0.068
+set_model_parameter /n/soma CM 0.01
+set_model_parameter /n/soma RM 0.01
+set_model_parameter /n/soma RA 0.01
+set_model_parameter /n/soma ELEAK 0.01
+
+set_model_parameter /n/soma LENGTH 1
+set_model_parameter /n/soma DIA 1
+
+set_runtime_parameter /n/soma INJECT 2e-9
+
+run /n 0.001
+
+echo output follows:\n
+sh cat /tmp/output
+
+Typing in all these parameters is a lot of work, and the gshell is not
+intended to be used as a model editor.  Therefore you do:
+
+ndf_save /** STDOUT
+
+Or better to a file
+
+ndf_save /** my-first-model.ndf
+
+Then, to check if the syntax is correct, from a unix shell command line, you do
+
+neurospacesparse my-first-model.ndf
+
+Now quit the gshell, and restart it.
+
+genesis >
+
+You can now load your model using:
+
+ndf_load my-first-model.ndf
+
+Check what you have:
+
+list_elements
+list_elements /n
+show_model_parameters /n/soma
+
+show_parameter /n/soma CM
+show_parameter_scaled /n/soma CM
+
+Note that because I used a 1 for the values for diameter and length,
+PI comes out as scaled value for CM.
+
+Also note that the system does not care much how one create his
+models, manually, using the backward compatibility, or using NDF
+files, or both, or even in other ways.  The ndf_save command is
+supposed to work always, and allows to convert models.
+
+Third, I renamed 'neuron' to just 'n' because it is a reserved token
+in a NDF file.
+\end{document}

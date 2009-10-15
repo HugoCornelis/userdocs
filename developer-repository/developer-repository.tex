@@ -1,0 +1,187 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Using the GENESIS repository for Development}
+
+For the federated development of the software components of GENESIS, a software buildbot machine houses a \href{http://monotone.ca/}{monotone} server that is connectible over the internet. Source code changes can be properly merged using the functions available on monotone, regardless of the location where the changes have been made (at home, in your office, on the airplane). The build mechanism will always build the most up to date version of the code.
+
+\subsection*{Convenient Access to the Source Code}
+
+The easiest way to get the latest version of the source code is via the Neurospaces installer. See the section  NeurospacesRepositoryAndTheInstaller for more information.
+
+We now explain how to {\it checkout} code manually when not using the installer.
+
+\subsubsection*{Serving your source code}
+
+If you want someone else to {\it sync} their code with what you have on your laptop, you can conveniently convert your laptop to a source code server using the command {\it neurospaces\_serve} (see the \href{../developer-package/developer-package.tex}{\it DeveloperPackage}). Other people can now connect to your laptop using, for example
+\begin{verbatim}
+   neurospaces_sync --repo-sync <ip-address-of-your-laptop>
+\end{verbatim}
+or
+\begin {verbatim}
+   neurospaces_pull --repo-pull <ip-address-of-your-laptop>
+\end{verbatim}
+All these commands accept a ``{\tt --regex <package-regex>}'' option to select packages to {\it serve}, {\it sync} and {\it pull} respectively. To interrupt the server and kill all the server processes, use ``{\tt neurospaces\_kill\_servers}''.
+
+\subsection*{Checking out Code Manually}
+
+To check out the latest version of the GENESIS code you must first initialize a local monotone repository via this command:
+\begin{verbatim}
+   mtn --db=myrepo.mtn db init 
+\end{verbatim}
+There are monotone instances running for different parts of GENESIS on different ports. To target the correct component of our GENESIS system you need to use the following arguments for the remote server. The server address and port number are accessed by, for example, for the backward compatibility layer
+\begin{verbatim}
+   repo-genesis3.cbi.utsa.edu:4692
+\end{verbatim}
+
+\vspace{3mm}
+\begin{footnotesize}
+\begin{centering}
+\begin{tabular}{| l | l | c | l |}
+\hline
+{\bf Description}                                               & {\bf Package name}   & {\bf Port \#} & {\bf Repository Name} \\ \hline
+GENESIS backward compatability layer    & ns-sli                             & 4692           & ns-sli.mtn \\ \hline
+Internal Storage for Models                           & model-container        & 4693           & model-container.mtn \\ \hline
+Single neuron solver                                      & heccer 	                        & 4694           & heccer.mtn \\ \hline
+Scheduler                                                         & ssp                                & 4695           & ssp.mtn \\ \hline
+Development Package                                  & developer                    & 4696           & neurospaces-developer.mtn \\ \hline
+Project Browser                                               & project-browser          & 4697           & neurospacesweb.mtn \\ \hline
+Incomplete GUI 	                                      & studio                            & 4698           & studio.mtn \\ \hline
+GShell 	                                                         & gshell                            & 4699          & gshell.mtn \\ \hline
+User documentation                                       & userdocs                      & 4700          & userdocs.mtn \\ \hline
+Gui development                                             & gui                                 & 4701          & gui.mtn \\ \hline
+\end{tabular}
+\end{centering}
+\end{footnotesize}
+
+\noindent Code can be pulled from the monotone server into your local working repository with the command
+\begin{verbatim}
+   mtn --db=myrepo.mtn pull repo-genesis3.cbi.utsa.edu:<port#> ``*''
+\end{verbatim}
+The ``*'' argument pulls all branches from the server into your local repository. To {\it pull} a specific branch see the following section. It's important that each server be synchronized with it's own local repository. Once the code has been pulled you can checkout one of the branches into your working directory with the command
+\begin{verbatim}
+   mtn --db=myrepo.mtn --branch=<Branch ID> co source_directory 
+\end{verbatim}
+
+\subsection*{Synchronizing Databases}
+
+To synchronize your monotone repository to the remote server you'll need to use the {\it sync} command with the proper address of the server (as listed in the above table).
+\begin{verbatim}
+   mtn --db=myrepo.mtn sync repo-genesis3.cbi.utsa.edu:<port#> "*" 
+\end{verbatim}
+Now all changes, including logs will be on both the client and server repositories. Note in order to perform this operation you need to be given write access to the repositories on the GENESIS server repository {\tt repo-genesis3}.
+
+\subsection*{Branches}
+
+You must know the desired branch when pulling a repository. All branches can be downloaded simultaneously via the ``*'' argument. We currently use numeric branches that start at zero ({\tt 0}). After pulling a repository you can generate a list of branches available for check out from your local repository via the command
+\begin{verbatim}
+   mtn --db=myrepo.mtn list branches 
+\end{verbatim}
+
+\subsection*{Committing Changes}
+
+A monotone repository is an annotated database and every change that is made is signed with keys. To be able to commit changes to your local monotone repository you need to generate a key pair. To do this execute the command
+\begin{verbatim}
+   mtn genkey email@address.com 
+\end{verbatim}
+This stores a your private key in {\it ~/.monotone}. To enable this, you will be asked to enter a password which is used to verify your identity when you check in changes. To see all the keys monotone has stored you can do a
+\begin{verbatim}
+   mtn list keys 
+\end{verbatim}
+and also an
+\begin{verbatim}
+   mtn --db=myrepo.mtn list keys 
+\end{verbatim}
+To commit the changes you have made to your own database repository, {\tt cd} to the appropriate source directory and execute either
+\begin{verbatim}
+   mtn ci
+\end{verbatim}
+or
+\begin{verbatim}
+   mtn commit 
+\end{verbatim}
+
+\subsection*{Repository Access}
+
+To get write access to a repository which you did not initiate, it must be signed with your public key. To export your public key perform the following command
+\begin{verbatim}
+   mtn --db=repo.mtn pubkey my@email.com > me.pubkey 
+\end{verbatim}
+Send the repository owner your public key for write access. To perform this you must have monotone read in the key from {\it stdin} with the read command
+\begin{verbatim}
+   cat me.pubkey | mtn --db=repo.mtn read 
+\end{verbatim}
+If this is successful it will indicate that a packet has been read. You can store several keys in a file this way with the number of successful packets read in being given. 
+
+%\section*{Accessing the GENESIS Repository from the \href{../developer-package/developer-package.tex}{\tt Developer
+%  Package}}
+
+%The \href{../genesis-repository/genesis-repository.tex}{GENESIS Repository} is accessible from the \href{../developer-package/developer-package.tex}{\tt Developer
+%  Package}. Important for this feature to work is to have the correct directory layout on your \href{../developer-machine/developer-machine.tex}{DeveloperMachine}.
+
+%In summary, what you want to do is pull the set of default packages from the server(s):
+%\begin{verbatim}
+%   neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu \
+%      --repo-co --verbose --developer --directories-create \
+%      --no-configure --no-compile --no-install
+%\end{verbatim}
+%This command has options that inhibit the default actions of configuration, compilation, and installation. If you also want to compile and install in just one run, simply omit those options:
+%\begin{verbatim}
+%   neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu \
+%      --repo-co --verbose --developer --directories-create
+%\end{verbatim}
+%There are developer friendly frontends to the {\it neurospaces\_build} script in the \href{../developer-package/developer-package.tex}{\tt Developer
+%  Package}:
+%\begin{itemize}
+%\item {\it neurospaces\_serve}\,\,\,Starts serving the source code repositories such that other people can {\it pull} and {\it sync} to your machine (note that this locks all your databases).
+%\item {\it neurospaces\_pull}\,\,\,Download the source code from a repository.
+%\item {\it neurospaces\_status}\,\,\,Check for local source code modification (no network required).
+%\item {\it neurospaces\_sync}\,\,\,Synchronize local source code modification with a repository.
+%\item {\it neurospaces\_update}\,\,\,Make the local source code up to date using the repositories locally stored on your PC (so this is a local operation). 
+%\end{itemize}
+
+%\subsection*{Details}
+
+%\begin{itemize}
+%\item {\bf Pull to your local repository:}
+%\begin{verbatim}
+%neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu \
+%   --no-configure --no-install --no-compile --verbose --developer \
+%   --regex 'heccer|model-container|ssp'
+%\end{verbatim}
+
+%\item {\bf Checkout from your local repository:}
+%\begin{verbatim}
+%neurospaces_build --repo-co --no-configure \
+%   --no-install --no-compile --verbose --developer \
+%   --regex 'heccer|model-container|ssp'
+%\end{verbatim}
+
+%\item {\bf When you start from scratch it is useful to create the workspace directories:}
+%\begin{verbatim}
+%neurospaces_build --repo-co --no-configure \
+%   --no-install --no-compile --verbose --developer \
+%   --regex 'heccer|model-container|ssp' --directories-create
+%\end{verbatim}
+
+%\item {\bf Combine everything for the set of default packages, including compilation and installation:}
+%\begin{verbatim}
+%neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu \
+%   --repo-co --verbose --developer --directories-create
+%\end{verbatim}
+
+%\end{itemize}
+
+\end{document}
