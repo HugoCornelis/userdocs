@@ -199,7 +199,7 @@ sub update_links
 	# to the next item so this doesn't get added to our
 	# updated list.
 	#
-	if( tag_defined($descriptor,'draft') )
+	if( tag_defined($descriptor,'draft')  or tag_defined($descriptor,'obsolete') )
 	{
 	  next;
 	}
