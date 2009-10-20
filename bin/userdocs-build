@@ -59,6 +59,11 @@ sub build_document
     # to check for so that it can copy over other file types.
     if(tag_defined($descriptor,'pdf'))
     {
+
+      print "\n\nThe document ";
+      print $descriptor->{'document name'};
+      print " is a pdf file, copying it over to the output directory\n\n";
+
       system "mkdir -p output/ps";
       system "mkdir -p output/pdf";
       system "mkdir -p output/html";
