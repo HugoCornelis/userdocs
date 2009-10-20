@@ -1,5 +1,5 @@
+#!/usr/bin/perl -w
 #!/usr/bin/perl -w 
-#!/usr/bin/perl -w -d:ptkdb
 #
 
 
@@ -15,7 +15,7 @@ my $option_verbose;
 my $option_tags = [];
 
 
-
+my $parse_debug = 0;
 
 sub build_document
 {
@@ -149,14 +149,17 @@ sub build_document
 
 		my $filename_base = $1;
 
-		system "latex '$filename'";
+		if($parse_debug == 0)
+		{
+		  system "latex '$filename'";
 
-		system "makeindex -c '$filename_base'";
+		  system "makeindex -c '$filename_base'";
 
-		system "bibtex '$filename_base'";
+		  system "bibtex '$filename_base'";
 
-		system "latex '$filename'";
-		system "latex '$filename'";
+		  system "latex '$filename'";
+		  system "latex '$filename'";
+		}
 
 		# generate ps output
 
@@ -170,7 +173,7 @@ sub build_document
 
 		    chdir "ps";
 
-		    system "dvips '../$filename_base.dvi' -o '$filename_base.ps'";
+# 		    system "dvips '../$filename_base.dvi' -o '$filename_base.ps'";
 
 		    if ($option_verbose)
 		    {
@@ -192,7 +195,10 @@ sub build_document
 
 		    chdir "pdf";
 
-		    system "ps2pdf '../ps/$filename_base.ps' '$filename_base.pdf'";
+		    if($parse_debug == 0)
+		    {
+		      system "ps2pdf '../ps/$filename_base.ps' '$filename_base.pdf'";
+		    }
 
 		    if ($option_verbose)
 		    {
@@ -242,8 +248,11 @@ sub build_document
 		    system "cp -rp ../figures/* figures/";
 
 		    # generate html output
-
-		    system "htlatex '$filename'";
+		    
+		    if($parse_debug == 0)
+		    {
+		      system "htlatex '$filename'";
+		    }
 
 		    if ($option_verbose)
 		    {
@@ -438,7 +447,7 @@ sub main
     {
 	local $/;
 
-	my $documents_tag = Load(`userdocs-tag-filter 2>&1 "$tag" "published"`);
+	my $documents_tag = Load(`userdocs-tag-filter 2>&1 "published"`);
 
 
 
