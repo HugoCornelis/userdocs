@@ -48,11 +48,44 @@ The preferred method of generating a FAQ is to email the genesis-sim-users maili
 
 \section*{DEVELOPER FAQ}
 
-%\begin{enumerate}
+\begin{enumerate}
 
-%\item {\bf 
+\item {\bf How do I find the version numbers of the GENESIS components I have installed ?} \\
+There are several ways to determine the version of the \href{../reserved-words/reserved-words.tex}{\bf GENESIS\,components} that are currently installed on your machine:
+\begin{itemize}
+\item To determine the version of the {\bf G-Shell}, at a command line prompt enter:
 
-%\end{enumerate}
+{\tt genesis-g3 --version}
+
+\item The script {\it neurospaces\_versions} gives release labels, but the details
+of the release procedure are currently not defined as we are pre-alpha release.  So the usefulness of information returned by this script is limited.
+
+\item The script {\it neurospaces\_status} returns \href{../version-control/version/control.tex}{monotone\,version\,control} numbers.
+
+\item Either {\it neurospaces\_versions} or {\it neurospaces\_status} can be combined with a ``{\tt --regex}'' argument to select
+software components.  For example:
+
+\begin{verbatim}
+neurospaces_status --regex ns-sli
+   /usr/local/bin/neurospaces_build: *** package ns-sli
+   /usr/local/bin/neurospaces_build: package ns-sli [mtn ls missing] executing
+   /usr/local/bin/neurospaces_build: package ns-sli [mtn ls unknown] executing
+   /usr/local/bin/neurospaces_build: package ns-sli [mtn status] executing
+   Current branch: 0
+   Changes against parent d13a526e58e47dcfb6163dad38c59a2a7d39b723
+      patched  tests/scripts/test-simplecell/simplecell-0.g
+\end{verbatim}
+
+The string {\tt d13a5...} is a monotone version identifier that is unique to the currently installed version of \href{../nssli/nssli.tex}{\bf NS-SLI}.
+
+\item If you go to the {\bf NS-SLI} source directory and do
+\begin{verbatim}
+   mtn log | less
+\end{verbatim}
+you get a detailed cvs-style log of progress.
+
+\end{itemize}
+\end{enumerate}
 
 \section*{DOCUMENTATION FAQ}
 
