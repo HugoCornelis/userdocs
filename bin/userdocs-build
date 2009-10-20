@@ -54,7 +54,7 @@ sub build_document
     }
 
 
-    # Note: Thi tag handles special cases for pdf.
+    # Note: This tag handles special cases for pdf.
     # Should expand it to allow maybe a "filetype" attribute
     # to check for so that it can copy over other file types.
     if(tag_defined($descriptor,'pdf'))
@@ -463,10 +463,6 @@ sub main
 
     `mkdir -p html/htdocs/neurospaces_project/userdocs/`;
 
-    # copy over the bog-ch files since they're PDFs and don't need any processing. 
-    # Should make these directories respect the tag system.
-    system "cp -pr bog-ch* 'html/htdocs/neurospaces_project/userdocs'";
-
     if (!scalar keys %$documents)
     {
 	print "$0: no documents to build\n";
@@ -474,7 +470,6 @@ sub main
 
     foreach my $document (keys %$documents)
     {
-
 
 	build_document($document);
     }
