@@ -118,7 +118,11 @@ sub main
     {
 	local $/;
 
-	my $documents_tag = Load(`userdocs-tag-filter 2>&1 "$tag" "published"`);
+	
+	#
+	# removed the "tag" option so the only relevant tag is published.
+	#
+	my $documents_tag = Load(`userdocs-tag-filter 2>&1 "published"`);
 
 	if (!scalar @$documents_tag)
 	{
