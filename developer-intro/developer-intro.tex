@@ -14,7 +14,7 @@
 
 \section*{Introduction to GENESIS for Developers}
 
-The documentation linked to here is for GENESIS users who want to contribute to the development of extended functionality of the GENESIS simulation platform, rather than for those users who want to do scientific simulations. (Although a single individual may want to do both.) Developer documentation provides links to more technical documentation supporting software development. It is assumed that you are familiar with the monotone version control software used by GENESIS (for more information see \href{../version-control/version-control.tex}{Version Control}). Links to the more general user documentation can be found at the \href{../documentation-homepage/documentation-homepage.tex}{Documentation Home Page}. 
+The documentation linked to here is for GENESIS users who want to contribute to the development of extended functionality of the GENESIS simulation platform, rather than for those users who want to do scientific simulations. (Although a single individual may want to do both.) Developer documentation provides links to more technical documentation supporting software development. It is assumed that you are familiar with the monotone version control software used by GENESIS (for more information see \href{../version-control/version-control.tex}{\bf Version\,Control}). Links to the more general user documentation can be found at the \href{../documentation-homepage/documentation-homepage.tex}{\bf Documentation\,Home\,Page}. 
 %The documentation linked to here is for the use by people who are involved in the development and extension of GENESIS functionality.
 
 \subsection*{Becoming a GENESIS Developer}
@@ -25,12 +25,12 @@ In principle anyone can become a GENESIS developer, all that is required is a de
 	\item {\bf Member of the GENESIS Developers Federation:} To become a GENESIS developer send a request to 
 	\href{mailto:genesis@genesis-sim.org}{genesis@genesis-sim.org}. You will be registered as a GENESIS developer 
 	and receive a key that will allow you to pull and push documentation and code to the GENESIS repositories. To learn more 
-	about these GENESIS repositories and version control see \href{../version-control/version-control.tex}{Version Control}.
+	about these GENESIS repositories and version control see \href{../version-control/version-control.tex}{\bf Version\,Control}.
 	
 	\item {\bf Independent Developer:} GENESIS is structured in such a way that it is possible to download the code from:
 	\href{http://sourceforge.net/projects/neurospaces/files/}{http://sourceforge.net/projects/neurospaces/files/}
 	You can then proceed entirely independently with your own code and documentation development. To do this see the 
-	\href{../installation-developer/installation-developer.tex}{Developer Installation} documentation. It describes how to set up 
+	\href{../installation-developer/installation-developer.tex}{\bf Developer\,Installation} documentation. It describes how to set up 
 	your own choice of version control and associated file repositories.
 
 \end{itemize}
@@ -41,7 +41,7 @@ Here we describe the directory structure used to do GENESIS development.
 
 GENESIS contains several software components useful for neural simulations using models based on experimental data:
 \begin{enumerate}
-\item {\bf Each software component can have implementations in several programming languages:} For example, there are Java and C based implementations of the \href{../model-container/model-container.tex}{\bf Model Container}.
+\item {\bf Each software component can have implementations in several programming languages:} For example, there are Java and C based implementations of the \href{../model-container/model-container.tex}{\bf Model\,Container}.
 \item {\bf Each software component has several resources:} For example, source code, documentation, additional tools etc.
 \item {\bf Each software component can have experimental features that are not part of an official distribution:} We call this a branch of the source code (it is irrelevant if such a branch is present in a version control system or not). 
 \end{enumerate}
@@ -78,7 +78,7 @@ The \href{../developer-package/developer-package.tex}{\it DeveloperPackage} has 
 
 Configuration is located in the {\it /etc/neurospaces/} directory.
 
-Every software component or tool has its own subdirectory. E.g. the {\it morphology2ndf} convertor, part of the {\bf Model\,Container}, has its default configuration in {\it /etc/neurospaces/morphology2ndf}. Configuration files are specified in the \href{http://www.yaml.org/}{YAML format}, because scripting languages like \href{http://www.perl.org/}{perl} and \href{http://www.python.org/}{python} have built in support to process YAML, and because YAML is more readable than XML.
+Every software component or tool has its own subdirectory. E.g. the {\it morphology2ndf} convertor, part of the {\bf Model\,Container}, has its default configuration in {\it /etc/neurospaces/morphology2ndf}. Configuration files are specified in the \href{http://www.yaml.org/}{\bf YAML} format, because scripting languages like \href{http://www.perl.org/}{\bf Perl} and \href{http://www.python.org/}{\bf Python} have built in support to process YAML, and because YAML is more readable than XML.
 
 Configuration is normally processed as follows:
 \begin{enumerate}
@@ -86,7 +86,7 @@ Configuration is normally processed as follows:
 \item {\bf Every tool reads its configuration from {\it /etc/neurospaces/$<$tool-name$>$/}:} This is merged with default configuration, possibly overriding default configuration.
 \item {\bf Every tool accepts additional configuration from the user:} This is via command line options or otherwise, again possibly overwriting configuration settings generated in the previous step. 
 \end{enumerate}
-The merging algorithm is defined in the \href{http://search.cpan.org/dist/Data-Utilities/}{Data-Utilities package}, available from \href{http://www.cpan.org/}{CPAN}.
+The merging algorithm is defined in the \href{http://search.cpan.org/dist/Data-Utilities/}{\bf Data-Utilities} package, available from \href{http://www.cpan.org/}{\bf CPAN}.
 
 %There is a default configuration available in the {\it ConfiguratorPackage} (UNDER CONSTRUCTION). 
 
