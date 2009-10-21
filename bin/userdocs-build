@@ -1,5 +1,5 @@
-#!/usr/bin/perl -w
 #!/usr/bin/perl -w 
+#!/usr/bin/perl -w -d:ptkdb
 #
 
 
@@ -25,7 +25,7 @@ sub build_document
 
     my $directory = $document;
 
-#     my $filename = $2;
+#    my $filename = $2;
 
     if ($option_verbose)
     {
@@ -147,7 +147,7 @@ sub build_document
 
 		}
 
-		my $filename_base = $1;
+		my $filename_base = $document;
 
 		if($parse_debug == 0)
 		{
@@ -173,7 +173,10 @@ sub build_document
 
 		    chdir "ps";
 
-# 		    system "dvips '../$filename_base.dvi' -o '$filename_base.ps'";
+		    if($parse_debug == 0)
+		    {
+		      system "dvips '../$filename_base.dvi' -o '$filename_base.ps'";
+		    }
 
 		    if ($option_verbose)
 		    {
