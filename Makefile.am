@@ -113,7 +113,7 @@ dist-keywords:
 	release-expand userdocs $(RELEASE_MAJOR) $(RELEASE_MINOR) $(RELEASE_MICRO) $(RELEASE_MAJOR)-$(RELEASE_MINOR) hugo.cornelis@gmail.com --verbose
 #	release-expand neurospacesread des 10 0 des-10 hugo.cornelis@gmail.com --verbose
 
-clean-local:
+clean-local: website-clean
 	find $(srcdir) -type d -exec chmod -R u+w \{\} \;
 	$(RM) -fr `find $(srcdir) -name _Inline`
 	$(RM) -rf */output/*
@@ -155,7 +155,7 @@ website-upload: website-clean website-prepare html-upload
 webcheck:
 	rm -rf html/htdocs/neurospaces_project/userdocs/webcheck
 	mkdir html/htdocs/neurospaces_project/userdocs/webcheck
-	webcheck -o html/htdocs/neurospaces_project/userdocs/webcheck html/htdocs/neurospaces_project/userdocs
+	webcheck -o html/htdocs/neurospaces_project/userdocs/webcheck html/htdocs/neurospaces_project/userdocs --redirects=10
 
 docs-level1:
 
