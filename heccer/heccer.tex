@@ -24,19 +24,19 @@
 
 The optimization of a neuronal solver ultimately focuses on accuracy and performance. Transforming complex biological parameters into precomputed tables and optimizing for a high CPU cache hit ratio are the most important features for a good solver, and gives the solver a performance boost of about a factor four to six.
 
-Heccer is a fast compartmental solver, that is based on {\it hsolve} of the GENESIS simulator. To find out more about the numerical principles implemented in Heccer see \href{}{??}. The efficiency of Heccer is explained in \href{}{??}.
+{\bf Heccer} is a fast compartmental solver, that is based on {\it hsolve} of the GENESIS simulator. To find out more about the numerical principles implemented in {\bf Heccer} see \href{}{??}. The efficiency of {\bf Heccer} is explained in \href{}{??}.
 
-Heccer can be instantiated from C, or from Perl (or other scripting languages). It is also possible to link Heccer directly to Matlab. Heccer comes with Swig interface definitions, such that linking Heccer to any other technologies should be easy.
+{\bf Heccer} can be instantiated from C, or from Perl (or other scripting languages). It is also possible to link {\bf Heccer} directly to Matlab. {\bf Heccer} comes with \href{http://www.swig.org/}{\bf Swig} interface definitions, such that linking {\bf Heccer} to any other technologies should be easy.
 
-Adding new channel types to Heccer can be done using callouts. The callout mechanism allows for general user extensions that contribute a current or conductance at a particular time in a simulation. Heccer automatically integrates this contribution into the membrane potential.
+Adding new channel types to {\bf Heccer} can be done using callouts. The callout mechanism allows for general user extensions that contribute a current or conductance at a particular time in a simulation. {\bf Heccer} automatically integrates this contribution into the membrane potential.
 
-The source code of Heccer contains inline developer documentation. As yet, there is no stable API but the \href{http://www.swig.org/}{SWIG} interfaces for Heccer are not expected to change much. If you are interested in this, look at \href{}{a simple example} for driving Heccer from perl, and \href{}{another example} with active channels and a calcium pool. Heccer is currently capable of simulating Purkinje cells (see the \href{../purkinje-cell-model/purkinje-cell-model.tex}{Purkinje cell model}), and, at first evaluation, runs slightly faster than {\it hsolve} (It is difficult to assess why exactly: while the {\it hsolve} implementation is much more optimized than Heccer's, the Heccer design is slightly better optimized than {\it hsolve}'s.).
+The source code of {\bf Heccer} contains inline developer documentation. As yet, there is no stable API but the Swig interfaces for {\bf Heccer} are not expected to change much. If you are interested in this, look at \href{}{a simple example} for driving {\bf Heccer} from Perl, and \href{}{another example} with active channels and a calcium pool. {\bf Heccer} is currently capable of simulating Purkinje cells (see the \href{../purkinje-cell-model/purkinje-cell-model.tex}{Purkinje cell model}), and, at first evaluation, runs slightly faster than {\it hsolve} (It is difficult to assess why exactly: while the {\it hsolve} implementation is much more optimized than {\bf Heccer's}, the {\bf Heccer} design is slightly better optimized than {\it hsolve}'s.).
 
 \subsection*{Heccer Features}
 
 \begin{itemize}
 
-\item Can be driven from C, Perl, SSP, and fetches the model parameters from the \href{../model-container/model-container.tex}{Model Container}.
+\item Can be driven from C, Perl, SSP, and fetches the model parameters from the \href{../model-container/model-container.tex}{\bf Model\,Container}.
 \item Computes the behaviour of single neurons.
 \item Integrates Hodgkin-Huxley-like channels.
 \item Integrates exponentially decaying calcium concentrations and Nernst potentials. Interfaces will be provided for more elaborate calcium models.
@@ -46,10 +46,10 @@ The source code of Heccer contains inline developer documentation. As yet, there
 \item Computes the contribution of one channel type to the overall dendritic current, e.g. the contribution of all calcium channels or the contribution of all persistent calcium channels.
 \item Can serialize the current neuron state to an external stream for later resuming the simulation (or for multiple use).
 \item In combination with the previous point, can be initialized from external sources.
-\item Can be used with or without the Model Container. To use Heccer without the Model Container, configure the module with the command line ``{\tt ./configure --without-neurospaces}''. To use Heccer with the Model Container, the Model Container must be installed before Heccer is compiled. 
+\item Can be used with or without the {\bf Model\,Container}. To use {\bf Heccer} without the {\bf Model\,Container}, configure the module with the command line ``{\tt ./configure --without-neurospaces}''. To use {\bf Heccer} with the {\bf Model\,Container}, the {\bf Model\,Container} must be installed before {\bf Heccer} is compiled. 
 \end{itemize}
-Heccer has been validated with a Purkinje cell model and produces an exact match with {\it hsolve} (see the purkinje cell model and the purkinje cell tutorial in the GENESIS simulator distribution). Heccer is constantly undergoing regression tests. You can see the output of these tests \href{}{here}. These tests give an idea of the functionality of Heccer as a compartmental solver.
+{\bf Heccer} has been validated with a Purkinje cell model and produces an exact match with {\it hsolve} (see the purkinje cell model and the Purkinje cell tutorial in the GENESIS simulator distribution). {\bf Heccer} is constantly undergoing regression tests. You can see the output of these tests \href{}{here}. These tests give an idea of the functionality of {\bf Heccer} as a compartmental solver.
 
-Besides being open source, Heccer is also hypersource. The Heccer source code can be browsed \href{}{here}. An example test file with points of entry into Heccer, can be found \href{}{here}.
+Besides being open source, {\bf Heccer} is also hypersource. The {\bf Heccer} source code can be browsed \href{}{here}. An example test file with points of entry into {\bf Heccer}, can be found \href{}{here}.
  
 \end{document}
