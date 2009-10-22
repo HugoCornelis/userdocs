@@ -110,7 +110,7 @@ Once a document is located on the monotone server repository, it is available to
 
 \subsection*{Monotone Workflow Examples}
 
-The following sections give some example workflows for monotone use. More detailed tutorials and documentation are available from the \href{http://www.monotone.ca/docs/index.html}{monotone website}.
+The following sections give some example workflows for monotone use. More detailed tutorials and documentation are available from the \href{http://www.monotone.ca/docs/index.html}{\bf monotone website}.
 
 \subsection*{Updating the Local Workspace}
 
@@ -127,6 +127,11 @@ Reissuing the ``{\tt mtn ls unknown}'' command should now result in no output.
 Alternatively, once files have been registered in your local workspace, the following command reports which have been changed since the last code check in (see following):
 \begin{verbatim}
    mtn ls changed
+\end{verbatim}
+
+Importantly, the default file type for the GENESIS Documentation System is the \LaTeX\,\,{\bf .tex} file. To register a different file type with monotone and add it to your local workspace, for example a PDF file (see \href{../common-suffixes/common-suffixes.tex}{\bf Common\,Suffixes} for a more complete list of recognized file types), use the following command:
+\begin{verbatim}
+   mtn add --no-respect-ignore <directory-name>/<file-name>.pdf
 \end{verbatim}
 
 The files that have been registered with monotone can now be added to your local repository with the following command:
