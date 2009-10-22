@@ -14,15 +14,15 @@
 
 \section*{\it autogen}
 
-This document provides an overview of how the GENESIS build system is set up for development via an {\it autogen.sh} script and monotone.
+This document provides an overview of how the GENESIS build system is set up for development via an {\it autogen} script and monotone. There is an {\it autogen.sh} script as part of each GENESIS \href{../reserved-words/reserved-words.tex}{\bf Component}. It is used by the \href{../developer-package/developer-package.tex}{\it DeveloperPackage} as part of the build and install configuration.
 
 \subsection*{Introduction}
 
-Developing software with autotools across different system types and autotools versions can cause incompatibility problems. To prevent these problems from pestering developers, GENESIS implements an {\it autogen.sh} script which will automatically generate the necessary compilation files.
+Developing software with autotools across different system types and autotools versions can cause incompatibility problems. To prevent these problems from pestering developers, GENESIS implements an {\it autogen} script which will automatically generate the necessary compilation files.
 
 \subsection*{\it autogen.sh}
 
-In each package you will find a script titled {\it autogen.sh} which is typically composed of four autotools commands (see \href{http://www.gnu.org/software/autoconf/}{http://www.gnu.org/software/autoconf/} or your {\it man} or {\it info} pages for more information about these commands):
+In each package you will find a script titled {\it autogen.sh} which is typically composed of four autotools commands (see \href{http://www.gnu.org/software/autoconf/}{\bf http://www.gnu.org/software/autoconf/} or your {\it man} or {\it info} pages for more information about these commands):
 \begin{itemize}
 	\item {\it aclocal}
 	\item {\it autoconf}
