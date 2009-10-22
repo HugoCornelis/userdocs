@@ -145,6 +145,21 @@ sub try_to
 }
 
 
+
+
+
+sub report_error
+{
+    my $command = shift;
+
+    my $error_code = shift;
+
+    try_to_mail("neurospaces_cron error", "$0: $command returned $error_code");
+
+    die "$0: $command returned $error_code";
+}
+
+
 #
 # copies the resulting html data to a directory specified in
 # the config file and then sets up a sym link for it.
