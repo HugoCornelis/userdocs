@@ -56,10 +56,10 @@ sub main
 
   try_to("neurospaces_clean --regex userdocs",1);
 
-  try_to("make website-prepare -C ~/neurospaces_project/userdocs/source/snapshots/0/ > $output_filename",1);
+  try_to("make website-prepare -C ~/neurospaces_project/userdocs/source/snapshots/0/ > $output_path",1);
 
   # now do a link check.
-  try_to("make webcheck -C ~/neurospaces_project/userdocs/source/snapshots/0/ > $output_filename",1);
+  try_to("make webcheck -C ~/neurospaces_project/userdocs/source/snapshots/0/ > $output_path",1);
 
   try_to_mail("Userdocs has been built on darwin.",
 	      "Userdocs has finished building.\n\n");
