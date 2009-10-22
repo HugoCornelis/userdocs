@@ -22,6 +22,8 @@ sub try_to_mail_status
     # place of the /usr/sbin/sendmail. A user may have                                                      
     # a different sendmail path.                                                                            
 
+    # mando: perhaps you have to use chomp after using backquotes.
+
     open(MAIL, "|/usr/sbin/sendmail -oi -t");
     print MAIL "From: $sendfrom_email\n";
     print MAIL "To: $sendto_email\n";
