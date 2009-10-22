@@ -48,8 +48,6 @@ system "neurospaces_install --regex userdocs";
 
 system "make clean -C ~/neurospaces_project/userdocs/source/snapshots/0/";
 
-system "make website-clean -C ~/neurospaces_project/userdocs/source/snapshots/0/";
-
 system "make website-prepare -C ~/neurospaces_project/userdocs/source/snapshots/0/ > /tmp/userdocs_make.output";
 
 #system "cat /tmp/userdocs_make.output |  mail -s \"userdocs has been built on darwin\" sysadminspam@gmail.com";
@@ -72,5 +70,103 @@ try_to_mail_status("sysadminspam@gmail.com",
 system "rm -f /tmp/userdocs_make.output";
 
 
+
+#
+# ($config_file) a file with a configuration in it.
+#
+sub parse_config_file
+{
+  my $config_file = shift;
+
+  if (! -e $config_file)
+  {
+      print "\n$config_file is an invalid filename\n";
+
+      return;
+  }
+
+  print "\nParsing configuration in $config_file\n\n";
+
+  $configuration = YAML::LoadFile($config_file);
+
+
+  if(!defined $configuration)
+  {
+
+    print "This YAML file is invalid\n";
+    return;
+
+  }
+
+  if(defined $configuration->{MAILTO})
+  {
+    chomp($configuration->{MAILTO});
+    print "\tSend to email: $configuration->{MAILTO}\n";
+  }
+
+  if(defined $configuration->{MAILFROM})
+  {
+    chomp($configuration->{MAILFROM});
+    print "\tSend from email: $configuration->{MAILFROM}\n";
+  }
+
+  if(defined $configuration->{OUTPUTDIR})
+  {
+      #! note that this overrides an option from set by the command line
+
+      $option_output_directory = $configuration->{OUTPUTDIR};
+      chomp($option_output_directory);
+      print "\tOutput directory is $option_output_directory\n";
+  }
+
+
+  if(defined $configuration->{URL})
+  {
+      chomp($configuration->{URL});
+      print "\tOutput directory for test harness output is $configuration->{URL}\n";
+  }
+
+
+
+  if(defined $configuration->{DOXYGENOUTPUT})
+  {
+      chomp($configuration->{DOXYGENOUTPUT});
+      print "\tURL for serving the doxygen output is $configuration->{DOXYGENOUTPUT}\n";
+  }
+
+
+    if(defined $configuration->{DOXYGENURL})
+  {
+      chomp($configuration->{DOXYGENURL});
+      print "\tOutput directory for doxygen is $configuration->{URL}\n";
+  }
+
+
+  if(defined $configuration->{REGTESTURL})
+  {
+      chomp($configuration->{REGTESTURL});
+      print "\tURL for serving the regression tests is $configuration->{REGTESTURL}\n";
+  }
+
+
+  if(defined $configuration->{REGTESTOUTPUT})
+  {
+      chomp($configuration->{REGTESTOUTPUT});
+      print "\tOutput directory for regression tests is $configuration->{DOXYGENOUTPUT}\n";
+  }
+
+
+  if(defined $configuration->{LOGROTATE})
+  {
+
+    chomp($configuration->{LOGROTATE});
+    print "\tNumber of logs to rotate $configuration->{LOGROTATE}\n";
+
+  }
+
+
+  print "Done Parsing $config_file:\n";
+
+}
 
 
