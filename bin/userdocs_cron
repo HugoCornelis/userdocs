@@ -230,6 +230,7 @@ sub parse_config_file
 
   if(defined $configuration->{HTMLDIR})
   {
+    $option_html_output_directory = $configuration->{HTMLDIR};
     chomp($configuration->{HTMLDIR});
     print "\tThe directory for html output is: $configuration->{HTMLDIR}\n";
   }
