@@ -61,11 +61,44 @@ sub main
   # now do a link check.
   try_to("make webcheck -C ~/neurospaces_project/userdocs/source/snapshots/0/ > $output_path",1);
 
-  try_to_mail("Userdocs has been built on darwin.",
-	      "Userdocs has finished building.\n\n");
+  my $text = produce_email_text()
+
+  try_to_mail("Userdocs has been built.",
+	      "Userdocs has finished building.\n\n" . $text);
 
   copy_html_data();
 
+
+}
+
+
+
+#
+# Forms the status message to be sent
+# in the cronjob email.
+#
+sub produce_email_text
+{
+
+  my $status_message = "";
+  my $outputfile = $option_output_directory . "/" . $output_filename;
+  my $errorcounts = `cat $outputfile | grep error_count`;
+  my $die_messages = `grep die $outputfile`;
+
+  $status_message
+      .= (
+	  "$0:\nCheck for your output on the host machine here "
+	  . $option_output_directory
+	  . "/"
+	  . $output_filename . "\n"
+	 );
+
+  if (defined $configuration->{URL})
+  {
+      $status_message .= "Check the test output over the web via this link " . $configuration->{URL} . "\n";
+  }
+
+  return $status_message;
 
 }
 
