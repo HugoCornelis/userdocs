@@ -35,9 +35,47 @@ This TODO list was built on \today, \thistime.
 
 \section{TODO List}
 
+\subsection{ns-sli: follow-up after the October developers meeting 1}
+
+Implement the following SLI commands and objects:
+
+\begin{itemize}
+\item scaletabchan: also try to implement a tagging mechanism that
+  allows to browse the 'history of a tabchan' (Hugo).
+\item spikegen: likely requires a trivial mapping to the spikegen
+  token in the model-container (Mando).
+\item delta compression of ascii files: requires the glue of the
+  Heccer::Output object to create a filesystem fifo with a dummy name,
+  bind it to a perl oneliner and pipe it to bzip2 to write compressed
+  output (Mando).
+\item randomspike: likely needs network support to be finished first
+  (Hugo).
+\item pulsegen: likely needs network support to be finished first
+  (Mando).
+\end{itemize}
+
+\subsection{ns-sli: follow-up after the October developers meeting 2}
+
+Others that need implementation:
+
+\begin{itemize}
+\item Table object functions and modes, some are spike related, some
+  are input and output related.
+\item Analysis functions related to table objects.
+\item Interspike and peristim objects (low priority).
+\item Createmap needs proper testing.
+\item Volumeconnect needs to be linked to the volumeconnect algorithm
+  in the model-container.
+\item Script\_out: requires a hook in ssp.
+\item Disk\_in and disk\_out equivalents.  Likely the delta-compressor
+  and the annotations provided by DAVIS are already sufficient.
+\end{itemize}
+
+
 \subsection{Allow use of token names for model components}
 
-This requires component names to be stringified in the NDF file format. E.g. cell, neuron, channel, etc.
+This requires component names to be stringified in the NDF file
+format. E.g. cell, neuron, channel, etc.
 
 {
   \vspace{5mm}
