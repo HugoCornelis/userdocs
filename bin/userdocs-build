@@ -75,19 +75,29 @@ sub build_document
     # to check for so that it can copy over other file types.
     if(tag_defined($descriptor,'pdf'))
     {
+      file_copy($descriptor->{'document name'},'pdf');
+#       print "\n\nThe document ";
+#       print $descriptor->{'document name'};
+#       print " is a pdf file, copying it over to the output directory\n\n";
 
-      print "\n\nThe document ";
-      print $descriptor->{'document name'};
-      print " is a pdf file, copying it over to the output directory\n\n";
+#       system "mkdir -p output/ps";
+#       system "mkdir -p output/pdf";
+#       system "mkdir -p output/html";
+#       system "cp *.pdf output/html";
+#       system "cp *.pdf output/ps";
+#       system "cp *.pdf output/pdf";
 
-      system "mkdir -p output/ps";
-      system "mkdir -p output/pdf";
-      system "mkdir -p output/html";
-      system "cp *.pdf output/html";
-      system "cp *.pdf output/ps";
-      system "cp *.pdf output/pdf";
-
-      chdir '..';
+#       chdir '..';
+      return;
+    }
+    elsif(tag_defined($descriptor,'mp3'))
+    {
+      file_copy($descriptor->{'document name'},'mp3');
+      return;
+    }
+    elsif(tag_defined($descriptor,'wav'))
+    {
+      file_copy($descriptor->{'document name'},'wav');
       return;
     }
 
@@ -561,6 +571,33 @@ sub create_http_redirect
   return;
 }
 
+
+
+#
+# ($documentname,$filetype)
+#
+# Takes a particular file type to use an as extension for copying
+# data to an output folder.
+sub file_copy
+{
+  my $documentname = shift;
+  my $filetype = shift;
+
+  print "\n\nThe document ";
+  print $documentname;
+  print " is a $filetype file, copying it over to the output directory\n\n";
+
+  system "mkdir -p output/ps";
+  system "mkdir -p output/pdf";
+  system "mkdir -p output/html";
+  system "cp *.$filetype output/html";
+  system "cp *.$filetype output/ps";
+  system "cp *.$filetype output/pdf";
+  
+  chdir '..';
+  return;
+
+}
 
 
 
