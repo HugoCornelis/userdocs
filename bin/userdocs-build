@@ -40,6 +40,11 @@ sub build_document
     my $descriptor = YAML::LoadFile('descriptor.yml');
 
 
+
+    #
+    # check for the obsolete tag first so we don't end up doing
+    # any extra work.
+    #
     if(tag_defined($descriptor,'obsolete'))
     {
       print "This document is obsolete, skipping.\n";
@@ -53,6 +58,17 @@ sub build_document
       return;
     }
 
+
+
+    #
+    # Here we check for the redirect attribute and perform actions as 
+    # necessary.
+    #
+    if(defined $descriptor->{redirect})
+    {
+      create_http_redirect($document,$descriptor->{redirect});
+      return;
+    }
 
     # Note: This tag handles special cases for pdf.
     # Should expand it to allow maybe a "filetype" attribute
@@ -501,6 +517,49 @@ sub main
 }
 
 
+#
+#
+#
+sub create_http_redirect
+{
+  my $document = shift;
+  my $redirect_url = shift;
+
+  print "\n\nThe document ";
+  print $document;
+  print " is an http redirect to a website.\n\n";
+
+  print  "-- creating directories --\n";
+  system "mkdir -p output/ps";
+  system "mkdir -p output/pdf";
+  system "mkdir -p output/html";
+
+
+
+  print "-- creating html file --\n";
+
+  my $html_document = $document . ".html";
+
+  open(OUTPUT,">$html_document");
+  print OUTPUT "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n<html>\n  <head>\n    <title>";
+  print OUTPUT $html_document . " (http redirect)";
+  print OUTPUT "</title>\n  </head>\n  <body><meta http-equiv=\"refresh\" content=\"0;URL=";
+  print OUTPUT $redirect_url;
+  print OUTPUT "\">\n  </body>\n</html>";
+  close(OUTPUT);
+
+  
+  print "-- copying redirect file to output directories\n";
+
+  system "cp -f $html_document output/ps";
+  system "cp -f $html_document output/pdf";
+  system "cp -f $html_document output/html";
+
+  print "-- Done --\n\n";
+
+  chdir '..';
+  return;
+}
 
 
 
@@ -579,6 +638,7 @@ sub prepare_publish_document
 
     chdir '..';
 }
+
 
 
 sub read_cmd_line
