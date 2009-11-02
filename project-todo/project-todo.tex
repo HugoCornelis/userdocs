@@ -85,57 +85,6 @@ propagate through to the compilation phase of the model-container.
 }
 
 
-\subsection{Automated Regression Tester}
-
-After an update of the model-container, monotone reports that there
-are files missing from the local model-container workspace.  This
-inhibits further updates such that the tester starts testing old
-software.  An example monotone checkin that produces this problem is
-the model-container checkin of version
-d4cbeb603334d009ba2797976db15f53db5046fe.  This version contains a
-white-space only change but corrupts the model-container workspace on
-the tester machine.
-
-{
-  \vspace{5mm}
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & \\
-    \hline
-    Time Estimate
-    & 2 days \\
-    \hline
-    Assigned to
-    & Mando \\
-    \hline
-  \end{tabular}
-}
-
-
-\subsection{ns-sli showfield}
-
-Implement ns-sli showfield. (DONE)
-
-{
-  \vspace{5mm}
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
-    \hline
-    Time Estimate
-    & 1 days \\
-    \hline
-    Assigned to
-    & Mando \\
-    \hline
-  \end{tabular}
-}
-
-
 \subsection{symmetric compartments}
 
 Implement symmetric compartments.  We will have to decide how to do
@@ -270,72 +219,6 @@ Document the python dependencies of the gshell.
 }
 
 
-\subsection{gshell studio}
-
-Disable the studio in the gshell, it should only be loaded on explicit
-request (DONE).
-
-{
-  \vspace{5mm}
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
-    \hline
-    Time Estimate
-    & 4 hours \\
-    \hline
-    Assigned to
-    & Hugo \\
-    \hline
-  \end{tabular}
-}
-
-
-\subsection{make dist for ns-sli}
-
-Building a tarball of the backward compatibility modules is broken.
-This needs to be fixed before a debian package can be built. (DONE)
-
-{
-  \vspace{5mm}
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
-    \hline
-    Time Estimate
-    & 1 day \\
-    \hline
-    Assigned to
-    & Mando \\
-    \hline
-  \end{tabular}
-}
-
-
-\subsection{Repository Server}
-\label{sec:repository-server}
-Monotone sometimes hangs on the repository server.  Upgrade the
-repository server (DONE).
-
-{
-  \vspace{5mm}
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Time Estimate
-    & 1 day \\
-    \hline
-    Assigned to
-    & Mando \\
-    \hline
-  \end{tabular}
-}
-
-
 \subsection{Webcheck}
 
 Go through the Webcheck output and identify critical and easy to fix
@@ -357,36 +240,6 @@ problems.
     \hline
   \end{tabular}
 }
-
-
-\subsection{Use neurospaces\_build to serve the source code}
-
-Right now custom scripts are used to serve the GENESIS 3 source code
-to the internet.  This leads to duplication of configuration data such
-as filenames.  The installer script neurospaces\_build has dedicated
-function to serve the source code without configuration data
-duplication.  Rather than using custom scripts, the neurospaces\_build
-script should be used to serve the source code to the outside world. (DONE)
-
-{
-  \vspace{5mm}
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
-    \hline
-    Time Estimate
-    & 1 day \\
-    \hline
-    Assigned to
-    & Mando \\
-    \hline
-  \end{tabular}
-}
-
-
-
 
 
 \subsection{Fix trash cleanup in automated tester.}
@@ -420,14 +273,13 @@ input file that can be passed as an argument to the neurospaces\_cron script.
 
 \subsection{File permission errors}
 
-Since GENESIS 3 is to be installed on machines for multiple users
-a serious bug must be addressed. Certain programs output to a hardcoded
-filename, such as /tmp/output. When one user starts up a simulation which 
-writes to such a file, it is given permissions for their user id. If a 
-second user tries to start up a similar simulation, which writes to the 
-same filename, the simulation will fail and GENESIS will bail out with an
-error (as was displayed by the tester). This bottlenecks the number of 
-users that can be using GENESIS 3 at the same time on the same machine.
+Certain tests output to a hardcoded filename, such as /tmp/output.
+When one user runs the tests this file is given permissions for their
+user id. If a second user tries to run the same test, it writes to the
+same filename, the test will fail and the test will bail out with an
+error (as was displayed by the regression tester machine).  This
+bottlenecks the number of users that can reliably install a developer
+installation on the same machine.
 
 
 {
@@ -760,9 +612,8 @@ Compile other dependencies from the NS wiki.
 
 \subsection{Add Network Modeling Support}
 
-Because this is an important function, it requires substantial
-development on one software component, and also impacts other software
-components.
+Network modeling support still requires substantial development on one
+software component, and also impacts other software components.
 
 \begin{itemize}
 \item DES
@@ -1135,6 +986,150 @@ Allan Coop, Hugo Cornelis, Mando Rodriguez, Dave Beeman, James Bower.
 
 
 \section{DONE List}
+
+\subsection{Use neurospaces\_build to serve the source code}
+
+Right now custom scripts are used to serve the GENESIS 3 source code
+to the internet.  This leads to duplication of configuration data such
+as filenames.  The installer script neurospaces\_build has dedicated
+function to serve the source code without configuration data
+duplication.  Rather than using custom scripts, the neurospaces\_build
+script should be used to serve the source code to the outside world. (DONE)
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & Required for alpha1 Release 3.0 \\
+    \hline
+    Time Estimate
+    & 1 day \\
+    \hline
+    Assigned to
+    & Mando \\
+    \hline
+  \end{tabular}
+}
+
+
+\subsection{gshell studio}
+
+Disable the studio in the gshell, it should only be loaded on explicit
+request (DONE).
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & Required for alpha1 Release 3.0 \\
+    \hline
+    Time Estimate
+    & 4 hours \\
+    \hline
+    Assigned to
+    & Hugo \\
+    \hline
+  \end{tabular}
+}
+
+
+\subsection{make dist for ns-sli}
+
+Building a tarball of the backward compatibility modules is broken.
+This needs to be fixed before a debian package can be built. (DONE)
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & Required for alpha1 Release 3.0 \\
+    \hline
+    Time Estimate
+    & 1 day \\
+    \hline
+    Assigned to
+    & Mando \\
+    \hline
+  \end{tabular}
+}
+
+
+\subsection{Repository Server}
+\label{sec:repository-server}
+Monotone sometimes hangs on the repository server.  Upgrade the
+repository server (DONE).
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Time Estimate
+    & 1 day \\
+    \hline
+    Assigned to
+    & Mando \\
+    \hline
+  \end{tabular}
+}
+
+
+\subsection{Automated Regression Tester}
+
+After an update of the model-container, monotone reports that there
+are files missing from the local model-container workspace.  This
+inhibits further updates such that the tester starts testing old
+software.  An example monotone checkin that produces this problem is
+the model-container checkin of version
+d4cbeb603334d009ba2797976db15f53db5046fe.  This version contains a
+white-space only change but corrupts the model-container workspace on
+the tester machine.
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & \\
+    \hline
+    Time Estimate
+    & 2 days \\
+    \hline
+    Assigned to
+    & Mando \\
+    \hline
+  \end{tabular}
+}
+
+
+\subsection{ns-sli showfield}
+
+Implement ns-sli showfield. (DONE)
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & Required for alpha1 Release 3.0 \\
+    \hline
+    Time Estimate
+    & 1 days \\
+    \hline
+    Assigned to
+    & Mando \\
+    \hline
+  \end{tabular}
+}
+
 
 \subsection{G-Shell}
 \begin{itemize}
