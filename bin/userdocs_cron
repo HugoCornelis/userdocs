@@ -187,7 +187,7 @@ sub report_error
 
     my $error_code = shift;
 
-    try_to_mail("neurospaces_cron error", "$0: $command returned $error_code");
+    try_to_mail("userdocs_cron error", "$0: $command returned $error_code");
 
     die "$0: $command returned $error_code";
 }
