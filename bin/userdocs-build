@@ -67,6 +67,7 @@ sub build_document
     if(defined $descriptor->{redirect})
     {
       create_http_redirect($document,$descriptor->{redirect});
+      chdir '..';
       return;
     }
 
@@ -87,17 +88,19 @@ sub build_document
 #       system "cp *.pdf output/ps";
 #       system "cp *.pdf output/pdf";
 
-#       chdir '..';
+      chdir '..';
       return;
     }
     elsif(tag_defined($descriptor,'mp3'))
     {
       file_copy($descriptor->{'document name'},'mp3');
+      chdir '..';
       return;
     }
     elsif(tag_defined($descriptor,'wav'))
     {
       file_copy($descriptor->{'document name'},'wav');
+      chdir '..';
       return;
     }
 
@@ -566,8 +569,6 @@ sub create_http_redirect
   system "cp -f $html_document output/html";
 
   print "-- Done --\n\n";
-
-  chdir '..';
   return;
 }
 
@@ -593,8 +594,6 @@ sub file_copy
   system "cp *.$filetype output/html";
   system "cp *.$filetype output/ps";
   system "cp *.$filetype output/pdf";
-  
-  chdir '..';
   return;
 
 }
