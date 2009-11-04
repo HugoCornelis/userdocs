@@ -214,6 +214,16 @@ sub update_links
 
 	$item =~ s({\\bf \\underline{.+}})({\\bf \\underline{$document_name}})g;
 
+
+	if(defined $descriptor->{'summary'})
+	{
+
+	  chop($item);
+	  chop($item);
+	  $item .= " : " . $descriptor->{'summary'} . "\n\n";
+
+	}
+
 	push(@updated_links,$item);
 
 
