@@ -156,10 +156,17 @@ See \href{../workflow-documentation/workflow-documentation.tex}{\bf Documentatio
 
 \section*{BACKWARD COMPATIBILITY FAQ}
 
-%\begin{enumerate}
+\begin{itemize}
 
-%\item {\bf 
+\item {\bf  In G-2, field variables such as $V_m$ and $I_m$ that are calculated by the solver are not treated differently to fixed parameters such as $R_m$ and $C_m$ that are set with {\it setfield}.  (In fact you could set $V_m$ with {\it setfield}, but it will be changed at the next timestep, while {\it getfield} can be used on either type of variable.)  Evidently, G-3 does not show $V_m$ with {\it show\_parameter}, or make it available with {\it getfield}.  But, {\it getfield} should work on both kinds of field variables. What is the reason for this?} \\
+The {\bf Model\,Container} registers solver information for each model being solved.  This allows the software to retrieve information from the solvers (e.g. {\bf Heccer}) about the model they are solving. Solved variables with common names such as $V_m$ or dedicated names such as $average_{V_m}$, and other information of potential interest to a user, such as what is the maximal time step so far or what is the simulation time, are local to the solver. Due to the separation of a model from its mathematical implementation, this is obviously very different from how G-2 works.
 
-%\end{enumerate}
+\item {\bf The G-2 {\it create} command creates and initializes all fields of a compartment when it is created.  In the {\bf G-Shell}, the field parameters don't seem to exist until they are initialized. Was that a design decision, and what do you think is best?} \\
+Yes, this is a design decision.  The {\bf Model\,Container} allows the definition of
+``incomplete'' models.  It is up to other software components to decide if a model is complete or not. In G-3 completeness for a mathematical solver
+is quite different from completeness for a morphology analyzer.
+
+
+\end{itemize}
 
 \end{document}
