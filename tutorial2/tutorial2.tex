@@ -62,7 +62,7 @@ To run one of these models the model description file (NDF) must first be loaded
 \end{verbatim}
 This command results in the complete Purkinje cell model being made available to the GENESIS shell.
 
-Note that currently it is not advisable to load more than one model at a time into the GENESIS shell. To change to a different model requires exiting the shell, restarting GENESIS, and loading the new model (see the \href{../gshell/gshell.tex}{Introduction to the GENESIS Shell}).
+{\bf Note:} Currently, it is not advisable to load more than one model at a time into the GENESIS shell. Although multiple models can be loaded, the command {\it ndf\_save} will save all models to the ndf file. To change to a different model you can either issue the {\tt delete} command (see example below) or exit the {\bf G-Shell}, restart GENESIS, and load the new model (see the \href{../gshell/gshell.tex}{Introduction to the GENESIS Shell}).
 
 \subsection*{Explore Model}
 
@@ -102,7 +102,7 @@ Choosing one of the segments at random (here, for example {\tt /Purkinje/segment
 \end{verbatim}
 or by making the chosen element the current working element via the {\tt ce} (change working element) command. We can then check what the current working element is with the {\tt pwe} (print working element) command
 \begin{verbatim}
-    genesis > ce b3s45[10]
+    genesis > ce /Purkinje/segments/b3s45[10]
     genesis > pwe
     /Purkinje/segments/b3s45[10]
     genesis > list_elements .
@@ -111,26 +111,34 @@ or by making the chosen element the current working element via the {\tt ce} (ch
     . . .
     - /Purkinje/segments/b3s45[10]/Purkinje_spine_0
 \end{verbatim}
-The ability to change the current working element allows us to either check the value of the model parameters associated with the current working element (such as {\tt RM} or {\tt CM}) via the command {\tt show\_model\_parameters} or change default parameter values via the {\tt set\_model\_parameter} command, e.g.
+The ability to change the current working element allows us to either check the value of the model parameters associated with the current working element (such as {\tt RM} or {\tt CM}) via the command {\tt show\_model\_parameters}, change default parameter values via the {\tt set\_model\_parameter} command or view the scaled value of the parameter via the command {\tt show\_parameter\_scaled}, e.g.
 \begin{verbatim}
     genesis > pwe
     /Purkinje/segments/b3s45[10]
     genesis > show_model_parameters .
     ---
-    UNDER CONSTRUCTION
-    genesis > set_model_parameter RM 2.0
-    genesis > show_model_parameters RM
-    UNDER CONSTRUCTION
-    genesis > show_model_parameters .
-    UNDER CONSTRUCTION
+       'parameter name': SURFACE
+       type: number
+       value: 1.54645e-10
+       . . .
+       'parameter name': ELEAK
+       type: number
+       value: -0.08
+    genesis > show_parameter /Purkinje/segments/b3s45[10] RM
+    value = 3    
+    genesis > set_model_parameter /Purkinje/segments/b3s45[10] RM 2.0
+    genesis > show_parameter /Purkinje/segments/b3s45[10] RM
+    value = 2
+    genesis > show_parameter_scaled /Purkinje/segments/b3s45[10] RM
+    scaled value = 1.29328e+10
 \end{verbatim}
 
-Note that:
+{\bf Note:}
 \begin{itemize}
 
-\item The {\tt ce} command will accept either the full path name\\(e.g. {\tt  /Purkinje/segments/b3s45[10]}) to a segment or just the segment name itself (as given in the above example).  Parameter values associated with a given element can be changed using either the full path name or making the given segment the current working element (as with the above example).
+\item The commands {\tt ce}, {\tt set\_model\_parameter}, and {\tt show\_parameter} currently only accept the full path name\\(e.g. {\tt  /Purkinje/segments/b3s45[10]}) to a segment even if the parameter to be queried or changed is in the current working element. % or just the segment name itself (as given in the above example).  Parameter values associated with a given element can be changed using either the full path name or making the given segment the current working element (as with the above example).
 
-\item In the GENESIS shell the commands {\tt .} and {\tt ..} operate in the same way as when employed to traverse the Unix file system (see \\\href{../unix-linux/unix-linux.tex}{Introduction to Unix and the Linux graphical desktop}). The {\tt ..} operator may be chained, e.g. {\tt ../../../}
+\item In the GENESIS shell the commands {\tt .} and {\tt ..} operate in the same way as when employed to traverse the Unix file system (see \href{../unix-linux/unix-linux.tex}{Introduction to Unix and the Linux graphical desktop}). The {\tt ..} operator may be chained, e.g. {\tt ../../../}
 
 \item Also remember that in the GENESIS documentation, an elipsis ($\ldots$) indicates missing lines.
 
