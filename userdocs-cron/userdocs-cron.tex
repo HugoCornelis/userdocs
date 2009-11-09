@@ -1,0 +1,41 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{\it userdocs\_cron}
+
+The GENESIS documentation system consumes many resources, particularly memory and cpu time, when being rebuilt. Rebuilding can take a considerable time, particularly on a single processor. For example, rebuilding Levels 1 and 2 takes at least ten minutes, whereas, rebuilding all seven levels takes at least 40 minutes. For these reasons the documentation build is an automated operation. The {\it userdocs} package comes with a {\it cron} script that can be set up to run at periodic intervals to keep your documentation up to date.
+
+\subsection*{Configuration}
+
+To configure the {\it userdocs\_cron} script you must construct a YAML file with the following options:
+\begin{itemize}
+   \item {\bf MAILTO:} An email recipient to send an email to on completion of the job.
+   \item {\bf MAILFROM:} An email address from which to send a completion email.
+   \item {\bf HTMLDIR:} A directory which will hold your {\it userdocs} html data directory to be served from the internet.
+   \item {\bf OUTPUTDIR:} A directory to write the output log data.
+   \item {\bf URL:} An http link which serves the test harness output (for an example see \href{http://neurospaces.sourceforge.net/neurospaces_project/gshell/tests/html/specifications/pclamp.html}{\bf PClamp}. 
+\end{itemize}
+\subsubsection*{Example configuration file}
+
+\begin{verbatim}
+---
+MAILTO: my@email.com
+MAILFROM: userdocs@buildmachine.com
+HTMLDIR: /var/www/html
+OUTPUTDIR: /tmp
+URL: http://mywebsite/userdocs
+\end{verbatim}
+
+\end{document}
