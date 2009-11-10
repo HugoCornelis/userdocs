@@ -11,30 +11,33 @@
 % start: userdocs-tag-replace-items related-do-nothing
 % end: userdocs-tag-replace-items related-do-nothing
 
+\section*{Create a New Document}
+
 \subsection*{Introduction}
 
 The GENESIS Documentation System is fully automated with versioning under the control of \href{http://monotone.ca/}{\bf monotone}. To learn more about monotone and its use by GENESIS see \href{../version-control/version-control.tex}{\bf Version\,Control} and to learn more about the levels of GENESIS documentation see \href{../documentation-overview/documentation-overview.tex}{\bf Documentation\,Overview}. This document assumes that you are familiar with that material.
 
-Here, we introduce some of the flexibility, features, and requirements of the GENESIS Documentation System. We describe the location of source files within this system and how to create a new document. To learn how to add a new document to the GENESIS version control system see \href{../version-control/version-control.tex}{\bf Version\,Control}. Once a document is under version control and identified with the correct tags (see below) it can be automatically published to be available for other members of the GENESIS community.
+Here, we introduce some of the flexibility, features, and requirements of the GENESIS Documentation System. We describe the location of source files within this system, the contents of a documentation folder/directory, and how to create a new document.
+
+To learn how to add a new document to the GENESIS version control system see \href{../version-control/version-control.tex}{\bf Version\,Control}. Once a document is under version control and identified with the correct tags (see below) it can be automatically published from your local computer to the GENESIS website (\href{http://www.genesis-sim.org/}{www.genesis-sim.org}) to be available for other members of the GENESIS community.
 
 \subsection*{Location of GENESIS Documentation}
 
-The documents that make up the GENESIS Documentation System are located in your local workspace, which can be found at the default location
+Following a \href{../genesis-installation/genesis-installation.tex}{\bf Developer Installation} the documents that make up the GENESIS Documentation System are located in your local workspace. The default location of your local workspace is:
 \begin{verbatim}
     ~/neurospaces_project/userdocs/source/snapshots/0
 \end{verbatim}
-The source materials for individual GENESIS documents can be found in uniquely named folders/directories located in your local workspace. One of the directories in the workspace should be named\,{\it NewDocument}. This directory and the files it contains provide a template for a generic GENESIS document. The files included by default are\,{\it descriptor.yml} and\,{\it NewDocument.tex}, and a sub-directory named\,{\it figures}.
+The source materials for individual GENESIS documents are located in uniquely named folders/directories in your local workspace. One of the directories in the workspace should be named\,{\it NewDocument}. This directory and the files it contains provide a template for a generic GENESIS document. The files included by default are\,{\it descriptor.yml} and\,{\it NewDocument.tex}, and a sub-directory named\,{\it figures}.
 
 \subsubsection*{The Default YML Descriptor File}
 
-The name of the descriptor file\,{\it descriptor.yml} should not be changed. The default contents of this file include:
+The name of the descriptor file\,{\it descriptor.yml} should not be changed. The default contents of this file include: attributes (terminated by a colon) and tags (indicated by a hyphen), for example:
 
 \begin{verbatim}
 ---
 comment: Optional comment.
 description: Briefly describe document contents here. 
 document name: Insert a user readable document name here.
-summary: Document summary for contents page link. 
 tags:
   - genesis3
   - level2
@@ -43,7 +46,8 @@ tags:
 
 \begin{itemize}
 
-\item {\tt ---} The three dashes on the first line of the file {\it descriptor.yml} are part of the Y Markup Language (YML) syntax for automated software engineering (see \href{http://fdik.org/yml/}{\bf http://fdik.org/yml/}). {\bf Note:} The meaning of the white space/indents in the\,{\it descriptor.yml} file is defined for YML.
+\item {\tt ---} The three dashes on the first line of the file {\it descriptor.yml} are part of the \href{http://fdik.org/yml/}{\bf Y\,Markup\,Language} (YML) syntax for automated software engineering. \\
+{\bf Note:} The meaning of the white space/indents in the\,{\it descriptor.yml} file is defined for YML.
 
 \item {\tt comment:} Optional comment about the documentation file, e.g. reason for being tagged {\tt -\,obsolete}.
 
@@ -51,17 +55,18 @@ tags:
 
 \item {\tt document name:} Provide a document name which gives the title of the documentation file. This name is used as a link to the given file in the GENESIS Documentation System. This name is independent of and should be more human readable than the actual name of the document file it identifies.
 
-\item {\tt summary:} This attribute is not present in the {\it New\,Document} template. However, if present, it should be followed by a short description of the contents of the document. This description will appear after the document name on the contents index page of the documentation level given by the (for example here) {\tt -\,contents-level1} tag (see below).
-
 \item {\tt tags:} List of any tags used to identify the current document. The default tags include {\tt -\,genesis3}, {\tt -\,level2}, and {\tt -\,published}. These tags indicate that the document is part of the GENESIS Documentation System at the level of User Guides and Documentation (Level 2) and that that the document will be published when documentation is rebuilt (see \href{../neurospaces-cron/neurospaces-cron.tex}{\it neurospaces\_cron}), but that in the absence of a {\tt - contents-level2} tag, the document name will not appear in the Level 2 Contents index (see below).
 
 \begin{itemize}
-
    \item New tags may be created by adding them to the {\it descriptor.yml} file, but see below for a list of the tags currently recognized.  Note that the tagging system is case insensitive to avoid tag duplication.
 
    \item Importantly, each of the directories {\tt contents-level1}\,\ldots {\tt contents-level7} in your local workspace contains a list of the documentation to be found at the given level. These content indices are generated automatically during a GENESIS installation, a {\tt userdocs} module installation, or a GENESIS update. They provide direct links to all documents tagged for the given level of documentation.
-   
+\end{itemize}   
 \end{itemize}
+Two important attributes are not included in the default {\it descriptor.yml} file, but may be added as required:
+\begin{itemize}
+\item {\tt redirect:} Followed by a user supplied URL, automatically generates a \href{../http-redirect/http-redirect.tex}{\bf HTTP\,redirect}. This allows documentation external to the GENESIS Documentation System to be automatically incorporated in the absence of any local documentation (with the exception of the {\it descriptor.yml} file).
+\item {\tt summary:} Followed by a short user supplied description of the contents of the document. This description will appear after the document name on the contents index page of the documentation level given by (for example here) the {\tt -\,contents-level2} tag.
 
 \end{itemize}
 
@@ -73,54 +78,23 @@ The default \LaTeX\, documentation source file\,{\it NewDocument.tex} in the {\i
 
 \subsubsection*{Related Documentation Hyperlinks}
 
-These are created via the tag construct located under the {\bf Related Documentation} heading at the beginning of the {\it NewDocument.tex} file. 
+At times it is necessary to direct a user to documentation that is off site since reproducing the content can be time consuming, or require special host configurations (e.g YouTube videos). By using the {\bf redirect:} attribute in your documentation {\it descriptor.yml} file, you can link to URLs on the internet, effectively integrating the linked content into your own documentation.
+
+An example of the use of the redirect tag can be shown here:
+
+---
+description: A redirect to a website
+document name: Off Site Information
+redirect: http://www.directmehere.edu
+tags:
+  - contents-level5
+  - published
+
+The structure is identical to previous descriptor files with the exception of our redirect attribute. This will place a link to the content in the Level 5 contents page. To add a redirect to your documentation the only file needed is the descriptor file with the indicated redirect flag. These are created via the tag construct located under the {\bf Related Documentation} heading at the beginning of the {\it NewDocument.tex} file. 
 
 \subsubsection*{The Figures Folder}
 
 This directory contains any figures that your new document source file may include. The name of this folder should not be changed.
-
-\section*{Incorporate a Pre-existing Document, File, or Video}
-
-The GENESIS Document System recognizes a number of different file formats. The purpose is to allow preexisting documentation to be directly included without having first to be converted to the \LaTeX\,format.
-
-To incorporate a pre-existing document into the GENESIS Document System:
-
-\begin{enumerate}
-
-\item Include a tag in the {\it descriptor.yml} file in the document directory. Currently, the following file format tags are recognized (Note. No tag is necessary for either \LaTeX\,files as the .tex file name suffix is the default for the GENESIS Documentation System or eps files in the {\it figures} folder):
-
-\begin{itemize}
-
-\item[]{\bf - eps} Encapsulated postscript.
-%\item[]{\bf - html} Hypertext markup language.
-\item[]{\bf - pdf} Portable document format.
-%\item[]{\bf - png} Portable network graphics.
-%\item[]{\bf - ps} Postscript.
-
-\end{itemize}
-
-\item Place the document file in the document directory (NOT the {\it figures} sub-directory).
-
-\end{enumerate}
-
-It is also possible to incorporate audio files and videos as part of documentation. The recognized audio file format tags include:
-
-\begin{itemize}
-
-\item[]{\bf - wav} Microsoft .wav file format.
-\item[]{\bf - mp3} Digital audio encoding format.
-
-\end{itemize}
-
-To incorporate video into a GENESIS document: 
-
-\begin{enumerate}
-   \item Create an account with a video sharing website, e.g. \href{http://www.youtube.com/create_account}{\bf YouTube}.
-   \item Upload your video(s).
-   \item Embed a link to the video(s) into the document describing their contents. See \href{../NewDocument/NewDocument.tex}{\bf NewDocument}, for further details.
-\end{enumerate}
-
-Incorporation of pre-existing documentation in one of the above formats is the only time that the document directory name and the document name do not have to match (see further below). Note that with document incorporation (c.f. creation) the document to be included is located in the document directory and NOT the {\it figures} directory.
  
 \section*{Create a New Document}
 
@@ -128,26 +102,40 @@ There are four simple steps to the creation of a new document within the GENESIS
 
 \begin{enumerate}
 
-\item {\bf Make a new document:} Copy the\,{\it NewDocument} template folder to the name of the new document you want to make. Change the name of the \LaTeX\,\,\,file\,{\it NewDocument.tex} inside the renamed folder to the name of your new document. To do this replace the\,{\it NewDocument} part of the default source file name with the new name you have just given to the\,{\it NewDocument} folder.
+\item {\bf Create document:}  To automatically create one or more new document template structures, simply envoke the {\it userdocs-create} script at a terminal command line prompt and give the name of the document you wish to create as an argument:
+\begin{verbatim}
+   userdocs-create <my-document>
+\end{verbatim}
+This command creates a new document folder/directory and its sub-directories by copying the template {\it NewDocument} file and assigning the given document name to both the documentation folder (here, for example, it would be {\it my-document}) and the default documentation file it contains (here, {\it my-document.tex}).
 
-This will result in both the documentation directory and the source file having the same name (with the exception of the {\tt .tex} extension of the source file). For example, the name of the directory containing this document is {\it document-create} and the name of the source file it contains is\,{\it document-create.tex}.
+You can also specify multiple document names to create a series of documents:
+\begin{verbatim}
+   userdocs-create <my-document1> <my-document2> <my-document3> . . .
+\end{verbatim}
+{\bf Important:} It is a requirement of the GENESIS Documentation System that the names of the descriptor file\,{\it descriptor.yml} and the directory\,{\it figures} located in the document folder should not be changed.
 
-Importantly, remember that the names of the descriptor file\,{\it descriptor.yml} and the directory\,{\it figures} located in the document folder are required by the GENESIS Documentation System and should not be changed.
+For more details see \href{../document-create-manual/document-create-manual.tex}{\bf Manual Document Creation}. The other steps in document creation are currently manual.
 
-\item {\bf Add a set of related hyperlinks:} Hyperlinks to one or more related documents (usually outside the scope of the GENESIS Documentation System) are by default located at the beginning of each document source {\tt .tex} file following the {\bf Related Documentation:} heading. The generation of these links is controlled by a tagging construct which is automatically expanded whenever the document system is rebuilt:
+\item {\bf Add any related document hyperlinks:} Hyperlinks to one or more related documents are by default located at the beginning of each document source {\tt .tex} file following the {\bf Related Documentation} heading. The generation of these links is controlled by a tagging construct which is automatically expanded whenever the document system is rebuilt:
 \begin{verbatim}
    % start: userdocs-tag-replace-items <related-do-nothing>
    % end: userdocs-tag-replace-items <related-do-nothing>
 \end{verbatim}
-The default tag for the reference hyperlink system is {\tt <related-do-nothing>}, which allows a document to be created and published in the absence of any reference hyperlinks. 
+The default tag for the related hyperlink system is {\tt <related-do-nothing>}, which allows a document to be created and published in the absence of any related hyperlinks. 
 
-More than one reference hyperlink can be added to a document. Each added link requires its own tagging construct and is identified by a tag you create that replaces the default tag. The replacement tag should have the following form:
+More than one related document hyperlink can be added to a document by the addition of tags you create that replace the default tag. For example:
 \begin{verbatim}
-   related-<your-tag-name>
+   % start: userdocs-tag-replace-items <your-tag-name1> <your-tag-name2> <your-tag-name3> . . .
+   % end: userdocs-tag-replace-items <your-tag-name1> <your-tag-name2> <your-tag-name3> . . .
 \end{verbatim}
-where {\tt <your-tag-name>} is replaced by an identifier you create. This tag must also be placed in the {\it descriptor.yml} file (see next section) of the document you want to reference for the hyperlink to functionally appear at the head of the document.
 
-Note that the default reference hyperlink {\tt related-do-nothing} relies on a document called \href{../do-nothing/do-nothing.tex}{\it do-nothing.tex}. 
+As in the above example, the related tag(s) should have the following form:
+\begin{verbatim}
+   related-<your-tag-name1>
+\end{verbatim}
+where {\tt <your-tag-name1>} is replaced by an identifier you create. Importantly, this tag must also be placed in the {\it descriptor.yml} file of the document you want the hyperlink to reference.
+
+{\bf Note:} The default related document hyperlink {\tt related-do-nothing} relies on a document called \href{../do-nothing/do-nothing.tex}{\it do-nothing.tex}. 
 
 \item {\bf Update the descriptor.yml file:} Each directory/file in the GENESIS Documentation System is tagged on the basis of its content, for example:
 
@@ -166,45 +154,41 @@ Note that the default reference hyperlink {\tt related-do-nothing} relies on a d
          \item[]\href{../contents-level6/contents-level6.tex}{\tt -\,level6} (autogenerated api documentation)
          \item[]\href{../contents-level7/contents-level7.tex}{\tt -\,level7} (inline source code documentation)
       \end{itemize}
+{\bf Important:} When creating a new document, the default tag ({\tt -\,level2}) in the associated {\it descriptor.yml} file should be replaced with a tag from the above list that identifies the correct level of the document.
 
 For more on the levels of the GENESIS Documentation System see the \href{../documentation-overview/documentation-overview.tex}{Documentation\,Overview}.
 
-\item {\bf Insert ``Related Document'' hyperlink tags:} If one or more related document hyperlink tags have been inserted into your new document then the same tags must be placed in the {\it descriptor.yml} file of the document to be referenced.
+\item {\bf Tag Appearance of Document Name in Contents Index:} A document name (given by the {\tt document name:} attribute) will not appear in the documentation contents list unless one of the {\tt -\,contents-level1}$\ldots${\tt -\,contents-level7} tags is present in the associated {\it descriptor.yml} file. The presence of this tag results in the document name being placed in alphabetical order in the contents page of the level specified by the tag. If you do not want the name of the document to appear in the contents page you should remove this tag. This functionality allows one or more documents to be hyperlinked from a summary document (see particularly Level 1 and 2 documentation) without the name of the hyperlinked document(s) also appearing in the contents page of the given level.
 
-\item {\bf Flag document origin:} If the document has been created from one located on the \href{http://code.google.com/p/neurospaces/w/list}{\bf Neurospaces\,wiki} then a {\tt --wiki} tag should be inserted in the {\it descriptor.yml} file.
+\item {\bf Insert ``Related Document'' hyperlink tags:} If you wish your new document (referring document in following figure) to link another document (referenced document in following figure) under its {\bf Related Documentation} section, you must insert the appropriate tag in the {\bf descriptor.yml} file of the referenced document. The following figure illustrates these relationships.
+\begin{figure}[h]
+  \centering
+   \includegraphics[scale=0.6]{figures/related-document.eps}
+%\caption{{\bf A Dummy Figure:} Example of \LaTeX\,\,\,code to incorporate a figure into documentation.}
+%  \label{fig:df-2}
+\end{figure}
 
-\item {\bf Flag document status:} For a given document to be part of the documentation version control system and the GENESIS Documentation System, it must be in a documentation folder along with a {\it descriptor.yml} file that contains only one of either the {\tt -\,draft}, {\tt -\,local}, or {\tt -\,published} tags.
+\item {\bf Tag document origin:} If the document has been created from one located on the \href{http://code.google.com/p/neurospaces/w/list}{\bf Neurospaces\,wiki} then a {\tt --wiki} tag should be inserted in the {\it descriptor.yml} file.
 
-{\bf Note 1:} Importantly, when creating a new document, the default tag ({\tt -\,level1}) in the associated {\it descriptor.yml} file should be replaced with a tag identifying the correct level of the document (see list above).
+\item {\bf Tag document status:} For a given document to be part of the documentation version control system and the GENESIS Documentation System, it must be in a documentation folder along with a {\it descriptor.yml} file that contains only one of either the {\tt -\,draft}, {\tt -\,local}, or {\tt -\,published} tags. {\bf Note:} The {\tt-\,published} tag in the {\it descriptor.yml} file associated with your new document should be replaced with the {\tt -\,draft} tag  while you are working on the document to prevent it being published to the GENESIS website. 
 
-{\bf Note 2:} The presence of the {\tt -\,contents-level1} tag results in the document name (given by the string following the {\tt document name:} attribute in the YML key/value tuple) being placed in alphabetical order in the contents page of the level specified by the tag. If you do not want the name of the document to appear in the contents page you should remove this tag. This allows multiple documents to be hyperlinked in a summary document (see particularly Level 1 and 2 documentation) without the name of the hyperlinked document also appearing in the contents page of the given level.
+{\bf Precedence of publication related tags:} Three tags control publication of documents within the GENESIS Documentation System. They are interpreted in a hierarchical manner, such that the presence of the {\tt  -\,draft} tag along with either the {\tt -\,local} and/or {\tt -\,published} tag will prevent the document from being included into a build/update of the Documentation System. Alternatively, a document will not be published to be browser viewable in the absence of either the {\tt -\,local} or {\tt -\,published} tag. So if documentation is (not) appearing where you expect after an update, it is a good idea to check the publication tags in the {\it descriptor.yml} file.
 
-{\bf Note 3:} The {\tt-\,published} tag should be replaced with the {\tt -\,draft} tag  while you are working on a document to prevent it being published to the GENESIS website Documentation System. 
-
-{\bf Note 4:} The {\tt -\,contents-level1} and {\tt-\,published} tags are present in the {\it descriptor.yml} template file to allow the {\tt NewDocument} template document to appear in the GENESIS Documentation System. To add your new document to the GENESIS Documentation System, replace the {\tt -\,draft} tag by either the {\tt -\,published} or the {\tt -\,local} tag.  
-
-{\bf Precedence of publication related tags:} Three tags control publication of documents within the GENESIS Documentation System:
 \begin{itemize}
 	\item[]{\tt -\,draft}: The presence of this tag in the\,{\it descriptor.yml} file associated with a document will prevent the document 
 	from being published,  i.e. viewable within a browser. For a document to be publishable, the {\tt -\,draft} tag must be replaced 
 	with either the {\tt -\,local} or the {\tt -\,published} tag.
 	
 	\item[]{\tt -\,local}: This tag indicates that a document will be included into any local build of the the GENESIS Documentation 
-	System. The presence of this tag means that a document will be browser viewable on (a) local machine(s), but will not appear as a `published' 
-	document on the GENESIS web site at {\tt http://genesis-sim.org}. This tag is useful to developers for checking documentation prior to publication on the web via the GENESIS web site and can be used to control who can view documentation locally.
+	System. The presence of this tag means that a document will be browser viewable on (a) local machine(s), but will not appear as a 
+	`published' document on the GENESIS web site at {\tt http://genesis-sim.org}. This tag is useful to developers for checking documentation
+	prior to publication on the web via the GENESIS web site and can be used to control who can view documentation locally.
 	
-	\item[]{\tt -\,published:} The presence of this tag in the\,{\it descriptor.yml} file will cause the associated document to be published to the GENESIS Documentation System on the GENESIS web site, as long as neither the {\tt -\,draft} nor the {\tt -\,local} tags are present in the same\,{\it descriptor.yml} file (see next item).
-	
-	\item[]{\bf Note 4:} The three publication related tags are interpreted in a hierarchical manner, such that the presence of the {\tt 
-	-\,draft} tag along with either the {\tt -\,local} and/or {\tt -\,published} tag will prevent the document from being included into a 
-	build/update of the Documentation System.
-		
-	\item[]Similarly, absence of the {\tt -\,draft} tag but presence of the {\tt -\,local} tag will prevent publication of a document to the 
-	GENESIS web site even if the {\tt -\,published} tag is present.
-	
-	\item[] {\bf Note 5:} A document will not be published to be browser viewable in the absence of either the {\tt -\,local} or {\tt -\,published} tag. So if documentation is (not) appearing where you expect after an update, it is a good idea to check the 
-	publication tags in the {\it descriptor.yml} file.
-	\item[] {\bf Note 6:} A document name will not appear in the contents list unless one of the {\tt -\,contents-level1}$\ldots${\tt -\,contents-level7} tags appears in the associated {\it descriptor.yml} file.
+	\item[]{\tt -\,published:} The presence of this tag in the\,{\it descriptor.yml} file will cause the associated document to be published to the 
+	GENESIS Documentation System on the GENESIS web site, as long as neither the {\tt -\,draft} nor the {\tt -\,local} tags are present in the same
+	\,{\it descriptor.yml} file (see next item). Similarly, absence of the {\tt -\,draft} tag but presence of the {\tt -\,local} tag will prevent publication of a 
+	document to the GENESIS web site even if the {\tt -\,published} tag is present.
+
 \end{itemize}
 
 Tags in the descriptor file currently recognized by \href{../neurospaces-cron/neurospaces-cron.tex}{\it neurospaces\_cron} include:
@@ -247,13 +231,55 @@ Other recommended tags not yet recognized by {\it neurospaces\_cron} include:
     - png
     - ps
 \end{verbatim}
-Importantly, remember that the interpretation of the\,{\it descriptor.yml} file by the GENESIS Documentation System is sensitive to white space and indents.
+
+{\bf Note:} User supplied tags not recognized by {\it neurospaces\_cron} may still be useful for local control and sorting of documentation. Importantly, when adding your own tags remember that the interpretation of the\,{\it descriptor.yml} file by the GENESIS Documentation System is sensitive to white space and indents.
  
 \end{enumerate}
 
 \item {\bf Update the\,{\it figures} folder:} Place any figures or images, etc that your source document file contains in the\,{\it figures} directory.
 
 \end{enumerate}
+
+\subsection*{Incorporate a Pre-existing Document, File, or Video}
+
+The GENESIS Document System recognizes a number of different file formats. The purpose is to allow preexisting documentation to be directly included without having first to be converted to the \LaTeX\,format.
+
+To incorporate a pre-existing document into the GENESIS Document System:
+
+\begin{enumerate}
+
+\item Include a tag in the {\it descriptor.yml} file in the document directory. Currently, the following file format tags are recognized (Note. No tag is necessary for either \LaTeX\,files as the {\tt .tex} file name suffix is the default for the GENESIS Documentation System or {\tt .eps} files in the {\it figures} folder):
+
+\begin{itemize}
+
+\item[]{\bf - eps} Encapsulated postscript.
+%\item[]{\bf - html} Hypertext markup language.
+\item[]{\bf - pdf} Portable document format.
+%\item[]{\bf - png} Portable network graphics.
+%\item[]{\bf - ps} Postscript.
+
+\end{itemize}
+
+\item Place the document file in the document directory (NOT the {\it figures} sub-directory).
+
+\end{enumerate}
+
+It is also possible to incorporate audio and video files as part of documentation. Currently recognized audio file format tags include:
+
+\begin{itemize}
+   \item[]{\bf - wav} Microsoft .wav file format.
+   \item[]{\bf - mp3} Digital audio encoding format.
+\end{itemize}
+
+To incorporate video into a GENESIS document: 
+
+\begin{enumerate}
+   \item Create an account with a video sharing website, e.g. \href{http://www.youtube.com/create_account}{\bf YouTube}.
+   \item Upload your video(s).
+   \item Embed a link to the video(s) into the document describing their contents. See \href{../NewDocument/NewDocument.tex}{\bf NewDocument}, for further details.
+\end{enumerate}
+
+{\bf Note:} With document incorporation (c.f. creation) the document to be included is located in the {\it $<$document-name$>$} directory and NOT the {\it figures} subdirectory.
 
 \subsection*{Document Version Tracking and Control}
 
