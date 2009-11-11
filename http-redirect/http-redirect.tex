@@ -1,0 +1,33 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{HTTP Redirect}
+
+At times it is necessary to direct a user to documentation that is off site since reproducing the content can be time consuming, or require special host configurations (e.g \href{http://www.youtube.com/user/genesissim}{\bf YouTube\,videos}). By using the {\tt redirect:} attribute in your documentation {\it descriptor.yml} file, you can link to URLs on the internet, effectively integrating the linked content into your own documentation.
+
+The only file needed to add a http redirect to your documentation is the {\it descriptor.yml} file containing a user supplied URL and a tag to indicate the level of documentation. The following example shows how to do this:
+\begin{verbatim}
+---
+comment: Optional comment.
+description: A redirect to a website
+document name: Off Site Documentation
+redirect: http://www.directmehere.edu
+tags:
+  - contents-level5
+  - published
+\end{verbatim}
+The structure is identical to previous {\it descriptor.yml} files with the exception of the redirect attribute. If present, this example would place a link to the URL content in the Level 5 contents page (indicated by the {\tt -\,contents-level-5} tag).
+
+\end{document}
