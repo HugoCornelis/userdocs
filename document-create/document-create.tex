@@ -65,7 +65,7 @@ tags:
 \end{itemize}
 Two important attributes are not included in the default {\it descriptor.yml} file, but may be added as required:
 \begin{itemize}
-\item {\tt redirect:} Followed by a user supplied URL, automatically generates a \href{../http-redirect/http-redirect.tex}{\bf HTTP\,redirect}. This allows documentation external to the GENESIS Documentation System to be automatically incorporated in the absence of any local documentation (with the exception of the {\it descriptor.yml} file).
+\item {\tt redirect:} Followed by a user supplied URL, automatically generates a HTTP redirect. This allows documentation external to the GENESIS Documentation System to be automatically incorporated in the absence of any local documentation (with the exception of a {\it descriptor.yml} file). See \href{../http-redirect/http-redirect.tex}{\bf HTTP\,redirect} for an example.
 \item {\tt summary:} Followed by a short user supplied description of the contents of the document. This description will appear after the document name on the contents index page of the documentation level given by (for example here) the {\tt -\,contents-level2} tag.
 
 \end{itemize}
@@ -75,22 +75,6 @@ Two important attributes are not included in the default {\it descriptor.yml} fi
 Source files for the GENESIS Documentation System are currently produced with the \LaTeX\,typesetting package (see \href{http://www.latex-project.org/}{\bf www.latex-project.org}). It is planned that Microsoft Word ({\tt .doc} format) and OpenOffice ({\tt .odt}, ODF format) file formats will also be automatically recognized by the GENESIS Documentation System.
 
 The default \LaTeX\, documentation source file\,{\it NewDocument.tex} in the {\it NewDocument} folder can be compiled to produce a readable PDF file. It gives help and examples for colorizing text, generating static hyperlinks to local and remote documentation, and how to insert a figure into your documentation.
-
-\subsubsection*{Related Documentation Hyperlinks}
-
-At times it is necessary to direct a user to documentation that is off site since reproducing the content can be time consuming, or require special host configurations (e.g YouTube videos). By using the {\bf redirect:} attribute in your documentation {\it descriptor.yml} file, you can link to URLs on the internet, effectively integrating the linked content into your own documentation.
-
-An example of the use of the redirect tag can be shown here:
-
----
-description: A redirect to a website
-document name: Off Site Information
-redirect: http://www.directmehere.edu
-tags:
-  - contents-level5
-  - published
-
-The structure is identical to previous descriptor files with the exception of our redirect attribute. This will place a link to the content in the Level 5 contents page. To add a redirect to your documentation the only file needed is the descriptor file with the indicated redirect flag. These are created via the tag construct located under the {\bf Related Documentation} heading at the beginning of the {\it NewDocument.tex} file. 
 
 \subsubsection*{The Figures Folder}
 
