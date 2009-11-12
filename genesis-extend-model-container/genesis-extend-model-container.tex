@@ -1,0 +1,237 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Extending the Model Container}
+
+This document details the steps a developer must go through in order to add an object called {\bf PulseGen} to the {\bf \href{../model-container/model-container.tex}{\bf Model\,Container}. The following steps are performed in order.
+
+\subsection*{Adding the PulseGen object}
+
+The following subheadings are in order of execution.
+Adding a new tokenizer
+
+First I added a new tokenizer to the analyzer.l file:
+
+pulse           {       return(TOKEN_PULSE);    }
+
+This step is automated.
+Add a new token
+
+Added a new token to the description.tokens file located in hierarchy/output/symbols/ like so:
+
+%token TOKEN_PULSE
+
+This step is automated.
+Adding a parser rule
+
+A series of grammar rules must now be added:
+
+First open the file hierarchy/parser.start file there is a union. In this file there is a union, here we add a symbol for our pulse object:
+
+struct symtab_Pulse * ppulse;
+
+The prefix p for pulse indicates that this is a pointer.
+
+Now some more declarations must be added for the lexer. Copying the format of the current declarations you will need to add a block like this for our pulse object:
+
+%type <phsle> PulseSymbol
+%type <ppulse> PulseSectionFront
+%type <ppulse> PulseSectionFront1
+%type <pidin> PulseSectionFront2
+%type <ppulse> PulseDescription
+%type <phsle> PulseComponent
+
+This part of this step is automated.
+
+The next step is to add a rule for each of the declarations we just declared so that the parser knows what to do with them.
+
+We need to add a rule for the PulseSymbol?:
+
+PulseSymbol
+        :
+                PulseSection
+                {
+#line
+                    //- put symbol table element on stack
+
+                    $$ = &$1->bio.ioh.iol.hsle;
+                }
+
+The pulse symbol uses a Bio Component symbol.
+
+This step is automated.
+
+We add a rule for PulseDescription?:
+
+PulseDescription        /* <ppulse> */
+        :
+                {
+#line
+
+                    $$ = ParserContextGetActual((PARSERCONTEXT *)pacParserContext);
+                }
+        |
+                PulseDescription
+                ChildSectionOptionalInputOptionalParameters
+                {
+#line
+                    //- link children
+
+                    if ($2)
+                    {
+                        SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+                    }
+
+                    //- reset actual symbol
+
+                    ParserContextSetActual
+                        ((PARSERCONTEXT *)pacParserContext,
+                         &$1->bio.ioh.iol.hsle);
+
+                    //- put symbol description on stack
+
+                    $$ = $1;
+                }
+        |
+                PulseDescription
+                Parameters
+                {
+#line
+                    //- link parameters
+
+                    SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
+
+                    //- reset actual symbol
+
+                    ParserContextSetActual
+                        ((PARSERCONTEXT *)pacParserContext,
+                         &$1->bio.ioh.iol.hsle);
+
+                    //- put symbol on stack
+
+                    $$ = $1;
+                }
+        ;
+
+This step is automated.
+
+A rule for PulseSectionEnd?:
+
+PulseSectionEnd
+        :
+                EndPushedPidin
+                TOKEN_PULSE
+                {
+#line
+                }
+        ;
+
+This step is automated.
+
+A rule for PulseSectionFront?:
+
+PulseSectionFront       /* <ppulse> */
+        :
+                PulseSectionFront1
+                PulseSectionFront2
+                {
+#line
+
+                    //- prepare struct for symbol table
+
+                    $$ = $1;
+
+                    //- set actual symbol
+
+                    ParserContextSetActual
+                        ((PARSERCONTEXT *)pacParserContext,
+                         &$$->bio.ioh.iol.hsle);
+
+                    //- assign name to symbol
+
+                    SymbolSetName(&$$->bio.ioh.iol.hsle, $2);
+                }
+        ;
+
+This step is automated.
+
+Rule for PulseSectionFront1?:
+
+PulseSectionFront1      /* <ppulse> */
+        :
+                TOKEN_PULSE
+                {
+#line
+
+                    //- prepare struct for symbol table
+
+                    $$ = PulseCalloc();
+
+                    //- set actual symbol
+
+                    ParserContextSetActual
+                        ((PARSERCONTEXT *)pacParserContext,
+                         &$$->bio.ioh.iol.hsle);
+                }
+        ;
+
+Note that this called PulseCalloc?, which must be defined for this to work.
+
+This step is automated.
+
+Rule for PulseSectionFront2?:
+
+PulseSectionFront2      /* <ppulse> */
+        :
+                IdentifierOptionIndexPushedPidin
+                {
+#line
+
+                    //- put identifier on stack
+
+                    $$ = $1;
+                }
+        ;
+
+This step is automated.
+
+Rule for PulseSection?:
+
+PulseSection    /* <ppulse> */
+        :
+                PulseSectionFront
+                        InputOutputRelations
+                        OptionalItemInputRelations
+                        PulseDescription
+                PulseSectionEnd
+                {
+#line
+                    //- link input/output relations
+
+                    SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+
+                    //- bind I/O relations
+
+                    SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+
+                    //- put finished section info on stack
+
+                    $$ = $4;
+                }
+        ;
+
+This step is automated. 
+
+\end{document}
