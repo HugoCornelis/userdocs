@@ -40,10 +40,18 @@ Installing GENESIS on Fedora 10 requires executing the following major steps. No
          \item tetex-tex4ht
          \item \href{http://monotone.ca/}{monotone-0.44} or higher and its dependency--the crypto libraries. You only need to install the client package (not the server package) 
       \end{itemize}
+   \item[] Install the dependencies for running tests:
+      \begin{itemize}
+         \item perl -MCPAN -e ``{\tt install Test::More}''
+         \item perl -MCPAN -e ``{\tt install Clone}''
+         \item perl -MCPAN -e ``{\tt install Data::Utilities}''
+         \item perl -MCPAN -e ``{\tt install File::Find::Rule}''
+         \item perl -MCPAN -e ``{\tt install Digest::SHA}''
+      \end{itemize}
  \end{itemize}
 
- For the g-tube, one also needs to install the packages wxPython and
- wxPython-devel and their dependencies.
+ For the {\bf G-Tube}, the packages wxPython and
+ wxPython-devel and their dependencies must be installed.
  
 \subsection*{Download and install the developer package}
 
@@ -69,17 +77,7 @@ Installing GENESIS on Fedora 10 requires executing the following major steps. No
 \subsection*{Check if the installation was successful}
 
 This step is optional.
-
 \begin{itemize}
-   \item[] Install the dependencies for running the tests:
-      \begin{itemize}
-         \item perl -MCPAN -e ``{\tt install Test::More}''
-         \item perl -MCPAN -e ``{\tt install Clone}''
-         \item perl -MCPAN -e ``{\tt install Data::Utilities}''
-         \item perl -MCPAN -e ``{\tt install File::Find::Rule}''
-         \item perl -MCPAN -e ``{\tt install Digest::SHA}''
-      \end{itemize}
-      
    \item[] Run tests of all the packages and save tester output to a file  by typing ``{\tt neurospaces\_check >/tmp/check.out 2>\&1}''.
    \item[] Check the output by typing ``{\tt less /tmp/check.out}''. Importantly, search for lines containing the string {\tt error\_count}.
 \end{itemize}
