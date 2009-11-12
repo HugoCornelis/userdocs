@@ -18,7 +18,9 @@ For a brief introduction to electrophysiological recording techniques see the Wi
 
 \section*{GENESIS Perfect Clamp Utility}
 
-The GENESIS perfect clamp utility provides a simple but ``perfect'' voltage or current clamp to one or more specified compartment(s) of a neuronal morphology. Here, we describe how to use it from the \href{../gshell/gshell.tex}{GENESIS shell}. It is assumed that you are familiar with the contents of the following GENESIS documentation: \href{../tutorial1/tutorial1.tex}{Tutorial 1} and \href{../tutorial2/tutorial2.tex}{Tutorial 2}.
+The GENESIS perfect clamp utility provides a simple but ``perfect'' voltage or current clamp to one or more specified compartment(s) of a neuronal morphology. Here, we describe how to use it from the \href{../gshell/gshell.tex}{GENESIS shell}. We outline the creation and application of either a voltage or current clamp to the soma of a model Purkinje cell, how to check the clamp, run a simulation, and where to find the output.
+
+It is assumed that you are familiar with the contents of the following GENESIS documentation: \href{../tutorial1/tutorial1.tex}{Tutorial 1} and \href{../tutorial2/tutorial2.tex}{Tutorial 2}.
 
 \subsection*{Running the Perfect Clamp Utility}
 
@@ -49,16 +51,13 @@ The GENESIS perfect clamp utility provides a simple but ``perfect'' voltage or c
 	\end{verbatim}	
 \end{enumerate}
 
-\subsection*{Voltage Clamp}
-
-Here we outline the creation, and application of a voltage clamp to the soma of a model Purkinje cell.
+\subsection*{Create Voltage Clamp}
 
 \begin{enumerate}
 
 	\item{\bf Create the voltage clamp circuitry object:} Enter the following commands on a single input line:
 	\begin{verbatim}
-	   genesis > add_inputclass perfectclamp voltage_clamp_protocol name
-	                voltage_clamp_protocol command -0.060
+	   genesis > add_inputclass perfectclamp voltage_clamp_protocol name voltage_clamp_protocol command -0.060
 	\end{verbatim}
 	These commands create a voltage clamp object with a command voltage or holding potential of -60\,mV. (Remember that GENESIS uses SI units.)
 	
@@ -76,7 +75,11 @@ Here we outline the creation, and application of a voltage clamp to the soma of 
 	            name: voltage_clamp_protocol
 	         package: Heccer::PerfectClamp
 	\end{verbatim}
-	
+\end{enumerate}
+
+\subsection{Apply Voltage Clamp}
+
+\begin{enumerate}
 	\item{\bf Apply the voltage clamp at the Purkinje cell soma:}
 	\begin{verbatim}
 	   genesis > add_input voltage_clamp_protocol /Purkinje/segments/soma Vm
@@ -92,47 +95,11 @@ Here we outline the creation, and application of a voltage clamp to the soma of 
 	      field: Vm
 	      inputclass: voltage_clamp_protocol
 	   \end{verbatim}
-	
-	\item{\bf Add an output for the somatic voltage clamp:}
-	\begin{verbatim}
-	   genesis  > add_output /Purkinje/segments/soma Vm
-	\end{verbatim}
-	
-	\item{\bf Add a dendritic output:} Similarly, we can add an output for the voltage clamp to one or more dendritic compartments.
-	\begin{verbatim}
-	   genesis > add_output /Purkinje/segments/b0s03[56] Vm
-	   genesis > add_output /Purkinje/segments/b1s06[137] Vm
-	   . . .
-	\end{verbatim}
-	{\bf Note:} For the model cell loaded, you can identify the path and name of dendritic segments with the following command:
-	\begin{verbatim}
-	   genesis > list-elements /Purkinje/segments
-	\end{verbatim}	
-	This generates a (long) list of all segments in the morphology of the cell that is loaded. For more information about traversing the cell model see \href{../tutorial2/tutorial2.tex}{Tutorial 2}.
-	
-         \item{\bf Check model prior to running simulation:}
-	\begin{verbatim}
-	   genesis > check /Purkinje
-	\end{verbatim}
-	
-	\item{\bf Run the simulation for 100 ms:}
-	\begin{verbatim}
-	   genesis > run /Purkinje 0.1
-	\end{verbatim}
-	
-	\item{\bf Where is the output?}
-	\begin{verbatim}
-	   genesis > sh cat /tmp/output
-	\end{verbatim}
-
 \end{enumerate}
 
-\subsection*{Current Clamp}
-
-Here we outline the creation, and application of a current clamp to the soma of a model Purkinje cell.
+\subsection*{Create Current Clamp}
 
 \begin{enumerate}
-
 	\item{\bf Create the current clamp circuitry object:} Enter the following commands on a single input line:
 	\begin{verbatim}
 	   genesis > add_inputclass perfectclamp current_clamp_protocol name current_clamp_protocol command 1e-9
@@ -153,7 +120,11 @@ Here we outline the creation, and application of a current clamp to the soma of 
 	            name: current_clamp_protocol
 	         package: Heccer::PerfectClamp
 	\end{verbatim}
-	
+\end{enumerate}
+
+\subsection*{Apply Current Clamp}
+
+\begin{enumerate}	
 	\item{\bf Apply the current clamp at the Purkinje cell soma:}
 	\begin{verbatim}
 	   genesis > add_input current_clamp_protocol /Purkinje/segments/soma INJECT
@@ -169,8 +140,12 @@ Here we outline the creation, and application of a current clamp to the soma of 
 	      field: INJECT
 	      inputclass: current_clamp_protocol
 	   \end{verbatim}
-	
-	\item{\bf Add an output for the somatic current clamp:}
+\end{enumerate}
+
+\subsection*{Add Output for Voltage or Current Clamp}
+
+\begin{enumerate}
+	\item{\bf Add an output for the somatic clamp:}
 	\begin{verbatim}
 	   genesis  > add_output /Purkinje/segments/soma Vm
 	\end{verbatim}
@@ -186,7 +161,11 @@ Here we outline the creation, and application of a current clamp to the soma of 
 	   genesis > list-elements /Purkinje/segments
 	\end{verbatim}	
 	This generates a (long) list of all segments in the morphology of the cell that is loaded. For more information about traversing the cell model see \href{../tutorial2/tutorial2.tex}{Tutorial 2}.
-	
+\end{enumerate}
+
+\subsection*{Check Model, Run Simulation, and Find Output}
+
+\begin{enumerate}
          \item{\bf Check model prior to running simulation:}
 	\begin{verbatim}
 	   genesis > check /Purkinje
@@ -201,7 +180,7 @@ Here we outline the creation, and application of a current clamp to the soma of 
 	\begin{verbatim}
 	   genesis > sh cat /tmp/output
 	\end{verbatim}
-	
 \end{enumerate}
+
 
 \end{document}
