@@ -1,5 +1,5 @@
 #!/usr/bin/perl
-
+#!/usr/bin/perl -w -d:ptkdb
 
 use strict;
 use Getopt::Long;
@@ -82,7 +82,6 @@ sub produce_email_text
 
   my $status_message = "";
   my $outputfile = $option_output_directory . "/" . $output_filename;
-  my $errorcounts = `cat $outputfile | grep error_count`;
   my $die_messages = `grep die $outputfile`;
 
   $status_message
@@ -96,6 +95,43 @@ sub produce_email_text
   if (defined $configuration->{URL})
   {
       $status_message .= "Check the test output over the web via this link " . $configuration->{URL} . "\n";
+  }
+
+
+  #
+  # Now find all of the log files and check for error messages
+  #
+  my $errors = "";
+
+  my $logfiletext = `find . | grep output | grep \.log`;
+
+  my @logfiles = split(/\n/,$logfiletext);
+
+  my $logfile;
+
+  foreach $logfile(@logfiles)
+  {
+    my $latexerrors = `cat $logfile | grep ^!`;
+
+    if($latexerrors eq "")
+    {
+
+      next;
+
+    }
+
+    #my $filename = $logfile;
+    #$filename =~ m(.*output/(.*)\.log$);
+    my @tmp = split(/\//,$logfile);
+    my $tmp = $tmp[-1];
+    @tmp = split(/\./,$tmp);
+    my $filename = $tmp[0];
+
+    $status_message .= "\n\n"; 
+    $status_message .= $filename;
+    $status_message .= " : \n\t";
+    $status_message .= $latexerrors;
+
   }
 
   return $status_message;

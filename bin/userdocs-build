@@ -180,7 +180,7 @@ sub build_document
 
 		if($parse_debug == 0)
 		{
-		  system "latex '$filename'";
+		  system "latex -halt-on-error '$filename'";
 
 		  system "makeindex -c '$filename_base'";
 
