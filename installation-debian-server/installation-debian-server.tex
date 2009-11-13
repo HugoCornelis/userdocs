@@ -1,0 +1,219 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Installation on a Debian Server}
+
+This is a guide for setting up an independent version of the GENESIS software platform on a new Debain 5.0.3 installation, with the tester, code repository, and webserver running.
+
+\section*{Setting up the Web Server}
+
+Test run output as well as generated html files from programs like Xrefactory and Doxygen need to be accessible over the internet. This is a guide to adding the Apache2 rules to set up a directory that will have its contents displayed via a http server.
+
+\subsection*{\it DocumentRoot}
+
+The {\it DocumentRoot} is the publicly available directory displayed when a user visits the bare URL for your server with a web browser (example: http://myserver.edu). If you want data to be available over the web, you can simply place it in the document root. If you place a file named {\it mydata} in the {\it DocumentRoot}, it will be available at the URL http://myserver.edu/mydata.
+
+If you want directories in another location on the machine to be displayed via the URL with a suffix see the next section.
+
+\subsection*{Configuration File {\it /etc/apache2/apache2.conf}}
+
+The default http configuration file for the Apache Web Server in Debian is in the file {\it /etc/apache2/apache2.conf}. The cleanest method for declaring your Apache rules is to put all of your rules in a separate file, then add an {\it Include} statement to the default configuration file to include your file. For example:
+\begin{verbatim}
+   Include /etc/apache2/my.conf
+\end{verbatim}
+To start your configuration file you'll need a {\it VirtualHost} block. So the initial configuration file should look like this.
+\begin{verbatim}
+   NameVirtualHost *:80
+   <VirtualHost *:80>
+   </VirtualHost>
+\end{verbatim}
+In your configuration file you will explicitly declare which directories you want served within the {\it VirtualHost} block. If you want to serve the directory {\it /var/www/tests} for test output you simply declare a block in the your configuration file for the directory and an {\it Alias} directive so that the directory can be accesible via a suffix to the URL (such as http://myserver.edu/tests). Your configuration file should end up looking like this:
+\begin{verbatim}
+   NameVirtualHost *:80
+   <VirtualHost *:80>   
+      <Directory /var/www/tests>
+         Options +FollowSymLinks Indexes MultiViews
+         AllowOverride All
+         order allow,deny
+         allow from all
+      </Directory>
+      Alias /tests /var/www/tests/
+   </VirtualHost>
+\end{verbatim}
+For each directory you'd like to serve you must add a block and an alias. After you have updated your configuration restart Apache with this command:
+\begin{verbatim}
+   apache2ctl restart
+\end{verbatim}
+You should now be able to view the contents of the directory {\it /var/www/tests} from your URL suffixed with your alias.
+
+\section*{Install the Developer Package}
+
+\subsection*{Dependencies}
+
+\begin{itemize}
+   \item[]{\bf Install {\it gcc}:} Install gcc by executing the following command as root:
+   \begin{verbatim}
+      apt-get install gcc
+   \end{verbatim}
+   
+   \item[]{\bf Install {\it autotools}:} By default, Debian usually doesn't have development tools installed. You will need to use {\it apt-get} to install and make {\it automake} with the following commands:
+   \begin{verbatim}
+      apt-get install automake apt-get install make
+   \end{verbatim}
+   
+   \item[]{\bf Install Perl Dependencies:} Install the following Perl modules from CPAN:
+     \begin{itemize}
+        \item[]{\bf YAML}
+        \item[]{\bf IO::Pty}
+        \item[]{\bf Expect}
+        \item[]{\bf Data::Comparator}
+        \item[]{\bf File::Find::Rule}
+        \item[]{\bf Inline}
+     \end{itemize}
+     {\bf Note:} You must install {\it gcc} first in order to compile Perl modules from CPAN.     
+
+   \item[]{\bf Additional Dependencies:} The following additional dependencies must be installed via {\it apt-get}:
+     \begin{itemize}
+        \item[]{\bf psmisc} (for the {\it killall} command)
+        \item[]{\bf daemon} (to run {\it neurospaces\_serve} as a daemon process)
+        \item[]{\bf sudo}
+        \item[]{\bf libncurses5-dev}
+        \item[]{\bf flex}
+        \item[]{\bf bison}
+        \item[]{\bf swig}
+        \item[]{\bf libperl-dev}
+        \item[]{\bf libreadline5-dev}
+        \item[]{\bf python-dev}
+     \end{itemize}
+\end{itemize}
+
+\section*{Set up the Monotone Repository Server}
+
+The GENESIS project uses \href{http://www.monotone.ca/}{monotone} for its source code versioning system. The {\it DeveloperPackage} contains scripts for starting up the monotone repositories, but first some things must be set up for it to run correctly.
+
+\subsection*{Install Monotone}
+
+Install monotone, it is freely available from \href{http://monotone.ca/}{\bf http://monotone.ca/}. Simply download the static binary and place it in your path.
+
+\subsubsection*{Create a monotone user}
+
+It is bad practice to run a monotone repository as root so the first thing you should do is create a non-privileged user for monotone to run as. On the root shell prompt enter:
+\begin{verbatim}
+   useradd monotone -b /home/monotone
+\end{verbatim}
+{\bf Note:} If the user directory is not created, you must create it in  {\it /home} via the {\it mkdir} command ``{\tt mkdir /home/monotone}''. You must then perform a {\it chown} to set the permissions ``{\tt chown -R monotone:monotone /home/monotone}''.
+
+\subsubsection*{Setting up permissions}
+
+\begin{itemize}
+   \item[]{\bf Set up a server key:} As the monotone user execute the command:
+   \begin{verbatim}
+      mtn genkey email@address.com
+   \end{verbatim}
+with an email address that the server can be identified with. Enter in a passphrase for it.
+
+The key will then be stored in the directory {\it $\sim$/.monotone/} and will be automatically used when the monotone user invokes any monotone command. To prevent monotone from asking for this passphrase every time it performs an action, create a file within {\it $\sim$/.monotone/} with the name {\it monotonerc} and put the following monotone lua function into the file:
+\begin{verbatim}
+   function get_passphrase(keypair_id)
+      return "my passphrase"
+\end{verbatim}
+This will give your passphrase to monotone automatically and prevent the process from stopping to ask for user input. If the monotone user directory is readable across the system it is advisable to use a unique password to prevent unauthorized users from reading this file.
+\end{itemize}
+
+\subsubsection*{Read permissions}
+
+To set who can read from the monotone repositories you serve, create the file in {\it ~/.monotone/read\_permissions}. Inside this file you can set patterns to allow everyone to read all repositories, for example:
+\begin{verbatim}
+   pattern "*"
+      allow "*"
+\end{verbatim}
+
+\subsubsection*{Write permissions}
+
+To set who can write to a repository create the file {\it ~/.monotone/write\_permissions}. Here you simply type each email address and the identifier used when setting up your key, one line at a time.
+
+In addition to this you must read in a public key on each monotone repository. For instructions on how to do this see the {\bf Repository\,Access} section of the \href{../developer-repository/developer-repository.tex}{\bf Developer\,Repository} document.
+
+\subsubsection*{Starting the montone repository servers}
+
+First you must have the compliant directory setup for the developer packages scripts to find the repositories to serve:
+\begin{verbatim}
+   ~/neurospaces_project/MTN
+\end{verbatim}
+Inside the MTN directory you have repositories for each of the projects you will be serving over the web:
+
+\vspace*{3mm}
+\begin{tabular}{| l | l |  l |}
+\hline
+developer.mtn & model-container.mtn & studio.mtn      \\ \hline
+gshell.mtn        & ns-sli.mtn                     & userdocs.mtn \\ \hline
+heccer.mtn       & ssp.mtn                        &                          \\ \hline
+\end{tabular}
+\vspace*{3mm}
+
+You can then either issue the command:
+\begin{verbatim}
+   nohup neurospaces_serve &
+\end{verbatim}
+as your monotone user or you can issue the command:
+\begin{verbatim}
+   sudo -H -u monotone nohup neurospaces_serve &
+\end{verbatim}
+as root to start the repository servers. They can now be connected too over the internet for pulls, pushes, and syncs.
+
+\subsection*{Setting up the Tester}
+
+The neurospaces tester is a script which performs a routine check of the GENESIS repository, source code, and documentation. It is meant to be set up as a cronjob on a server with email capabilities, so that notification of a test run can be emailed to designated recipients.
+
+When the script is set up, it ensures that errors within the system are reported in a timely fashion.
+
+\subsubsection*{Sending mail}
+
+By default Debian is configured for local mail only. To send email over the internet you will need to set the {\it dc\_eximconfig\_configtype} option in the file {\it /etc/exim4/update-exim4.conf.conf} from {\tt local} to {\tt internet}.
+
+Then perform a restart of {\it exim} via the command:
+\begin{verbatim}
+   /etc/init.d/exim4 restart
+\end{verbatim}
+
+\subsection*{Building userdocs}
+
+\subsubsection*{Dependencies}
+
+To build the user documentation you need to install \LaTeX\,\,and the following dependencies via the Debian installer {\it apt-get}:
+\begin{itemize}
+   \item[]{\bf tetex-base}
+   \item[]{\bf tetex-bin}
+   \item[]{\bf tetex-doc} (Might not need to install this as it may be included with {\it tetex-base})
+   \item[]{\bf tetex-extra}
+   \item[]{\bf tex4ht}
+   \item[]{\bf webcheck} (For link checking) 
+\end{itemize}
+For Level 6 documentation you need to install:
+\begin{itemize}
+   \item[]\href{http://www.doxygen.org/}{\bf Doxygen}
+   \item[]\href{http://www.graphviz.org/Download.php}{\bf graphviz} (If you want graphs in your Doxygen output).
+\end{itemize}
+For building regression test output you need:
+\begin{itemize}
+   \item[]\href{http://www.gnu.org/software/src-highlite/}{\bf Source-highlight} 
+\end{itemize}
+The following CPAN modules for Perl must also be installed:
+\begin{itemize}
+   \item[]{\bf HTML::Table}
+   \item[]{\bf HTML::Template}
+\end{itemize}
+
+\end{document}
