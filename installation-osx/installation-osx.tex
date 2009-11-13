@@ -41,6 +41,7 @@ Install the following packages:
          \item ExtUtils
          \item Data::Comparator
          \item File::Find::Rule
+         \item Term::Readline
       \end{itemize}
    \end{itemize}
    
@@ -58,11 +59,20 @@ Install the following packages:
    \begin{verbatim}
    /opt/local/bin/perl
    \end{verbatim}
-  there is a macports installation of Perl (see warning above against using macports compilers). This is most easily corrected with the following command:
+  there is a macports installation of Perl (see warning above against using macports compilers). This is most easily corrected by removing the macports path /opt/local/bin from your path on your .profile file in your home directory:
    \begin{verbatim}
-   mv /opt/local/bin/perl /opt/local/bin/perl-macports
+   PATH=/opt/local/bin:/usr/local/bin:$PATH
    \end{verbatim}
-   If you do not make this change, running GENESIS may result in a bus error as the correct Perl libraries will not be found.   
+
+   Just remove /opt/local/bin:
+
+   \begin{verbatim}
+   PATH=/usr/local/bin:$PATH
+   \end{verbatim}
+   
+   Only remove the macports path and leave all others alone.
+
+   If you do not make this change, running GENESIS may result in a bus error as the correct Perl libraries will not be found. It may also call macports versions of build tools, which can result in some undesirable behavior.  
    \item[] Download the latest version of the {\it DeveloperPackage}, available from \href{http://sourceforge.net/projects/neurospaces/files/}{Sourceforge}.  It is called {\it developer-release-label.tar.gz}, where {\it release-label} is the current release identifier. ({\bf Note:} If downloading via your browser, do not unpack the package during the download as it will be placed into its own subdirectory).
    \item[] Change to the directory where you downloaded the file.
    \item[] Unpack archive: ``{\tt tar xfz developer-release-label.tar.gz}''.
