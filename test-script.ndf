@@ -1,0 +1,18 @@
+#!/usr/local/bin/genesis-g3
+ 
+create cell /n  
+create segment /n/soma  
+ 
+set_model_parameter /n/soma Vm_init -0.068  
+set_model_parameter /n/soma CM 0.0164  
+set_model_parameter /n/soma RM 1.500  
+set_model_parameter /n/soma RA 2.500  
+set_model_parameter /n/soma ELEAK -0.080  
+ 
+set_model_parameter /n/soma LENGTH 4.47e-5  
+set_model_parameter /n/soma DIA 2e-5  
+ 
+set_runtime_parameter /n/soma INJECT 2e-9  
+add_output /n/soma Vm  
+ 
+run /n 0.001
