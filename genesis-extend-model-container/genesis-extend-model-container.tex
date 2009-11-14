@@ -15,7 +15,7 @@
 
 \section*{Extending the Model Container}
 
-This document details the steps a developer must go through in order to add an object called {\bf PulseGen} to the \href{../model-container/model-container.tex}{\bf Model\,Container}. The following steps are performed in order. Files can be found in the root directory of the source directory, which for the {\bf Model\,Container} is likely located at: {\it $\sim$/neurospaces\_project/model-container/source/snapshots/0}.
+This document details the steps a developer must go through in order to add an object called {\bf PulseGen()} to the \href{../model-container/model-container.tex}{\bf Model\,Container}. The following steps are performed in order. Files can be found in the root directory of the source directory, which for the {\bf Model\,Container} is likely located at: {\it $\sim$/neurospaces\_project/model-container/source/snapshots/0}.
 
 \subsection*{Add an entry to {\it hierarchy/symbols}}
 
@@ -65,15 +65,15 @@ The {\it symbols} file contains declarations for class types. A new set of decla
       },
    },
 \end{verbatim}        
-{\bf Note:} Commented lines were adapted to reflect {\it PulseGen} semantics.
+{\bf Note:} Commented lines were adapted to reflect {\it PulseGen()} semantics.
 
-Because we want to have our instances of {\it pulse\_gen} to be output as {\it PulseGen}, with a capital letter for each word, we declare the  {\it pulse\_gen} with an underscore between each word.
+Because we want to have our instances of {\it pulse\_gen} to be output as {\it PulseGen()}, with a capital letter for each word, we declare the  {\it pulse\_gen} with an underscore between each word.
 
 The \href{../genesis-extend-model-container-detail/genesis-extend-model-container-detail.tex}{\bf Details\,of\,Extending\,the\,Model\,Container} page shows how this configuration changes the grammar for the NDF model specification language.
 
 \subsection*{Add the necessary types to the parser}
 
-Open the file {\it hierarchy/parser.start} file. In this file there is a union, to this union we add a symbol for our {\it PulseGen} object:
+Open the file {\it hierarchy/parser.start} file. In this file there is a union, to this union we add a symbol for our {\it PulseGen()} object:
 \begin{verbatim}
    struct symtab_PulseGen * ppulsegen;
 \end{verbatim}
@@ -86,13 +86,13 @@ Now source files which have the appropriate data structures and functions must b
    cp components/pool.c components/pulsegen.c
    cp neurospaces/components/pool.h neurospaces/components/pulsegen.h
 \end{verbatim}
-Now change all references of pool to {\it PulseGen} with appropriate case. This is a good starting point as all that's needed is to determine which parameters and functions you wish to add. Also since we declared our symbol with an underscore, we must retain this format for certain parts of the file.
+Now change all references of pool to {\it PulseGen()} with appropriate case. This is a good starting point as all that's needed is to determine which parameters and functions you wish to add. Also since we declared our symbol with an underscore, we must retain this format for certain parts of the file.
 
-Our symbol generated a file called {\it pulse\_gen\_vtable.c} which we must properly point to in our {\it PulseGenCalloc} function.
+Our symbol generated a file called {\it pulse\_gen\_vtable.c} which we must properly point to in our {\it PulseGenCalloc\{\}} function.
 \begin{verbatim}
    #include "hierarchy/output/symbols/pulse_gen_vtable.c"
 \end{verbatim}
-Again in {\it PulseGenCalloc} we must retain the underscore when the system performs a {\it SymbolCalloc}. This uses a define which is generated from our symbols entry called {\it HIERARCHY\_TYPE\_symbols\_pulse\_gen} which retains the underscore.
+Again in {\it PulseGenCalloc\{\}} we must retain the underscore when the system performs a {\it SymbolCalloc}. This uses a define which is generated from our symbols entry called {\it HIERARCHY\_TYPE\_symbols\_pulse\_gen} which retains the underscore.
 \begin{verbatim}
    SymbolCalloc(1, sizeof(struct symtab_PulseGen), _vtable_pulse_gen, HIERARCHY_TYPE_symbols_pulse_gen);
 \end{verbatim}
@@ -127,7 +127,7 @@ The target {\it libneurospacesread.so} add:
 \begin{verbatim}
    pulsegen.o \
 \end{verbatim}
-After all of this {\it PulseGen} should compile and your new object is ready to use.
+After all of this {\it PulseGen()} should compile and your new object is ready to use.
 
 \subsection*{Creating a simple test}
 
@@ -173,7 +173,7 @@ PUBLIC_MODELS
         END ALIAS
 END PUBLIC_MODELS
 \end{verbatim}
-{\it PulseGen\_1} is our instance of a Pulse object. When we load our model it will be callable via this name. We save this file as {\it pulsegen/pulsegen1.ndf} inside of the library directory.
+{\it PulseGen()\_1} is our instance of a Pulse object. When we load our model it will be callable via this name. We save this file as {\it pulsegen/pulsegen1.ndf} inside of the library directory.
 
 \subsection*{Test specification}
 
@@ -266,7 +266,7 @@ Now with both of these saved you can run the test on the command line with the t
 \begin{verbatim}
    tests/neurospaces_harness --regex pulsegen
 \end{verbatim}
-This produces the output telling us whether {\it PulseGen} has passed or failed the test. The following output has been shortened to extract the parts we are interested in:
+This produces the output telling us whether {\it PulseGen()} has passed or failed the test. The following output has been shortened to extract the parts we are interested in:
 \begin{verbatim}
 ------------------------------------------------
 ------------------------------------------------
