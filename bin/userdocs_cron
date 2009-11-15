@@ -103,7 +103,7 @@ sub produce_email_text
   #
   my $errors = "";
 
-  my $logfiletext = `find . | grep output | grep \.log`;
+  my $logfiletext = `find . | grep output | grep html | grep \.log`;
 
   my @logfiles = split(/\n/,$logfiletext);
 
