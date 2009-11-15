@@ -128,6 +128,7 @@ sub produce_email_text
     my $filename = $tmp[0];
 
     $status_message .= "\n\n"; 
+    $status_message .= "Error in document: ";
     $status_message .= $filename;
     $status_message .= " : \n\t";
     $status_message .= $latexerrors;

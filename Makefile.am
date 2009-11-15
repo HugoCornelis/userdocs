@@ -119,6 +119,7 @@ clean-local: website-clean
 	find $(srcdir) -type d -exec chmod -R u+w \{\} \;
 	$(RM) -fr `find $(srcdir) -name _Inline`
 	$(RM) -rf */output/*
+	$(RM) -f */*.log
 #	$(RM) -fr $(srcdir)/hierarchy/output
 #	$(RM) -rf $(top_srcdir)/docs/html
 
