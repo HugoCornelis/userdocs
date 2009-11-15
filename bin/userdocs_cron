@@ -119,19 +119,21 @@ sub produce_email_text
       next;
 
     }
+    else
+    {
+      #my $filename = $logfile;
+      #$filename =~ m(.*output/(.*)\.log$);
+      my @tmp = split(/\//,$logfile);
+      my $tmp = $tmp[-1];
+      @tmp = split(/\./,$tmp);
+      my $filename = $tmp[0];
 
-    #my $filename = $logfile;
-    #$filename =~ m(.*output/(.*)\.log$);
-    my @tmp = split(/\//,$logfile);
-    my $tmp = $tmp[-1];
-    @tmp = split(/\./,$tmp);
-    my $filename = $tmp[0];
-
-    $status_message .= "\n\n"; 
-    $status_message .= "Error in document: ";
-    $status_message .= $filename;
-    $status_message .= " : \n\t";
-    $status_message .= $latexerrors;
+      $status_message .= "\n\n"; 
+      $status_message .= "Error in document: ";
+      $status_message .= $filename;
+      $status_message .= " : \n\t";
+      $status_message .= $latexerrors;
+    }
 
   }
 
