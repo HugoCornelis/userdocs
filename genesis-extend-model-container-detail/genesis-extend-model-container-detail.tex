@@ -1,0 +1,217 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Details of Extending the Model\,Container}
+
+For the example of adding a {\it PulseGen} to the \href{../model-container/model-container.tex}{\bf Model\,Container}, with the exception of adding a symbol for the pulse object (see below), the following steps are automated by the function {\it pulse\_gen} given in the documentation for \href{../genesis-extend-model-container/extend-model-container.tex}{\bf Extending\,the\,Model\,Container}.
+
+The following subheadings are in order of execution.
+
+\subsection*{Add the new tokenizer}
+
+First add a new tokenizer to the {\it analyzer.l} file:
+\begin{verbatim}
+   pulse { return(TOKEN_PULSE); }
+\end{verbatim}
+
+\subsection*{Add the new token}
+
+The new token is added to the {\it description.tokens} file located in {\it hierarchy/output/symbols/}:
+\begin{verbatim}
+   %token TOKEN_PULSE
+\end{verbatim}
+
+\subsection*{Add a parser rule}
+
+A series of grammar rules must now be added:
+\begin{itemize}
+   \item[]{\bf Update {\it hierarchy/parser.start}:} In this file there is a union where we add a symbol for our pulse object:
+\begin{verbatim}
+   struct symtab_Pulse * ppulse;
+\end{verbatim}
+The prefix {\tt p} for {\tt pulse} indicates that this is a pointer. \\
+{\bf Note:} This is the only step in extending the functionality of the {\bf Model\,Container} that is not automated by the function {\it pulse\_gen}.
+
+   \item[]{\bf Add new declarations for the lexer:} Copying the format of the current declarations, a block like the following will need to be added for the pulse object:
+\begin{verbatim}
+   %type <phsle> PulseSymbol
+   %type <ppulse> PulseSectionFront
+   %type <ppulse> PulseSectionFront1
+   %type <pidin> PulseSectionFront2
+   %type <ppulse> PulseDescription
+   %type <phsle> PulseComponent
+\end{verbatim}
+\end{itemize}
+
+\subsection*{Add rules}
+
+The next step is to add a rule for each of the declarations just made so that the parser knows what to do with them.
+
+\subsubsection*{Rule for {\it PulseSymbol}}
+
+\begin{verbatim}
+   PulseSymbol
+      :
+         PulseSection
+         {
+#line
+            //- put symbol table element on stack
+            $$ = &$1->bio.ioh.iol.hsle;
+         }
+\end{verbatim}
+The {\it PulseSymbol} uses a Bio\,Component symbol.
+
+\subsubsection*{Rule for {\it PulseDescription}}
+
+\begin{verbatim}
+   PulseDescription        /* <ppulse> */
+      :
+         {
+   #line
+            $$ = ParserContextGetActual((PARSERCONTEXT *)pacParserContext);
+         }
+      |
+         PulseDescription
+         ChildSectionOptionalInputOptionalParameters
+         {
+   #line
+            //- link children
+            if ($2)
+            {
+               SymbolAddChild(&$1->bio.ioh.iol.hsle, $2);
+            }
+            
+            //- reset actual symbol
+            ParserContextSetActual
+               ((PARSERCONTEXT *)pacParserContext,
+               &$1->bio.ioh.iol.hsle);
+
+            //- put symbol description on stack
+            $$ = $1;
+         }
+      |
+         PulseDescription
+         Parameters
+            {
+   #line
+            //- link parameters
+            SymbolParameterLinkAtEnd(&$1->bio.ioh.iol.hsle, $2);
+
+            //- reset actual symbol
+            ParserContextSetActual
+               ((PARSERCONTEXT *)pacParserContext,
+               &$1->bio.ioh.iol.hsle);
+
+            //- put symbol on stack
+               $$ = $1;
+         }
+      ;
+\end{verbatim}
+
+\subsubsection*{Rule for {\it PulseSectionEnd}}
+
+\begin{verbatim}
+   PulseSectionEnd
+      :
+         EndPushedPidin
+         TOKEN_PULSE
+         {
+   #line
+         }
+      ;
+\end{verbatim}
+
+\subsubsection*{Rule for {\it PulseSectionFront}}
+
+\begin{verbatim}
+   PulseSectionFront       /* <ppulse> */
+      :
+         PulseSectionFront1
+         PulseSectionFront2
+         {
+   #line
+            //- prepare struct for symbol table
+            $$ = $1;
+
+            //- set actual symbol
+            ParserContextSetActual
+               ((PARSERCONTEXT *)pacParserContext,
+               &$$->bio.ioh.iol.hsle);
+               
+            //- assign name to symbol
+            SymbolSetName(&$$->bio.ioh.iol.hsle, $2);
+         }
+      ;
+\end{verbatim}
+
+\subsubsection*{Rule for {\it PulseSectionFront1}}
+
+\begin{verbatim}
+   PulseSectionFront1      /* <ppulse> */
+      :
+         TOKEN_PULSE
+         {
+   #line
+            //- prepare struct for symbol table
+            $$ = PulseCalloc();
+                    
+            //- set actual symbol
+            ParserContextSetActual
+               ((PARSERCONTEXT *)pacParserContext,
+               &$$->bio.ioh.iol.hsle);
+         }
+      ;
+\end{verbatim}
+{\bf Note:} This is called by {\it PulseCalloc}, which must be defined for this to work.
+
+\subsubsection*{Rule for {\it PulseSectionFront2}}
+
+\begin{verbatim}
+   PulseSectionFront2      /* <ppulse> */
+      :
+         IdentifierOptionIndexPushedPidin
+         {
+   #line
+            //- put identifier on stack
+            $$ = $1;
+         }
+      ;
+\end{verbatim}
+
+\subsubsection*{Rule for {\it PulseSection}}
+
+\begin{verbatim}
+   PulseSection    /* <ppulse> */
+      :
+         PulseSectionFront
+            InputOutputRelations
+            OptionalItemInputRelations
+            PulseDescription
+         PulseSectionEnd
+         {
+   #line
+            //- link input/output relations
+            SymbolAssignBindableIO(&$4->bio.ioh.iol.hsle, $2);
+                    
+            //- bind I/O relations
+            SymbolAssignInputs(&$4->bio.ioh.iol.hsle, $3);
+                    
+            //- put finished section info on stack
+            $$ = $4;
+         }
+      ;
+\end{verbatim}
+
+\end{document}
