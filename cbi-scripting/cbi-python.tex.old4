@@ -1,0 +1,757 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{epsfig}
+%\usepackage{graphicx}
+\usepackage{lineno}
+\usepackage{url}
+
+\begin{document}
+
+\title{Python as a Federation Tool for GENESIS 3.0}
+
+\author{Cornelis H. \hspace{2mm} Coop A. D. \hspace{2mm} Bower J. M. \\
+  {\small University of Texas Health Science Center at San Antonio}}
+
+\maketitle
+\pagenumbering{arabic}
+\section{Introduction}
+Historically, there have been fundamental differences between
+scripting languages such as Perl\cite{wall99:_perl_progr_refer_guide},
+Python\cite{martelli06:_python_nutsh},
+Rexx\cite{o'hara88:_moder_progr_using_rexx},
+Tcl\cite{ousterhout94:_tcl_tk_toolk}, Visual Basic, and the Unix
+shells and system programming languages such as C or C++.  System
+programming languages start from the most primitive computer elements
+such as words of memory. They are designed to manage the complexity of
+building data structures and algorithms from scratch and usually
+require pre-declared data types.  Alternatively, scripting languages
+as a replacement for shell scripts were designed for `gluing': they
+assume the existence of a set of powerful components and are intended
+primarily for connecting components together. The fact that scripting
+languages are typically loosely typed and do not need a visible
+compilation step simplifies connectivity between components and allows
+for rapid prototyping.  They are also often small, lightweight,
+suitable for embedding, and provide a higher level of programming in
+an interpreted development environment. Scripting languages operate at
+a higher level than system programming languages, in the sense that on
+average a single statement does more work. For example, a typical
+statement in a system programming language executes about five machine
+instructions, whereas in a scripting language hundreds or thousands of
+machine instructions are executed\cite{ousterhout98:_scrip}.
+
+%9.  L. Wall, T. Christiansen, and R. Schwartz, Programming Perl, Second Edition, O'Reilly and Associates, ISBN 1-56592-149-6, 1996.
+%4. M. Lutz, Programming Python, O'Reilly, ISBN 1-56592-197-6, 1996.
+%6. R. O'Hara and D. Gomberg, Modern Programming Using REXX, Prentice Hall, ISBN 0-13-597329-5, 1988.
+%8.  J. Ousterhout, Tcl and the Tk Toolkit, Addison-Wesley, ISBN 0-201-63337-X, 1994.
+% 1. John K. Ousterhout (1998) Scripting: Higher Level Programming for the 21st Century. IEEE COMPUTER 31: 23-30.
+
+A scripting language is not a replacement for a system programming
+language or vice versa. Each is suited to a different set of tasks.
+For gluing and system integration, applications can be developed 5-10x
+faster with a scripting language; system programming languages require
+large amounts of boilerplate and conversion code to connect the
+pieces, whereas this is implicit in scripting languages. Where
+execution speed is key, a system programming language can often run
+several orders of magnitude faster than a scripting language due to
+fewer run-time checks.
+
+The strongly typed nature of system programming languages discourages
+reuse. Scripting languages, on the other hand, have actually
+stimulated significant software reuse. They use a model where
+interesting components are built in a system programming language and
+then glued together into applications using the scripting language.
+This division of labor provides a natural framework for reusability.
+Components are designed to be reusable, and there are well-defined
+interfaces between components and scripts that make it easy to use
+components. Nevertheless, scripting and system programming are
+symbiotic. Used together, they produce programming environments of
+exceptional power: system programming languages are used to create
+functional components which can then be assembled using scripting
+languages.
+
+In summary, system programming languages are well suited to building
+components where the complexity is in the data structures and
+algorithms, while scripting languages are well suited for integrating
+applications where the complexity is in the connections. With an
+increasing requirement for software integration, scripting is
+providing an important programming paradigm.
+
+This paper illustrates the use of the general purpose Python scripting
+language for making high performance simulation software coded in
+system programming languages accessible for people in neuroscience and
+biology, and we compare it to a domain specific scripting language.
+
+
+%http://en.wikipedia.org/wiki/Scripting\_languages
+%Historical overview
+
+%http://www.google.com/trends?q=perl\%2C+Python
+
+%http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html
+
+\subsection{GENESIS}
+
+GENESIS (GEneral NEural SImulation System) is a general purpose
+simulation platform that was developed to support the simulation of
+neural systems ranging from subcellular components and biochemical
+reactions to complex models of single neurons, simulations of large
+networks, and systems-level models. It was the first broad scale
+modeling system in computational biology to encourage modelers to
+develop and share model features and components. For these people, it
+was the object-oriented approach taken by simulators along with their
+high-level simulation languages that allowed the exchange,
+modification, and reuse of models or model components. It was this
+community of developers and users that ultimately drove the
+development of the GENESIS platform.
+
+GENESIS simulations are constructed from modules that receive inputs,
+perform calculations on them, and then generate outputs. Model neurons
+are constructed from these basic components, such as compartments, and
+variable conductance ion channels. Compartments are linked to their
+channels and are then linked together to form multi-compartmental
+neurons of any desired level of complexity. Neurons may be linked
+together to form neural circuits.  It is the syntax used by the
+GENESIS Script Language Interpreter (SLI), the commands which it
+recognizes, and of the main GENESIS `objects' which are available for
+constructing simulations that have most powerfully assisted in the
+sharing of model features amongst the broader modeling community.
+
+A high-level simulation language, the GENESIS SLI, provides a
+framework in which a simulation programmer can define and manipulate
+GENESIS elements. It allows modelers to easily extend the capabilities
+of the simulator, and to exchange, modify, and reuse models or model
+components. The SLI interprets statements in the GENESIS simulation
+language, and constitutes the operating system `shell'. User-defined
+SLI scripts are used to glue the pieces of a simulation together. The
+graphical objects used to define the front end of a simulation and
+GENESIS data handlers are all controlled from SLI scripts.
+
+GENESIS 3.0 (G3) is a major revision and update of the GENESIS system.
+The core simulator functionality is restructured, with a more modern
+modular design (the CBI federated architecture). This will not only
+result in improved simulator performance and portability, but will
+also allow the use of alternate script parsers and user interfaces, as
+well as the ability to communicate with other modeling programs and
+environments. The CBI federated architecture is specifically designed
+to support the integration of these stand-alone software components.
+
+The core components of the architecture are shown in
+Figure~\ref{fig:cbi-arch}. On the bottom left are databases of
+neuronal models or experimental data that can be accessed by the
+simulator. Optional model processors (e.g. the reConstruct interface)
+load a model into the model container.  The model container stores the
+model in memory and makes it available to other software components in
+different formats.  The model container translates biological concepts
+and properties into mathematical formulae that can be understood by
+numerical solvers. Thus the numerical solvers are indepent of the
+biological model representation. The simulation controller
+orchestrates and synchronizes the actions taken by the model container
+(e.g. when to load a model, the definition of the stimulus, and when
+to export a model) and solvers (when to fetch the model from the model
+container, when to start the calculations, and what the output
+variables are).
+
+\begin{figure}[ht]
+  \centering
+    \includegraphics[scale=0.4]{figures/G3arch.eps}
+  \caption{Relation of components in CBI architecture.}
+  \label{fig:cbi-arch}
+\end{figure}
+
+The scripting layer allows the simulation system to be driven from
+multiple scripting languages. Python and Perl are currently supported,
+and for backwards compatibility, the GENESIS SLI is being
+incorporated. The G3 GUI is shown at the top. It allows models to be
+imported from databases or constructed from scratch, the exploration
+of model structure and parameters, and the visualization of variables
+and model behavior.
+
+\section{Methods}
+
+The CBI federated architecture provides a modular paradigm that places
+stand-alone software components into logical relationships. In this it
+shares a number of ideas with the well-known model-view-controller
+(MVC-reff??) paradigm. The distinguishing feature of the CBI
+architecture is that the back end comprises numerical solvers rather
+than relational databases. The data layers in the CBI architecture
+correspond to high-level data associated with biological concepts and
+extend to low level data such as numerical values (Figure ??). The
+benefit of this layering of data is that it allows the mathematical
+and biological aspects of a model to be distinguished and separated.
+
+Clear delineation of the modules in the CBI architecture allows both
+developers and users to choose to contribute to a single component
+with limited complexity, instead of being forced to contribute to the
+whole simulator and be exposed to tremendous complexity. Within the
+CBI paradigm each software component becomes self contained in the
+sense that it can be run independently. This has important advantages
+as it facilitates the interoperability of software obtained from
+different sources by: (1) reduced complexity of software modules
+compared to a unitary system, (2) simplified documentation of modules
+in terms of inputs and outputs, (3) easy incorporation or removal of
+individual modules as required, (4) simplified development and testing
+of components as stand alone modules, and (5) clear delineation of
+scope for new module development. The federated approach to the CBI
+architecture provides three significant advantages for software
+development: (1) modules can be run separately on different machines,
+for example, the GUI and modeling environment might run locally, while
+the simulator is run elsewhere either serially or in parallel on more
+powerful machines, (2) decomposition of an application into multiple
+software components allows reuse and extension of individual modules,
+whether stand alone or otherwise, clearly facilitating model
+development and research progress, and (3) individual components can
+be independently updated, enhanced, or replaced when needed, thus the
+life cycle of a modular architecture is smoother that of a
+non-scalable application.
+
+Many existing software components such as GUI libraries and plotting
+libraries, are application neutral.  Other software components are
+tailored to computational neuroscience needs.  The CBI federated
+architecture then provides the framework for integration of a
+functioning simulator using a scripting language and other integration
+technology.  Thus the CBI federated architecture provides an extremely
+plastic environment within which independent modules can be integrated
+with scripting languages of choice.  Here we specifically illustrate
+the use of Python for this purpose.
+
+The Neurospaces project has provided core software components of the
+G3 neuroscience simulator\cite{cornelis03:_neuros}.  The components
+provided are: (1) the model container, stores a conceptual
+representation of a model that can be regarded as an enumeration of
+biological concepts and their relationships, and an expanded
+representation of a model that if mathematically complete can be
+simulated, (2) Heccer, a fast compartmental solver based on the
+GENESIS {\it hsolve} that can be instantiated from C, Perl, Python or
+other scripting languages, (3) SSP (Simple Scheduler in Perl), binds
+Neurospaces and Heccer and activates them correctly, such that they
+work together on a single simulation (4) Neurospaces Studio, contains
+tools for graphical browsing and command line usage, (5) Geometry
+Library, a general purpose library containing essential geometrical
+operators not commonly found in other geometrical libraries, (6)
+Reconstruct Interface, supports conversion of contours exported by the
+Reconstruct software to the Neurospaces declarative NDF format, (7)
+Project Browser, for inspection of projects and simulation results.
+
+\subsection{SWIG for federated software integration}
+
+SWIG (Simplified Wrapper and Interface Generator) was chosen to
+facilitate the use of Python bindings in G3. It is a software
+development tool that connects programs written in C and C++ with
+high-level scripting languages, such as Perl and Python. For the CBI
+architecture, it provides control over most aspects of wrapper
+generation and automates the generation of the required Python
+interfaces. SWIG uses a layered approach to build Python extension
+modules where parts of the extension module are defined in C and other
+parts are defined in Python. The C layer contains low-level wrappers
+whereas Python code is used to define high-level features.
+Considerably more flexibility is obtained by generating code in both
+languages as an extension module can be enhanced with support code in
+either language.
+
+\subsection{Python}
+
+Python is a clear and powerful object-oriented scripting language,
+comparable to Perl, Ruby, or Scheme.  In August 2008 nearly 5\% of all
+code written was developed in Python to make it the 6th most popular
+programming language\cite{software09:_tiobe_progr_commun_index}. It
+combines considerable power with very clear syntax and has modules,
+classes, exceptions, high level data types, in combination with a
+dynamic and loose typing. It runs on many hardware architectures,
+integrates with scientific and user interface libraries, and new
+modules are easily written in C or C++ (or other languages, depending
+on the chosen implementation). It is also usable as an extension
+language for applications written in other languages that need
+easy-to-use scripting or automation interfaces.
+
+% 9. http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html.
+
+\subsection{Meta-Programming in Python}
+
+Meta-programming is a programming technique where a program generates
+a new program and then executes it.  We used this technique in the
+GENESIS 3 Python bindings to generate an additional layer of Python
+code that provides increased flexibility for the definition of models
+and simulations.  The key Python primitives used are a data structure
+that defines the high-level interfaces.  During program initialization
+this data structure is translated to strings containing Python code
+such as class and method definitions, which are then bound to the
+run-time environment using the Python \textbf{eval} function.
+
+\section{Results}
+
+Developed by Michael Vanier in the late 1990's, PyGENESIS was a
+version of GENESIS that replaced the standard SLI with a Python
+interface. This Python-enabled version of GENESIS was never publicly
+released due to the then immaturity of the Python scripting language.
+However, with the development of G3 as a CBI federated software
+architecture and with the increased sophistication of the Python
+platform, we have enabled several of the simulators core components
+with Python interfaces.  While it is possible to drive each component
+in isolation from these interfaces, in the next sections, we focus on
+the behavior of the integrated simulator.
+
+\subsection{A Simple Example}
+
+Python uses modules to group related functions together.  The Python
+bindings of the G3 simulator use modules to separate interfaces for
+simple models with many default settings (e.g. to start a new research
+project) from more complicated interfaces that expose the full
+functionality of the simulator.
+
+As an example the \textbf{Neurospaces.SingleCellContainer} module
+contains functions to simplify simulations of single neuron models.
+This module is a front-end to the \textbf{Neurospaces} module.
+\textbf{Neurospaces} interfaces with the model container which is
+coded in an efficient system programming language.  Likewise,
+\textbf{Heccer.SimpleHeccer} is a wrapper module around
+\textbf{Heccer} which in turn is an interface to the low-level single
+neuron solver.  Other modules are under construction to facilitate
+network modeling.
+
+Here we show a simple high-level Python script that runs a simulation
+of a single cylindrical segment defined by standard values for the
+parameters of membrane and axial resistance and membrane capacitance
+({\tt RM}, {\tt RA}, and {\tt CM}, respectively\footnote{the solver
+  requires an axial resistance for all compartments.}).  These
+parameters are given by their specific values as commonly reported in
+the literature, instead of their actual values scaled to the
+compartment surface area as used by a
+solver\cite{cornelis04:_neuros_param_handl}.
+
+{\vspace*{1mm}
+ { \footnotesize
+  \linenumbers
+  {\begin{verbatim}
+#!/usr/bin/python
+# load the SingleCellContainer library
+import Neurospaces.SingleCellContainer
+
+# create a cell for simulation
+c = Neurospaces.SingleCellContainer.Cell("/cell");
+
+# create a cylindrical segment inside the cell, and set its properties
+s = Neurospaces.SingleCellContainer.Segment("/cell/soma");
+
+s.parameter("Vm_init", -0.0680)
+s.parameter("RM", 1.000)
+s.parameter("RA", 2.50)
+s.parameter("CM", 0.0164)
+s.parameter("ELEAK", -0.0800)
+
+s.parameter("DIA", 2e-05)
+s.parameter("LENGTH", 4.47e-05)
+
+# apply current injection to the soma
+s.parameter("INJECT", 1e-9)
+
+# redirect output to the given file
+Neurospaces.SingleCellContainer.set_output_filename("/tmp/output")
+
+# compile the model
+Neurospaces.SingleCellContainer.compile("/cell")
+
+# define the output variables
+Neurospaces.SingleCellContainer.output("/cell/soma", "Vm")
+    
+# run the simulation
+Neurospaces.SingleCellContainer.run(0.5)
+\end{verbatim}
+  \vspace*{1mm} }}}
+
+Due to the CBI architecture, the G3 platform provides many interfaces.
+As example, the compartmental solver can be driven stand-alone from C
+code, from Python or from Perl for running the simplest models, or it
+can be integrated with the model container for running more realistic
+models that are based on morphological data.  To illustrate this
+flexibility we now compare the above Python script with alternative
+implementations in the C code and GENESIS SLI.
+
+In the C code that interfaces directly to the solver, there is an
+abundance of low level details.  For example the compartments are
+identified by their position in an array, and parameters such as
+membrane resistance and capacitance must be provided as an ordered
+sequence of their actual values (scaled to the compartment surface
+area).
+
+The complexity of the GENESIS SLI interface falls between that of the
+Python and Perl interfaces, and the C code interface\footnote{Note
+  that the GENESIS SLI interface is the standard scripting language of
+  GENESIS 2, and is now also supported by GENESIS 3.}.  While
+compartments have names, parameter values are given in a format used
+by solvers.
+
+{\vspace*{1mm} \footnotesize
+  \begin{minipage}{1\linewidth}
+    
+    \begin{minipage}[t]{.50\linewidth}
+{\bf C Code Implementation}
+\resetlinenumber
+\begin{verbatim}
+#include "heccer/compartment.h"
+struct Compartment compSoma =
+{
+ // type of structure
+ { MATH_TYPE_Compartment, },
+
+ -1,  // no parent compartment
+ 4.57537e-11, // Cm
+ -0.08,       // Em
+ -0.068,      // InitVm
+ 0,           // Inject
+ 360502,      // Ra
+ 3.58441e+08, // Rm
+};
+
+//  compartment and channel mapping
+int piC2m[] = { 0, -1, };
+
+// model definition
+struct Intermediary inter =
+{ 1, &compSoma, NULL, piC2m, };
+
+// main simulation script
+#include "main.c"
+
+\end{verbatim}
+    \end{minipage}
+    \begin{minipage}[t]{.50\linewidth}
+{\bf GENESIS SLI Implementation}
+\resetlinenumber
+\begin{verbatim}
+create neutral /cell
+create compartment /cell/soma
+
+setfield /cell/soma dia 2e-05
+setfield /cell/soma len 4.47e-05
+
+setfield /cell/soma Ra 355711
+setfield /cell/soma Rm 3.56051e+08
+setfield /cell/soma Em -0.0800
+setfield /cell/soma Cm 4.60608e-11
+
+setfield /cell/soma inject 1e-9
+
+reset
+
+step 0.5 -time
+\end{verbatim}
+    \end{minipage}
+%    \begin{minipage}{.50\linewidth}
+%\begin{verbatim}
+%Compare GENESIS SLI \& G3 C code \& G3 perl \& G3 Python
+%\end{verbatim}
+%    \end{minipage}
+%    \begin{minipage}{.50\linewidth}
+%\begin{verbatim}
+%Compare GENESIS SLI \& G3 C code \& G3 perl \& G3 Python
+%\end{verbatim}
+%    \end{minipage}
+  \end{minipage}
+  \linenumbers
+  \vspace*{1mm}
+}
+
+While Python bindings are suitable for construction of toy models from
+scratch, it is better to use a domain specific language to construct
+the various parts of a model. The Neurospaces model container is
+installed with a library of model components.  As an example, the
+standard Hodgkin-Huxley channels are provided in the file
+\textbf{channels/hodgkin-huxley.ndf}.  These channels can then be
+included in the segment defined above by adding the Python statements:
+
+{\footnotesize
+  \resetlinenumber[23]
+  \linenumbers
+\begin{verbatim}
+s.insert_child("channels/hodgkin-huxley.ndf::/k")
+s.insert_child("channels/hodgkin-huxley.ndf::/na")
+\end{verbatim}
+}
+
+The model container can export models constructed in Python or other
+scripting languages as a library for incorporation in new models or
+for use with other tools such as the Neurospaces project browser.
+These new models can then be imported by a call to the \textbf{read}
+method in the \textbf{Neurospaces} module. For example, importing a
+Purkinje cell model with over 4000 compartments may be done with the
+following statement:
+
+{\footnotesize
+\begin{verbatim}
+Neurospaces.SingleCellContainer.read("cells/purkinje/edsjb1994.ndf")
+\end{verbatim}
+}
+
+The structure of the model can then be analyzed.  For example, the
+names of the most distal segment of each dendrite can be obtained
+with:
+
+{\footnotesize
+\begin{verbatim}
+Neurospaces.SingleCellContainer.query("segmentertips /Purkinje")
+\end{verbatim}
+}
+
+Given the name of one dendritic segment, the number of branch points
+between that segment and the soma can be determined. After indicating
+which paths of the dendritic tree must be examined, the model
+container parameter \textbf{SOMATOPETAL\_BRANCHPOINTS} contains the
+result which can be obtained with:
+
+{\footnotesize
+\begin{verbatim}
+Neurospaces.SingleCellContainer.query
+  ("segmentersetbase /Purkinje")
+Neurospaces.SingleCellContainer.query
+  ("printparameter /Purkinje/segments/b1s06[182] SOMATOPETAL_BRANCHPOINTS")
+\end{verbatim}
+}
+
+As another example, a wildcard can be used to activate endogenous
+synapses:
+
+{\footnotesize
+\begin{verbatim}
+Neurospaces.SingleCellContainer.query
+  ("setparameterconcept spine::/Purk_spine/head/par 25")
+Neurospaces.SingleCellContainer.query
+  ("setparameterconcept thickd::gaba::/Purk_GABA 1")
+\end{verbatim}
+}
+
+Finally, a simulation may conveniently be started using:
+
+{\footnotesize
+\begin{verbatim}
+Neurospaces.SingleCellContainer.output
+  ("/Purkinje/segments/soma", "Vm")
+Neurospaces.SingleCellContainer.run(0.5)
+\end{verbatim}
+}
+
+This outputs the soma membrane potential to a file named
+\textbf{/tmp/output}.
+
+
+\subsection{Gluing Pre-existing Applications \& Libraries}
+
+As mentioned above, one advantage of the CBI federated software
+architecture, is that it defines how to interface simulator components
+with external applications.  An obvious example is the use of existing
+3D graphics software to examine and edit the spatial properties of a
+model neuron morphology.  Others include, integration with external
+graphing and windowing software for plotting the values of solved
+variables against simulation time, or to allow the construction of
+button rich tutorial applications.
+
+We are currently working on integration of the GENESIS 3 platform and
+the GTK+ library to build cross platform graphical user interfaces
+(GUIs) using the Python module \textbf{pygtk}.  \textbf{matplotlib} is
+a Python interface to a 2D plotting library producing publication
+quality figures in a variety of hardcopy formats.
+
+Because all these libraries exist and are publicly available for
+download, what remains to be done is providing data bindings, such
+that for example the data produced by a mathematical solver flows into
+a widget that plots the value of a variable against time.  The events
+that are generated inside such a GUI application fall into one of two
+categories.  The first category considers events generated to open a
+menu or dialog interface.  The second category considers events that
+interact with the simulation.  Since a lot of documentation for the
+first category is available on the internet, we only deal here with
+the second category, and we focus on events like starting and stopping
+a simulation.
+
+Most nowadays GUI applications are conveniently constructed using one
+of the available user interface builders.  Glade is such an interface
+builder that allows the user to build a GUI with visual elements such
+as menus and buttons, and write a description of the elements to an
+XML file.  The Python bindings then allow to read such an XML file.
+What remains to be done is the binding of button events to specific
+actions for the simulator.
+
+%Because the focus of Glade is simple GUI applications, it does not
+%directly support plotting functions.  In our example we choose to
+%imported these from the \textbf{matplotlib} library.
+
+In the code below, we show snippets of Python code that connect all
+the necessary software components to build a small GUI to the GENESIS
+3 simulator.  For this, we assume that a Glade XML file with name
+\textbf{G3.glade} can be found that describes a GUI with one window
+(name: window1) and that allows to set the simulation time, and
+contains a button to start the simulation.
+
+The first lines of code in a Python script that provides an integrated
+GUI to GENESIS 3 loads all the necessary Python modules which in turn
+load the libraries that are coded in a low-level system programming
+language.
+
+{\footnotesize
+  \resetlinenumber
+  \linenumbers
+\begin{verbatim}
+import pygtk
+import gtk
+import gtk.glade
+\end{verbatim}
+}
+
+To read the Glade XML file and connect the button with a function to
+run the simulation:
+
+{\footnotesize
+  \resetlinenumber[5]
+  \linenumbers
+\begin{verbatim}
+wTree = gtk.glade.XML("G3.glade", "window1")
+wTree.signal_autoconnect( { "on_button1_clicked": run_simulation } )
+\end{verbatim}
+}
+
+The function \textbf{run\_simulation} is a Python function with as
+function body the complete listing of the first example.
+
+The edit field with the simulation time requires the use of a global
+variable that follows the value in the edit field:
+
+{\footnotesize
+  \resetlinenumber[8]
+  \linenumbers
+\begin{verbatim}
+def set_simulation_time(self):
+    global simulation_time
+    simulation_time = self.get_text()
+    
+wTree.signal_autoconnect
+      ( { "on_simulation_time_changed": set_simulation_time } )
+\end{verbatim}
+}
+
+The code of a GUI application is always terminated by a call to the
+main event loop of the GUI library.
+
+{\footnotesize
+  \resetlinenumber[14]
+  \linenumbers
+\begin{verbatim}
+gtk.main()
+\end{verbatim}
+}
+
+This script runs a small model, and can be combined with other Python
+fragments given here to run more complicated models, add various
+stimulus conditions, and extract the output of interest.  The script
+saves the membrane potential of the soma to the file
+\textbf{/tmp/output}.  To plot this membrane potential in the
+application window, we use the \textbf{matplotlib} library:
+
+{\footnotesize
+  \resetlinenumber[5]
+%  \linenumbers
+\begin{verbatim}
+import matplotlib
+import pylab
+\end{verbatim}
+}
+
+The following code reads the file and puts the output in the two
+arrays \textbf{t} and \textbf{v}:
+
+{\footnotesize
+  \resetlinenumber[5]
+%  \linenumbers
+\begin{verbatim}
+    v = [] ; t = []
+    file = open("/tmp/output")
+    for line in file:
+        values = re.split(" ", line)
+        t.append(float(values[0]))
+        v.append(float(values[1]))
+\end{verbatim}
+}
+
+The plot widget is not directly supported by Glade and must be created
+by custom Python code.  The plot is then generated using:
+
+{\footnotesize
+  \resetlinenumber[5]
+%  \linenumbers
+\begin{verbatim}
+    # generate the plot
+    figure = matplotlib.figure.Figure(figsize=(6,4), dpi=60)
+    axis = figure.add_subplot(111)
+    axis.plot(t,v)
+
+    # display the plot
+    canvas = matplotlib.backends.backend_gtk.FigureCanvasGTK(figure)
+    canvas.show()
+    grahview = wTree.get_widget("vbox1")
+    grahview.pack_start(canvas, True, True)
+\end{verbatim}
+}
+
+
+A more complex example illustrates the integration of G3 with Blender
+(http://www.blender.org/, a free open source 3D content creation suite
+available for all major operating systems that have Python enabled
+bindings)\,\footnote{Blender has the restriction that the Python code
+  must be run from the Blender Python interpreter.} to validate and
+analyze models of the morphology of small dendritic segments obtained
+from electron microscopy data. Past research on cerebellar Purkinje
+cells has shown that the balance between excitation and inhibition
+plays an important role in dendritic
+processing\cite{santamaria02:_modul_purkin}\marginpar{Hausser ref?}.
+The spatial resolution of the models employed in such studies was
+limited by the reconstruction techniques that were available.
+Consequently, over the last several years we have used electron
+microscopy in conjunction with Reconstruct (Fiala, 2005;
+http://www.bu.edu/neural/Reconstruct.html, a Windows based application
+for montaging, aligning, tracing, measuring, and reconstructing
+objects from serial section images) \marginpar{cite howard} to obtain
+more precise morphologies of small segments of Purkinje cell
+dendrite\cite{jc05:_recon}.
+%Fiala JC (2005) Reconstruct: a free editor for serial section microscopy. J Microscopy 218:52-61.
+Interactive visualization of these reconstructed segments is a
+valuable method of model validation and is achieved through the
+interface of G3 with Blender.
+
+Show EM dendrite reconstruction in Blender (screen shot)
+
+Show Python interface snippet.
+
+Special purpose software has been written to convert Reconstruct data
+and import it into the G3 model container.  The core of these
+algorithms implements geometrical transformations such that EM
+contours are extracted to provide equivalent cylinders suitable for
+cable modeling.  The geometrical properties of the cylinders are
+stored as NDF files, and algorithms provided by the model container
+link them with the cable parameters required by a solver. A simulation
+can then be run with the \textbf{read} and \textbf{run} methods
+mentioned above.
+
+\section{Conclusion}
+
+Although the Python bindings of the G3 simulator embed the same
+powerful concepts as the SLI scripting language of the GENESIS 2
+simulator, the new version of the simulator stores model parameters
+separately from stimulation protocol and the way to run a simulation.
+
+
+% ********************** Back matter ********************************
+% Bibliography
+\cleardoublepage
+\pagenumbering{roman}
+\bibliographystyle{abbrv}
+%\bibliography{DDDAS_bib_library}
+%\bibliography{crest2008,Qian,DDDAS_bib_library}
+\bibliography{all}
+
+% ********************** End of the Document ************************
+\end{document}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

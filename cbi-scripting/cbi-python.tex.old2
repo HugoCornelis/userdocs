@@ -1,0 +1,204 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[dvips]{epsfig}
+%\usepackage{graphicx}
+\usepackage{url}
+
+\begin{document}
+
+\title{Python as a Federation Tool for GENESIS 3.0}
+
+\author{Cornelis H. \hspace{2mm} Coop A. D. \hspace{2mm} Bower J. M. \\
+  {\small University of Texas Health Science Center at San Antonio}}
+
+\maketitle
+
+\pagenumbering{arabic}
+\section{Introduction}
+Historically, there have been fundamental differences between
+scripting languages such as Perl[9], Python[4], Rexx[6], Tcl[8],
+Visual Basic, and the Unix shells and system programming languages
+such as C or C++. System programming languages start from the most
+primitive computer elements such as words of memory. They are designed
+to manage the complexity of building data structures and algorithms
+from scratch and usually are strongly typed (require statically
+declared data types). Alternatively, scripting languages are designed
+for `gluing': they assume the existence of a set of powerful
+components and are intended primarily for connecting components
+together. The fact that scripting languages are typically typeless and
+do not need a visible compilation step simplifies connectivity between
+components and enables rapid application development. They are also
+often small, lightweight, suitable for embedding in C programs, and
+provide a higher level of programming than assembly or system
+programming languages in an interpreted development environment.
+Scripting languages operate at a higher level than system programming
+languages, in the sense that on average a single statement does more
+work. For example, a typical statement in a system programming
+language executes about five machine instructions, whereas in a
+scripting language hundreds or thousands of machine instructions are
+executed [1].
+
+%9.  L. Wall, T. Christiansen, and R. Schwartz, Programming Perl, Second Edition, O'Reilly and Associates, ISBN 1-56592-149-6, 1996.
+%4. M. Lutz, Programming Python, O'Reilly, ISBN 1-56592-197-6, 1996.
+%6. R. O'Hara and D. Gomberg, Modern Programming Using REXX, Prentice Hall, ISBN 0-13-597329-5, 1988.
+%8.  J. Ousterhout, Tcl and the Tk Toolkit, Addison-Wesley, ISBN 0-201-63337-X, 1994.
+% 1. John K. Ousterhout (1998) Scripting: Higher Level Programming for the 21st Century. IEEE COMPUTER 31: 23-30.
+
+A scripting language is not a replacement for a system programming
+language or vice versa. Each is suited to a different set of tasks.
+For gluing and system integration, applications can be developed 5-10x
+faster with a scripting language; system programming languages require
+large amounts of boilerplate and conversion code to connect the
+pieces, whereas this can be done directly with a scripting language.
+For complex algorithms and data structures, the strong typing of a
+system programming language makes programs easier to manage. Where
+execution speed is key, a system programming language can often run
+10-20x faster than a scripting language due to fewer run-time checks.
+
+The strongly typed nature of system programming languages discourages
+reuse. Scripting languages, on the other hand, have actually
+stimulated significant software reuse. They use a model where
+interesting components are built in a system programming language and
+then glued together into applications using the scripting language.
+This division of labor provides a natural framework for reusability.
+Components are designed to be reusable, and there are well-defined
+interfaces between components and scripts that make it easy to use
+components. Nevertheless, scripting and system programming are
+symbiotic. Used together, they produce programming environments of
+exceptional power: system programming languages are used to create
+functional components which can then be assembled using scripting
+languages.
+
+In summary, system programming languages are well suited to building
+components where the complexity is in the data structures and
+algorithms, while scripting languages are well suited for gluing
+applications where the complexity is in the connections. As gluing
+tasks become increasingly prevalent, scripting will provide an
+increasingly important programming paradigm.
+
+http://en.wikipedia.org/wiki/Scripting\_languages
+Historical overview
+
+http://www.google.com/trends?q=perl\%2C+python
+
+http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html
+
+\subsection{GENESIS}
+GENESIS (GEneral NEural SImulation System) is a general purpose
+simulation platform that was developed to support the simulation of
+neural systems ranging from subcellular components and biochemical
+reactions to complex models of single neurons, simulations of large
+networks, and systems-level models. It was the first broad scale
+modeling system in computational biology to encourage modelers to
+develop and share model features and components. Simulations are
+constructed from modules that receive inputs, perform calculations on
+them, and then generate outputs. Model neurons are constructed from
+these basic components, such as compartments. and variable conductance
+ion channels. Compartments are linked to their channels and are then
+linked together to form multi-compartmental neurons of any desired
+level of complexity. Neurons may be linked together to form neural
+circuits.  It is the syntax used by the GENESIS Script Language
+Interpreter, the commands which it recognizes, and of the main GENESIS
+`objects' which are available for constructing simulations that have
+most powerfully assisted in the sharing of model features.
+
+A high-level simulation language, the GENESIS Script Language
+Interpreter (SLI), provides a framework in which a simulation
+programmer can define and manipulate GENESIS elements. It allows
+modelers to easily extend the capabilities of the simulator, and to
+exchange, modify, and reuse models or model components. The SLI
+interprets statements in the GENESIS simulation language, and
+constitutes the operating system `shell'. User-defined SLI scripts are
+used to glue the pieces of a simulation together. The graphical
+objects used to define the front end of a simulation and GENESIS data
+handlers are all controlled from SLI scripts.
+
+GENESIS 3.0 is a major revision and update of the GENESIS system. The
+core simulator functionality is reimplemented in C++, with a more
+modern modular design (the CBI functional architecture). This will not
+only result in improved performance and portability, but will also
+allow the use of alternate script parsers and user interfaces, as well
+as the ability to communicate with other modeling programs and
+environments. The core components of the architecture are shown in
+Figure~\ref{fig:cbi-arch}. On the bottom left are databases of
+neuronal models or experimental data that can be accessed by the
+simulator. Optional model processors (e.g. the reconstruct interface)
+load a model into the model container. The model container translates
+biological concepts and properties into mathematical formulae that can
+be understood by numerical solvers. Thus the numerical solvers are
+indepent of the biological model representation. The simulation
+controller orchestrates and synchronizes the actions taken by the
+model container (e.g. when to load a model, what stimulation to apply,
+when to export a model) and solvers (when to fetch the model from the
+model container, when to start the calculations, and what the output
+variables are).
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[scale=0.5]{figures/G3arch.eps}
+%  \includegraphics[scale=0.5]{figures/G3arch.png}
+  \caption{Relation of components in CBI architecture.}
+  \label{fig:cbi-arch}
+\end{figure}
+
+The scripting layer allows the simulation system to be driven from
+multiple scripting languages. Python and Perl are currently supported,
+and for backwards compatibility, the GENESIS 2 SLI is being
+incorporated. The GENESIS 3 GUI is shown at the top. It allows models
+to be imported from databases or constructed them from scratch, the
+exploration of model structure and parameters, and the visualization
+of variables and model behavior.
+
+\subsection{Python}
+Python is a clear and powerful object-oriented programming language,
+comparable to Perl, Ruby, Scheme, or Java.  In August 2008 nearly 5\%
+of all code written was developed in Python to make it the 6th most
+popular programming language [9]. Python combines considerable power
+with very clear syntax. It has modules, classes, exceptions, very high
+level dynamic data types, and dynamic typing. There are interfaces to
+many system calls and libraries, as well as to various windowing
+systems. New built-in modules are easily written in C or C++ (or other
+languages, depending on the chosen implementation). It is also usable
+as an extension language for applications written in other languages
+that need easy-to-use scripting or automation interfaces.
+
+PyGENESIS is a Python interface developed for GENESIS that used Python
+as its scripting language instead of the standard GENESIS SLI. It's
+still very rough, and has not been actively maintained for a long
+time. PyGENESIS enables description of neuronal dynamics with
+mathematical expressions and other custom methods. Methods to retreive
+descriptions on the model instances return them in Python data types
+(strings, sequences, dictionaries and networkx.graphs), which are
+intended to be visualized via matplotlib functions.
+
+% 9. http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html.
+
+Genesis \& python, Mike Vanier's version.
+
+\section{Methods}
+CBI federated architecture
+
+SWIG for federation integration.
+
+
+\section{Results}
+
+Compare SLI \& G3 C code \& G3 perl \& G3 python
+
+1. Very simple model
+
+2. Model loaded from NMC
+
+3. Blender.
+
+\section{Conclusion}
+
+
+\end{document}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
