@@ -19,7 +19,7 @@ This script is part of the \href{../developer-package}{\it DeveloperPackage}, it
 
 \subsection*{Running {\it neurospaces\_cron}}
 
-The {\it neurospaces\_cron} script can be run by entering ``{\tt neurospaces\_cron}'' from the command line after installing the Neurospaces developer package called {\it developer}. There are command line arguments available to customize aspects of a {\it cron} job, e.g.
+The {\it neurospaces\_cron} script can be run by entering ``{\tt neurospaces\_cron}'' from the command line after installing the {\it DeveloperPackage}. There are command line arguments available to customize aspects of a {\it cron} job, e.g.
 \begin{itemize}
    \item {\tt --outputdir <absolute path to target directory>:} Set the output directory for {\it cron} job output logs.
    \item {\tt --config <file name>:} Read a YAML configuration file for setting {\it cron} job parameters.
@@ -71,7 +71,7 @@ This job is set to run at exactly one minute after midnight. To run the job more
 \end{verbatim}
 which would make the {\it cron} job run every eight hours.
 
-Note that {\tt g3tester} is a user set up for permissions to perform a {\tt sudo make install}, and {\tt sudo make uninstall}. To set up a regular user to use sudo, add them to the {\it /etc/sudoers} file (see next section).
+{\bf Note:} The {\tt g3tester} is a user set up for permissions to perform a {\tt sudo make install}, and {\tt sudo make uninstall}. To set up a regular user to use sudo, add them to the {\it /etc/sudoers} file (see next section).
 
 \subsection*{The Sudoers File}
 
