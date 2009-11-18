@@ -398,8 +398,14 @@ s.parameter("ELEAK", -0.0800)
 s.parameter("DIA", 2e-05)
 s.parameter("LENGTH", 4.47e-05)
 
-# apply current injection to the soma
+# first example: apply current injection to the soma
 s.parameter("INJECT", 1e-9)
+
+# second example: use a wildcard to activate endogenous synapses
+Neurospaces.SingleCellContainer.query
+  ("setparameterconcept spine::/Purk_spine/head/par 25")
+Neurospaces.SingleCellContainer.query
+  ("setparameterconcept thickd::gaba::/Purk_GABA 1")
 
 # redirect output to the given file
 Neurospaces.SingleCellContainer.set_output_filename("/tmp/output")
@@ -592,8 +598,10 @@ can be given to load a declarative specification of a cerebellar
 purkinje cell, and to start the {\it Neurospaces Studio} to visualize
 and render its morphology in three dimensions.
 
-Likewise, the following commands load the same model from a GENESIS 2
-SLI procedural script and start the {\it Neurospaces Studio}:
+Likewise, the following commands load the same model\marginpar{A: I
+  would like to make it clear that the simulation is not run} from a
+GENESIS 2 SLI procedural script and start the {\it Neurospaces
+  Studio}:
 
 {\footnotesize
 \begin{verbatim}
@@ -625,15 +633,13 @@ show_parameter /Purkinje/segments/b1s06[182] SOMATOPETAL_BRANCHPOINTS
 \end{verbatim}
 }
 
-As another example, a wildcard may be used to activate endogenous
-synapses:
+After finding a suitable dendritic segment, its synaptic channel can
+be stimulated with a precomputed spike train using:
 
 {\footnotesize
 \begin{verbatim}
-set_runtime_parameter thickd::gaba::/Purk_GABA FREQUENCY 1
-set_runtime_parameter spine::/Purk_spine/head/par FREQUENCY 25
+set_runtime_parameter /Purkinje/segments/b1s06[182]/Purkinje_spine_0/head/par/synapse EVENT_FILENAME event_data/events.yml
 \end{verbatim}
-}
 
 Finally, a simulation can be conveniently started using:
 
