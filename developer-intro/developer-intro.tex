@@ -14,213 +14,38 @@
 
 \section*{Introduction to GENESIS for Developers}
 
-The documentation linked to here is for GENESIS users who want to contribute to the development of extended functionality of the GENESIS simulation platform, rather than for those users who want to do scientific simulations. (Although a single individual may want to do both.) Developer documentation provides links to more technical documentation supporting software development. It is assumed that you are familiar with the monotone version control software used by GENESIS (for more information see \href{../version-control/version-control.tex}{\bf Version\,Control}). Links to the more general user documentation can be found at the \href{../documentation-homepage/documentation-homepage.tex}{\bf Documentation\,Home\,Page}. 
+The documentation linked to here is for GENESIS users who want to contribute to the development of extended functionality of the GENESIS simulation platform, rather than for those users who want to do scientific simulations. (Although a single individual may want to do both.) Developer documentation provides links to more technical documentation supporting software development. It is assumed that you are familiar with the monotone version control software used by GENESIS (for more information see \href{../version-control/version-control.tex}{\bf Version\,Control}). Links to the more general user documentation can be found at the \href{http://www.genesis-sim.org/userdocs/contents-level1/contents-level1.html}{\bf Level\,1\,Documentation\,Contents\,Index}. 
 %The documentation linked to here is for the use by people who are involved in the development and extension of GENESIS functionality.
 
-\subsection*{Becoming a GENESIS Developer}
+The federated development of GENESIS software components proceeds via a software buildbot machine that houses a \href{http://monotone.ca/}{monotone} server that is connectible over the internet. This allows source code changes to be properly merged using the functions available in\,{\it monotone}, regardless of the location where the changes have been made (at home, in your office, on the airplane). The build mechanism will always build the most up to date version of the code.
+
+\section*{Becoming a GENESIS Developer}
 
 In principle anyone can become a GENESIS developer, all that is required is a desire to focus on tool and documentation development rather than model building and simulation. There are at least three ways to be a GENESIS  developer:
 
-\begin{itemize}
-	\item {\bf Member of the GENESIS Core Development Team:} Core development of the GENESIS software platform is undertaken by the 
-	members of the GENESIS Core Develoment Team.
-	\item {\bf Member of the GENESIS Developers Federation:} To become a GENESIS developer send a request to 
-	\href{mailto:genesis@genesis-sim.org}{\bf genesis@genesis-sim.org} with the subject ``New Developer Request''.
-	You will be registered as a GENESIS developer and receive a key that will allow you to pull and push documentation
-	and code to the GENESIS repositories. To learn more about the GENESIS repositories and version control see
-	\href{../version-control/version-control.tex}{\bf Version\,Control}.
+\subsection*{Member of the GENESIS Core Development Team}
+
+Core development of the GENESIS software platform is undertaken by the members of the GENESIS Core Development Team.
+
+\subsection*{Member of the GENESIS Developers Federation}
+
+To become a GENESIS developer send a request to \href{mailto:genesis@genesis-sim.org}{\bf genesis@genesis-sim.org} with the subject ``New Developer Request''. You will be registered as a GENESIS developer and receive a key that will allow you to pull and push documentation and code to the GENESIS repositories.
+
+To learn more about the GENESIS repositories and version control see \href{../version-control/version-control.tex}{\bf Version\,Control}.
 	
-	\item {\bf Independent Developer:} GENESIS is structured in such a way that it is possible to download the code from:
-	\href{http://sourceforge.net/projects/neurospaces/files/}{\bf http://sourceforge.net/projects/neurospaces/files/}
-	You can then proceed entirely independently with your own code and documentation development. To do this see the 
-	\href{../installation-developer/installation-developer.tex}{\bf Developer\,Installation} documentation. It describes how to set up 
-	your own choice of version control and associated file repositories.
+To learn more about installation on your local machine as a GENESIS developer see \href{../installation-developer/installation-developer.tex}{\bf Developer\,Installation}.
 
-\end{itemize}
+\subsection*{\bf Independent Developer}
 
-\section*{Developing Sources}
+GENESIS is structured in such a way that it is possible to download the code from \href{http://sourceforge.net/projects/neurospaces/files/}{\bf http://sourceforge.net/projects/neurospaces/files/}. You can then proceed entirely independently with your own code and documentation development. To do this see the \href{../installation-independent/installation-independent.tex}{\bf Independent\,Installation} documentation. It describes how to set up your own choice of version control and associated file repositories independently of the \href{http://www.genesis-sim.org/}{\bf GENESIS website}.
 
-Here we describe the directory structure used to do GENESIS development.
+%The \href{../developer-package/developer-package.tex}{\it DeveloperPackage} has built in support to create and maintain this directory layout.
 
-GENESIS contains several software components useful for neural simulations using models based on experimental data:
-\begin{enumerate}
-\item {\bf Each software component can have implementations in several programming languages:} For example, there are Java and C based implementations of the \href{../model-container/model-container.tex}{\bf Model\,Container}.
-\item {\bf Each software component has several resources:} For example, source code, documentation, additional tools etc.
-\item {\bf Each software component can have experimental features that are not part of an official distribution:} We call this a branch of the source code (it is irrelevant if such a branch is present in a version control system or not). 
-\end{enumerate}
-
-\subsection*{Source Locations}
-
-\begin{itemize}
-\item {\bf The source code of a software component is normally put in the directory:}
-\begin{verbatim}
-$HOME/neurospaces_project/<package-name>/source/ \
-   <programming language>/snapshots/<branch name>/
-$
-\end{verbatim}
-
-\item {\bf Other resources are put in other directories:} For example, documents that are not part of the distribution can be put under
-\begin{verbatim}
-$HOME/neurospaces_project/<package-name>/docs/
-$
-\end{verbatim}
-
-\item {\bf Archived patches are located in:}
-\begin{verbatim}
-$HOME/neurospaces_project/<package-name>/source/ \
-   <programming language>/patches/ 
-$
-\end{verbatim}
-
-\end{itemize}
-The \href{../developer-package/developer-package.tex}{\it DeveloperPackage} has built in support to create and maintain this directory layout.
 % structure when
 %working in developer mode (using its {\tt --developer} option).
-
-\subsection*{Configuration}
-
-Configuration is located in the {\it /etc/neurospaces/} directory.
-
-Every software component or tool has its own subdirectory. E.g. the {\it morphology2ndf} convertor, part of the {\bf Model\,Container}, has its default configuration in {\it /etc/neurospaces/morphology2ndf}. Configuration files are specified in the \href{http://www.yaml.org/}{\bf YAML} format, because scripting languages like \href{http://www.perl.org/}{\bf Perl} and \href{http://www.python.org/}{\bf Python} have built in support to process YAML, and because YAML is more readable than XML.
-
-Configuration is normally processed as follows:
-\begin{enumerate}
-\item {\bf Every tool has built in default configuration:} Every tool must be able to work in an intuitive way when no other configuration is found except the default built-in configuration.
-\item {\bf Every tool reads its configuration from {\it /etc/neurospaces/$<$tool-name$>$/}:} This is merged with default configuration, possibly overriding default configuration.
-\item {\bf Every tool accepts additional configuration from the user:} This is via command line options or otherwise, again possibly overwriting configuration settings generated in the previous step. 
-\end{enumerate}
-The merging algorithm is defined in the \href{http://search.cpan.org/dist/Data-Utilities/}{\bf Data-Utilities} package, available from \href{http://www.cpan.org/}{\bf CPAN}.
-
 %There is a default configuration available in the {\it ConfiguratorPackage} (UNDER CONSTRUCTION). 
 
-\section*{Build Procedure}
+%\section*{Build Procedure}
 
-The \href{../developer-package/developer-package.tex}{\it Developer\,Package} has built in support to automate the actions required for a developer installation. It also has many more tools for GENESIS software development. For more information, see the details of the {\it DeveloperPackage}.
-
-\section*{Extending GENESIS Functionality}
-
-GENESIS contains many software components. The source code of the most
-important ones are publicly available from a central repository. (The
-server {\tt repo-genesis3} is coded as the default server in
-the \href{../developer-package/developer-package.tex}{\it DeveloperPackage}, 
-a default that can be overwritten using command line
-options.) Other software components can be made available from other
-sources. The {\it DeveloperPackage}, when configured correctly,
-automatically incorporates software components from geographically
-distributed sources. The addition of a new software component to GENESIS is the equivalent to adding a new column to the associative array constructed by the {\it DeveloperPackage}. 
-
-New software components can be added to the configuration of the {\it
-  neurospaces\_build} script of the {\it DeveloperPackage}. All the other tools of the
-{\it DeveloperPackage}, such as tools to compile and install, tools to synchronize
-the source code with remote servers, and tools to generate and publish
-documentation on a website will work with the new configuration.
-
-For smooth integration with the GENESIS installer, it is a requirement that the top level source directory of the new component contains a {\it configure} script, and a {\it Makefile} with the targets {\it clean}, {\it check}, {\it dist}, {\it distcheck}, {\it install}, {\it uninstall}, {\it docs}, {\it html-upload-prepare}, {\it html-upload}, and {\it dist-keywords}.
-
-\subsubsection*{Creating a new software component}
-
-The following steps should be performed on your developer machine each time you wish to start development of a new software component.
-
-Use the command line arguments ``{\tt --enable <your-software> --regex <your-software>}'' to limit the operations given below to only the software component named. Here, as an example, we use ``{\tt <your-software>}'' which should be replaced by the name of your software component. 
-
-\begin{enumerate}
-\item {\bf Add the new software component to the configuration of the {\it neurospaces\_build} script:} As an example, for the component named {\tt <your-software>}, you would add the following code block to the configuration file:
-\begin{verbatim}
-	'<your-software>' => {
-	   './configure' => ['--with-delete-operation'],
-	   directory => "$ENV{HOME}/neurospaces_project/<your-software>/source/snapshots/0",
-	   disabled => 0,
-	   order => 1,
-	   target_name => '<your-software>',
-	   version_control => {
-	      port_number => 4693,
-	      repository => "$ENV{HOME}/neurospaces_project/MTN/<your-software>.mtn",
-	   },
-},
-\end{verbatim}
-  This code block includes the directory name where sources are to be
-  found, the build order, and version control information ({\bf Note:}
-  the server port number cannot be changed at anytime). The {\tt \$} indicates a terminal prompt.
-
-\item {\bf Create the correct directory layout:}
-\begin{verbatim}
-   $ neurospaces_create_directories
-\end{verbatim}
-  
-\item {\bf Create the monotone repository:}
-\begin{verbatim}
-   $ neurospaces_init
-\end{verbatim}
-
-\item {\bf Populate the new project with files:} Use monotone to check in your modifications regularly (see \href{../version-control/version-control.tex}{\bf Version\,Control} for more details).
-
-\end{enumerate}
-
-\subsubsection*{Making a new software component available to others}
-
-Serving the source code over the internet makes it available to
-others.  It is best, although not required, to employ a dedicated user on
-your machine to serve the source code.
-
-\begin{itemize}
-\item {\bf Configure your new monotone server:} The information in the
-  configuration of the new software component is used by the {\it
-    neurospaces\_serve} command to make the source code available over
-  the internet.  If you are only serving your own software component,
-  use the ``{\tt --enable <your-software> --regex <your-software>}''
-  command line arguments.
-  
-\item {\bf Synchronize your private monotone repository:} After the
-  server has been configured the developer package tools can be used to
-  synchronize your private changes with the server, provided all tools
-  have been configured with the updated configuration for
-  {\tt <your-software>}.  For example, {\it neurospaces\_sync} can be used
-  to synchronize your private repository with the server repository.
-\end{itemize}
-  
-\subsubsection*{Pushing the new software component to other computers}
-
-The following steps will enable others to access your new software.
-
-\begin{itemize}
-
-\item {\bf Get a version of the developer package that contains the
-    configuration for the new software component.}
-  
-\item {\bf Create the correct directory layout:}
-\begin{verbatim}
-	neurospaces_create_directories
-\end{verbatim}
-
-\item {\bf Create the private monotone repository:} This step is
-  optional because the pull operation in the next step will create a
-  new repository for the new software component if required.
-\begin{verbatim}
-	neurospaces_init
-\end{verbatim}
-
-\item {\bf Pull the repository from the server:}
-\begin{verbatim}
-	neurospaces_pull --enable <your-software> \
-	   --regex <your-software>
-\end{verbatim}
-  
-\item {\bf Update local source code with the latest source in the
-    local repository, keeping local changes if any:}
-\begin{verbatim}
-	neurospaces_update --enable <your-software> \
-	   --regex <your-software>
-\end{verbatim}
-  
-\item {\bf Recompile all software components, and link them against
-    each other:}
-\begin{verbatim}
-	neurospaces_install --configure
-\end{verbatim}
-  The ``{\tt --configure}'' argument enables configuration, which is
-  needed for a new software component.
-\end{itemize}
-
-{\bf Note:} For further information on setting up and using the GENESIS repository for development see \href{../developer-repository/developer-repository.tex}{\bf Developer\,Repository}.
 
 \end{document}

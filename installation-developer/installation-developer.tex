@@ -14,9 +14,7 @@
 
 \section*{GENESIS Developer Installation}
 
-\subsection*{Introduction}
-
-The federated development of GENESIS software components proceeds via a software buildbot machine that houses a \href{http://monotone.ca/}{monotone} server that is connectible over the internet. This allows source code changes to be properly merged using the functions available in\,{\it monotone}, regardless of the location where the changes have been made (at home, in your office, on the airplane). The build mechanism will always build the most up to date version of the code.
+\subsection*{Prerequisites}
 
 There are several prerequisites to the construction of a GENESIS development environment. These include:
 
@@ -24,153 +22,141 @@ There are several prerequisites to the construction of a GENESIS development env
 
 \item {\bf Required tools:}\,{\it gdb},\,{\it gcc}, and\,{\it (x)emacs} with the\,{\it elisp} packages. Note that the GENESIS \href{../ndf-file-format/ndf-file-format.tex}{NDF file format} has a special\,{\it elisp} package for use with\,{\it (x)emacs}.
 \item \href{../version-control/version-control.tex}{{\bf Version control:}} Monotone is used as a statically linked binary (currently version 0.45). As it is a distributed version control system, developers can use,\,{\it monotone} to maintain and exchange their code repositories and executables. Monotone installation is supported by the\,{\it Developer Package} module. 
-\item {\bf  The\,{\it installer}:} Can optionally be used to do initial directory layout. Importantly, the\,{\it installer} requires the correct directory layout. See the script {\it neurospaces\_create\_directories}.
+\item {\bf  The\,{\it DeveloperPackage}:} Can optionally be used to do initial directory layout. Importantly, the\,{\it DeveloperPackage} requires the correct directory layout. See the script {\it neurospaces\_create\_directories}.
 
 \end{itemize}
 
-\subsection*{Where to find GENESIS}
+\subsection*{Where to find a Developer Installation of GENESIS}
 
-The easiest way to get the latest version of the GENESIS source code is via the {\it installer} available from the developer package (see following sections.)
+The easiest way to get the latest version of the GENESIS source code is via the  \href{../developer-package/developer-package.tex}{\it DeveloperPackage} (see also following sections.)
 
 Source code for GENESIS can be found at:
 
 \href{http://sourceforge.net/projects/neurospaces/files/}{http://sourceforge.net/projects/neurospaces/files/}
 
+\section*{Developing Sources}
+
+%Here we describe the directory structure used for GENESIS development.
+
+GENESIS contains several software \href{../reserved-words/reserved-words.tex}{\bf Components} useful for neural simulations using models based on experimental data:
+\paragraph{\bf Each software component can have implementations in several programming languages:} For example, there are Java and C based implementations of the \href{../model-container/model-container.tex}{\bf Model\,Container}.
+\paragraph{\bf Each software component has several resources:} For example, source code, documentation, additional tools, etc.
+\paragraph{\bf Each software component can have experimental features that are not part of an official distribution:} We call this a branch of the source code (it is irrelevant if such a branch is present in a version control system or not). 
+
+\subsection*{Source Locations}
+
+The source code of a software component is normally put in the directory:
+\begin{verbatim}
+   $HOME/neurospaces_project/<package-name>/source/ <programming language>/snapshots/<branch name>/
+\end{verbatim}
+Other resources are put in other directories: For example, documents that are not part of the distribution can be put under:
+\begin{verbatim}
+   $HOME/neurospaces_project/<package-name>/docs/
+\end{verbatim}
+Archived patches are located in:
+\begin{verbatim}
+   $HOME/neurospaces_project/<package-name>/source/ <programming language>/patches/ 
+\end{verbatim}
+
 \subsection*{Basic Directory Layout}
 
+Create a directory {\it $\sim$/neurospaces\_project} in your home directory. \\
+\noindent Create the directory {\it $\sim$/neurospaces\_project/MTN} to contain all\,{\it monotone} repositories accessible to the\,{\it DeveloperPackage}. \\
+\noindent Every software module has its own subdirectory: For example, the\,{\bf Model\,Container} directory ({\it $\sim$/neurospaces\_project/model-container}):
+
 \begin{itemize}
+\item[]{\it $\sim$/neurospaces\_project/model-container/docs} contains documentation not included in the distribution. 
+\item[]{\it $\sim$/neurospaces\_project/model-container/source/snapshots/0} is the local workspace under monotone control, contains the source code you are working on. 
+\item[]{\it $\sim$/neurospaces\_project/model-container/snapshots/0/\_MTN} location of directory with the\,{\it monotone} options specific to the source code.
+\item[]{\it $\sim$/neurospaces\_project/model-container/source/snapshots/0/installed} optionally contains a locally installed version of the module.
+\item[]{\it $\sim$/neurospaces\_project/model-container/source/snapshots/patches} contains diffs/patches to your code, available on your local machine.
+\end{itemize}
+The {\it Developer\,Package} has built in support to automate the actions required for a developer installation. It also has many more tools for GENESIS software development. For more information, see the \href{../developer-package/developer-package.tex}{\it DeveloperPackage}.
 
-\item Create a directory {\it $\sim$/neurospaces\_project} in your home directory.
-\item Create the directory {\it $\sim$/neurospaces\_project/MTN} to contain all\,{\it monotone} repositories accessible to the\,{\it installer}.
-\item Every software module has its own subdirectory. For example, the\,{\it model-container} directory ({\it $\sim$/neurospaces\_project/model-container}):
+\subsection*{Configuration}
 
+Configuration is located in the {\it /etc/neurospaces/} directory.
+
+Every software component or tool has its own subdirectory. For example, the {\it morphology2ndf} convertor, part of the {\bf Model\,Container}, has its default configuration in {\it /etc/neurospaces/morphology2ndf}. Configuration files are specified in the \href{http://www.yaml.org/}{\bf YAML} format, because scripting languages like \href{http://www.perl.org/}{\bf Perl} and \href{http://www.python.org/}{\bf Python} have built in support to process YAML, and because YAML is more readable than XML.
+
+Configuration is normally processed as follows:
 \begin{enumerate}
-
-\item[] {\it $\sim$/neurospaces\_project/model-container/docs} contains documentation not included in the distribution. 
-
-\item[] {\it $\sim$/neurospaces\_project/model-container/source/snapshots/0} is the local workspace under\,{\it monotone} control, contains the source code you are working on. 
-
-\item[] {\it $\sim$/neurospaces\_project/model-container/snapshots/0/\_MTN} location of directory with the\,{\it monotone} options specific to the source code.
-
-\item[] {\it $\sim$/neurospaces\_project/model-container/source/snapshots/0/installed} optionally contains a locally installed version of the module.
-
-\item[] {\it $\sim$/neurospaces\_project/model-container/source/snapshots/patches} contains diffs/patches to your code, available on your local machine.
-
+\item {\bf Every tool has built in default configuration:} Every tool must be able to work in an intuitive way when no other configuration is found except the default built-in configuration.
+\item {\bf Every tool reads its configuration from {\it /etc/neurospaces/$<$tool-name$>$/}:} This is merged with default configuration, possibly overriding default configuration.
+\item {\bf Every tool accepts additional configuration from the user:} This is via command line options or otherwise, again possibly overwriting configuration settings generated in the previous step. 
 \end{enumerate}
+The merging algorithm is defined in the \href{http://search.cpan.org/dist/Data-Utilities/}{\bf Data-Utilities} package, available from \href{http://www.cpan.org/}{\bf CPAN}.
 
-\item The installer scripts provided by the {\it Developer Package} knows how to work with the directory hierarchy given above. The following provides a full example:
+\section*{A Specific Installation Example}
+
+The installer scripts provided by the {\it DeveloperPackage} knows how to work with the directory hierarchy given above. We now show a full example for installing the {\bf Model\,Container}:
 
 \begin{enumerate}
-\item It sets up the model-container source code repository on your local machine.
+\item It sets up the {\bf Model\,Container} source code repository on your local machine.
 \item Checks out the code.
-\item Uses the installer scripts to install all the currently available packages.
+\item Uses the {\it DeveloperPackage} scripts to install all the currently available packages.
 \begin{verbatim}
-[10:54] (0,2) ~ $ mkdir neurospaces_project/
-[10:54] (0,2) ~ $ cd neurospaces_project/
-[10:55] (0,2) neurospaces_project $ mkdir MTN
-[10:57] (0,2) neurospaces_project $ cd MTN/
-[10:57] (0,2) MTN $ mtn --db=neurospaces-developer.mtn db init
-[11:00] (0,2) MTN $ mtn --db=neurospaces-developer.mtn \
-   pull repo-genesis3.cbi.utsa.edu:4696 "*"
-mtn: doing anonymous pull; use -kKEYNAME if you need authentication
-mtn: connecting to repo-genesis3.cbi.utsa.edu:4696
-mtn: first time connecting to server repo-genesis3.cbi.utsa.edu:4696
-mtn: I'll assume it's really them, but you might want to double-check
-mtn: their key's fingerprint: cbc91b2ec1d19e95f64cb164cc2166f4bdfe7bf4
-mtn: warning: saving public key for cbiadmin@utsa.edu to database
-mtn: finding items to synchronize:
-mtn:  bytes in | bytes out | certs in | revs in
-mtn:   549.1 k |       510 |  754/754 | 183/183
-mtn: successful exchange with repo-genesis3.cbi.utsa.edu:4696
+$ mkdir neurospaces_project/
+$ cd neurospaces_project/
+$ mkdir MTN
+$ cd MTN/
+$ mtn --db=neurospaces-developer.mtn db init
+$ mtn --db=neurospaces-developer.mtn pull repo-genesis3.cbi.utsa.edu:4696 "*"
+   mtn: doing anonymous pull; use -kKEYNAME if you need authentication
+   mtn: connecting to repo-genesis3.cbi.utsa.edu:4696
+   mtn: first time connecting to server repo-genesis3.cbi.utsa.edu:4696
+   mtn: I'll assume it's really them, but you might want to double-check
+   mtn: their key's fingerprint: cbc91b2ec1d19e95f64cb164cc2166f4bdfe7bf4
+   mtn: warning: saving public key for cbiadmin@utsa.edu to database
+   mtn: finding items to synchronize:
+   mtn:  bytes in | bytes out | certs in | revs in
+   mtn:   549.1 k |       510 |  754/754 | 183/183
+   mtn: successful exchange with repo-genesis3.cbi.utsa.edu:4696
 
-[11:00] (0,2) MTN $ cd ../
-[11:00] (0,2) neurospaces_project $ mkdir developer/
-[11:00] (0,2) neurospaces_project $ mkdir developer/source
-[11:00] (0,2) neurospaces_project $ mkdir developer/source/snapshots/
-[11:00] (0,2) neurospaces_project $ mkdir developer/source/snapshots/0
-[11:00] (0,2) neurospaces_project $ cd developer/source/snapshots/0/
-[11:00] (0,2) 0 $ mtn --db ~/neurospaces_project/MTN/developer.mtn \
-   --branch 0 co .
-[11:01] (0,2) 0 $ ls
+$ cd ../
+$ mkdir developer/
+$ mkdir developer/source
+$ mkdir developer/source/snapshots/
+$ mkdir developer/source/snapshots/0
+$ cd developer/source/snapshots/0/
+$ mtn --db ~/neurospaces_project/MTN/developer.mtn --branch 0 co .
+$ ls
    itemizeaclocal.m4  bin/  configure*  configure.ac  COPYING  docs/ 
    INSTALL  install-sh*  license.txt  Makefile.am  Makefile.in  missing* 
    _MTN/  release-expand.config*  tests/  tests.config  TODO.txt
 
-[11:01] (0,2) 0 $ ./configure 
-checking for a BSD-compatible install... /usr/bin/install -c
-checking whether build environment is sane... yes
-checking for gawk... gawk
-checking whether make sets $(MAKE)... yes
-find: tests/data: No such file or directory
-configure: creating ./config.status
-config.status: creating Makefile
+$ ./configure 
+   checking for a BSD-compatible install... /usr/bin/install -c
+   checking whether build environment is sane... yes
+   checking for gawk... gawk
+   checking whether make sets $(MAKE)... yes
+   find: tests/data: No such file or directory
+   configure: creating ./config.status
+   config.status: creating Makefile
 
-[11:08] (0,2) 0 $ make
-make[1]: Entering directory `/local_home/hugo/neurospaces_project/  \
-   developer/source/snapshots/0'
-make[1]: Nothing to be done for `all-am'.
-make[1]: Leaving directory `/local_home/hugo/neurospaces_project/  \
-   developer/source/snapshots/0'
+$ make
+   make[1]: Entering directory `/local_home/hugo/neurospaces_project/ developer/source/snapshots/0'
+   make[1]: Nothing to be done for `all-am'.
+   make[1]: Leaving directory `/local_home/hugo/neurospaces_project/ developer/source/snapshots/0'
 
-[11:08] (0,2) 0 $ sudo make install
-make[1]: Entering directory `/local_home/hugo/neurospaces_project/ \
-   developer/source/snapshots/0'
-make[2]: Entering directory `/local_home/hugo/neurospaces_project/ \
-   developer/source/snapshots/0'
-test -z "/usr/local/bin" || mkdir -p -- "/usr/local/bin"
+$ sudo make install
+   make[1]: Entering directory `/local_home/hugo/neurospaces_project/ eveloper/source/snapshots/0'
+   make[2]: Entering directory `/local_home/hugo/neurospaces_project/ developer/source/snapshots/0' test -z "/usr/local/bin" || mkdir -p -- "/usr/local/bin"
    /usr/bin/install -c 'bin/mcad2doxy' '/usr/local/bin/mcad2doxy'
-   /usr/bin/install -c 'bin/neurospaces_build' \
-      '/usr/local/bin/neurospaces_build'
-   /usr/bin/install -c 'bin/neurospaces_status' \
-      '/usr/local/bin/neurospaces_status'
-   /usr/bin/install -c 'bin/neurospaces_versions' \
-      '/usr/local/bin/neurospaces_versions'
-   /usr/bin/install -c 'bin/release-expand' \
-      '/usr/local/bin/release-expand'
-   /usr/bin/install -c 'bin/release-extract' \
-      '/usr/local/bin/release-extract'
-test -z "/usr/local/neurospaces/developer" || \
-   mkdir -p -- "/usr/local/neurospaces/developer"
-   /local_home/hugo/neurospaces_project/developer/source/ \
-      snapshots/0/install-sh -c -m 644 \
-      'tests/introduction.html' \
-      '/usr/local/neurospaces/developer/tests/introduction.html'
-   /local_home/hugo/neurospaces_project/developer/source/ \
-      snapshots/0/install-sh -c -m 644 \
-      'tests/specifications/global.t' \
-      '/usr/local/neurospaces/developer/tests/specifications/global.t'
-   /local_home/hugo/neurospaces_project/developer/source/ \
-      snapshots/0/install-sh -c -m 644 \
-      'tests/specifications/downloads.t' \
-      '/usr/local/neurospaces/developer/tests/specifications/downloads.t'
-   /local_home/hugo/neurospaces_project/developer/source/ \
-      snapshots/0/install-sh -c -m 644 \
-      'tests/specifications/developer.t' \
-      '/usr/local/neurospaces/developer/tests/specifications/developer.t'
-   /local_home/hugo/neurospaces_project/developer/source/ \
-      snapshots/0/install-sh -c -m 644 \
-      'tests/specifications/strings/ \
-      neurospaces_build--no-compile --no-configure --no-install \
-         --regex developer --dry-run --developer --verbose --verbose \
-         -- verbose.txt' '/usr/local/neurospaces/developer/tests/ \
-         specifications/strings/neurospaces_build --no-compile \
-         --no-configure --no-install --regex developer --dry-run \
-         --developer --verbose --verbose--verbose.txt'
-   /local_home/hugo/neurospaces_project/developer/source/ \
-      snapshots/0/install-sh -c -m 644 'tests/specifications/strings \
-      /neurospaces_build --tag-build-10 --no-compile --no-configure \
-      --no-install --regex developer --dry-run --developer --verbose \
-      --verbose--verbose.txt' '/usr/local/neurospaces/developer/tests/ \
-      specifications/strings/neurospaces_build --tag-build-10 \
-      --no-compile --no-configure --no-install --regex developer \
-      --dry-run --developer --verbose --verbose --verbose.txt'
-make[2]: Leaving directory `/local_home/hugo/neurospaces_project/ \
-   developer/source/snapshots/0'
-make[1]: Leaving directory `/local_home/hugo/neurospaces_project/ \
-   developer/source/snapshots/0'
+   /usr/bin/install -c 'bin/neurospaces_build' '/usr/local/bin/neurospaces_build'
+   /usr/bin/install -c 'bin/neurospaces_status' '/usr/local/bin/neurospaces_status'
+   /usr/bin/install -c 'bin/neurospaces_versions' '/usr/local/bin/neurospaces_versions' /usr/bin/install -c 'bin/release-expand' /usr/bin/install -c 'bin/release-extract' '/usr/local/bin/release-extract'
+   test -z "/usr/local/neurospaces/developer" || mkdir -p -- "/usr/local/neurospaces/developer"
+   /local_home/hugo/neurospaces_project/developer/source/ snapshots/0/install-sh -c -m 644 'tests/introduction.html' '/usr/local/neurospaces/developer/tests/introduction.html'
+   /local_home/hugo/neurospaces_project/developer/source/ snapshots/0/install-sh -c -m 644 'tests/specifications/global.t' '/usr/local/neurospaces/developer/tests/specifications/global.t'
+   /local_home/hugo/neurospaces_project/developer/source/ snapshots/0/install-sh -c -m 644 'tests/specifications/downloads.t' /local_home/hugo/neurospaces_project/developer/source/ snapshots/0/install-sh -c -m 644 'tests/specifications/developer.t'  '/usr/local/neurospaces/developer/tests/specifications/developer.t'
+   /local_home/hugo/neurospaces_project/developer/source/ snapshots/0/install-sh -c -m 644 'tests/specifications/strings/ neurospaces_build--no-compile --no-configure --no-install --regex developer --dry-run --developer --verbose --verbose -- verbose.txt' '/usr/local/neurospaces/developer/tests/ specifications/strings/neurospaces_build --no-compile --no-configure --no-install --regex developer --dry-run --developer --verbose --verbose--verbose.txt'
+   /local_home/hugo/neurospaces_project/developer/source/ snapshots/0/install-sh -c -m 644 'tests/specifications/strings /neurospaces_build --tag-build-10 --no-compile --no-configure --no-install --regex developer --dry-run --developer --verbose --verbose--verbose.txt' '/usr/local/neurospaces/developer/tests/ specifications/strings/neurospaces_build --tag-build-10 --no-compile --no-configure --no-install --regex developer --dry-run --developer --verbose --verbose --verbose.txt'
+   make[2]: Leaving directory `/local_home/hugo/neurospaces_project/ developer/source/snapshots/0'
+   make[1]: Leaving directory `/local_home/hugo/neurospaces_project/ developer/source/snapshots/0'
 
-[11:08] (0,2) 0 $ neurospaces_packages
-/usr/local/bin/neurospaces_build:
+$ neurospaces_packages
+   /usr/local/bin/neurospaces_build:
    enabled packages in order of build:
       - developer
       - model-container
@@ -181,25 +167,151 @@ make[1]: Leaving directory `/local_home/hugo/neurospaces_project/ \
       - gshell
       - userdocs
 
-[11:08] (0,2) 0 $ neurospaces_pull
-[11:08] (0,2) 0 $ neurospaces_update
-[11:08] (0,2) 0 $ neurospaces_install
-[11:08] (0,2) 0 $ neurospaces_check
-[11:08] (0,2) 0 $ 
+$ neurospaces_pull
+$ neurospaces_update
+$ neurospaces_install
+$ neurospaces_check
 \end{verbatim}
 \end{enumerate}
-\end{itemize}
 
-You can then go to the directory of each individual software component, configure, compile, check, and install the given module. For example, a simple build for the modules\,{\it model\_container},\,{\it heccer},\,{\it ssp}, and\,{\it studio} on a developer machine can be done with:  
+You can then go to the directory of each individual software component, configure, compile, check, and install the given module. For example, a simple build for the modules {\bf Model\,Container}, {\bf Heccer}, {\bf SSP}, and {\bf Studio} on a developer machine can be done with:  
 \begin{verbatim}
    neurospaces_build --developer --regex 'model-container|heccer|ssp|studio'
 \end{verbatim}
-and to include running tests via the check target of the makefiles:
+and to include running tests via the check target of the {\it make} files:
 \begin{verbatim}
    neurospaces_build --check --developer \
       --regex 'model-container|heccer|ssp|studio'
 \end{verbatim}
-However, an\,{\it installer} has been built that automates these actions while respecting the dependencies between the different modules (ie. each of the mentioned steps is done for each module in the correct order).
+However, a {\it DeveloperPackage} has been built that automates these actions while respecting the dependencies between the different modules (ie. each of the mentioned steps is done for each module in the correct order).
+
+\section*{Extending GENESIS Functionality}
+
+GENESIS contains many software components. The source code of the most
+important ones are publicly available from a central repository. (The
+server {\tt repo-genesis3} is coded as the default server in
+the \href{../developer-package/developer-package.tex}{\it DeveloperPackage}, 
+a default that can be overwritten using command line
+options.) Other software components can be made available from other
+sources. The {\it DeveloperPackage}, when configured correctly,
+automatically incorporates software components from geographically
+distributed sources. The addition of a new software component to GENESIS is the equivalent to adding a new column to the associative array constructed by the {\it DeveloperPackage}. 
+
+New software components can be added to the configuration of the {\it
+  neurospaces\_build} script of the {\it DeveloperPackage}. All the other tools of the
+{\it DeveloperPackage}, such as tools to compile and install, tools to synchronize
+the source code with remote servers, and tools to generate and publish
+documentation on a website will work with the new configuration.
+
+For smooth integration with the GENESIS installer, it is a requirement that the top level source directory of the new component contains a {\it configure} script, and a {\it Makefile} with the targets {\it clean}, {\it check}, {\it dist}, {\it distcheck}, {\it install}, {\it uninstall}, {\it docs}, {\it html-upload-prepare}, {\it html-upload}, and {\it dist-keywords}.
+
+\subsubsection*{Creating a new software component}
+
+The following steps should be performed on your developer machine each time you wish to start development of a new software component.
+
+Use the command line arguments ``{\tt --enable <your-software> --regex <your-software>}'' to limit the operations given below to only the software component named. Here, as an example, we use ``{\tt <your-software>}'' which should be replaced by the name of your software component. 
+
+\begin{enumerate}
+\item {\bf Add the new software component to the configuration of the {\it neurospaces\_build} script:} As an example, for the component named {\tt <your-software>}, you would add the following code block to the configuration file:
+\begin{verbatim}
+	'<your-software>' => {
+	   './configure' => ['--with-delete-operation'],
+	   directory => "$ENV{HOME}/neurospaces_project/<your-software>/source/snapshots/0",
+	   disabled => 0,
+	   order => 1,
+	   target_name => '<your-software>',
+	   version_control => {
+	      port_number => 4693,
+	      repository => "$ENV{HOME}/neurospaces_project/MTN/<your-software>.mtn",
+	   },
+},
+\end{verbatim}
+  This code block includes the directory name where sources are to be
+  found, the build order, and version control information ({\bf Note:}
+  the server port number cannot be changed at anytime). The {\tt \$} indicates a terminal prompt.
+
+\item {\bf Create the correct directory layout:}
+\begin{verbatim}
+   $ neurospaces_create_directories
+\end{verbatim}
+  
+\item {\bf Create the monotone repository:}
+\begin{verbatim}
+   $ neurospaces_init
+\end{verbatim}
+
+\item {\bf Populate the new project with files:} Use monotone to check in your modifications regularly (see \href{../version-control/version-control.tex}{\bf Version\,Control} for more details).
+
+\end{enumerate}
+
+\subsubsection*{Making a new software component available to others}
+
+Serving the source code over the internet makes it available to
+others.  It is best, although not required, to employ a dedicated user on
+your machine to serve the source code.
+
+\begin{itemize}
+\item {\bf Configure your new monotone server:} The information in the
+  configuration of the new software component is used by the {\it
+    neurospaces\_serve} command to make the source code available over
+  the internet.  If you are only serving your own software component,
+  use the ``{\tt --enable <your-software> --regex <your-software>}''
+  command line arguments.
+  
+\item {\bf Synchronize your private monotone repository:} After the
+  server has been configured the developer package tools can be used to
+  synchronize your private changes with the server, provided all tools
+  have been configured with the updated configuration for
+  {\tt <your-software>}.  For example, {\it neurospaces\_sync} can be used
+  to synchronize your private repository with the server repository.
+\end{itemize}
+  
+\subsubsection*{Pushing the new software component to other computers}
+
+The following steps will enable others to access your new software.
+
+\begin{itemize}
+
+\item {\bf Get a version of the developer package that contains the
+    configuration for the new software component.}
+  
+\item {\bf Create the correct directory layout:}
+\begin{verbatim}
+	neurospaces_create_directories
+\end{verbatim}
+
+\item {\bf Create the private monotone repository:} This step is
+  optional because the pull operation in the next step will create a
+  new repository for the new software component if required.
+\begin{verbatim}
+	neurospaces_init
+\end{verbatim}
+
+\item {\bf Pull the repository from the server:}
+\begin{verbatim}
+	neurospaces_pull --enable <your-software> \
+	   --regex <your-software>
+\end{verbatim}
+  
+\item {\bf Update local source code with the latest source in the
+    local repository, keeping local changes if any:}
+\begin{verbatim}
+	neurospaces_update --enable <your-software> \
+	   --regex <your-software>
+\end{verbatim}
+  
+\item {\bf Recompile all software components, and link them against
+    each other:}
+\begin{verbatim}
+	neurospaces_install --configure
+\end{verbatim}
+  The ``{\tt --configure}'' argument enables configuration, which is
+  needed for a new software component.
+\end{itemize}
+
+{\bf Note:} For further information on setting up and using the GENESIS repository for development see \href{../developer-repository/developer-repository.tex}{\bf Developer\,Repository}.
+
+To extend the functionality of a pre-existing GENESIS {\bf Component} see \href{../genesis-extend-model-container}{\bf Extending the Model\,Container}.
 
 %\subsection*{The\,{\it Developer Package}}
 
