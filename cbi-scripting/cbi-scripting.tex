@@ -30,14 +30,14 @@ Python is widely employed in specialized areas of systems integration
 (e.g\,.~\cite{thiruvathukal01:_web_progr_python}).
 
 An important feature of the latest version of the GENESIS (GEneral
-NEural SImulation System) platform, GENESIS 3 (G3), is that it
+NEural SImulation System) platform, GENESIS 3 (G-3), is that it
 decomposes into self-contained software modules, referred to as the
 CBI architecture\,\cite{cornelis08:_cbi_archit_comput_simul_realis}.
 This federated architecture allows separate Python bindings to be
 defined for the mathematical solvers and the GUI, as well as for other
 necessary software.
 
-Currently, there are many technologies that simplify the binding of G3
+Currently, there are many technologies that simplify the binding of G-3
 to Python libraries.  We employ SWIG (Simplified Wrapper and Interface
 Generator\,\cite{08:_simpl_wrapp_inter_gener}).  SWIG examines an
 application API and makes it available to a scripting language.
@@ -51,7 +51,7 @@ and simplify addition of new functionality.
 We illustrate our approach with two examples: (1) a Python script that
 generates, runs, and displays the output of a simple single
 compartment model neuron, and (2) the application of Python bindings
-to connect the G3 simulator to Blender, an open source 3D content
+to connect the G-3 simulator to Blender, an open source 3D content
 creation suite.  We use these bindings to visualize 3D models based on
 electron microscopy and convert them to computational
 models\,\cite{cornelis08:_model_neuros_genes}.
@@ -175,7 +175,7 @@ simulation together. The graphical objects used to define the front
 end of a simulation and GENESIS data handlers are all controlled from
 SLI scripts.
 
-G3 is a major revision and update of the GENESIS system.  The core
+G-3 is a major revision and update of the GENESIS system.  The core
 simulator functionality is restructured, with a more modern modular
 design (the CBI federated architecture, described below). This not
 only results in improved simulator performance and portability, but
@@ -213,7 +213,7 @@ variables are).
 The scripting layer allows the simulation system to be driven from
 multiple scripting languages. Python and Perl are currently supported,
 and for backwards compatibility, the GENESIS SLI is being
-incorporated. The G3 Graphic User Interface (GUI), shown at the top,
+incorporated. The G-3 Graphic User Interface (GUI), shown at the top,
 is entirely developed in Python.  It allows models to be imported from
 databases or constructed from scratch, the exploration of model
 structure and parameters, and the visualization of variables and model
@@ -258,7 +258,7 @@ individual components can be independently updated, enhanced, or
 replaced when needed, thus the life cycle of a modular architecture is
 smoother than that of a non-scalable application.
 
-The Neurospaces project provides core software components of the G3
+The Neurospaces project provides core software components of the G-3
 neuroscience simulator\,\cite{cornelis03:_neuros} including, (1) the
 {\it Model Container}, stores two representations of a model, the
 first is conceptual and can be regarded as an enumeration of
@@ -307,7 +307,7 @@ scripting or automation interfaces.
 \subsection{Meta-Programming in Python}
 
 Meta-programming is a programming technique where a program generates
-a new program and then executes it.  We used this technique for the G3
+a new program and then executes it.  We used this technique for the G-3
 Python bindings to generate an additional layer of Python code that
 provides increased flexibility for the definition of models and
 simulations.  The key Python primitives used are a data structure that
@@ -318,7 +318,7 @@ environment using the Python {\it eval} function.
 
 \subsection{SWIG for federated software integration}
 
-SWIG was chosen to facilitate the use of Python bindings in G3. It is
+SWIG was chosen to facilitate the use of Python bindings in G-3. It is
 a software development tool that connects programs written in C and
 C++ with high-level scripting languages, such as Perl and Python. For
 the CBI architecture, it provides control over most aspects of wrapper
@@ -338,7 +338,7 @@ version of GENESIS that replaced the standard GENESIS SLI with a
 Python interface\cite{vanier97:_genes_python}.  This Python-enabled
 version of GENESIS was never publicly released due to the then
 immaturity of Python as a scripting language.  However, with the
-increased sophistication of the Python platform and development of G3
+increased sophistication of the Python platform and development of G-3
 as a CBI federated software architecture, Python interfaces have been
 developed for several of the simulator core components.  While it is
 possible to drive each component in isolation from these interfaces,
@@ -348,7 +348,7 @@ create a simulator with a user-friendly interface.
 \subsection{A Python Enabled Neural Simulator}
 
 Python uses modules to group related functions together.  The Python
-bindings of the G3 simulator use modules to separate interfaces for
+bindings of the G-3 simulator use modules to separate interfaces for
 simple models with many default settings (e.g. to start a new research
 project) from more complicated interfaces that expose the full
 functionality of the simulator.
@@ -421,7 +421,7 @@ Neurospaces.SingleCellContainer.run(0.5)
 \end{verbatim}
   \vspace*{1mm} }}}
 
-Due to the CBI architecture, the G3 platform provides many interfaces.
+Due to the CBI architecture, the G-3 platform provides many interfaces.
 As an example, the compartmental solver can be driven stand-alone from
 C code, from Python, or from Perl to run the simplest models, or it
 can be integrated with the model container for running more realistic
@@ -438,7 +438,7 @@ actual values (scaled to the compartment surface area).
 The complexity of the GENESIS SLI interface falls between that of the
 Python and Perl interfaces, and the C code interface\footnote{Note
   that the GENESIS SLI interface is the standard scripting language of
-  GENESIS 2. It is also supported by G3.}.  While compartments have
+  GENESIS 2. It is also supported by G-3.}.  While compartments have
 names, parameter values are given in a format used by solvers.
 
 %\begin{figure}[ht]
@@ -509,12 +509,12 @@ step 0.5 -time
     \end{minipage}
 %    \begin{minipage}{.50\linewidth}
 %\begin{verbatim}
-%Compare GENESIS SLI \& G3 C code \& G3 perl \& G3 Python
+%Compare GENESIS SLI \& G-3 C code \& G-3 perl \& G-3 Python
 %\end{verbatim}
 %    \end{minipage}
 %    \begin{minipage}{.50\linewidth}
 %\begin{verbatim}
-%Compare GENESIS SLI \& G3 C code \& G3 perl \& G3 Python
+%Compare GENESIS SLI \& G-3 C code \& G-3 perl \& G-3 Python
 %\end{verbatim}
 %    \end{minipage}
   \end{minipage}
@@ -640,6 +640,7 @@ be stimulated with a precomputed spike train using:
 \begin{verbatim}
 set_runtime_parameter /Purkinje/segments/b1s06[182]/Purkinje_spine_0/head/par/synapse EVENT_FILENAME ``event_data/events.yml''
 \end{verbatim}
+}
 
 Finally, a simulation can be conveniently started using:
 
@@ -665,7 +666,7 @@ graphing and windowing software for plotting the values of solved
 variables against simulation time, or to allow the construction of
 button rich tutorial applications.
 
-We are currently working on integration of the G3 platform and the WX
+We are currently working on integration of the G-3 platform and the WX
 library to build cross platform GUIs using the Python module {\it
   wxPython}.  {\it matplotlib} is a Python interface to a 2D plotting
 library producing publication quality figures in a variety of hardcopy
@@ -698,7 +699,7 @@ file that is readable via Python bindings.
 %imported these from the {\it matplotlib} library.
 
 In the examples below, we show Python scripting to connect the
-software components required to build a small GUI for the G3
+software components required to build a small GUI for the G-3
 simulator.  For this, we assume that a wxFormBuilder file with name
 {\tt G3.wx} can be found that describes a GUI with one window (name:
 window1), allows the simulation duration to be set, and contains a
@@ -810,7 +811,7 @@ with custom Python code.  A plot can then be generated using:
 \end{verbatim}
 }
 
-A more complex example illustrates the integration of G3 with Blender
+A more complex example illustrates the integration of G-3 with Blender
 (http://www.blender.org/, a free open source 3D content creation suite
 with an active developer community and available for all major
 operating systems that have Python enabled bindings\,\footnote{Blender
@@ -844,17 +845,17 @@ dendrite\,\cite{lu09:_d_purkin, cornelis08:_model_neuros_genes}).
 %Show Python interface snippet.
 
 Special purpose software has been written to convert Reconstruct data
-for importation into the G3 model container.  The core of these
+for importation into the G-3 model container.  The core of these
 algorithms implements geometrical transformations such that EM
 contours are extracted to provide equivalent cylinders suitable for
 cable modeling.  The geometrical properties of the cylinders are
-stored as NDF files (the file format used by G3), and algorithms
+stored as NDF files (the file format used by G-3), and algorithms
 provided by the model container link them with the cable parameters
 required by the mathematical solvers.  A simulation can then be run
 with the {\it read} and {\it run} methods mentioned above.
 
 The necessary conversion algorithms are accessible from Python via the
-model container.  The Python interface of Blender links it to the G3
+model container.  The Python interface of Blender links it to the G-3
 simulator, such that Blender becomes the first 3D model inspection
 tool for EM data.  As an example, the Python script developed above
 can be run from within the Blender environment.  Also, via the same
@@ -863,15 +864,15 @@ data.
 
 Interactive visualization of reconstructed dendritic segments is a
 valuable method of model validation and is available with the
-interface of G3 and Blender (see Figure~\ref{fig:cbi-blender}).
+interface of G-3 and Blender (see Figure~\ref{fig:cbi-blender}).
 However, the development of small focused plugins allows for more than
 just these functions. For example, 3D measurement and manipulation of
 neuron morphology, computation of surface areas and volumes, and the
 generation of 3D crossections and 2D cuts.
 
 \subsection{Future Directions}
-Complementary functionality to that provided by interfacing G3 with
-Blender would be available after interfacing G3 with {\it
+Complementary functionality to that provided by interfacing G-3 with
+Blender would be available after interfacing G-3 with {\it
   neuro}Construct, a software package designed to simplify development
 of complex networks of biologically realistic
 neurons\,\cite{gleeson05:_build_networ_model}.  Implemented in Java,
@@ -887,7 +888,7 @@ design\,\cite{crook07:_morph}.
 Finally, we note that we have developed a serial communication
 framework for event delivery of action potentials to postsynaptic
 targets (DES: Discrete Event System).  This software component is
-integrated with the mathematical solvers of G3 using either Python or
+integrated with the mathematical solvers of G-3 using either Python or
 Perl.  Because it is optimized for communication over serial hardware,
 we plan to extend it with communication frameworks for parallel
 hardware such as that provided by the MOOSE simulator (see Ray and
@@ -904,24 +905,24 @@ series of software components specific to neuroscience applications.
 The advantage is that a scripting language such as Python becomes a
 powerful integration tool to connect these components to general
 purpose libraries for visualization, rendering, and GUIs.  A key
-enabling property of G3 is that it stores model parameters separately
+enabling property of G-3 is that it stores model parameters separately
 from stimulation protocols and the way simulations are run.  By
 defining clear functional boundaries of the core software components
 such as the model container and the mathematical solvers, we also
 provide clear interfaces for integration.
 
-Although the Python bindings of the G3 simulator embed the same
+Although the Python bindings of the G-3 simulator embed the same
 powerful concepts as the GENESIS SLI, their purpose is different.
 While the SLI had as major goals the integration of model components,
 output collection, and running simulations, the primary goal of
 scripting languages such as Python has become application integration.
 
-Here, we have illustrated the relationship between Python and the G3
+Here, we have illustrated the relationship between Python and the G-3
 simulator.  We have focused on a simple but comprehensive example, the
 running of a single compartment neuron and the plotting of its
 membrane potential. The purpose is to demonstrate the advantages of
 using high-level scripting languages such as Python for binding the
-independent stand-alone components of G3.
+independent stand-alone components of G-3.
 
 %It is an approach that
 %simplifies the extension, modification, and customization of the
@@ -936,16 +937,16 @@ and, as an example, to collect the output data for movie generation.
 %, and the
 %simulation to movie generation and other relevant functions provided
 %by the Blender plugin library.
-Employed in this way, the modularized design of the G3 simulator
+Employed in this way, the modularized design of the G-3 simulator
 provides for progressive federated software development.
 
-%The G3 platform uses scripting to connect neuroscience specific
+%The G-3 platform uses scripting to connect neuroscience specific
 %software to general purpose software and integrate it into a next
 %generation simulator.  The advantage is that third party software
 %libraries and applications become available for users, for example,
 %Blender, {\it matplotlib}, and Glade, among many others. This has
 %become possible due to the rearchitectured GENESIS software design
-%where G3 now stores model parameters separately from stimulation
+%where G-3 now stores model parameters separately from stimulation
 %protocols and the way simulations are run. It is the stand-alone
 %nature of the individual software components and the fact that they
 %can now easily be interfaced that serves the purpose of continued
