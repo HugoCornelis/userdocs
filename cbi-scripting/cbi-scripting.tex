@@ -572,10 +572,10 @@ morphology.  From the primary morphology structure it defines derived
 attributes such as total cell volume and the number of somatopetal
 branch points given the name of a dendritic segment.
 
-The {\it GENESIS 3 Shell} integrates with other software components in
-an interactive environment and can conveniently be used to explore a
-morphology and model structure, and to interactively query their
-derived attributes.  It is started from a UNIX system shell with:
+The {\it GENESIS 3 Shell} integrates other software components into an
+interactive environment and can conveniently be used to explore a
+morphology and model structure, and to query their derived attributes.
+It is started from a UNIX system shell with:
 
 {\footnotesize
 \begin{verbatim}
@@ -638,7 +638,7 @@ be stimulated with a precomputed spike train using:
 
 {\footnotesize
 \begin{verbatim}
-set_runtime_parameter /Purkinje/segments/b1s06[182]/Purkinje_spine_0/head/par/synapse EVENT_FILENAME event_data/events.yml
+set_runtime_parameter /Purkinje/segments/b1s06[182]/Purkinje_spine_0/head/par/synapse EVENT_FILENAME ``event_data/events.yml''
 \end{verbatim}
 
 Finally, a simulation can be conveniently started using:
@@ -665,9 +665,9 @@ graphing and windowing software for plotting the values of solved
 variables against simulation time, or to allow the construction of
 button rich tutorial applications.
 
-We are currently working on integration of the G3 platform and the
-GTK+ library to build cross platform GUIs using the Python module {\it
-  pygtk}.  {\it matplotlib} is a Python interface to a 2D plotting
+We are currently working on integration of the G3 platform and the WX
+library to build cross platform GUIs using the Python module {\it
+  wxPython}.  {\it matplotlib} is a Python interface to a 2D plotting
 library producing publication quality figures in a variety of hardcopy
 formats.
 
@@ -683,8 +683,8 @@ on the internet, we only deal here with the latter, and focus on
 events such as starting and stopping a simulation.
 
 Most contemporary GUI applications are conveniently constructed using
-one of the available user interface builders.  Glade
-(http://glade.gnome.org/; a user interface designer for the GTK+
+one of the available user interface builders.  wxFormBuilder
+(http://wxformbuilder.org/; a user interface designer for the wxPython
 toolkit and the Linux desktop environment GNOME) is one such builder.
 It allows the user to construct a GUI with visual elements such as
 menus and buttons, and write a description of the elements to an XML
@@ -699,8 +699,8 @@ file that is readable via Python bindings.
 
 In the examples below, we show Python scripting to connect the
 software components required to build a small GUI for the G3
-simulator.  For this, we assume that a Glade XML file with name {\tt
-  G3.glade} can be found that describes a GUI with one window (name:
+simulator.  For this, we assume that a wxFormBuilder file with name
+{\tt G3.wx} can be found that describes a GUI with one window (name:
 window1), allows the simulation duration to be set, and contains a
 button to start the simulation.
 
@@ -712,9 +712,7 @@ programming language.
   \resetlinenumber
   \linenumbers
 \begin{verbatim}
-import pygtk
-import gtk
-import gtk.glade
+import wx
 \end{verbatim}
 }
 
