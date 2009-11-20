@@ -274,8 +274,9 @@ for model construction, exploration and simulation, (5) {\it GENESIS 3
   Shell}, a shell that dynamically loads other software components in
 an interactive environment, (6) {\it Reconstruct Interface}, which
 supports conversion of contours exported by the Reconstruct software
-to the Neurospaces declarative NDF format, (7) {\it Project Browser},
-for inspection of projects and simulation results.
+to the Neurospaces declarative NDF format (the file format used by
+G-3), (7) {\it Project Browser}, for inspection of projects and
+simulation results.
 
 Many existing software components such as GUI libraries and plotting
 libraries, are application neutral.  Other software components are
@@ -574,8 +575,9 @@ branch points given the name of a dendritic segment.
 
 The {\it GENESIS 3 Shell} integrates other software components into an
 interactive environment and can conveniently be used to explore a
-morphology and model structure, and to query their derived attributes.
-It is started from a UNIX system shell with:
+model, its structural aspects such as its morphology, and to query its
+derived attributes such as total volume and surface area.  The {\it
+  GENESIS 3 Shell} is started from a UNIX system shell with:
 
 {\footnotesize
 \begin{verbatim}
@@ -583,33 +585,42 @@ genesis-g3
 \end{verbatim}
 }
 
-The {\it Neurospaces Studio} contains graphical tools for visual
-exploration of a model loaded into the model container.  For instance
-after the interactive shell has been started, the commands:
+After the interactive shell has been started, the command:
 
 {\footnotesize
 \begin{verbatim}
 ndf_load cells/purkinje/edsjb1994.ndf
-explore
 \end{verbatim}
 }
 
-can be given to load a declarative specification of a cerebellar
-purkinje cell, and to start the {\it Neurospaces Studio} to visualize
-and render its morphology in three dimensions.
+is given to load a declarative specification of a cerebellar purkinje
+cell.
 
-Likewise, the following commands load the same model\marginpar{A: I
-  would like to make it clear that the simulation is not run} from a
-GENESIS 2 SLI procedural script and start the {\it Neurospaces
-  Studio}:
+Alternatively, if the model is encoded in a GENESIS 2 SLI script the
+command {\tt ndf\_load} can be replaced with {\tt sli\_load}:
 
 {\footnotesize
 \begin{verbatim}
 sli_load PurkM9_model/CLIMB9.g
+\end{verbatim}
+}
+
+imports the model without running the simulation that is specified in
+the SLI script.  A similar command is provided to interface with the
+PyNN network modeling environment\cite{andrew08:_pynn}.
+
+To start the graphical front-end of the {\it Neurospaces Studio} to
+visualize and render the model morphology in three dimensions, the
+command:
+
+{\footnotesize
+\begin{verbatim}
 explore
 \end{verbatim}
 }
 
+Figure~\ref{fig:cbi-studio} shows sample output of running these
+commands.
 
 \begin{figure}[ht]
   \centering
@@ -634,11 +645,13 @@ show_parameter /Purkinje/segments/b1s06[182] SOMATOPETAL_BRANCHPOINTS
 }
 
 After finding a suitable dendritic segment, its synaptic channel can
-be stimulated with a precomputed spike train using:
+be stimulated with a precomputed spike train that is stored in a file
+with filename ``event\_data/events.yml'':
 
 {\footnotesize
 \begin{verbatim}
-set_runtime_parameter /Purkinje/segments/b1s06[182]/Purkinje_spine_0/head/par/synapse EVENT_FILENAME ``event_data/events.yml''
+set_runtime_parameter /Purkinje/segments/b1s06[182]/Purkinje_spine_0/head/par/synapse
+        EVENT_FILENAME ``event_data/events.yml''
 \end{verbatim}
 }
 
@@ -651,8 +664,8 @@ run /Purkinje 0.1
 \end{verbatim}
 }
 
-This outputs the soma membrane potential to a file with a default
-filename of {\tt /tmp/output}.
+This outputs the somatic response to the stimulus to a file with a
+default filename of {\tt /tmp/output}.
 
 
 \subsection{Gluing Pre-existing Applications \& Libraries}
@@ -849,10 +862,10 @@ for importation into the G-3 model container.  The core of these
 algorithms implements geometrical transformations such that EM
 contours are extracted to provide equivalent cylinders suitable for
 cable modeling.  The geometrical properties of the cylinders are
-stored as NDF files (the file format used by G-3), and algorithms
-provided by the model container link them with the cable parameters
-required by the mathematical solvers.  A simulation can then be run
-with the {\it read} and {\it run} methods mentioned above.
+stored as NDF files, and algorithms provided by the model container
+link them with the cable parameters required by the mathematical
+solvers.  A simulation can then be run with the {\it read} and {\it
+  run} methods mentioned above.
 
 The necessary conversion algorithms are accessible from Python via the
 model container.  The Python interface of Blender links it to the G-3
@@ -891,8 +904,8 @@ targets (DES: Discrete Event System).  This software component is
 integrated with the mathematical solvers of G-3 using either Python or
 Perl.  Because it is optimized for communication over serial hardware,
 we plan to extend it with communication frameworks for parallel
-hardware such as that provided by the MOOSE simulator (see Ray and
-Bhalla, this issue) and the MUSIC
+hardware such as that provided by the MOOSE
+simulator\cite{ray08:_pymoos} and the MUSIC
 framework\,\cite{ekeberg08:_music_multis_coord}.
 
 
