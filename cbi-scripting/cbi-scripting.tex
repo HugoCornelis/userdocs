@@ -701,8 +701,8 @@ one of the available user interface builders.  wxFormBuilder
 (http://wxformbuilder.org/; a user interface designer for the wxPython
 toolkit and the Linux desktop environment GNOME) is one such builder.
 It allows the user to construct a GUI with visual elements such as
-menus and buttons, and write a description of the elements to an XML
-file that is readable via Python bindings.
+menus and buttons, and write a description of the elements to a file 
+known as an XML Resource File (XRC), that is readable via Python bindings.
 
 %What remains to be done is the binding of button events to specific
 %actions for the simulator.
@@ -711,12 +711,13 @@ file that is readable via Python bindings.
 %directly support plotting functions.  In our example we choose to
 %imported these from the {\it matplotlib} library.
 
-In the examples below, we show Python scripting to connect the
-software components required to build a small GUI for the G-3
-simulator.  For this, we assume that a wxFormBuilder file with name
-{\tt G3.wx} can be found that describes a GUI with one window (name:
-window1), allows the simulation duration to be set, and contains a
-button to start the simulation.
+In the example below, we will create a wxPython application class 
+called 'G3App' which demonstrates the Python scripting needed to 
+connect the software components required to build a small GUI for 
+the G-3 simulator.  For this, we assume that an XRC file with name
+{\tt G3.xrc} can be found that describes a GUI with one frame (name:
+mainFrame), allows the simulation duration to be set via a
+text control, and contains a button to start the simulation.
 
 The first lines of code in the script load the necessary Python
 modules which in turn load libraries coded in a low-level system
@@ -727,50 +728,152 @@ programming language.
   \linenumbers
 \begin{verbatim}
 import wx
+from wx import xrc
 \end{verbatim}
 }
 
-The following Python code reads the Glade XML file and connects a
-button with a function to run the simulation:
+Here we declare our class as an inherited class of the wx.App class, 
+and also declare a constructor function which we will use to set up 
+some GUI specifics on instantiation of our object.
 
 {\footnotesize
-  \resetlinenumber[5]
-  \linenumbers
-\begin{verbatim}
-wTree = gtk.glade.XML("G3.glade", "window1")
-wTree.signal_autoconnect( { "on_button1_clicked": run_simulation } )
-\end{verbatim}
+   \resetlinenumber[3]
+   \linenumbers
+ \begin{verbatim}
+class G3App(wx.App):
+    def OnInit(self): 
+ \end{verbatim}
 }
 
-The function {\it run\_simulation} is a Python function with a
-function body that contains a complete listing of the first Python
-example (above). The {\it edit} field with the simulation time
-requires the use of a global variable that follows the value in that
-field:
+Inside of our initialization function we want to load our XRC file. 
+The following Python codes reads in an XML resource file, and loads
+it into a Python object.
 
 {\footnotesize
-  \resetlinenumber[8]
+   \resetlinenumber[5]
+   \linenumbers
+ \begin{verbatim}
+        self.res = xrc.XmlResource('G3.xrc')
+ \end{verbatim}
+}
+
+Here we retrieve all of the declared widget objects from our XRC 
+specification so that we can perform Python operations on them at a 
+lower level. Each object we declared in wxFormBuilder can be retrieved 
+via the name given during construction:
+
+{\footnotesize
+   \resetlinenumber[6]
+   \linenumbers
+ \begin{verbatim}
+        self.frame = self.res.LoadFrame(None, 'mainFrame')
+        self.runButton = xrc.XRCCTRL(self.frame, 'runButton')
+        self.setButton = xrc.XRCCTRL(self.frame, 'setButton')
+        self.durationTextCtrl = xrc.XRCCTRL(self.frame,'durationTextCtrl')
+ \end{verbatim}
+}
+
+Next we need to bind actions to our buttons, ``Set Simulation Time'' 
+and ``Run Simulation.'' Earlier we loaded all of the 
+declared widgets into individual objects, so now we can perform
+a bind between the button objects and functions for setting the
+simulation time, and running the simulation. We will 
+call our functions {\it OnSet} and {\it OnRun} respectively. 
+
+{\footnotesize
+   \resetlinenumber[10]
+   \linenumbers
+ \begin{verbatim}
+        self.frame.Bind(wx.EVT_BUTTON, self.OnRun, self.runButton)
+        self.frame.Bind(wx.EVT_BUTTON, self.OnSet, self.setButton)
+ \end{verbatim} 
+}
+
+% The following Python code reads the Glade XML file and connects a
+% button with a function to run the simulation:
+
+% {\footnotesize
+%   \resetlinenumber[5]
+%   \linenumbers
+% \begin{verbatim}
+% wTree = gtk.glade.XML("G3.glade", "window1")
+% wTree.signal_autoconnect( { "on_button1_clicked": run_simulation } )
+% \end{verbatim}
+% }
+
+Now we must define {\it OnSet} and {\it OnRun} in our G3App class so
+they can be useable by the event binding. The function {\it OnSet} 
+is fairly simple, its only purpose is to read the value in the 
+user input text control (self.durationTextCtrl) and pass this value
+to a global variable called {\it simulation\_time}.
+
+{\footnotesize
+  \resetlinenumber[12]
   \linenumbers
 \begin{verbatim}
-def set_simulation_time(self):
-    global simulation_time
-    simulation_time = self.get_text()
+    def OnSet(self, evt):
+        global simulation_time
+        simulation_time = float(self.durationTextCtrl.GetValue())
+ \end{verbatim}
+}
+
+The {\it OnRun} function will make a call to a function called {\it run\_simulation},
+which contains a complete listing of the first Python example (above), 
+and takes the simulation time as an argument. 
+
+
+{\footnotesize
+  \resetlinenumber[15]
+  \linenumbers
+\begin{verbatim}
+    def OnRun(self,evt):
+        global simulation_time
+        run_simulation(simulation_time)
+\end{verbatim}
+}
+ 
+% The function {\it run\_simulation} is a Python function with a
+% function body that contains a complete listing of the first Python
+% example (above). The {\it edit} field with the simulation time
+% requires the use of a global variable that follows the value in that
+% field:
+
+% {\footnotesize
+%   \resetlinenumber[12]
+%   \linenumbers
+% \begin{verbatim}
+% def set_simulation_time(self):
+%     global simulation_time
+%     simulation_time = self.get_text()
     
-wTree.signal_autoconnect
-      ( { "on_simulation_time_changed": set_simulation_time } )
-\end{verbatim}
-}
+% wTree.signal_autoconnect
+%       ( { "on_simulation_time_changed": set_simulation_time } )
+% \end{verbatim}
+% }
 
 The code of a GUI application is always terminated by a call to the
-main event loop of the GUI library.
+main event loop of the GUI library. Here we instantiate our GUI class
+and set it into the main event loop. This is outside of our G3App class
+declaration.
 
-{\footnotesize
-  \resetlinenumber[14]
-  \linenumbers
-\begin{verbatim}
-gtk.main()
-\end{verbatim}
-}
+% {\footnotesize
+%   \resetlinenumber[14]
+%   \linenumbers
+% \begin{verbatim}
+% gtk.main()
+% \end{verbatim}
+% }
+
+ {\footnotesize
+   \resetlinenumber[14]
+   \linenumbers
+ \begin{verbatim}
+if __name__ == '__main__':
+    app = G3App(False)
+    app.MainLoop()
+ \end{verbatim}
+ }
+
 
 This script runs a small model and can be combined with other Python
 code given here to increase the complexity of a model, add various
