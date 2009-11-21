@@ -274,8 +274,9 @@ for model construction, exploration and simulation, (5) {\it GENESIS 3
   Shell}, a shell that dynamically loads other software components in
 an interactive environment, (6) {\it Reconstruct Interface}, which
 supports conversion of contours exported by the Reconstruct software
-to the Neurospaces declarative NDF format, (7) {\it Project Browser},
-for inspection of projects and simulation results.
+to the Neurospaces declarative NDF format (the file format used by
+G-3), (7) {\it Project Browser}, for inspection of projects and
+simulation results.
 
 Many existing software components such as GUI libraries and plotting
 libraries, are application neutral.  Other software components are
@@ -574,8 +575,9 @@ branch points given the name of a dendritic segment.
 
 The {\it GENESIS 3 Shell} integrates other software components into an
 interactive environment and can conveniently be used to explore a
-morphology and model structure, and to query their derived attributes.
-It is started from a UNIX system shell with:
+model, its structural aspects such as its morphology, and to query its
+derived attributes such as total volume and surface area.  The {\it
+  GENESIS 3 Shell} is started from a UNIX system shell with:
 
 {\footnotesize
 \begin{verbatim}
@@ -583,33 +585,42 @@ genesis-g3
 \end{verbatim}
 }
 
-The {\it Neurospaces Studio} contains graphical tools for visual
-exploration of a model loaded into the model container.  For instance
-after the interactive shell has been started, the commands:
+After the interactive shell has been started, the command:
 
 {\footnotesize
 \begin{verbatim}
 ndf_load cells/purkinje/edsjb1994.ndf
-explore
 \end{verbatim}
 }
 
-can be given to load a declarative specification of a cerebellar
-purkinje cell, and to start the {\it Neurospaces Studio} to visualize
-and render its morphology in three dimensions.
+is given to load a file with a declarative specification of a
+cerebellar purkinje cell.
 
-Likewise, the following commands load the same model\marginpar{A: I
-  would like to make it clear that the simulation is not run} from a
-GENESIS 2 SLI procedural script and start the {\it Neurospaces
-  Studio}:
+Alternatively, if the model is encoded in a GENESIS 2 SLI script the
+command {\tt ndf\_load} can be replaced with {\tt sli\_load}:
 
 {\footnotesize
 \begin{verbatim}
-sli_load PurkM9_model/CLIMB9.g
+sli_load PurkM9_model/CURRENT9.g
+\end{verbatim}
+}
+
+imports the model without running the simulation that is specified in
+the SLI script.  A similar command is provided to interface with the
+PyNN network modeling environment\cite{andrew08:_pynn}.
+
+To start the graphical front-end of the {\it Neurospaces Studio} to
+visualize and render the model morphology in three dimensions, the
+command:
+
+{\footnotesize
+\begin{verbatim}
 explore
 \end{verbatim}
 }
 
+Figure~\ref{fig:cbi-studio} shows sample output of running these
+commands.
 
 \begin{figure}[ht]
   \centering
@@ -634,11 +645,13 @@ show_parameter /Purkinje/segments/b1s06[182] SOMATOPETAL_BRANCHPOINTS
 }
 
 After finding a suitable dendritic segment, its synaptic channel can
-be stimulated with a precomputed spike train using:
+be stimulated with a precomputed spike train that is stored in a file
+with filename ``event\_data/events.yml'':
 
 {\footnotesize
 \begin{verbatim}
-set_runtime_parameter /Purkinje/segments/b1s06[182]/Purkinje_spine_0/head/par/synapse EVENT_FILENAME ``event_data/events.yml''
+set_runtime_parameter /Purkinje/segments/b1s06[182]/Purkinje_spine_0/head/par/synapse
+        EVENT_FILENAME ``event_data/events.yml''
 \end{verbatim}
 }
 
@@ -651,8 +664,8 @@ run /Purkinje 0.1
 \end{verbatim}
 }
 
-This outputs the soma membrane potential to a file with a default
-filename of {\tt /tmp/output}.
+This outputs the somatic response to the stimulus to a file with a
+default filename of {\tt /tmp/output}.
 
 
 \subsection{Gluing Pre-existing Applications \& Libraries}
@@ -688,8 +701,8 @@ one of the available user interface builders.  wxFormBuilder
 (http://wxformbuilder.org/; a user interface designer for the wxPython
 toolkit and the Linux desktop environment GNOME) is one such builder.
 It allows the user to construct a GUI with visual elements such as
-menus and buttons, and write a description of the elements to an XML
-file that is readable via Python bindings.
+menus and buttons, and write a description of the elements to a file 
+known as an XML Resource File (XRC), that is readable via Python bindings.
 
 %What remains to be done is the binding of button events to specific
 %actions for the simulator.
@@ -698,12 +711,13 @@ file that is readable via Python bindings.
 %directly support plotting functions.  In our example we choose to
 %imported these from the {\it matplotlib} library.
 
-In the examples below, we show Python scripting to connect the
-software components required to build a small GUI for the G-3
-simulator.  For this, we assume that a wxFormBuilder file with name
-{\tt G3.wx} can be found that describes a GUI with one window (name:
-window1), allows the simulation duration to be set, and contains a
-button to start the simulation.
+In the example below, we will create a wxPython application class 
+called 'G3App' which demonstrates the Python scripting needed to 
+connect the software components required to build a small GUI for 
+the G-3 simulator.  For this, we assume that an XRC file with name
+{\tt G3.xrc} can be found that describes a GUI with one frame (name:
+mainFrame), allows the simulation duration to be set via a
+text control, and contains a button to start the simulation.
 
 The first lines of code in the script load the necessary Python
 modules which in turn load libraries coded in a low-level system
@@ -714,50 +728,152 @@ programming language.
   \linenumbers
 \begin{verbatim}
 import wx
+from wx import xrc
 \end{verbatim}
 }
 
-The following Python code reads the Glade XML file and connects a
-button with a function to run the simulation:
+Here we declare our class as an inherited class of the wx.App class, 
+and also declare a constructor function which we will use to set up 
+some GUI specifics on instantiation of our object.
 
 {\footnotesize
-  \resetlinenumber[5]
-  \linenumbers
-\begin{verbatim}
-wTree = gtk.glade.XML("G3.glade", "window1")
-wTree.signal_autoconnect( { "on_button1_clicked": run_simulation } )
-\end{verbatim}
+   \resetlinenumber[3]
+   \linenumbers
+ \begin{verbatim}
+class G3App(wx.App):
+    def OnInit(self): 
+ \end{verbatim}
 }
 
-The function {\it run\_simulation} is a Python function with a
-function body that contains a complete listing of the first Python
-example (above). The {\it edit} field with the simulation time
-requires the use of a global variable that follows the value in that
-field:
+Inside of our initialization function we want to load our XRC file. 
+The following Python codes reads in an XML resource file, and loads
+it into a Python object.
 
 {\footnotesize
-  \resetlinenumber[8]
+   \resetlinenumber[5]
+   \linenumbers
+ \begin{verbatim}
+        self.res = xrc.XmlResource('G3.xrc')
+ \end{verbatim}
+}
+
+Here we retrieve all of the declared widget objects from our XRC 
+specification so that we can perform Python operations on them at a 
+lower level. Each object we declared in wxFormBuilder can be retrieved 
+via the name given during construction:
+
+{\footnotesize
+   \resetlinenumber[6]
+   \linenumbers
+ \begin{verbatim}
+        self.frame = self.res.LoadFrame(None, 'mainFrame')
+        self.runButton = xrc.XRCCTRL(self.frame, 'runButton')
+        self.setButton = xrc.XRCCTRL(self.frame, 'setButton')
+        self.durationTextCtrl = xrc.XRCCTRL(self.frame,'durationTextCtrl')
+ \end{verbatim}
+}
+
+Next we need to bind actions to our buttons, ``Set Simulation Time'' 
+and ``Run Simulation.'' Earlier we loaded all of the 
+declared widgets into individual objects, so now we can perform
+a bind between the button objects and functions for setting the
+simulation time, and running the simulation. We will 
+call our functions {\it OnSet} and {\it OnRun} respectively. 
+
+{\footnotesize
+   \resetlinenumber[10]
+   \linenumbers
+ \begin{verbatim}
+        self.frame.Bind(wx.EVT_BUTTON, self.OnRun, self.runButton)
+        self.frame.Bind(wx.EVT_BUTTON, self.OnSet, self.setButton)
+ \end{verbatim} 
+}
+
+% The following Python code reads the Glade XML file and connects a
+% button with a function to run the simulation:
+
+% {\footnotesize
+%   \resetlinenumber[5]
+%   \linenumbers
+% \begin{verbatim}
+% wTree = gtk.glade.XML("G3.glade", "window1")
+% wTree.signal_autoconnect( { "on_button1_clicked": run_simulation } )
+% \end{verbatim}
+% }
+
+Now we must define {\it OnSet} and {\it OnRun} in our G3App class so
+they can be useable by the event binding. The function {\it OnSet} 
+is fairly simple, its only purpose is to read the value in the 
+user input text control (self.durationTextCtrl) and pass this value
+to a global variable called {\it simulation\_time}.
+
+{\footnotesize
+  \resetlinenumber[12]
   \linenumbers
 \begin{verbatim}
-def set_simulation_time(self):
-    global simulation_time
-    simulation_time = self.get_text()
+    def OnSet(self, evt):
+        global simulation_time
+        simulation_time = float(self.durationTextCtrl.GetValue())
+ \end{verbatim}
+}
+
+The {\it OnRun} function will make a call to a function called {\it run\_simulation},
+which contains a complete listing of the first Python example (above), 
+and takes the simulation time as an argument. 
+
+
+{\footnotesize
+  \resetlinenumber[15]
+  \linenumbers
+\begin{verbatim}
+    def OnRun(self,evt):
+        global simulation_time
+        run_simulation(simulation_time)
+\end{verbatim}
+}
+ 
+% The function {\it run\_simulation} is a Python function with a
+% function body that contains a complete listing of the first Python
+% example (above). The {\it edit} field with the simulation time
+% requires the use of a global variable that follows the value in that
+% field:
+
+% {\footnotesize
+%   \resetlinenumber[12]
+%   \linenumbers
+% \begin{verbatim}
+% def set_simulation_time(self):
+%     global simulation_time
+%     simulation_time = self.get_text()
     
-wTree.signal_autoconnect
-      ( { "on_simulation_time_changed": set_simulation_time } )
-\end{verbatim}
-}
+% wTree.signal_autoconnect
+%       ( { "on_simulation_time_changed": set_simulation_time } )
+% \end{verbatim}
+% }
 
 The code of a GUI application is always terminated by a call to the
-main event loop of the GUI library.
+main event loop of the GUI library. Here we instantiate our GUI class
+and set it into the main event loop. This is outside of our G3App class
+declaration.
 
-{\footnotesize
-  \resetlinenumber[14]
-  \linenumbers
-\begin{verbatim}
-gtk.main()
-\end{verbatim}
-}
+% {\footnotesize
+%   \resetlinenumber[14]
+%   \linenumbers
+% \begin{verbatim}
+% gtk.main()
+% \end{verbatim}
+% }
+
+ {\footnotesize
+   \resetlinenumber[14]
+   \linenumbers
+ \begin{verbatim}
+if __name__ == '__main__':
+    app = G3App(False)
+    app.MainLoop()
+ \end{verbatim}
+ }
+
 
 This script runs a small model and can be combined with other Python
 code given here to increase the complexity of a model, add various
@@ -849,10 +965,10 @@ for importation into the G-3 model container.  The core of these
 algorithms implements geometrical transformations such that EM
 contours are extracted to provide equivalent cylinders suitable for
 cable modeling.  The geometrical properties of the cylinders are
-stored as NDF files (the file format used by G-3), and algorithms
-provided by the model container link them with the cable parameters
-required by the mathematical solvers.  A simulation can then be run
-with the {\it read} and {\it run} methods mentioned above.
+stored as NDF files, and algorithms provided by the model container
+link them with the cable parameters required by the mathematical
+solvers.  A simulation can then be run with the {\it read} and {\it
+  run} methods mentioned above.
 
 The necessary conversion algorithms are accessible from Python via the
 model container.  The Python interface of Blender links it to the G-3
@@ -883,6 +999,8 @@ specifications (see http://www.neuroml.org), including MorphML
 set of standards) and NetworkML (the core of NeuroML Level 3) and can
 be used to visually validate network layout and
 design\,\cite{crook07:_morph}.
+
+Cite python interface to Neuron and Nest
 % [135]  P. Gleeson, V. Steuber and R. A. Silver (2007) neuroConstruct: A Tool for Modeling Networks of Neurons in 3D Space, Neuron, 54: 219-235.
 
 Finally, we note that we have developed a serial communication
@@ -891,8 +1009,8 @@ targets (DES: Discrete Event System).  This software component is
 integrated with the mathematical solvers of G-3 using either Python or
 Perl.  Because it is optimized for communication over serial hardware,
 we plan to extend it with communication frameworks for parallel
-hardware such as that provided by the MOOSE simulator (see Ray and
-Bhalla, this issue) and the MUSIC
+hardware such as that provided by the MOOSE
+simulator\cite{ray08:_pymoos} and the MUSIC
 framework\,\cite{ekeberg08:_music_multis_coord}.
 
 
