@@ -27,8 +27,8 @@ Simple examples can be used by developers who do not want to know about the intr
 \subsection*{Detailed Examples}
 The detailed examples provide:
 \begin{itemize}
-   \item Steps to build a release for the example {\tt <your-software>} package.
-   \item Examples of the release procedure.
+   \item[]Steps to build a release for the example {\tt <your-software>} package.
+   \item[]Examples of the release procedure.
 \end{itemize}
 
 \subsection*{Utilities}
@@ -37,7 +37,7 @@ Some utilities currently depend on \href{http://monotone.ca}{monotone} for sourc
 \subsubsection*{Main script}
 
 \begin{itemize}
-   \item {\it neurospaces\_build}:\,\,\,Performs various back-end operations on a set of software packages. It is configurable in its packages and operations. The command
+   \item {\it neurospaces\_build}:\,\,\,Performs various back-end operations on a set of software packages. It is configurable in its packages and operations. The command:
       \begin{verbatim}
    neurospaces_build --help
       \end{verbatim}
@@ -101,7 +101,7 @@ The following utilities take optional arguments of ``{\tt --regex}'' to select t
    \item{\bf Build/Check:}
    \begin{itemize}
       \item {\it neurospaces\_configure}\,\,\,(Re)configures the simulator software (requires packages to be installed already).
-      \item {\it neurospaces\_install}\,\,\,Install new simulator source code.
+      \item {\it neurospaces\_install}\,\,\,Install new simulator executable binaries and scripts.
       \item {\it neurospaces\_uninstall}\,\,\,Uninstalls the simulator software (including the installer scripts, to reinstall you must go to the {\it Developer} source code directory and run ``{\tt make \&\& sudo make install}'').
       \item {\it neurospaces\_clean}\,\,\,Clean local source code directories. 
    \end{itemize}
@@ -180,7 +180,7 @@ Do not forget to edit release notes, tag the files as ``Any'', ``Source.gz'', et
    \item {\bf Integrate Software Components:}
    \begin{itemize}
       \item {\it neurospaces\_versions}\,\,\,Shows which versions of the GENESIS packages are installed.
-      \item {\it neurospaces\_cron}\,\,\,A {\it cron} job based tester script. 
+      \item \href{../neurospaces\_cron/neurospaces\_cron.tex}{\it neurospaces\_cron}\,\,\,A {\it cron} job based tester script. 
       \item {\bf Simple Example:} What operations on known packages exist.
       \begin{verbatim}
    $ neurospaces_build --help-operations
