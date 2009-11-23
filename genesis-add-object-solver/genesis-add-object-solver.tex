@@ -13,8 +13,118 @@
 % start: userdocs-tag-replace-items related-do-nothing
 % end: userdocs-tag-replace-items related-do-nothing
 
-\section*{Add a Solver Object}
+\section*{Create and Add Solver Object to GENESIS Component}
 
-UNDER CONSTRUCTION
+This developer guide gives an example of how to add a new simulation object to {\bf Heccer} and integrate the modified \href{../reserved-words/reserved-words.tex}{\bf Component} with GENESIS.
+
+\section*{Creating Source Files}
+
+First we create the following source files for the new object in the correct places in {\bf Heccer}:
+\begin{verbatim}
+   pulsegen.c
+   heccer/pulsegen.h
+\end{verbatim}
+
+\section*{Implementation}
+
+\subsection*{Declarations}
+
+\subsubsection*{Data Structure}
+
+To keep track of all the data for the new object we define a struct(ure) which contains all of our variables. This structure is set up in the header file {\it heccer/pulsegen.h}:
+\begin{verbatim}
+   struct simobj_PulseGen
+   {
+   
+      char *pcName;
+
+      double dLevel1;
+      double dWidth1;
+      double dDelay1;
+
+      double dLevel2;
+      double dWidth2;
+      double dDelay2;
+
+      double dBaseLevel;
+
+      double dTriggerTime;
+      int iTriggerMode;
+  
+      int iPreviousInput;
+
+      /// An input value referenced via pointer. 
+      /// Since we don't have "messages" we'll use 
+      /// a pointer for now.
+  
+     double *pdPulseIn;
+
+      /// solved variables
+
+      double *pdPulseOut;
+   };
+\end{verbatim}
+
+\subsubsection*{Functions}
+
+Keeping in mind that the new object is going to be used by a simulation, we need appropriate functions for setting up the object, performing an action during a simulation step, and freeing the object. A set of functions must be created for each of these cases:
+
+\begin{itemize}
+\item {\bf Allocate a new Pulse Generator:}
+\begin{verbatim}
+   struct PulseGen * PulseGenNew(char *pcName);
+\end{verbatim}
+
+\item {\bf Delete a Pulse Generator:}
+\begin{verbatim}
+   int PulseGenFinish(struct simobj_PulseGen *ppg);
+\end{verbatim}
+
+\item {\bf Add a solved variable to the Pulse Generator:}
+\begin{verbatim}
+   int PulseGenAddVariable(struct simobj_PulseGen *ppg, void *pvOutput);
+\end{verbatim}
+
+\item {\bf Reset the Pulse Generator:}
+\begin{verbatim}
+   int PulseGenReset(struct simobj_PulseGen *ppg);
+\end{verbatim}
+
+\item{\bf Set data fields for the Pulse Generator:}
+\begin{verbatim}
+   int PulseGenSetFields
+   (
+      struct simobj_PulseGen *ppg,
+      double dLevel1,
+      double dWidth1,
+      double dDelay1,
+      double dLevel2,
+      double dWidth2,
+      double dDelay2,
+      double dBaseLevel,
+      int iTriggerMode
+   );
+\end{verbatim}
+Finally, perform a step of a simulation:
+\begin{verbatim}
+   int PulseGenSingleStep(struct simobj_PulseGen *ppg, double dTime);
+\end{verbatim}
+\end{itemize}
+
+\subsection*{Add New Object to Make Targets}
+
+Before compiling the new simulation object you must add your source files to targets of the {\bf Heccer} package {\it Makefile.am}.
+
+\begin{itemize}
+   \item In {\it libheccer\_a\_SOURCES} add:
+\begin{verbatim}
+   pulsegen.c
+\end{verbatim}
+   \item In {\it nobase\_include\_HEADERS} add:
+\begin{verbatim}
+   heccer/pulsegen.h 
+\end{verbatim}
+\end{itemize}
+The new simulation object will be compiled into the {\bf Heccer} library when a {\it make} is performed.
 
 \end{document}
