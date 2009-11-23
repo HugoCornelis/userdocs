@@ -19,13 +19,17 @@
 
 Generally, there should be no software dependencies or configuration requirements for installing GENESIS as a user (c.f. a developer, see below). The exception is if you want to verify your installation. As installation testing is performed as a sequence of regression tests you must have specific Perl modules installed on your machine.
 
-If you don't understand the syntax in the following list of Perl modules required for testing a GENESIS installation, you should get your systems administrator to install them. 
+CPAN as the standard location where Perl modules can be obtained. To install a Perl module from CPAN invoke, for example: 
+\begin{verbatim}
+   'perl -MCPAN -e ``install <required perl module>'' '
+\end{verbatim}
 
-\subsection*{Perl Modules Required for User Installation Tests}
+If you don't feel comfortable doing this, you should get your systems administrator to install the following Perl modules required for user installation tests: 
+
 \begin{itemize}
-   \item Data::Comparator
-   \item Data::Transformator
-   \item YAML
+   \item[]Data::Comparator
+   \item[]Data::Transformator
+   \item[]YAML
 \end{itemize}
 
 \section*{Software Dependencies for Developer Installation}
