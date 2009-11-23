@@ -31,7 +31,17 @@ Install the following packages:
    \item[]\href{http://monotone.ca/}{\bf monotone-0.40:} (or higher).
    \item[]{\bf Xcode Tools:} The Apple Development Toolset. Xcode is available on Disk 2 of the Mac OSX installer set of DVDs under optional install. The package is called {\it  XcodeTools.mpkg}. It is also available from the \href{http://developer.apple.com/technology/xcode.html}{\bf Apple Developer Website}. In the latter case  you will need a valid Apple ID to log in and access the developer page.
    
-   {\bf WARNING:} The compilers available from macports should NOT be used for installation.
+   {\bf WARNING:} The compilers available from MacPorts should NOT be used for installation (see below). Prior to installing the {\it DeveloperPackage} you should check which Perl libraries OSX uses with ``{\tt  which perl}''. This should return {\tt  /usr/bin/perl}. If the response is {\tt /opt/local/bin/perl}, there is a MacPorts installation of Perl. This is most easily corrected by removing the MacPorts path {\it /opt/local/bin} from your path in the {\it .profile} file in your home directory. To do this open the  {\it .profile} file in an editor and convert the line (or similar):
+\begin{verbatim}
+   PATH=/opt/local/bin:/usr/local/bin:$PATH
+\end{verbatim}
+by removing {\it /opt/local/bin} to give:
+\begin{verbatim}
+   PATH=/usr/local/bin:$PATH
+\end{verbatim}
+{\bf Note:} Only remove the MacPorts path and leave all others alone. If you do not make this change, running GENESIS may result in a bus error as the correct Perl libraries will not be found. It may also call MacPorts versions of build tools, which can result in some undesirable behavior.  
+
+   
    \item[]Install the following Perl dependencies via CPAN:
       \begin{itemize}
          \item YAML
@@ -54,35 +64,10 @@ Then at the {\tt cpan>} prompt enter:
    . . . 
 \end{verbatim}
    
-\subsection*{Download and Install the developer package}
+\subsection*{Download and Install the {\it DeveloperPackage}}
+
+Download the latest version of the {\it DeveloperPackage}, available from \href{http://sourceforge.net/projects/neurospaces/files/}{Sourceforge}.  It is called {\it developer-release-label.tar.gz}, where {\it release-label} is the current release identifier. ({\bf Note:} If downloading via your browser, do not unpack the package during the download as it will be placed into its own subdirectory).
 \begin{itemize}
-   \item[] Prior to installing the {\it DeveloperPackage} you should check which Perl libraries OSX uses:
-   \begin{verbatim}
-   which perl
-   \end{verbatim}
-   This should return
-   \begin{verbatim}
-   /usr/bin/perl
-   \end{verbatim}
-   If the response is:
-   \begin{verbatim}
-   /opt/local/bin/perl
-   \end{verbatim}
-  there is a macports installation of Perl (see warning above against using macports compilers). This is most easily corrected by removing the macports path /opt/local/bin from your path on your .profile file in your home directory:
-   \begin{verbatim}
-   PATH=/opt/local/bin:/usr/local/bin:$PATH
-   \end{verbatim}
-
-   Just remove /opt/local/bin:
-
-   \begin{verbatim}
-   PATH=/usr/local/bin:$PATH
-   \end{verbatim}
-   
-   Only remove the macports path and leave all others alone.
-
-   If you do not make this change, running GENESIS may result in a bus error as the correct Perl libraries will not be found. It may also call macports versions of build tools, which can result in some undesirable behavior.  
-   \item[] Download the latest version of the {\it DeveloperPackage}, available from \href{http://sourceforge.net/projects/neurospaces/files/}{Sourceforge}.  It is called {\it developer-release-label.tar.gz}, where {\it release-label} is the current release identifier. ({\bf Note:} If downloading via your browser, do not unpack the package during the download as it will be placed into its own subdirectory).
    \item[] Change to the directory where you downloaded the file.
    \item[] Unpack archive: ``{\tt tar xfz developer-release-label.tar.gz}''.
    \item[] Change to the directory with the content of the archive: ``{\tt cd developer-release-label}''.
@@ -90,23 +75,26 @@ Then at the {\tt cpan>} prompt enter:
    \item[] Compile and install the {\it DeveloperPackage}: ``{\tt sudo make install}'' (requires administrator privileges).
 \end{itemize}
 
-\subsection*{Install the software packages}
+\subsection*{Install software packages}
 
 Once the above dependencies are installed source code can be pulled from the GENESIS repository and a build performed with the following commands:
-\begin{itemize}
-   \item[]{\it neurospaces\_create\_directories}
-   \item[]{\it neurospaces\_pull}
-   \item[]{\it neurospaces\_update}
-   \item[]{\it neurospaces\_configure}
-   \item[]{\it neurospaces\_install} (requires admin password) 
-\end{itemize}
+\begin{enumerate}
+   \item{\it neurospaces\_create\_directories}
+   \item{\it neurospaces\_pull}
+   \item{\it neurospaces\_update}
+   \item{\it neurospaces\_configure}
+   \item{\it neurospaces\_install} (requires admin password) 
+\end{enumerate}
 
-\subsection*{Check if the installation was successful}
+\subsection*{Check if installation was successful}
 
 Once these have completed the installation can be tested with the following command:
 \begin{itemize}
    \item[]{\tt neurospaces\_check $>$/tmp/check.out 2$>$\&1}
 \end{itemize}
 This will perform a series of regression tests and save the output to file. The output can be checked by typing ``{\tt less /tmp/check.out}''. Importantly, search for lines containing the string {\tt error\_count} that will indicate any inconsistencies with the installation.
+
+{\bf Note:} The running of tests is optional, but strongly advised.
+
 
 \end{document}

@@ -20,13 +20,14 @@ There are several prerequisites to the construction of a GENESIS development env
 
 \begin{itemize}
 
-\item {\bf Required tools:}\,{\it gdb},\,{\it gcc}, and\,{\it (x)emacs} with the\,{\it elisp} packages. Note that the GENESIS \href{../ndf-file-format/ndf-file-format.tex}{NDF file format} has a special\,{\it elisp} package for use with\,{\it (x)emacs}.
+\item {\bf Required tools:}\,{\it gdb},\,{\it gcc}, and\,{\it (x)emacs} with the\,{\it elisp} packages. \\
+{\bf Note:} The GENESIS \href{../ndf-file-format/ndf-file-format.tex}{NDF file format} has a special\,{\it elisp} package for use with\,{\it (x)emacs} that is installed as a part of the {\bf Model\,Container} package.
 \item \href{../version-control/version-control.tex}{{\bf Version control:}} Monotone is used as a statically linked binary (currently version 0.45). As it is a distributed version control system, developers can use,\,{\it monotone} to maintain and exchange their code repositories and executables. Monotone installation is supported by the\,{\it Developer Package}. 
 \item {\bf  The\,{\it DeveloperPackage}:} Can optionally be used to do initial directory layout. Importantly, the\,{\it DeveloperPackage} requires the correct directory layout. See the script {\it neurospaces\_create\_directories}.
 
 \end{itemize}
 
-\subsection*{Where to find a Developer Installation of GENESIS}
+\subsection*{Download Code for GENESIS Developer Installation}
 
 Source code for GENESIS can be found at: \href{http://sourceforge.net/projects/neurospaces/files/}{http://sourceforge.net/projects/neurospaces/files/}
 
@@ -51,17 +52,12 @@ Download the latest version of the {\it DeveloperPackage}, available from \href{
 
 Following manual installation of the \href{../developer-package/developer-package.tex}{\it DeveloperPackage}, the generalized scheme to download and install the available GENESIS \href{../reserved-words/reserved-words.tex}{\bf Components} is via the following commands:
 
-\begin{itemize}
+\begin{enumerate}
 \item {\bf Create the correct directory layout:}
 \begin{verbatim}
 	neurospaces_create_directories
 \end{verbatim}
   
-\item {\bf Create the monotone repository:}
-\begin{verbatim}
-	neurospaces_init
-\end{verbatim}
-
 \item {\bf Pull all the code from the remote repositories:}
 \begin{verbatim}
 	neurospaces_pull
@@ -72,7 +68,12 @@ Following manual installation of the \href{../developer-package/developer-packag
 	neurospaces_update
 \end{verbatim}
 
-\item {\bf Clean all workspaces:}
+\item {\bf Generate make files:}
+\begin{verbatim}
+	neurospaces_configure
+\end{verbatim}
+
+\item {\bf Clean all workspaces:} (Used when upgrading {\it DeveloperPackage}, or following a build to remove previously built files).
 \begin{verbatim}
 	neurospaces_clean
 \end{verbatim}
@@ -87,6 +88,32 @@ Following manual installation of the \href{../developer-package/developer-packag
 	neurospaces_check
 \end{verbatim}
 
+\end{enumerate}
+
+\section*{Accessing the Version Control Repository from the {\it Developer Package}}
+
+%The version control repository is accessible from the {\it DeveloperPackage}. Important for this feature to work is to have the correct directory layout on your developer machine.
+
+%In summary, what you want to do is this: {\it pull} the set of default packages from the servers:
+%\begin{verbatim}
+%   neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu --repo-co \
+%      --verbose --developer --directories-create --no-configure \
+%      --no-compile --no-install
+%\end{verbatim}
+%This command has options that inhibit the default actions of configuration, compilation and installation. If you also want to compile and install in just one run, simply omit those options:
+
+%\begin{verbatim}
+%   neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu --repo-co \
+%      --verbose --developer --directories-create
+%\end{verbatim}
+
+There are developer friendly frontends to the {\it neurospaces\_build} script in the {\it DeveloperPackage}:
+\begin{itemize}
+\item[]{\it neurospaces\_serve} Starts serving the source code repositories such that other people can {\it pull} and {\it sync} to your machine ({\bf Note} This locks all your databases).
+\item[]{\it neurospaces\_pull}\,\,\,Download the source code from a repository.
+\item[]{\it neurospaces\_status}\,\,\,Check for local source code modification (no network required).
+\item[]{\it neurospaces\_sync}\,\,\,Synchronize local source code modification with a repository.
+\item[]{\it neurospaces\_update}\,\,\,Update local source code using the repositories locally stored on your computer (so this is a local operation). 
 \end{itemize}
 
 \section*{Developing Sources}
@@ -611,32 +638,6 @@ However, a {\it DeveloperPackage} has been built that automates these actions wh
 %\subsection*{Microsoft Windows Installation}
 
 %UNDER CONSTRUCTION
-
-\section*{Accessing the Version Control Repository from the {\it Developer Package}}
-
-%The version control repository is accessible from the {\it DeveloperPackage}. Important for this feature to work is to have the correct directory layout on your developer machine.
-
-%In summary, what you want to do is this: {\it pull} the set of default packages from the servers:
-%\begin{verbatim}
-%   neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu --repo-co \
-%      --verbose --developer --directories-create --no-configure \
-%      --no-compile --no-install
-%\end{verbatim}
-%This command has options that inhibit the default actions of configuration, compilation and installation. If you also want to compile and install in just one run, simply omit those options:
-
-%\begin{verbatim}
-%   neurospaces_build --repo-pull repo-genesis3.cbi.utsa.edu --repo-co \
-%      --verbose --developer --directories-create
-%\end{verbatim}
-
-There are developer friendly frontends to the {\it neurospaces\_build} script in the {\it DeveloperPackage}:
-\begin{itemize}
-\item {\bf neurospaces\_serve:} Starts serving the source code repositories such that other people can {\it pull} and {\it sync} to your machine (note that this locks all your databases).
-\item {\bf neurospaces\_pull:} Download the source code from a repository.
-\item {\bf neurospaces\_status:} Check for local source code modification (no network required).
-\item {\bf neurospaces\_sync:} Synchronize local source code modification with a repository.
-\item {\bf neurospaces\_update:} Makes the local source code up to date using the repositories locally stored on your computer (so this is a local operation). 
-\end{itemize}
 
 %\section*{Details}
 
