@@ -139,7 +139,7 @@ programming languages accessible to neuroscientists and biologists.
 
 \subsection{GENESIS}
 
-GENESIS (http://genesis-sim.org/)is a general purpose
+GENESIS (http://genesis-sim.org/) is a general purpose
 simulation platform that was developed to support the simulation of
 neural systems ranging from subcellular components and biochemical
 reactions to complex models of single neurons, simulations of large
@@ -155,24 +155,26 @@ development of the GENESIS platform.
 GENESIS simulations are constructed from components that receive inputs,
 perform calculations on them, and then generate outputs. Model neurons
 are constructed from basic parts, such as compartments, and
-variable conductance ion channels. Compartments are linked to their
-channels and are then linked together to form multi-compartmental
+variable conductance ion channels. Channels are linked to their
+compartments  which are then linked together to form multi-compartmental
 neurons of any desired level of complexity. Neurons may be linked
 together to form neural circuits.  It is the paradigm used by the
 GENESIS script language interpreter (SLI), the commands which it recognizes, and the main GENESIS
-`objects' which are available for constructing simulations that have
+`objects' available for constructing simulations that have
 most powerfully assisted in the sharing of model features amongst the
 broader modeling community.
 
-A high-level simulation language, the GENESIS SLI, provides a
-framework within which a simulation programmer can define and
-manipulate GENESIS elements. It allows modelers to easily extend the
+A high-level simulation language, the GENESIS SLI\footnote{Note:
+  The GENESIS SLI interface is the standard scripting language of
+  GENESIS 2. It is also supported by G-3 with the backward compatibility component {\bf NS-SLI}.}, provided a
+framework within which a simulation programmer defined and
+manipulated GENESIS elements. It allowed modelers to easily extend the
 capabilities of the simulator, and to exchange, modify, and reuse
 models or model components. The SLI interprets statements in the
 GENESIS simulation language, and constitutes the operating system
-`shell'. User-defined SLI scripts are used to glue the pieces of a
+`shell'. User-defined SLI scripts were used to glue the pieces of a
 simulation together. The graphical objects used to define the front
-end of a simulation and GENESIS data handlers are all controlled from
+end of a simulation and GENESIS data handlers were all controlled from
 SLI scripts.
 
 G-3 is a major revision and update of the GENESIS system.  The core
@@ -270,9 +272,9 @@ for model construction, exploration and simulation, (5) {\bf G-Shell}: Dynamical
 an interactive environment, (6) {\it Reconstruct\,Interface}: Supports conversion of contours exported by the Reconstruct software
 to the declarative NDF format (the file format used by
 G-3), (7) {\bf Project\,Browser}: For inspection of projects and
-simulation results.
+simulation results, and for completeness we also mention (8) {\bf NS-SLI}: The G-3 component that provides backward compatibility for GENESIS 2.
 
-Many existing software packages such as GUI libraries and plotting
+Much existing software such as GUI libraries and plotting
 libraries, are application neutral.  Other software packages are
 tailored to computational neuroscience needs.  The CBI federated
 architecture provides a framework for integration of a functioning
@@ -286,7 +288,7 @@ specifically illustrate the use of Python for this purpose.
 
 Python is an object-oriented scripting language, comparable to Perl,
 Ruby, or Scheme.  In August 2008 nearly 5\% of all code written was
-developed in Python to make it the 6th most popular programming
+developed in Python to make it the 7th most popular programming
 language\,\cite{software09:_tiobe_progr_commun_index}. It combines
 considerable power with very clear syntax and has modules, classes,
 exceptions, and high level data types, in combination with a dynamic
@@ -330,7 +332,7 @@ either language.
 
 Developed by Michael Vanier in the late 1990's, PyGENESIS was a
 version of GENESIS that replaced the standard GENESIS SLI with a
-Python interface\cite{vanier97:_genes_python}.  This Python-enabled
+Python interface\,\cite{vanier97:_genes_python}.  This Python-enabled
 version of GENESIS was never publicly released due to the then
 immaturity of Python as a scripting language.  However, with the
 increased sophistication of the Python platform and development of G-3
@@ -348,11 +350,11 @@ simple models with many default settings (e.g. to start a new research
 project) from more complicated interfaces that expose the full
 functionality of the simulator.
 
-As an example the {\tt Neurospaces.SingleCellContainer} module
+As an example the {\it Neurospaces.SingleCellContainer} module
 contains functions to simplify simulations of single neuron models.
-This module is a front-end to the {\tt Neurospaces} module.  {\tt
+This module is a front-end to the {\it Neurospaces} module.  {\it
   Neurospaces} interfaces with the {\bf Model\,Container} which is coded in
-an efficient system programming language.  Likewise, {\tt
+an efficient system programming language.  Likewise, {\it
   Heccer.SimpleHeccer} is a wrapper module around the {\bf Heccer}
 component which in turn is an interface to the low-level single neuron
 solver.  Other components are under construction to facilitate network
@@ -431,9 +433,7 @@ identified by their position in an array, and parameters such as {\tt
 actual values (scaled to the compartment surface area).
 
 The complexity of the GENESIS SLI interface falls between that of the
-Python and Perl interfaces, and the C code interface\footnote{Note
-  that the GENESIS SLI interface is the standard scripting language of
-  GENESIS 2. It is also supported by G-3.}.  While compartments have
+Python and Perl interfaces, and the C code interface.  While compartments have
 names, parameter values are given in a format used by solvers.
 
 %\begin{figure}[ht]
@@ -601,7 +601,7 @@ sli_load PurkM9_model/CURRENT9.g
 
 imports the model without running the simulation that is specified in
 the SLI script.  A similar command is provided to interface with the
-PyNN network modeling environment\cite{andrew08:_pynn}.
+PyNN network modeling environment\,\cite{andrew08:_pynn}.
 
 To start the graphical front-end of the {\it Neurospaces Studio} to
 visualize and render the model morphology in three dimensions, the
@@ -1004,7 +1004,7 @@ integrated with the mathematical solvers of G-3 using either Python or
 Perl.  Because it is optimized for communication over serial hardware,
 we plan to extend it with communication frameworks for parallel
 hardware such as that provided by the MOOSE
-simulator\cite{ray08:_pymoos} and the MUSIC
+simulator\,\cite{ray08:_pymoos} and the MUSIC
 framework\,\cite{ekeberg08:_music_multis_coord}.
 
 
