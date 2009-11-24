@@ -351,7 +351,7 @@ project) from more complicated interfaces that expose the full
 functionality of the simulator.
 
 As an example the {\it Neurospaces.SingleCellContainer} module
-contains functions to simplify simulations of single neuron models.
+contains functions to simplify the simulation of single neuron models.
 This module is a front-end to the {\it Neurospaces} module.  {\it
   Neurospaces} interfaces with the {\bf Model\,Container} which is coded in
 an efficient system programming language.  Likewise, {\it
@@ -520,9 +520,9 @@ step 0.5 -time
 
 While Python bindings are suitable for construction of toy models from
 scratch, it is better to use a domain specific language to construct
-the various parts of a model. The Neurospaces {\bf Model\,Container} is
+the various parts of a model. The {\bf Model\,Container} is
 installed with a library of model components.  As an example, the
-standard Hodgkin-Huxley channels are provided in the file {\tt
+standard Hodgkin-Huxley channels are provided in the file {\it
   channels/hodgkin-huxley.ndf}.  These channels can be included in the
 segment defined above by adding the Python statements:
 
@@ -530,14 +530,14 @@ segment defined above by adding the Python statements:
   \resetlinenumber[23]
   \linenumbers
 \begin{verbatim}
-s.import_child("channels/hodgkin-huxley.ndf::/k")
-s.import_child("channels/hodgkin-huxley.ndf::/na")
+   s.import_child("channels/hodgkin-huxley.ndf::/k")
+   s.import_child("channels/hodgkin-huxley.ndf::/na")
 \end{verbatim}
 }
 
 The {\bf Model\,Container} can export models constructed in Python or other
 scripting languages as a library for incorporation into new models or
-for use with other tools such as the Neurospaces project browser.
+for use with other tools such as the {\bf Project\,Browser}.
 These new models can then be imported by a call to the {\tt
   Neurospaces} {\it read} method. For example, importing a Purkinje
 cell model with over 4000 compartments may be done with the following
@@ -545,7 +545,7 @@ statement:
 
 {\footnotesize
 \begin{verbatim}
-Neurospaces.SingleCellContainer.read("cells/purkinje/edsjb1994.ndf")
+   Neurospaces.SingleCellContainer.read("cells/purkinje/edsjb1994.ndf")
 \end{verbatim}
 }
 
@@ -555,10 +555,9 @@ with:
 
 {\footnotesize
 \begin{verbatim}
-Neurospaces.SingleCellContainer.query("segmentertips /Purkinje")
+   Neurospaces.SingleCellContainer.query("segmentertips /Purkinje")
 \end{verbatim}
 }
-
 
 \subsection{Interactive Query and Simulation}
 
@@ -567,49 +566,49 @@ morphology.  From the primary morphology structure it defines derived
 attributes such as total cell volume and the number of somatopetal
 branch points given the name of a dendritic segment.
 
-The {\it GENESIS 3 Shell} integrates other software components into an
-interactive environment and can conveniently be used to explore a
-model, its structural aspects such as its morphology, and to query its
-derived attributes such as total volume and surface area.  The {\it
-  GENESIS 3 Shell} is started from a UNIX system shell with:
+The GENESIS 3 Shell {\bf G-Shell} integrates other software components into an
+interactive environment that can be used to explore a
+model, for example its structural aspects such as its morphology, and to query its
+derived attributes such as total volume and surface area.  The {\bf
+  G-Shell} is started from a UNIX system shell with:
 
 {\footnotesize
 \begin{verbatim}
-genesis-g3
+   genesis-g3
 \end{verbatim}
 }
 
-After the interactive shell has been started, the command:
+After the {\bf G-Shell} has been started, the command:
 
 {\footnotesize
 \begin{verbatim}
-ndf_load cells/purkinje/edsjb1994.ndf
+   ndf_load cells/purkinje/edsjb1994.ndf
 \end{verbatim}
 }
 
-is given to load a file with a declarative specification of a
-cerebellar purkinje cell.
+will load the given file with a declarative specification of a
+cerebellar Purkinje cell.
 
 Alternatively, if the model is encoded in a GENESIS 2 SLI script the
-command {\tt ndf\_load} can be replaced with {\tt sli\_load}:
+command {\it ndf\_load} can be replaced with {\it sli\_load}:
 
 {\footnotesize
 \begin{verbatim}
-sli_load PurkM9_model/CURRENT9.g
+   sli_load PurkM9_model/CURRENT9.g
 \end{verbatim}
 }
 
-imports the model without running the simulation that is specified in
+This command imports the model without running the simulation that is specified in
 the SLI script.  A similar command is provided to interface with the
 PyNN network modeling environment\,\cite{andrew08:_pynn}.
 
-To start the graphical front-end of the {\it Neurospaces Studio} to
-visualize and render the model morphology in three dimensions, the
+To start the graphical front-end of the {\bf Studio} to
+visualize and render the model morphology in three dimensions, enter the
 command:
 
 {\footnotesize
 \begin{verbatim}
-explore
+   explore
 \end{verbatim}
 }
 
@@ -619,11 +618,10 @@ commands.
 \begin{figure}[ht]
   \centering
   \includegraphics[scale=0.3]{figures/studio-screenshot.eps}
-  \caption{Using the Neurospaces Studio to Query a Model and its
-    Parameters}
+  \caption{Using the {\bf Studio} to query a model and its
+    parameters}
   \label{fig:cbi-studio}
 \end{figure}
-
 
 Given the name of one of its dendritic segments, the number of branch
 points between that segment and the soma can be determined. After
@@ -633,33 +631,33 @@ can be obtained with:
 
 {\footnotesize
 \begin{verbatim}
-morphology_summarize /Purkinje
-show_parameter /Purkinje/segments/b1s06[182] SOMATOPETAL_BRANCHPOINTS
+   morphology_summarize /Purkinje
+   show_parameter /Purkinje/segments/b1s06[182] SOMATOPETAL_BRANCHPOINTS
 \end{verbatim}
 }
 
-After finding a suitable dendritic segment, its synaptic channel can
+After finding a suitable dendritic segment, a given synaptic channel can
 be stimulated with a precomputed spike train that is stored in a file
-with filename ``event\_data/events.yml'':
+with, for example, the filename {\it event\_data/events.yml}:
 
 {\footnotesize
 \begin{verbatim}
-set_runtime_parameter /Purkinje/segments/b1s06[182]/Purkinje_spine_0/head/par/synapse
-        EVENT_FILENAME ``event_data/events.yml''
+   set_runtime_parameter /Purkinje/segments/b1s06[182]/Purkinje_spine_0/head/par/synapse
+      EVENT_FILENAME ``event_data/events.yml''
 \end{verbatim}
 }
 
-Finally, a simulation can be conveniently started using:
+Finally, following the addition of an output comprising the somatic membrane potential, a simulation can conveniently be started using:
 
 {\footnotesize
 \begin{verbatim}
-add_output /Purkinje/segments/soma Vm
-run /Purkinje 0.1
+   add_output /Purkinje/segments/soma Vm
+   run /Purkinje 0.1
 \end{verbatim}
 }
 
-This outputs the somatic response to the stimulus to a file with a
-default filename of {\tt /tmp/output}.
+This outputs the somatic response to the stimulus to a file with the
+default filename of {\it /tmp/output}.
 
 
 \subsection{Gluing Pre-existing Applications \& Libraries}
@@ -675,8 +673,8 @@ button rich tutorial applications.
 
 We are currently working on integration of the G-3 platform and the WX
 library to build cross platform GUIs using the Python module {\it
-  wxPython}.  {\it matplotlib} is a Python interface to a 2D plotting
-library producing publication quality figures in a variety of hardcopy
+  wxPython}. A Python interface to a 2D plotting
+library  ({\it matplotlib}) can be used to produce publication quality figures in a variety of hardcopy
 formats.
 
 All these libraries exist and are publicly available for download,
@@ -691,7 +689,7 @@ on the internet, we only deal here with the latter, and focus on
 events such as starting and stopping a simulation.
 
 Most contemporary GUI applications are conveniently constructed using
-one of the available user interface builders.  wxFormBuilder
+one of the available user interface builders.  {\it wxFormBuilder}
 (http://wxformbuilder.org/; a user interface designer for the wxPython
 toolkit and the Linux desktop environment GNOME) is one such builder.
 It allows the user to construct a GUI with visual elements such as
@@ -706,11 +704,11 @@ known as an XML Resource File (XRC), that is readable via Python bindings.
 %imported these from the {\it matplotlib} library.
 
 In the example below, we will create a wxPython application class 
-called 'G3App' which demonstrates the Python scripting needed to 
+called `G3App' which demonstrates the Python scripting needed to 
 connect the software components required to build a small GUI for 
 the G-3 simulator.  For this, we assume that an XRC file with name
-{\tt G3.xrc} can be found that describes a GUI with one frame (name:
-mainFrame), allows the simulation duration to be set via a
+{\it G3.xrc} can be found that describes a GUI with one frame (name:
+mainFrame) that allows the simulation duration to be set via a
 text control, and contains a button to start the simulation.
 
 The first lines of code in the script load the necessary Python
@@ -721,12 +719,12 @@ programming language.
   \resetlinenumber
   \linenumbers
 \begin{verbatim}
-import wx
-from wx import xrc
+   import wx
+   from wx import xrc
 \end{verbatim}
 }
 
-Here we declare our class as an inherited class of the wx.App class, 
+Here we declare our class as an inherited class of the {\it wx.App} class, 
 and also declare a constructor function which we will use to set up 
 some GUI specifics on instantiation of our object.
 
@@ -734,8 +732,8 @@ some GUI specifics on instantiation of our object.
    \resetlinenumber[3]
    \linenumbers
  \begin{verbatim}
-class G3App(wx.App):
-    def OnInit(self): 
+   class G3App(wx.App):
+      def OnInit(self): 
  \end{verbatim}
 }
 
@@ -747,28 +745,28 @@ it into a Python object.
    \resetlinenumber[5]
    \linenumbers
  \begin{verbatim}
-        self.res = xrc.XmlResource('G3.xrc')
+   self.res = xrc.XmlResource('G3.xrc')
  \end{verbatim}
 }
 
 Here we retrieve all of the declared widget objects from our XRC 
 specification so that we can perform Python operations on them at a 
-lower level. Each object we declared in wxFormBuilder can be retrieved 
+lower level. Each object we declared in {\it wxFormBuilder} can be retrieved 
 via the name given during construction:
 
 {\footnotesize
    \resetlinenumber[6]
    \linenumbers
  \begin{verbatim}
-        self.frame = self.res.LoadFrame(None, 'mainFrame')
-        self.runButton = xrc.XRCCTRL(self.frame, 'runButton')
-        self.setButton = xrc.XRCCTRL(self.frame, 'setButton')
-        self.durationTextCtrl = xrc.XRCCTRL(self.frame,'durationTextCtrl')
+   self.frame = self.res.LoadFrame(None, 'mainFrame')
+   self.runButton = xrc.XRCCTRL(self.frame, 'runButton')
+   self.setButton = xrc.XRCCTRL(self.frame, 'setButton')
+   self.durationTextCtrl = xrc.XRCCTRL(self.frame,'durationTextCtrl')
  \end{verbatim}
 }
 
 Next we need to bind actions to our buttons, ``Set Simulation Time'' 
-and ``Run Simulation.'' Earlier we loaded all of the 
+and ``Run Simulation.'' Earlier we loaded the 
 declared widgets into individual objects, so now we can perform
 a bind between the button objects and functions for setting the
 simulation time, and running the simulation. We will 
@@ -778,8 +776,8 @@ call our functions {\it OnSet} and {\it OnRun} respectively.
    \resetlinenumber[10]
    \linenumbers
  \begin{verbatim}
-        self.frame.Bind(wx.EVT_BUTTON, self.OnRun, self.runButton)
-        self.frame.Bind(wx.EVT_BUTTON, self.OnSet, self.setButton)
+   self.frame.Bind(wx.EVT_BUTTON, self.OnRun, self.runButton)
+   self.frame.Bind(wx.EVT_BUTTON, self.OnSet, self.setButton)
  \end{verbatim} 
 }
 
@@ -798,16 +796,16 @@ call our functions {\it OnSet} and {\it OnRun} respectively.
 Now we must define {\it OnSet} and {\it OnRun} in our G3App class so
 they can be useable by the event binding. The function {\it OnSet} 
 is fairly simple, its only purpose is to read the value in the 
-user input text control (self.durationTextCtrl) and pass this value
+user input text control ({\it self.durationTextCtrl}) and pass this value
 to a global variable called {\it simulation\_time}.
 
 {\footnotesize
   \resetlinenumber[12]
   \linenumbers
 \begin{verbatim}
-    def OnSet(self, evt):
-        global simulation_time
-        simulation_time = float(self.durationTextCtrl.GetValue())
+   def OnSet(self, evt):
+      global simulation_time
+      simulation_time = float(self.durationTextCtrl.GetValue())
  \end{verbatim}
 }
 
@@ -815,14 +813,13 @@ The {\it OnRun} function will make a call to a function called {\it run\_simulat
 which contains a complete listing of the first Python example (above), 
 and takes the simulation time as an argument. 
 
-
 {\footnotesize
   \resetlinenumber[15]
   \linenumbers
 \begin{verbatim}
-    def OnRun(self,evt):
-        global simulation_time
-        run_simulation(simulation_time)
+   def OnRun(self,evt):
+      global simulation_time
+      run_simulation(simulation_time)
 \end{verbatim}
 }
  
@@ -862,17 +859,16 @@ declaration.
    \resetlinenumber[14]
    \linenumbers
  \begin{verbatim}
-if __name__ == '__main__':
-    app = G3App(False)
-    app.MainLoop()
+   if __name__ == '__main__':
+      app = G3App(False)
+      app.MainLoop()
  \end{verbatim}
  }
-
 
 This script runs a small model and can be combined with other Python
 code given here to increase the complexity of a model, add various
 stimulus conditions, and extract the output of interest.  The script
-saves the membrane potential of the soma to the file {\tt
+saves the membrane potential of the soma to the file {\it
   /tmp/output}.  To plot this membrane potential in the application
 window, the {\it matplotlib} library is used:
 
@@ -880,24 +876,24 @@ window, the {\it matplotlib} library is used:
   \resetlinenumber[5]
 %  \linenumbers
 \begin{verbatim}
-import matplotlib
-import pylab
+   import matplotlib
+   import pylab
 \end{verbatim}
 }
 
-The following code reads the output file into two arrays, {\tt t} and
-{\tt v}:
+The following code reads the output file into two arrays, {\it t} and
+{\it v}:
 
 {\footnotesize
   \resetlinenumber[5]
 %  \linenumbers
 \begin{verbatim}
-    t = []; v = [] ;
-    file = open("/tmp/output")
-    for line in file:
-        values = re.split(" ", line)
-        t.append(float(values[0]))
-        v.append(float(values[1]))
+   t = []; v = [] ;
+      file = open("/tmp/output")
+      for line in file:
+         values = re.split(" ", line)
+         t.append(float(values[0]))
+         v.append(float(values[1]))
 \end{verbatim}
 }
 
@@ -908,16 +904,16 @@ with custom Python code.  A plot can then be generated using:
   \resetlinenumber[5]
 %  \linenumbers
 \begin{verbatim}
-    # generate the plot
-    figure = matplotlib.figure.Figure(figsize=(6,4), dpi=60)
-    axis = figure.add_subplot(111)
-    axis.plot(t,v)
+   # generate the plot
+   figure = matplotlib.figure.Figure(figsize=(6,4), dpi=60)
+   axis = figure.add_subplot(111)
+   axis.plot(t,v)
 
-    # display the plot
-    canvas = matplotlib.backends.backend_gtk.FigureCanvasGTK(figure)
-    canvas.show()
-    grahview = wTree.get_widget("vbox1")
-    grahview.pack_start(canvas, True, True)
+   # display the plot
+   canvas = matplotlib.backends.backend_gtk.FigureCanvasGTK(figure)
+   canvas.show()
+   grahview = wTree.get_widget("vbox1")
+   grahview.pack_start(canvas, True, True)
 \end{verbatim}
 }
 
@@ -955,14 +951,14 @@ dendrite\,\cite{lu09:_d_purkin, cornelis08:_model_neuros_genes}).
 %Show Python interface snippet.
 
 Special purpose software has been written to convert Reconstruct data
-for importation into the G-3 {\bf Model\,Container}.  The core of these
+for importation into the {\bf Model\,Container}.  The core of these
 algorithms implements geometrical transformations such that EM
 contours are extracted to provide equivalent cylinders suitable for
 cable modeling.  The geometrical properties of the cylinders are
 stored as NDF files, and algorithms provided by the {\bf Model\,Container}
 link them with the cable parameters required by the mathematical
 solvers.  A simulation can then be run with the {\it read} and {\it
-  run} methods mentioned above.
+  run} methods given above.
 
 The necessary conversion algorithms are accessible from Python via the
 {\bf Model\,Container}.  The Python interface of Blender links it to the G-3
@@ -978,9 +974,10 @@ interface of G-3 and Blender (see Figure~\ref{fig:cbi-blender}).
 However, the development of small focused plugins allows for more than
 just these functions. For example, 3D measurement and manipulation of
 neuron morphology, computation of surface areas and volumes, and the
-generation of 3D crossections and 2D cuts.
+generation of 3D crossections and 2D cuts also becomes possible.
 
 \subsection{Future Directions}
+
 Complementary functionality to that provided by interfacing G-3 with
 Blender would be available after interfacing G-3 with {\it
   neuro}Construct, a software package designed to simplify development
@@ -1012,8 +1009,8 @@ framework\,\cite{ekeberg08:_music_multis_coord}.
 \section{Conclusion}
 
 Software libraries can be divided into application specific and
-application neutral categories.  The Neurospaces project provides a
-series of software components specific to neuroscience applications.
+application neutral categories.  Through the Neurospaces project, GENESIS now provides a
+series of software components specific to neuroscience applications (G-3).
 The advantage is that a scripting language such as Python becomes a
 powerful integration tool to connect these components to general
 purpose libraries for visualization, rendering, and GUIs.  A key
