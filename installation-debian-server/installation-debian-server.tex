@@ -124,17 +124,25 @@ It is bad practice to run a monotone repository as root so the first thing you s
    \end{verbatim}
 with an email address that the server can be identified with. Enter in a passphrase for it.
 
-The key will then be stored in the directory {\it $\sim$/.monotone/} and will be automatically used when the monotone user invokes any monotone command. To prevent monotone from asking for this passphrase every time it performs an action, create a file within {\it $\sim$/.monotone/} with the name {\it monotonerc} and put the following monotone lua function into the file:
+The key will then be stored in the directory {\it $\sim$/.monotone/}
+and will be automatically used when the monotone user invokes any
+monotone command. To prevent monotone from asking for this passphrase
+every time it performs an action, create a file within {\it
+  $\sim$/.monotone/} with the name {\it monotonerc} and put the
+following monotone lua function into the file:
 \begin{verbatim}
    function get_passphrase(keypair_id)
       return "my passphrase"
 \end{verbatim}
-This will give your passphrase to monotone automatically and prevent the process from stopping to ask for user input. If the monotone user directory is readable across the system it is advisable to use a unique password to prevent unauthorized users from reading this file.
+This will give your passphrase to monotone automatically and prevent
+the process from stopping to ask for user input. It is advisable to
+protect access to the file and to use a unique password for the
+monotone user to prevent unauthorized users from reading this file.
 \end{itemize}
 
 \subsubsection*{Read permissions}
 
-To set who can read from the monotone repositories you serve, create the file in {\it ~/.monotone/read\_permissions}. Inside this file you can set patterns to allow everyone to read all repositories, for example:
+To set who can read from the monotone repositories you serve, create the file in {\it $\sim$/.monotone/read\_permissions}. Inside this file you can set patterns to allow everyone to read all repositories, for example:
 \begin{verbatim}
    pattern "*"
       allow "*"
@@ -142,7 +150,7 @@ To set who can read from the monotone repositories you serve, create the file in
 
 \subsubsection*{Write permissions}
 
-To set who can write to a repository create the file {\it ~/.monotone/write\_permissions}. Here you simply type each email address and the identifier used when setting up your key, one line at a time.
+To set who can write to a repository create the file {\it $\sim$/.monotone/write\_permissions}. Here you simply type each email address and the identifier used when setting up your key, one line at a time.
 
 In addition to this you must read in a public key on each monotone repository. For instructions on how to do this see the {\bf Repository\,Access} section of the \href{../developer-repository/developer-repository.tex}{\bf Developer\,Repository} document.
 
