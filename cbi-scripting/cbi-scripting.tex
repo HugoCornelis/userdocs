@@ -224,7 +224,7 @@ behavior (see below).
 \subsection{The CBI Federated Architecture}
 The CBI (Computational Biology Initiative) federated architecture
 provides a modular paradigm that places stand-alone software
-components into logical relationships. In this it shares a number of
+components into logical relationships. Each software module is an independent and standalone component such that development and maintenance can be implemented concurrently. This leads to a federated software architecture that exists as an ecology of software components that are CBI compliant. In this it shares a number of
 ideas with the well-known three-tier architecture paradigm.  The
 distinguishing feature of the CBI architecture is that the back end
 comprises mathematical solvers rather than relational databases.  The
@@ -268,9 +268,8 @@ mathematical representation that, if complete, can be simulated, (2)
   hsolve} object that can be instantiated from C, Perl, Python or
 other scripting languages, (3) {\bf SSP} (Simple Scheduler in Perl): Binds {\bf Heccer} and the {\bf Model\,Container}, and activates them correctly,
 such that they work together on a single simulation, (4) {\bf Studio} and {\bf G-Tube}: Contain graphical tools
-for model construction, exploration and simulation, (5) {\bf G-Shell}: Dynamically loads other software components in
-an interactive environment, (6) {\bf Project\,Browser}: For inspection of projects and
-simulation results, and for completeness we also mention (7) {\bf NS-SLI}: The G-3 component that provides backward compatibility for GENESIS 2.
+for model construction, exploration and simulation, (5) {\bf G-Shell}: Dynamically loads other software components in an interactive environment, (6) {\bf Project\,Browser}: For inspection of projects and
+simulation results, and for completeness we also mention (7) {\bf NS-SLI}: The G-3 component that provides backward compatibility for GENESIS 2. All software can be downloaded from the GENESIS web site: http://genesis-sim.org/download/.
 
 Much existing software such as GUI libraries and plotting
 libraries, are application neutral.  Other software packages are
@@ -1024,7 +1023,7 @@ enabling property of G-3 is that it stores model parameters separately
 from stimulation protocols and the way simulations are run.  By
 defining clear functional boundaries of the core software components
 such as the {\bf Model\,Container} and the mathematical solvers, we also
-provide clear interfaces for integration.
+provide clear interfaces for integration. We have outlined an ecology of software components that are CBI compliant and that integrate with the G-3 simulator.
 
 Although the Python bindings of the G-3 simulator embed the same
 powerful concepts as the GENESIS SLI, their purpose is different.
@@ -1037,7 +1036,7 @@ simulator.  We have focused on a simple but comprehensive example, the
 running of a single compartment neuron and the plotting of its
 membrane potential. The purpose is to demonstrate the advantages of
 using high-level scripting languages such as Python for binding the
-independent stand-alone components of G-3.
+independent stand-alone components of G-3. In the process of achieving this goal, we have defined an ecology of holistic dynamic interactions between G-3 software components.
 
 %It is an approach that
 %simplifies the extension, modification, and customization of the
