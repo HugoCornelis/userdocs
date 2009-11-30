@@ -34,6 +34,7 @@ The  {\it neurospaces\_cron} configuration file is a YAML formatted file contain
 \begin{itemize}
    \item[]{\bf MAILTO:} Email address for recipient of email notifying {\it cron} job completion.
    \item[]{\bf MAILFROM:} Email address from which {\it cron} job completion email is sent.
+   \item[]{\bf MAILBCC:} Email addresses to send a courtesy copy of the cron jobs report to.  
    \item[]{\bf OUTPUTDIR:} Target directory for writing {\it cron} job output log data.
    \item[]{\bf URL:} http link to serve test harness output.
    \item[]{\bf DOXYGENOUTPUT:} The local directory that holds doxygen html output.
@@ -49,6 +50,7 @@ The  {\it neurospaces\_cron} configuration file is a YAML formatted file contain
 ---
 MAILTO: my@email.com
 MAILFROM: g3tester@repo-genesis3.cbi.utsa.edu
+MAILBCC: user1@email.com, user2@email.com, user3@email.com
 OUTPUTDIR: /var/www/tests
 URL: http://repo-genesis3.cbi.utsa.edu/tests
 DOXYGENOUTPUT: /var/www/doxygen
