@@ -116,8 +116,10 @@ my $option_numerical_compare = $config->{numerical_compare} || 0;
 my $option_random_order;
 my $option_regex_selector = ".*";
 my $option_report_disabled;
+my $option_show;
 my $option_timeout_multiplier = 1;
 my $option_timings;
+my $option_trace;
 my $option_verbose;
 
 
@@ -385,6 +387,16 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 		next;
 	    }
 
+	    if ($option_show)
+	    {
+		if (!$test_report->{selected}->{$module_name}->{$description})
+		{
+		    $test_report->{selected}->{$module_name}->{$description} = 1;
+		}
+
+		next;
+	    }
+
 	    # give some diagnostics
 
 	    if (@$command_definitions > 1)
@@ -492,8 +504,17 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 
 # 		    $exp->slave->stty(qw(raw -echo));
 
-		    $exp->spawn($command, @$arguments)
-			or die "$0: cannot spawn $command: $!\n";
+		    $exp->spawn
+			(
+			 (
+			  $option_trace
+			  ? ("strace", "-f")
+			  : ()
+			 ),
+			 $command,
+			 @$arguments
+			)
+			    or die "$0: cannot spawn $command: $!\n";
 
 		    # set the running_command_definition
 
@@ -517,7 +538,7 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 		}
 	    }
 
-	    # loop over all tests for this module
+	    # loop over all tests for this command
 
 	    my $command_tests = $command_definition->{command_tests};
 
@@ -953,8 +974,10 @@ sub read_cmd_line
 	     "randomize-order=s" => \$option_random_order,
 	     "regex-selector=s" => \$option_regex_selector,
 	     "report-disabled" => \$option_report_disabled,
+	     "show!" => \$option_show,
 	     "timeout-multiplier=s" => \$option_timeout_multiplier,
 	     "timings!" => \$option_timings,
+	     "trace!" => \$option_trace,
 	     "v|verbose+" => \$option_verbose,
 	    );
 
@@ -972,8 +995,10 @@ sub read_cmd_line
 	   random_order => $option_random_order,
 	   regex_selector => $option_regex_selector,
 	   report_disabled => $option_report_disabled,
+	   show => $option_show,
 	   timeout_multiplier => $option_timeout_multiplier,
 	   timings => $option_timings,
+	   trace => $option_trace,
 	   verbose => $option_verbose,
 	  };
 
@@ -993,8 +1018,10 @@ options:
     --randomize-order    randomize the order of the tests before executing them (require List::Util to be installed).
     --regex-selector     defines a regex to run specific tests.
     --report-disabled    include information of disabled tests in the test report.
+    --show               show tests that would be run using the current configuration.
     --timeout-multiplier multiply all timeout values with this constant.
     --timings            add timing information about the tests to the report.
+    --trace              enable tracing using the strace unix shell command.
     --verbose            set verbosity level.
 ";
 
@@ -1018,7 +1045,7 @@ sub report_error_add
 
     $error_count++;
 
-    print STDERR "*** Error: $error ($description, $module_name)\n";
+    print STDERR "*** Error: $error ($description, $module_name, error_count $error_count)\n";
 
     # fill in the error report
 
@@ -1064,7 +1091,7 @@ sub report_error_add
 
 	my $expected_filename = "/tmp/text_$config->{package}->{name}_$error_count.expected";
 
-	my $expected_file = new IO::File ">$expected_filename";
+	my $expected_file = IO::File->new(">$expected_filename");
 
 	print $expected_file $expected;
 
@@ -1072,7 +1099,7 @@ sub report_error_add
 
 	my $seen_filename = "/tmp/text_$config->{package}->{name}_$error_count.seen";
 
-	my $seen_file = new IO::File ">$seen_filename";
+	my $seen_file = IO::File->new(">$seen_filename");
 
 	print $seen_file $seen;
 
@@ -1104,13 +1131,28 @@ sub report_exit
 		   {
 		    description => $test_report->{description},
 		    ($option_report_disabled ? (disabled => $test_report->{disabled}) : ()),
-		    errors => $test_report->{errors},
-		    global => $test_report->{global},
+		    ($option_show ? () : (errors => $test_report->{errors})),
+		    ($option_show ? () : (global => $test_report->{global})),
 		    ($error_count ? (target => $test_report->{target}) : ()),
+		    ($option_show ? (selected => $test_report->{selected}) : ()),
 		   },
 		  );
 
     print($report_text);
+
+    # and write the full report to a file
+
+    my $report_filename = ">/tmp/report_$config->{package}->{name}.yml";
+
+    eval
+    {
+	YAML::DumpFile($report_filename, $test_report);
+    };
+
+    if ($@)
+    {
+	print STDERR "*** Error: Failed to write output report to $report_filename\n";
+    }
 
     # if email enabled by the options
 
@@ -1276,12 +1318,15 @@ sub report_message
 
     my $line = '-' x $longest;
 
-    print "\n";
-    print "$line\n" for 0 .. $header;
-    print "\n";
-    print "$message\n\n";
-    print "$line\n" for 0 .. $trailer;
-    print "\n";
+    if (!$option_show)
+    {
+	print "\n";
+	print "$line\n" for 0 .. $header;
+	print "\n";
+	print "$message\n\n";
+	print "$line\n" for 0 .. $trailer;
+	print "\n";
+    }
 }
 
 

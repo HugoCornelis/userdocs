@@ -15,7 +15,12 @@
 
 \section*{Create and Add Solver Object to GENESIS Component}
 
-This developer guide gives an example of how to add a new simulation object to {\bf Heccer} and integrate the modified \href{../reserved-words/reserved-words.tex}{\bf Component} with GENESIS.
+This developer guide gives an example of how to add a new simulation
+object and integrate it the
+\href{../reserved-words/reserved-words.tex}{\bf Component} with
+GENESIS.  For simplicity we embed the new component in the {\bf
+  Heccer} package.  As an example we implement the pulsegen object of
+GENESIS 2.
 
 \section*{Creating Source Files}
 
@@ -75,7 +80,7 @@ Keeping in mind that the new object is going to be used by a simulation, we need
    struct PulseGen * PulseGenNew(char *pcName);
 \end{verbatim}
 
-\item {\bf Delete a Pulse Generator:}
+\item {\bf Delete a Pulse Generator after the Simulation has Finished:}
 \begin{verbatim}
    int PulseGenFinish(struct simobj_PulseGen *ppg);
 \end{verbatim}
