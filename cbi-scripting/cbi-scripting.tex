@@ -115,7 +115,8 @@ interfaces between components and scripts that make them easy to use.
 In this sense scripting and system programming are symbiotic. Used
 together, they produce programming environments of exceptional power:
 system programming languages are used to create functional components
-which are then be assembled using scripting languages.
+which are then be assembled using scripting languages\marginpar{Allan:
+  are then be ??}.
 
 In summary, system programming languages are well suited to building
 components where the complexity is in the data structures and
@@ -683,7 +684,7 @@ with external applications.  An obvious example is the use of existing
 model neuron morphology.  Others include, integration with external
 graphing and windowing software for plotting the values of solved
 variables against simulation time, or to allow the construction of
-button rich tutorial applications.
+button-rich tutorial applications.
 
 We are currently working on integration of the G-3 platform and the WX
 library to build cross platform GUIs using the Python module {\it
@@ -694,13 +695,20 @@ formats.
 All these libraries exist and are publicly available for download,
 however, they must be provided with data bindings such that, for
 example, the data produced by a mathematical solver flows to a widget
-that plots the value of a variable against time.  The events that are
-generated inside such a GUI application fall into one of two
-categories.  The first, considers events generated to open a menu or
-dialog interface.  The second, considers events that interact with the
-simulation.  Since a lot of documentation for the former is available
-on the internet, we only deal here with the latter, and focus on
-events such as starting and stopping a simulation.
+that plots the value of a variable against time.
+%The events that are
+%generated inside such a GUI application fall into one of two
+%categories.  The first, considers events generated to open a menu or
+%dialog interface.  The second, considers events that interact with the
+%simulation.  Since a lot of documentation for the former is available
+%on the internet, we only deal here with the latter, and focus on
+%events such as starting and stopping a simulation.
+GUI libraries typically communicate with other software components
+using an event based system.  The functional core of this system is an
+event dispatching loop, usually called the {\it main loop}.  In the
+following we show how to configure the {\it wxPython} library to setup
+communication between its main loop and simple actions such as
+starting and stopping a simulation.
 
 Most contemporary GUI applications are conveniently constructed using
 one of the available user interface builders.  {\it wxFormBuilder}
@@ -751,9 +759,9 @@ some GUI specifics on instantiation of our object.
  \end{verbatim}
 }
 
-Inside of our initialization function we want to load our XRC file. 
-The following Python codes reads in an XML resource file, and loads
-it into a Python object.
+Inside of our initialization function we want to load our XRC file.
+The following Python code reads in an XML resource file, and loads it
+into a Python object.
 
 {\footnotesize
    \resetlinenumber[5]
@@ -779,12 +787,11 @@ via the name given during construction:
  \end{verbatim}
 }
 
-Next we need to bind actions to our buttons, ``Set Simulation Time'' 
-and ``Run Simulation.'' Earlier we loaded the 
-declared widgets into individual objects, so now we can perform
-a bind between the button objects and functions for setting the
-simulation time, and running the simulation. We will 
-call our functions {\it OnSet} and {\it OnRun} respectively. 
+Next we bind actions to our buttons, ``Set Simulation Time'' and ``Run
+Simulation.'' Earlier we loaded the declared widgets into individual
+objects, so now we can perform a bind between the button objects and
+functions for setting the simulation time, and running the simulation.
+We will call our functions {\it OnSet} and {\it OnRun} respectively.
 
 {\footnotesize
    \resetlinenumber[10]
@@ -856,9 +863,9 @@ and takes the simulation time as an argument.
 % \end{verbatim}
 % }
 
-The code of a GUI application is always terminated by a call to the
-main event loop of the GUI library. Here we instantiate our GUI class
-and set it into the main event loop. This is outside of our G3App class
+The code of the GUI application is terminated by a call to the main
+event loop of wxPython.  Here we instantiate our GUI class and set it
+into the main event loop. This is outside of our G3App class
 declaration.
 
 % {\footnotesize
@@ -952,7 +959,7 @@ Reconstruct\,\cite{jc05:_recon}
 %objects from serial section images)
 % \marginpar{cite howard}
 to obtain more precise morphologies of small segments of Purkinje cell
-dendrite\,\cite{lu09:_d_purkin, cornelis08:_model_neuros_genes}).
+dendrites\,\cite{lu09:_d_purkin, cornelis08:_model_neuros_genes}).
 %Fiala JC (2005) Reconstruct: a free editor for serial section microscopy. J Microscopy 218:52-61.
 
 \begin{figure}[ht]
@@ -965,17 +972,23 @@ dendrite\,\cite{lu09:_d_purkin, cornelis08:_model_neuros_genes}).
 %Show Python interface snippet.
 
 Special purpose software has been written to convert Reconstruct data
-for importation into the {\bf Model\,Container}.  The {\it Reconstruct\,Interface} converts the the Reconstruct application into a G-3 simulator component to a G-3 simulator component by making it CBI compliant. contours exported by the Reconstruct software
-to the declarative NDF format (the file format used by
-G-3)
-The core of these
-algorithms implements geometrical transformations such that EM
-contours are extracted to provide equivalent cylinders suitable for
-cable modeling.  The geometrical properties of the cylinders are
-stored as NDF files, and algorithms provided by the {\bf Model\,Container}
-link them with the cable parameters required by the mathematical
-solvers.  A simulation can then be run with the {\it read} and {\it
-  run} methods given above.
+for importation into the {\bf Model\,Container}.  The {\it
+  Reconstruct\,Interface} converts the Reconstruct application into a
+G-3 simulator component by making it CBI compliant.
+%  It converts
+%contours exported by the Reconstruct software to the declarative NDF
+%format (the file format used by G-3). 
+The core of this interface implements geometrical transformation
+algorithms that convert EM contours provided by Reconstruct to
+equivalent cylinders suitable for cable modeling.
+% The core of these algorithms
+%implements geometrical transformations such that EM contours are
+%extracted to provide equivalent cylinders suitable for cable modeling.
+The geometrical properties of the cylinders are stored as NDF files,
+and algorithms provided by the {\bf Model\,Container} link them with
+the cable parameters required by the mathematical solvers.  A
+simulation can then be run with the {\it read} and {\it run} methods
+given above.
 
 The necessary conversion algorithms are accessible from Python via the
 {\bf Model\,Container}.  The Python interface of Blender links it to the G-3
@@ -1026,22 +1039,26 @@ framework\,\cite{ekeberg08:_music_multis_coord}.
 \section{Conclusion}
 
 Software libraries can be divided into application specific and
-application neutral categories.  Through the Neurospaces project, GENESIS now provides a
-series of software components specific to neuroscience applications (G-3).
-The advantage is that a scripting language such as Python becomes a
-powerful integration tool to connect these components to general
-purpose libraries for visualization, rendering, and GUIs.  A key
-enabling property of G-3 is that it stores model parameters separately
-from stimulation protocols and the way simulations are run.  By
-defining clear functional boundaries of the core software components
-such as the {\bf Model\,Container} and the mathematical solvers, we also
-provide clear interfaces for integration. We have outlined an ecology of software components that are CBI compliant and that integrate with the G-3 simulator.
+application neutral categories.  Through the Neurospaces project,
+GENESIS now provides a series of software components specific to
+neuroscience applications (G-3).  The advantage is that scripting
+languages such as Python and Perl become a powerful integration tool
+to connect these components to general purpose libraries for
+visualization, rendering, and GUIs.  A key enabling property of G-3 is
+that it stores model parameters separately from stimulation protocols
+and the way simulations are run.  By defining clear functional
+boundaries of the core software components such as the {\bf
+  Model\,Container} and the mathematical solvers, we also provide
+clear interfaces for integration. We have outlined an ecology of
+software components that are CBI compliant and that integrate with the
+G-3 simulator.
 
 Although the Python bindings of the G-3 simulator embed the same
 powerful concepts as the GENESIS SLI, their purpose is different.
 While the SLI had as major goals the integration of model components,
 output collection, and running simulations, the primary goal of
-scripting languages such as Python has become application integration.
+scripting languages such as Perl and Python has become application
+integration.
 
 Here, we have illustrated the relationship between Python and the G-3
 simulator.  We have focused on a simple but comprehensive example, the
