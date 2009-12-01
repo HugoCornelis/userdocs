@@ -15,7 +15,14 @@
 
 \section*{Installation on a Debian Server}
 
-This is a guide for setting up an independent version of the GENESIS software platform on a new Debain 5.0.3 installation, with the tester, code repository, and webserver running.
+This is a guide for setting up an independent version of the GENESIS software platform on a new Debain 5.0.3 installation, with the tester, code repository, and webserver running. The installation requires minimal system changes, however it is advisable to make backups of the following affected files before starting:
+
+\begin{itemize}
+\item[] /etc/apache2/apache2.conf or whatever configuration file apache uses.
+\item[] /etc/crontab which needs one line added for the cronjob.
+\end{itemize}
+
+The installation will also require some administrator access to create directories with certain user permissions. 
 
 \section*{Setting up the Web Server}
 
@@ -25,11 +32,13 @@ Test run output as well as generated html files from programs like Xrefactory an
 
 The {\it DocumentRoot} is the publicly available directory displayed when a user visits the bare URL for your server with a web browser (example: http://myserver.edu). If you want data to be available over the web, you can simply place it in the document root. If you place a file named {\it mydata} in the {\it DocumentRoot}, it will be available at the URL http://myserver.edu/mydata.
 
+The default DocumentRoot on a debian server installation is ``/var/www/html''. 
+
 If you want directories in another location on the machine to be displayed via the URL with a suffix see the next section.
 
 \subsection*{Configuration File {\it /etc/apache2/apache2.conf}}
 
-The default http configuration file for the Apache Web Server in Debian is in the file {\it /etc/apache2/apache2.conf}. The cleanest method for declaring your Apache rules is to put all of your rules in a separate file, then add an {\it Include} statement to the default configuration file to include your file. For example:
+The default http configuration file for the Apache Web Server in Debian is in the file {\it /etc/apache2/apache2.conf}.  \textbf{Important} before starting be sure to create a backup of your configuration file. The cleanest method for declaring your Apache rules is to put all of your rules in a separate file, then add an {\it Include} statement to the default configuration file to include your file. For example:
 \begin{verbatim}
    Include /etc/apache2/my.conf
 \end{verbatim}
@@ -56,7 +65,7 @@ For each directory you'd like to serve you must add a block and an alias. After 
 \begin{verbatim}
    apache2ctl restart
 \end{verbatim}
-You should now be able to view the contents of the directory {\it /var/www/tests} from your URL suffixed with your alias.
+The \textit{apache2ctl} script comes standard with Apache 2. However if it is not present in your installation, you can restart Apache via the init script \textit{/etc/init.d/apache2} with a ``restart'' argument. You should now be able to view the contents of the directory {\it /var/www/tests} from your URL suffixed with your alias.
 
 \section*{Install the Developer Package}
 
@@ -183,9 +192,9 @@ as root to start the repository servers. They can now be connected too over the 
 
 \subsection*{Setting up the Tester}
 
-The neurospaces tester is a script which performs a routine check of the GENESIS repository, source code, and documentation. It is meant to be set up as a cronjob on a server with email capabilities, so that notification of a test run can be emailed to designated recipients.
+The neurospaces tester (neurospaces\_cron) is a script which performs a routine check of the GENESIS repository, source code, and documentation. It is meant to be set up as a cronjob on a server with email capabilities, so that notification of a test run can be emailed to designated recipients.
 
-When the script is set up, it ensures that errors within the system are reported in a timely fashion.
+When the script is set up, it ensures that errors within the system are reported in a timely fashion. This is just an overview of what needs to be done to set up the environment for the tester script to run. For more information on {\it neurospaces\_cron}, such as configuration options, see the \href{../neurospaces-cron/neurospaces-cron.tex}{\bf neurospaces-cron} document. 
 
 \subsubsection*{Sending mail}
 
@@ -195,6 +204,21 @@ Then perform a restart of {\it exim} via the command:
 \begin{verbatim}
    /etc/init.d/exim4 restart
 \end{verbatim}
+
+\subsubsection*{Setting up directories}
+
+The tester script will need write access to some directories that you will be configuring via the YAML configuration file. Here are some examples of what is currently being used on the official GENESIS tester machine. 
+
+\begin{verbatim}
+OUTPUTDIR: /var/www/tests
+URL: http://repo-genesis3.cbi.utsa.edu/tests
+DOXYGENOUTPUT: /var/www/doxygen
+DOXYGENURL: http://repo-genesis3.cbi.utsa.edu/doxygen
+REGTESTOUTPUT: /var/www/regtests
+REGTESTURL: http://repo-genesis3.cbi.utsa.edu/regtests
+\end{verbatim}
+
+The directories {\it /var/www/tests}, {\it /var/www/doxygen} , and {\it /var/www/regtests} are all writable by the tester, and are viewable over the internet via the respective URL link. Instructions to make directories world readable via the Apache web server were previously shown in the section above titled "Setting up the Web Server". 
 
 \subsection*{Building userdocs}
 
