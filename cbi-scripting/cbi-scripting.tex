@@ -259,17 +259,29 @@ individual components can be independently updated, enhanced, or
 replaced when needed, thus the life cycle of a modular architecture is
 smoother than that of a non-scalable application.
 
-The Neurospaces project (http://neurospaces.sourceforge.net/) provides core software components of the G-3 simulator\,\cite{cornelis03:_neuros} including, (1) the
-{\bf Model Container}: Stores two representations of a model, the
-first is conceptual and can be regarded as an enumeration of
-biological concepts and their relationships, the second is an expanded
+The Neurospaces project (http://neurospaces.sourceforge.net/) provides
+core software components of the G-3
+simulator\,\cite{cornelis03:_neuros} including, (1) the {\bf Model
+  Container}: Stores two representations of a model, the first is
+conceptual and can be regarded as an enumeration of biological
+concepts and their relationships, the second is an expanded
 mathematical representation that, if complete, can be simulated, (2)
 {\bf Heccer}: A fast compartmental solver based on the GENESIS {\it
   hsolve} object that can be instantiated from C, Perl, Python or
-other scripting languages, (3) {\bf SSP} (Simple Scheduler in Perl): Binds {\bf Heccer} and the {\bf Model\,Container}, and activates them correctly,
-such that they work together on a single simulation, (4) {\bf Studio} and {\bf G-Tube}: Contain graphical tools
-for model construction, exploration and simulation, (5) {\bf G-Shell}: Dynamically loads other software components in an interactive environment, (6) {\bf Project\,Browser}: For inspection of projects and
-simulation results, and for completeness we also mention (7) {\bf NS-SLI}: The G-3 component that provides backward compatibility for GENESIS 2. All software can be downloaded from the GENESIS web site: http://genesis-sim.org/download/.
+other scripting languages, (3) {\bf SSP} (Simple Scheduler in Perl):
+Binds {\bf Heccer} and the {\bf Model\,Container}, and activates them
+correctly, such that they work together on a single simulation, (4)
+{\bf Studio} and {\bf G-Tube}: Contain graphical tools for model
+construction, exploration and simulation, (5) {\bf G-Shell}:
+Dynamically loads other software components in an interactive
+environment, (6) {\bf Project\,Browser}: For inspection of projects
+and simulation results, and for completeness we also mention (7) {\bf
+  NS-SLI}: The G-3 component that provides backward compatibility for
+GENESIS 2. All software can be downloaded from the GENESIS web site:
+http://genesis-sim.org/download/ and extensive installation
+instructions with examples are available from the GENESIS
+documentation website
+(http://www.genesis-sim.org/userdocs/developer-installation/developer-installation.html).
 
 Much existing software such as GUI libraries and plotting
 libraries, are application neutral.  Other software packages are
@@ -600,13 +612,13 @@ command {\it ndf\_load} can be replaced with {\it sli\_load}:
 \end{verbatim}
 }
 
-This command imports the model without running the simulation that is specified in
-the SLI script.  A similar command is provided to interface with the
-PyNN network modeling environment\,\cite{andrew08:_pynn}.
+This command imports the model that is specified in the SLI script
+without running the simulation.  A similar command is provided to
+interface with the PyNN network modeling
+environment\,\cite{andrew08:_pynn}.
 
-To start the graphical front-end of the {\bf Studio} to
-visualize and render the model morphology in three dimensions, enter the
-command:
+To visualize and render the model morphology in three dimensions,
+start the graphical front-end of the {\bf Studio} with the command:
 
 {\footnotesize
 \begin{verbatim}
