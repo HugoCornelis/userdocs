@@ -140,38 +140,39 @@ programming languages accessible to neuroscientists and biologists.
 
 \subsection{GENESIS}
 
-GENESIS (http://genesis-sim.org/) is a general purpose
-simulation platform that was developed to support the simulation of
-neural systems ranging from subcellular components and biochemical
-reactions to complex models of single neurons, simulations of large
-networks, and systems-level models. It was the first broad scale
-modeling system in computational biology to encourage modelers to
-develop and share model features and components. For these people, it
-was the object-oriented approach taken by simulators along with their
+GENESIS (http://genesis-sim.org/) is a general purpose simulation
+platform that was developed to support the simulation of neural
+systems ranging from subcellular components and biochemical reactions
+to complex models of single neurons, simulations of large networks,
+and systems-level models. It was the first broad scale modeling system
+in computational biology to encourage modelers to develop and share
+model features and components. For these people, it was the
+object-oriented approach taken by simulators along with their
 high-level simulation languages that allowed the exchange,
-modification, and reuse of models or model components. It was this
-community of developers and users that ultimately drove the
-development of the GENESIS platform.
+modification, and reuse of models or model
+components\marginpar{twice}. It was this community of developers and
+users that ultimately drove the development of the GENESIS platform.
 
-GENESIS simulations are constructed from components that receive inputs,
-perform calculations on them, and then generate outputs. Model neurons
-are constructed from basic parts, such as compartments, and
+GENESIS simulations are constructed from model components that receive
+inputs, perform calculations on them, and then generate outputs. Model
+neurons are constructed from basic parts, such as compartments, and
 variable conductance ion channels. Channels are linked to their
-compartments  which are then linked together to form multi-compartmental
-neurons of any desired level of complexity. Neurons may be linked
-together to form neural circuits.  It is the paradigm used by the
-GENESIS script language interpreter (SLI), the commands which it recognizes, and the main GENESIS
-`objects' available for constructing simulations that have
-most powerfully assisted in the sharing of model features amongst the
-broader modeling community.
+compartments which are then linked together to form
+multi-compartmental neurons of any desired level of complexity.
+Neurons may be connected together to form neural circuits.  It is the
+paradigm used by the GENESIS script language interpreter (SLI), the
+commands which it recognizes, and the main GENESIS `objects' available
+for constructing simulations that have most powerfully assisted in the
+sharing of model features amongst the broader modeling community.
 
-A high-level simulation language, the GENESIS SLI\footnote{Note:
-  The GENESIS SLI interface is the standard scripting language of
-  GENESIS 2. It is also supported by G-3 with the backward compatibility component {\bf NS-SLI}.}, provided a
-framework within which a simulation programmer defined and
-manipulated GENESIS elements. It allowed modelers to easily extend the
-capabilities of the simulator, and to exchange, modify, and reuse
-models or model components. The SLI interprets statements in the
+A high-level simulation language, the GENESIS SLI\footnote{Note: The
+  GENESIS SLI interface is the standard scripting language of GENESIS
+  2. It is also supported by G-3 with the backward compatibility
+  component {\bf NS-SLI}.}, provided a framework within which a
+simulation programmer defined and manipulated GENESIS model
+components. It allowed modelers to easily extend the capabilities of
+the simulator, and to exchange, modify, and reuse models or model
+components\marginpar{twice}. The SLI interprets statements in the
 GENESIS simulation language, and constitutes the operating system
 `shell'. User-defined SLI scripts were used to glue the pieces of a
 simulation together. The graphical objects used to define the front
@@ -196,7 +197,7 @@ see below) load a model into the {\bf Model\,Container}.  The {\bf Model\,Contai
 stores a model in memory and makes it available to other software
 components in different formats.  One function of the {\bf Model\,Container}
 is to translate biological concepts and properties into mathematical
-formulae that can be understood by the mathematical solvers. Thus,
+concepts that can be understood by the mathematical solvers. Thus,
 importantly and unlike other existing neural simulators, the
 mathematical solvers are independent of the biological representation
 of a model. The simulation controller orchestrates and synchronizes
@@ -375,11 +376,12 @@ component which in turn is an interface to the low-level single neuron
 solver.  Other components are under construction to facilitate network
 modeling.
 
-Here we show a simple high-level Python script\footnote{All code is
-  available from the Neurospaces project testsuite.} that runs a
-simulation of a single cylindrical segment defined by standard values
-for the parameters of membrane and axial resistance and membrane
-capacitance ({\tt RM}, {\tt RA},
+Here we show a simple high-level Python script\footnote{The given code
+  is written for clarity of the paper rather than for compactness or
+  efficiency with relation to the scripting language used.} that runs
+a simulation of a single cylindrical segment defined by standard
+values for the parameters of membrane and axial resistance and
+membrane capacitance ({\tt RM}, {\tt RA},
 %\footnote{The solver requires {\tt RA} for all
 %  compartments.}
 and {\tt CM}, respectively).  These parameters are given by their
@@ -433,13 +435,13 @@ Neurospaces.SingleCellContainer.run(0.5)
 \end{verbatim}
   \vspace*{1mm} }}}
 
-Due to the CBI architecture, the G-3 platform provides many interfaces.
-As an example, the compartmental solver can be driven stand-alone from
-C code, from Python, or from Perl to run the simplest models, or it
-can be integrated with the {\bf Model\,Container} for running more realistic
-multicompartment models based on morphological data.  To illustrate
-this flexibility we now compare the above Python script with
-alternative implementations in C code and the GENESIS SLI.
+Due to the CBI architecture, the G-3 platform provides many user
+interfaces.  As an example, the compartmental solver can be driven
+stand-alone from C code, from Python, or from Perl to run the simplest
+models, or it can be integrated with the {\bf Model\,Container} for
+running more realistic multicompartment models based on morphological
+data.  To illustrate this flexibility we now compare the above Python
+script with alternative implementations in C code and the GENESIS SLI.
 
 There is an abundance of low level detail in the C code that
 interfaces directly to the solver.  For example compartments are
@@ -686,11 +688,25 @@ graphing and windowing software for plotting the values of solved
 variables against simulation time, or to allow the construction of
 button-rich tutorial applications.
 
+In the past, the graphical interface to GENESIS 2 was provided by the
+X-windows Output and Display Utility for Simulations (XODUS).  The
+XODUS interface made graphical objects available that could be
+connected to model components from within the SLI.  Rather than
+providing a full GUI instance, the flexibility of XODUS came from its
+infrastructure that allowed modelers to easily develop new GUIs
+dedicated to their research and teaching projects\footnote{The
+  official GENESIS 2 software distribution contains both simple and
+  sophisticated example GUIs}.  However, the XODUS paradigm inevitably
+allowed modelers to contaminate their model script with GUI related
+statements\marginpar{this is a new paragraph: problem statement to
+  introduce new G3 GUI capabilities}.
+
+
 We are currently working on integration of the G-3 platform and the WX
 library to build cross platform GUIs using the Python module {\it
-  wxPython}. A Python interface to a 2D plotting
-library  ({\it matplotlib}) can be used to produce publication quality figures in a variety of hardcopy
-formats.
+  wxPython}. A Python interface to a 2D plotting library ({\it
+  matplotlib}) can be used to produce publication quality figures in a
+variety of hardcopy formats.
 
 All these libraries exist and are publicly available for download,
 however, they must be provided with data bindings such that, for
@@ -715,8 +731,12 @@ one of the available user interface builders.  {\it wxFormBuilder}
 (http://wxformbuilder.org/; a user interface designer for the wxPython
 toolkit and the Linux desktop environment GNOME) is one such builder.
 It allows the user to construct a GUI with visual elements such as
-menus and buttons, and write a description of the elements to a file 
-known as an XML Resource File (XRC), that is readable via Python bindings.
+menus and buttons, and write a description of the elements to a file
+known as an XML Resource File (XRC), that is readable via Python
+bindings.  This functionality replaces the highly succesful GENESIS 2
+XODUS paradigm that required SLI scripting to connect GUI components
+to model components and simulation actions\marginpar{paragraph solves
+  the XODUS paradigm problem}.
 
 %What remains to be done is the binding of button events to specific
 %actions for the simulator.
@@ -903,7 +923,10 @@ window, the {\it matplotlib} library is used:
 }
 
 The following code reads the output file into two arrays, {\it t} and
-{\it v}:
+{\it v}\footnote{The given code is written for clarity of the paper
+  rather than for compactness or efficiency with relation to the
+  scripting language used.  For example here a single call to the
+  builtin function numpy.loadtxt() could have been used.}:
 
 {\footnotesize
   \resetlinenumber[5]
@@ -937,6 +960,18 @@ with custom Python code.  A plot can then be generated using:
    grahview.pack_start(canvas, True, True)
 \end{verbatim}
 }
+
+This first example shows simple GUI capabilities: the advantages over
+the previous approach are that\marginpar{Allan: let's discuss this a
+  bit}:
+\begin{itemize}
+\item It provides a clear separation between GUI code and periphery
+  code such as input and output specification, and from model
+  construction code.
+\item It allows GUI construction kits to be used for the development
+  of dedicated research and educational projects.
+\item It allows to use dedicated GUI kits (following example).
+\end{itemize}
 
 A more complex example illustrates the integration of G-3 with Blender
 (http://www.blender.org/, a free open source 3D content creation suite
@@ -1021,7 +1056,7 @@ set of standards) and NetworkML (the core of NeuroML Level 3) and can
 be used to visually validate network layout and
 design\,\cite{crook07:_morph}.
 
-Cite python interface to Neuron and Nest
+Cite python interface to Neuron and Nest, PyNN.
 % [135]  P. Gleeson, V. Steuber and R. A. Silver (2007) neuroConstruct: A Tool for Modeling Networks of Neurons in 3D Space, Neuron, 54: 219-235.
 
 Finally, we note that we have developed a serial communication
@@ -1036,6 +1071,14 @@ framework\,\cite{ekeberg08:_music_multis_coord}.
 
 
 \pagebreak
+\section{Discussion}
+
+Ecology of software components connected over interfaces.  Gluing them
+together can be done in several ways.  Examples given above, but also
+integration of the model-container with a web server to allow
+measuring and analyzing morphologies in a morphology database.  This
+could be useful for the neuro-morpho database (cite).
+
 \section{Conclusion}
 
 Software libraries can be divided into application specific and
