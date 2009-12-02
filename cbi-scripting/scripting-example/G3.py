@@ -1,10 +1,9 @@
-import sys
-sys.path.append('/usr/local/glue/swig/python')
+import DataPlot
+import example
 import wx
 from wx import xrc
 
-# global for simulation time
-simulation_time = 0.0
+
 
 class G3App(wx.App):
 
@@ -18,7 +17,6 @@ class G3App(wx.App):
         # via the name we gave each component in the builder.
         self.frame = self.res.LoadFrame(None, 'mainFrame')
         self.runButton = xrc.XRCCTRL(self.frame, 'runButton')
-        self.setButton = xrc.XRCCTRL(self.frame, 'setButton')
         self.durationTextCtrl = xrc.XRCCTRL(self.frame,'durationTextCtrl')
 
         # Bind the gui objects to methods.
@@ -26,27 +24,53 @@ class G3App(wx.App):
         # Note: frame is the main component inthe MainLoop so this
         # is what we set the binding to. 
         self.frame.Bind(wx.EVT_BUTTON, self.OnRun, self.runButton)
-        self.frame.Bind(wx.EVT_BUTTON, self.OnSet, self.setButton)
 
         # Display our simple gui.
         self.frame.Show()
-        return True
+        return True       
 
-    # An action to do when the setup button is pushed.
-    def OnSet(self, evt):
-        global simulation_time
-        simulation_time = float(self.durationTextCtrl.GetValue())
-        print "Simulation time set to " + self.durationTextCtrl.GetValue() + "\n\n"
-       
 
     # An action to do when the run button is pushed.
+    # This will run the simulation with the given time
+    # and plot the output.
     def OnRun(self,evt):
-        global simulation_time
+
+        simulation_time = float(self.durationTextCtrl.GetValue())
         print "Simulation time is: " + str(simulation_time)
-        print "run simulation..."
-        # here we would do
-        #
-        # run_simulation(simulation_time)
+        print "running simulation..."
+
+        example.run_simulation(simulation_time)
+
+        print "Simulation Complete!"
+
+        print "Plotting output"
+        self.Plot('/tmp/output')
+
+
+    ##
+    # Plots data output from a data file.
+    #
+    #wxPython sizer & layouts
+    # This is the alternative to using an
+    # XRC specification, this however is a small
+    # example.
+    def Plot(self,datafile):
+
+        plotwindow = wx.Frame(self.frame, -1, "Graph display", (480,300))
+        plotpanel = wx.Panel(plotwindow, -1)
+
+        self.dataplot = DataPlot.DataPlot(plotpanel, -1,
+                                          '/tmp/output',
+                                          'Example Plot',
+                                          'Time (Seconds)',
+                                          'Membrane Potential (Volts)')
+
+        vbox_sizer = wx.BoxSizer(wx.VERTICAL)
+        vbox_sizer.Add(self.dataplot, 1, wx.EXPAND)
+        plotpanel.SetAutoLayout(True)
+        plotpanel.SetSizer(vbox_sizer)
+        plotpanel.Layout()
+        plotwindow.Show()
 
 
 
@@ -54,4 +78,7 @@ class G3App(wx.App):
 if __name__ == '__main__':
     app = G3App(False)
     app.MainLoop()
+
+
+
 

@@ -755,36 +755,39 @@ text control, and contains a button to start the simulation.
 
 The first lines of code in the script load the necessary Python
 modules which in turn load libraries coded in a low-level system
-programming language.
+programming language. 
 
 {\footnotesize
   \resetlinenumber
   \linenumbers
 \begin{verbatim}
-   import wx
-   from wx import xrc
+import DataPlot
+import example
+import wx
+from wx import xrc
 \end{verbatim}
 }
 
 Here we declare our class as an inherited class of the {\it wx.App} class, 
-and also declare a constructor function which we will use to set up 
-some GUI specifics on instantiation of our object.
+and also declare an {\it OnInit} method which wxPython uses as part of its
+initlialization sequence.
 
 {\footnotesize
-   \resetlinenumber[3]
+   \resetlinenumber[8]
    \linenumbers
  \begin{verbatim}
-   class G3App(wx.App):
-      def OnInit(self): 
+class G3App(wx.App):
+
+    def OnInit(self):
  \end{verbatim}
 }
 
-Inside of our initialization function we want to load our XRC file.
+Inside of our initialization method we want to load our XRC file.
 The following Python code reads in an XML resource file, and loads it
 into a Python object.
 
 {\footnotesize
-   \resetlinenumber[5]
+   \resetlinenumber[13]
    \linenumbers
  \begin{verbatim}
    self.res = xrc.XmlResource('G3.xrc')
@@ -797,28 +800,26 @@ lower level. Each object we declared in {\it wxFormBuilder} can be retrieved
 via the name given during construction:
 
 {\footnotesize
-   \resetlinenumber[6]
+   \resetlinenumber[18]
    \linenumbers
  \begin{verbatim}
    self.frame = self.res.LoadFrame(None, 'mainFrame')
    self.runButton = xrc.XRCCTRL(self.frame, 'runButton')
-   self.setButton = xrc.XRCCTRL(self.frame, 'setButton')
    self.durationTextCtrl = xrc.XRCCTRL(self.frame,'durationTextCtrl')
  \end{verbatim}
 }
 
-Next we bind actions to our buttons, ``Set Simulation Time'' and ``Run
-Simulation.'' Earlier we loaded the declared widgets into individual
-objects, so now we can perform a bind between the button objects and
-functions for setting the simulation time, and running the simulation.
-We will call our functions {\it OnSet} and {\it OnRun} respectively.
+Next we bind an action to our button, ``Run Simulation.'' Earlier we 
+loaded the declared widgets into individual objects, so now we can 
+perform a bind between the button object and a Python method declaration 
+that will run the simulation and plot the output. We will call our run 
+method {\it OnRun}.
 
 {\footnotesize
-   \resetlinenumber[10]
+   \resetlinenumber[26]
    \linenumbers
  \begin{verbatim}
    self.frame.Bind(wx.EVT_BUTTON, self.OnRun, self.runButton)
-   self.frame.Bind(wx.EVT_BUTTON, self.OnSet, self.setButton)
  \end{verbatim} 
 }
 
@@ -834,36 +835,89 @@ We will call our functions {\it OnSet} and {\it OnRun} respectively.
 % \end{verbatim}
 % }
 
-Now we must define {\it OnSet} and {\it OnRun} in our G3App class so
-they can be useable by the event binding. The function {\it OnSet} 
-is fairly simple, its only purpose is to read the value in the 
-user input text control ({\it self.durationTextCtrl}) and pass this value
-to a global variable called {\it simulation\_time}.
+% Tuesday, Dec 1, 2009
+% simplified the gui so this button is no longer needed. 
+% 
+% The function {\it OnSet} 
+%is fairly simple, its only purpose is to read the value in the 
+%user input text control ({\it self.durationTextCtrl}) and pass this value
+%to a global variable called {\it simulation\_time}.
+
+%{\footnotesize
+%  \resetlinenumber[12]
+%  \linenumbers
+%\begin{verbatim}
+%   def OnSet(self, evt):
+%      global simulation_time
+%      simulation_time = float(self.durationTextCtrl.GetValue())
+% \end{verbatim}
+%}
+
+
+Now we must define {\it OnRun} in our G3App class so that it can be 
+useable by the event binding. The {\it OnRun} method will perform 
+a series of operations. First it will read in the numerical value 
+that a user enters into the text control and store it in a variable 
+for the simulation time. This value is then passed to a function, 
+called {\it run\_simulation}, which contains a complete listing of 
+the first Python example (above). This code is contained in a seperate 
+Python file that is simply imported into our own program. Finally, 
+after the simulation is complete a call to a ``Plot'' method is made. 
+This method will plot the data onto a wxPython plot widget
+
 
 {\footnotesize
-  \resetlinenumber[12]
+  \resetlinenumber[36]
   \linenumbers
 \begin{verbatim}
-   def OnSet(self, evt):
-      global simulation_time
-      simulation_time = float(self.durationTextCtrl.GetValue())
- \end{verbatim}
-}
+    def OnRun(self,evt):
 
-The {\it OnRun} function will make a call to a function called {\it run\_simulation},
-which contains a complete listing of the first Python example (above), 
-and takes the simulation time as an argument. 
+        simulation_time = float(self.durationTextCtrl.GetValue())
+        print "Simulation time is: " + str(simulation_time)
+        print "running simulation..."
 
-{\footnotesize
-  \resetlinenumber[15]
-  \linenumbers
-\begin{verbatim}
-   def OnRun(self,evt):
-      global simulation_time
-      run_simulation(simulation_time)
+        example.run_simulation(simulation_time)
+
+        print "Simulation Complete!"
+
+        print "Plotting output"
+        self.Plot('/tmp/output')
 \end{verbatim}
 }
  
+The plot method makes use of an external class called ``DataPlot'' that
+was made specifically for reading in GENESIS data output and loading 
+it into a native wxPython plot widget. It is an active component of
+the (\it g-tube} and can also be used standalone. The import we declared at the 
+start of our program grants us the ability to use it as a callable object. 
+
+
+{\footnotesize
+  \resetlinenumber[57]
+  \linenumbers
+\begin{verbatim} 
+    def Plot(self,datafile):
+
+        plotwindow = wx.Frame(self.frame, -1, "Graph display", (480,300))
+        plotpanel = wx.Panel(plotwindow, -1)
+
+        self.dataplot = DataPlot.DataPlot(plotpanel, -1,
+                                          '/tmp/output',
+                                          'Example Plot',
+                                          'Time (Seconds)',
+                                          'Membrane Potential (Volts)')
+
+        vbox_sizer = wx.BoxSizer(wx.VERTICAL)
+        vbox_sizer.Add(self.dataplot, 1, wx.EXPAND)
+        plotpanel.SetAutoLayout(True)
+        plotpanel.SetSizer(vbox_sizer)
+        plotpanel.Layout()
+        plotwindow.Show()
+
+\end{verbatim}
+}
+
+
 % The function {\it run\_simulation} is a Python function with a
 % function body that contains a complete listing of the first Python
 % example (above). The {\it edit} field with the simulation time
@@ -897,7 +951,7 @@ declaration.
 % }
 
  {\footnotesize
-   \resetlinenumber[14]
+   \resetlinenumber[78]
    \linenumbers
  \begin{verbatim}
    if __name__ == '__main__':
@@ -906,60 +960,70 @@ declaration.
  \end{verbatim}
  }
 
-This script runs a small model and can be combined with other Python
-code given here to increase the complexity of a model, add various
-stimulus conditions, and extract the output of interest.  The script
-saves the membrane potential of the soma to the file {\it
-  /tmp/output}.  To plot this membrane potential in the application
-window, the {\it matplotlib} library is used:
+% Tues, Dec 1, 2009
+%
+% Code is no longer valid, translated this to the wx.lib.plot
+% implementation. Moved it before the call to the main loop since 
+% the plot call is now part of the G3App class. 
+%
+%<-- start
 
-{\footnotesize
-  \resetlinenumber[5]
-%  \linenumbers
-\begin{verbatim}
-   import matplotlib
-   import pylab
-\end{verbatim}
-}
+%This script runs a small model and can be combined with other Python
+%code given here to increase the complexity of a model, add various
+%stimulus conditions, and extract the output of interest.  The script
+%saves the membrane potential of the soma to the file {\it
+%  /tmp/output}.  To plot this membrane potential in the application
+%window, the {\it matplotlib} library is used:
 
-The following code reads the output file into two arrays, {\it t} and
-{\it v}\footnote{The given code is written for clarity of the paper
-  rather than for compactness or efficiency with relation to the
-  scripting language used.  For example here a single call to the
-  builtin function numpy.loadtxt() could have been used.}:
+%{\footnotesize
+%  \resetlinenumber[5]
+%%  \linenumbers
+%\begin{verbatim}
+%   import matplotlib
+%   import pylab
+%\end{verbatim}
+%}
 
-{\footnotesize
-  \resetlinenumber[5]
-%  \linenumbers
-\begin{verbatim}
-   t = []; v = [] ;
-      file = open("/tmp/output")
-      for line in file:
-         values = re.split(" ", line)
-         t.append(float(values[0]))
-         v.append(float(values[1]))
-\end{verbatim}
-}
+%The following code reads the output file into two arrays, {\it t} and
+%{\it v}\footnote{The given code is written for clarity of the paper
+%  rather than for compactness or efficiency with relation to the
+%  scripting language used.  For example here a single call to the
+%  builtin function numpy.loadtxt() could have been used.}:
 
-The plot widget is not directly supported by Glade and must be created
-with custom Python code.  A plot can then be generated using:
+%{\footnotesize
+%  \resetlinenumber[5]
+%%  \linenumbers
+%\begin{verbatim}
+%   t = []; v = [] ;
+%      file = open("/tmp/output")
+%      for line in file:
+%         values = re.split(" ", line)
+%         t.append(float(values[0]))
+%         v.append(float(values[1]))
+%\end{verbatim}
+%}
 
-{\footnotesize
-  \resetlinenumber[5]
-%  \linenumbers
-\begin{verbatim}
-   # generate the plot
-   figure = matplotlib.figure.Figure(figsize=(6,4), dpi=60)
-   axis = figure.add_subplot(111)
-   axis.plot(t,v)
+%The plot widget is not directly supported by Glade and must be created
+%with custom Python code.  A plot can then be generated using:
 
-   # display the plot
-   canvas = matplotlib.backends.backend_gtk.FigureCanvasGTK(figure)
-   canvas.show()
-   grahview = wTree.get_widget("vbox1")
-   grahview.pack_start(canvas, True, True)
-\end{verbatim}
-}
+%{\footnotesize
+%  \resetlinenumber[5]
+%%  \linenumbers
+%\begin{verbatim}
+%   # generate the plot
+%   figure = matplotlib.figure.Figure(figsize=(6,4), dpi=60)
+%   axis = figure.add_subplot(111)
+%   axis.plot(t,v)
+
+%   # display the plot
+%   canvas = matplotlib.backends.backend_gtk.FigureCanvasGTK(figure)
+%   canvas.show()
+%   grahview = wTree.get_widget("vbox1")
+%   grahview.pack_start(canvas, True, True)
+%\end{verbatim}
+%}
+
+%end --->
 
 This first example shows simple GUI capabilities: the advantages over
 the previous approach are that\marginpar{Allan: let's discuss this a
