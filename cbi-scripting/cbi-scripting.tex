@@ -702,11 +702,18 @@ statements\marginpar{this is a new paragraph: problem statement to
   introduce new G3 GUI capabilities}.
 
 
-We are currently working on integration of the G-3 platform and the WX
+We are currently working on integration of the G-3 platform and the wxWidgets
 library to build cross platform GUIs using the Python module {\it
-  wxPython}. A Python interface to a 2D plotting library ({\it
-  matplotlib}) can be used to produce publication quality figures in a
-variety of hardcopy formats.
+  wxPython}. 
+
+% commented out Wednesday, Dec 2, 2009
+%
+% The script now handles the plotting on it's own via the DataPlot class,
+% So this sentence doesn't apply anymore
+%
+%A Python interface to a 2D plotting library ({\it
+%  matplotlib}) can be used to produce publication quality figures in a
+%variety of hardcopy formats.
 
 All these libraries exist and are publicly available for download,
 however, they must be provided with data bindings such that, for
@@ -750,7 +757,7 @@ called `G3App' which demonstrates the Python scripting needed to
 connect the software components required to build a small GUI for 
 the G-3 simulator.  For this, we assume that an XRC file with name
 {\it G3.xrc} can be found that describes a GUI with one frame (name:
-mainFrame) that allows the simulation duration to be set via a
+mainFrame), allows the simulation duration to be set via a
 text control, and contains a button to start the simulation.
 
 The first lines of code in the script load the necessary Python
@@ -790,7 +797,7 @@ into a Python object.
    \resetlinenumber[13]
    \linenumbers
  \begin{verbatim}
-   self.res = xrc.XmlResource('G3.xrc')
+        self.res = xrc.XmlResource('G3.xrc')
  \end{verbatim}
 }
 
@@ -803,9 +810,9 @@ via the name given during construction:
    \resetlinenumber[18]
    \linenumbers
  \begin{verbatim}
-   self.frame = self.res.LoadFrame(None, 'mainFrame')
-   self.runButton = xrc.XRCCTRL(self.frame, 'runButton')
-   self.durationTextCtrl = xrc.XRCCTRL(self.frame,'durationTextCtrl')
+        self.frame = self.res.LoadFrame(None, 'mainFrame')
+        self.runButton = xrc.XRCCTRL(self.frame, 'runButton')
+        self.durationTextCtrl = xrc.XRCCTRL(self.frame,'durationTextCtrl')
  \end{verbatim}
 }
 
@@ -816,10 +823,10 @@ that will run the simulation and plot the output. We will call our run
 method {\it OnRun}.
 
 {\footnotesize
-   \resetlinenumber[26]
+   \resetlinenumber[25]
    \linenumbers
  \begin{verbatim}
-   self.frame.Bind(wx.EVT_BUTTON, self.OnRun, self.runButton)
+        self.frame.Bind(wx.EVT_BUTTON, self.OnRun, self.runButton)
  \end{verbatim} 
 }
 
@@ -836,6 +843,7 @@ method {\it OnRun}.
 % }
 
 % Tuesday, Dec 1, 2009
+%<--- start
 % simplified the gui so this button is no longer needed. 
 % 
 % The function {\it OnSet} 
@@ -852,7 +860,7 @@ method {\it OnRun}.
 %      simulation_time = float(self.durationTextCtrl.GetValue())
 % \end{verbatim}
 %}
-
+%end --->
 
 Now we must define {\it OnRun} in our G3App class so that it can be 
 useable by the event binding. The {\it OnRun} method will perform 
@@ -888,8 +896,9 @@ This method will plot the data onto a wxPython plot widget
 The plot method makes use of an external class called ``DataPlot'' that
 was made specifically for reading in GENESIS data output and loading 
 it into a native wxPython plot widget. It is an active component of
-the (\it g-tube} and can also be used standalone. The import we declared at the 
-start of our program grants us the ability to use it as a callable object. 
+the {\it g-tube}, a Python GUI under development for GENESIS 3, that can 
+also be used standalone. The import we declared at the start of our 
+program grants us the ability to use it as a callable object. 
 
 
 {\footnotesize
@@ -913,7 +922,6 @@ start of our program grants us the ability to use it as a callable object.
         plotpanel.SetSizer(vbox_sizer)
         plotpanel.Layout()
         plotwindow.Show()
-
 \end{verbatim}
 }
 
@@ -954,9 +962,9 @@ declaration.
    \resetlinenumber[78]
    \linenumbers
  \begin{verbatim}
-   if __name__ == '__main__':
-      app = G3App(False)
-      app.MainLoop()
+if __name__ == '__main__':
+    app = G3App(False)
+    app.MainLoop()
  \end{verbatim}
  }
 
