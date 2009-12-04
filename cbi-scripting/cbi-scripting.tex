@@ -1033,9 +1033,9 @@ the previous approach include\marginpar{Allan: let's discuss this a
 \end{itemize}
 
 A more complex example illustrates the integration of G-3 with Blender
-(http://www.blender.org/, a free open source 3D content creation suite
-with an active developer community and available for all major
-operating systems that have Python enabled bindings\,\footnote{Blender
+(http://www.blender.org/\,\footnote{Free open source 3D content creation suite
+available for all major
+operating systems that have Python enabled bindings. Note, however, that Blender
   has the restriction that the Python code must be run from the
   Blender Python interpreter.}) to validate and analyze models of the
 morphology of small dendritic segments obtained from electron
@@ -1063,7 +1063,7 @@ dendrites\,\cite{lu09:_d_purkin, cornelis08:_model_neuros_genes}).
   \label{fig:cbi-blender}
 \end{figure}
 
-%Show Python interface snippet.
+\noindent{\bf Hugo: Show Python interface snippet.}
 
 Special purpose software has been written to convert Reconstruct data
 for importation into the {\bf Model\,Container}.  The {\it
@@ -1078,15 +1078,14 @@ equivalent cylinders suitable for cable modeling.
 % The core of these algorithms
 %implements geometrical transformations such that EM contours are
 %extracted to provide equivalent cylinders suitable for cable modeling.
-The geometrical properties of the cylinders are stored as NDF files,
-and algorithms provided by the {\bf Model\,Container} link them with
+The geometrical properties of the cylinders are stored in the native G-3 file format as NDF files. Algorithms provided by the {\bf Model\,Container} link them with
 the cable parameters required by the mathematical solvers.  A
 simulation can then be run with the {\it read} and {\it run} methods
 given above.
 
 The necessary conversion algorithms are accessible from Python via the
 {\bf Model\,Container}.  The Python interface of Blender links it to the G-3
-simulator, such that Blender becomes the first 3D model inspection
+simulator, such that Blender becomes the first G-3 3D model inspection
 tool for EM data.  As an example, the Python script developed above
 can be run from within the Blender environment.  Also, via the same
 Python interface simulations can be started based on the 3D image
@@ -1128,8 +1127,7 @@ hardware such as that provided by the MOOSE
 simulator\,\cite{ray08:_pymoos} and the MUSIC
 framework\,\cite{ekeberg08:_music_multis_coord}.
 
-
-\pagebreak
+%\pagebreak
 \section{Discussion}
 
 Ecology of software components connected over interfaces.  Gluing them
