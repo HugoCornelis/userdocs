@@ -772,7 +772,7 @@ from wx import xrc
 }
 
 The  {\it G3App} class is then declared as an inherited class of the {\it wx.App} class. The {\it OnInit} method which {\it wxPython} uses as part of its
-initlialization sequence is then declared.
+initialization sequence is then declared.
 
 {\footnotesize
    \resetlinenumber[8]
@@ -784,8 +784,8 @@ class G3App(wx.App):
  \end{verbatim}
 }
 
-Inside of our initialization method we want to load our XRC file.
-The following Python code reads in an XML resource file, and loads it
+The XRC file is then loaded during initialization.
+The following Python code reads an XML resource file, and loads it
 into a Python object.
 
 {\footnotesize
@@ -796,9 +796,9 @@ into a Python object.
  \end{verbatim}
 }
 
-Here we retrieve all of the declared widget objects from our XRC 
-specification so that we can perform Python operations on them at a 
-lower level. Each object we declared in {\it wxFormBuilder} can be retrieved 
+Declared widget objects are then retrieved from the XRC 
+specification so that Python operations can be performed on them at a 
+lower level. Each object declared in {\it wxFormBuilder} is retrieved 
 via the name given during construction:
 
 {\footnotesize
@@ -811,11 +811,8 @@ via the name given during construction:
  \end{verbatim}
 }
 
-Next we bind an action to our button, ``Run Simulation.'' Earlier we 
-loaded the declared widgets into individual objects, so now we can 
-perform a bind between the button object and a Python method declaration 
-that will run the simulation and plot the output. We will call our run 
-method {\it OnRun}.
+Next an action is bound to a ``Run Simulation'' button. As the declared widgets were loaded into individual objects, the button object can be bound to a Python method declaration (here,  {\it OnRun})
+that will run the simulation and plot the output.
 
 {\footnotesize
    \resetlinenumber[25]
@@ -857,17 +854,14 @@ method {\it OnRun}.
 %}
 %end --->
 
-Now we must define {\it OnRun} in our G3App class so that it can be 
-useable by the event binding. The {\it OnRun} method will perform 
-a series of operations. First it will read in the numerical value 
-that a user enters into the text control and store it in a variable 
-for the simulation time. This value is then passed to a function, 
-called {\it run\_simulation}, which contains a complete listing of 
-the first Python example (above). This code is contained in a seperate 
-Python file that is simply imported into our own program. Finally, 
-after the simulation is complete a call to a ``Plot'' method is made. 
-This method will plot the data onto a wxPython plot widget
-
+{\it OnRun} is then defined in the {\it G3App} class so that it is available for event binding. (This code is contained in a seperate 
+Python file that is imported into the program {\bf ???}.) The {\it OnRun} method performs 
+a series of operations. First, it reads the numerical value 
+entered by a user into the text control {\bf ???} and stores it in a variable 
+that defines the simulation time. This value is then passed to a function (here, {\it run\_simulation}) that contains a complete listing of 
+the first Python example (above){\bf ???}.  Finally, 
+after the simulation is complete a call to a {\it Plot} method is made. 
+This plots data onto a {\it wxPython} plot widget
 
 {\footnotesize
   \resetlinenumber[36]
@@ -888,13 +882,12 @@ This method will plot the data onto a wxPython plot widget
 \end{verbatim}
 }
  
-The plot method makes use of an external class called ``DataPlot'' that
-was made specifically for reading in GENESIS data output and loading 
-it into a native wxPython plot widget. It is an active component of
-the {\it g-tube}, a Python GUI under development for GENESIS 3, that can 
-also be used standalone. The import we declared at the start of our 
-program grants us the ability to use it as a callable object. 
-
+The {\it Plot} method makes use of an external class called {\it DataPlot} that
+was specifically created to read in GENESIS data output and load 
+it into a native {\it wxPython} plot widget. It is an active component of
+the {\bf G-Tube}, a Python GUI under development for G-3, that can 
+also be used standalone. The import declared at the start of this 
+program {\bf ???} allows it to be used as a callable object. 
 
 {\footnotesize
   \resetlinenumber[57]
@@ -920,7 +913,6 @@ program grants us the ability to use it as a callable object.
 \end{verbatim}
 }
 
-
 % The function {\it run\_simulation} is a Python function with a
 % function body that contains a complete listing of the first Python
 % example (above). The {\it edit} field with the simulation time
@@ -940,9 +932,9 @@ program grants us the ability to use it as a callable object.
 % \end{verbatim}
 % }
 
-The code of the GUI application is terminated by a call to the main
-event loop of wxPython.  Here we instantiate our GUI class and set it
-into the main event loop. This is outside of our G3App class
+The code {\bf ???} of the GUI application is terminated by a call to the main
+event loop of {\it wxPython}.  The GUI class application is now instantiated and set
+into the main event loop. This is outside of the {\it G3App} class
 declaration.
 
 % {\footnotesize
@@ -1029,11 +1021,11 @@ if __name__ == '__main__':
 %end --->
 
 This first example shows simple GUI capabilities: the advantages over
-the previous approach are that\marginpar{Allan: let's discuss this a
+the previous approach include\marginpar{Allan: let's discuss this a
   bit}:
 \begin{itemize}
-\item It provides a clear separation between GUI code and periphery
-  code such as input and output specification, and from model
+\item Clear separation between GUI code, peripheral
+  code such as input and output specifications, and model
   construction code.
 \item It allows GUI construction kits to be used for the development
   of dedicated research and educational projects.
