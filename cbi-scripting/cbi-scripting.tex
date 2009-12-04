@@ -30,7 +30,7 @@ Python is widely employed in specialized areas of systems integration
 (e.g\,.~\cite{thiruvathukal01:_web_progr_python}).
 
 An important feature of the latest version of the GENESIS (GEneral
-NEural SImulation System) platform, GENESIS 3 (G-3), is that it
+NEural SImulation System) platform, GENESIS 3.0 (G-3, http://genesis-sim.org/), is that it
 decomposes into self-contained software components, that conform to the
 CBI architecture\,\cite{cornelis08:_cbi_archit_comput_simul_realis}.
 This federated architecture allows separate Python bindings to be
@@ -48,9 +48,9 @@ required\,\cite{08:_swig_python}. One solution to this problem is to employ self
 compilation techniques that minimize the maintenance costs of existing code
 and simplify addition of new functionality.
 
-We illustrate this approach with two examples: (1) a Python script that
+We illustrate this approach with two examples: (1) A Python script that
 generates, runs, and displays the output of a simple single
-compartment model neuron, and (2) the application of Python bindings
+compartment model neuron, and (2) The application of Python bindings
 to connect the G-3 simulator to Blender, an open source 3D content
 creation suite.  We use these bindings to visualize 3D models based on
 electron microscopy and convert them to computational
@@ -60,13 +60,13 @@ models\,\cite{cornelis08:_model_neuros_genes}.
 
 \section{Introduction}
 
-Historically, there have been fundamental differences between
+Historically, there have been fundamental differences between the Unix
+shells and system programming languages such as C or C++ and
 scripting languages such as
 Perl\,\cite{wall99:_perl_progr_refer_guide},
 Python\,\cite{martelli06:_python_nutsh},
 Rexx\,\cite{o'hara88:_moder_progr_using_rexx},
-Tcl\,\cite{ousterhout94:_tcl_tk_toolk}, Visual Basic, and the Unix
-shells and system programming languages such as C or C++.  System
+Tcl\,\cite{ousterhout94:_tcl_tk_toolk}, and Visual Basic.  System
 programming languages start from the most primitive computer elements
 such as the `words' of memory. They are designed to manage the complexity of
 building data structures and algorithms from scratch and usually
@@ -76,7 +76,7 @@ assumed the existence of a set of powerful components and were
 intended primarily for connecting components together. The fact that
 scripting languages are typically loosely typed and do not need a
 visible compilation step simplifies connectivity between components
-and allows for rapid prototyping of enterprise software systems.
+and allows for rapid prototyping of a software system.
 %They
 %are also often small, lightweight languages, suitable for embedding,
 %and provide higher levels of programming in an interpreted development
@@ -97,18 +97,18 @@ be executed\,\cite{ousterhout98:_scrip}.
 A scripting language is not a replacement for a system programming
 language or vice versa. Each is suited to a different set of tasks.
 For gluing and system integration, applications can be developed
-5--10x faster with a scripting language. System programming languages
-require large amounts of boilerplate and conversion code to connect
+five to ten times faster with a scripting language. System programming languages
+require large amounts of `boilerplate' and conversion code to connect
 the pieces, whereas this is implicit in scripting languages. Where
 execution speed is key, a system programming language can often run
-several orders of magnitude faster than a scripting language due to
+several orders of magnitude faster than a scripting language due to the requirement of
 fewer run-time checks.
 
 The strongly typed nature of system programming languages discourages
 reuse. Scripting languages, on the other hand, have actually
 stimulated significant software reuse. They use a model where
 interesting components are built in a system programming language and
-then glued together into applications using the scripting language.
+then glued together into applications using a scripting language.
 This division of labor provides a natural framework for reusability.
 Components are designed to be reusable, and there are well-defined
 interfaces between components and scripts that make them easy to use.
@@ -125,7 +125,7 @@ applications where the complexity is in the connections. With an
 increasing requirement for software integration, scripting is
 providing an important programming paradigm.
 
-Here, we illustrate the use of the general purpose scripting languages
+Here, we illustrate the use of the general purpose Python scripting language
 for making high performance simulation software coded in system
 programming languages accessible to neuroscientists and biologists.
 
@@ -140,7 +140,7 @@ programming languages accessible to neuroscientists and biologists.
 
 \subsection{GENESIS}
 
-GENESIS (http://genesis-sim.org/) is a general purpose simulation
+GENESIS is a general purpose simulation
 platform that was developed to support the simulation of neural
 systems ranging from subcellular components and biochemical reactions
 to complex models of single neurons, simulations of large networks,
@@ -150,8 +150,9 @@ model features and components. For these people, it was the
 object-oriented approach taken by simulators along with their
 high-level simulation languages that allowed the exchange,
 modification, and reuse of models or model
-components\marginpar{twice}. It was this community of developers and
-users that ultimately drove the development of the GENESIS platform.
+components. 
+% It was this community of developers and
+% users that ultimately drove the development of the GENESIS platform.
 
 GENESIS simulations are constructed from model components that receive
 inputs, perform calculations on them, and then generate outputs. Model
@@ -169,10 +170,8 @@ A high-level simulation language, the GENESIS SLI\footnote{Note: The
   GENESIS SLI interface is the standard scripting language of GENESIS
   2. It is also supported by G-3 with the backward compatibility
   component {\bf NS-SLI}.}, provided a framework within which a
-simulation programmer defined and manipulated GENESIS model
-components. It allowed modelers to easily extend the capabilities of
-the simulator, and to exchange, modify, and reuse models or model
-components\marginpar{twice}. The SLI interprets statements in the
+modeler could easily extend the capabilities of
+the simulator and manipulate models or model components by exchange, modification, and reuse. The SLI interprets statements in the
 GENESIS simulation language, and constitutes the operating system
 `shell'. User-defined SLI scripts were used to glue the pieces of a
 simulation together. The graphical objects used to define the front
@@ -181,30 +180,28 @@ SLI scripts.
 
 G-3 is a major revision and update of the GENESIS system.  The core
 simulator functionality is restructured, with a more modern modular
-design (the CBI federated architecture, described below). This not
+design (the CBI federated software architecture, described below). This not
 only results in improved simulator performance and portability, but
 also allows the use of alternate script parsers and user interfaces,
 as well as the ability to communicate with other modeling programs and
 environments. The CBI federated architecture is specifically designed
 to support the integration of these stand-alone software components
-and applications using modern integration technologies.
+and applications by using modern integration technologies.
 
 The core components of the architecture are shown in
 Figure~\ref{fig:cbi-arch}. On the bottom left are databases of
 neuronal models or experimental data that can be accessed by the
-simulator. Optional model processors (e.g. the reConstruct interface,
-see below) load a model into the {\bf Model\,Container}.  The {\bf Model\,Container}
+simulator. Optional model processors (e.g. the reConstruct interface) load a model into the {\bf Model\,Container}.  The {\bf Model\,Container}
 stores a model in memory and makes it available to other software
 components in different formats.  One function of the {\bf Model\,Container}
 is to translate biological concepts and properties into mathematical
 concepts that can be understood by the mathematical solvers. Thus,
 importantly and unlike other existing neural simulators, the
 mathematical solvers are independent of the biological representation
-of a model. The simulation controller orchestrates and synchronizes
+of a model. A simulation controller orchestrates and synchronizes
 the actions taken by the {\bf Model\,Container} (e.g. when to load a model,
 the definition of the stimulus, and when to export a model) and
-mathematical solvers (when to fetch the model from the model
-container, when to start the calculations, and what the output
+mathematical solvers (when to fetch the model from the {\bf Model\,Container}, when to start the calculations, and what the output
 variables are).
 
 \begin{figure}[ht]
@@ -214,17 +211,15 @@ variables are).
   \label{fig:cbi-arch}
 \end{figure}
 
-The scripting layer allows the simulation system to be driven from
-multiple scripting languages. Python and Perl are currently supported,
-and for backwards compatibility, the GENESIS SLI is being
-incorporated. The G-3 Graphic User Interface ({\bf G-Tube}), shown at the top,
+A scripting layer allows the simulation system to be driven from
+multiple scripting languages. Python and Perl are currently supported, as is (for backward compatibility) the GENESIS SLI. The G-3 Graphic User Interface or GUI ({\bf G-Tube}), shown at the top,
 is entirely developed in Python.  It allows models to be imported from
 databases or constructed from scratch, the exploration of model
 structure and parameters, and the visualization of variables and model
-behavior (see below).
+behavior.
 
-\subsection{The CBI Federated Architecture}
-The CBI (Computational Biology Initiative) federated architecture
+\subsection{The CBI Federated Software Architecture}
+The CBI (Computational Biology Initiative) federated software architecture
 provides a modular paradigm that places stand-alone software
 components into logical relationships. Each software module is an independent and standalone component such that development and maintenance can be implemented concurrently. This leads to a federated software architecture that exists as an ecology of software components that are CBI compliant. In this it shares a number of
 ideas with the well-known three-tier architecture paradigm.  The
@@ -251,8 +246,8 @@ simplified development and testing of components as stand alone
 components, and (5) clear delineation of scope for the development of new
 components. The federated approach provides three significant advantages
 for software development: (1) components can be run separately on
-different machines, for example, {\bf G-Tube} and modeling environment
-might run locally, while the simulator runs elsewhere, either serially
+different machines, for example, {\bf G-Tube} and the modeling environment
+might run locally, while the mathematical solvers run elsewhere, either serially
 or in parallel, on more powerful machines, (2) decomposition of an
 application into multiple software components allows reuse and
 extension of individual components, whether stand alone or otherwise,
@@ -263,7 +258,7 @@ smoother than that of a non-scalable application.
 
 The Neurospaces project (http://neurospaces.sourceforge.net/) provides
 core software components of the G-3
-simulator\,\cite{cornelis03:_neuros} including, (1) the {\bf Model
+simulator\,\cite{cornelis03:_neuros}. These include, (1) the {\bf Model
   Container}: Stores two representations of a model, the first is
 conceptual and can be regarded as an enumeration of biological
 concepts and their relationships, the second is an expanded
@@ -274,23 +269,23 @@ other scripting languages, (3) {\bf SSP} (Simple Scheduler in Perl):
 Binds {\bf Heccer} and the {\bf Model\,Container}, and activates them
 correctly, such that they work together on a single simulation, (4)
 {\bf Studio} and {\bf G-Tube}: Contain graphical tools for model
-construction, exploration and simulation, (5) {\bf G-Shell}:
+construction, exploration and simulation, (5) {\bf G-Shell} (G-3 interactive Shell):
 Dynamically loads other software components in an interactive
-environment, (6) {\bf Project\,Browser}: For inspection of projects
-and simulation results, and for completeness we also mention (7) {\bf
+environment, and the (6) {\bf Project\,Browser}: For inspection of projects
+and simulation results. For completeness we also mention (7) {\bf
   NS-SLI}: The G-3 component that provides backward compatibility for
-GENESIS 2. All software can be downloaded from the GENESIS web site:
-http://genesis-sim.org/download/ and extensive installation
+the GENESIS 2 SLI. All software can be downloaded from the GENESIS web site
+(http://genesis-sim.org/download/) and extensive installation
 instructions with examples are available from the GENESIS
 documentation website
 (http://www.genesis-sim.org/userdocs/developer-installation/developer-installation.html).
 
 Much existing software such as GUI libraries and plotting
 libraries, are application neutral.  Other software packages are
-tailored to computational neuroscience needs.  The CBI federated
-architecture provides a framework for integration of a functioning
+tailored to the needs of computational neuroscience.  The CBI federated
+software architecture provides a framework for integration of a functioning
 simulator using a scripting language, web services and other
-integration technology.  Thus, the CBI federated architecture provides
+integration technology.  Thus, the software architecture provides
 an extremely plastic environment within which independent components can
 be integrated with scripting languages of choice.  Here we
 specifically illustrate the use of Python for this purpose.
@@ -320,19 +315,19 @@ Python bindings to generate an additional layer of Python code that
 provides increased flexibility for the definition of models and
 simulations.  The key Python primitives used are a data structure that
 defines high-level interfaces.  During program initialization this
-data structure is translated to strings containing Python code such as
-class and method definitions, these are then bound to the run-time
-environment using the Python {\it eval} function.
+data structure is translated into strings containing Python code such as
+class and method definitions. These, in turn, are then bound to the run-time
+environment using the Python\,{\it eval} function.
 
 \subsection{SWIG for federated software integration}
 
 SWIG was chosen to facilitate the use of Python bindings in G-3. It is
 a software development tool that connects programs written in C and
-C++ with high-level scripting languages, such as Perl and Python. For
+C++ with high-level scripting languages, such as Python and Perl. For
 the CBI architecture, it provides control over most aspects of wrapper
 generation and automates the generation of the required Python
 interfaces. SWIG uses a layered approach to build Python extension
-modules where some parts of the extension module are defined in C and
+modules where some parts are defined in C and
 others are defined in Python. The C layer contains low-level wrappers
 whereas the Python code is used to define high-level features.
 Considerably more flexibility is obtained by generating code in both
@@ -351,8 +346,8 @@ version of GENESIS that replaced the standard GENESIS SLI with a
 Python interface\,\cite{vanier97:_genes_python}.  This Python-enabled
 version of GENESIS was never publicly released due to the then
 immaturity of Python as a scripting language.  However, with the
-increased sophistication of the Python platform and development of G-3
-as a CBI federated software architecture, Python interfaces have been
+current sophistication of the Python platform and development of G-3
+as a federated software architecture, Python interfaces have been
 developed for several of the simulator core components.  While it is
 possible to drive each component in isolation from these interfaces,
 in the next sections, we focus on how they may be integrated to create
@@ -435,13 +430,13 @@ Neurospaces.SingleCellContainer.run(0.5)
 \end{verbatim}
   \vspace*{1mm} }}}
 
-Due to the CBI architecture, the G-3 platform provides many user
-interfaces.  As an example, the compartmental solver can be driven
+Due to the CBI federated software architecture, the G-3 platform provides many user
+interfaces.  As an example, the compartmental solver {\bf Heccer} can be driven
 stand-alone from C code, from Python, or from Perl to run the simplest
 models, or it can be integrated with the {\bf Model\,Container} for
 running more realistic multicompartment models based on morphological
 data.  To illustrate this flexibility we now compare the above Python
-script with alternative implementations in C code and the GENESIS SLI.
+script with alternative implementations in C code and the old GENESIS SLI.
 
 There is an abundance of low level detail in the C code that
 interfaces directly to the solver.  For example compartments are
@@ -455,7 +450,7 @@ names, parameter values are given in a format used by solvers.
 
 %\begin{figure}[ht]
 %  \centering
-{\vspace*{1mm} \footnotesize
+{\vspace*{3mm} \footnotesize
   \begin{minipage}{1\linewidth}
     
     \begin{minipage}[t]{.50\linewidth}
@@ -490,7 +485,7 @@ struct Intermediary inter =
 \end{verbatim}
     \end{minipage}
     \begin{minipage}[t]{.50\linewidth}
-{\bf GENESIS SLI Implementation}
+{\bf GENESIS 2 SLI Implementation}
 \resetlinenumber
 \begin{verbatim}
 
@@ -544,8 +539,8 @@ standard Hodgkin-Huxley channels are provided in the file {\it
 segment defined above by adding the Python statements:
 
 {\footnotesize
-  \resetlinenumber[23]
-  \linenumbers
+%  \resetlinenumber[23]
+%  \linenumbers
 \begin{verbatim}
    s.import_child("channels/hodgkin-huxley.ndf::/k")
    s.import_child("channels/hodgkin-huxley.ndf::/na")
@@ -578,14 +573,14 @@ with:
 
 \subsection{Interactive Query and Simulation}
 
-The {\bf Model\,Container} knows about biological concepts such as a neuron
+The {\bf Model\,Container} `knows' about biological concepts such as a neuron
 morphology.  From the primary morphology structure it defines derived
 attributes such as total cell volume and the number of somatopetal
 branch points given the name of a dendritic segment.
 
-The GENESIS 3 Shell {\bf G-Shell} integrates other software components into an
+The {\bf G-Shell} integrates other software components into an
 interactive environment that can be used to explore a
-model, for example its structural aspects such as its morphology, and to query its
+model, for example structural aspects such as morphology, and to query
 derived attributes such as total volume and surface area.  The {\bf
   G-Shell} is started from a UNIX system shell with:
 
@@ -673,8 +668,7 @@ Finally, following the addition of an output comprising the somatic membrane pot
 \end{verbatim}
 }
 
-This outputs the somatic response to the stimulus to a file with the
-default filename of {\it /tmp/output}.
+This outputs the somatic response to the stimulus in a file named by default as {\it /tmp/output}.
 
 
 \subsection{Gluing Pre-existing Applications \& Libraries}
@@ -684,7 +678,7 @@ architecture is that it defines how to interface simulator components
 with external applications.  An obvious example is the use of existing
 3D graphics software to examine and edit the spatial properties of a
 model neuron morphology.  Others include, integration with external
-graphing and windowing software for plotting the values of solved
+graphing and windowing software to plot the values of solved
 variables against simulation time, or to allow the construction of
 button-rich tutorial applications.
 
@@ -693,16 +687,17 @@ X-windows Output and Display Utility for Simulations (XODUS).  The
 XODUS interface made graphical objects available that could be
 connected to model components from within the SLI.  Rather than
 providing a full GUI instance, the flexibility of XODUS came from its
-infrastructure that allowed modelers to easily develop new GUIs
-dedicated to their research and teaching projects\footnote{The
+infrastructure which allowed modelers to easily develop new GUIs
+dedicated to their particular research and teaching projects\footnote{The
   official GENESIS 2 software distribution contains both simple and
-  sophisticated example GUIs}.  However, the XODUS paradigm inevitably
+  sophisticated example GUIs.}.  However, the XODUS paradigm inevitably
 allowed modelers to contaminate their model script with GUI related
-statements\marginpar{this is a new paragraph: problem statement to
-  introduce new G3 GUI capabilities}.
+statements
+%\marginpar{this is a new paragraph: problem statement to
+%  introduce new G3 GUI capabilities}.
 
 
-We are currently working on integration of the G-3 platform and the wxWidgets
+We are currently working on integration of the G-3 platform and the {\it wxWidgets}
 library to build cross platform GUIs using the Python module {\it
   wxPython}. 
 
@@ -734,16 +729,15 @@ communication between its main loop and simple actions such as
 starting and stopping a simulation.
 
 Most contemporary GUI applications are conveniently constructed using
-one of the available user interface builders.  {\it wxFormBuilder}
-(http://wxformbuilder.org/; a user interface designer for the wxPython
-toolkit and the Linux desktop environment GNOME) is one such builder.
-It allows the user to construct a GUI with visual elements such as
+one of a number of available user interface builders.  Here, we employ {\it wxFormBuilder}\,\footnote{A user interface designer for the {\it wxPython}
+toolkit and the Linux desktop environment GNOME, available from
+http://wxformbuilder.org/.} which allows a user to construct a GUI with visual elements such as
 menus and buttons, and write a description of the elements to a file
-known as an XML Resource File (XRC), that is readable via Python
-bindings.  This functionality replaces the highly successful GENESIS 2
+readable via Python
+bindings known as an XML Resource File (XRC).  This functionality replaces the highly succesful GENESIS 2
 XODUS paradigm that required SLI scripting to connect GUI components
-to model components and simulation actions\marginpar{paragraph solves
-  the XODUS paradigm problem}.
+to model components and simulation actions.
+% \marginpar{paragraph solves he XODUS paradigm problem}.
 
 %What remains to be done is the binding of button events to specific
 %actions for the simulator.
@@ -752,19 +746,19 @@ to model components and simulation actions\marginpar{paragraph solves
 %directly support plotting functions.  In our example we choose to
 %imported these from the {\it matplotlib} library.
 
-In the example below, we will create a wxPython application class 
-called `G3App' which demonstrates the Python scripting needed to 
+In the following example we create a {\it wxPython} application class 
+called {\it G3App} which demonstrates the Python scripting needed to 
 connect the software components required to build a small GUI for 
-the G-3 simulator.  For this, we assume that an XRC file with name
-{\it G3.xrc} can be found that describes a GUI with one frame (name:
-mainFrame), allows the simulation duration to be set via a
-text control, and contains a button to start the simulation.
+the G-3 simulator.  For this, it is assumed that a XRC file with the name
+{\it G3.xrc} can be found that describes a GUI with one frame (here,
+{\it mainFrame}) which allows the simulation duration to be set via a
+text control and contains a button to start the simulation.
 
 The first lines of code in the script load the necessary Python
 modules which in turn load libraries coded in a low-level system
-programming language. The imports on {\it DataPlot} and {\it example}, 
-reference files which are located inside the directory along with our program, 
-the import for {\it wx} references a system wide install of wxPython.
+programming language. It imports {\it DataPlot} and {\it example} 
+reference files which are located inside the directory along with {\it G3App} while 
+the import for {\it wx} references a system wide install of {\it wxPython}.
 
 {\footnotesize
   \resetlinenumber
@@ -777,9 +771,8 @@ from wx import xrc
 \end{verbatim}
 }
 
-Here we declare our class as an inherited class of the {\it wx.App} class, 
-and also declare an {\it OnInit} method which wxPython uses as part of its
-initlialization sequence.
+The  {\it G3App} class is then declared as an inherited class of the {\it wx.App} class. The {\it OnInit} method which {\it wxPython} uses as part of its
+initialization sequence is then declared.
 
 {\footnotesize
    \resetlinenumber[8]
@@ -791,8 +784,8 @@ class G3App(wx.App):
  \end{verbatim}
 }
 
-Inside of our initialization method we want to load our XRC file.
-The following Python code reads in an XML resource file, and loads it
+The XRC file is then loaded during initialization.
+The following Python code reads an XML resource file, and loads it
 into a Python object.
 
 {\footnotesize
@@ -803,9 +796,9 @@ into a Python object.
  \end{verbatim}
 }
 
-Here we retrieve all of the declared widget objects from our XRC 
-specification so that we can perform Python operations on them at a 
-lower level. Each object we declared in {\it wxFormBuilder} can be retrieved 
+Declared widget objects are then retrieved from the XRC 
+specification so that Python operations can be performed on them at a 
+lower level. Each object declared in {\it wxFormBuilder} is retrieved 
 via the name given during construction:
 
 {\footnotesize
@@ -818,11 +811,8 @@ via the name given during construction:
  \end{verbatim}
 }
 
-Next we bind an action to our button, ``Run Simulation.'' Earlier we 
-loaded the declared widgets into individual objects, so now we can 
-perform a bind between the button object and a Python method declaration 
-that will run the simulation and plot the output. We will call our run 
-method {\it OnRun}.
+Next an action is bound to a ``Run Simulation'' button. As the declared widgets were loaded into individual objects, the button object can be bound to a Python method declaration (here,  {\it OnRun})
+that will run the simulation and plot the output.
 
 {\footnotesize
    \resetlinenumber[25]
@@ -864,17 +854,14 @@ method {\it OnRun}.
 %}
 %end --->
 
-Now we must define {\it OnRun} in our G3App class so that it can be 
-useable by the event binding. The {\it OnRun} method will perform 
-a series of operations. First it will read in the numerical value 
-that a user enters into the text control and store it in a variable 
-for the simulation time. This value is then passed to a function, 
-called {\it run\_simulation}, which contains a complete listing of 
-the first Python example (above). This code is contained in a seperate 
-Python file that is simply imported into our own program. Finally, 
-after the simulation is complete a call to a ``Plot'' method is made. 
-This method will plot the data onto a wxPython plot widget
-
+{\it OnRun} is then defined in the {\it G3App} class so that it is available for event binding. (This code is contained in a seperate 
+Python file that is imported into the program {\bf ???}.) The {\it OnRun} method performs 
+a series of operations. First, it reads the numerical value 
+entered by a user into the text control {\bf ???} and stores it in a variable 
+that defines the simulation time. This value is then passed to a function (here, {\it run\_simulation}) that contains a complete listing of 
+the first Python example (above){\bf ???}.  Finally, 
+after the simulation is complete a call to a {\it Plot} method is made. 
+This plots data onto a {\it wxPython} plot widget
 
 {\footnotesize
   \resetlinenumber[36]
@@ -895,13 +882,12 @@ This method will plot the data onto a wxPython plot widget
 \end{verbatim}
 }
  
-The plot method makes use of an external class called ``DataPlot'' that
-was made specifically for reading in GENESIS data output and loading 
-it into a native wxPython plot widget. It is an active component of
-the {\it g-tube}, a Python GUI under development for GENESIS 3, that can 
-also be used standalone. The import we declared at the start of our 
-program grants us the ability to use it as a callable object. 
-
+The {\it Plot} method makes use of an external class called {\it DataPlot} that
+was specifically created to read in GENESIS data output and load 
+it into a native {\it wxPython} plot widget. It is an active component of
+the {\bf G-Tube}, a Python GUI under development for G-3, that can 
+also be used standalone. The import declared at the start of this 
+program {\bf ???} allows it to be used as a callable object. 
 
 {\footnotesize
   \resetlinenumber[57]
@@ -927,7 +913,6 @@ program grants us the ability to use it as a callable object.
 \end{verbatim}
 }
 
-
 % The function {\it run\_simulation} is a Python function with a
 % function body that contains a complete listing of the first Python
 % example (above). The {\it edit} field with the simulation time
@@ -947,9 +932,9 @@ program grants us the ability to use it as a callable object.
 % \end{verbatim}
 % }
 
-The code of the GUI application is terminated by a call to the main
-event loop of wxPython.  Here we instantiate our GUI class and set it
-into the main event loop. This is outside of our G3App class
+The code {\bf ???} of the GUI application is terminated by a call to the main
+event loop of {\it wxPython}.  The GUI class application is now instantiated and set
+into the main event loop. This is outside of the {\it G3App} class
 declaration.
 
 % {\footnotesize
@@ -1036,11 +1021,11 @@ if __name__ == '__main__':
 %end --->
 
 This first example shows simple GUI capabilities: the advantages over
-the previous approach are that\marginpar{Allan: let's discuss this a
+the previous approach include\marginpar{Allan: let's discuss this a
   bit}:
 \begin{itemize}
-\item It provides a clear separation between GUI code and periphery
-  code such as input and output specification, and from model
+\item Clear separation between GUI code, peripheral
+  code such as input and output specifications, and model
   construction code.
 \item It allows GUI construction kits to be used for the development
   of dedicated research and educational projects.
