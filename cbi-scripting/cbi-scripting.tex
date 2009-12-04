@@ -354,6 +354,7 @@ in the next sections, we focus on how they may be integrated to create
 a simulator with a user-friendly interface.
 
 \subsection{A Python Enabled Neural Simulator}
+\label{ss-apens}
 
 Python uses modules to group related functions together.  The Python
 bindings of the G-3 simulator use modules to separate interfaces for
@@ -734,7 +735,7 @@ toolkit and the Linux desktop environment GNOME, available from
 http://wxformbuilder.org/.} which allows a user to construct a GUI with visual elements such as
 menus and buttons, and write a description of the elements to a file
 readable via Python
-bindings known as an XML Resource File (XRC).  This functionality replaces the highly successful GENESIS 2
+bindings known as an XML Resource File (XRC).  This functionality replaces the highly succesful GENESIS 2
 XODUS paradigm that required SLI scripting to connect GUI components
 to model components and simulation actions.
 % \marginpar{paragraph solves he XODUS paradigm problem}.
@@ -854,14 +855,8 @@ that will run the simulation and plot the output.
 %}
 %end --->
 
-{\it OnRun} is then defined in the {\it G3App} class so that it is available for event binding. (This code is contained in a seperate 
-Python file that is imported into the program {\bf ???}.) The {\it OnRun} method performs 
-a series of operations. First, it reads the numerical value 
-entered by a user into the text control {\bf ???} and stores it in a variable 
-that defines the simulation time. This value is then passed to a function (here, {\it run\_simulation}) that contains a complete listing of 
-the first Python example (above){\bf ???}.  Finally, 
-after the simulation is complete a call to a {\it Plot} method is made. 
-This plots data onto a {\it wxPython} plot widget
+{\it OnRun} is defined in the {\it G3App} class so that it is available for event binding. It is a method that performs a series of operations, including: reading the numerical value, 
+entered by a user and that defines the simulation time, into a text control widget and storing it in a variable (here, {\it self.durationTextCtrl}). The variable is then passed to the function {\it run\_simulation}, a file that contains the first Python example given above in Section~\ref{ss-apens} (lines 1--39). After the simulation is complete a call to a {\it Plot} method is made. This plots data onto a {\it wxPython} plot widget
 
 {\footnotesize
   \resetlinenumber[36]
@@ -886,8 +881,7 @@ The {\it Plot} method makes use of an external class called {\it DataPlot} that
 was specifically created to read in GENESIS data output and load 
 it into a native {\it wxPython} plot widget. It is an active component of
 the {\bf G-Tube}, a Python GUI under development for G-3, that can 
-also be used standalone. The import declared at the start of this 
-program {\bf ???} allows it to be used as a callable object. 
+also be used standalone. This import declared at line 1 of {\it G3App} allows it to be used as a callable object. 
 
 {\footnotesize
   \resetlinenumber[57]
@@ -932,7 +926,7 @@ program {\bf ???} allows it to be used as a callable object.
 % \end{verbatim}
 % }
 
-The code {\bf ???} of the GUI application is terminated by a call to the main
+The code of the GUI application ({\it G3App}) is terminated by a call to the main
 event loop of {\it wxPython}.  The GUI class application is now instantiated and set
 into the main event loop. This is outside of the {\it G3App} class
 declaration.
