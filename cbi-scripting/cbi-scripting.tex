@@ -391,57 +391,43 @@ a mathematical solver\,\cite{cornelis04:_neuros_param_handl}.
   {\begin{verbatim}
 #!/usr/bin/python
 # load the SingleCellContainer library
-import sys
-sys.path.append('/usr/local/glue/swig/python')
 import Neurospaces.SingleCellContainer
 
-#
-# Function runs a simulation with the set parameters.
-# Takes the simulation time as an argument.
-#
-def run_simulation(simulationtime):
+# create a cell for simulation
+c = Neurospaces.SingleCellContainer.Cell("/cell");
 
-    # create a cell for simulation
-    c = Neurospaces.SingleCellContainer.Cell("/cell");
+# create a cylindrical segment inside the cell, and set its properties
+s = Neurospaces.SingleCellContainer.Segment("/cell/soma");
 
-    # create a cylindrical segment inside the cell, and set its properties
-    s = Neurospaces.SingleCellContainer.Segment("/cell/soma");
+s.parameter("Vm_init", -0.0680)
+s.parameter("RM", 1.000)
+s.parameter("RA", 2.50)
+s.parameter("CM", 0.0164)
+s.parameter("ELEAK", -0.0800)
 
-    s.parameter("Vm_init", -0.0680)
-    s.parameter("RM", 1.000)
-    s.parameter("RA", 2.50)
-    s.parameter("CM", 0.0164)
-    s.parameter("ELEAK", -0.0800)
+s.parameter("DIA", 2e-05)
+s.parameter("LENGTH", 4.47e-05)
 
-    s.parameter("DIA", 2e-05)
-    s.parameter("LENGTH", 4.47e-05)
+# first example: apply current injection to the soma
+s.parameter("INJECT", 1e-9)
 
-    # first example: apply current injection to the soma
-    s.parameter("INJECT", 1e-9)
+# second example: use a wildcard to activate endogenous synapses
+Neurospaces.SingleCellContainer.query
+  ("setparameterconcept spine::/Purk_spine/head/par 25")
+Neurospaces.SingleCellContainer.query
+  ("setparameterconcept thickd::gaba::/Purk_GABA 1")
 
-    # second example: use a wildcard to activate endogenous synapses
-    Neurospaces.SingleCellContainer.query("setparameterconcept spine::/Purk_spine/head/par 25")
-    Neurospaces.SingleCellContainer.query("setparameterconcept thickd::gaba::/Purk_GABA 1")
+# redirect output to the given file
+Neurospaces.SingleCellContainer.set_output_filename("/tmp/output")
 
-    # redirect output to the given file
-    Neurospaces.SingleCellContainer.set_output_filename("/tmp/output")
+# compile the model
+Neurospaces.SingleCellContainer.compile("/cell")
 
-    # compile the model
-    Neurospaces.SingleCellContainer.compile("/cell")
-
-    # define the output variables
-    Neurospaces.SingleCellContainer.output("/cell/soma", "Vm")
-
-    # run the simulation
-    Neurospaces.SingleCellContainer.run(simulationtime)
-
-
-#
-# Main program, executes a simulation with
-# with 0.5 seconds.
-#
-if __name__ == '__main__':
-    run_sumulation(0.5)
+# define the output variables
+Neurospaces.SingleCellContainer.output("/cell/soma", "Vm")
+    
+# run the simulation
+Neurospaces.SingleCellContainer.run(0.5)
 \end{verbatim}
   \vspace*{1mm} }}}
 
@@ -776,8 +762,8 @@ reference files which are located inside the directory along with {\it G3App} wh
 the import for {\it wx} references a system wide install of {\it wxPython}.
 
 {\footnotesize
-  \resetlinenumber
-  \linenumbers
+%  \resetlinenumber
+  \linenumbers*
 \begin{verbatim}
 import DataPlot
 import example
@@ -790,8 +776,7 @@ The  {\it G3App} class is then declared as an inherited class of the {\it wx.App
 initialization sequence is then declared.
 
 {\footnotesize
-   \resetlinenumber[8]
-   \linenumbers
+\linenumbers
  \begin{verbatim}
 class G3App(wx.App):
 
@@ -804,7 +789,6 @@ The following Python code reads an XML resource file, and loads it
 into a Python object.
 
 {\footnotesize
-   \resetlinenumber[13]
    \linenumbers
  \begin{verbatim}
         self.res = xrc.XmlResource('G3.xrc')
@@ -817,7 +801,6 @@ lower level. Each object declared in {\it wxFormBuilder} is retrieved
 via the name given during construction:
 
 {\footnotesize
-   \resetlinenumber[18]
    \linenumbers
  \begin{verbatim}
         self.frame = self.res.LoadFrame(None, 'mainFrame')
@@ -830,7 +813,6 @@ Next an action is bound to a ``Run Simulation'' button. As the declared widgets 
 that will run the simulation and plot the output.
 
 {\footnotesize
-   \resetlinenumber[25]
    \linenumbers
  \begin{verbatim}
         self.frame.Bind(wx.EVT_BUTTON, self.OnRun, self.runButton)
@@ -869,11 +851,9 @@ that will run the simulation and plot the output.
 %}
 %end --->
 
-{\it OnRun} is defined in the {\it G3App} class so that it is available for event binding. It is a method that performs a series of operations, including: reading the numerical value, 
-entered by a user and that defines the simulation time, into a text control widget and storing it in a variable (here, {\it self.durationTextCtrl}). The variable is then passed to the function {\it run\_simulation}, a file that contains the first Python example given above in Section~\ref{ss-apens} (lines 1--39). After the simulation is complete a call to a {\it Plot} method is made. This plots data onto a {\it wxPython} plot widget
+{\it OnRun} is defined in the {\it G3App} class so that it is available for event binding. It is a method that performs a series of operations which include: reading a user-entered numerical value that defines the simulation time into a text control widget and storing it in a variable (here, {\it self.durationTextCtrl}). The variable is then passed to the function {\it run\_simulation} which is given in the Python example in Section~\ref{ss-apens} (lines 1--53). After the simulation is complete a call to a {\it Plot} method is made. This plots data onto a {\it wxPython} plot widget
 
 {\footnotesize
-  \resetlinenumber[36]
   \linenumbers
 \begin{verbatim}
     def OnRun(self,evt):
@@ -898,7 +878,6 @@ the {\bf G-Tube}, a Python GUI under development for G-3, that can
 also be used standalone. This import declared at line 1 of {\it G3App} allows it to be used as a callable object. 
 
 {\footnotesize
-  \resetlinenumber[57]
   \linenumbers
 \begin{verbatim} 
     def Plot(self,datafile):
@@ -954,8 +933,7 @@ declaration.
 % }
 
  {\footnotesize
-   \resetlinenumber[78]
-   \linenumbers
+   \linenumbers*
  \begin{verbatim}
 if __name__ == '__main__':
     app = G3App(False)
