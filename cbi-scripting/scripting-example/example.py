@@ -5,8 +5,8 @@ sys.path.append('/usr/local/glue/swig/python')
 import Neurospaces.SingleCellContainer
 
 #
-# This function is from the example in the paper, this performs a
-# simple simulation and places the output data into a file.
+# Function runs a simulation with the set parameters.
+# Takes the simulation time as an argument.
 #
 def run_simulation(simulationtime):
    
@@ -45,6 +45,10 @@ def run_simulation(simulationtime):
     Neurospaces.SingleCellContainer.run(simulationtime)
 
 
+#
+# Main program, executes a simulation with
+# with 0.5 seconds.
+#
 if __name__ == '__main__':
     run_sumulation(0.5)
 
