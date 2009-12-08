@@ -176,6 +176,33 @@ Contains a set of subkeys that define how to run a schedule. Each subkey contain
         method: advance
 \end{verbatim}
 
+
+\subsubsection*{\tt inputclasses}
+
+This option allows you to use external simulation objects with your model. A simulation object can be something compiled into the Heccer module, or completely stand alone. Here in this example, we load the {\it perectclamp} object which has been compiled into the Heccer module. The {\it options} attribute allows us to set parameters for the object upon initlization. 
+
+\begin{verbatim}
+inputclasses:
+  perfectclamp:
+    module_name: Heccer
+    options:
+      filename: /usr/local/neurospaces/models/library/event_data/soma_vm_trace.yml
+      name: purkinje cell perfect clamp
+    package: Heccer::PerfectClamp
+\end{verbatim}
+
+
+\subsubsection*{\tt inputs}
+
+The inputs attribute allows the user to set an input for a simulation object that has been loaded via the {\it inputclasses} attribute. Here in this example an output element along with the intended output parameter are given for a perfectclamp object.
+
+\begin{verbatim}
+inputs:
+  - component_name: /Purkinje/segments/soma
+    field: Vm
+    inputclass: perfectclamp
+\end{verbatim}
+
 \subsubsection*{\tt services}
 
     Contains a definition of all the services, and the method to instantiate these services. For the neurospaces service, the most important methods are 'read', to read a model specified in a neurospaces description file, and 'load', to load a model specified in an external format (only Genesis .p files are supported at present). Additional options like e.g. a shrinkage correction factor, or a spines distribution definition, can be specified overhere. 
@@ -221,6 +248,10 @@ When using GENESIS as the modeling service, the difference between {\tt granular
 
 \end{itemize}
 
+\subsubsection*{\tt name}
+
+The internal name of the schedule. It is a good idea to maintain a clear correspondence between the internal name and the filename of the schedule. 
+
 \subsubsection*{\tt outputclasses}
 
 The output classes specify the type of outputs. Internally, output classes are the same as solver classes, but they come in a separate key for interfacing with other software. Options for the output class can be specified overhere ??? (e.g. a filename for output). 
@@ -228,10 +259,6 @@ The output classes specify the type of outputs. Internally, output classes are t
 \subsubsection*{\tt outputs}
 
 The actual outputs of the simulation are defined here. This key is an enumeration of elements and fields that are present in the model. The addressing scheme to get to these fields and elements is defined by the model service. So for GENESIS, ``{\tt /}'' is the element separator, and ``{\tt -$>$}'' is the field separator. 
-
-\subsubsection*{\tt name}
-
-The internal name of the schedule. It is a good idea to maintain a clear correspondence between the internal name and the filename of the schedule. 
 
 \subsubsection*{\tt version}
 
