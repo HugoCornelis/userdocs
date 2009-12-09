@@ -87,7 +87,7 @@ A list of all segments in the model can then be generated with another {\tt list
     . . .
     - /Purkinje/segments/b3s46[15]
 \end{verbatim}
-Choosing one of the segments at random (here, for example {\tt /Purkinje/segments/b3s45[10]}), we can generate a list of the elements that are associated with the given segment either by using the full pathname
+Choosing one of the segments at random (here, for example {\it /Purkinje/segments/b3s45[10]}), we can generate a list of the elements that are associated with the given segment either by using the full pathname
 \begin{verbatim}
     genesis > list_elements /Purkinje/segments/b3s45[10]
     ---
@@ -100,7 +100,7 @@ Choosing one of the segments at random (here, for example {\tt /Purkinje/segment
     - /Purkinje/segments/b3s45[10]/stellate
     - /Purkinje/segments/b3s45[10]/Purkinje_spine_0
 \end{verbatim}
-or by making the chosen element the current working element via the {\tt ce} (change working element) command. We can then check what the current working element is with the {\tt pwe} (print working element) command
+or by making the chosen element the current working element via the {\it ce} (change working element) command. We can then check what the current working element is with the {\it pwe} (print working element) command
 \begin{verbatim}
     genesis > ce /Purkinje/segments/b3s45[10]
     genesis > pwe
@@ -111,7 +111,7 @@ or by making the chosen element the current working element via the {\tt ce} (ch
     . . .
     - /Purkinje/segments/b3s45[10]/Purkinje_spine_0
 \end{verbatim}
-The ability to change the current working element allows us to either check the value of the model parameters associated with the current working element (such as {\tt RM} or {\tt CM}) via the command {\tt show\_model\_parameters}, change default parameter values via the {\tt set\_model\_parameter} command or view the scaled value of the parameter via the command {\tt show\_parameter\_scaled}, e.g.
+The ability to change the current working element allows us to either check the value of the model parameters associated with the current working element (such as {\tt RM} or {\tt CM}) via the command {\it show\_model\_parameters}, change default parameter values via the {\it set\_model\_parameter} command or view the scaled value of the parameter via the command {\it show\_parameter\_scaled}, e.g.
 \begin{verbatim}
     genesis > pwe
     /Purkinje/segments/b3s45[10]
@@ -136,15 +136,15 @@ The ability to change the current working element allows us to either check the 
 {\bf Note:}
 \begin{itemize}
 
-\item The commands {\tt ce}, {\tt set\_model\_parameter}, and {\tt show\_parameter} currently only accept the full path name\\(e.g. {\tt  /Purkinje/segments/b3s45[10]}) to a segment even if the parameter to be queried or changed is in the current working element. % or just the segment name itself (as given in the above example).  Parameter values associated with a given element can be changed using either the full path name or making the given segment the current working element (as with the above example).
+\item The commands {\it ce}, {\it set\_model\_parameter}, and {\it show\_parameter} currently only accept the full path name (e.g. {\it  /Purkinje/segments/b3s45[10]}) to a segment even if the parameter to be queried or changed is in the current working element. % or just the segment name itself (as given in the above example).  Parameter values associated with a given element can be changed using either the full path name or making the given segment the current working element (as with the above example).
 
-\item In the GENESIS shell the commands {\tt .} and {\tt ..} operate in the same way as when employed to traverse the Unix file system (see \href{../unix-linux/unix-linux.tex}{Introduction to Unix and the Linux graphical desktop}). The {\tt ..} operator may be chained, e.g. {\tt ../../../}
+\item In the GENESIS shell the commands ``{\bf .}'' and ``{\bf ..}'' operate in the same way as when employed to traverse the Unix file system (see \href{../unix-linux/unix-linux.tex}{Introduction to Unix and the Linux graphical desktop}). The ``{\bf ..}'' operator may be chained, e.g. ``{\bf ../../../}''.
 
 \item Also remember that in the GENESIS documentation, an elipsis ($\ldots$) indicates missing lines.
 
 \end{itemize}
 
-Another Purkinje cell in the NDF library {\it cells/purkinje} is {\tt edsjb1994\_partitioned.ndf}. This model is identical to edsjb1994.ndf with the exception that its morphology has been repartitioned. It is simple to delete the current model and load the repartitioned version
+Another Purkinje cell in the NDF library {\it cells/purkinje} is {\it edsjb1994\_partitioned.ndf}. This model is identical to edsjb1994.ndf with the exception that its morphology has been repartitioned. It is simple to delete the current model and load the repartitioned version
 \begin{verbatim}
     genesis > delete /Purkinje
         delete: /Purkinje
@@ -197,7 +197,13 @@ This generates considerable output that locates each dendritic spine head in the
 
 \subsection*{Save Model}
 
-UNDER CONSTRUCTION
+There are two ways to save a model.
+
+\begin{enumerate}
+   \item{\bf Explicitly:}
+   \item{\bf Generically:}
+\end{enumerate}
+
 
 \subsection*{Define Simulation Constants}
 
@@ -205,15 +211,67 @@ UNDER CONSTRUCTION
 
 \subsection*{Define Simulation Inputs}
 
-UNDER CONSTRUCTION
+There are currently three ways to provide stimulation inputs to a single cell model. 
+
+\subsubsection*{Synaptic Activation}
+
+Once the model is loaded into the {\bf G-Shell}, either of the following input paradigms can be activated to provide synaptic activation:
+
+\begin{enumerate}
+   \item{\bf Endogenous Poissonian Synaptic Activation:} The simplest way to activate synapses.
+   \paragraph{Excitatory:} The following command applies a Poisson stream of event times to glutamate synapses on spin heads at 25\,Hz.
+\begin{verbatim}
+   genesis > set_runtime_parameter spine::/Purk_spine/head/par FREQUENCY 25
+\end{verbatim}
+   \paragraph{Inhibitory:} The following command applies a Poisson stream of event times to GABAergic synapses on dendrites flagged as thick at 1\,Hz.
+\begin{verbatim}
+   genesis > set_runtime_parameter thickd::gaba::/Purk_GABA FREQUENCY 1
+\end{verbatim}
+Information about what run time parameters have been set can be obtained with:
+\begin{verbatim}
+   genesis > show_runtime_parameters
+\end{verbatim}
+which for the endogenous excitatory and inhibitory Poissonian synaptic activation set above would return:
+\begin{verbatim} 
+   runtime_parameters:
+     - component_name: thickd::gaba::/Purk_GABA
+       field: FREQUENCY
+       value: 1
+       value_type: number
+     - component_name: spine::/Purk_spine/head/par
+       field: FREQUENCY
+       value: 25
+       value_type: number
+ \end{verbatim}
+    
+   \item{\bf Extrinsic Synaptic Activation:} This provides a much more flexible way to activate synapses than the endogenous activation method. Here, explicit synaptic activation times pre-generated outside of GENESIS (e.g. from a specified probability distribution using Matlab) are read from a file containing the required event list.
+   
+   After identifying which synapses should be activated, e.g.
+   \begin{verbatim}
+   genesis > show_parameter /Purkinje/segments/b1s06[182] SOMATOPETAL_BRANCHPOINTS
+      value = 23 
+   \end{verbatim}
+   The event list can then be attached to the spine heads of the specified dendritic segment:
+   \begin{verbatim}
+   genesis > set_runtime_parameter /Purkinje/segments/b1s06[182]/Purkinje_spine_0/head/par/synapse EVENT_FILENAME event_data/events.yml
+   \end{verbatim}   
+\end{enumerate}
 
 \subsection*{Define Simulation Outputs}
 
-UNDER CONSTRUCTION
+The following commands will define simulation outputs from the soma:
+\begin{verbatim}
+   genesis > add_output /Purkinje/segments/soma Vm
+   genesis > add_output /Purkinje/segments/soma/ca_pool Ca
+\end{verbatim}
+for the membrane potential ($V_m$) and calcium concentration ($[Ca]_{in}$).
 
 \subsection*{Check Simulation}
 
-UNDER CONSTRUCTION
+The following command, as given in \href{../tutorial1/tutorial1.tex}{Tutorial 1}, is run to check the simulation:
+\begin{verbatim}
+   genesis > check /Purkinje
+\end{verbatim}
 
 \subsection*{Run Simulation}
 
@@ -224,7 +282,10 @@ To run a simulation for 10\,s we can use the same command as used for the simple
 
 \subsection*{Reset Simulation}
 
-UNDER CONSTRUCTION
+A simulation can be returned to its initial state where the time step of the simulation is set to zero and the initial values for all solved variables are loaded with the following command:
+\begin{verbatim}
+    genesis > reset /Purkinje
+\end{verbatim}
 
 \subsection*{Save Model State}
 
