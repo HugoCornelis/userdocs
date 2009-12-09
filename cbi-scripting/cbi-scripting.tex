@@ -256,7 +256,7 @@ individual components can be independently updated, enhanced, or
 replaced when needed, thus the life cycle of a modular architecture is
 smoother than that of a non-scalable application.
 
-The Neurospaces project (http://neurospaces.sourceforge.net/) provides
+The Neurospaces project (http://www.neurospaces.org/) provides
 core software components of the G-3
 simulator\,\cite{cornelis03:_neuros}. These include, (1) the {\bf Model
   Container}: Stores two representations of a model, the first is
@@ -332,12 +332,89 @@ others are defined in Python. The C layer contains low-level wrappers
 whereas the Python code is used to define high-level features.
 Considerably more flexibility is obtained by generating code in both
 languages as an extension module can be enhanced with support code in
-either language.
+either language.  Table~\ref{tab:cbi-codecounts} gives an overview
+of the resulting code.
 
-\subsection{Technical Facts}
+\begin{table}
+  \centering
+  \begin{tabular}{|c|c|c|c|c|c|c|}
+    \hline
 
-table with number of lines of C, Perl, Python code, hand written and
-generated.
+    \rule[-2ex]{0mm}{5ex}
+    Language:
+    & C (h)
+    & C (g)
+    & Perl (h)
+    & Perl (g)
+    & Python (h)
+    & Python (g) \\
+
+    \hline
+
+    \rule[-2ex]{0mm}{5ex}
+    Model Container
+    & 1832580
+    & 4416163
+    & 30406
+    & 207638
+    & 14568
+    & 250178 \\
+
+    \rule[-2ex]{0mm}{5ex}
+    Heccer
+    & 1163991
+    & 1575615
+    & 57565
+    & 107261
+    & 1586
+    & 171219 \\
+
+    \rule[-2ex]{0mm}{5ex}
+    SSP
+    & 829
+    & 2323
+    & 55063
+    & 0
+    & 0
+    & 0 \\
+
+    \rule[-2ex]{0mm}{5ex}
+    Studio
+    & 0
+    & 0
+    & 174923
+    & 0
+    & 0
+    & 0 \\
+
+    \rule[-2ex]{0mm}{5ex}
+    NS-SLI
+    & 1448636
+    & 483641
+    & 4603
+    & 2802
+    & 0
+    & 0 \\
+
+    \rule[-2ex]{0mm}{5ex}
+    G-Shell
+    & 0
+    & 0
+    & 28142
+    & 0
+    & 623
+    & 836 \\
+
+    \hline
+  \end{tabular}
+  \caption
+  [Languages Used: Comparison of Hand-Written and Generated Code Counts.]
+  {
+    \small Languages Used: Comparison of Hand-Written and Generated Code Character Counts.
+  }
+  \label{tab:cbi-codecounts}
+\end{table}
+
 
 \section{Results}
 
@@ -1034,15 +1111,17 @@ the previous approach include\marginpar{Allan: let's discuss this a
 \end{itemize}
 
 A more complex example illustrates the integration of G-3 with Blender
-(http://www.blender.org/\,\footnote{Free open source 3D content creation suite
-available for all major
-operating systems that have Python enabled bindings. Note, however, that Blender
-  has the restriction that the Python code must be run from the
-  Blender Python interpreter.}) to validate and analyze models of the
-morphology of small dendritic segments obtained from electron
-microscopy data. Past research on cerebellar Purkinje cells has shown
-that the balance between excitation and inhibition plays an important
-role in dendritic processing\,\cite{santamaria02:_modul_purkin,
+(http://www.blender.org/\,\footnote{Free open source 3D content
+  creation suite available for all major operating systems that have
+  Python enabled bindings.}  The Python environment of Blender has the
+restriction that the code must be run from inside the Blender specific
+Python interpreter, thereby replacing the functionality previously
+provided by the G-Shell.  We used the state-of-the-art rendering
+functions of Blender to validate and analyze models of the morphology
+of small dendritic segments obtained from electron microscopy data.
+Past research on cerebellar Purkinje cells has shown that the balance
+between excitation and inhibition plays an important role in dendritic
+processing\,\cite{santamaria02:_modul_purkin,
   mittmann07:_linkin_purkin}.  However, the spatial resolution of the
 models employed in such studies was limited by the reconstruction
 techniques then available.  Consequently, over the last several years
@@ -1106,16 +1185,18 @@ Complementary functionality to that provided by interfacing G-3 with
 Blender would be available after interfacing G-3 with {\it
   neuro}Construct, a software package designed to simplify development
 of complex networks of biologically realistic
-neurons\,\cite{gleeson05:_build_networ_model}.  Implemented in Java,
-it can be connected to Python applications (e.g. see
-http://www.jython.org/).  {\it neuro}Construct uses the latest NeuroML
-specifications (see http://www.neuroml.org), including MorphML
+neurons\,\cite{gleeson05:_build_networ_model}\cite{gleeson07}.
+Implemented in Java, it can be connected to Python applications (e.g.
+see http://www.jython.org/).  {\it neuro}Construct uses the latest
+NeuroML specifications (see http://www.neuroml.org), including MorphML
 (http://www.morphml.org/), ChannelML (part of Level\,2 of the NeuroML
 set of standards) and NetworkML (the core of NeuroML Level\,3) and can
 be used to visually validate network layout and
 design\,\cite{crook07:_morph}.
 
 {\bf Cite python interface to Neuron and Nest, PyNN.}
+
+\cite{deschutter09:_review_paper_descr_neuroin_softw}.
 % [135]  P. Gleeson, V. Steuber and R. A. Silver (2007) neuroConstruct: A Tool for Modeling Networks of Neurons in 3D Space, Neuron, 54: 219-235.
 
 Finally, we note that we have developed a serial communication
