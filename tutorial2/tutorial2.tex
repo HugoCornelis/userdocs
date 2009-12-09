@@ -15,7 +15,7 @@
 
 \section*{Using the GENESIS Shell for\\Multi-compartment Modeling and Simulation}
 
-In this second of two introductory tutorials you will be guided through a brief session using the \href{../gshell/gshell.tex}{GENESIS shell}. In this tutorial it is assumed that you are familiar with the contents of \href{../tutorial1/tutorial1.tex}{Tutorial 1} and the links it contains. You will be shown how to use basic features of the GENESIS shell to create, explore, and run a realistic multi-compartment model neuron. For example:
+In this second of two introductory tutorials you will be guided through a brief session using the GENESIS shell (\href{../gshell/gshell.tex}{\bf G-Shell}). In this tutorial it is assumed that you are familiar with the contents of \href{../tutorial1/tutorial1.tex}{\bf Tutorial\,1} and the links it contains. You will be shown how to use basic features of the {\bf G-Shell} to create, explore, and run a realistic multi-compartment model neuron. For example:
 \begin{verbatim}
     ndf_load cells/purkinje/edsjb1994.ndf
     run /Purkinje 0.1
@@ -23,19 +23,19 @@ In this second of two introductory tutorials you will be guided through a brief 
 
 \subsection*{Import Model}
 
-A large number of predefined model neurons come bundled with the GENESIS distribution. The command
+A large number of predefined model neurons come bundled with the GENESIS distribution. The command:
 \begin{verbatim}
     genesis > show_library
 \end{verbatim}
-lists the available model libraries. Example library files can be found with
+lists the available model libraries. Example library files can be found with:
 \begin{verbatim}
     genesis > show_library ndf examples
 \end{verbatim}
-You can display the contents of the single cell library with
+You can display the contents of the single cell library with:
 \begin{verbatim}
     genesis > show_library ndf cells
 \end{verbatim}
-which returns in part
+which returns in part:
 \begin{verbatim}
     ---
     ndf_library:
@@ -46,7 +46,7 @@ which returns in part
 \end{verbatim}
 This indicates the existence of a directory in the library where one or more Purkinje cell models are stored.
 
-The contents of the {\it purkinje} directory can be displayed with
+The contents of the {\it purkinje} directory can be displayed with:
 \begin{verbatim}
     genesis > show_library ndf cells/purkinje
     ---
@@ -56,29 +56,29 @@ The contents of the {\it purkinje} directory can be displayed with
        - edsjb1994_partitioned.ndf
 \end{verbatim}
 
-To run one of these models the model description file (NDF) must first be loaded into the GENESIS shell.  (To learn more about the NDF format see  \href{../ndf-file-format/ndf-file-format.tex}{Introduction to the NDF File Format}.) For example, to load the multicompartment De Schutter and Bower Purkinje cell model referenced above, enter
+To run one of these models the model description file (NDF) must first be loaded into the {\bf G-Shell}.  (To learn more about the NDF format see  \href{../ndf-file-format/ndf-file-format.tex}{\bf Introduction to the NDF File Format}.) For example, to load the multicompartment De Schutter and Bower Purkinje cell model referenced above, enter:
 \begin{verbatim}
     ndf_load cells/purkinje/edsjb1994.ndf
 \end{verbatim}
-This command results in the complete Purkinje cell model being made available to the GENESIS shell.
+This command results in the complete Purkinje cell model being made available to the {\bf G-Shell}.
 
-{\bf Note:} Currently, it is not advisable to load more than one model at a time into the GENESIS shell. Although multiple models can be loaded, the command {\it ndf\_save} will save all models to the ndf file. To change to a different model you can either issue the {\tt delete} command (see example below) or exit the {\bf G-Shell}, restart GENESIS, and load the new model (see the \href{../gshell/gshell.tex}{Introduction to the GENESIS Shell}).
+{\bf Note:} Currently, it is not advisable to load more than one model at a time into the {\bf G-Shell}. Although multiple models can be loaded, the command {\it ndf\_save} will save all models to the ndf file. To change to a different model you can either issue the {\tt delete} command (see example below) or exit the {\bf G-Shell}, restart GENESIS, and load the new model (see the \href{../gshell/gshell.tex}{\bf Introduction to the GENESIS Shell}).
 
 \subsection*{Explore Model}
 
-To determine the name of a model that has been loaded and made available to the GENESIS shell (i.e. the name located at the root node of the element hierarchy tree), enter, for example 
+To determine the name of a model that has been loaded and made available to the {\bf G-Shell} (i.e. the name located at the root node of the element hierarchy tree), enter, for example: 
 \begin{verbatim}
     genesis > list_elements
     ---
     - /Purkinje
 \end{verbatim}
-We can then determine the child elements of {\tt /Purkinje} with
+We can then determine the child elements of {\it /Purkinje} with:
 \begin{verbatim}
     genesis > list_elements /Purkinje
     ---
     - /Purkinje/segments
 \end{verbatim}
-A list of all segments in the model can then be generated with another {\tt list\_elements} command
+A list of all segments in the model can then be generated with another {\it list\_elements} command:
 \begin{verbatim}
     genesis > list_elements /Purkinje/segments
     ---
@@ -87,7 +87,7 @@ A list of all segments in the model can then be generated with another {\tt list
     . . .
     - /Purkinje/segments/b3s46[15]
 \end{verbatim}
-Choosing one of the segments at random (here, for example {\it /Purkinje/segments/b3s45[10]}), we can generate a list of the elements that are associated with the given segment either by using the full pathname
+Choosing one of the segments at random (here, for example {\it /Purkinje/segments/b3s45[10]}), we can generate a list of the elements that are associated with the given segment either by using the full pathname:
 \begin{verbatim}
     genesis > list_elements /Purkinje/segments/b3s45[10]
     ---
@@ -100,7 +100,7 @@ Choosing one of the segments at random (here, for example {\it /Purkinje/segment
     - /Purkinje/segments/b3s45[10]/stellate
     - /Purkinje/segments/b3s45[10]/Purkinje_spine_0
 \end{verbatim}
-or by making the chosen element the current working element via the {\it ce} (change working element) command. We can then check what the current working element is with the {\it pwe} (print working element) command
+or by making the chosen element the current working element via the {\it ce} (change working element) command. We can then check what the current working element is with the {\it pwe} (print working element) command:
 \begin{verbatim}
     genesis > ce /Purkinje/segments/b3s45[10]
     genesis > pwe
@@ -111,7 +111,7 @@ or by making the chosen element the current working element via the {\it ce} (ch
     . . .
     - /Purkinje/segments/b3s45[10]/Purkinje_spine_0
 \end{verbatim}
-The ability to change the current working element allows us to either check the value of the model parameters associated with the current working element (such as {\tt RM} or {\tt CM}) via the command {\it show\_model\_parameters}, change default parameter values via the {\it set\_model\_parameter} command or view the scaled value of the parameter via the command {\it show\_parameter\_scaled}, e.g.
+The ability to change the current working element allows us to either check the value of the model parameters associated with the current working element (such as {\tt RM} or {\tt CM}) via the command {\it show\_model\_parameters}, change default parameter values via the {\it set\_model\_parameter} command or view the scaled value of the parameter via the command {\it show\_parameter\_scaled}, for example:
 \begin{verbatim}
     genesis > pwe
     /Purkinje/segments/b3s45[10]
@@ -134,33 +134,33 @@ The ability to change the current working element allows us to either check the 
 \end{verbatim}
 
 {\bf Note:}
-\begin{itemize}
 
+\begin{itemize}
 \item The commands {\it ce}, {\it set\_model\_parameter}, and {\it show\_parameter} currently only accept the full path name (e.g. {\it  /Purkinje/segments/b3s45[10]}) to a segment even if the parameter to be queried or changed is in the current working element. % or just the segment name itself (as given in the above example).  Parameter values associated with a given element can be changed using either the full path name or making the given segment the current working element (as with the above example).
 
-\item In the GENESIS shell the commands ``{\bf .}'' and ``{\bf ..}'' operate in the same way as when employed to traverse the Unix file system (see \href{../unix-linux/unix-linux.tex}{Introduction to Unix and the Linux graphical desktop}). The ``{\bf ..}'' operator may be chained, e.g. ``{\bf ../../../}''.
+\item In the {\bf G-Shell} the commands ``{\bf .}'' and ``{\bf ..}'' operate in the same way as when employed to traverse the Unix file system (see \href{../unix-linux/unix-linux.tex}{\bf Introduction to Unix and the Linux graphical desktop}). The ``{\bf ..}'' operator may be chained, e.g. ``{\bf ../../../}''.
 
 \item Also remember that in the GENESIS documentation, an elipsis ($\ldots$) indicates missing lines.
 
 \end{itemize}
 
-Another Purkinje cell in the NDF library {\it cells/purkinje} is {\it edsjb1994\_partitioned.ndf}. This model is identical to edsjb1994.ndf with the exception that its morphology has been repartitioned. It is simple to delete the current model and load the repartitioned version
+Another Purkinje cell in the NDF library {\it cells/purkinje} is {\it edsjb1994\_partitioned.ndf}. This model is identical to edsjb1994.ndf with the exception that its morphology has been repartitioned. It is simple to delete the current model and load the repartitioned version:
 \begin{verbatim}
     genesis > delete /Purkinje
         delete: /Purkinje
     genesis > ndf_load cells/purkinje/edsjb1994_partitioned.ndf
 \end{verbatim}
-We can now ask for a summary of the morphology
+We can now ask for a summary of the morphology:
 \begin{verbatim}
     genesis > morphology_summarize /Purkinje
 \end{verbatim}
-which generates the following output
+which generates the following output:
 \begin{verbatim}
     Number of segments: 4548
     Number of segments without parents: 1
     Number of segment tips: 1474
 \end{verbatim}
-We can also list the segments in {\it /Purkinje/segments}
+We can also list the segments in {\it /Purkinje/segments}:
 \begin{verbatim}
     genesis > list_elements /Purkinje/segments
     ---
@@ -169,7 +169,7 @@ We can also list the segments in {\it /Purkinje/segments}
     - /Purkinje/segments/branches
     - /Purkinje/segments/branchlets
 \end{verbatim}
-or find the nine segments in the main dendrite ({\it /Purkinje/segments/main}), e.g.
+or find the nine segments in the main dendrite ({\it /Purkinje/segments/main}), for example:
 \begin{verbatim}
     genesis > list_elements /Purkinje/segments/main
     ---
@@ -180,11 +180,11 @@ or find the nine segments in the main dendrite ({\it /Purkinje/segments/main}), 
 \end{verbatim}
 and so on for the branches (``{\tt list\_elements /Purkinje/segments/branches}'') and branchlets (``{\tt list\_elements /Purkinje/segments/branchlets}'').
 
-It is also possible to list the location of the spine heads in the dendritic morphology
+It is also possible to list the location of the spine heads in the dendritic morphology:
 \begin{verbatim}
     genesis > morphology_list_spine_heads /Purkinje
 \end{verbatim}
-This generates considerable output that locates each dendritic spine head in the element hierarchy
+This generates considerable output that locates each dendritic spine head in the element hierarchy:
 \begin{verbatim}
     tips:
       name: Purkinje
@@ -197,37 +197,81 @@ This generates considerable output that locates each dendritic spine head in the
 
 \subsection*{Save Model}
 
-There are two ways to save a model.
+There are two ways to save a model in the {\bf G-Shell}.
 
 \begin{enumerate}
-   \item{\bf Explicitly:}
-   \item{\bf Generically:}
+   \item{\bf Explicitly:} A model can be saved by giving its name as loaded into the {\bf G-Shell} and an explicit path to the directory (including the name of the NDF file) where you want to save it:
+   \begin{verbatim}
+   ndf_save /Purkinje /<path from / to your home directory>/<path to your directory>/<file name>.ndf
+   \end{verbatim}
+   \item{\bf Generically:} Alternatively, if the name of the model as loaded into the {\bf G-Shell} is not known, a wild card construct can be employed (although remember that a {\it list\_elements} command with no argument will report the name of the root element of the model hierarchy, in the example here, {\it /Purkinje}):
+   \begin{verbatim}
+   ndf_save /** /<path from / to your home directory>/<path to your directory>/<file name>.ndf
+   \end{verbatim}   
 \end{enumerate}
-
+{\bf Note:} If you have a developer installation, in the absence of an explicit path to the directory where you would like to save the NDF file, it will be saved by default in {\it /$<$explicit path to$>$/neurospaces\_project/model-container/source/snapshots/0}.
 
 \subsection*{Define Simulation Constants}
 
-UNDER CONSTRUCTION
+Here, for example, we set the run-time activity of the model neuron by 
+setting the magnitude of the current to be injected at the soma (in this case 2\,nA):
+\begin{verbatim}
+   genesis > set_runtime_parameter /n/soma INJECT 2e-9
+\end{verbatim}
+To check that the parameter value has been correctly set:
+\begin{verbatim}
+   genesis > show_runtime_parameters
+   ---
+   runtime_parameters:
+      - component_name: /Purkinje/segments/soma
+         field: INJECT
+         value: 2e-9
+         value_type: number
+\end{verbatim}  
 
 \subsection*{Define Simulation Inputs}
 
-There are currently three ways to provide stimulation inputs to a single cell model. 
+There are currently three ways to provide stimulation inputs to a single cell model. Once the model is loaded into the {\bf G-Shell}, either of the following input paradigms can be activated to provide cell activation:
+
+\subsubsection*{Current Injection}
+
+A 2\,nA current injection can be applied to the soma with the following command:
+\begin{verbatim}
+   genesis > set_runtime_parameter /Purkinje/segments/soma INJECT 2e-9
+\end{verbatim}
+
+Information about these runtime parameters can be obtained with:
+\begin{verbatim}
+   genesis > show_runtime_parameters
+      runtime_parameters:
+         - component_name: /Purkinje/segments/soma
+            field: INJECT
+            value: 2e-9
+            value_type: number
+\end{verbatim}
+
+\subsubsection*{Current or Voltage Clamp}
+
+For details see the \href{../pclamp/pclamp.tex}{\bf Perfect\,Clamp} tutorial.
+
+\subsubsection*{Dynamic Clamp}
+
+One project being undertaken by GENESIS developers is the interfacing of the Real-Time eXperiment Interface (\href{http://www.rtxi.org/}{\bf RTXI}) with GENESIS to enable the realtime tuning of model parameters.
+
+RTXI is a collaborative open-source software development project aimed at producing a real-time Linux based software system for hard real-time data acquisition and control applications in biological research. \\
 
 \subsubsection*{Synaptic Activation}
-
-Once the model is loaded into the {\bf G-Shell}, either of the following input paradigms can be activated to provide synaptic activation:
-
 \begin{enumerate}
-   \item{\bf Endogenous Poissonian Synaptic Activation:} The simplest way to activate synapses.
-   \paragraph{Excitatory:} The following command applies a Poisson stream of event times to glutamate synapses on spin heads at 25\,Hz.
+   \item{\bf Endogenous Poissonian Synaptic Activation:} This provides the simplest way to activate synapses.
+   \paragraph{Excitatory:} The following command applies a Poisson stream of event times at 25\,Hz to glutamate synapses on spine heads.
 \begin{verbatim}
    genesis > set_runtime_parameter spine::/Purk_spine/head/par FREQUENCY 25
 \end{verbatim}
-   \paragraph{Inhibitory:} The following command applies a Poisson stream of event times to GABAergic synapses on dendrites flagged as thick at 1\,Hz.
+   \paragraph{Inhibitory:} The following command applies a Poisson stream of event times at 1\,Hz to GABAergic synapses on dendrites flagged as thick.
 \begin{verbatim}
    genesis > set_runtime_parameter thickd::gaba::/Purk_GABA FREQUENCY 1
 \end{verbatim}
-Information about what run time parameters have been set can be obtained with:
+Information about the run time parameters that have been set can be obtained with:
 \begin{verbatim}
    genesis > show_runtime_parameters
 \end{verbatim}
