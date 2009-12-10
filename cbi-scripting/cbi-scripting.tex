@@ -763,7 +763,7 @@ with the command:
   \label{fig:cbi-studio}
 \end{figure}
 
-Figure~\ref{fig:cbi-studio} shows sample output of running these
+Figure~\ref{fig:cbi-studio} shows sample output of running this
 commands.  Other capabilities of the {\bf Studio} includes rendering
 morphologies in three dimensions and generating overviews of network
 models (not shown).  In the next section we explore more graphical
@@ -1093,25 +1093,26 @@ if __name__ == '__main__':
 
 In this example we have shown how the CBI architecture allows for
 separation between GUI statements and peripheral code such as input
-and output specifications, and model construction.  Besides having the
-possibility to use construction kits for the development of dedicated
-research and educational projects, this approach also allows to use
-dedicated GUI kits.  This is shown in a more complex example.
+and output specifications, and model construction.  Besides allowing common GUI construction kits to be used for the development of
+research and educational projects, this approach also allows more specialized GUI kits to be used.  This is illustrated with the following example.
+
+\subsection{Interfacing GENESIS with Blender}
 
 Blender (http://www.blender.org/) is a free open source 3D content
 creation suite available for all major operating systems that have
 Python enabled bindings.  The Python environment of Blender has the
 restriction that the code must be run from inside the Blender specific
-Python interpreter, thereby replacing the functionality previously
-provided by the G-Shell.  We used the state-of-the-art rendering
-functions of Blender to validate and analyze models of the morphology
+Python interpreter. In doing this, Blender replaces the functionality otherwise
+provided by the {\bf G-Shell}. It allows the state-of-the-art rendering
+functions of Blender to be used to validate and analyze models of the morphology
 of small dendritic segments obtained from electron microscopy data.
-Past research on cerebellar Purkinje cells has shown that the balance
+
+Past research has shown that the balance
 between excitation and inhibition plays an important role in dendritic
-processing\,\cite{santamaria02:_modul_purkin,
+processing in cerebellar Purkinje cells\,\cite{santamaria02:_modul_purkin,
   mittmann07:_linkin_purkin}.  However, the spatial resolution of the
-models employed in such studies was limited by the reconstruction
-techniques then available.  Consequently, over the last several years
+models employed in such studies was limited by the available reconstruction
+techniques.  To overcome this problem, over the last several years
 we have used electron microscopy in conjunction with
 Reconstruct\,\cite{jc05:_recon} to obtain more precise morphologies of
 small segments of Purkinje cell dendrites\,\cite{huo09:_purkin,
@@ -1124,7 +1125,7 @@ small segments of Purkinje cell dendrites\,\cite{huo09:_purkin,
   \label{fig:cbi-blender}
 \end{figure}
 
-\noindent{\bf Hugo: Show Python interface snippet.}
+% \noindent{\bf Hugo: Show Python interface snippet.}
 
 Special purpose software has been written to convert Reconstruct data
 for importation into the {\bf Model\,Container}.  The {\it
@@ -1144,8 +1145,8 @@ the cable parameters required by the mathematical solvers.  A
 simulation can then be run with the {\it read} and {\it run} methods
 given above.
 
-The necessary conversion algorithms are accessible from Python via the
-{\bf Model\,Container}.  The Python interface of Blender links it to the G-3
+The necessary conversion algorithms are accessible from the
+{\bf Model\,Container} via Python.  The Python interface of Blender links it to the G-3
 simulator, such that Blender becomes the first G-3 3D model inspection
 tool for EM data.  As an example, the Python script developed above
 can be run from within the Blender environment.  Also, via the same
@@ -1154,7 +1155,7 @@ data.
 
 Interactive visualization of reconstructed dendritic segments is a
 valuable method of model validation and is available with the
-interface of G-3 and Blender (see Figure~\ref{fig:cbi-blender}).
+interface of G-3 with Blender (see Figure~\ref{fig:cbi-blender}).
 However, the development of small focused plugins allows for more than
 just these functions. For example, 3D measurement and manipulation of
 neuron morphology, computation of surface areas and volumes, and the
