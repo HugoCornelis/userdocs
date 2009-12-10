@@ -710,26 +710,6 @@ without running the simulation.  A similar command is provided to
 interface with the PyNN network modeling
 environment\,\cite{andrew08:_pynn}.
 
-To visualize and render the model morphology in three dimensions,
-start the graphical front-end of the {\bf Studio} with the command:
-
-{\footnotesize
-\begin{verbatim}
-   explore
-\end{verbatim}
-}
-
-Figure~\ref{fig:cbi-studio} shows sample output of running these
-commands.
-
-\begin{figure}[ht]
-  \centering
-  \includegraphics[scale=0.3]{figures/studio-screenshot.eps}
-  \caption{Using the {\bf Studio} to query a model and its
-    parameters.}
-  \label{fig:cbi-studio}
-\end{figure}
-
 Given the name of one of its dendritic segments, the number of branch
 points between that segment and the soma can be determined. After
 indicating which paths of the dendritic tree must be examined, the
@@ -764,6 +744,29 @@ Finally, following the addition of an output comprising the somatic membrane pot
 }
 
 This outputs the somatic response to the stimulus in a file named by default as {\it /tmp/output}.
+
+To locate the compartment {\bf b1s06[182]} the model morphology can
+then be visualized and rendered in three dimensions using the
+graphical front-end of the {\bf Studio} with the command:
+
+{\footnotesize
+\begin{verbatim}
+   explore
+\end{verbatim}
+}
+
+\begin{figure}[ht]
+  \centering
+  \includegraphics[scale=0.3]{figures/studio-screenshot.eps}
+  \caption{Using the {\bf Studio} to query a model and its
+    parameters.}
+  \label{fig:cbi-studio}
+\end{figure}
+
+Figure~\ref{fig:cbi-studio} shows sample output of running these
+commands.  In the next section we explore more graphical capabilities
+of the GENESIS 3 simulation system.
+
 
 
 \subsection{Gluing Pre-existing Applications \& Libraries}
