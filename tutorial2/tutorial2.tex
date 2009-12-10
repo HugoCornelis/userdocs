@@ -202,14 +202,14 @@ There are two ways to save a model in the {\bf G-Shell}.
 \begin{enumerate}
    \item{\bf Explicitly:} A model can be saved by giving its name as loaded into the {\bf G-Shell} and an explicit path to the directory (including the name of the NDF file) where you want to save it:
    \begin{verbatim}
-   ndf_save /Purkinje /<path from / to your home directory>/<path to your directory>/<file name>.ndf
+ndf_save /Purkinje /<path from / to your home directory>/<path to your directory>/<file name>.ndf
    \end{verbatim}
    \item{\bf Generically:} Alternatively, if the name of the model as loaded into the {\bf G-Shell} is not known, a wild card construct can be employed (although remember that a {\it list\_elements} command with no argument will report the name of the root element of the model hierarchy, in the example here, {\it /Purkinje}):
    \begin{verbatim}
-   ndf_save /** /<path from / to your home directory>/<path to your directory>/<file name>.ndf
+ndf_save /** /<path from / to your home directory>/<path to your directory>/<file name>.ndf
    \end{verbatim}   
 \end{enumerate}
-{\bf Note:} If you have a developer installation, in the absence of an explicit path to the directory where you would like to save the NDF file, it will be saved by default in {\it /$<$explicit path to$>$/neurospaces\_project/model-container/source/snapshots/0}.
+{\bf Note:} In the absence of an explicit path to the directory where you would like to save the NDF file, it will be saved by default in the directory where you run the {\bf G-shell}.
 
 \subsection*{Define Simulation Constants}
 
@@ -243,11 +243,12 @@ A 2\,nA current injection can be applied to the soma with the following command:
 Information about these runtime parameters can be obtained with:
 \begin{verbatim}
    genesis > show_runtime_parameters
-      runtime_parameters:
-         - component_name: /Purkinje/segments/soma
-            field: INJECT
-            value: 2e-9
-            value_type: number
+   ---
+   runtime_parameters:
+      - component_name: /Purkinje/segments/soma
+         field: INJECT
+         value: 2e-9
+         value_type: number
 \end{verbatim}
 
 \subsubsection*{Current or Voltage Clamp}
@@ -265,61 +266,60 @@ RTXI is a collaborative open-source software development project aimed at produc
    \item{\bf Endogenous Poissonian Synaptic Activation:} This provides the simplest way to activate synapses.
    \paragraph{Excitatory:} The following command applies a Poisson stream of event times at 25\,Hz to glutamate synapses on spine heads.
 \begin{verbatim}
-   genesis > set_runtime_parameter spine::/Purk_spine/head/par FREQUENCY 25
+genesis > set_runtime_parameter spine::/Purk_spine/head/par FREQUENCY 25
 \end{verbatim}
    \paragraph{Inhibitory:} The following command applies a Poisson stream of event times at 1\,Hz to GABAergic synapses on dendrites flagged as thick.
 \begin{verbatim}
-   genesis > set_runtime_parameter thickd::gaba::/Purk_GABA FREQUENCY 1
+genesis > set_runtime_parameter thickd::gaba::/Purk_GABA FREQUENCY 1
 \end{verbatim}
 Information about the run time parameters that have been set can be obtained with:
 \begin{verbatim}
-   genesis > show_runtime_parameters
+genesis > show_runtime_parameters
 \end{verbatim}
 which for the endogenous excitatory and inhibitory Poissonian synaptic activation set above would return:
 \begin{verbatim} 
-   runtime_parameters:
-     - component_name: thickd::gaba::/Purk_GABA
-       field: FREQUENCY
-       value: 1
-       value_type: number
-     - component_name: spine::/Purk_spine/head/par
-       field: FREQUENCY
-       value: 25
-       value_type: number
+runtime_parameters:
+   - component_name: thickd::gaba::/Purk_GABA
+      field: FREQUENCY
+      value: 1
+      value_type: number
+   - component_name: spine::/Purk_spine/head/par
+      field: FREQUENCY
+      value: 25
+      value_type: number
  \end{verbatim}
     
    \item{\bf Extrinsic Synaptic Activation:} This provides a much more flexible way to activate synapses than the endogenous activation method. Here, explicit synaptic activation times pre-generated outside of GENESIS (e.g. from a specified probability distribution using Matlab) are read from a file containing the required event list.
    
    After identifying which synapses should be activated, e.g.
    \begin{verbatim}
-   genesis > show_parameter /Purkinje/segments/b1s06[182] SOMATOPETAL_BRANCHPOINTS
-      value = 23 
+genesis > show_parameter /Purkinje/segments/b1s06[182] SOMATOPETAL_BRANCHPOINTS
+   value = 23 
    \end{verbatim}
    The event list can then be attached to the spine heads of the specified dendritic segment:
    \begin{verbatim}
-   genesis > set_runtime_parameter /Purkinje/segments/b1s06[182]/Purkinje_spine_0/head/par/synapse EVENT_FILENAME event_data/events.yml
+genesis > set_runtime_parameter /Purkinje/segments/b1s06[182]/Purkinje_spine_0/head/par/synapse EVENT_FILENAME event_data/events.yml
    \end{verbatim}   
 \end{enumerate}
 
 \subsection*{Define Simulation Outputs}
 
-The following commands will define simulation outputs from the soma:
+Outputs can be specified from any number of compartments and can consist of any variable known to the mathematical solvers. For example, the following commands will define simulation outputs from the soma for the membrane potential ($V_m$) and calcium concentration ($[Ca]_{in}$):
 \begin{verbatim}
    genesis > add_output /Purkinje/segments/soma Vm
    genesis > add_output /Purkinje/segments/soma/ca_pool Ca
 \end{verbatim}
-for the membrane potential ($V_m$) and calcium concentration ($[Ca]_{in}$).
 
 \subsection*{Check Simulation}
 
-The following command, as given in \href{../tutorial1/tutorial1.tex}{Tutorial 1}, is run to check the simulation:
+The following command is used to check the simulation:
 \begin{verbatim}
    genesis > check /Purkinje
 \end{verbatim}
 
 \subsection*{Run Simulation}
 
-To run a simulation for 10\,s we can use the same command as used for the simple one compartment model in \href{../tutorial1/tutorial1.tex}{Tutorial 1}
+To run a simulation for 10\,s we can use the same {\it run} command as used for the simple one compartment model in \href{../tutorial1/tutorial1.tex}{Tutorial 1}
 \begin{verbatim}
     genesis > run /Purkinje 10.00
 \end{verbatim}
@@ -333,7 +333,18 @@ A simulation can be returned to its initial state where the time step of the sim
 
 \subsection*{Save Model State}
 
-UNDER CONSTRUCTION
+The state of a simulation can be saved to a file name of your choosing, for example:
+\begin{verbatim}
+   genesis > simulation_state_save /Purkinje /<directory path>/<file name>.ndf
+\end{verbatim}
+This command saves the state of a model to a file at the given location following the last update time step of a run. In the absence of a directory path, the file is saved by default in the current directory, i.e. the directory from which the {\bf G-Shell} was initiated.
+
+A simulation can then be initiated from this saved 
+state with the command 
+\begin{verbatim}
+   genesis > simulation_state_load /<directory path>/<file name>.ndf 
+\end{verbatim}
+The next {\it run} command will then start the simulation from this reinitialized state.
 
 \subsection*{Check Simulation Output}
 
