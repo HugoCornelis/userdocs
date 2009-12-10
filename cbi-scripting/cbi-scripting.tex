@@ -1162,26 +1162,30 @@ Complementary functionality to that provided by interfacing G-3 with
 Blender would be available after interfacing G-3 with {\it
   neuro}Construct, a software package designed to simplify development
 of complex networks of biologically realistic
-neurons\,\cite{gleeson05:_build_networ_model}\cite{gleeson07}.
+neurons\,\cite{gleeson05:_build_networ_model}\cite{gleeson07}.  {\it
+  neuro}Construct uses the latest NeuroML specifications (see
+http://www.neuroml.org), including MorphML (http://www.morphml.org/),
+ChannelML and NetworkML and can be used to visually validate network
+layout and design\,\cite{crook07:_morph}.
+
 Implemented in Java, it can be connected to Python applications (e.g.
-see http://www.jython.org/).  {\it neuro}Construct uses the latest
-NeuroML specifications (see http://www.neuroml.org), including MorphML
-(http://www.morphml.org/), ChannelML (part of Level\,2 of the NeuroML
-set of standards) and NetworkML (the core of NeuroML Level\,3) and can
-be used to visually validate network layout and
-design\,\cite{crook07:_morph}.
+see http://www.jython.org/).  In principle this allows {\it
+  neuro}{Construct} to be integrated with other simulators that have
+Python bindings, including NEURON and
+NEST.
 
-{\bf Cite python interface to Neuron and Nest, PyNN, Steps.}
+As of today, many simulators come with Python bindings, ranging from
+detailed monte carlo simulators\cite{wils09:_steps} and dedicated
+large network simulators\cite{eppler08:_pynes} to the general purpose
+NEURON simulator\cite{hines09:_neuron_python}.  Some simulators use
+Python because of its ease of use\cite{pecevski09:_pcsim} and
+simplicity\cite{goodman08:_brian}.  PyNN is a Python package for
+simulator-independent specification of neuronal network
+models\cite{andrew08:_pynn} that targets these simulators.
 
-\cite{wils09:_steps}
-\cite{eppler08:_pynes}
-\cite{pecevski09:_pcsim}
-\cite{goodman08:_brian}
-\cite{stewart09:_python}
-\cite{hines09:_neuron_python}
+%\cite{stewart09:_python}
 
-\cite{deschutter09:_review_paper_descr_neuroin_softw}.
-% [135]  P. Gleeson, V. Steuber and R. A. Silver (2007) neuroConstruct: A Tool for Modeling Networks of Neurons in 3D Space, Neuron, 54: 219-235.
+%\cite{deschutter09:_review_paper_descr_neuroin_softw}.
 
 Finally, we note that we have developed a serial communication
 framework for event delivery of action potentials to postsynaptic
@@ -1200,7 +1204,8 @@ Ecology of software components connected over interfaces.  Gluing them
 together can be done in several ways.  Examples given above, but also
 integration of the {\bf Model\,Container} with a web server to allow
 measuring and analyzing morphologies in a morphology database.  This
-could be useful for the neuro-morpho database (cite).
+could be useful for the neuro-morpho
+database\,\cite{ascoli06:_mobil}\cite{ascoli07:_neurom}.
 
 \section{Conclusion}
 
