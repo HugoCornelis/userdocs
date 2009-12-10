@@ -1174,19 +1174,6 @@ see http://www.jython.org/).  In principle this allows {\it
 Python bindings, including NEURON and
 NEST.
 
-As of today, many simulators come with Python bindings, ranging from
-detailed monte carlo simulators\cite{wils09:_steps} and dedicated
-large network simulators\cite{eppler08:_pynes} to the general purpose
-NEURON simulator\cite{hines09:_neuron_python}.  Some simulators use
-Python because of its ease of use\cite{pecevski09:_pcsim} and
-simplicity\cite{goodman08:_brian}.  PyNN is a Python package for
-simulator-independent specification of neuronal network
-models\cite{andrew08:_pynn} that targets these simulators.
-
-%\cite{stewart09:_python}
-
-%\cite{deschutter09:_review_paper_descr_neuroin_softw}.
-
 Finally, we note that we have developed a serial communication
 framework for event delivery of action potentials to postsynaptic
 targets (DES: Discrete Event System).  This software component is
@@ -1197,8 +1184,33 @@ hardware such as that provided by the MOOSE
 simulator\,\cite{ray08:_pymoos} and the MUSIC
 framework\,\cite{ekeberg08:_music_multis_coord}.
 
+%\cite{stewart09:_python}
+
+%\cite{deschutter09:_review_paper_descr_neuroin_softw}.
+
 %\pagebreak
 \section{Discussion}
+
+The current generation of simulators can be characterized as software
+applications that support the user in the activities from model
+construction to data analysis.  Many of these simulators come with
+Python bindings, ranging from monte-carlo simulators for
+reaction-diffusion systems\cite{wils09:_steps} and dedicated large
+network simulators\cite{eppler08:_pynes} to the general purpose NEURON
+and GENESIS
+simulators\cite{hines09:_neuron_python}\cite{bower98:_book_genes}.
+Some of these simulators use Python because of its ease of
+use\cite{pecevski09:_pcsim} and simplicity\cite{goodman08:_brian}.
+Interoperability between such simulators can be implemented using the
+NeuroML standard for model specification in
+XML\cite{nigel01:_towar_neurom} and PyNN for simulator-independent
+specification of neuronal network models in
+Python\cite{andrew08:_pynn}.
+
+However successful open source development is not always characterized
+like this\cite{Open-Source03theecology}.  The other branch of
+development which we have outlined in this paper is component based.
+Another example of this branch is \cite{schuermann09:_neuron}.
 
 Ecology of software components connected over interfaces.  Gluing them
 together can be done in several ways.  Examples given above, but also
