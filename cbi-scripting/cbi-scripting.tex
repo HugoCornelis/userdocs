@@ -1013,14 +1013,14 @@ call to the main event loop of {\it wxPython}.
 % \end{verbatim}
 % }
 
- {\footnotesize
-   \linenumbers*
- \begin{verbatim}
+{\footnotesize
+  \linenumbers*
+\begin{verbatim}
 if __name__ == '__main__':
     app = G3App(False)
     app.MainLoop()
- \end{verbatim}
- }
+\end{verbatim}
+}
 
 % Tues, Dec 1, 2009
 %
@@ -1087,22 +1087,16 @@ if __name__ == '__main__':
 
 %end --->
 
-This first example shows simple GUI capabilities: the advantages over
-the previous approach include\marginpar{Allan: let's discuss this a
-  bit}:
-\begin{itemize}
-\item Clear separation between GUI code, peripheral
-  code such as input and output specifications, and model
-  construction code.
-\item It allows GUI construction kits to be used for the development
-  of dedicated research and educational projects.
-\item It allows to use dedicated GUI kits (following example).
-\end{itemize}
+In this example we have shown how the CBI architecture allows for
+separation between GUI statements and peripheral code such as input
+and output specifications, and model construction.  Besides having the
+possibility to use construction kits for the development of dedicated
+research and educational projects, this approach also allows to use
+dedicated GUI kits.  This is shown in a more complex example.
 
-A more complex example illustrates the integration of G-3 with Blender
-(http://www.blender.org/\,\footnote{Free open source 3D content
-  creation suite available for all major operating systems that have
-  Python enabled bindings.}  The Python environment of Blender has the
+Blender (http://www.blender.org/) is a free open source 3D content
+creation suite available for all major operating systems that have
+Python enabled bindings.  The Python environment of Blender has the
 restriction that the code must be run from inside the Blender specific
 Python interpreter, thereby replacing the functionality previously
 provided by the G-Shell.  We used the state-of-the-art rendering
@@ -1115,15 +1109,9 @@ processing\,\cite{santamaria02:_modul_purkin,
 models employed in such studies was limited by the reconstruction
 techniques then available.  Consequently, over the last several years
 we have used electron microscopy in conjunction with
-Reconstruct\,\cite{jc05:_recon}
-% (Fiala, 2005;
-%http://www.bu.edu/neural/Reconstruct.html, a Windows based application
-%for montaging, aligning, tracing, measuring, and reconstructing
-%objects from serial section images)
-% \marginpar{cite howard}
-to obtain more precise morphologies of small segments of Purkinje cell
-dendrites\,\cite{lu09:_d_purkin, cornelis08:_model_neuros_genes}).
-%Fiala JC (2005) Reconstruct: a free editor for serial section microscopy. J Microscopy 218:52-61.
+Reconstruct\,\cite{jc05:_recon} to obtain more precise morphologies of
+small segments of Purkinje cell dendrites\,\cite{huo09:_purkin,
+  cornelis08:_model_neuros_genes}).
 
 \begin{figure}[ht]
   \centering
