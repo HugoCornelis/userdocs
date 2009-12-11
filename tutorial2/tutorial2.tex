@@ -62,7 +62,7 @@ To run one of these models the model description file (NDF) must first be loaded
 \end{verbatim}
 This command results in the complete Purkinje cell model being made available to the {\bf G-Shell}.
 
-{\bf Note:} Currently, it is not advisable to load more than one model at a time into the {\bf G-Shell}. Although multiple models can be loaded, the command {\it ndf\_save} will save all models to the ndf file. To change to a different model you can either issue the {\tt delete} command (see example below) or exit the {\bf G-Shell}, restart GENESIS, and load the new model (see the \href{../gshell/gshell.tex}{\bf Introduction to the GENESIS Shell}).
+{\bf Note:} Currently, it is not advisable to load more than one model at a time into the {\bf G-Shell}. Although multiple models can be loaded, the command {\it ndf\_save} will save all models to the ndf file. To change to a different model you can either issue the {\it delete} command (see example below) or exit the {\bf G-Shell}, restart GENESIS, and load the new model (see the \href{../gshell/gshell.tex}{\bf Introduction to the GENESIS Shell}).
 
 \subsection*{Explore Model}
 
@@ -147,7 +147,6 @@ The ability to change the current working element allows us to either check the 
 Another Purkinje cell in the NDF library {\it cells/purkinje} is {\it edsjb1994\_partitioned.ndf}. This model is identical to edsjb1994.ndf with the exception that its morphology has been repartitioned. It is simple to delete the current model and load the repartitioned version:
 \begin{verbatim}
     genesis > delete /Purkinje
-        delete: /Purkinje
     genesis > ndf_load cells/purkinje/edsjb1994_partitioned.ndf
 \end{verbatim}
 We can now ask for a summary of the morphology:
@@ -204,7 +203,7 @@ There are two ways to save a model in the {\bf G-Shell}.
    \begin{verbatim}
 ndf_save /Purkinje /<path from / to your home directory>/<path to your directory>/<file name>.ndf
    \end{verbatim}
-   \item{\bf Generically:} Alternatively, if the name of the model as loaded into the {\bf G-Shell} is not known, a wild card construct can be employed (although remember that a {\it list\_elements} command with no argument will report the name of the root element of the model hierarchy, in the example here, {\it /Purkinje}):
+   \item{\bf Generically:} Alternatively, if the name of the model loaded into the {\bf G-Shell} is not known, a wild card construct can be employed (although remember that a {\it list\_elements} command with no argument will report the name of the root element of the model hierarchy, in the example used here, {\it /Purkinje}):
    \begin{verbatim}
 ndf_save /** /<path from / to your home directory>/<path to your directory>/<file name>.ndf
    \end{verbatim}   
@@ -231,7 +230,7 @@ To check that the parameter value has been correctly set:
 
 \subsection*{Define Simulation Inputs}
 
-There are currently three ways to provide stimulation inputs to a single cell model. Once the model is loaded into the {\bf G-Shell}, either of the following input paradigms can be activated to provide cell activation:
+There are currently three ways to provide stimulation inputs to a single cell model. Once the model is loaded into the {\bf G-Shell}, either of the following input paradigms can be used to provide cell activation:
 
 \subsubsection*{Current Injection}
 
@@ -326,7 +325,7 @@ To run a simulation for 10\,s we can use the same {\it run} command as used for 
 
 \subsection*{Reset Simulation}
 
-A simulation can be returned to its initial state where the time step of the simulation is set to zero and the initial values for all solved variables are loaded with the following command:
+A simulation can be returned to its initial state, where the time step of the simulation is set to zero and the initial values for all solved variables are loaded, with the following command:
 \begin{verbatim}
     genesis > reset /Purkinje
 \end{verbatim}
