@@ -85,16 +85,33 @@ Others that need implementation:
   and the annotations provided by DAVIS are already sufficient.
 \end{itemize}
 
+\subsection{Implement more consistent G-Shell command names}
+
+\begin{verbatim}
+   runtime_parameter_add <name>
+   runtime_parameter_show <name>
+   runtime_parameter_delete <name>
+
+   input_add <name>
+   input_show <name>
+   input_delete <name>
+
+   inputclass_add <name>
+   inputclass_show <name>
+   inputclass_delete <name>
+\end{verbatim}
 
 \subsection{Descriptor file tags recognized by {\it neurospaces\_cron}}
 
-The following tags should be recognized for the alpha release to allow documentation in the given formats to be recognized when placed in the documentation folder (c.f. the {\it figures} folder).
+Extend the number of file formats for documentation that are recognized by the documentation build system when a document is placed in a document folder, as for example, currently happens for PDF formated documents. The following tags should be recognized for the alpha release.
 \begin{itemize}
    \item[]{\bf - html} Hypertext markup language.
     \item[]{\bf - png} Portable network graphics.
     \item[]{\bf - ps} Postscript.
 \end{itemize}
-The following tag should also be recognized
+This means that tags given above, should also be placed in the descriptor.yml file and recognized.
+
+The following tag should also be recognized (cf. draft, published):
 \begin{itemize}
     \item[]{\bf - local} Private (local) documentation publication.
 \end{itemize}
@@ -119,7 +136,18 @@ The following tag should also be recognized
    \end{verbatim} (DONE)
    
    \item After a {\tt ce} command there should be no requirement for the absolute path argument for commands such as {\it set\_model\_parameter} and {\it show\_parameter}, etc.
-      
+\begin{verbatim}
+genesis > ndf_load cells/purkinje/edsjb1994.ndf
+genesis > pwe
+/
+genesis > show_parameter /Purkinje/segments/b3s45[10] RM
+value = 3
+genesis > ce /Purkinje/segments/b3s45[10]  
+genesis > show_parameter RM
+symbol not found      
+genesis > show_parameter /Purkinje/segments/b3s45[10] RM
+value = 3
+\end{verbatim} 
 \end{enumerate}
 
 \subsection{Model container and readline library}
