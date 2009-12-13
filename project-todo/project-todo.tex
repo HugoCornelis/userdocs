@@ -116,40 +116,6 @@ The following tag should also be recognized (cf. draft, published):
     \item[]{\bf - local} Private (local) documentation publication.
 \end{itemize}
 
-\subsection{G-Shell enhancements/bugs on Mac}
-
-\begin{enumerate}
-   \item 
-   \begin{verbatim}
-      genesis > help ndf_save
-      ---
-      *** Error: no help for topic ndf_save yet
-      genesis > ndf_save mypc.ndf
-      Bus error
-      dhcp-129-111-247-96:0 adcmobile$ genesis-g3
-      cat: neurospaces/config.h: No such file or directory
-      Welcome to the GENESIS 3 shell
-      genesis > ndf_load cells/purkinje/edsjb1994.ndf
-      genesis > ndf_save
-      Bus error
-      dhcp-129-111-247-96:0 adcmobile$
-   \end{verbatim} (DONE)
-   
-   \item After a {\tt ce} command there should be no requirement for the absolute path argument for commands such as {\it set\_model\_parameter} and {\it show\_parameter}, etc.
-\begin{verbatim}
-genesis > ndf_load cells/purkinje/edsjb1994.ndf
-genesis > pwe
-/
-genesis > show_parameter /Purkinje/segments/b3s45[10] RM
-value = 3
-genesis > ce /Purkinje/segments/b3s45[10]  
-genesis > show_parameter RM
-symbol not found      
-genesis > show_parameter /Purkinje/segments/b3s45[10] RM
-value = 3
-\end{verbatim} 
-\end{enumerate}
-
 \subsection{Model container and readline library}
 
 The model-container does not use the readline library for its
@@ -1059,6 +1025,65 @@ Allan Coop, Hugo Cornelis, Mando Rodriguez, Dave Beeman, James Bower.
 
 
 \section{DONE List}
+
+\subsection{G-Shell enhancements/bugs on Mac}
+
+\begin{enumerate}
+   \item 
+   \begin{verbatim}
+      genesis > help ndf_save
+      ---
+      *** Error: no help for topic ndf_save yet
+      genesis > ndf_save mypc.ndf
+      Bus error
+      dhcp-129-111-247-96:0 adcmobile$ genesis-g3
+      cat: neurospaces/config.h: No such file or directory
+      Welcome to the GENESIS 3 shell
+      genesis > ndf_load cells/purkinje/edsjb1994.ndf
+      genesis > ndf_save
+      Bus error
+      dhcp-129-111-247-96:0 adcmobile$
+   \end{verbatim} (DONE)
+   
+   \item After a {\tt ce} command there should be no requirement for the absolute path argument for commands such as {\it set\_model\_parameter} and {\it show\_parameter}, etc.
+\begin{verbatim}
+genesis > ndf_load cells/purkinje/edsjb1994.ndf
+genesis > pwe
+/
+genesis > show_parameter /Purkinje/segments/b3s45[10] RM
+value = 3
+genesis > ce /Purkinje/segments/b3s45[10]  
+genesis > show_parameter RM
+symbol not found      
+genesis > show_parameter /Purkinje/segments/b3s45[10] RM
+value = 3
+\end{verbatim} 
+
+     The use of the command {\it show\_parameter} above is invalid.
+     Use of the current element as the default element for the GENESIS
+     2 {\it setfield} command interferes with future extensibility of
+     this command and will not be implemented.
+
+     This can be easily worked around using the '.' to refer to the
+     current working element.  The following snippet illustrates this
+     use:
+\begin{verbatim}
+genesis > ndf_load cells/purkinje/edsjb1994.ndf
+genesis > ce /Purkinje/segments/
+genesis > pwe
+/Purkinje/segments
+genesis > ce b3s45[10]
+genesis > pwe
+/Purkinje/segments/b3s45[10]
+genesis > show_parameter . RM
+value = 3
+genesis > ce ../
+genesis > pwe
+/Purkinje/segments
+genesis > show_parameter b3s45[10] RM
+value = 3
+\end{verbatim} (DONE)
+\end{enumerate}
 
 \subsection{Allow use of token names for model components}
 
