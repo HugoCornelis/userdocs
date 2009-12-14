@@ -769,12 +769,10 @@ morphologies in three dimensions and generating overviews of network
 models (not shown).  In the next section we explore more graphical
 capabilities of the GENESIS 3 simulation system.
 
-
-
 \subsection{Gluing Pre-existing Applications \& Libraries}
 
 In the past, the graphical interface to GENESIS 2 was provided by the
-X-windows Output and Display Utility for Simulations (XODUS).  The
+X-Window System Output and Display Utility for Simulations (XODUS).  The
 XODUS interface made graphical objects available that could be
 connected to model components from within the SLI.  Rather than
 providing a full GUI instance, the flexibility of XODUS came from its
@@ -1162,6 +1160,7 @@ neuron morphology, computation of surface areas and volumes, and the
 generation of 3D crossections and 2D cuts also becomes possible.
 
 \subsection{The Discrete Event System}
+
 Finally, we note that we have developed a serial communication
 framework for event delivery of action potentials to postsynaptic
 targets.  Called the Discrete Event System (DES), this software component is
@@ -1172,23 +1171,7 @@ hardware such as that provided by the MOOSE
 simulator\,\cite{ray08:_pymoos} and the MUSIC
 framework\,\cite{ekeberg08:_music_multis_coord}.
 
-\subsection{Future Directions}
-
-Complementary functionality to that provided by interfacing G-3 with
-Blender would be available after interfacing G-3 with {\it
-  neuro}Construct, a software package designed to simplify development
-of complex networks of biologically realistic
-neurons\,\cite{gleeson05:_build_networ_model, gleeson07}.  {\it
-  neuro}Construct uses the latest NeuroML specifications (see
-http://www.neuroml.org), including MorphML (http://www.morphml.org/),
-ChannelML and NetworkML and can be used to visually validate network
-layout and design\,\cite{crook07:_morph}.
-
-Implemented in Java, it can be connected to Python applications (e.g.
-see http://www.jython.org/).  In principle this allows {\it
-  neuro}{Construct} to be integrated with other simulators that have
-Python bindings, including NEURON and
-NEST.
+%\subsection{Future Directions}
 
 %\cite{stewart09:_python}
 
@@ -1197,35 +1180,7 @@ NEST.
 %\pagebreak
 \section{Discussion}
 
-The current generation of simulators can be characterized as software
-applications that support the user in the activities from model
-construction to data analysis.  Many of these simulators come with
-Python bindings, ranging from Monte-Carlo simulators for
-reaction-diffusion systems\,\cite{wils09:_steps} and dedicated large
-network simulators\,\cite{eppler08:_pynes} to the general purpose NEURON
-and GENESIS
-simulators\,\cite{hines09:_neuron_python, bower98:_book_genes}.
-Some of these simulators use Python because of its ease of
-use\,\cite{pecevski09:_pcsim} and simplicity\,\cite{goodman08:_brian}.
-Interoperability between such simulators can be implemented using the
-NeuroML standard for model specification in
-XML\,\cite{nigel01:_towar_neurom} and PyNN for simulator-independent
-specification of neuronal network models in
-Python\,\cite{andrew08:_pynn}.
-
-However successful open source development is not always characterized
-like this\,\cite{Open-Source03theecology}.  The other branch of
-development which we have outlined in this paper is component based.
-Another example of this branch is\,\cite{schuermann09:_neuron}.
-
-Ecology of software components connected over interfaces.  Gluing them
-together can be done in several ways.  Examples given above, but also
-integration of the {\bf Model\,Container} with a web server to allow
-measuring and analyzing morphologies in a morphology database.  This
-could be useful for the neuro-morpho
-database\,\cite{ascoli06:_mobil, ascoli07:_neurom}.
-
-\section{Conclusion}
+%\section{Conclusion}
 
 Software libraries can be divided into application specific and
 application neutral categories.  Through the Neurospaces project,
@@ -1249,6 +1204,28 @@ output collection, and running simulations, the primary goal of
 scripting languages such as Perl and Python has become application
 integration.
 
+The current generation of neural simulators can be characterized as software
+applications that support the user in the activities from model
+construction to data analysis.  Many of these simulators come with
+Python bindings, ranging from Monte-Carlo simulators for
+reaction-diffusion systems\,\cite{wils09:_steps} and dedicated large
+network simulators\,\cite{eppler08:_pynes} to the general purpose NEURON
+and GENESIS
+simulators\,\cite{hines09:_neuron_python, bower98:_book_genes}.
+Some of these simulators use Python because of its ease of
+use\,\cite{pecevski09:_pcsim} and simplicity\,\cite{goodman08:_brian}.
+For others, interoperability can be implemented using the
+NeuroML standard for model specification in
+XML\,\cite{nigel01:_towar_neurom} and PyNN for simulator-independent
+specification of neuronal network models in
+Python\,\cite{andrew08:_pynn}.
+
+Currently, successful open source software development 
+% is not always characterized in such a manner and
+seems to depart on the one hand from the popular view of being the production of an egalitarian network of developers free from the hierarchal organization and central control of the ``cathederal'' model pervasive in the commercial world and, on the other hand, also depart from the flat structure of the open source development ``bazaar''\,\cite{Open-Source03theecology}.  Here, we outline a highly successful alternative that follows the component based approach to open source software development (for another example in neural simulation see\,\cite{schuermann09:_neuron}). This approach has given rise to an ecology of software components connected over interfaces.  Gluing these components
+together can be done in a variety ways and we have given examples above. Another possible example is that of integration of the {\bf Model\,Container} with a web server to allow
+measurement and analysis of morphologies in a morphology database.  Such a platform would likely be useful, for example, for the neuro-morpho database\,\cite{ascoli06:_mobil, ascoli07:_neurom}.
+
 Here, we have illustrated the relationship between Python and the G-3
 simulator.  We have focused on a simple but comprehensive example, the
 running of a single compartment neuron and the plotting of its
@@ -1269,6 +1246,17 @@ and, for example, to collect the output data for movie generation.
 %, and the
 %simulation to movie generation and other relevant functions provided
 %by the Blender plugin library.
+Complementary functionality to that provided by interfacing G-3 with
+Blender would be available after interfacing G-3 with {\it
+  neuro}Construct, a software package designed to simplify development
+of complex networks of biologically realistic
+neurons\,\cite{gleeson05:_build_networ_model, gleeson07}.  Implemented in Java, {\it neuro}Construct uses the latest NeuroML specifications (see
+http://www.neuroml.org), including MorphML (http://www.morphml.org/),
+ChannelML and NetworkML, can be used to visually validate network
+layout and design\,\cite{crook07:_morph}, and can be connected to Python applications (e.g.
+see http://www.jython.org/). In principle this allows it to be integrated with other simulators that have
+Python bindings, including NEURON and NEST.
+
 Employed in this way, the modularized design of the G-3 simulator
 provides for progressive federated software development.
 
