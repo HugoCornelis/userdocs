@@ -1161,13 +1161,24 @@ just these functions. For example, 3D measurement and manipulation of
 neuron morphology, computation of surface areas and volumes, and the
 generation of 3D crossections and 2D cuts also becomes possible.
 
+\subsection{The Discrete Event System}
+Finally, we note that we have developed a serial communication
+framework for event delivery of action potentials to postsynaptic
+targets.  Called the Discrete Event System (DES), this software component is
+integrated with the mathematical solvers of G-3 using either Python or
+Perl.  Because it is optimized for communication over serial hardware,
+we plan to extend it with communication frameworks for parallel
+hardware such as that provided by the MOOSE
+simulator\,\cite{ray08:_pymoos} and the MUSIC
+framework\,\cite{ekeberg08:_music_multis_coord}.
+
 \subsection{Future Directions}
 
 Complementary functionality to that provided by interfacing G-3 with
 Blender would be available after interfacing G-3 with {\it
   neuro}Construct, a software package designed to simplify development
 of complex networks of biologically realistic
-neurons\,\cite{gleeson05:_build_networ_model}\cite{gleeson07}.  {\it
+neurons\,\cite{gleeson05:_build_networ_model, gleeson07}.  {\it
   neuro}Construct uses the latest NeuroML specifications (see
 http://www.neuroml.org), including MorphML (http://www.morphml.org/),
 ChannelML and NetworkML and can be used to visually validate network
@@ -1179,16 +1190,6 @@ see http://www.jython.org/).  In principle this allows {\it
 Python bindings, including NEURON and
 NEST.
 
-Finally, we note that we have developed a serial communication
-framework for event delivery of action potentials to postsynaptic
-targets (DES: Discrete Event System).  This software component is
-integrated with the mathematical solvers of G-3 using either Python or
-Perl.  Because it is optimized for communication over serial hardware,
-we plan to extend it with communication frameworks for parallel
-hardware such as that provided by the MOOSE
-simulator\,\cite{ray08:_pymoos} and the MUSIC
-framework\,\cite{ekeberg08:_music_multis_coord}.
-
 %\cite{stewart09:_python}
 
 %\cite{deschutter09:_review_paper_descr_neuroin_softw}.
@@ -1199,30 +1200,30 @@ framework\,\cite{ekeberg08:_music_multis_coord}.
 The current generation of simulators can be characterized as software
 applications that support the user in the activities from model
 construction to data analysis.  Many of these simulators come with
-Python bindings, ranging from monte-carlo simulators for
-reaction-diffusion systems\cite{wils09:_steps} and dedicated large
-network simulators\cite{eppler08:_pynes} to the general purpose NEURON
+Python bindings, ranging from Monte-Carlo simulators for
+reaction-diffusion systems\,\cite{wils09:_steps} and dedicated large
+network simulators\,\cite{eppler08:_pynes} to the general purpose NEURON
 and GENESIS
-simulators\cite{hines09:_neuron_python}\cite{bower98:_book_genes}.
+simulators\,\cite{hines09:_neuron_python, bower98:_book_genes}.
 Some of these simulators use Python because of its ease of
-use\cite{pecevski09:_pcsim} and simplicity\cite{goodman08:_brian}.
+use\,\cite{pecevski09:_pcsim} and simplicity\,\cite{goodman08:_brian}.
 Interoperability between such simulators can be implemented using the
 NeuroML standard for model specification in
-XML\cite{nigel01:_towar_neurom} and PyNN for simulator-independent
+XML\,\cite{nigel01:_towar_neurom} and PyNN for simulator-independent
 specification of neuronal network models in
-Python\cite{andrew08:_pynn}.
+Python\,\cite{andrew08:_pynn}.
 
 However successful open source development is not always characterized
-like this\cite{Open-Source03theecology}.  The other branch of
+like this\,\cite{Open-Source03theecology}.  The other branch of
 development which we have outlined in this paper is component based.
-Another example of this branch is \cite{schuermann09:_neuron}.
+Another example of this branch is\,\cite{schuermann09:_neuron}.
 
 Ecology of software components connected over interfaces.  Gluing them
 together can be done in several ways.  Examples given above, but also
 integration of the {\bf Model\,Container} with a web server to allow
 measuring and analyzing morphologies in a morphology database.  This
 could be useful for the neuro-morpho
-database\,\cite{ascoli06:_mobil}\cite{ascoli07:_neurom}.
+database\,\cite{ascoli06:_mobil, ascoli07:_neurom}.
 
 \section{Conclusion}
 
