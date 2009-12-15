@@ -146,22 +146,7 @@ Once a model has been saved, the next time GENESIS is run the file can be loaded
 
 \subsection*{Define Simulation Constants}
 
-The GENESIS shell distinguishes between model parameters such as those used to build our simple single compartment model, i.e. those generated above by the {\it create} command, and parameters that do not alter the model but only affect model behavior at run-time during a simulation, e.g. the duration and/or magnitude of a stimulus or the duration of a simulation. Here, for example, we can set the run-time activity of our model neuron by setting the magnitude of the current to be injected at the soma, e.g. 
-\begin{verbatim}
-    genesis > set_runtime_parameter /n/soma INJECT 2e-9
-\end{verbatim}
-This will apply a 2\,nA current injection to the soma for the duration of the simulation. We can check that this parameter has been correctly set with
-\begin{verbatim}
-    genesis > show_runtime_parameters
-\end{verbatim}
-which returns
-\begin{verbatim}
-    runtime_parameters:
-       - component_name: /n/soma
-         field: INJECT
-         value: 2e-9
-         value_type: number
-\end{verbatim}
+The GENESIS shell distinguishes between model parameters such as those used to build our simple single compartment model, i.e. those generated above by the {\it create} command, and parameters that do not alter the model but only affect model behavior at run-time during a simulation, e.g. the maximum conductance of the $Ca_T$ channels located in the soma. However, as in this introductory tutorial we have constructed a passive compartment, a description of how to define simulation constants is delayed until \href{../tutorial2/tutorial2.tex}{Tutorial 2}.  
 
 \subsection*{Define Simulation Inputs}
 
