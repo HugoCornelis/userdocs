@@ -46,7 +46,43 @@ The preferred method of generating a FAQ is to email the genesis-sim-users maili
 
 For further information see \href{../workflow-user-query/workflow-user-query.tex}{\bf Workflow\,User\,Question}.
 
+\item {\bf Who should I be when installing GENESIS on my computer?} \\
+GENESIS should not be installed as superuser/root/administrator or by using the {\it sudo} command. However, installation as a regular user will result in a prompt requesting the root password to be entered for each component installed. 
+
+Testing an installation (recommended) as superuser (not recommended) via the command:
+\begin{verbatim}
+   neurospaces_check >/tmp/check.out 2>&1
+\end{verbatim}
+generates files that are owned by root. Subsequent use of GENESIS will fail as many files will not be owned by the user. For example, when running \href{../example-script1/example-script1.tex}{\bf Example\,Script\,1} in \href{../tutorial1/tutorial1.tex}{\bf Tutorial\,1}, an error message similar to the following will be generated:
+\begin{verbatim}
+   genesis > create cell /n
+   . . .
+   genesis > check /n
+   Can't locate object method "new" via package "SSP" at /usr/local/glue/swig/perl/GENESIS3.pm line 1314.
+   at /usr/local/bin/genesis-g3 line 40
+           main::__ANON__('Can\'t locate object method "new" via package "SSP" at /usr/l...') called at /usr/local/glue/swig/perl/GENESIS3.pm line 1314
+           GENESIS3::Commands::run('/n', 0) called at /usr/local/glue/swig/perl/GENESIS3.pm line 224
+           GENESIS3::Commands::check('/n') called at (eval 89) line 1
+           eval 'GENESIS3::Commands::check( \'/n\', )
+   ;' called at /usr/local/bin/genesis-g3 line 146
+           main::interprete('check /n') called at /usr/local/bin/genesis-g3 line 217
+           main::loop() called at /usr/local/bin/genesis-g3 line 279
+           main::main() called at /usr/local/bin/genesis-g3 line 339
+   $Result = undef;
+ \end{verbatim}
+ If you have this problem a quick fix is to:
+ \begin{enumerate}
+    \item Delete all files in {\it /tmp} that were produced by {\it neurospaces\_check} with a command such as the following:
+    \begin{verbatim}
+root /tmp #  rm -Rf neurospaces/ morphology* file* text_* report_* heccer output* purk_test_soma* readcell_reset.txt  traub91_* text_gshell_1.* singlep.ssp 1.* current_schedule a1 a2
+    \end{verbatim}
+    
+    \item If the previous step doesn't fix the problem, remove all {\it \_Inline} directories from your home directory/folder.
+ \end{enumerate}
+ Although GENESIS is a system-wide install, currently only a single account owner or user should uniquely use a single copy of GENESIS on a machine.
 \end{enumerate}
+
+{\bf Thank you:} Alexandre Gravier
 
 \section*{DEVELOPER FAQ}
 
