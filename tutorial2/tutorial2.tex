@@ -212,21 +212,95 @@ ndf_save /** /<path from / to your home directory>/<path to your directory>/<fil
 
 \subsection*{Define Simulation Constants}
 
-Here, for example, we set the run-time activity of the model neuron by 
-setting the magnitude of the current to be injected at the soma (in this case 2\,nA):
+Here, for example, we set the run-time activity of the model neuron by finding and
+setting the maximum conductance of the $Ca_T$ channels located at the soma. To find the settable parameters enter:
 \begin{verbatim}
-   genesis > set_runtime_parameter /n/soma INJECT 2e-9
+   genesis > list_elements
+   ---
+   - /Purkinje
+   genesis > list_elements /Purkinje
+   ---
+   - /Purkinje/SpinesNormal_13_1
+   - /Purkinje/segments
+   genesis > list_elements /Purkinje/segments
+   ---
+   - /Purkinje/segments/soma
+   - /Purkinje/segments/main
+   - /Purkinje/segments/branches
+   - /Purkinje/segments/branchlets
+   genesis > list_elements /Purkinje/segments/soma
+   ---
+   - /Purkinje/segments/soma/km
+   - /Purkinje/segments/soma/kdr
+   - /Purkinje/segments/soma/ka
+   - /Purkinje/segments/soma/kh
+   - /Purkinje/segments/soma/nap
+   - /Purkinje/segments/soma/naf
+   - /Purkinje/segments/soma/cat
+   - /Purkinje/segments/soma/ca_pool
+   genesis > show_model_parameters /Purkinje/segments/soma/cat
+     -
+       'parameter name': G_MAX
+       type: number
+       value: 5
+     -
+       'parameter name': Erev
+       type: function
+       'function name': NERNST
+       'function parameters':
+
+         -
+           'parameter name': Cin
+           'field name': concen
+           type: field
+           value: ../ca_pool->concen
+           'resolved value': /Purkinje/segments/soma/ca_pool->concen
+         -
+           'parameter name': Cout
+           type: number
+           value: 2.4
+         -
+           'parameter name': valency
+           'field name': VAL
+           type: field
+           value: ../ca_pool->VAL
+           'resolved value': /Purkinje/segments/soma/ca_pool->VAL
+         -
+           'parameter name': T
+           type: number
+           value: 37
 \end{verbatim}
-To check that the parameter value has been correctly set:
+The value of model parameters for $Ca_T$ channels located at the soma can then be found with:
 \begin{verbatim}
-   genesis > show_runtime_parameters
+   genesis > show_model_parameters /Purkinje/segments/soma/cat
+     -
+       'parameter name': G_MAX
+       type: number
+       value: 5
+    . . .  
+\end{verbatim}
+The runtime value of {\tt G\_MAX} can then be set with the following command:
+\begin{verbatim}
+   genesis > set_runtime_parameter /Purkinje/segments/soma/cat G_MAX 4
+\end{verbatim}
+To check that the parameter value has been correctly set, enter:
+\begin{verbatim}
+   genesis > show_runtime_parameters /Purkinje/segments/soma/cat G_MAX
    ---
    runtime_parameters:
-      - component_name: /Purkinje/segments/soma
-         field: INJECT
-         value: 2e-9
+      - component_name: /Purkinje/segments/soma/cat
+         field: G_MAX
+         value: 4
          value_type: number
-\end{verbatim}  
+\end{verbatim}
+{\bf Note:} Only the run time value of this parameter has been altered. The default value defined by the model is unaffected:
+\begin{verbatim}
+   genesis > show_model_parameters /Purkinje/segments/soma/cat
+     -
+       'parameter name': G_MAX
+       type: number
+       value: 5
+\end{verbatim}
 
 \subsection*{Define Simulation Inputs}
 
