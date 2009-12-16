@@ -72,17 +72,19 @@ generates files that are owned by root. Subsequent use of GENESIS will fail as m
  \end{verbatim}
  If you have this problem a quick fix is to:
  \begin{enumerate}
-    \item Delete all files in {\it /tmp} that were produced by {\it neurospaces\_check} with a command such as the following:
+    \item Delete all files in {\it /tmp} owned by root (find owner with ``{\tt ls -l}'') that were produced by {\it neurospaces\_check} with a command such as the following:
     \begin{verbatim}
 root /tmp #  rm -Rf neurospaces/ morphology* file* text_* report_* heccer output* purk_test_soma* readcell_reset.txt  traub91_* text_gshell_1.* singlep.ssp 1.* current_schedule a1 a2
     \end{verbatim}
     
     \item If the previous step doesn't fix the problem, remove all {\it \_Inline} directories from your home directory/folder.
+    
+    \item Keep removing files owned by root in {\it /tmp} and the {\it \_Inline} directories in your home directory, until the problem is resolved.
  \end{enumerate}
  Although GENESIS is a system-wide install, currently only a single account owner or user should uniquely use a single copy of GENESIS on a machine.
 \end{enumerate}
 
-{\bf Thank you:} Alexandre Gravier
+{\bf FAQ Acknowledgment:} Alexandre Gravier.
 
 \section*{DEVELOPER FAQ}
 
