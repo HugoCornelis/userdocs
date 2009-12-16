@@ -238,37 +238,6 @@ setting the maximum conductance of the $Ca_T$ channels located at the soma. To f
    - /Purkinje/segments/soma/naf
    - /Purkinje/segments/soma/cat
    - /Purkinje/segments/soma/ca_pool
-   genesis > show_model_parameters /Purkinje/segments/soma/cat
-     -
-       'parameter name': G_MAX
-       type: number
-       value: 5
-     -
-       'parameter name': Erev
-       type: function
-       'function name': NERNST
-       'function parameters':
-
-         -
-           'parameter name': Cin
-           'field name': concen
-           type: field
-           value: ../ca_pool->concen
-           'resolved value': /Purkinje/segments/soma/ca_pool->concen
-         -
-           'parameter name': Cout
-           type: number
-           value: 2.4
-         -
-           'parameter name': valency
-           'field name': VAL
-           type: field
-           value: ../ca_pool->VAL
-           'resolved value': /Purkinje/segments/soma/ca_pool->VAL
-         -
-           'parameter name': T
-           type: number
-           value: 37
 \end{verbatim}
 The value of model parameters for $Ca_T$ channels located at the soma can then be found with:
 \begin{verbatim}
@@ -421,7 +390,12 @@ The next {\it run} command will then start the simulation from this reinitialize
 
 \subsection*{Check Simulation Output}
 
-UNDER CONSTRUCTION
+Simulation output (in the default location) can be checked with the following command:
+\begin{verbatim}
+   genesis > sh cat /tmp/output
+\end{verbatim}
+This will print the values in {\it /tmp/output} to the screen.
 
+{\bf Note:} Most of the common UNIX shell commands can be run in the {\bf G-Shell} if passed as arguments to the {\tt sh} command.
 
 \end{document}
