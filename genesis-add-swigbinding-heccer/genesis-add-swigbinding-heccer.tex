@@ -1,0 +1,257 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Add a SWIG Binding to HECCER}
+
+In a previous example we created a simulation object called \href{../genesis-add-object-solver/genesis-add-object-solver.tex}{\it PulseGen\{\}} for use in G-3 simulations as a callable object. Here we implement the necessary bindings to make the object callable from Perl using SWIG. This will allow it to easily be used in the Perl based applications of GENESIS such as the \href{../gshell/gshell.tex}{\bf G-Shell} and \href{../ssp/ssp.tex}{\bf SSP}.
+
+\subsection*{Source files}
+
+The {\it PulseGen\{\}} implementation currently resides in the {\bf Heccer} component in the files:
+\begin{verbatim}
+   pulsegen.c
+   heccer/pulsegen.h
+\end{verbatim}
+
+\subsubsection*{Perl SWIG files}
+
+{\bf Heccer} has two files where SWIG bindings are implemented:
+
+\begin{verbatim}
+   glue/swig/perl/heccer.i
+   glue/swig/perl/Heccer.pm
+\end{verbatim}
+
+{\it heccer.i} is a SWIG interface file which generates C code that can be compiled and linked against Perl headers and libraries.
+
+{\it Heccer.pm} is a Perl module that contains higher level function calls to the previously mentioned interface.
+
+Here, we show how to add bindings to these files to make the {\it PulseGen\{\}} object callable.
+
+\subsubsection*{SWIG interface file {\it heccer.i}}
+
+First we need to include our {\it heccer/pulsegen.h} header in the interface file in two places. At the top of the file with the other includes we add:
+\begin{verbatim}
+   #include "heccer/pulsegen.h"
+\end{verbatim}
+For the module declaration we add it near the end like this:
+\begin{verbatim}
+   %include "heccer/pulsegen.h"
+\end{verbatim}
+Next we need to declare a couple of functions for retrieving object data, and for performing a step in a simulation. These functions are considered to be low level functions.
+
+The following function returns a pointer to a {\it simobj\_PulseGen{}} data structure (defined in {\it heccer/pulsegen.h}) so that the calling process can get access to the object's data:
+\begin{verbatim}
+   void * pulse_gen_get_driver_data(struct simobj_PulseGen *ppg)
+   {
+       return((void *)ppg);
+   }
+\end{verbatim}
+This function will be called when performing a step in a simulation:
+\begin{verbatim}
+   void * pulse_gen_get_driver_method(struct simobj_PulseGen *ppg)
+   {
+       return((void *)PulseGenSingleStep);
+   }
+\end{verbatim}
+
+\subsubsection*{Perl module {\it Heccer.pm}}
+
+In this section we define higher level functions that make use of the functions we defined in the SWIG interface file. These functions will be defined within a Perl module and be callable by other Perl programs.
+
+In our implementation files for our simulation object, {\it pulsegen.c} and {\it heccer/pulsegen.h}, we have a set of functions required for running a simulation:
+\begin{verbatim}
+   struct simobj_PulseGen * PulseGenNew(char *pcName);
+      int PulseGenFinish(struct simobj_PulseGen *ppg);
+      int PulseGenAddInput(struct simobj_PulseGen *ppg, void *pvInput);
+      int PulseGenAddVariable(struct simobj_PulseGen *ppg, void *pvOutput);
+      int PulseGenReset(struct simobj_PulseGen *ppg);
+      int PulseGenSingleStep(struct simobj_PulseGen *ppg, double dTime);
+      int PulseGenSetFields
+      (
+         struct simobj_PulseGen *ppg,
+            double dLevel1,
+            double dWidth1,
+            double dDelay1,
+            double dLevel2,
+            double dWidth2,
+            double dDelay2,
+            int iTriggerMode,
+            double *pdPulseOut
+      );
+\end{verbatim}
+In our Perl module we want to create a 1-to-1 correspondence for each function. The file {\it glue/swig/perl/Heccer.pm} contains declarations for packages along with their accompanying functions.
+
+We declare a new package and then, using an existing working example for {\it PerfectClamp\{\}}, we create identical calls to our {\it PulseGen\{\}}, with some changes made to accommodate the {\it PulseGen\{\}} parameters. We are going to define a function for the following actions: {\it add}, {\it finish}, {\it get\_driver}, {\it get\_time\_step}, {\it initiate, new}, {\it report}, and {\it step}:
+
+This is our package declaration, it precedes our set of functions:
+\begin{verbatim}
+   package Heccer::PulseGen;
+   BEGIN { our @ISA = qw(Heccer::Glue); }
+\end{verbatim}
+The {\it add} function adds a variable address to the {\it PulseGen\{\}} structure so that it knows where to write its output. We perform a call to {\it PulseGenAddVariable} which we created in our simulation object:
+\begin{verbatim}
+   sub add
+   {
+      my $self = shift;
+      my $options = shift;
+      my $backend = $self->backend();
+      my $name
+         = $options->{service_request}->{component_name}
+            . "__"
+               . $options->{service_request}->{field};
+      $name =~ s/\//____/g;
+      my $result = $backend->PulseGenAddVariable($options->{address});
+
+      return $result;
+   }
+\end{verbatim}
+The {\it finish} function performs a call to {\it PulseGenFinish} from the simulation object:
+\begin{verbatim}
+   sub finish
+   {
+      my $self = shift;
+      # close files, free memory
+      my $backend = $self->backend();
+      $backend->PulseGenFinish();
+   }
+\end{verbatim}
+The {\it get\_driver} function simply makes calls to {\it pulse\_gen\_get\_driver\_data} and {\it pulse\_gen\_get\_driver\_method} to give the Perl bindings access to the simulation object.
+\begin{verbatim}
+   sub get_driver
+   {
+      my $self = shift;
+      my $result
+         = {
+            data => $self->{backend}->pulse_gen_get_driver_data(),
+            method => $self->{backend}->pulse_gen_get_driver_method(),
+            };
+
+      return $result;
+   }
+\end{verbatim}
+The {\it get\_time\_step} function is left in for consistency, it performs no operations.
+\begin{verbatim}
+   sub get_time_step
+   {
+      my $self = shift;
+      return undef;
+   }
+\end{verbatim}
+The {\it initiate} function is left in for consistency, it performs no operations.
+\begin{verbatim}
+   sub initiate
+   {
+      my $self = shift;
+   }
+\end{verbatim}
+
+The {\it new} function is the most important. It allocates and sets up a new {\it PulseGen} object. We create a new object via a call to {\it PulseGenNew} from our simulation object. We then set up the parameters {\it PulseGen} needs by checking for them in the options hash: {\it width1}, {\it level1}, {\it delay1}, {\it width2}, {\it level2}, {\it delay2}, {\it baselevel}, and {\it triggermode}. If all are present then a call is made to {\it PulseGenSetFields}, which sets all of the parameters for the simulation object:
+\begin{verbatim}
+   sub new
+   {
+      my $package = shift;
+      my $options = shift;
+      my $self = { %$options, };
+      bless $self, $package;
+
+      if (!defined $self->{name})
+      {
+         $self->{name} = "a pulsegen";
+      }
+
+      $self->{backend} = SwiggableHeccer::PulseGenNew($self->{name});
+
+      if (!defined $self->{backend})
+      {
+         return undef;
+      }
+
+      #
+      # Here we check for all of our needed variables, we die if even 
+      # one is missing since we need it to continue creating the object.
+      #
+      if (!defined $options->{width1})
+      {   
+         return "Heccer::PulseGen constructor: width1 is not defined, cannot construct pulsegen object";
+      }
+      elsif(!defined $options->{level1})
+      {
+         return "Heccer::PulseGen constructor: level1 is not defined, cannot construct pulsegen object";
+      }
+      elsif(!defined $options->{delay1})
+      {
+         return "Heccer::PulseGen constructor: delay1 is not defined, cannot construct pulsegen object";
+      }
+      elsif(!defined $options->{level2})
+      {
+         return "Heccer::PulseGen constructor: level2 is not defined, cannot construct pulsegen object";
+      }
+      elsif(!defined $options->{width2})
+      {
+         return "Heccer::PulseGen constructor: width2 is not defined, cannot construct pulsegen object";
+      }
+      elsif(!defined $options->{delay2})
+      {
+         return "Heccer::PulseGen constructor: delay2 is not defined, cannot construct pulsegen object";
+      }
+      elsif(!defined $options->{baselevel})
+      {
+         return "Heccer::PulseGen constructor: baselevel is not defined, cannot construct pulsegen object";
+      }
+      elsif(!defined $options->{triggermode})
+      {
+         return "Heccer::PulseGen constructor: triggermode is not defined, cannot construct pulsegen object";
+      }
+      else
+      {
+         my $backend = $self->backend();
+
+         $backend->PulseGenSetFields($options->{level1},
+            $options->{width1},
+            $options->{delay1},
+            $options->{level2},
+            $options->{width2},
+            $options->{delay2},
+            $options->{baselevel},
+            $options->{triggermode});
+      }
+      return $self;
+   }
+\end{verbatim}
+The {\it report} function is left in for consistency, it performs no operations.
+\begin{verbatim}
+   sub report
+   {
+      my $self = shift;
+      #t nothing I guess ?
+   }
+\end{verbatim}
+The {\it step} function simply performs a given number of simulation steps. A call is made to {\it PulseGenSingleStep} from our simulation object:
+\begin{verbatim}
+   sub step
+   {
+      my $self = shift;
+      my $scheduler = shift;
+      my $options = shift;
+      my $backend = $self->backend();
+      my $result = $backend->PulseGenSingleStep($options->{steps});
+
+      return $result;
+   }
+\end{verbatim}
+With this set of declarations, we are now able to utilize the {\it PulseGen\{\}} simulation object from a set of Perl functions via SWIG. 
+
+\end{document}
