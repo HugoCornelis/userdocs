@@ -13,17 +13,17 @@
 % start: userdocs-tag-replace-items related-do-nothing
 % end: userdocs-tag-replace-items related-do-nothing
 
-\section*{The Model Container}
+\section*{The Model\,Container}
 
-The Model Container is used as an abstraction layer on top of a simulator and deals with biological entities and end-user concepts instead of mathematical equations. It provides a solver independent internal storage format for models that allows user independent optimizations of the numerical core. By `containing' the biological model, the Model Container makes the implementation of the numerical core independent of software implementation.
+The {\bf Model\,Container} is used as an abstraction layer on top of a simulator and deals with biological entities and end-user concepts instead of mathematical equations. It provides a solver independent internal storage format for models that allows user independent optimizations of the numerical core. By `containing' the biological model, the {\bf Model\,Container} makes the implementation of the numerical core independent of software implementation.
 
-The Model Container API abstracts away all the mathematical and computational details of the simulator. Optimized to store large models in little memory--it stores neuronal models in a fraction of the memory that would be used by conventional simulators--and provides automatic partitioning of the model such that simulations can be run in parallel. From the modeler's perspective, the Model Container will be able to import and export NeuroML files to facilitate model exchange and ideas.
+The {\bf Model\,Container} API abstracts away all the mathematical and computational details of the simulator. Optimized to store large models in little memory--it stores neuronal models in a fraction of the memory that would be used by conventional simulators--and provides automatic partitioning of the model such that simulations can be run in parallel. From the modeler's perspective, the {\bf Model\,Container} will be able to import and export NeuroML files to facilitate model exchange and ideas.
 
-\subsubsection*{Features}
+\subsection*{Features}
 
 \begin{itemize}
 
-\item Covers models from the network level down to the level of mechanism. A Perl interface converts and imports GENESIS {\tt .p} and SWC morphology files. These conversions are done on an ``as needed just in time'' basis. (For example, it can reproduce an exact match with the \href{../purkinje-cell-model/purkinje-cell-model.pdf}{Purkinje cell model}).
+\item Covers models from the network level down to the level of mechanism. A Perl interface converts and imports GENESIS {\tt .p} and SWC morphology files. These conversions are done on an ``as needed just in time'' basis. (For example, it can reproduce an exact match with the \href{../purkinje-cell-model/purkinje-cell-model.tex}{\bf Purkinje\,Cell\,Model}).
 
 \item Defines models in a purely declarative, extensible language.
 
@@ -48,5 +48,12 @@ The Model Container API abstracts away all the mathematical and computational de
 \item Can save and reload connections between components. Costly computation of connections required to be done only once.
     
 \end{itemize}
+
+\subsection*{Extending the Model\,Container}
+\begin{itemize}
+   \item \href{../genesis-extend-model-container/genesis-extend-model-container.tex}{\bf Extend the Model\,Container:} Details the steps a developer must go through to extend the {\bf Model\,Container} by adding a {\it PulseGen()} object.
+\end{itemize}
+
+
     
 \end{document}
