@@ -1,0 +1,117 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Physical Processes and Model Variables}
+
+Physical processes are a mathematical model of the functional activity
+of a biological entity.  This modeling aspect associates physical
+processes with parameters (fixed during a simulation) and variables
+(computed by a simulation).
+
+As an example, a synaptic current is commonly modeled using a
+second-order differential equation:
+\begin{equation}
+  \label{eq:second-order-synchan}
+  G'' + \alpha G' + \beta G = S
+\end{equation}
+with $S = \delta(t - t_1) + \cdots + \delta(t - t_N)$.
+
+In computational neuroscience the right-hand side of this equation
+corresponds to the level of synaptic activation delivered by spikes
+arriving at times $t_i$.
+
+Assuming the initial values $G(0) = 0$ and $G'(0) = 0$, the solution
+to this equation is a dual-exponential equation:
+\begin{equation}
+  \label{eq:dual-exponential}
+  G(t) = \frac{\tau_1\tau_2}{\tau_1 - \tau_2}
+  \cdot (\mathrm{e}^{\frac{-t}{\tau_1}} - \mathrm{e}^{\frac{-t}{\tau_2}})
+\end{equation}
+with $\alpha = \frac{\tau_1 + \tau_2}{\tau_1 \tau_2}$ and $\beta =
+\frac{1}{\tau_1 \tau_2}$.
+%\begin{equation}
+%  \label{eq:simple-spatial-cable}
+%  \frac{a}{2R_a}\frac{\partial^2V}{\partial x^2} = C_m \frac{\partial V}{\partial t} + \frac{V}{R_m}
+%  + I_{\mathrm{HH}} + I_{\mathrm{syn}}
+%\end{equation}
+This equation has two parameters {\tt TAU1} and {\tt TAU2}, sometimes
+called the raise and decay time constants respectively.  Assigning
+values to the two parameters, this can be expressed in the NDF format
+as:
+%EQUATION_EXPONENTIAL exp2
+
+%  ...
+\begin{verbatim}
+  PARAMETERS
+    PARAMETER ( TAU1 = 0.50e-3 ),
+    PARAMETER ( TAU2 = 1.20e-3 )
+  END PARAMETERS
+\end{verbatim}
+%END EQUATION_EXPONENTIAL
+
+When a biological entity modulates the behavior of its neighbour,
+their physical processes share one or more variables.  In the case of
+a synaptic channel the incoming spikes raise the neurotransmitter
+concentration level in the synaptic cleft, which then modulates total
+ionic conductance through the channel.  The NDF format expresses the
+neurotransmitter concentration level as {\tt activation} and
+conductance as {\tt G}.  These shared variables must be declared using
+the {\tt BINDINGS} keyword:
+\begin{verbatim}
+  BINDABLES
+    INPUT activation, OUTPUT G
+  END BINDABLES
+\end{verbatim}
+Assuming a synapse is present under the label {\tt ../synapse}, its
+activation level can be bound to the channel activation level using a
+{\tt BINDINGS} clause:
+\begin{verbatim}
+  BINDINGS
+    INPUT ../synapse->activation
+  END BINDINGS
+\end{verbatim}
+
+Putting everything together using the {\tt EQUATION\_EXPONENTIAL}
+token to represent the dual-exponential equation, we get the NDF
+snippet:
+\begin{verbatim}
+EQUATION_EXPONENTIAL exp2
+  BINDABLES
+    INPUT activation, OUTPUT G
+  END BINDABLES
+  BINDINGS
+    INPUT ../synapse->activation
+  END BINDINGS
+  PARAMETERS
+    PARAMETER ( TAU1 = 0.50e-3 ),
+    PARAMETER ( TAU2 = 1.20e-3 )
+  END PARAMETERS
+END EQUATION_EXPONENTIAL
+\end{verbatim}
+
+In this example, the order of the clauses of {\tt BINDABLES}, {\tt
+  BINDINGS} and {\tt PARAMETERS} was chosen for readibility.
+
+We finally note that neither the
+\href{../ndf-file-format/ndf-file-format.tex}{\bf NDF file format} nor
+the \href{../model-container/model-container.tex}{model-container}
+make a syntactical distinction between variables and parameters of a
+physical process.
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
