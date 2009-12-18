@@ -46,8 +46,8 @@ with $\alpha = \frac{\tau_1 + \tau_2}{\tau_1 \tau_2}$ and $\beta =
 %  + I_{\mathrm{HH}} + I_{\mathrm{syn}}
 %\end{equation}
 This equation has two parameters {\tt TAU1} and {\tt TAU2}, sometimes
-called the raise and decay time constants respectively.  Assigning
-values to the two parameters, this can be expressed in the NDF format
+called the rise and decay time constants, respectively.  Assigning
+values to the two parameters, this can be expressed in the \href{../ndf-file-format/ndf-file-format.tex}{\bf NDF\,File\,Format}
 as:
 %EQUATION_EXPONENTIAL exp2
 
@@ -60,14 +60,14 @@ as:
 \end{verbatim}
 %END EQUATION_EXPONENTIAL
 
-When a biological entity modulates the behavior of its neighbour,
+When one biological entity modulates the behavior of another,
 their physical processes share one or more variables.  In the case of
 a synaptic channel the incoming spikes raise the neurotransmitter
 concentration level in the synaptic cleft, which then modulates total
-ionic conductance through the channel.  The NDF format expresses the
+ionic conductance through channel in the post-synaptic membrane.  The NDF file format expresses the
 neurotransmitter concentration level as {\tt activation} and
-conductance as {\tt G}.  These shared variables must be declared using
-the {\tt BINDINGS} keyword:
+conductance as {\tt G}.  As these variables  are shared they must be declared using
+the {\tt BINDABLES} keyword:
 \begin{verbatim}
   BINDABLES
     INPUT activation, OUTPUT G
@@ -101,17 +101,16 @@ END EQUATION_EXPONENTIAL
 \end{verbatim}
 
 In this example, the order of the clauses of {\tt BINDABLES}, {\tt
-  BINDINGS} and {\tt PARAMETERS} was chosen for readibility.  We
-finally note that neither the
-\href{../ndf-file-format/ndf-file-format.tex}{\bf NDF file format} nor
-the \href{../model-container/model-container.tex}{model-container}
-make a syntactical distinction between variables and parameters of a
+  BINDINGS} and {\tt PARAMETERS} was chosen for readibility.  
+{\bf Note:} Neither the NDF file format nor
+the \href{../model-container/model-container.tex}{\bf Model\,Container}
+makes a syntactical distinction between the variables and parameters of a
 physical process.
 
 The NDF format supports an extensible set of tokens including {\tt
   SEGMENT}, {\tt CHANNEL}, {\tt CELL}, {\tt POPULATION}, {\tt
-  PROJECTION}, {\tt NETWORK} and many more that allow to construct
-models of subcellular dynamics upto network models.
+  PROJECTION}, {\tt NETWORK} and many more that allow the construction of
+models ranging from subcellular dynamics up to the network level.
 
 \end{document}
 

@@ -14,25 +14,28 @@
 
 \section*{GENESIS Interactive Shell Tokens}
 
-The tokens recognized by the GENESIS shell fall into four broadly different categories:
+The tokens recognized by the GENESIS shell (\href{../gshell/gshell.tex}{\bf G-Shell}) fall into four broad categories:
 
 \begin{enumerate}
 
 \item {\bf Some tokens define sections in an NDF description file.}
   The most important are {\tt IMPORT}, {\tt PRIVATE\_MODELS}, and {\tt
     PUBLIC\_MODELS}. Models defined in one section of an NDF file can
-  be forwarded to the next section with the {\tt ALIAS} token. To
-  obtain a complete list of the {\it section} tokens enter ``{\tt list
-    section}''. To learn more about the NDF file format see
-  \href{../ndf-file-format/ndf-file-format.tex}{The Neurospaces
-    Description Format}.
+  be forwarded to the next section with the {\tt ALIAS} token. To learn more
+  about the NDF file format see \href{../ndf-file-format/ndf-file-format.tex}{\bf The
+  Neurospaces Description Format}.
 
+  
+  To obtain a complete list of the {\it section} tokens enter ``{\tt list
+    section}''.
+    
 \item {\bf Many tokens have the semantics of a specific physical
     process.} Examples include, {\tt CHANNEL} for a Hodgkin-Huxley
   type conductance and {\tt SEGMENT} for a cylindrical cable equation.
 %  All these tokens map to a single hierarchical element tree (see for
 %  example, ???).
   Physical processes may be nested into parent--child data structures.
+  
   To obtain a complete list of the {\it physical} tokens enter ``{\tt
     list physical}''.
 
@@ -40,15 +43,18 @@ The tokens recognized by the GENESIS shell fall into four broadly different cate
   special case of the previous item. Examples include, {\tt RANDOMIZE}
   to randomize a value, and {\tt FIXED} to calculate a constant value
   that cannot be scaled. A special case is {\tt SERIAL} that returns
-  the unique identifier of the current symbol.  To obtain a complete
+  the unique identifier of the current symbol. 
+  
+  To obtain a complete
   list of the {\it function} tokens enter ``{\tt list functions}''.
 
 \item {\bf Other tokens exist to define the structure of a model.} For
   example, the {\tt CHILD} token adds a new (reference to a) child of
   an active symbol. The {\tt PARAMETERS} token defines attributes for
   symbols with (name, value) pairs. The {\tt BINDABLES} token allows
-  variables to be shared between different components of a model. To
-  obtain a complete list of the {\it structure} tokens enter ``{\tt
+  variables to be shared between different components of a model.
+  
+  To obtain a complete list of the {\it structure} tokens enter ``{\tt
     list structure}''.
 
 \end{enumerate}

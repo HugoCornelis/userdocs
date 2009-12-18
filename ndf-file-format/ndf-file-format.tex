@@ -23,7 +23,7 @@ The Neurospaces Description Format or NDF file format is a declarative ASCII tex
 %We now introduce the basic parts of a simple NDF file that defines a single compartment neuron containing classical Hodgkin-Huxley descriptions of $Na$ and $K$ channels.
 A NDF file contains four sections. These sections are not necessarily
 filled, but they must be present in the given order.  A NDF file has
-the following general form which we describe below.
+the following general form which we describe in more detail below.
 
 \begin{center}
  \begin{linenumbers}
@@ -59,7 +59,7 @@ the following general form which we describe below.
 \end{center}
 
 \subsubsection*{Header Section}
-The header, which runs from lines 1--6 must always be present and must always start with the
+The header, which runs from lines 1--6 in the previous example, must always be present and must always start with the
 interpreter sequence giving the system specific absolute path to the
 NMC executable:
 \begin{verbatim}
@@ -77,7 +77,7 @@ XEmacs editors\footnote{The Neurospaces Emacs major mode is bundled
 of file, here a NDF file.
 
 \subsubsection*{Import Section}
-This section (lines 8--11) declares dependencies on other NDF files with the {\tt  FILE} keyword, e.g.
+This section (lines 8--11) uses the {\tt  FILE} keyword to declare dependencies on other NDF files, e.g.
 \begin{verbatim}
     IMPORT
         FILE <namespace> "<path>/<fname>.ndf"
@@ -107,7 +107,7 @@ As an example, if a first file is dependent on a second file, only the public fi
 
 For more information about the syntax used to define models, take a
 look at the document describing the
-\href{../shell-tokens/shell-tokens.tex}{\bf shell tokens}.
+\href{../shell-tokens/shell-tokens.tex}{\bf Shell\,Tokens}.
 
 
 %\subsection*{Running a Simulation}
