@@ -14,10 +14,10 @@
 
 \section*{Physical Processes and Model Variables}
 
-Physical processes are a mathematical model of the functional activity
-of a biological entity.  This modeling aspect associates physical
+Mathematical models can be used to describe physical processes that underly the functional activity
+of biological entities by associating the physical
 processes with parameters (fixed during a simulation) and variables
-(computed by a simulation).
+(computed during a simulation).
 
 As an example, a synaptic current is commonly modeled using a
 second-order differential equation:
@@ -64,7 +64,7 @@ When one biological entity modulates the behavior of another,
 their physical processes share one or more variables.  In the case of
 a synaptic channel the incoming spikes raise the neurotransmitter
 concentration level in the synaptic cleft, which then modulates total
-ionic conductance through channel in the post-synaptic membrane.  The NDF file format expresses the
+ionic conductance through channels in the post-synaptic membrane.  The NDF file format expresses the
 neurotransmitter concentration level as {\tt activation} and
 conductance as {\tt G}.  As these variables  are shared they must be declared using
 the {\tt BINDABLES} keyword:
