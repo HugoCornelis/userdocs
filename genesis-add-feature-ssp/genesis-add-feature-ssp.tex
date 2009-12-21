@@ -1,0 +1,176 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Add the PulseGen\{\} Object to SSP}
+
+\subsection*{Reading Parameters}
+
+To integrate a solver object (here, we use the example \href{../genesis-add-object-solver/genesis-add-object-solver.tex}{\it PulseGen\{\}}) with \href{../ssp/ssp.tex}{\bf SSP}, {\bf SSP} must first be made aware of the parameters of the object. {\it PulseGen\{\}} takes parameters for {\it Level1}, {\it Width1}, {\it Delay1}, {\it Level2}, {\it Width2}, {\it Delay2}, {\it BaseLevel\{\}}, and {\it TriggerMode\{\}}, so {\bf SSP} must be able to read in a value for each as an argument.
+
+First, variables are declared for the optional arguments near the top of the {\it bin/ssp} file:
+\begin{verbatim}
+   my $option_pulsegen_level1;
+   my $option_pulsegen_width1;
+   my $option_pulsegen_delay1;
+   my $option_pulsegen_level2;
+   my $option_pulsegen_width2;
+   my $option_pulsegen_delay2;
+   my $option_pulsegen_baselvel;
+   my $option_pulsegen_triggermode;
+\end{verbatim}
+Then in the Perl subroutine {\it read\_cmd\_line} we add the options to be read in to the call to {\it GetOptions()}:
+\begin{verbatim}
+   "pulsegen-level1=s" => \$option_pulsegen_level1,
+   "pulsegen-width1=s" => \$option_pulsegen_width1,
+   "pulsegen-delay1=s" => \$option_pulsegen_delay1,
+   "pulsegen-level2=s" => \$option_pulsegen_level2,
+   "pulsegen-width2=s" => \$option_pulsegen_width2,
+   "pulsegen-delay2=s" => \$option_pulsegen_delay2,
+\end{verbatim}
+This allows the values to be read from the command line and placed into memory. They must then be passed on to {\it PulseGen\{\}}.
+
+\subsection*{Passing data to {\it PulseGen\{\}}}
+
+Now that {\it PulseGen\{\}} can read in values, each parameter must be checked and passed on to the {\it PulseGen\{\}} object. We do this by using a simple {\it if} statement that checks whether a variable has been defined and then passes on a value to {\bf SSP}. A block similar to the following must be made for each parameter to be accepted by{\it PulseGen\{\}}. Here is an example for setting {\it width1} in {\it PulseGen\{\}}:
+\begin{verbatim}
+   if (defined $option_pulsegen_width1)
+   {
+      my $pulsegen_inputclassname = "pulsegen";
+
+      my $inputclass
+         = {
+               module_name => "Heccer",
+               options => {
+                  command => $option_pulsegen_width1,
+                  name => "pulsegen set to $option_pulsegen_width1",
+               },
+               package => "Heccer::Pulsegen",
+            };
+
+      my $inputs
+         = [
+            {
+               component_name => "$model_root/segments/soma",
+               field => "WIDTH1",
+               inputclass => $pulsegen_inputclassname,
+            },
+         ];
+
+      $scheduler->{inputclasses}->{$pulsegen_inputclassname} = $inputclass;
+
+         if (!defined $scheduler->{inputs})
+         {
+            $scheduler->{inputs} = [];
+         }
+
+         push @{$scheduler->{inputs}}, @$inputs;
+   }
+\end{verbatim}
+
+|\subsection*{Creating a SSP specification}
+
+For testing purposes, a {\bf SSP} specification is created to check the functionality of the {\it PulseGen\{\}} object. A test will load a model, create a {\it PulseGen\{\}} solver object, then clamp the {\it PulseGen\{\}} output to the model's membrane potential ($V_m$) at the soma. Although not biologically correct, this provides a good base case for a test.
+
+First, a file {\it pulsegen\_freerun.yml} is created as a large YAML hash. The simulation runs for 200 steps, similar to the examples in \href{../genesis-create-test-heccer/genesis-create-test-heccer.tex}{\bf Create a Heccer Test} and the associated GENESIS 2 script :
+\begin{verbatim}
+--- !!perl/hash:SSP
+apply:
+  results:
+    - arguments:
+        - commands:
+            - perl -e 'my $result = [ `cat /tmp/output`, ]'
+      method: shell
+  simulation:
+    - arguments:
+        - 200
+      method: steps
+\end{verbatim}
+Here, the {\it PulseGen\{\}} object is created as an input class and all of the parameters previously used in the \href{../genesis-create-test-heccer/genesis-create-test-heccer.tex}{\bf Create a Heccer Test} and GENESIS 2 scripts are assigned to it.
+\begin{verbatim}
+inputclasses:
+  pulsegen:
+    module_name: Heccer
+    options:
+      level1: 50.0
+      width1: 3.0
+      delay1: 5.0
+      level2: -20.0
+      width2: 5.0
+      delay2: 8.0
+      baselevel: 10.0
+      triggermode: 0
+    package: Heccer::PulseGen
+\end{verbatim}
+The  {\it PulseGen\{\}} object is then "clamped" to the model's soma.
+\begin{verbatim}
+inputs:
+  - component_name: /Purkinje/segments/soma
+    field: Vm
+    inputclass: pulsegen
+models:
+  - modelname: /Purkinje
+    solverclass: heccer
+name: purkinje cell pulsegen
+\end{verbatim}
+An output object {\it double\_2\_ascii} is then created that writes $V_m$ to the file {\it /tmp/output}.
+\begin{verbatim}
+outputclasses:
+  double_2_ascii:
+    module_name: Heccer
+    options:
+      filename: /tmp/output
+    package: Heccer::Output
+outputs:
+  - component_name: /Purkinje/segments/soma
+    field: Vm
+    outputclass: double_2_ascii
+\end{verbatim}
+Here, the \href{../model-container/model-container.tex}{\bf Model\,Container} is invoked to load the desired model. Parameters for the {\bf Model\,Container} can also be set in this block:
+\begin{verbatim}
+services:
+  model_container:
+    initializers:
+      - arguments:
+          - filename: cells/purkinje/edsjb1994.ndf
+            no-use-library: 1
+          -
+            - ssp configuration for edsjb1994 using pulsegen
+            - -R
+            - -A
+        method: load
+    module_name: Neurospaces
+\end{verbatim}
+Finally, \href{../heccer/heccer.tex}{\bf Heccer} is invoked. The output granularity is set to 1 and the step size to 0.5 seconds. Again, in line with the previous examples:
+\begin{verbatim}
+solverclasses:
+  heccer:
+    constructor_settings:
+      configuration:
+        reporting:
+          granularity: 1
+          tested_things: 6225920
+      dStep: 0.5
+      options:
+        iOptions: 4
+    module_name: Heccer
+    service_name: model_container
+\end{verbatim}
+After saving the specification, the simulation is started with the command:
+\begin{verbatim}
+   ssp pulsegen_freerun.yml
+\end{verbatim}
+The expected output is then written to the file {\it /tmp/output} as declared in the specification. 
+
+\end{document}
