@@ -191,6 +191,7 @@ inputclasses:
     package: Heccer::PerfectClamp
 \end{verbatim}
 
+{\it PerfectClamp} is part of the Heccer package and takes two options, one for an identifier and one for a filename which points to a file containing event data.
 
 \subsubsection*{\tt inputs}
 
@@ -202,6 +203,9 @@ inputs:
     field: Vm
     inputclass: perfectclamp
 \end{verbatim}
+
+This {\it inputs} block tells SSP to connect the {\it PerfectClamp} to the component {\it /Purkinje/segments/soma}
+ via the membrane potential {\it Vm}.
 
 \subsubsection*{\tt services}
 
