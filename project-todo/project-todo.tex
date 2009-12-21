@@ -87,6 +87,8 @@ Others that need implementation:
 
 \subsection{Implement more consistent G-Shell command names}
 
+Assigned to Hugo (G-Shell) and Mando (G-Tube).
+
 \begin{verbatim}
    runtime_parameter_add <name>
    runtime_parameter_show <name>
@@ -231,6 +233,35 @@ conditions between simultaneously running ssp processes.
 }
 
 
+\subsection{File permission errors}
+
+Certain tests output to a hardcoded filename, such as /tmp/output.
+When one user runs the tests this file is given permissions for their
+user id. If a second user tries to run the same test, it writes to the
+same filename, the test will fail and the test will bail out with an
+error (as was displayed by the regression tester machine).  This
+bottlenecks the number of users that can reliably install a developer
+installation on the same machine.
+
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    &  \\
+    \hline
+    Time Estimate
+    & ??? \\
+    \hline
+    Assigned to
+    & ??? \\
+    \hline
+  \end{tabular}
+}
+
+
 \subsection{Daily Releases and Release Labels}
 
 The installer scripts can update the release labels in the source code
@@ -291,6 +322,9 @@ This file may also be renamed to {\it .ns-sli}.
 
 Document the python dependencies of the gshell.
 
+Currently the gshell requires Inline::Python as a recommended option
+to be installed.
+
 {
   \vspace{5mm}
   \centering
@@ -340,35 +374,6 @@ input file that can be passed as an argument to the neurospaces\_cron script.
 
 
 
-\subsection{File permission errors}
-
-Certain tests output to a hardcoded filename, such as /tmp/output.
-When one user runs the tests this file is given permissions for their
-user id. If a second user tries to run the same test, it writes to the
-same filename, the test will fail and the test will bail out with an
-error (as was displayed by the regression tester machine).  This
-bottlenecks the number of users that can reliably install a developer
-installation on the same machine.
-
-
-{
-  \vspace{5mm}
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    &  \\
-    \hline
-    Time Estimate
-    & ??? \\
-    \hline
-    Assigned to
-    & ??? \\
-    \hline
-  \end{tabular}
-}
-
-
 \subsection{Source code Configuration}
 
 Fix automake scripts to detect different operating systems 
@@ -376,7 +381,8 @@ and build makefiles accordingly:
 
 
 \begin{itemize}
-\item {\it Fedora 11}: Compensate for libhistory being built into stdio.
+\item {\it Fedora 11}: Compensate for libhistory being built into the
+  installed libc.
 \item {\it BSD}: Not currently supported.
 \item {\it Solaris 10}: Not currently supported.
 \end{itemize}
@@ -412,7 +418,7 @@ each software component must implement the following makefile targets:
   Create an installer script that builds the tarball of each package
   (neurospaces\_dist) (DONE).
 \item {\it pkg-deb}: for creation of a binary archive for debian based
-  Linux distributions (including Ubuntu). - (IN PROGRESS)
+  Linux distributions (including Ubuntu). - (DONE)
 \item {\it pkg-rpm}: for creation of a binary archive for rpm based Linux
   distributions (such as Redhat and Fedora). - (IN PROGRESS)
 \item MAC .dmg file. - (IN PROGRESS)
@@ -536,7 +542,7 @@ scripts:
 \begin{itemize}
 \item Purkinje Cell Scripts from Erik De Schutter: some of the scripts
   are used for regression tests (and work correctly).  Other Purkinje
-  cell scripts still need validation.
+  cell scripts still need validation (DONE).
 \item Rallpacks: for benchmarking it would be useful to implement
   scripts for the rallpack standard.  To show the relationships
   between the different GENESIS\,3 interfaces, it is useful to
@@ -641,44 +647,6 @@ scripts:
 }
 
 
-\subsection{Find out about Dependencies}
-
-Write a document that briefly describes the dependencies.  These
-dependencies are known:
-\begin{itemize}
-\item Perl dependencies:
-  \begin{itemize}
-  \item YAML
-  \item Clone
-  \item Data::Utilities
-  \end{itemize}
-\item GUI dependencies:
-  \begin{itemize}
-  \item wxWidgets
-  \item pyYAML
-  \end{itemize}
-\end{itemize}
-
-Compile other dependencies from the NS wiki.
-
-{
-  \vspace{5mm}
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
-    \hline
-    Time Estimate
-    & 1 day \\
-    \hline
-    Assigned to
-    & Mando and Hugo \\
-    \hline
-  \end{tabular}
-}
-
-
 \subsection{Add Network Modeling Support}
 
 Network modeling support still requires substantial development on one
@@ -743,16 +711,17 @@ software component, and also impacts other software components.
   \item Get the GUI read from external libraries on the net.
   \item Add support for different file types like SWC.
   \end{itemize}
-\item Load Tutorial: Display a list of clickable tutorial links and
-  have the GUI open them in a web browser of html widget.
-\item Load Project: Get GUI to load a project based on a yaml file
-  which includes all relevant input and result files.
 \item Create Model: Create interface to allow a user to create a
   simple model via text and/or graphics.
 \item Explore Model: Create a graphics widget which displays the
-  morphology when clicking 'explore model'.
-\item Save Model: Get save model to work properly (save a project file
-  as well as all included files).
+  morphology when clicking 'explore model'.  Remove Studio from output
+  menu.
+\item Load Project: Get GUI to load a project based on a yaml file
+  which includes all relevant input and result files (DONE).
+\item Save Project: Get save model to work properly (save a project
+  file as well as all included files).
+\item Load Tutorial: Display a list of clickable tutorial links and
+  have the GUI open them in a web browser of html widget.
 \end{itemize}
 
 {
@@ -773,37 +742,10 @@ software component, and also impacts other software components.
 }
 
 
-\subsection{GUI: Design Experiment}
+\subsection{GUI: Run Simulation (2)}
 \begin{itemize}
-\item Choose Inputs: create a menu of selectable inputs from the loaded model. (DONE)
-\item Choose Outputs: create a menu of selectable outputs from the loaded model.
-\end{itemize}
-
-{
-  \vspace{5mm}
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
-    \hline
-    Time Estimate
-    & 1 - 2 days for integration \\
-    \hline
-    Assigned to
-    & Mando \\
-    \hline
-  \end{tabular}
-}
-
-
-\subsection{GUI: Run Simulation}
-\begin{itemize}
-\item CHECK: Appears to be working. (DONE)
-\item RUN: Appears to be working. (DONE)      
 \item STOP: Get `stop' simulation to properly work (not sure how this
   will work since the G-Shell is stop and wait).
-\item RESET: Get reset functionality to work. (DONE)
 \item SAVE: Save model state. 
 \item LOAD: Get GUI to load a previous save state.
 \item Runtime Option: create a menu for adding runtime options.
@@ -829,10 +771,6 @@ software component, and also impacts other software components.
 
 \subsection{GUI: Output}
 \begin{itemize}
-\item Plot: Get plot to take parameters from the simulation to fill in
-  the legend, X and Y axis as well as the title of a graph. - (DONE)
-\item Studio: Remove Studio from output menu? Same functionality will
-  be in `Explore Model.'
 \item Matlab: Create export menu/functionality for matlab.
 \item xmgrace: Create export menu/functionality for xmgrace.
 \item Mathematica: Create export menu/functionality for Mathematica.
@@ -885,13 +823,6 @@ files that can be loaded into the GUI.
 
 \subsection{GUI: Other}
 \begin{itemize}
-\item Finish yaml loader to load the clickable graphic complete with
-  roll overs dynamically.
-\item Have the GUI use a `project' file which will track various
-  aspects of a users project. (DONE)
-\item Get {\it compileall} script to work and make python byte code for
-  various distros.
-\item Have GUI track Workflow state and guide user accordingly. (DONE)
 \item Screenshot functionality for plot and explore model.
 \end{itemize}
 
@@ -962,6 +893,16 @@ In GENESIS 2, this is possible using forward integration methods only.
 
 Build up a library of cells that can be used with G2 or G3.
 
+\begin{itemize}
+\item Purkinje cell model edsjb1994 (present in the model container).
+\item Purkinje cell model Sergio (hopefully by email).
+\item Purkinje cell model Allan (may be included in dash).
+\item Rapp's passive model (must be reconstructed from the paper).
+\item Different species purkinje cell morphologies (gp, rat, turtle,
+  finch (present in project-browser).
+\item Rallpacks 1, 2, 3 (present in NS-SLI).
+\item Traub91 (present in NS-SLI).
+\end{itemize}
 
 \subsection{Level 4 Documentation: Technical Specifications}
 
@@ -1021,15 +962,6 @@ work proposed in the administrative supplement.
 First move conceptualized items from the supplement to this TODO list.
 
 
-\subsection{Unify the Methods of Handling of Inputs to a Model}
-
-There are several fundamentally different ways to specify inputs to a
-simulated model from the {\bf G-Shell}.  For example, a voltage clamp
-protocol is specified by creating input objects (pclamp object).  A
-current injection and endogeneous stimulation is specified by setting
-parameters.
-
-
 \subsection{Announce GENESIS\,3 alpha1}
 
 Compose an announcement of the GENESIS\,3 alpha1 release to the
@@ -1055,6 +987,140 @@ Allan Coop, Hugo Cornelis, Mando Rodriguez, Dave Beeman, James Bower.
 
 
 \section{DONE List}
+
+\subsection{Unify the Methods of Handling of Inputs to a Model}
+
+There are several fundamentally different ways to specify inputs to a
+simulated model from the {\bf G-Shell}.  For example, a voltage clamp
+protocol is specified by creating input objects (pclamp object).  A
+current injection and endogeneous stimulation is specified by setting
+parameters.
+
+
+\subsection{GUI: Other}
+\begin{itemize}
+\item Finish yaml loader to load the clickable graphic complete with
+  roll overs dynamically (DONE).
+\item Have the GUI use a `project' file which will track various
+  aspects of a users project. (DONE)
+\item Get {\it compileall} script to work and make python byte code for
+  various distros (DONE).
+\item Have GUI track Workflow state and guide user accordingly. (DONE)
+\end{itemize}
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & Required for alpha1 Release 3.0 \\
+    \hline
+    Time Estimate
+    & 1 week \\
+    \hline
+    Assigned to
+    & Mando \\
+    \hline
+  \end{tabular}
+}
+
+
+\subsection{GUI: Output}
+\begin{itemize}
+\item Plot: Get plot to take parameters from the simulation to fill in
+  the legend, X and Y axis as well as the title of a graph. - (DONE)
+\end{itemize}
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & Required for alpha1 Release 3.0 \\
+    \hline
+    Time Estimate
+    & 1 - 2 weeks \\
+    \hline
+    Assigned to
+    & Mando \\
+    \hline
+  \end{tabular}
+}
+
+
+\subsection{GUI: Run Simulation (1)}
+\begin{itemize}
+\item CHECK: Appears to be working. (DONE)
+\item RUN: Appears to be working. (DONE)      
+\item RESET: Get reset functionality to work. (DONE)
+\end{itemize}
+
+
+\subsection{GUI: Design Experiment}
+\begin{itemize}
+\item Choose Inputs: create a menu of selectable inputs from the
+  loaded model. (DONE).
+\item Choose Outputs: create a menu of selectable outputs from the
+  loaded model (DONE).
+\end{itemize}
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & Required for alpha1 Release 3.0 \\
+    \hline
+    Time Estimate
+    & 1 - 2 days for integration \\
+    \hline
+    Assigned to
+    & Mando \\
+    \hline
+  \end{tabular}
+}
+
+
+\subsection{Find out about Dependencies}
+
+Write a document that briefly describes the dependencies.  These
+dependencies are known:
+\begin{itemize}
+\item Perl dependencies:
+  \begin{itemize}
+  \item YAML
+  \item Clone
+  \item Data::Utilities
+  \end{itemize}
+\item GUI dependencies:
+  \begin{itemize}
+  \item wxWidgets
+  \item pyYAML
+  \end{itemize}
+\end{itemize}
+
+Compile other dependencies from the NS wiki.
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & Required for alpha1 Release 3.0 \\
+    \hline
+    Time Estimate
+    & 1 day \\
+    \hline
+    Assigned to
+    & Mando and Hugo \\
+    \hline
+  \end{tabular}
+}
+
 
 \subsection{G-Shell enhancements/bugs on Mac}
 
@@ -1459,3 +1525,5 @@ problems. (DONE)
 }
 
 \end{document}
+
+
