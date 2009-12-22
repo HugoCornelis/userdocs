@@ -103,6 +103,25 @@ sub build_document
       chdir '..';
       return;
     }
+    elsif(tag_defined($descriptor,'html'))
+    {
+      file_copy($descriptor->{'document name'},'html');
+      chdir '..';
+      return;
+    }
+    elsif(tag_defined($descriptor,'png'))
+    {
+      file_copy($descriptor->{'document name'},'png');
+      chdir '..';
+      return;
+    }
+    elsif(tag_defined($descriptor,'ps'))
+    {
+      file_copy($descriptor->{'document name'},'ps');
+      chdir '..';
+      return;
+    }
+
 
     # if we find a makefile
 

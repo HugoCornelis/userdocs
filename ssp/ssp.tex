@@ -208,11 +208,11 @@ This {\it inputs} block tells {\bf SSP} to connect the {\it PerfectClamp} to the
 
 \subsubsection*{\tt services}
 
-    Contains a definition of all the services, and the method to instantiate these services. For the neurospaces service, the most important methods are 'read', to read a model specified in a neurospaces description file, and 'load', to load a model specified in an external format (only GENESIS {\tt .p} files are supported at present). Additional options like e.g. a shrinkage correction factor, or a spines distribution definition, can be specified over here. 
+    Contains a definition of all the services, and the method to instantiate these services. For the neurospaces service, the most important methods are 'read', to read a model specified in a neurospaces description file, and 'load', to load a model specified in an external format (only GENESIS {\tt .p} files are supported at present). Additional options like e.g. a shrinkage correction factor, or a spines distribution definition, can be specified here. 
 
 \subsubsection*{\tt solverclasses}
 
-    The solver classes, and their relationship to the services. E.g. this key tells {\bf SSP} to load in the {\bf Heccer} module, and, whenever it is used, it must talk to {\it neurospaces} to figure out what needs to be simulated. Solver specific settings, e.g. the time step, are specified over here. 
+    The solver classes, and their relationship to the services. E.g. this key tells {\bf SSP} to load in the {\bf Heccer} module, and, whenever it is used, it must talk to {\it neurospaces} to figure out what needs to be simulated. Solver specific settings, e.g. the time step, are specified here. 
 
 \subsubsection*{\tt models}
 
@@ -257,7 +257,7 @@ The internal name of the schedule. It is a good idea to maintain a clear corresp
 
 \subsubsection*{\tt outputclasses}
 
-The output classes specify the type of outputs. Internally, output classes are the same as solver classes, but they come in a separate key for interfacing with other software. Options for the output class can be specified over here ??? (e.g. a filename for output). 
+The output classes specify the type of outputs. Internally, output classes are the same as solver classes, but they come in a separate key for interfacing with other software. Options for the output class can be specified here (e.g. a filename for output). 
 
 \subsubsection*{\tt outputs}
 
