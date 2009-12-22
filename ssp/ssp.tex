@@ -125,7 +125,7 @@ Below is a slightly enhanced {\bf SSP} configuration file that performs several 
 
 The comand ``{\tt ssp\_directory}'' calls {\bf SSP} for each schedule in a given directory, with the options ``{\tt set-name}'' and ``{\tt set-outputclass-filename}'' (see below).
 
-\subsection*{Starting {\bf SSP}}
+\subsection*{Starting SSP}
 
 When starting {\bf SSP}, you must specify a schedule template (a filename) for {\bf SSP} to read. {\bf SSP} will then read the file, modify it according to command line options, convert it to a real schedule, and then execute the schedule. Currently, the most important options are:
 \begin{itemize}
@@ -152,7 +152,7 @@ If some of these are not defined in the schedule, {\bf SSP} will assume defaults
 
 There is one special key {\tt description}. It is available at all levels of the hierarchy, but is ignored by {\bf SSP}. This allows the inclusion of comments in a {\bf SSP} file.
 
-The {\bf SSP} schedules are in \href{http://fdik.org/yml/}{YAML} format. The basics of this format are that it uses dashes for an order sensitive enumeration of items, and it uses colons for an order insensitive enumeration of key--value pairs. Each entry is newline terminated.
+The {\bf SSP} schedules are in \href{http://fdik.org/yml/}{\bf YAML} format (which is white space sensitive, see further below). The basics of this format are that it uses dashes for an order sensitive enumeration of items, and it uses colons for an order insensitive enumeration of key--value pairs. Each entry is newline terminated.
 
 {\bf SSP} relies on external ``services'' and ``engines''. In computational neuroscience parlance, the engines are solvers, and the services contain the model that needs to be computed by the solvers. So {\bf SSP} tells the engines when to do something, but the services tell the engines what has to be done. Currently the services are information services, but that is subject to change (e.g. it is currently unclear if a discrete event scheduler must be specified as a service or as an engine, from semantics it is the former, from software architecture it is the latter).
 
@@ -176,10 +176,9 @@ Contains a set of subkeys that define how to run a schedule. Each subkey contain
         method: advance
 \end{verbatim}
 
-
 \subsubsection*{\tt inputclasses}
 
-This option allows you to use external simulation objects with your model. A simulation object can be something compiled into the Heccer module, or completely stand alone. Here in this example, we load the {\it perectclamp} object which has been compiled into the Heccer module. The {\it options} attribute allows us to set parameters for the object upon initlization. 
+This option allows you to use external simulation objects with your model. A simulation object can be something compiled into the {\bf Heccer} component, or completely stand alone. Here in this example, we load the {\it perectclamp} object which has been compiled into the {\bf Heccer} component. The {\it options} attribute allows us to set parameters for the object upon initialization. 
 
 \begin{verbatim}
 inputclasses:
@@ -191,11 +190,11 @@ inputclasses:
     package: Heccer::PerfectClamp
 \end{verbatim}
 
-{\it PerfectClamp} is part of the Heccer package and takes two options, one for an identifier and one for a filename which points to a file containing event data.
+{\it PerfectClamp} is part of the {\bf Heccer} component and takes two options, one for an identifier and one for a filename which points to a file containing event data.
 
 \subsubsection*{\tt inputs}
 
-The inputs attribute allows the user to set an input for a simulation object that has been loaded via the {\it inputclasses} attribute. Here in this example an output element along with the intended output parameter are given for a perfectclamp object.
+The inputs attribute allows the user to set an input for a simulation object that has been loaded via the {\it inputclasses} attribute. Here in this example an output element along with the intended output parameter are given for a {\it PerfectClamp\{\}} object.
 
 \begin{verbatim}
 inputs:
@@ -204,20 +203,20 @@ inputs:
     inputclass: perfectclamp
 \end{verbatim}
 
-This {\it inputs} block tells SSP to connect the {\it PerfectClamp} to the component {\it /Purkinje/segments/soma}
+This {\it inputs} block tells {\bf SSP} to connect the {\it PerfectClamp} to the component {\it /Purkinje/segments/soma}
  via the membrane potential {\it Vm}.
 
 \subsubsection*{\tt services}
 
-    Contains a definition of all the services, and the method to instantiate these services. For the neurospaces service, the most important methods are 'read', to read a model specified in a neurospaces description file, and 'load', to load a model specified in an external format (only Genesis .p files are supported at present). Additional options like e.g. a shrinkage correction factor, or a spines distribution definition, can be specified overhere. 
+    Contains a definition of all the services, and the method to instantiate these services. For the neurospaces service, the most important methods are 'read', to read a model specified in a neurospaces description file, and 'load', to load a model specified in an external format (only GENESIS {\tt .p} files are supported at present). Additional options like e.g. a shrinkage correction factor, or a spines distribution definition, can be specified over here. 
 
 \subsubsection*{\tt solverclasses}
 
-    The solver classes, and their relationship to the services. E.g. this key tells ssp to load in the heccer module, and, whenever it is used, it must talk to neurospaces to figure out what needs to be simulated. Solver specific settings, e.g. the time step, are specified overhere. 
+    The solver classes, and their relationship to the services. E.g. this key tells {\bf SSP} to load in the {\bf Heccer} module, and, whenever it is used, it must talk to {\it neurospaces} to figure out what needs to be simulated. Solver specific settings, e.g. the time step, are specified over here. 
 
 \subsubsection*{\tt models}
 
-    An enumeration of the parts of the model to simulate, and what solverclasses to use for this part of the model. Model parts not listed are not simulated. For each entry of the enumeration, i.e. for each part of the model that will be simulated, you have the possibility to set a number of parameters, right before the engines get to see the model. The subkeys in an entry of the enumeration to do that are: 
+    An enumeration of the parts of the model to simulate, and what solverclasses to use, for this part of the model. Model parts not listed are not simulated. For each entry of the enumeration, i.e. for each part of the model that will be simulated, you have the possibility of setting a number of parameters, right before the engines get to see the model. The subkeys in an entry of the enumeration to do that are: 
 
 \begin{itemize}
 
@@ -258,7 +257,7 @@ The internal name of the schedule. It is a good idea to maintain a clear corresp
 
 \subsubsection*{\tt outputclasses}
 
-The output classes specify the type of outputs. Internally, output classes are the same as solver classes, but they come in a separate key for interfacing with other software. Options for the output class can be specified overhere ??? (e.g. a filename for output). 
+The output classes specify the type of outputs. Internally, output classes are the same as solver classes, but they come in a separate key for interfacing with other software. Options for the output class can be specified over here ??? (e.g. a filename for output). 
 
 \subsubsection*{\tt outputs}
 
@@ -270,7 +269,7 @@ Defines the version number the schedule complies to. If omitted its value is ``{
 
 \subsection*{Creating and Changing SSP Schedules}
 
-The best way to create a new {\bf SSP} schedule, is to modify an exising one to your needs. Small Perl scripts can be used to generate multiple {\bf SSP} schedules for batch mode simulations. For example:
+The best way to create a new {\bf SSP} schedule, is to modify an exising one as required. Small Perl scripts can be used to generate multiple {\bf SSP} schedules for batch mode simulations. For example:
 
 \begin{verbatim}
    ssp_directory > schedules.out 2>&1 --schedules-directory schedules/ --verbose &
@@ -280,6 +279,6 @@ The progress of multiple simulations can then be monitored with:
 \begin{verbatim}
    tail -f schedules.out
 \end{verbatim}
-{\bf SSP} schedules are specified in \href{http://www.yaml.org/}{YAML} format, an easy to understand format for na\"{i}ve computer users. As white space is  used to structure the content of information, YAML is white space sensitive. Indentation is used to define the hierarchical depth of an entry, while newlines are used to terminate an entry. This results in a very easy to understand format. All the examples given above employ YAML syntax. Importantly, by far the majority of scripting languages have built-in support for YAML data structures. 
+{\bf SSP} schedules are specified in \href{http://www.yaml.org/}\bf {YAML} format, an easy to understand format for na\"{i}ve computer users. As white space is  used to structure the content of information, YAML is white space sensitive. Indentation is used to define the hierarchical depth of an entry, while newlines are used to terminate an entry. This results in a very easy to understand format. All the examples given above employ YAML syntax. Importantly, by far the majority of scripting languages have built-in support for YAML data structures. 
 
 \end{document}
