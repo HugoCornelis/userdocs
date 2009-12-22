@@ -103,20 +103,14 @@ Assigned to Hugo (G-Shell) and Mando (G-Tube).
    inputclass_delete <name>
 \end{verbatim}
 
-\subsection{Descriptor file tags recognized by {\it neurospaces\_cron}}
+\subsection{Descriptor file tags recognized by {\it neurospaces\_cron} (2)}
 
-Extend the number of file formats for documentation that are recognized by the documentation build system when a document is placed in a document folder, as for example, currently happens for PDF formated documents. The following tags should be recognized for the alpha release.
-\begin{itemize}
-   \item[]{\bf - html} Hypertext markup language. (DONE)
-    \item[]{\bf - png} Portable network graphics. (DONE)
-    \item[]{\bf - ps} Postscript. (DONE)
-\end{itemize}
-This means that tags given above, should also be placed in the descriptor.yml file and recognized.
-
-The following tag should also be recognized (cf. draft, published):
+The following tag should be recognized by the documentation build
+system (cf. draft, published):
 \begin{itemize}
     \item[]{\bf - local} Private (local) documentation publication.
 \end{itemize}
+
 
 \subsection{Incorrect path to NDF model file corrupts G-Shell}
 \begin{verbatim}
@@ -292,32 +286,6 @@ repository).
 }
 
 
-\subsection{ns-sli .simrc}
-
-The backward-compatibility module expects the .simrc file in the users
-home directory.  The default place of this file should be a place in
-{\it /usr/local}. (DONE)
-
-This file may also be renamed to {\it .ns-sli}.
-
-{
-  \vspace{5mm}
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
-    \hline
-    Time Estimate
-    & 1 day \\
-    \hline
-    Assigned to
-    & Hugo \\
-    \hline
-  \end{tabular}
-}
-
-
 \subsection{gshell python}
 
 Document the python dependencies of the gshell.
@@ -341,37 +309,6 @@ to be installed.
     \hline
   \end{tabular}
 }
-
-
-
-
-\subsection{Fix trash cleanup in automated tester.} (DONE)
-
-The automated tester (neurospaces\_cron) currently has a problem with 
-not deleting all of the files it generates in /tmp. Over time the 
-``files'' grow and consume large amounts of disk space. The trash file 
-removal must be fixed so that it keeps from contaminating the file system
-further. It must also be improved by making the trash list an configurable 
-input file that can be passed as an argument to the neurospaces\_cron script.
-
-{
-  \vspace{5mm}
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Won't take wildcards for file deleting. \\
-    \hline
-    Time Estimate
-    & 1 day \\
-    \hline
-    Assigned to
-    & Mando \\
-    \hline
-  \end{tabular}
-}
-
-
 
 
 \subsection{Source code Configuration}
@@ -1001,6 +938,75 @@ Allan Coop, Hugo Cornelis, Mando Rodriguez, Dave Beeman, James Bower.
 
 
 \section{DONE List}
+
+\subsection{Fix trash cleanup in automated tester.} (DONE)
+
+The automated tester (neurospaces\_cron) currently has a problem with
+not deleting all of the files it generates in /tmp. Over time the
+``files'' grow and consume large amounts of disk space. The trash file
+removal must be fixed so that it keeps from contaminating the file
+system further. It must also be improved by making the trash list an
+configurable input file that can be passed as an argument to the
+neurospaces\_cron script.
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & Won't take wildcards for file deleting. \\
+    \hline
+    Time Estimate
+    & 1 day \\
+    \hline
+    Assigned to
+    & Mando \\
+    \hline
+  \end{tabular}
+}
+
+
+\subsection{ns-sli .simrc}
+
+The backward-compatibility module expects the .simrc file in the users
+home directory.  The default place of this file should be a place in
+{\it /usr/local}. (DONE)
+
+This file may also be renamed to {\it .ns-sli}.
+
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Notes
+    & Required for alpha1 Release 3.0 \\
+    \hline
+    Time Estimate
+    & 1 day \\
+    \hline
+    Assigned to
+    & Hugo \\
+    \hline
+  \end{tabular}
+}
+
+
+\subsection{Descriptor file tags recognized by {\it neurospaces\_cron} (1)}
+
+Extend the number of file formats for documentation that are
+recognized by the documentation build system when a document is placed
+in a document folder, as for example, currently happens for PDF
+formated documents. The following tags should be recognized for the
+alpha release.
+\begin{itemize}
+   \item[]{\bf - html} Hypertext markup language. (DONE)
+    \item[]{\bf - png} Portable network graphics. (DONE)
+    \item[]{\bf - ps} Postscript. (DONE)
+\end{itemize}
+This means that tags given above, should also be placed in the
+descriptor.yml file and recognized.
 
 \subsection{Unify the Methods of Handling of Inputs to a Model}
 
