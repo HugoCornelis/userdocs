@@ -16,21 +16,21 @@
 
 \subsection*{Introduction}
 
-Both the \href{../model-container/model-container.tex}{\bf Model Container} and the mathematical solver \href{../heccer/heccer.tex}{\bf Heccer} are stand-alone GENESIS modules. To be useful, these modules must be `glued' together and activated correctly, such that they can work together in co-ordination on a single simulation. This is exactly what the Simple Scheduler in Perl ({\bf SSP}) does. It is currently the standard scheduler for GENESIS. {\bf SSP} exploits the sophistication of the Perl scripting language to load software modules on demand, and activate them from a configuration file. It achieves this by loading dynamically those software modules referenced in its configuration. Because the {\bf SSP} scheduler does not have any computational load, its implementation is very simple and highly configurable. Other configurations will connect {\bf SSP} to other modeling services or solvers.
+Both the \href{../model-container/model-container.tex}{\bf Model\,Container} and the mathematical solver \href{../heccer/heccer.tex}{\bf Heccer} are stand-alone GENESIS components. To be useful, these components must be `glued' together and activated correctly, such that they can work together in co-ordination on a single simulation. This is exactly what the Simple Scheduler in Perl ({\bf SSP}) does. It is currently the standard scheduler for GENESIS. {\bf SSP} exploits the sophistication of the Perl scripting language to load software components on demand, and activate them from a configuration file. It achieves this by loading dynamically those software components referenced in its configuration. Because the {\bf SSP} scheduler does not have any computational load, its implementation is very simple and highly configurable. Other configurations will connect {\bf SSP} to other modeling services or solvers.
 
-In summary:
+In summary {\bf SSP}:
 
 \begin{itemize}
-\item {\bf SSP} glues other software components together.
-\item {\bf SSP} synchronizes the activities of other components during a simulation.
-\item {\bf SSP} is configurable. 
+\item {\bf Glues} other software components together.
+\item {\bf Synchronizes} the activities of other components during a simulation.
+\item {\bf Is configurable}. 
 \end{itemize}
 
 \subsection*{The SSP Configuration File}
 
-Below is a typical configuration file for {\bf SSP}. It first configures {\bf SSP} to use the\,{\bf Model Container} for internal storage of biological models. It then instructs {\bf SSP} to load a model called \,{\it cells/tensizesp.ndf}, and to instantiate a solver called\,{\bf Heccer} for that part of the model ({\it /tensizesp}). The simulation of the model is run using the\,{\it apply} entry in the configuration file.
+Below is a typical configuration file for {\bf SSP}. It first configures {\bf SSP} to use the\,{\bf Model\,Container} for internal storage of biological models. It then instructs {\bf SSP} to load a model called \,{\it cells/tensizesp.ndf}, and to instantiate a solver called\,{\bf Heccer} for that part of the model ({\it /tensizesp}). The simulation of the model is run using the\,{\it apply} entry in the configuration file.
 
-Note that the order in the configuration file below is alphabetical, not chronological. Thus, entries may specified in any order.
+Note that the order in the configuration file below is alphabetical, not chronological, i.e. entries may specified in any order.
 
 \begin{verbatim}
   --- !!perl/hash:SSP
@@ -68,7 +68,7 @@ Below is a slightly enhanced {\bf SSP} configuration file that performs several 
 \begin{itemize}
 \item Pass specific options to\,{\bf Heccer} which will then give a small report after every update time step during the simulation.
 \item Increment the time step to a new value. 
-\item Specify the output classes and actual outputs of the simulation. These outputs are written to a file in the file system (here, in this case using a default filename).
+\item Specify the output classes and actual outputs of the simulation. These outputs are written to a file in the file system (here, a default filename is used).
 \end{itemize}
 
 \begin{verbatim}
@@ -121,7 +121,7 @@ Below is a slightly enhanced {\bf SSP} configuration file that performs several 
 
 \subsection*{Working with SSP}
 
-{\bf SSP} is started using the command ``{\tt ssp}''. In the absence of any options a description of how to use the module is generated along with a list of options recognized at startup.
+{\bf SSP} is started using the command ``{\tt ssp}''. In the absence of any options a description of how to use the component is generated along with a list of options recognized at startup.
 
 The comand ``{\tt ssp\_directory}'' calls {\bf SSP} for each schedule in a given directory, with the options ``{\tt set-name}'' and ``{\tt set-outputclass-filename}'' (see below).
 
@@ -142,9 +142,9 @@ Both of these options allow a user to track the correspondence between the sched
 
 A schedule is a hierarchical enumeration of ``keys'' that tell {\bf SSP} to do certain things. Amongst other contents, a {\bf SSP} schedule must define:
 \begin{itemize}
-\item What external modules must be loaded by {\bf SSP}
-\item How to link these modules together (if required).
-\item How to activate the listed modules
+\item What external components must be loaded by {\bf SSP}
+\item How to link these components together (if required).
+\item How to activate the listed components
 \item What the outputs of a schedule are.
 \item How to finish a simulation and clean up.
 \end{itemize}
@@ -212,7 +212,7 @@ This {\it inputs} block tells {\bf SSP} to connect the {\it PerfectClamp} to the
 
 \subsubsection*{\tt solverclasses}
 
-    The solver classes, and their relationship to the services. E.g. this key tells {\bf SSP} to load in the {\bf Heccer} module, and, whenever it is used, it must talk to {\it neurospaces} to figure out what needs to be simulated. Solver specific settings, e.g. the time step, are specified here. 
+    The solver classes, and their relationship to the services. E.g. this key tells {\bf SSP} to load in the {\bf Heccer} component, and, whenever it is used, it must talk to {\it neurospaces} to figure out what needs to be simulated. Solver specific settings, e.g. the time step, are specified here. 
 
 \subsubsection*{\tt models}
 
