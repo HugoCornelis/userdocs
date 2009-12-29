@@ -1169,31 +1169,45 @@ generation of 3D crossections and 2D cuts also becomes possible.
 
 \section{Discussion}
 
-The G-3 platform uses scripting to connect neuroscience specific
+The current
+generation of neural simulators can be characterized as software
+applications that support a user workflow extending from model
+construction to data analysis.  Many of these simulators come with
+Python bindings, ranging from Monte-Carlo simulators for
+reaction-diffusion systems\,\cite{wils09:_steps} and dedicated large
+network simulators\,\cite{eppler08:_pynes} to the general purpose
+NEURON and GENESIS simulators\,\cite{hines09:_neuron_python,
+  bower98:_book_genes}.  Some of these simulators use Python because
+of its ease of use\,\cite{pecevski09:_pcsim} and
+simplicity\,\cite{goodman08:_brian}.  For others, interoperability can
+be implemented using the NeuroML standard for model specification in
+XML\,\cite{nigel01:_towar_neurom} and PyNN for simulator-independent
+specification of neuronal network models in
+Python\,\cite{andrew08:_pynn}.
+
+The G-3 platform now provides an alternative approach that uses scripting to connect neuroscience specific
 software to general purpose software and integrate it into a next
-generation simulator.  The advantage is that third party software
+generation neural simulator.  The advantage is that third party software
 libraries and applications become available for users, for example,
 Blender, {\it matplotlib}, and Glade, among many others. This has
 become possible due to the rearchitectured GENESIS software design
-where G-3 now conforms to the CBI federated software architecture and stores model parameters separately from stimulation
+where G-3 now conforms to the CBI federated software architecture. In this paradigm, model parameters are stored separately from stimulation
 protocols and the way simulations are run. It is the stand-alone
 nature of the individual software components and the fact that they
-can now easily be interfaced that serves the purpose of continued
-development and user-friendliness.
+can now easily be interfaced that facilitates continued software
+development and increased user-friendliness.
 
 \subsection{Other Software Components}
 
-It is to these ends (extensibility and user-friendliness) that we are currently using Blender for visual inspection and validation of
-reconstructed dendrites by connecting the model to the geometrical and
-analytical tools provided by the Blender plugin library.  However it
+To demonstrate the power of our approach, we have interfaced G-3 with Blender. This novel software platform has been used for visual inspection and validation of
+reconstructed dendrites by connecting a model to the geometrical and
+analytical tools provided by the Blender plugin library.  Further, we note that it
 is also possible to use Blender to instantiate neural simulations and,
-for example, to collect the output data for movie generation.
-%, and the
-%simulation to movie generation and other relevant functions provided
-%by the Blender plugin library.
+for example, to collect simulation output data for movie generation.
+
 Complementary functionality to that provided by interfacing G-3 with
 Blender would be available after interfacing G-3 with {\it
-  neuro}Construct, a software package designed to simplify development
+  neuro}Construct (http://www.neuroconstruct.org/), a software package designed to simplify the development
 of complex networks of biologically realistic
 neurons\,\cite{gleeson05:_build_networ_model, gleeson07}.  Implemented
 in Java, {\it neuro}Construct uses the latest NeuroML specifications
@@ -1210,7 +1224,7 @@ framework for event delivery of action potentials to postsynaptic
 targets.  Called the Discrete Event System (DES), this software
 component is integrated with the mathematical solvers of G-3 using
 either Perl or Python.  Because it is optimized for communication over
-serial hardware, we plan to extend it with communication frameworks
+serial hardware, DES can be extended to support communication frameworks
 for parallel hardware such as those provided by the MOOSE
 simulator\,\cite{ray08:_pymoos} and the MUSIC
 framework\,\cite{ekeberg08:_music_multis_coord}.
@@ -1249,22 +1263,6 @@ clear interfaces for integration.
 %software components that are CBI compliant and that integrate with the
 %G-3 simulator.
 
-%The\marginpar{what is the purpose of this paragraph?} current
-%generation of neural simulators can be characterized as software
-%applications that support the user in the activities from model
-%construction to data analysis.  Many of these simulators come with
-%Python bindings, ranging from Monte-Carlo simulators for
-%reaction-diffusion systems\,\cite{wils09:_steps} and dedicated large
-%network simulators\,\cite{eppler08:_pynes} to the general purpose
-%NEURON and GENESIS simulators\,\cite{hines09:_neuron_python,
-%  bower98:_book_genes}.  Some of these simulators use Python because
-%of its ease of use\,\cite{pecevski09:_pcsim} and
-%simplicity\,\cite{goodman08:_brian}.  For others, interoperability can
-%be implemented using the NeuroML standard for model specification in
-%XML\,\cite{nigel01:_towar_neurom} and PyNN for simulator-independent
-%specification of neuronal network models in
-%Python\,\cite{andrew08:_pynn}.
-
 Processes of software development have traditionally been described as
 either cathedral-style where there is a closed developer group under
 central direction and software releases are infrequent, or
@@ -1282,16 +1280,16 @@ often\,\cite{raymond01:_cathed_bazaar; citeulike:126678}.
 When the cathederal-style of software development leads to a single
 threaded development cycle most suitable to commercial applications,
 the bazaar-style leads to multi-threaded development cycles of
-applications that come in different flavours\footnote{A typical
+applications that come in different flavours\,\footnote{A typical
   example is the family of editors based on Emacs.}.
 
 Here, we have outlined an alternative that follows the component based
-approach to open source software development (for another example of
+approach to open source software development (for other examples of
 this approach to neural simulation
 see\,\cite{schuermann09:_neuron; nordlie09:_visual}). Our
 approach has given rise to an ecology of software components connected
 over interfaces.  Gluing these components together can be done in a
-variety of ways and we have given examples above that use Perl and Python.
+variety of ways and we have given examples that use Perl and Python.
 %Here, we have illustrated the relationship between Python and the G-3
 %simulator.  We have focused on a simple but comprehensive example, the
 %running of a single compartment neuron and the plotting of its

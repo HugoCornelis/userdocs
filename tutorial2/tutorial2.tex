@@ -56,13 +56,13 @@ The contents of the {\it purkinje} directory can be displayed with:
        - edsjb1994_partitioned.ndf
 \end{verbatim}
 
-To run one of these models the model description file (NDF) must first be loaded into the {\bf G-Shell}.  (To learn more about the NDF format see  \href{../ndf-file-format/ndf-file-format.tex}{\bf Introduction to the NDF File Format}.) For example, to load the multicompartment De Schutter and Bower Purkinje cell model referenced above, enter:
+To run one of these models the model description file (NDF) must first be loaded into the {\bf G-Shell}.  (To learn more about the NDF format see  \href{../ndf-file-format/ndf-file-format.tex}{\bf Introduction\,to\,the\,NDF\,File\,Format}.) For example, to load the multicompartment De Schutter and Bower Purkinje cell model referenced above, enter:
 \begin{verbatim}
     ndf_load cells/purkinje/edsjb1994.ndf
 \end{verbatim}
 This command results in the complete Purkinje cell model being made available to the {\bf G-Shell}.
 
-{\bf Note:} Currently, it is not advisable to load more than one model at a time into the {\bf G-Shell}. Although multiple models can be loaded, the command {\it ndf\_save} will save all models to the ndf file. To change to a different model you can either issue the {\it delete} command (see example below) or exit the {\bf G-Shell}, restart GENESIS, and load the new model (see the \href{../gshell/gshell.tex}{\bf Introduction to the GENESIS Shell}).
+{\bf Note:} Currently, it is not advisable to load more than one model at a time into the {\bf G-Shell}. Although multiple models can be loaded, the command {\it ndf\_save} will save all models to the ndf file. To change to a different model you can either issue the {\it delete} command (see example below) or exit the {\bf G-Shell}, restart GENESIS, and load the new model (see the \href{../gshell/gshell.tex}{\bf Introduction\,to\,the\,GENESIS\,Shell}).
 
 \subsection*{Explore Model}
 
@@ -138,7 +138,7 @@ The ability to change the current working element allows us to either check the 
 \begin{itemize}
 \item The commands {\it ce}, {\it set\_model\_parameter}, and {\it show\_parameter} currently only accept the full path name (e.g. {\it  /Purkinje/segments/b3s45[10]}) to a segment even if the parameter to be queried or changed is in the current working element. % or just the segment name itself (as given in the above example).  Parameter values associated with a given element can be changed using either the full path name or making the given segment the current working element (as with the above example).
 
-\item In the {\bf G-Shell} the commands ``{\bf .}'' and ``{\bf ..}'' operate in the same way as when employed to traverse the Unix file system (see \href{../unix-linux/unix-linux.tex}{\bf Introduction to Unix and the Linux graphical desktop}). The ``{\bf ..}'' operator may be chained, e.g. ``{\bf ../../../}''.
+\item In the {\bf G-Shell} the commands ``{\bf .}'' and ``{\bf ..}'' operate in the same way as when employed to traverse the Unix file system (see \href{../unix-linux/unix-linux.tex}{\bf Introduction\,to\,Unix\,and\,the\,Linux\,Graphical\,Desktop}). The ``{\bf ..}'' operator may be chained, e.g. ``{\bf ../../../}''.
 
 \item Also remember that in the GENESIS documentation, an elipsis ($\ldots$) indicates missing lines.
 
@@ -201,11 +201,11 @@ There are two ways to save a model in the {\bf G-Shell}.
 \begin{enumerate}
    \item{\bf Explicitly:} A model can be saved by giving its name as loaded into the {\bf G-Shell} and an explicit path to the directory (including the name of the NDF file) where you want to save it:
    \begin{verbatim}
-ndf_save /Purkinje /<path from / to your home directory>/<path to your directory>/<file name>.ndf
+ndf_save /Purkinje /<directory path>/<file name>.ndf
    \end{verbatim}
    \item{\bf Generically:} Alternatively, if the name of the model loaded into the {\bf G-Shell} is not known, a wild card construct can be employed (although remember that a {\it list\_elements} command with no argument will report the name of the root element of the model hierarchy, in the example used here, {\it /Purkinje}):
    \begin{verbatim}
-ndf_save /** /<path from / to your home directory>/<path to your directory>/<file name>.ndf
+ndf_save /** /<directory path>/<file name>.ndf
    \end{verbatim}   
 \end{enumerate}
 {\bf Note:} In the absence of an explicit path to the directory where you would like to save the NDF file, it will be saved by default in the directory where you run the {\bf G-shell}.
@@ -361,7 +361,8 @@ The following command is used to check the simulation:
 
 \subsection*{Run Simulation}
 
-To run a simulation for 10\,s we can use the same {\it run} command as used for the simple one compartment model in \href{../tutorial1/tutorial1.tex}{Tutorial 1}
+To run a simulation for 10\,s we can use the same {\it run} command as used for the simple one compartment model in \href{../tutorial1/tutorial1.tex}
+[\bf Tutorial\,1}
 \begin{verbatim}
     genesis > run /Purkinje 10.00
 \end{verbatim}
