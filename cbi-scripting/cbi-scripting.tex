@@ -324,7 +324,7 @@ environment using the Python\,{\it eval} function.
 
 \subsection{SWIG for Federated Software Integration}
 
-SWIG was chosen to facilitate the use of Python bindings in G-3. It is
+SWIG was chosen to facilitate the use of Perl and Python bindings in G-3. It is
 a software development tool that connects programs written in C and
 C++ with high-level scripting languages, such as Python and Perl. For
 the CBI architecture, it provides control over most aspects of wrapper
@@ -629,8 +629,8 @@ step 0.5 -time
 
 While Python bindings are suitable for construction of toy models from
 scratch, it is better to use a domain specific language to construct
-the various parts of a model. The {\bf Model\,Container} is
-installed with a library of model components.  As an example, the
+the various parts of a model. For example, the {\bf Model\,Container} is
+installed with a library of model components where the
 standard Hodgkin-Huxley channels are provided in the file {\it
   channels/hodgkin-huxley.ndf}.  These channels can be included in the
 {\it example} given above by adding the Python statements:
@@ -644,7 +644,7 @@ standard Hodgkin-Huxley channels are provided in the file {\it
 \end{verbatim}
 }
 
-The {\bf Model\,Container} can export models constructed in Python or other
+The {\bf Model\,Container} can export models constructed in Perl, Python or other
 scripting languages as a library for incorporation into new models or
 for use with other tools such as the {\bf Project\,Browser}.
 These new models can then be imported by a call to the {\tt
@@ -1153,10 +1153,10 @@ given above.
 
 The necessary conversion algorithms are accessible from the
 {\bf Model\,Container} via Python.  The Python interface of Blender links it to the G-3
-simulator, such that Blender becomes the first G-3 3D model inspection
+simulator, such that Blender is the first G-3 3D model inspection
 tool for EM data.  As an example, the Python script developed above
 can be run from within the Blender environment.  Also, via the same
-Python interface simulations can be started based on the 3D image
+Python interface, simulations can be started based on the 3D image
 data.
 
 Interactive visualization of reconstructed dendritic segments is a
@@ -1169,9 +1169,21 @@ generation of 3D crossections and 2D cuts also becomes possible.
 
 \section{Discussion}
 
+The G-3 platform uses scripting to connect neuroscience specific
+software to general purpose software and integrate it into a next
+generation simulator.  The advantage is that third party software
+libraries and applications become available for users, for example,
+Blender, {\it matplotlib}, and Glade, among many others. This has
+become possible due to the rearchitectured GENESIS software design
+where G-3 now conforms to the CBI federated software architecture and stores model parameters separately from stimulation
+protocols and the way simulations are run. It is the stand-alone
+nature of the individual software components and the fact that they
+can now easily be interfaced that serves the purpose of continued
+development and user-friendliness.
+
 \subsection{Other Software Components}
 
-We are currently using Blender for visual inspection and validation of
+It is to these ends (extensibility and user-friendliness) that we are currently using Blender for visual inspection and validation of
 reconstructed dendrites by connecting the model to the geometrical and
 analytical tools provided by the Blender plugin library.  However it
 is also possible to use Blender to instantiate neural simulations and,
@@ -1197,9 +1209,9 @@ Finally, we note that we have developed a serial communication
 framework for event delivery of action potentials to postsynaptic
 targets.  Called the Discrete Event System (DES), this software
 component is integrated with the mathematical solvers of G-3 using
-either Python or Perl.  Because it is optimized for communication over
+either Perl or Python.  Because it is optimized for communication over
 serial hardware, we plan to extend it with communication frameworks
-for parallel hardware such as that provided by the MOOSE
+for parallel hardware such as those provided by the MOOSE
 simulator\,\cite{ray08:_pymoos} and the MUSIC
 framework\,\cite{ekeberg08:_music_multis_coord}.
 
@@ -1254,11 +1266,11 @@ clear interfaces for integration.
 %Python\,\cite{andrew08:_pynn}.
 
 Processes of software development have traditionally been described as
-either cathedral-style when there is a closed developer group under
+either cathedral-style where there is a closed developer group under
 central direction and software releases are infrequent, or
-bazaar-style when the software is developed by volunteers and software
+bazaar-style where the software is developed by volunteers and software
 releases are done early and
-often\,\cite{raymond01:_cathed_bazaar}\cite{citeulike:126678}.
+often\,\cite{raymond01:_cathed_bazaar; citeulike:126678}.
 %Brooks' Law and Linus' Law.
 %Currently, successful open source software development 
 %seems to depart on the one hand from the popular view of being the
@@ -1273,40 +1285,26 @@ the bazaar-style leads to multi-threaded development cycles of
 applications that come in different flavours\footnote{A typical
   example is the family of editors based on Emacs.}.
 
-Here, we outline an alternative that follows the component based
+Here, we have outlined an alternative that follows the component based
 approach to open source software development (for another example of
-the component based approach in neural simulation
-see\,\cite{schuermann09:_neuron}\cite{nordlie09:_visual}). This
+this approach to neural simulation
+see\,\cite{schuermann09:_neuron; nordlie09:_visual}). Our
 approach has given rise to an ecology of software components connected
 over interfaces.  Gluing these components together can be done in a
-variety of ways and we have given examples above.
-
+variety of ways and we have given examples above that use Perl and Python.
 %Here, we have illustrated the relationship between Python and the G-3
 %simulator.  We have focused on a simple but comprehensive example, the
 %running of a single compartment neuron and the plotting of its
 %membrane potential. The purpose is to demonstrate the advantages of
-%using high-level scripting languages such as Python for binding the
+%using high-level scripting languages such as Perl and/or Python for binding the
 %independent stand-alone components of G-3. In the process of achieving this goal, we have defined an ecology of holistic dynamic interactions between G-3 software components.
-
 %It is an approach that
 %simplifies the extension, modification, and customization of the
 %GENESIS platform, not only for developers but also most importantly
 %for users.
-
 Employed in this way, the modularized design of the G-3 simulator
 provides for progressive federated software development.
 
-%The G-3 platform uses scripting to connect neuroscience specific
-%software to general purpose software and integrate it into a next
-%generation simulator.  The advantage is that third party software
-%libraries and applications become available for users, for example,
-%Blender, {\it matplotlib}, and Glade, among many others. This has
-%become possible due to the rearchitectured GENESIS software design
-%where G-3 now stores model parameters separately from stimulation
-%protocols and the way simulations are run. It is the stand-alone
-%nature of the individual software components and the fact that they
-%can now easily be interfaced that serves the purpose of continued
-%development and user-friendliness.
 %Using Python for integration makes
 %the application much more accessible to users.
 
