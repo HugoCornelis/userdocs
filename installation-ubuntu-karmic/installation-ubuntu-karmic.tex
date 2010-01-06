@@ -1,0 +1,93 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Developer Installation Ubuntu (Karmic)}
+
+Installing GENESIS on Ubuntu requires executing the following major steps. Note: Installation requires administrator privileges.
+\begin{itemize}
+   \item[] Prepare and upgrade the system software.
+   \item[] Download and install the {\it DeveloperPackage}.
+   \item[] Install the software packages.
+   \item[] Check if the installation was successful. 
+\end{itemize}
+
+\subsection*{Prepare and upgrade the system software}
+
+\begin{itemize}
+\item[] Install the following packages using the Start Menu -$>$
+  System Settings -$>$ Add and Remove Software -$>$ Software
+  Management menu.  Always follow the option to install additional
+  dependencies.
+      \begin{itemize}
+         \item libyaml-perl
+         \item libexpect-perl
+         \item libinline-perl
+         \item autoconf
+         \item automake
+         \item libc6-dev
+         \item libncurses5-dev
+         \item flex
+         \item bison
+         \item libperl-dev
+         \item patch
+         \item python-dev
+         \item python-yaml
+         \item swig
+         \item libreadline5-dev
+         \item libclone-perl
+      \end{itemize}
+   \item[] monotone-0.45 (available as a statically linked binary from \href{http://monotone.ca/}{http://monotone.ca/})
+   \item[] Install the dependencies for running tests:
+      \begin{itemize}
+         \item perl -MCPAN -e ``{\tt install Test::More}''
+         \item perl -MCPAN -e ``{\tt install Data::Utilities}''
+         \item perl -MCPAN -e ``{\tt install File::Find::Rule}''
+         \item perl -MCPAN -e ``{\tt install Digest::SHA}''
+      \end{itemize}   
+      {\bf Note:} The running of tests is optional, but strongly advised.
+ \end{itemize}
+
+\subsection*{Download and Install the {\it DeveloperPackage}}
+
+\begin{enumerate}
+   \item Download the latest version of the {\it DeveloperPackage}, available from \href{http://sourceforge.net/projects/neurospaces/files/}{Sourceforge}. It is called {\it developer-release-label.tar.gz}, where {\it release-label} is the current release identifier.
+   \item Change to the directory where you downloaded the file.
+   \item Unpack the archive by typing ``{\tt tar xfz developer-release-label.tar.gz}''.
+   \item Change to the directory with the content of the archive by typing ``{\tt cd developer-release-label}''.
+   \item Configure by typing ``{\tt ./configure}''.
+   \item Compile by typing ``{\tt make}''.
+   \item Install by typing ``{\tt make install}''. 
+\end{enumerate}
+
+\subsection*{Install software packages}
+
+\begin{enumerate}
+   \item Use the installer script to create the correct directory layout by typing ``{\tt neurospaces\_create\_directories}''.
+   \item Pull the archives of the source code by typing ``{\tt neurospaces\_pull}''.
+   \item Update the source code in the working directories by typing ``{\tt neurospaces\_update}''.
+   \item Generate {\it make} files by typing ``{\tt neurospaces\_configure}''.
+   \item Compile and install the software by typing ``{\tt neurospaces\_install}''.
+\end{enumerate}
+
+\subsection*{Check if the installation was successful}
+
+This step is optional but strongly advised.
+
+\begin{itemize}      
+   \item[] Run tests of all the packages and save tester output to a file  by typing ``{\tt neurospaces\_check >/tmp/check.out 2>\&1}''.
+   \item[] Check the output by typing ``{\tt less /tmp/check.out}''. Importantly, search for lines containing the string {\tt error\_count}.
+\end{itemize}
+    
+\end{document}
