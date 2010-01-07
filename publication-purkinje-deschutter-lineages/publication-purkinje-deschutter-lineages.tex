@@ -1,462 +1,0 @@
-\documentclass[12pt]{article}
-\usepackage{verbatim,}
-\usepackage[dvips]{epsfig}
-\usepackage{color}
-\usepackage{url}
-\usepackage[colorlinks=true]{hyperref}
-
-\begin{document}
-
-\section*{GENESIS: Documentation}
-
-{\bf Related Documentation:}
-% start: userdocs-tag-replace-items related-do-nothing
-% end: userdocs-tag-replace-items related-do-nothing
-
-\section*{De Schutter \& Bower Purkinje Cell Model Lineages}
-
-Here, we give the lineage of the various components reported for the De Schutter \& Bower Purkinje cell model:
-\begin{itemize}
-\item De Schutter E \& Bower JM (1994) An active membrane model of the cerebellar Purkinje cell I. Simulation of current clamp in slice. {\it Journal of Nerurophysiology}. {\bf 71}: 375--400.
-\end{itemize}
-
-\subsection*{Morphology}
-
-\subsubsection*{Passive}
-
-\begin{itemize}
-   \item Llin\'as R \& Nicholson C (1976) Reversal properties of climbing fiber pontential in cat Purkinje cells: An example of a distributed synapse. {\it Journal of Neurophysiology}. {\bf 39}: 311-323.
-   
-   \item Rapp M, Segev I \& Yarom Y (1994) Physiology, morphology and detailed passive models of guinea-pig cerebellar Purkinje cells. {\it Journal of Physiology} (Lond.). {\bf 474}: 101--118.
-   \begin{enumerate}
-\item Purkinje cells (PCs) from guinea-pig cerebellar slices were physiologically characterized
-using intracellular techniques. Extracellular caesium ions were used to linearize the
-membrane properties of PCs near the resting potential. Under these conditions the average
-input resistance, $R_N$, was 29 M½, the average system time constant, $\tau_0$, was 82\,ms and
-the average cable length, $L_N$, was 0.59.
-\item Three PCs were fully reconstructed following physiological measurements and staining
-with horseradish peroxidase. Assuming that each spine has an area of 1$\mu$m$^2$ and that the
-spine density over the spiny dendrites is ten spines per micrometre length, the total
-membrane area of each PC is $\sim$150,000 $\mu$m$^2$, of which $\sim$100,000 $\mu$m$^2$ is in the spines.
-\item Detailed passive cable and compartmental models were built for each of the three reconstructed
-PCs. Computational methods were devised to incorporate globally the huge
-number of spines into these models. In all three cells the models predict that the specific
-membrane resistivity, $R_m$ of the soma is much lower than the dendritic $R_m$ (Å500 and
-Å100,000 $\Omega$cm$^2$ respectively). The specific membrane capacitance, $C_m$, is estimated to be
-1.5--2 $\mu$Fcm$^{-2}$ and the specific cytoplasm resistivity, $R_l$, is 250 $\Omega$cm.
-\item The average cable length of the dendrites according to the model is 0.13$\lambda$, suggesting that
-under caesium conditions PCs are electrically very compact. Brief somatic spikes, however,
-are expected to attenuate 30-fold when spreading passively into the dendritic terminals.
-A simulated 200\,Hz train of fast, 90\,mV somatic spikes produced a smooth 12\,mV steady
-depolarization at the dendritic terminals.
-\item A transient synaptic conductance increase, with a 1\,nS peak at 0.5 ms and a driving force
-of 60\,mV, is expected to produce Å20 mV peak depolarization at the spine head membrane.
-This EPSP then attenuates between 200- and 900-fold into the soma. Approximately 800
-randomly distributed and synchronously activated spiny inputs are required to fire the
-soma.
-\item The passive model of the PC predicts a poor resolution of the spatio-temporal pattern of
-the parallel fibre input. An equally sized, randomly distributed group of 11\,\% of the
-parallel fibres, activated within a time window of a few milliseconds, would result in
-approximately the same composite EPSP at the soma.
-   \end{enumerate}
-   
-   \item Shelton DP (1985) Membrane resistivity estimated for the Purkinje neuron by means of a passive computer model. {\it Neuroscience}. {\bf 14}: 111--131.
-   
-\end{itemize}
-   
-\subsubsection*{Active}
-
-\begin{itemize}
-   \item Pellionisz \& Llin\'as (1977)
-   \item Bush \& Sejnowski (1991)
-   \item De Schutter \& Bower (1994)
-   \begin{enumerate}
-\item A detailed compartmental model of a cerebellar Purkinje
-   cell with active dendritic membrane was constructed. The model
-was based on anatomic reconstructions of single Purkinje cells and
-included 10 different types of voltage-dependent channels described
-by Hodgkin-Huxley equations, derived from Purkinje cellspecific
-voltage-clamp data where available. These channels included
-a fast and persistent Na$^+$ channel, three voltage-dependent
-K$^+$ channels, T-type and P-type Ca$^{2+}$ channels, and two types of
-Ca$^{2+}$-activated K$^+$ channels.
-\item The ionic channels were distributed differentially over three
-zones of the model, with Na$^+$ channels in the soma, fast K$^+$ channels
-in the soma and main dendrite, and Ca$^{2+}$ channels and Ca$^{2+}$-
-activated K$^+$ channels in the entire dendrite. Channel densities in
-the model were varied until it could reproduce Purkinje cell responses
-to current injections in the soma or dendrite, as observed
-in slice recordings.
-\item As in real Purkinje cells, the model generated two types of
-spiking behavior. In response to small current injections the
-model fired exclusively fast somatic spikes. These somatic spikes
-were caused by Na$^+$ channels and repolarized by the delayed rectifier.
-When higher-amplitude current injections were given, sodium
-spiking increased in frequency until the model generated
-large dendritic Ca$^{2+}$ spikes. Analysis of membrane currents underlying
-this behavior showed that these Ca$^{2+}$ spikes were caused by
-the P-type Ca$^{2+}$ channel and repolarized by the BK-type Ca$^{2+}$-activated
-K$^+$ channel. As in pharmacological blocking experiments,
-removal of Na$^+$ channels abolished the fast spikes and removal of
-Ca$^{2+}$ channels removed Ca$^{2+}$ spiking.
-\item In addition to spiking behavior, the model also produced
-slow plateau potentials in both the dendrite and soma. These
-longer-duration potentials occurred in response to both short and
-prolonged current steps. Analysis of the model demonstrated that
-the plateau potentials in the soma were caused by the window
-current component of the fast Na$^+$ current, which was much
-larger than the current through the persistent Na$^+$ channels.
-Plateau potentials in the dendrite were carried by the same P-type
-Ca$^{2+}$ channel that was also responsible for Ca$^{2+}$ spike generation.
-The P channel could participate in both model functions because
-of the low-threshold K$_2$-type Ca$^{2+}$-activated K$^+$ channel, which
-dynamically changed the threshold for dendritic spike generation
-through a negative feedback loop with the activation kinetics of
-the P-type Ca$^{2+}$ channel.
-\item These model responses were robust to changes in the densities
-of all of the ionic channels. For most of the channels, modifying
-their densities by factors of 22 resulted only in left or right
-shifts of the frequency-current curve. However, changes of $>$20\%
-to the amount of P-type Ca$^{2+}$ channels or of one of the Ca$^{2+}$-activated
-K$^+$ channels in the model either suppressed dendritic spikes
-or caused the model to always fire Ca$^{2+}$ spikes. Modeling results
-were also robust to variations in Purkinje cell morphology. We
-simulated models of two other anatomically reconstructed Purkinje
-cells with the same channel distributions and got similar
-responses to current injections.
-\item The model was used to compare the electrotonic length of
-the Purkinje cell in the presence and absence of active dendritic
-conductances. The electrotonic distance from soma to the tip of
-the most distal dendrite increased from 0.57 X in a passive model
-to 0.95 X in a quiet model with active membrane. During a dendritic
-spike generated by current injection the distance increased
-even more, to 1.57 X.
-\item Finally, the model was used to study the probable accuracy
-of experimental voltage-clamp data. Whole-cell patch-clamp conditions
-were simulated by blocking most of the K$^+$ currents in the
-model. The increased electrotonic length due to the active dendritic
-membrane caused space clamp to fail, resulting in membrane
-potentials in proximal and distal dendrites that differed critically
-from the holding potential in the soma.
-\end{enumerate}
-\end{itemize}
-
-\subsection*{Channels}
-
-\begin{itemize}
-
-\item {\bf Fast sodium current ($Na_F$):}
-   \begin{itemize}
-      \item Hodgkin AL \& Huxley AF (1952) A quantitative description of membrane current and its application to conduction and excitation in nerve. {\it Journal of Physiology} (Lond.). {\bf 117}: 500--544.
-      \begin{quote}
-       This article concludes a series of papers concerned with the flow of electric
-current through the surface membrane of a giant nerve fibre (Hodgkin,
-Huxley \& Katz, 1952; Hodgkin \& Huxley, 1952 a-c). Its general object is to
-discu the results of the preceding papers (Part I), to put them into
-mathematical form (Part II) and to show that they will account for conduction
-and excitation in quantitative terms (Part III).
-      \end{quote}
-      
-      \item G\"ahwiler BH \& Llano I (1989) Sodium and potassium conductances in somatic membranes of rat Purkinje cells from organotypic cerebellar cultures. {\it Journal of Physiology} (Lond.). {\bf 417:} 105--122.
-      \begin{enumerate}
-         \item The somatic voltage-gated conductances of Purkinje cells in organotypic
-cultures (Giihwiler, 1981) were studied using the outside-out patch recording
-configuration of the patch-clamp technique (Hamill, Marty, Neher, Sakmann \&
-Sigworth, 1981).
-         \item When activated by step depolarizations, the tetrodotoxin-sensitive voltagedependent
-Na+ current presented two distinct phases: an initial surge of inward
-current fluctuations which activates rapidly upon pulse onset and decays within
-20-40\,ms, and a later phase in which discrete bursts of single-channel activity are
-interspersed with silent periods.
-         \item Ensemble fluctuation analysis of the current fluctuations during the early phase
-of the Na$^+$ current and measurements of single channels during both early and late
-phases indicate that a single type of Na$^+$ channel can account for both phases of the
-Na$^+$ current. This channel has an elementary current amplitude of -2\,pA at
--40\,mV. This amplitude did not vary significantly between -60 and -20\,mV. The
-mean open time depended on membrane potential, increasing by a factor of three
-between -60 and -20\,mV.
-         \item The early component of the Na$^+$ current activated at a threshold of -60\,mV
-and reached its maximum amplitude at - 20, mid-point for the activation curve
-being -40\,mV. Times-to-peak current decreased with membrane potential, from
-3-5\,ms at -60\,mV to 0-3\,ms at 0\,mV. The decay phase of the current presented two
-exponential components, with time constants of 1-5 and 10\,ms at -40\,mV. The
-steady-state inactivation curve had a mid-point at -75\,mV.
-         \item The late component of the Na$^+$ current was observed in the voltage range from
--60 to -20\,mV, with a maximum at -40\,mV. Its maximum amplitude
-corresponded to approximately 1-7\,\% of the peak amplitude of the early component.
-         \item Macroscopic potassium currents were observed upon step depolarizations above
-a threshold of -30\,mV. The currents activated in a voltage-dependent fashion,
-times-to-peak decreasing with depolarization, and partially inactivated during 40\,ms
-         depolarizing steps. Peak current amplitudes at any given membrane potential were
-decreased by depolarizing the holding potential. The macroscopic properties of the
-K$^+$ current varied from patch to patch.
-         \item Two types of single-channel K$^+$ currents were observed during steady-state
-depolarizations. The unitary current amplitudes were 2-7 and 10-4\,pA at\,30 mV,
-corresponding to chord conductances of 28 and 90\,pS respectively. The 28\,pS channel
-was observed as well upon step depolarizations, the time course of activation for the
-resulting averaged currents being voltage dependent. Both 28 and 90\,pS channels
-were completely inhibited by external application of 1\,mM tetraethylammonium
-chloride.
-      \end{enumerate}
-      
-      \item Hirano T \& Hagiwara S (1989) Kinetics and distribution of voltage-gated Ca, Na, and K channels on the somata of rat cerebellar Purkinje cells. {\it Pfl\"ugers Archiv}. {\bf 413}: 463--469.
-      \begin{quote}
-      Voltage gated ion channels on the somatic membrane
-of rat cerebellar Purkinje cells were studied in dissociated
-cell culture with the combination of cell-attached
-and whole-cell variation of patch clamp technique. The
-method enables us to record local somatic membrane current
-under an improved space clamp condition. Transient (fast-inactivating)
-and steady (slow-inactivating) Ca channel currents,
-Na current, transient (fast-inactivating) and steady
-(slow-inactivating) K currents, were observed. Transient and
-steady Ca channel currents were activated at test potentials
-more positive than -40\,mV and -20\,mV, respectively (in
-50\,mM external Ba). The transient current inactivated with
-a half-decay time of 10-30\,ms during maintained
-depolarizing pulses, while the steady current showed relatively
-little inactivation. Na current was activated at more
-positive potentials than -60\,mV, and inactivated with a
-half-decay time of less than 5\,ms. Transient and steady K
-outward currents were recorded at more positive potential
-than - 20\,mV and - 40\,mV, respectively. The transient current
-inactivated with a half-decay time of 2-8\,ms. Ca, Na
-and K channels showed different patterns of distribution on
-the somatic membrane. Steady Ca channels tended to cluster
-compared with Na or K channels.
-      \end{quote}
-   \end{itemize}
-
-\item {\bf Persistent sodium current ($Na_P$):}
-
-\begin{itemize}
-
-   \item French CR, Sah P, Buckett KJ \& Gage P (1990) A voltage-dependent persistent sodium current in mammalian hippocampal neurons. {\it Journal of General Physiology}. {\bf 95}: 1139--1157.
-   \begin{quote}
-   Currents generated by depolarizing voltage pulses were recorded in
-neurons from the pyramidal cell layer of the CA1 region of rat or guinea pig hippocampus
-with single electrode voltage-clamp or tight-seal whole-cell voltageclamp
-techniques. In neurons in situ in slices, and in dissociated neurons, subtraction
-of currents generated by identical depolarizing voltage pulses before and after
-exposure to tetrodotoxin revealed a small, persistent current after the transient
-current. These currents could also be recorded directly in dissociated neurons in
-which other ionic currents were effectively suppressed. It was concluded that the
-persistent current was carded by sodium ions because it was blocked by TIX,
-decreased in amplitude when extraceUular sodium concentration was reduced, and
-was not blocked by cadmium. The amplitude of the persistent sodium current varied
-with clamp potential, being detectable at potentials as negative as -70\,mV and
-reaching a maximum at $\sim$-40\,mV. The maximum amplitude at -40\,mV in 21
-cells in slices was -0.34\,$\pm$\,0.05 nA (mean\,$\pm$\,1 SEM) and -0.21\,$\pm$\,0.05 nA in 10
-dissociated neurons. Persistent sodium conductance increased sigmoidally with a
-potential between -70 and -30\,mV and could be fitted with the Boltzmann equation,
-$g = g_{max}\{1 + exp[(V' - V)/k)]\}$. The average $g_{max}$, was 7.8\,$\pm$\,1.1\,nS in the 21
-neurons in slices and 4.4\,$\pm$\,1.6\,nS in the 10 dissociated cells that had lost their
-processes indicating that the channels responsible are probably most densely
-aggregated on or close to the soma. The half-maximum conductance occurred
-close to -50\,mV, both in neurons in slices and in dissociated neurons, and the
-slope factor ($k$) was 5-9\,mV. The persistent sodium current was much more resistant
-to inactivation by depolarization than the transient current and could be
-recorded at $>$50\,\% of its normal amplitude when the transient current was completely
-inactivated.
-Because the persistent sodium current activates at potentials close to the resting
-membrane potential and is very resistant to inactivation, it probably plays an
-important role in the repetitive firing of action potentials caused by prolonged
-depolarizations such as those that occur during barrages of synaptic inputs into
-these cells.
-   \end{quote}
-   
-   \item Kay AR \& Wong RKS (1987) Calcium current activation kinetics in isolated pyramidal neurons of the CA1 region of the mature guinea-pig hippocampus. {\it Journal of Physiology} (Lond.). {\bf 392}: 603-616.
-   \begin{enumerate}
-      \item Neurones were isolated from the CAI region of the guinea-pig hippocampus and
-subjected to the whole-cell mode of voltage clamping, to determine the kinetics of
-voltage-gated Ca$^{2+}$ channel activation.
-      \item Isolated neurones had an abbreviated morphology, having lost most of the
-distal dendritic tree during the isolation procedure. The electrical compactness of the
-cells facilitates voltage clamp analysis.
-      \item Block of sodium and potassium currents revealed a persistent current activated
-on depolarization above -40\,mV, which inactivated slowly when the intracellular
-medium contained EGTA. The current was blocked by Co$^{2+}$ and Cd$^{2+}$, augmented by
-increases in Ca$^{2+}$ and could be carried by Ba$^{2+}$, suggesting that the current is borne
-by Ca$^{2+}$.
-      \item Steady-state activation of the Ca$^{2+}$ current was found to be well described by
-the Boltzman equation raised to the second power.
-      \item The open channel's current-voltage ($I-V$) relationship rectified in the inward
-direction and was consistent with the constant-field equation.
-      \item The kinetics of Ca$^{2+}$ current onset followed $m^2$ kinetics throughout the range of
-its activation. Tail current kinetics were in accord with this model. A detailed
-Hodgkin-Huxley model was derived, defining the activation of this current.
-      \item The kinetics of the currents observed in this regionally and morphologically
-defined class of neurones were consistent with the existence of a single kinetic class
-of channels.
-   \end{enumerate}
-\end{itemize}
-
-\item {\bf T-type calcium current ($Ca_T$):}
-
-\begin{itemize}
-\item Gruol DL \& Deal CR (1990) Expression of calcium conductances in Purkinje neurons in culture. {\it Society for Neuroscience Abstracts.} {\bf 16}: 677.
-
-\item Hirano T \& Hagiwara S (1989) Kinetics and distribution of voltage-gated Ca, Na, and K channels on the somata of rat cerebellar Purkinje cells. {\it Pfl\"ugers Archiv}. {\bf 413}: 463--469.
-      \begin{quote}
-      Voltage gated ion channels on the somatic membrane
-of rat cerebellar Purkinje cells were studied in dissociated
-cell culture with the combination of cell-attached
-and whole-cell variation of patch clamp technique. The
-method enables us to record local somatic membrane current
-under an improved space clamp condition. Transient (fast-inactivating)
-and steady (slow-inactivating) Ca channel currents,
-Na current, transient (fast-inactivating) and steady
-(slow-inactivating) K currents, were observed. Transient and
-steady Ca channel currents were activated at test potentials
-more positive than -40\,mV and -20\,mV, respectively (in
-50\,mM external Ba). The transient current inactivated with
-a half-decay time of 10-30\,ms during maintained
-depolarizing pulses, while the steady current showed relatively
-little inactivation. Na current was activated at more
-positive potentials than -60\,mV, and inactivated with a
-half-decay time of less than 5\,ms. Transient and steady K
-outward currents were recorded at more positive potential
-than - 20\,mV and - 40\,mV, respectively. The transient current
-inactivated with a half-decay time of 2-8\,ms. Ca, Na
-and K channels showed different patterns of distribution on
-the somatic membrane. Steady Ca channels tended to cluster
-compared with Na or K channels.
-      \end{quote} 
-
-\item Kaneda M, Wakamori M, Ito M \& Akaike N (1990) Low-threshold calcium current in isolated Purkinje cell bodies of rat cerebellum. {\it Journal of Neurophysiology.} {\bf 63}: 1046--1051.
-
-\begin{enumerate}
-   \item The low- and high-threshold Ca$^{2+}$ currents were observed in
-Purkinje cell bodies isolated from the cerebellum of newborn (2
-wk old) and adult (8 wk old) rats under whole-cell clamp. A
-transient Ca$^{2+}$ current (low-threshold or ``T-type'' $I_{Ca}$ was elicited
-bv depolarizing step pulses to -60\,mV or more positive potentials
-from a holding potential ($V_H$) of -100 mV. In cells dissociated
-from newborn rats, a long-lasting Ca$^{2+}$ current (high-threshold or
-``L-type'' $I_{Ca}$) was also elicited by depolarizing command pulses
-beyond -30\,mV.
-   \item The low-threshold $I_{Ca}$ was resistant to the ``washout'' effect
-during the internal perfusion. whereas the high-threshold $I_{Ca}$
-faded gradually with time during the continuous internal perfusion.
-   \item In the current-voltage ($I- V$) relationship, the low-threshold
-$I_{Ca}$ had a threshold potential around -60\,mV and reached the
-maximum inward current around -20\,mV. The activation and
-inactivation kinetics of the current depended on membrane potential:
-for a test-potential change from -60 to +40\,mV, the time
-to peak of the current (activation) decreased from 31.9 to 5.0 ms,
-and the time constant of current decay (inactivation) decreased
-from 78.5 to 22.9\,ms.
-   \item Steady-state inactivation of low-threshold $I_{Ca}$ was membrane-
-potential dependent, and the inactivation of the 50\,\% level
-was -79\,mV. Recovery time constant from steady-state inactivation
-varied depending on the membrane potential. The time constants
-were 3.3 and 2.5 s at $V_H$s of -100 and -120\,mV, respectively.
-   \item The low-threshold $I_{Ca}$ was inhibited by various polyvalent
-metal cations in a concentration-dependent manner: the inhibition
-was in the order of La$^{3+} >>$ Zn$^{2+} >$ Cd$^{2+} >$ Ni$^{2+} >$ Co$^{2+}$.
-   \item Various organic CaÓ antagonists also inhibited the low-threshold
-$I_{Ca}$ in a concentration-dependent manner; the order of
-the inhibition was flunarizinc $>$ nicardipine $>$ D-600 $>$ diltiazem.
-The inhibitory potencv of nicardipine varied depending on external
-Ca$^{2+}$ concentration. At a concentration of 3$\times$10$^-6$\,M nicardipine,
-the inhibitory effect on the low-threshold $I_{Ca}$ in the bathing
-medium with 2.5\,mM Ca$^{2+}$ was stronger than with 10\,mM Ca$^{2+}$.
-   \item We found that the pharmacological properties of low-threshold
-$I_{Ca}$, in cerebellar Purkinje cell bodies were similar to
-those in the isolated hypothalamic neurons. but differed from
-those in the peripheral ganglion cells.
-
-\end{enumerate}
-
-\end{itemize}
-
-\item {\bf P-type calcium current ($Ca_P$):}
-\begin{itemize}
-   \item Llin\'as RR, Sugimori M \& Cherskey B (1989) Voltage-dependent calcium conductances in mammalian neurons: The P channel. {\it Annals of the American Academy of Science.} {\bf 560}: 103--111.
-   
-   \item Regan LJ (1991) Voltage-dependent calcium currents in Purkinje cells from rat cerebellar vermis. {\it Journal of Neuroscience.} {\bf 11}: 2259--2269.
-   \begin{quote}
-   Whole-cell patch clamp recording was used to characterize
-calcium currents in Purkinje cells dissociated from the cerebellar
-vermis of 1-3-week postnatal rats. A subset of Purkinje
-cells had a low-threshold, transient current similar to
-the T-type current in peripheral neurons. All Purkinje cells
-had a high-threshold, slowly inactivating current. Only a small
-component of the high-threshold current was sensitive to
-dihydropyridine (DHP) antagonists or to the dihydropyridine
-agonist BAY K8644. $\omega$-Conotoxin had very little effect on
-the high-threshold current. The results suggest that these
-Purkinje cells have at least three types of calcium channels:
-T-type channels (present in only a fraction of cells), DHP sensitive
-L-type channels (contributing a small fraction of
-the high-threshold current), and a predominant type of highthreshold
-channel that is pharmacologically distinct from
-L-type and N-type channels characterized in peripheral neurons.
-   \end{quote}
-
-   \item Usowics MM, Sugimori M, Chersky B \& Llin\'as RR (1992) Characterization of P-type calcium channels in cerebellar Purkinje cells. {\it Society for Neuroscience Abstracts.} {\bf 18}: 974.
-   
-   \item Usowics MM, Sugimori M, Chersky B \& Llin\'as R (1992) P-type calcium channels in the somata and dendrites of adult cerebellar Purkinje cells. {\it Neuron.} {\bf 9}:1185--1199.
-   \begin{quote}
-The pharmacological and single-channel properties of Ca$^{2+}$ channels were studied in the somata and dendrites of adult cerebellar Purkinje cells. The Ca$^{2+}$ channels were exclusively of the high threshold type: low threshold Ca$^{2+}$ channels were not found. These high threshold channels were not blocked by omega-conotoxin GVIA and were inhibited rather than activated by BAY K 8644. They were therefore pharmacologically distinct from high threshold N- and L-type channels. Funnel web spider toxin was an effective blocker. The channels opened to conductance levels of 9, 14, and 19\,pS (in 110\,mM Ba$^{2+}$). These slope conductances were in the range of those reported for N- and L-type channels. Our results are in agreement with previous reports suggesting that Ca$^{2+}$ channels in Purkinje cells can be classified as P-type channels according to their pharmacology. The results also suggest that distinctions among Ca$^{2+}$ channel types based on the single-channel conductance are not definitive.
-   \end{quote}
-   
-\end{itemize}
-
-\item {\bf Anomalous rectifier ($K_h$):}
-\begin{itemize}
-   \item Crepel F \& Penit-Soria J (1986) Inward rectification and low threshold calcium conductance in rat cerebellar Purkinje cells. An in vitro study. {\it Journal of Physiology.} (Lond.). {\bf 372}: 1--23.
-   
-   \item Gruol DL, Jacquin T \& Yool AJ (1991) Single-channel K$^+$currents recorded from the somatic and dendritic regions of cerebellar Purkinje neurons in culture. {\it Journal of Neuroscience.} {\bf 11}: 1002--1015.
-   
-   \item Spain WJ, Schwindt PC \& Crill WE (1987) Anomolous rectification in neurons from cat sensorimotor cortex in vitro. {\it Journal of Neurophysiology.} {\bf 57}: 1555-1576.
-      \begin{enumerate}
-         \item The ionic mechanisms underlying anomalousrectification in large neurons from layerV of cat sensorimotor cortex were studied inan in vitro brain slice. The anomalous rectificationwas apparent as an increase of slopeconductance during membrane hyperpolarization,and the development of anomalousrectification during a hyperpolarizing currentpulse was signaled by a depolarizing sag ofmembrane potential toward resting potential(RP).         \item Voltage-clamp analysis revealed thetime- and voltage-dependent inward current($I_{AR}$) that produced anomalous rectification.$I_{AR}$ reversal potential ($E_{AR}$) was estimated tobe $\sim$\,-50\,mV from extrapolation of linear,instantaneous, current-voltage relations.         \item The conductance underlying $I_{AR}$ ($G_{AR}$)had a sigmoidal steady-state activation characteristic.$G_{AR}$ increased with hyperpolarizationfrom -55 to -105\,mV with half-activationat $\sim$ -82 mV.         \item The time course of both $G_{AR}$ and $I_{AR}$ during a voltage step was described by two exponentials.The faster exponential had a timeconstant ($\tau_F$) of $\sim$\,40 ms; the slow time constant($\tau_S$) was $\sim$ 300\,ms. Neither $\tau_F$ nor $\tau_S$changed with voltage in the range -60\,mV to-110\,mV. The fast component constituted$\sim$\,80\,\% of $I_{AR}$  at each potential.         \item Both $I_{AR}$  and $G_{AR}$ increased in raised extracellularpotassium ([K$^+]_o$,) and $E_{AR}$ shiftedpositive, but the $G_{AR}$ activation curve did notshift along the voltage axis. Solutions containingan impermeable Na$^+$ substitute caused aninitial transient decrease in $I_{AR}$ followed by aslower increase of $I_{AR}$. Brain slices bathed inNa$^+$-substituted solution developed a gradualincrease in [K$^+]_o$ as measured with K$^+$-sensitivemicroelectrodes. We conclude that $G_{AR}$ ispermeable to both Na$^+$ and K$^+$, but the fullcontribution of Na$^+$ was masked by the slowincrease of [K$^+]_o$ that occurred in Na$^+$ substitutedsolutions.         \item Chloride did not appear to contributesignificantly to $I_{AR}$ since estimates of $E_{AR}$ weresimilar in neurons impaled with microelectrodesfilled with potassium chloride or methylsulfate,whereas, $E_{Cl}$ (estimated from reversalof a GABA-induced ionic current) was $\sim$\,30\,mV 
-more positive with the KCl-filled microelectrodes.         \item Extracellular Cs$^+$ caused a reversibledose- and voltage-dependent reduction of $G_{AR}$,whereas intracellular Cs$^+$ was ineffective.         \item The parameters measured during voltageclamp were used to formulate a quantitativeempirical model of $I_{AR}$. The model faithfullyreproduced measured current and voltage responsesand was used to estimate the variationof $I_{AR}$ in situations that were difficult to examineexperimentally. The results of thesecomputations suggest that $I_{AR}$ can contributeto spike repolarization, spike frequency adaptation,and afterhypolarization magnitudeand duration.
-      
-      \end{enumerate}
-\end{itemize}
-
-\item {\bf Delayed rectifier ($K_{dr}$):}
-   \begin{itemize}
-      \item Hirano T \& Hagiwara S (1989) Kinetics and distribution of voltage-gated Ca, Na, and K channels on the somata of rat cerebellar Purkinje cells. {\it Pfl\"ugers Archiv}. {\bf 413}: 463--469.
-
-      \item G\"ahwiler BH \& Llano I (1989) Sodium and potassium conductances in somatic membranes of rat Purkinje cells from organotypic cerebellar cultures. {\it Journal of Physiology} (Lond.). {\bf 417:} 105--122.
-
-      \item Yamada WM, Koch C \& Adams PR (1989) Multiple channels and calcium dynamics. In: Koch C \& Segev I (eds.). {\it Methods in Neuronal Modeling: From Synapses to Networks.} MA: MIT Press. pp. 97--133. 
-
-   \end{itemize}
-
-\item {\bf Persistent potassium current ($K_m$):}
-   \begin{itemize}
-      \item Bossu JL, Dupont JL \& Feltz A (1989) Calcium currents in rat cerebellar Purkinje cells maintained in culture. {\it Neuroscience.} {\bf 30}: 605--617.    
-      \item Hirano T \& Hagiwara S (1989) Kinetics and distribution of voltage-gated Ca, Na, and K channels on the somata of rat cerebellar Purkinje cells. {\it Pfl\"ugers Archiv}. {\bf 413}: 463--469.
-     \item Yamada WM, Koch C \& Adams PR (1989) Multiple channels and calcium dynamics. In: Koch C \& Segev I (eds.). {\it Methods in Neuronal Modeling: From Synapses to Networks.} MA: MIT Press. pp. 97--133. 
-
-\end{itemize}
-
-\item {\bf A current ($K_A$):}
-\begin{itemize}
-   \item Connor JA \& Stevens CF (1971) Voltage clamp studies of a transient outward membrane current in gastropod neural somata. {\it Journal of Physiology.} (Lond.). {\bf 213}: 21--30.
-     \item De Schutter E (1986) Alternative equations for the molluscan ion currents described by Connor and Stevens. {\it Brain Research.} {\bf 382}: 134--138.
-      \item Hirano T \& Hagiwara S (1989) Kinetics and distribution of voltage-gated Ca, Na, and K channels on the somata of rat cerebellar Purkinje cells. {\it Pfl\"ugers Archiv}. {\bf 413}: 463--469.
-     \item Li SJ, Wang Y, Strahlendorf HK \& Strahlendorf JC (1990) A transient voltage-dependent outward current recorded from rat cerebellar Purkinje cells under voltage clamp. {\it Society for Neuroscience Abstracts.} {\bf 16}: 507.
-   
-\end{itemize}
-
-\item {\bf Calcium-activated potassium current  ($K_C$):}
-\begin{itemize}
-   \item Traub RD, Wong RKS, Miles R \& Michelson H (1991) A model of a CA3 hippocampal pyramidal neuron incorporating voltage-clamp data on intrinsic conductances. {\it Journal of Neurophysiology.} {\bf 66}: 635--650.
-   \item Gola M, Ducreux C \& Chagneux H (1990) Ca$^{2+}$-activated K$^+$ current involvement in neuronal function revealed by in situ single-channel analysis in {\it Helix} neurones. {\it Journal of Physiology} (Lond.). {\bf 420}: 73--109.
-   \item Gruol DL, Jacquin T \& Yool AJ (1991) Single-channel K$^+$currents recorded from the somatic and dendritic regions of cerebellar Purkinje neurons in culture. {\it Journal of Neuroscience.} {\bf 11}: 1002--1015.
-   \item Franciolini F (1988) Calcium and voltage dependence of single Ca$^{2+}$-activated K$^+$ activated channelsfrom cultured hippocampal neurons of rat. {\it Biochimica et Biophysica Acta.} {\bf 93}: 419--427.
-
-\end{itemize}
-
-\item {\bf Calcium-activated potassium current  ($K_2$):}
-
-\item {\bf Leak current ($I_{leak}$):}
-
-\end{itemize}
-
-\end{document}

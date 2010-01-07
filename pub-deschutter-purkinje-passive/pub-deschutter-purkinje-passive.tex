@@ -1,0 +1,53 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+%\usepackage{natbib}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{De Schutter: Purkinje Cell Model}
+
+\subsection*{Source}
+
+De Schutter E \& Bower JM (1994) An active membrane model of the cerebellar Purkinje cell I. Simulation of current clamp in slice. {\it Journal of Nerurophysiology}. {\bf 71}: 375--400.
+
+\subsection*{Passive Membrane Parameters}
+
+\subsubsection*{Parameter values}
+
+\begin{tabular}{ l l l l }
+                                                                                                                            & {\bf Original} & {\bf Applied} & {\bf Adjusted} \\
+  Membrane capacitance ($C_m$: $\mu$F/cm$^2$)                               & 1.64              & 1.64               & 1.64                 \\
+  Membrane resistance ($R_m$ soma: k$\Omega\cdot$cm$^2$)        & 0.44              & 0.44               & 10\,$^\dag$    \\
+  Membrane resistance ($R_m$ dendrites: $k\Omega\cdot$cm$^2$) & 110               & 110                & 30\,$^\dag$    \\
+  Axial resistance ($R_A$: $\Omega\cdot$cm)                                         & 250              & 250                 & 250                  \\
+  Membrane time constant ($\tau_0$: ms)                                                  & 46                 & 46                   & 46                    \\
+  Input resistance ($R_N$: M$\Omega$)                                                    & 12.9              & 12.6\,*            & 19.6\,*             \\
+                                                                                                                            &                       &                        &                          \\
+\multicolumn{3}{l} {*\,Obtained value, $^\dag$\,Adjusted value.}                                                                                            \\
+\end{tabular}
+
+\subsubsection*{Column}
+
+\begin{enumerate}
+
+   \item {\bf Original:} Rapp M, Yarom Y \& Segev I (1992) The impact of parallel fiber background activity on the cable properties of cerebellar Purkinje cells. {\it Neural Computation.} {\bf 4}: 518--533.
+
+   \item {\bf Applied:} Initial simulations with active membrane did not reproduce the characteristic firing pattern ofPurkinje cells with these membrane parameters. In particular, thelow $R_m$ value in the soma caused a huge current sink and themodel did not fire somatic Na$^+$ spikes.
+
+\item {\bf Adjusted:} The fitted values of  $R_m$ are comparable with the valuesin other neuron models\,\cite{R:1992ys} and give themodel an $R_N$ under conditions of simulated externalCs$^+$ block (i.e. Kdr, KM, and Kh channels blocked\,\cite{B:1991zr}) which is realistic for Purkinje cells in slice\,\cite{R:1980ly}.
+\end{enumerate}
+
+\bibliographystyle{plain}
+\bibliography{../tex/bib/pub-ref}
+
+\end{document}
