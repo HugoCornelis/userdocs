@@ -1,3 +1,17 @@
-neurospaces_sync --enable userdocs --regex userdocs --verbose
-neurospaces_update --enable userdocs --regex userdocs --verbose
+#!/usr/bin/perl -w
+#!/usr/bin/perl -w -d:ptkdb
+#!
 
+
+use strict;
+
+system "neurospaces_sync --enable userdocs --regex userdocs --verbose";
+
+if ($?)
+{
+    die "*** Error: $0, $?";
+}
+else
+{
+    system "neurospaces_update --enable userdocs --regex userdocs --verbose";
+}
