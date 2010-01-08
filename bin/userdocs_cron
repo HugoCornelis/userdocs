@@ -43,6 +43,8 @@ sub main
 
   my $output_path = $option_output_directory . "/" . $output_filename;
 
+  rotate_logs();
+
   $ENV{PATH} .= ':/bin:/usr/bin:/usr/local/bin';
 
 
@@ -63,7 +65,7 @@ sub main
 
   my $text = produce_email_text();
 
-  try_to_mail("Userdocs has been built.",
+  try_to_mail("Userdocs cron has finished.",
 	      "Userdocs has finished building.\n\n" . $text);
 
   copy_html_data();
@@ -160,14 +162,6 @@ sub try_to_mail
 
     my $sendto = $configuration->{MAILTO};
     my $replyto = $configuration->{MAILFROM};
-
-    #todo figure out why I can't put the output of
-    # `which sendmail` into a variable and put it in 
-    # place of the /usr/sbin/sendmail. A user may have 
-    # a different sendmail path.
-
-    #t Mando: perhaps /sbin/ is not in the PATH, such that which does
-    #t not find sendmail when things run over cron?
 
     open(MAIL, "|/usr/sbin/sendmail -oi -t");
     print MAIL "From: $replyto\n";
@@ -322,10 +316,109 @@ sub parse_config_file
       print "\tThe link for accessing the userdocs is $configuration->{URL}\n";
   }
 
+  if(defined $configuration->{LOGROTATE})
+  {
+
+    chomp($configuration->{LOGROTATE});
+    print "\tNumber of logs to rotate $configuration->{LOGROTATE}\n";
+
+  }
+
+
+  if(defined $configuration->{LOGDIR})
+  {
+
+    chomp($configuration->{LOGDIR});
+    print "\tDirectory to store past logs is $configuration->{LOGDIR}\n";
+
+  }
+
 
   print "Done Parsing $config_file:\n";
 
 }
+
+
+
+# Rotates logs with the name '$logname'
+#
+sub rotate_logs
+{
+
+  my $output_dir = $configuration->{OUTPUTDIR};
+  my $logname = $output_filename;
+  my $numlogs  = -1;
+
+  if(not defined $configuration->{LOGROTATE})
+  {
+    #i If we aren't rotating logs when we just delete 
+    #i the log from the last run.
+    #i
+    if (-e $logname)
+    {
+	system "rm -f $logname";
+    }
+    return;
+  }
+  else
+  {
+    $numlogs = $configuration->{LOGROTATE};
+  }
+
+
+  my $logdir = $output_dir;
+
+
+  if(defined $configuration->{LOGDIR})
+  {
+
+    $logdir = $configuration->{LOGDIR};
+
+    if(! -d $logdir)
+    {
+      mkdir $logdir
+    }
+
+    $logdir .= "/";
+  }
+
+
+  # we shift all of our logs if present. 
+  # Whatever log happens to be the last one should
+  # get overwritten with a previous log.
+  my $i;
+  for($i = $numlogs-1; $i > -1; $i--)
+  {
+
+    my $log = $logdir . $logname .'.' . $i;
+
+    if( -e $log )
+    {
+
+      # mv should preserve permissions.
+
+      my $nextlog = $logdir . $logname . '.' . ($i+1);
+
+      system "mv -f $log $nextlog";
+
+    }
+    else
+    {
+      next;
+    }
+
+  }
+
+  # after the shift, we should be able to move the 
+  # first log to slot 0. Now the original slot is open
+  # for a log run.
+  my $nextlog = $logdir . $logname . '.' . 0;
+  system "mv -f $logname $nextlog";
+
+  return;
+
+}
+
 
 
 

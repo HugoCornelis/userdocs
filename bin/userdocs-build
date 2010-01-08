@@ -561,6 +561,9 @@ sub create_http_redirect
   print $document;
   print " is an http redirect to a website.\n\n";
 
+  print "Entering the $document directory";
+  chdir $document;
+
   print  "-- creating directories --\n";
   system "mkdir -p output/ps";
   system "mkdir -p output/pdf";
@@ -577,7 +580,7 @@ sub create_http_redirect
   print OUTPUT $html_document . " (http redirect)";
   print OUTPUT "</title>\n  </head>\n  <body><meta http-equiv=\"refresh\" content=\"0;URL=";
   print OUTPUT $redirect_url;
-  print OUTPUT "\">\n  </body>\n</html>";
+  print OUTPUT "\">\n  </body>\n</html>\n\n";
   close(OUTPUT);
 
   
