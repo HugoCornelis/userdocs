@@ -561,8 +561,11 @@ sub create_http_redirect
   print $document;
   print " is an http redirect to a website.\n\n";
 
-  print "Entering the $document directory";
+  print "Entering the $document directory ";
   chdir $document;
+  print `pwd`;
+  print "\n\n";
+
 
   print  "-- creating directories --\n";
   system "mkdir -p output/ps";
@@ -573,7 +576,11 @@ sub create_http_redirect
 
   print "-- creating html file --\n";
 
-  my $html_document = $document . ".html";
+  my @tmp = split(/\//,$document);
+
+  my $doctitle = $tmp[-1];
+
+  my $html_document = $document . $doctitle  . ".html";
 
   open(OUTPUT,">$html_document");
   print OUTPUT "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n<html>\n  <head>\n    <title>";
