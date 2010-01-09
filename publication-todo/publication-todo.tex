@@ -1,0 +1,279 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+%e.g.  \textcolor{red,green,blue}{text}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage{scrtime}
+ 
+\begin{document}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{GENESIS: Documentation}
+
+\section{The TODO and the DONE Lists}
+
+This list is specifically about the publication GUI.  See
+\href{../project-todo/project-todo.tex}{The project-todo list} for an
+explanation how to work with these lists.
+
+\subsection{General Advantages of the Publication GUI}
+\begin{itemize}
+\item Paper version of story and figures.
+\item Here is how it maps into the new system.
+\item Talk about the capabilities once you do that.
+\end{itemize}
+
+
+\section{TODO List}
+
+Based on
+\cite{deschutter94:_purkin_i}\cite{deschutter94:_purkin_ii}\cite{schutter94:_simul_purkin}
+
+\subsection{Technically}
+
+\subsubsection{loading the different Purkinje cell models into G-3}
+
+The g-tube has a model name selection box.  It lists the names of all
+the models that can be loaded.
+
+Both the g-tube and gshell currently work with one implicit workspace,
+so they can import only one model at a time.  The model-container uses
+'namespaces' as an abstraction for user workspaces.  Gshell commands
+need to be implemented to access the interface to manage the
+model-container's namespaces.  The g-tube interfaces to the gshell
+over its standard I/O stream connection to use these new commands.
+
+A namespace edit box will popup every time a new model is loaded to
+allow the user to edit the name of the namespace.  The edit box
+suggests a default name when popped up.
+
+The name of the namespace that was used to load the model, is visible
+in the model loader selection box.
+
+
+\subsubsection{Passive Segev Model}
+\begin{itemize}
+\item The Segev morphology is available from the
+  neuromorpho database.  There are subtle differences to the soma
+  dimensions with the edsjb1994 model.
+\item The passive properties of this model are accurately reported in
+  Segev paper.  The different versions of the Segev model must be
+  added to the model library.
+\item Both the segev model and the edsjb1994 model can be loaded under
+  their own namespace.  The GUI displays the differences in:
+  \begin{enumerate}
+  \item soma dimensions (different between the two models)
+  \item electrotonic length of the longest and shortest compartments (eds has a very very long compartment).
+  \item total dendritic length, surface area and volume.
+  \item Number of branch points, average branch order of dendritic tips.
+  \item RM, CM, RA, ELEAK, number of spines, number of compartments.
+  \item List of transmembrane currents.
+  \end{enumerate}
+  These quantities are visible for both models simultaneously in a
+  small table.  This table with morphology characteristics is
+  available from a button in the menu 'Model Construction' -> 'Explore
+  Model'.
+\end{itemize}
+The quantities mentioned above can be computed by the model container
+and are made available as yaml text files to the GUI from the standard
+I/O connection with the gshell.
+
+\subsubsection{DeSchutter: 3 different geinea pigs dendritic morphologies}
+\begin{itemize}
+\item We only have a recompartmentalized version of one of the them.
+  I don't know where to find the recompartmentalized versions of the
+  other two.  The morphologies are available from the neuromorpho
+  database, but naive recompartmentalization of the morphology changes
+  computational behavior such that exact reproduction of the
+  publication figures is not directly possible.  To be sorted out.
+\item The GUI shows a list with all the transmembrane currents /
+  channels found in the model.
+  \begin{enumerate}
+  \item The channel distribution table shows the current densities and
+    the reversal potentials of the different channels.
+  \item The channel characteristics table shows the parameters and a
+    button for each channel.  Clicking the button shows a plot of the
+    steady-state and tau membrane potential relationship.  This
+    relationship is calculated by heccer and made currently made
+    available to the GUI via the gshell 'tabulate' command.
+  \end{enumerate}
+\end{itemize}
+
+
+\subsubsection{Sergio\'s model}
+\begin{itemize}
+\item Different anamolous rectifier: I am in touch with Sergio about
+  his model and will implement it in G3.  I am still waiting for his
+  response, but if he cannot help us out, it should be relatively easy
+  to reproduce his model starting from Arnd Roth's and Sergio's
+  publications, because Sergio only replaced the anomalous rectifier
+  (h-current).
+\item The GUI shows that this model's morphology is identical to
+  Erik's model's morphology by showing the table with morphology
+  characteristics.
+\item It would be nice to display the morphology graphically as well.
+\end{itemize}
+
+\subsubsection{Japan model}
+\begin{itemize}
+\item This is reported as a modification of the original EDS model,
+  reimplemented in the NEURON simulator.  But: the morphology is taken
+  from D.P. Shelton (but looks different from Shelton's), there is no
+  report of different dendritic functional regions, and some channels
+  have been modified, others removed, and new added.  It is basically
+  a new model with some components shared between models.
+\item There is currently no possibility to document the assumptions or
+  hypotheses upon which the model is based, ie. comparing the
+  subregions in the edsjb1994 dendrite with the assumption built into
+  the Japanese model.
+\item The channels are reported the same way as the EDS publications.
+\item The publications are~\cite{miyasho01:_low_ca2_purkin,
+    chono03:_purkin}.
+\end{itemize}
+
+\subsubsection{Different species???}
+Passive models: See Segev model above.
+
+
+\subsubsection{Propagated to Neuron}
+Importing Neuron models can be made possible.  It assumed to take less
+time than the backward compatibility module because the Neuron script
+languages are not as sophisticated as the G-2 SLI.
+
+\subsubsection{Allan model ??}
+Implementing Allan's model in G3 will require a profound investigation
+for how to:
+\begin{itemize}
+\item Connect its dedicated solver to SSP.
+\item How to do its model specification.
+  \begin{enumerate}
+  \item interfacing with the model-container?
+  \item setup the solver from the model-container?
+  \end{enumerate}
+\item How such an entirely different model with entirely different
+  concepts integrates with the GUI.  This is an interesting exercise
+  we should do to check the flexibility and robustness of both
+  high-level concepts and technical implementation.
+\end{itemize}
+
+\subsection{Lineage implementation / model comparison}
+
+These three are detailed above.
+
+\subsubsection{Differences in structure}
+\begin{itemize}
+\item Text.
+\item visually / graphically.
+\item plot time constants for the channel.
+\end{itemize}
+
+\subsubsection{Difference in behavior}
+\begin{itemize}
+\item Current injection (two traces one from each model)
+\item Is currently not possible: two animated PCs on either side with
+  the the data plot in middle.
+\end{itemize}
+
+
+\subsection{Attribution}
+\begin{itemize}
+\item The model-container will define a new parameter
+  'PUBLICATION\_ATOM' that points to an external file.  The external
+  file contains 'publication atoms' possibly including bibtex
+  references to papers, tagged free text such as abstract and author
+  comments.  The PUBLICATION\_ATOM parameter is available for all
+  model types known by the model container (cell, channel, etc).
+\item The full pathname of the external file is guaranteed to be
+  unique in a distributed software system.
+\item Based on the PUBLICATION\_ATOM parameters of a complex model,
+  and by assigning 'attribution scores' to each model component, the
+  attribution of one or more contributors to a model can be fully
+  quantified.
+\item Likewise the 'local' past and current importance of a model
+  component can be quantified by counting its usage from the lineage
+  tree.  In a centralized database with peer-reviewed publications the
+  'local importance' provides an overall measure of the significance
+  of a model component.  The algorithms to compute the importance of a
+  model component shares principles with google algorithms to
+  attribute scores to google search hits.  They are also related to
+  spanning tree and coverage calculations in graph networks.
+\item The gshell's show\_library command has extensions for file types
+  such as 'ndf' files, 'g2' files, ao.  This command is already
+  supported by the g-tube.  A new extension type 'cite' lists all the
+  citations related to one model (channel, morphology, or other) and
+  allows to browse its lineage.
+\end{itemize}
+
+
+\subsubsection{Purkinje cell model}
+\begin{itemize}
+\item Attributions.
+\item Made like Sci citations Index.
+\end{itemize}
+
+
+\subsection{Reconstruct the figures in the papers from the model in real time}
+\begin{itemize}
+\item A library of SSP schedules with different stimulation paradigms
+  is available.  The GUI instructs the SSP scheduler to load a
+  schedule from the library and then runs the simulation.  This
+  produces the output for one figure.  Tables and channel kinetic plot
+  reconstruction may need a different mechanism.
+\item Most of the SSP configurations required for this functionality
+  are already available from different locations in the source code
+  (eg. the regression tests).  After initial creation of this library,
+  the g-tube needs an interface to access and load schedules from this
+  library.  This interface is available from a menu that is part of
+  the (still to be described) publication / research workflow.
+\item Obviously figure reproduction can also be done manually from the
+  g-tube menus.
+\item Future suggestion: the g-tube supports configuration files that
+  after loading, popup two plot windows, instruct it to load an SSP
+  (simulation) configuration for each plot window, and then run those
+  simulations.
+\end{itemize}
+
+
+\subsubsection{DeSchutter papers}
+\begin{itemize}
+\item Identify the industry standard model measures
+  \begin{enumerate}
+  \item Passive
+  \item Current injection / voltage clamp
+  \item Synaptic input
+  \item Physiological stimulation
+  \end{enumerate}
+\end{itemize}
+
+\subsection{Tutorialize this}
+
+\begin{enumerate}
+\item PDF of standard paper.
+\item Narrative components / Bullet points
+  \begin{enumerate}
+  \item Figures based
+  \end{enumerate}
+\item Points of deviation
+  \begin{enumerate}
+  \item Tells the authors in review
+  \end{enumerate}
+\end{enumerate}
+
+
+\section{DONE List}
+
+
+\bibliographystyle{abbrv}
+\bibliography{all}
+
+\end{document}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
