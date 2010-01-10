@@ -20,6 +20,9 @@ This list is specifically about the publication GUI.  See
 \href{../project-todo/project-todo.tex}{The project-todo list} for an
 explanation how to work with these lists.
 
+This list needs further expansion by mapping the technical comments to
+GUI todos.
+
 \subsection{General Advantages of the Publication GUI}
 \begin{itemize}
 \item Paper version of story and figures.
@@ -30,30 +33,29 @@ explanation how to work with these lists.
 
 \section{TODO List}
 
-Based on
+Example based on
 \cite{deschutter94:_purkin_i}\cite{deschutter94:_purkin_ii}\cite{schutter94:_simul_purkin}
 
 \subsection{Technically}
 
 \subsubsection{loading the different Purkinje cell models into G-3}
 
-The g-tube has a model name selection box.  It lists the names of all
-the models that can be loaded.
-
-Both the g-tube and gshell currently work with one implicit workspace,
-so they can import only one model at a time.  The model-container uses
-'namespaces' as an abstraction for user workspaces.  Gshell commands
-need to be implemented to access the interface to manage the
-model-container's namespaces.  The g-tube interfaces to the gshell
-over its standard I/O stream connection to use these new commands.
-
-A namespace edit box will popup every time a new model is loaded to
-allow the user to edit the name of the namespace.  The edit box
-suggests a default name when popped up.
-
-The name of the namespace that was used to load the model, is visible
-in the model loader selection box.
-
+\begin{enumerate}
+\item The g-tube has a model name selection box.  It lists the names
+  of all the models that can be loaded.
+\item Both the g-tube and gshell currently work with one implicit
+  workspace, so they can import only one model at a time.  The
+  model-container uses 'namespaces' as an abstraction for user
+  workspaces.  Gshell commands need to be implemented to access the
+  interface to manage the model-container's namespaces.  The g-tube
+  interfaces to the gshell over its standard I/O stream connection to
+  use these new commands.
+\item A namespace edit box will popup every time a new model is loaded
+  to allow the user to edit the name of the namespace.  The edit box
+  suggests a namespace for use.
+\item The name of the namespace that was used to load the model, is
+  visible in the model loader selection box.
+\end{enumerate}
 
 \subsubsection{Passive Segev Model}
 \begin{itemize}
