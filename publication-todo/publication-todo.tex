@@ -67,6 +67,12 @@ Example based on
   added to the model library.
 \item Both the segev model and the edsjb1994 model can be loaded under
   their own namespace.  The GUI displays the differences in:
+
+  The following quantities are visible for both models simultaneously
+  in a small table.  This table with morphology characteristics is
+  available from a button in the menu 'Model Construction' -> 'Explore
+  Model'.  (Todo: split this table in two: one for morphology, one for
+  passive move).
   \begin{enumerate}
   \item soma dimensions (different between the two models)
   \item electrotonic length of the longest and shortest compartments (eds has a very very long compartment).
@@ -75,10 +81,6 @@ Example based on
   \item RM, CM, RA, ELEAK, number of spines, number of compartments.
   \item List of transmembrane currents.
   \end{enumerate}
-  These quantities are visible for both models simultaneously in a
-  small table.  This table with morphology characteristics is
-  available from a button in the menu 'Model Construction' -> 'Explore
-  Model'.
 \end{itemize}
 The quantities mentioned above can be computed by the model container
 and are made available as yaml text files to the GUI from the standard
@@ -102,6 +104,8 @@ I/O connection with the gshell.
     shows a plot of the steady-state and tau membrane potential
     relationship.  This relationship is calculated by heccer and made
     available to the GUI via the gshell 'tabulate' command.
+  \item The voltage clamp current can be made visible too, using a
+    library of SSP schedules (see below).
   \end{enumerate}
 \end{itemize}
 
@@ -135,6 +139,8 @@ I/O connection with the gshell.
 \item The channels are reported the same way as the EDS publications.
 \item The publications are~\cite{miyasho01:_low_ca2_purkin,
     chono03:_purkin}.
+\item Currently we cannot integrate this model with the publication
+  system as we don't have its model scripts.
 \end{itemize}
 
 \subsubsection{Different species???}
@@ -142,9 +148,16 @@ Passive models: See Segev model above.
 
 
 \subsubsection{Propagated to Neuron}
-Importing Neuron models can be made possible.  It assumed to take less
-time than the backward compatibility module because the Neuron script
-languages are not as sophisticated as the G-2 SLI.
+\begin{itemize}
+\item Importing Neuron models can be made possible.  It assumed to
+  take less time than the backward compatibility module because the
+  Neuron script languages are not as sophisticated as the G-2 SLI.
+\item From a user perspective, loading SLI models is the same as
+  loading NDF models (and conversions are applied in the background).
+\item Importing Neuron models will work in the same way, with
+  conversions applied in the background.  The graphical part of the
+  G-Tube does not need explicit support for NEURON files.
+\end{itemize}
 
 \subsubsection{Allan model ??}
 Implementing Allan's model in G3 will require a profound investigation
@@ -160,11 +173,16 @@ for how to:
   concepts integrates with the GUI.  This is an interesting exercise
   we should do to check the flexibility and robustness of both
   high-level concepts and technical implementation.
+\item The technical reports that document the implementation workflow
+  can be found in the explanation for how to
+  \href{../genesis-extend-functionality/genesis-extend-functionality.tex}{extend
+    GENESIS functionality}.
 \end{itemize}
 
 \subsection{Lineage implementation / model comparison}
 
 These three are detailed above.
+
 
 \subsubsection{Differences in structure}
 \begin{itemize}
@@ -173,11 +191,20 @@ These three are detailed above.
 \item plot time constants for the channel.
 \end{itemize}
 
+The G-Tube allows to show multiple morphology, passive models, channel
+characteristics and channel distribution tables simultaneously.
+
+The differences in structure are visually represented using different
+colors (green color: same parameters / structure, red color:
+differences in parameters / structure).
+
 \subsubsection{Difference in behavior}
 \begin{itemize}
-\item Current injection (two traces one from each model)
+\item Current injection (two traces one from each model).  A library
+  of SSP schedules is used to setup the simulation required to produce
+  the traces (see also below).
 \item Is currently not possible: two animated PCs on either side with
-  the the data plot in middle.
+  the data plot in middle.
 \end{itemize}
 
 
@@ -228,12 +255,14 @@ These three are detailed above.
 \item Most of the SSP configurations required for this functionality
   are already available from different locations in the source code
   (eg. the regression tests).  After initial creation of this library,
-  the g-tube needs an interface to access and load schedules from this
-  library.  This interface is available from a menu that is part of
-  the (still to be described) publication / research workflow.
+  the buttons that implement functions for model comparison implicitly
+  select one or more SSP configuration files and run a simulation.
 \item Obviously figure reproduction can also be done manually from the
-  g-tube menus.
-\item Future suggestion: the g-tube supports configuration files that
+  g-tube menus.  For this, the G-Tube needs an interface to access and
+  load schedules from the SSP library.  This interface is available
+  from a menu that is part of the (still to be described) publication
+  / research workflow.
+\item Future suggestion: the G-Tube supports configuration files that
   after loading, popup two plot windows, instruct it to load an SSP
   (simulation) configuration for each plot window, and then run those
   simulations.
