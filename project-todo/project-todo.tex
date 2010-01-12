@@ -35,6 +35,31 @@ This TODO list was built on \today, \thistime.
 
 \section{TODO List}
 
+\subsection{gshell list\_elements}
+
+The gshell command 'list\_elements' sometimes loses part of the
+output.  In the following snippet parts of the 'km' and 'kh' channels
+have disappeared:
+
+
+\begin{verbatim}
+> genesis-g3 --execute "ndf_load cells/purkinje/edsjb1994.ndf"
+Welcome to the GENESIS 3 shell
+genesis > list_elements /Purkinje/segments/soma/**
+---
+- /Purkinje/segments/soma/km/km
+- /Purkinje/segments/soma/kdr/kdr_steadystate
+- /Purkinje/segments/soma/kdr/kdr_tau
+- /Purkinje/segments/soma/ka/ka_gate_activation
+- /Purkinje/segments/soma/ka/ka_gate_inactivation
+- /Purkinje/segments/soma/kh/kh
+- /Purkinje/segments/soma/nap/nap
+- /Purkinje/segments/soma/naf/naf_gate_activation
+- /Purkinje/segments/soma/naf/naf_gate_inactivation
+- /Purkinje/segments/soma/cat/cat_gate_activation
+- /Purkinje/segments/soma/cat/cat_gate_inactivation
+\end{verbatim}
+
 \subsection{morphology\_summarize}
 
 To characterize a cell morphology it would be good to extend the
