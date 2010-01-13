@@ -14,7 +14,7 @@
 
 \section*{GENESIS: Documentation}
 
-\section{Publication System: GUI}
+\section{Publication System: GUI Functionality}
 
 %This list is specifically about the publication GUI.  See
 %\href{../project-todo/project-todo.tex}{The project-todo list} for an
@@ -33,27 +33,13 @@
 
 %\section{Workflows and Technical Comments}
 
-The examples in this document are based on publications including
+The examples in this document are based on publications
 \cite{deschutter94:_purkin_i}\cite{deschutter94:_purkin_ii}\cite{schutter94:_simul_purkin}\cite{Rapp-P:1994qf}
 
 \subsection{Loading the different Purkinje cell models into G-3}
 
-\begin{enumerate}
-\item The g-tube has a model name selection box.  It lists the names
-  of all the models that can be loaded.
-\item Both the g-tube and gshell currently work with one implicit
-  workspace, so they can import only one model at a time.  The
-  model-container uses 'namespaces' as an abstraction for user
-  workspaces.  Gshell commands need to be implemented to access the
-  interface to manage the model-container's namespaces.  The g-tube
-  interfaces to the gshell over its standard I/O stream connection to
-  use these new commands.
-\item A namespace edit box will popup every time a new model is loaded
-  to allow the user to edit the name of the namespace.  The edit box
-  suggests a namespace for use.
-\item The name of the namespace that was used to load the model, is
-  visible in the model loader selection box.
-\end{enumerate}
+The following sections list the purkinje cells that we use as targets
+during implementation.
 
 \subsubsection{Passive Segev Model}
 \begin{itemize}
@@ -63,51 +49,21 @@ The examples in this document are based on publications including
 \item The passive properties of this model are accurately reported in
   Segev paper.  The different versions of the Segev model must be
   added to the model library.
-\item Both the Segev model and the edsjb1994 model can be loaded under
-  their own namespace.  The GUI displays the differences in:
-
-  The following quantities are visible for both models simultaneously
-  in a small table.  This table with morphology characteristics is
-  available from a button in the menu 'Model Construction' --$>$
-  'Explore Model'.  (this table should be split in two: one for
-  morphology, one for passive move).
-  \begin{enumerate}
-  \item soma dimensions (different between the two models)
-  \item electrotonic length of the longest and shortest compartments
-    (edsjb1994 has a very very long compartment).
-  \item total dendritic length, surface area and volume.
-  \item Number of branch points, average branch order of dendritic tips.
-  \item RM, CM, RA, ELEAK, number of spines, number of compartments.
-  \item List of transmembrane currents.
-  \end{enumerate}
+\item Both the Segev model and the edsjb1994 model can be loaded.  The
+  GUI can then display their differences.
 \end{itemize}
-The quantities mentioned above can be computed by the model container
-and are made available as yaml text files to the GUI from the standard
-I/O connection with the gshell.
 
-\subsubsection{DeSchutter: 3 different geinea pigs dendritic morphologies}
+
+\subsubsection{DeSchutter: 3 different guinea pigs dendritic
+  morphologies}
 \begin{itemize}
-\item We only have a recompartmentalized version of one of the them.
-  I don't know where to find the recompartmentalized versions of the
-  other two.  The morphologies are available from the neuromorpho
-  database, but naive recompartmentalization of the morphology changes
-  computational behavior such that exact reproduction of the
-  publication figures is not directly possible.  To be sorted out.
-\item The GUI shows a list with all the transmembrane currents /
-  channels found in the model.
-  \begin{enumerate}
-  \item The channel characteristics table shows the gate parameters
-    and the reversal potential for each channel (table 1
-    paper~\cite{deschutter94:_purkin_i}).
-  \item The channel distribution table shows the current densities
-    (table 2 paper~\cite{deschutter94:_purkin_i}).
-  \item Clicking a button in the table with channel characteristics
-    shows a plot of the steady-state and tau membrane potential
-    relationship.  This relationship is calculated by heccer and made
-    available to the GUI via the gshell 'tabulate' command.
-  \item The voltage clamp current can be made visible too, using a
-    library of SSP schedules (see below).
-  \end{enumerate}
+\item We only have a recompartmentalized version of one Purkinje cell
+  and it is unknown where to find the recompartmentalized versions of
+  the other two Purkinje cells.  The morphologies are available from
+  the neuromorpho database, but naive recompartmentalization of a
+  morphology changes its computational behavior such that exact
+  reproduction of the publication figures is not directly possible.
+  This needs further investigation.
 \end{itemize}
 
 
@@ -150,36 +106,18 @@ These can be handled as passive models (see Segev model above).
 
 
 \subsubsection{The Neuron Purkinje Cell Model}
-\begin{itemize}
-\item Importing Neuron models can be made possible.  It assumed to
-  take less time than the backward compatibility module because the
-  Neuron script languages are not as sophisticated as the G-2 SLI.
-\item From a user perspective, loading SLI models is the same as
-  loading NDF models (and conversions are applied in the background).
-\item Importing Neuron models will work in the same way, with
-  conversions applied in the background.  The graphical part of the
-  G-Tube does not need explicit support for NEURON files.
-\end{itemize}
+Importing Neuron models can be made possible.  It assumed to take less
+time than the backward compatibility module because the Neuron script
+languages are not as sophisticated as the G-2 SLI.
 
 \subsubsection{Allan model ??}
-Implementing Allan's model in G3 will require a profound investigation
-for how to:
-\begin{itemize}
-\item Connect its dedicated solver to SSP.
-\item How to do its model specification.
-  \begin{enumerate}
-  \item interfacing with the model-container?
-  \item setup the solver from the model-container?
-  \end{enumerate}
-\item How such an entirely different model with entirely different
-  concepts integrates with the GUI.  This is an interesting exercise
-  we should do to check the flexibility and robustness of both
-  high-level concepts and technical implementation.
-\item The technical reports that document the implementation workflow
-  can be found in the explanation for how to
-  \href{../genesis-extend-functionality/genesis-extend-functionality.tex}{extend
-    GENESIS functionality}.
-\end{itemize}
+
+Allan's model is based on entirely different concepts than any of the
+other Purkinje cell models.  A user does not care much about such
+differences.  Implementation of Allan's model in G-3 is an interesting
+exercise we should do to check the flexibility and robustness of both
+high-level concepts and technical implementation.
+
 
 \subsection{Lineage implementation / model comparison}
 
@@ -187,17 +125,17 @@ These three are detailed above.
 
 
 \subsubsection{Differences in structure}
-\begin{itemize}
-\item Text.
-\item visually / graphically.
-\item plot time constants for the channel.
-\end{itemize}
+%\begin{itemize}
+%\item Text.
+%\item visually / graphically.
+%\item plot time constants for the channel.
+%\end{itemize}
 
-The G-Tube allows to show multiple morphology, passive models, channel
+The G-Tube shows multiple morphology, passive models, channel
 characteristics and channel distribution tables simultaneously.
 
-The differences in structure are visually represented using different
-colors (green color: same parameters / structure, red color:
+Both quantitative and structural differences can visualized using
+different colors (green color: same parameters / structure, red color:
 differences in parameters / structure).
 
 \subsubsection{Difference in behavior}
@@ -210,67 +148,41 @@ differences in parameters / structure).
 \end{itemize}
 
 
-\subsection{Attribution}
-\begin{itemize}
-\item The model-container will define a new parameter
-  'PUBLICATION\_ATOM' that points to an external file.  The external
-  file contains 'publication atoms' possibly including bibtex
-  references to papers, tagged free text such as abstract and author
-  comments.  The PUBLICATION\_ATOM parameter is available for all
-  model types known by the model container (cell, channel, etc).
-\item The full pathname of the external file is guaranteed to be
-  unique in a distributed software system.
-\item Based on the PUBLICATION\_ATOM parameters of a complex model,
-  and by assigning 'attribution scores' to each model component, the
-  attribution of one or more contributors to a model can be fully
-  quantified.
-\item Likewise the 'local' past and current importance of a model
-  component can be quantified by counting its usage from the lineage
-  tree.  In a centralized database with peer-reviewed publications the
-  'local importance' provides an overall measure of the significance
-  of a model component.  The algorithms to compute the importance of a
-  model component shares principles with google algorithms to
-  attribute scores to google search hits.  They are also related to
-  spanning tree and coverage calculations in graph networks.
-\item The gshell's show\_library command has extensions for file types
-  such as 'ndf' files, 'g2' files, ao.  This command is already
-  supported by the g-tube.  A new extension type 'cite' lists all the
-  citations related to one model (channel, morphology, or other) and
-  allows to browse its lineage.
-\end{itemize}
+\subsection{Publication and Attribution}
+
+Attribution means identifying who has contributed what to a model, and
+identifying the importance of each contribution.
+
+The fundamental building block of a publication is a publication atom.
+A publication atom is a direct component of a model (such as a channel
+instance, a synapse instance).  Each publication atom is contributed
+by an author.
+
+Every publication atom starts with equal importance.  The use-count of
+a publication atom determines its overall importance.
+
+The G-Tube shows a table of all the people who have contributed to a
+model and how much they contributed.
+
+This attribution model obviously gives high attribution scores to
+Hodgkin and Huxley and to Wilfrid Rall.
 
 
-\subsubsection{Purkinje cell model}
-\begin{itemize}
-\item Attributions.
-\item Made like Sci citations Index.
-\end{itemize}
+%\subsubsection{Purkinje cell model}
+%\begin{itemize}
+%\item Attributions.
+%\item Made like Sci citations Index.
+%\end{itemize}
 
 
 \subsection{Reconstruct the figures in the papers from the model in real time}
-\begin{itemize}
-\item A library of SSP schedules with different stimulation paradigms
-  is available.  The GUI instructs the SSP scheduler to load a
-  schedule from the library and then runs the simulation.  This
-  produces the output for one figure.  Tables and channel kinetic plot
-  reconstruction may need a different mechanism.
-\item The SSP configuration library can be browsed using the
-  show\_library gshell command.
-\item Most of the SSP configurations required for this functionality
-  are already available from different locations in the source code
-  (eg. the regression tests).  After initial creation of this library,
-  the buttons that implement functions for model comparison implicitly
-  select one or more SSP configuration files and run a simulation.
-\item Obviously figure reproduction can also be done manually from the
-  g-tube menus.  For this, the G-Tube needs an interface to access and
-  load schedules from the SSP library.  This interface is available
-  from a menu that is part of the (still to be described) publication
-  / research workflow.
-\item Future suggestion: the G-Tube supports snapshot files that after
-  loading, popup two plot windows, instruct it to load an SSP
-  (simulation) configuration for each plot window, and then run those
-  simulations.
-\end{itemize}
+
+Opening a publication from within the G-Tube shows the figures of the
+publication.  Each figure has a caption explaining what is shown.
+
+Figures can be produced manually by loading a model and applying an
+SSP schedule to it.
+
 
 
 \subsubsection{DeSchutter papers}
@@ -300,6 +212,160 @@ differences in parameters / structure).
 
 
 \section{Technical Comments}
+
+\subsection{Loading Different Models into the G-Tube}
+
+\begin{enumerate}
+\item The model name selection box of the G-Tube lists the names of
+  all the models that can be loaded.
+\item Both the G-Tube and the gshell currently work with one implicit
+  workspace, which limits them to importation of only one model at a
+  time.  The model-container uses 'namespaces' as an abstraction for
+  user workspaces.  Gshell commands need to be implemented to access
+  the interface to manage the model-container's namespaces.  The
+  G-Tube connects to the gshell over its standard I/O stream
+  connection to use the new commands.
+\item A namespace edit box will popup every time a new model is loaded
+  to allow the user to edit the name of the namespace.  The edit box
+  suggests a namespace for use.
+\item The name of the namespace that was used to load the model, is
+  visible in the model loader selection box.
+\item The namespaces known to the G-Tube are also available from a
+  separate 'Recent' sub-menu in the file menu.
+\end{enumerate}
+
+
+\subsection{Morphology Characterization}
+The following quantities are visible for both models simultaneously
+in a small table.  This table with morphology characteristics is
+available from a button in the menu 'Model Construction' --$>$
+'Explore Model'.  (this table should be split in two: one for
+morphology, one for passive move).
+\begin{enumerate}
+\item soma dimensions (different between the two models)
+\item electrotonic length of the longest and shortest compartments
+  (edsjb1994 has a very very long compartment).
+\item total dendritic length, surface area and volume.
+\item Number of branch points, average branch order of dendritic tips.
+\item RM, CM, RA, ELEAK, number of spines, number of compartments.
+\item List of transmembrane currents.
+\end{enumerate}
+The quantities mentioned above can be computed by the model container
+and are made available as yaml text files to the GUI from the standard
+I/O connection with the gshell.
+
+For example
+\href{../pub-purkinje-deschutter-morphology/pub-purkinje-deschutter-morphology.tex}.
+
+\subsection{Channel Kinetics and Distribution}
+
+The GUI shows a list with all the transmembrane currents /
+channels found in the model.
+\begin{enumerate}
+\item The channel characteristics table shows the gate parameters and
+  the reversal potential for each channel (table 1
+  paper~\cite{deschutter94:_purkin_i}).
+\item The channel distribution table shows the current densities
+  (table 2 paper~\cite{deschutter94:_purkin_i}).
+\item Clicking a button in the table with channel characteristics
+  shows a plot of the steady-state and time constant against the
+  membrane potential.  This relationship is calculated by heccer and
+  made available to the GUI via the gshell 'tabulate' command.
+\item The voltage clamp current can be made visible too, using a
+  library of SSP schedules (see below).
+\end{enumerate}
+
+For example see
+\href{../pub-purkinje-deschutter-kinetics/pub-purkinje-deschutter-kinetics.tex}.
+
+
+\subsection{SSP Library of Simulation Configurations}
+
+\subsection{Importing Neuron Models}
+
+\begin{itemize}
+\item The G-Tube / gshell load SLI models in the same way as NDF
+  models (and necessary conversions are applied in the background).
+\item Importing Neuron models can work in the same way, with
+  conversions applied in the background.  The graphical part of the
+  G-Tube does not need explicit support for NEURON files.
+\end{itemize}
+
+\subsection{Other Models}
+
+Implementing Allan's model in G3 will require a profound investigation
+for how to:
+\begin{itemize}
+\item Connect its dedicated solver to SSP.
+\item How to do its model specification.
+  \begin{enumerate}
+  \item interfacing with the model-container?
+  \item setup the solver from the model-container?
+  \end{enumerate}
+\item The technical reports that document the implementation workflow
+  can be found in the explanation for how to
+  \href{../genesis-extend-functionality/genesis-extend-functionality.tex}{extend
+    GENESIS functionality}.
+\end{itemize}
+
+
+\subsection{Publication and Attribution}
+
+\begin{itemize}
+\item The model-container will define a new parameter
+  'PUBLICATION\_ATOM' that points to an external file.  The external
+  file contains 'publication atoms' possibly including bibtex
+  references to papers, tagged free text such as abstract and author
+  comments.  The PUBLICATION\_ATOM parameter is available for all
+  model types known by the model container (cell, channel, etc).
+\item The full pathname of the external file is guaranteed to be
+  unique in a distributed software system.
+\item Based on the PUBLICATION\_ATOM parameters of a complex model,
+  and by assigning 'attribution scores' to each model component, the
+  attribution of one or more contributors to a model can be fully
+  quantified.
+\item Likewise the 'local' past and current importance of a model
+  component can be quantified by counting its usage from the lineage
+  tree.  In a centralized database with peer-reviewed publications the
+  'local importance' provides an overall measure of the significance
+  of a model component.  The algorithms to compute the importance of a
+  model component shares principles with google algorithms to
+  attribute scores to google search hits.  They are also related to
+  spanning tree and coverage calculations in graph networks.
+\item The gshell's show\_library command has extensions for file types
+  such as 'ndf' files, 'g2' files, ao.  This command is already
+  supported by the G-Tube.  A new extension type 'cite' lists all the
+  citations related to one model (channel, morphology, or other) and
+  allows to browse its lineage.
+\end{itemize}
+
+
+\subsection{Reconstruct the figures in the papers from the model in real time}
+
+\begin{itemize}
+\item A library of SSP schedules with different stimulation paradigms
+  is available.  The GUI instructs the SSP scheduler to load a
+  schedule from the library and then runs the simulation.  This
+  produces the output for one figure.  Tables and channel kinetic plot
+  reconstruction may need a different mechanism.
+\item The SSP configuration library can be browsed using the
+  show\_library gshell command.  Each configuration is shown using its
+  description inside the yaml file.
+\item Most of the SSP configurations required for this functionality
+  are already available from different locations in the source code
+  (eg. the regression tests).  After initial creation of this library,
+  the buttons that implement functions for model comparison implicitly
+  select one or more SSP configuration files and run a simulation.
+\item Obviously figure reproduction can also be done manually from the
+  G-Tube menus.  For this, the G-Tube needs an interface to access and
+  load schedules from the SSP library.  This interface is available
+  from a menu that is part of the (still to be described) publication
+  / research workflow.
+\item Future suggestion: the G-Tube supports snapshot files that after
+  loading, popup two plot windows, instruct it to load an SSP
+  (simulation) configuration for each plot window, and then run those
+  simulations.
+\end{itemize}
 
 
 \bibliographystyle{abbrv}
