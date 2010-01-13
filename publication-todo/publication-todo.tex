@@ -14,31 +14,29 @@
 
 \section*{GENESIS: Documentation}
 
-\section{The TODO and the DONE Lists}
+\section{Publication System: GUI}
 
-This list is specifically about the publication GUI.  See
-\href{../project-todo/project-todo.tex}{The project-todo list} for an
-explanation how to work with these lists.
+%This list is specifically about the publication GUI.  See
+%\href{../project-todo/project-todo.tex}{The project-todo list} for an
+%explanation how to work with these lists.
 
-This list needs further expansion by mapping the technical comments to
-GUI todos.
+%This list needs further expansion by mapping the technical comments to
+%GUI todos.
 
-\subsection{General Advantages of the Publication GUI}
-\begin{itemize}
-\item Paper version of story and figures.
-\item Here is how it maps into the new system.
-\item Talk about the capabilities once you do that.
-\end{itemize}
+%\subsection{General Advantages of the Publication GUI}
+%\begin{itemize}
+%\item Paper version of story and figures.
+%\item Here is how it maps into the new system.
+%\item Talk about the capabilities once you do that.
+%\end{itemize}
 
 
-\section{TODO List}
+%\section{Workflows and Technical Comments}
 
-Example based on
-\cite{deschutter94:_purkin_i}\cite{deschutter94:_purkin_ii}\cite{schutter94:_simul_purkin}
+The examples in this document are based on publications including
+\cite{deschutter94:_purkin_i}\cite{deschutter94:_purkin_ii}\cite{schutter94:_simul_purkin}\cite{Rapp-P:1994qf}
 
-\subsection{Technically}
-
-\subsubsection{loading the different Purkinje cell models into G-3}
+\subsection{Loading the different Purkinje cell models into G-3}
 
 \begin{enumerate}
 \item The g-tube has a model name selection box.  It lists the names
@@ -65,17 +63,18 @@ Example based on
 \item The passive properties of this model are accurately reported in
   Segev paper.  The different versions of the Segev model must be
   added to the model library.
-\item Both the segev model and the edsjb1994 model can be loaded under
+\item Both the Segev model and the edsjb1994 model can be loaded under
   their own namespace.  The GUI displays the differences in:
 
   The following quantities are visible for both models simultaneously
   in a small table.  This table with morphology characteristics is
-  available from a button in the menu 'Model Construction' -> 'Explore
-  Model'.  (Todo: split this table in two: one for morphology, one for
-  passive move).
+  available from a button in the menu 'Model Construction' --$>$
+  'Explore Model'.  (this table should be split in two: one for
+  morphology, one for passive move).
   \begin{enumerate}
   \item soma dimensions (different between the two models)
-  \item electrotonic length of the longest and shortest compartments (eds has a very very long compartment).
+  \item electrotonic length of the longest and shortest compartments
+    (edsjb1994 has a very very long compartment).
   \item total dendritic length, surface area and volume.
   \item Number of branch points, average branch order of dendritic tips.
   \item RM, CM, RA, ELEAK, number of spines, number of compartments.
@@ -112,7 +111,7 @@ I/O connection with the gshell.
 \end{itemize}
 
 
-\subsubsection{Sergio\'s model}
+\subsubsection{Sergio model}
 \begin{itemize}
 \item Different anamolous rectifier: I am in touch with Sergio about
   his model and will implement it in G3.  I am still waiting for his
@@ -138,18 +137,19 @@ I/O connection with the gshell.
   hypotheses upon which the model is based, ie. comparing the
   subregions in the edsjb1994 dendrite with the assumption built into
   the Japanese model.
-\item The channels are reported the same way as the EDS publications.
+\item The channels are reported the same way as in
+  \cite{deschutter94:_purkin_i}.
 \item The publications are~\cite{miyasho01:_low_ca2_purkin,
     chono03:_purkin}.
 \item Currently we cannot integrate this model with the publication
-  system as we don't have its model scripts.
+  system because we don't have its model scripts.
 \end{itemize}
 
 \subsubsection{Different species???}
-Passive models: See Segev model above.
+These can be handled as passive models (see Segev model above).
 
 
-\subsubsection{Propagated to Neuron}
+\subsubsection{The Neuron Purkinje Cell Model}
 \begin{itemize}
 \item Importing Neuron models can be made possible.  It assumed to
   take less time than the backward compatibility module because the
@@ -254,6 +254,8 @@ differences in parameters / structure).
   schedule from the library and then runs the simulation.  This
   produces the output for one figure.  Tables and channel kinetic plot
   reconstruction may need a different mechanism.
+\item The SSP configuration library can be browsed using the
+  show\_library gshell command.
 \item Most of the SSP configurations required for this functionality
   are already available from different locations in the source code
   (eg. the regression tests).  After initial creation of this library,
@@ -264,8 +266,8 @@ differences in parameters / structure).
   load schedules from the SSP library.  This interface is available
   from a menu that is part of the (still to be described) publication
   / research workflow.
-\item Future suggestion: the G-Tube supports configuration files that
-  after loading, popup two plot windows, instruct it to load an SSP
+\item Future suggestion: the G-Tube supports snapshot files that after
+  loading, popup two plot windows, instruct it to load an SSP
   (simulation) configuration for each plot window, and then run those
   simulations.
 \end{itemize}
@@ -297,7 +299,7 @@ differences in parameters / structure).
 \end{enumerate}
 
 
-\section{DONE List}
+\section{Technical Comments}
 
 
 \bibliographystyle{abbrv}
