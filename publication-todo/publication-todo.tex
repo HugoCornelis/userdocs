@@ -42,6 +42,9 @@ The following sections list the purkinje cells that we use as targets
 during implementation.
 
 \subsubsection{Passive Segev Model}
+
+Publication~\cite{Rapp-P:1994qf}
+
 \begin{itemize}
 \item The Segev morphology is available from the
   neuromorpho database.  There are subtle differences to the soma
@@ -56,6 +59,9 @@ during implementation.
 
 \subsubsection{DeSchutter: 3 different guinea pigs dendritic
   morphologies}
+
+Publications:~\cite{deschutter94:_purkin_i}\cite{deschutter94:_purkin_ii}
+
 \begin{itemize}
 \item We only have a recompartmentalized version of one Purkinje cell
   and it is unknown where to find the recompartmentalized versions of
@@ -68,6 +74,9 @@ during implementation.
 
 
 \subsubsection{Sergio model}
+
+Publication:~\cite{solinas06:_dendr_purkin}
+
 \begin{itemize}
 \item Different anamolous rectifier: I am in touch with Sergio about
   his model and will implement it in G3.  I am still waiting for his
@@ -82,6 +91,9 @@ during implementation.
 \end{itemize}
 
 \subsubsection{Japan model}
+
+Publications:~\cite{chono03:_purkin}\cite{miyasho01:_low_ca2_purkin}
+
 \begin{itemize}
 \item This is reported as a modification of the original EDS model,
   reimplemented in the NEURON simulator.  But: the morphology is taken
@@ -102,7 +114,11 @@ during implementation.
 \end{itemize}
 
 \subsubsection{Different species???}
-These can be handled as passive models (see Segev model above).
+
+We have morphological data for fish, turtle, rat, guinea pig and mouse
+purkinje cells.  We can ask Rachael if she wants to contribute the
+zebra finch purkinje cells that she has.  These morphologies can be
+handled as passive models (see Segev model above).
 
 
 \subsubsection{The Neuron Purkinje Cell Model}
@@ -110,21 +126,23 @@ Importing Neuron models can be made possible.  It assumed to take less
 time than the backward compatibility module because the Neuron script
 languages are not as sophisticated as the G-2 SLI.
 
-\subsubsection{Allan model ??}
+\subsubsection{Allan Purkinje Cell Model}
+
+Publication:~\cite{coop01}
 
 Allan's model is based on entirely different concepts than any of the
-other Purkinje cell models.  A user does not care much about such
+other Purkinje cell models, but a user does not care much about such
 differences.  Implementation of Allan's model in G-3 is an interesting
 exercise we should do to check the flexibility and robustness of both
 high-level concepts and technical implementation.
 
 
-\subsection{Lineage implementation / model comparison}
+\subsection{Model Comparison}
 
-These three are detailed above.
+I have divided this a bit more than we discussed during the last
+meeting:
 
-
-\subsubsection{Differences in structure}
+\subsubsection{Structural Differences between Models}
 %\begin{itemize}
 %\item Text.
 %\item visually / graphically.
@@ -134,11 +152,11 @@ These three are detailed above.
 The G-Tube shows multiple morphology, passive models, channel
 characteristics and channel distribution tables simultaneously.
 
-Both quantitative and structural differences can visualized using
+Both quantitative and structural differences can be visualized using
 different colors (green color: same parameters / structure, red color:
 differences in parameters / structure).
 
-\subsubsection{Difference in behavior}
+\subsubsection{Behavioral Difference between Models}
 \begin{itemize}
 \item Current injection (two traces one from each model).  A library
   of SSP schedules is used to setup the simulation required to produce
@@ -147,8 +165,10 @@ differences in parameters / structure).
   the data plot in middle.
 \end{itemize}
 
+\subsubsection{Functional Difference between Models}
 
-\subsection{Publication and Attribution}
+
+\subsection{Publication, Attribution and Lineage}
 
 Attribution means identifying who has contributed what to a model, and
 identifying the importance of each contribution.
@@ -240,7 +260,7 @@ The following quantities are visible for both models simultaneously
 in a small table.  This table with morphology characteristics is
 available from a button in the menu 'Model Construction' --$>$
 'Explore Model'.  (this table should be split in two: one for
-morphology, one for passive move).
+morphology, one for passive parameters).
 \begin{enumerate}
 \item soma dimensions (different between the two models)
 \item electrotonic length of the longest and shortest compartments
