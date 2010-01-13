@@ -1,0 +1,70 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{De Schutter: Purkinje Cell Model}
+
+\subsection*{Source}
+
+De Schutter E \& Bower JM (1994) An active membrane model of the cerebellar Purkinje cell I. Simulation of current clamp in slice. {\it Journal of Nerurophysiology}. {\bf 71}: 375--400. \\
+De Schutter E \& Bower JM (1994) An active membrane model of the cerebellar Purkinje cell II. Simulation of synaptic responses.  {\it Journal of Nerurophysiology}. {\bf 71}: 401--419.
+
+\subsection*{Equations}
+
+The channel conductance was
+determined by the product of voltage-dependent activation ($m$)
+and inactivation ($h$) gates, and for the Ca$^{2+}$-activated channels
+a Ca$^{2+}$-dependent activation gate ($z$)
+
+\begin{equation}
+   G(V,[Ca^{2+}], t) = \bar gm(V, t)^p z([Ca^{2+}], t)^r, \mbox{        (units: mV, $\mu$M, ms)}
+\end{equation}
+
+Equations describing the voltage-dependent gates were described from the classic Hodgkin-Huxley\,\cite{L:1952fv} scheme
+
+\begin{equation}
+   \frac{\partial m}{\partial t} = \alpha_m(1-m) - \beta_mm, \mbox{        idem for $h$}
+\end{equation}
+
+\begin{equation}
+   \alpha_m(V,t) = \frac{A}{B+\exp^{V+C)/D}}, \mbox{        }\beta_m(V,t) = \frac{E}{F+\exp^{(V+G)/H}}, \mbox{        idem for $\alpha_h$ and $\beta_h$}
+\end{equation}
+
+Activation rates for Ca$^{2+}$-dependent gates were determined by a dissociation constant $A$ and a time constant $B$
+
+\begin{equation}
+   \frac{\partial z}{\partial t} = \frac{z_\infty - z}{\tau_z}
+\end{equation}
+
+\begin{equation}
+   z_\infty = \frac{1}{1+\frac{A}{\mbox{[Ca$^{2+}$]}}} \mbox{        }\tau_z = B
+\end{equation}
+
+For the Ca$^{2+}$ channels the Nernst potential\,\cite{B:1991zr} was
+computed continuously. Rectification of
+Ca$^{2+}$ channels was not modeled using the Goldman-Hodgkin-Katz (GHK) equation\,\cite{B:1991zr}
+because dendritic membrane potentials in this
+study stayed within a range where Ca$^{2+}$  channels can be considered
+ohmic (i.e., below -20\,mV; Fig. 4.15 in\,\cite{B:1991zr} ). Using
+the simulation results from the final model, we estimate that using
+the GHK equation with an appropriately scaled maximum conductance
+($\bar g$) to compensate for differences in driving force would
+cause only small changes in the amplitude of dendritic Ca$^{2+}$
+currents (mean difference 0.7\,\%, maximum 4.5\,\%).
+
+
+\bibliographystyle{plain}
+\bibliography{../tex/bib/pub-ref}
+
+\end{document}

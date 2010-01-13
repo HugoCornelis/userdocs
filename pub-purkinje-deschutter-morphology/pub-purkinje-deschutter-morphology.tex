@@ -1,0 +1,69 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+%\usepackage{../tex/bib/named}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{De Schutter: Purkinje Cell Model}
+
+\subsection*{Source}
+
+De Schutter E \& Bower JM (1994) An active membrane model of the cerebellar Purkinje cell I. Simulation of current clamp in slice. {\it Journal of Nerurophysiology}. {\bf 71}: 375--400.
+
+\subsection*{Morphology}
+
+\subsubsection*{Parameter values}
+
+\begin{table}
+\begin{tabular}{ l l l }
+                                                                  & {\bf Source}                                   & {\bf Applied}                                   \\
+  Shrinkage factor                                  & 10\,\%                                              & 10\,\%                                             \\
+  Spine number                                      & $\sim$150,000\,\cite{J:1988dq} & 1,474$^\dag$\,\cite{E:1994hc}   \\
+  Spine density ($\mu$m$^{-1}$)        & --                                                      & 13 \,\cite{M:1988bh}                     \\
+  Spine head diameter ($\mu$m)       & --                                                       & 0.54\,\cite{M:1988bh}                   \\ 
+  Spine neck length ($\mu$m)             & --                                                      & 0.66\,\cite{M:1988bh}                   \\
+  Spine neck diameter ($\mu$m)        & --                                                      & 0.20\,\cite{M:1988bh}                   \\
+  Spine surface area ($\mu$m$^2$)  & --                                                      & 1.33\,\cite{M:1988bh}                   \\
+  Number of dendritic tips                     & --                                                      & 471\,*                                               \\
+  %Number of branch points                   & --                                                       &                                                          \\
+                                                                  &                                                          &                                                          \\
+\multicolumn{2}{l} {*\,Obtained value, $^\dag$\,Adjusted value.}                                                                          \\
+\end{tabular}
+\end{table}
+
+\subsubsection*{Column}
+
+\begin{enumerate}
+
+   \item {\bf Source:} Rapp M, Yarom Y \& Segev I (1994) Physiology, morphology and detailed passive models of guinea-pig cerebellar Purkinje cells. {\it Journal of Physiology} (Lond.). {\bf 474}: 101--118.
+
+   \item {\bf Applied:} All simulations were performed with a model using the morphology of {\it cell I} of Rapp et
+al. (1994) unless otherwise noted.
+
+Because the morphological
+data used to build the current model were obtained with light
+microscopic techniques, the location and shapes of dendritic
+spines for the reconstructed cell were not known. Accordingly,
+spines were not simulated. Instead, membrane surface was added
+to the spiny dendritic compartments (defined as dendrites with a
+diameter $<$\,3.17\,$\mu$m) to compensate for missing spines\,\cite{R:1989cr, Rapp-M:1992kx}.
+
+When granule cell synaptic effects were studied in the model, spines were
+explicitly simulated using two compartments each.
+
+\end{enumerate}
+
+\bibliographystyle{plain}
+\bibliography{../tex/bib/g3-refs}
+
+\end{document}

@@ -1,0 +1,86 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\subsection*{Source}
+
+De Schutter E \& Bower JM (1994) An active membrane model of the cerebellar Purkinje cell I. Simulation of current clamp in slice. {\it Journal of Nerurophysiology}. {\bf 71}: 375--400. \\
+
+\noindent De Schutter E \& Bower JM (1994) An active membrane model of the cerebellar Purkinje cell II. Simulation of synaptic responses. {\it Journal of Nerurophysiology}. {\bf 71}: 401--419.
+
+\section*{Kinetics}
+
+\subsubsection*{Parameter values}
+
+\begin{table}[h]
+\caption{$E_r$, and the parameters to Eq. l-5 for the conductance of voltage- and Ca$^{2+}$-dependent channels n the model, and abbreviations for the different ionic channels.}        
+\begin{tabular}{ l l l l l l l l l l l l l }
+                                             &                                                                         &              &                       &         &                                                      &        &          &           &                &         &          &             \\
+   {\bf Name}                        & {\bf Abbreviation}                                         & {$E_r$} & {\bf Factor} & $P$ & $A$                                             & $B$ & $C$ & $D$   & $E$       & $F$ & $G$  & $H$   \\
+   Fast sodium                     & NaF                                                                & 45          & $m$             & 3      & 35.0                                            & 0      & 5       & -10.0 & 7.0         & 0     & 65     & 20.0   \\
+                                              &                                                                         &               & $h$              & 1      & 0.255                                          & 1      & 80     & 10.0  & 7.5         & 0     & -3      & -18.0  \\
+   Persistent sodium          & NaP                                                                & 45          & $m$             & 3      & 200.0                                          & 1      & -18    & -16.0 & 25.0      & 1     & 58     & 8.0      \\
+   P calcium                         & CaP                                                                & 135       & $m$             & 1      & 8.5                                               & 1      & -8      & -12.5 & 35.0      & 1     & 74     & 14.5    \\
+                                              &                                                                         &               & $h$              & 1      & 0.0015                                        & 1      & 29     & 8.0    & 0.0055  & 1     & 23     & -8.0    \\
+   T calcium                         & CaT                                                                 & 135      & $m$              & 1      & 2.60                                             & 1      & 21    & -8.0   & 0.180     & 1     & 40     & 4.0     \\
+                                             &                                                                          &              & $h$               & 1      & 0.0025                                        & 1      & 40    & 8.0     & 0.190    & 1      & 50    & -10.0  \\
+   Anomalous rectifier       & Kh\,\cite{Spain-W-J:1987ij}                         & -30       &                       &         &                                                      &         &          &           &                &         &          &            \\
+   Delayed rectifier            & Kdr\,\cite{Yamada-W:1989bs}                    & -85       &                       &         &                                                      &         &          &           &                &         &          &            \\
+   Persistant potassium    & KM\,$^\ddag$\,\cite{Yamada-W:1989bs} & -85       &                       &         &                                                      &         &          &           &                &         &          &            \\
+   A                                       & KA                                                                   & -85       & $m$              & 4      & 1.40                                             & 1      & 27    & -12.0  & 0.490    & 1      & 30    & 4.0     \\
+                                             &                                                                         &              & $h$               & 1      & 0.0175                                        & 1      & 50    & 8.0    & 1.30       & 1      & 13    & -10.0  \\
+   BK calcium-activated    & KC                                                                  & -85       & $m$               & 1      & 7.5, $\alpha_m$ is constant   & 10    &          &           & 0.110    & 0      & -35   & 14.9   \\
+                                             &                                                                         &              & $z$                & 2      & 4.00                                            & 2      &          &           &                &         &          &            \\
+   K2 calcium activated     & K2                                                                   & -85       & $m$              & 1      & 25.0, $\alpha_m$ is constant & 10   &          &           & 0.075     & 0     & 5       & 10.0   \\
+                                             &                                                                         &              & $z$               & 2      & 0.20                                             & 2     &          &           &                &         &          &            \\
+                                             &                                                                         &              &                       &         &                                                      &        &          &           &                &         &          &             \\
+   \multicolumn{13}{l} {$^\ddag$\,Adjusted value: All rate constants $\times 5$. $E_r$: reversal potential, $m$: voltage-dependent activation gate, $h$: voltage-dependent inactivation gate, $z$: Ca$^{2+}$-dependent activation gate, $\alpha_m$: voltage-independent activation.}
+\end{tabular}
+\end{table}
+
+\subsubsection*{Maximum conductances}
+
+\begin{table}[!h]
+\caption{$\bar g$ for the voltage and Ca$^{2+}$-dependent channels in 2 different versions of the Purkinje cell model.}
+\begin{tabular}{ l c c c c c c }  
+                    &                     &                                          &                                       &                     &                            &                                                       \\
+                    & \multicolumn{3}{ c} {\bf PM9 Model} &  \multicolumn{3}{ c} {\bf PM10 Model}                                                                                   \\{\bf Name} & {\bf Soma} & {\bf Main Dendrite}       & {\bf Rest of Dendrite} & {\bf Soma} & {\bf Main Dendrite} & {\bf Rest of Dendrite}          \\NaF            & 7,500          & 0.0                                   & 0.0                                & 7,500          & 0.0                     & 0.0                                                  \\NaP            & 1.0              & 0.0                                    & 0.0                               & 1.0               & 0.0                     & 0.0                                                  \\CaP            & 0.0              & 4.5                                    & 4.5                               & 0.0               & 4.0                     & 4.5                                                  \\CaT            & 0.5              & 0.5                                    & 0.5                                & 0.5               & 0.5                     & 0.5                                                  \\Kh               & 0.3              & 0.0                                    & 0.0                               & 0.3               & 0.0                     & 0.0                                                  \\Kdr             & 600.0          & 60.0                                  & 0.0                               & 900.0           & 90.0                   & 0.0                                                  \\KM              & 0.040         & 0.010                                & 0.013                          & 0.140           & 0.040                 & 0.013                                             \\KA              &15.0             & 2.0                                     & 0.0                              & 15.0             & 2.0                      & 0.0                                                  \\KC              & 0.0              & 80.0                                   & 80.0                            & 0.0               & 80.0                    & 80.0                                                \\K2              & 0.0              & 0.39                                    & 0.39                            & 0.0               & 0.39                   & 0.39                                                \\
+                   &                     &                                            &                                      &                     &                             &                                                         \\
+\multicolumn{7}{l}{Extent of the main dendrite is shown in Fig.\,1.}                                                                                                                                 \\\multicolumn{7}{l}{$\bar g$: maximum conductance mS/cm$^2$. For other abbreviations, see Table\,1, above.}                                                \\
+\multicolumn{7}{l}{}                                                                                                                                                                                                                   \\
+\end{tabular}
+\end{table}
+
+\subsubsection*{Estimating channel conductances}
+
+Constructing an accuraterepresentation of an ionic channel also requires an estimate ofthe channel $\bar g$. However, channel conductance values measured involtage-clamp experiments are often quite variable (McCormickand Huguenard 1992) and are only indicative. For this reason,channel $\bar g$s in the model were not based on experimental measurements\,[S:1993dz, De-Schutter-E:1993fu].
+
+\subsubsection*{Estimating channel densities}
+
+Having established and parameterized the equations governing the
+voltage-dependent behavior of the ionic conductances in thiscell, it was necessary to determine the channel densities in themodel. Because precise information on channel densities is nottechnically obtainable, channel densities, usually expressed as $\bar g$,are largely a free parameter in detailed single-cell models\,\cite{S:1993dz, L:1992kl, W:1991qa, Traub-R-D:1991mi}.In the present model, simulations were started using initialguesses for the $\bar g$ of the different channels in four zones of the cell,i.e. the soma, the main dendrite, the smooth dendrites, and thespiny dendrites (see Fig. 1). $\bar g$s were then altered until the modelcould reproduce the characteristic firing behavior of Purkinje cellsduring current injection in vitro\,\cite{R:1980ly, R:1980pi},as described in Figs. 3--7. During this optimizationprocess it was not necessary to distinguish betweenthe smooth and spiny dendrites. In addition, optimal performancerequired that the Kdr and A currents be present in themain dendrite as well as in the soma.Also, several combinations of $\bar g$ were found that could account forthe responses of Purkinje cells to current injection. For contrast,versions PM9 and PM10 are presented, where PM10 representsa Purkinje cell with higher K$^+$ channel densities, i.e., a leakier
+cell.
+\subsubsection*{Temperature dependence of channel kinetics}
+
+Temperatureis a well-known critical parameter for channel kinetics\,\cite{B:1991zr}.
+In the current simulations the in vivo and in vitro dataused to tune the model were collected at 37\,$^\circ$\,C whereas all of thepublished voltage-clamp data were obtained at room temperature.Assuming a Q\,10 factor of 3\,\cite{L:1952fv} all rate constants were multiplied by a factor of 5.
+\subsubsection*{Modeling calcium concentrations}
+
+In the present model realistic simulation of Ca$^{2+}$ concentrations was not attempted. However, computation of Ca$^{2+}$ concentrations was required to activate theKC and K2 channels. Because these channels are assumed to besensitive to the quickly changing, high Ca$^{2+}$ concentrations justbelow the membrane surface\,\cite{L:1989ff}, Ca$^{2+}$ concentrations were 
+computed in a thin submembrane shell\,\cite{D:1982lh}. These shells integrated the full Ca$^{2+}$ inflow throughthe CaP and CaT channels. Their volume and decay time constantswere initially free parameters in the model. The model tuningresulted in shells 0.2\,$\mu$m deep with a decay time of 0.1\,ms.The basal internal Ca$^{2+}$ concentration was 0.040\,$\mu$M; the outsideconcentration was constant at 2.4\,mM. These concentrationswere also used to compute Nernst potentials\,\cite{B:1991zr} for theCaP and CaT currents.
+
+\bibliographystyle{plain}
+\bibliography{../tex/bib/g3-refs}
+
+\end{document}
