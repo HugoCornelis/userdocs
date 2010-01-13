@@ -16,12 +16,12 @@
 
 \section{Publication System: GUI}
 
-This list is specifically about the publication GUI.  See
-\href{../project-todo/project-todo.tex}{The project-todo list} for an
-explanation how to work with these lists.
+%This list is specifically about the publication GUI.  See
+%\href{../project-todo/project-todo.tex}{The project-todo list} for an
+%explanation how to work with these lists.
 
-This list needs further expansion by mapping the technical comments to
-GUI todos.
+%This list needs further expansion by mapping the technical comments to
+%GUI todos.
 
 %\subsection{General Advantages of the Publication GUI}
 %\begin{itemize}
@@ -31,14 +31,12 @@ GUI todos.
 %\end{itemize}
 
 
-\section{Workflows and Technical Comments}
+%\section{Workflows and Technical Comments}
 
-Examples based on
+The examples in this document are based on publications including
 \cite{deschutter94:_purkin_i}\cite{deschutter94:_purkin_ii}\cite{schutter94:_simul_purkin}\cite{Rapp-P:1994qf}
 
-\subsection{Technically}
-
-\subsubsection{loading the different Purkinje cell models into G-3}
+\subsection{Loading the different Purkinje cell models into G-3}
 
 \begin{enumerate}
 \item The g-tube has a model name selection box.  It lists the names
@@ -151,7 +149,7 @@ I/O connection with the gshell.
 These can be handled as passive models (see Segev model above).
 
 
-\subsubsection{Propagated to Neuron}
+\subsubsection{The Neuron Purkinje Cell Model}
 \begin{itemize}
 \item Importing Neuron models can be made possible.  It assumed to
   take less time than the backward compatibility module because the
@@ -256,6 +254,8 @@ differences in parameters / structure).
   schedule from the library and then runs the simulation.  This
   produces the output for one figure.  Tables and channel kinetic plot
   reconstruction may need a different mechanism.
+\item The SSP configuration library can be browsed using the
+  show\_library gshell command.
 \item Most of the SSP configurations required for this functionality
   are already available from different locations in the source code
   (eg. the regression tests).  After initial creation of this library,
@@ -266,8 +266,8 @@ differences in parameters / structure).
   load schedules from the SSP library.  This interface is available
   from a menu that is part of the (still to be described) publication
   / research workflow.
-\item Future suggestion: the G-Tube supports configuration files that
-  after loading, popup two plot windows, instruct it to load an SSP
+\item Future suggestion: the G-Tube supports snapshot files that after
+  loading, popup two plot windows, instruct it to load an SSP
   (simulation) configuration for each plot window, and then run those
   simulations.
 \end{itemize}
@@ -299,7 +299,7 @@ differences in parameters / structure).
 \end{enumerate}
 
 
-\section{DONE List}
+\section{Technical Comments}
 
 
 \bibliographystyle{abbrv}
