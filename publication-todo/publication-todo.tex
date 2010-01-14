@@ -36,6 +36,9 @@
 The examples in this document are based on publications
 \cite{deschutter94:_purkin_i}\cite{deschutter94:_purkin_ii}\cite{schutter94:_simul_purkin}\cite{Rapp-P:1994qf}
 
+This first section gives an overview of what is needed, and the
+technical comments follow in the next section.
+
 \subsection{Loading the different Purkinje cell models into G-3}
 
 The following sections list the purkinje cells that we use as targets
@@ -136,7 +139,7 @@ high-level concepts and technical implementation.
 
 \subsection{Model Comparison}
 
-I have divided this a bit more than we discussed during the last
+I have divided differently from what we discussed during the last
 meeting:
 
 \subsubsection{Structural Differences between Models}
@@ -166,8 +169,11 @@ simulations that simulate common experimental protocols:
 %  the data plot in middle.
 \end{itemize}
 
-A library of SSP schedules is used to setup the simulation required to
-produce these traces (see also below).
+A library of SSP schedules is used to configure the simulation
+required to produce these traces (see also below).  The G-Tube allows
+to browse the SSP library and select a schedule for running a single
+simulation.  More details about this library can be found in
+section~\ref{sec:technical-comments}.
 
 
 \subsubsection{Functional Difference between Models}
@@ -179,22 +185,21 @@ produce these traces (see also below).
 
 \subsection{Publication, Attribution and Lineage}
 
-Attribution means identifying who has contributed what to a model, and
-identifying the importance of each contribution.
+The G-Tube allows to identify who has contributed what to a model, and
+to identify the impact of each contribution.
 
 The fundamental building block of a publication is a publication atom.
 A publication atom is a direct component of a model (such as a channel
 instance, a synapse instance).  Each publication atom is contributed
 by an author.
 
-Every publication atom starts with equal importance.  The use-count of
-a publication atom determines its overall importance.
+Every publication atom starts with an equal impact factor.  The
+use-count of a publication atom determines its overall impact.  This
+attribution model obviously gives high attribution scores to Hodgkin
+and Huxley and to Wilfrid Rall.
 
-The G-Tube shows a table of all the people who have contributed to a
-model and how much they contributed.
-
-This attribution model obviously gives high attribution scores to
-Hodgkin and Huxley and to Wilfrid Rall.
+The G-Tube shows a table of all the people who has contributed to a
+model and what model component they have contributed.
 
 
 %\subsubsection{Purkinje cell model}
@@ -206,41 +211,56 @@ Hodgkin and Huxley and to Wilfrid Rall.
 
 \subsection{Reconstruct the figures in the papers from the model in real time}
 
-Opening a publication from within the G-Tube shows the figures of the
-publication.  Each figure has a caption explaining what is shown.
+A G-Tube publication has a browsable menu of bullet points / narrative
+components.  It allows to explore the publication in depth.  Its
+structure is outline as:
 
-Figures can be produced manually by loading a model and applying an
-SSP schedule to it.
-
-
-
-\subsubsection{DeSchutter papers}
 \begin{itemize}
-\item Identify the industry standard model measures
-  \begin{enumerate}
-  \item Passive
-  \item Current injection / voltage clamp
-  \item Synaptic input
-  \item Physiological stimulation
-  \end{enumerate}
+\item The first menu item allows to read introductions and links the
+  publication with other publications.
+\item The second menu item explains the model in detail.
+  \begin{itemize}
+  \item It allows to present functions of the neuron using figures.
+  \item It allows its lineage to be browsed.
+  \item It allows to run automated tests on the model including a
+    structural analysis and automated validation simulations.
+  \end{itemize}
+\item The third menu item gives access to all the simulations that
+  have been run, and allows to reproduce automatically the figures
+  that are important to the publication.  The G-Tube also allows to
+  manually produce figures that are not part of the publication.
+\item The fourth menu item is a conclusion that links to the previous
+  menu items and other publications.
 \end{itemize}
 
-\subsection{Tutorialize this}
+%\subsubsection{DeSchutter papers}
+%\begin{itemize}
+%\item Identify the industry standard model measures
+%  \begin{enumerate}
+%  \item Passive
+%  \item Current injection / voltage clamp
+%  \item Synaptic input
+%  \item Physiological stimulation
+%  \end{enumerate}
+%\end{itemize}
 
-\begin{enumerate}
-\item PDF of standard paper.
-\item Narrative components / Bullet points
-  \begin{enumerate}
-  \item Figures based
-  \end{enumerate}
-\item Points of deviation
-  \begin{enumerate}
-  \item Tells the authors in review
-  \end{enumerate}
-\end{enumerate}
+%\subsection{Tutorialize this}
+
+%\begin{enumerate}
+%\item PDF of standard paper.
+%\item Narrative components / Bullet points
+%  \begin{enumerate}
+%  \item Figures based
+%  \end{enumerate}
+%\item Points of deviation
+%  \begin{enumerate}
+%  \item Tells the authors in review
+%  \end{enumerate}
+%\end{enumerate}
 
 
 \section{Technical Comments}
+\label{sec:technical-comments}
 
 \subsection{Loading Different Models into the G-Tube}
 
@@ -376,7 +396,7 @@ for how to:
   such as 'ndf' files, 'g2' files, ao.  This command is already
   supported by the G-Tube.  A new extension type 'cite' lists all the
   citations related to one model (channel, morphology, or other) and
-  allows to browse its lineage.
+  allows its lineage to be browsed.
 \end{itemize}
 
 
@@ -401,10 +421,10 @@ for how to:
   load schedules from the SSP library.  This interface is available
   from a menu that is part of the (still to be described) publication
   / research workflow.
-\item Future suggestion: the G-Tube supports snapshot files that after
-  loading, popup two plot windows, instruct it to load an SSP
-  (simulation) configuration for each plot window, and then run those
-  simulations.
+%\item Future suggestion: the G-Tube supports snapshot files that after
+%  loading, popup two plot windows, instruct it to load an SSP
+%  (simulation) configuration for each plot window, and then run those
+%  simulations.
 \end{itemize}
 
 
