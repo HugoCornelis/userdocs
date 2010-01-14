@@ -47,6 +47,17 @@ sub main
 
   $ENV{PATH} .= ':/bin:/usr/bin:/usr/local/bin';
 
+  # first we update the developer package to pick up 
+  # any build script changes. 
+
+  try_to("neurospaces_pull --regex developer",1); 
+
+  try_to("neurospaces_update --regex developer",1); 
+
+  try_to("neurospaces_configure --regex developer",1);
+
+  try_to("neurospaces_install --regex developer",1);
+
 
   try_to("neurospaces_pull --regex userdocs",1); 
 
