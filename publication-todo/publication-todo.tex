@@ -39,7 +39,7 @@ The examples in this document are based on publications
 \subsection{Loading the different Purkinje cell models into G-3}
 
 The following sections list the purkinje cells that we use as targets
-during implementation.
+for the implementation.
 
 \subsubsection{Passive Segev Model}
 
@@ -50,10 +50,8 @@ Publication~\cite{Rapp-P:1994qf}
   neuromorpho database.  There are subtle differences to the soma
   dimensions with the edsjb1994 model.
 \item The passive properties of this model are accurately reported in
-  Segev paper.  The different versions of the Segev model must be
-  added to the model library.
-\item Both the Segev model and the edsjb1994 model can be loaded.  The
-  GUI can then display their differences.
+  Segev paper.  Based on these properties, the different versions of
+  the Segev model can be added to the G-3 model library.
 \end{itemize}
 
 
@@ -64,12 +62,17 @@ Publications:~\cite{deschutter94:_purkin_i}\cite{deschutter94:_purkin_ii}
 
 \begin{itemize}
 \item We only have a recompartmentalized version of one Purkinje cell
-  and it is unknown where to find the recompartmentalized versions of
-  the other two Purkinje cells.  The morphologies are available from
-  the neuromorpho database, but naive recompartmentalization of a
+  and it is unknown where we can find the recompartmentalized versions
+  of the other two Purkinje cells.  The morphologies are available
+  from the neuromorpho database, but naive recompartmentalization of a
   morphology changes its computational behavior such that exact
   reproduction of the publication figures is not directly possible.
   This needs further investigation.
+\item The Purkinje cell model reported
+  in~\cite{deschutter94:_purkin_i} and \cite{deschutter94:_purkin_ii}
+  is implemented in the G-3 model library.  Both the Segev model and
+  the edsjb1994 model can be loaded.  The GUI can then display their
+  differences (see below).
 \end{itemize}
 
 
@@ -78,16 +81,14 @@ Publications:~\cite{deschutter94:_purkin_i}\cite{deschutter94:_purkin_ii}
 Publication:~\cite{solinas06:_dendr_purkin}
 
 \begin{itemize}
-\item Different anamolous rectifier: I am in touch with Sergio about
-  his model and will implement it in G3.  I am still waiting for his
-  response, but if he cannot help us out, it should be relatively easy
-  to reproduce his model starting from Arnd Roth's and Sergio's
-  publications, because Sergio only replaced the anomalous rectifier
-  (h-current).
-\item The GUI shows that this model's morphology is identical to
-  Erik's model's morphology by showing the table with morphology
-  characteristics.
-\item It would be nice to display the morphology graphically as well.
+\item Sergio's model has a different anamolous rectifier.  It should
+  be possible to reproduce his model starting the methods section
+  reported in his publication.
+\item This model's morphology is identical to Erik's model's
+  morphology.
+\item I am in touch with Sergio about his model, but am still waiting
+  for his response.  He said he will try to recover his model from a
+  backup.
 \end{itemize}
 
 \subsubsection{Japan model}
@@ -96,24 +97,20 @@ Publications:~\cite{chono03:_purkin}\cite{miyasho01:_low_ca2_purkin}
 
 \begin{itemize}
 \item This is reported as a modification of the original EDS model,
-  reimplemented in the NEURON simulator.  But: the morphology is taken
-  from D.P. Shelton (but looks different from Shelton's), there is no
-  report of different dendritic functional regions, and some channels
-  have been modified, others removed, and new added.  It is basically
-  a new model with some components shared between models.
+  reimplemented in the NEURON simulator.
+\item The morphology is taken from D.P. Shelton (but looks different
+  from Shelton's), there is no report of different dendritic
+  functional regions, some channels have been modified, others
+  removed, and new added.  It is really a new model with some
+  components shared with the edsjb1994 model.
 \item There is currently no possibility to document the assumptions or
   hypotheses upon which the model is based, ie. comparing the
   subregions in the edsjb1994 dendrite with the assumption built into
   the Japanese model.
-\item The channels are reported the same way as in
-  \cite{deschutter94:_purkin_i}.
-\item The publications are~\cite{miyasho01:_low_ca2_purkin,
-    chono03:_purkin}.
-\item Currently we cannot integrate this model with the publication
-  system because we don't have its model scripts.
+\item We do not have the model scripts.
 \end{itemize}
 
-\subsubsection{Different species???}
+\subsubsection{Different species}
 
 We have morphological data for fish, turtle, rat, guinea pig and mouse
 purkinje cells.  We can ask Rachael if she wants to contribute the
@@ -121,7 +118,7 @@ zebra finch purkinje cells that she has.  These morphologies can be
 handled as passive models (see Segev model above).
 
 
-\subsubsection{The Neuron Purkinje Cell Model}
+\subsubsection{The NEURON Simulator Purkinje Cell Model}
 Importing Neuron models can be made possible.  It assumed to take less
 time than the backward compatibility module because the Neuron script
 languages are not as sophisticated as the G-2 SLI.
@@ -157,15 +154,27 @@ different colors (green color: same parameters / structure, red color:
 differences in parameters / structure).
 
 \subsubsection{Behavioral Difference between Models}
+
+Behavioral differences between models can be shown by running
+simulations that simulate common experimental protocols:
+
 \begin{itemize}
-\item Current injection (two traces one from each model).  A library
-  of SSP schedules is used to setup the simulation required to produce
-  the traces (see also below).
-\item Is currently not possible: two animated PCs on either side with
-  the data plot in middle.
+\item Responses to current injection traces are shown for each model
+  that is compared.
+\item Voltage clamp simulations after application of channel blockers.
+%\item Is currently not possible: two animated PCs on either side with
+%  the data plot in middle.
 \end{itemize}
 
+A library of SSP schedules is used to setup the simulation required to
+produce these traces (see also below).
+
+
 \subsubsection{Functional Difference between Models}
+
+\begin{itemize}
+\item Synaptic stimulation under different physiological conditions.
+\end{itemize}
 
 
 \subsection{Publication, Attribution and Lineage}
@@ -300,6 +309,17 @@ For example see
 
 
 \subsection{SSP Library of Simulation Configurations}
+
+\begin{itemize}
+\item A library of SSP schedules with different stimulation paradigms
+  is available.  The GUI instructs the SSP scheduler to load a
+  schedule from the library and then runs the simulation.  This
+  produces the output for one figure.  Tables and channel kinetic plot
+  reconstruction may need a different mechanism.
+\item The SSP configuration library can be browsed using the
+  show\_library gshell command.  Each configuration is shown using its
+  description inside the yaml file.
+\end{itemize}
 
 \subsection{Importing Neuron Models}
 
