@@ -1,0 +1,96 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{lineno}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+
+\href{../model-variables/model-variables.tex}{\bf Physical Processes and Model Variables}
+
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{The NDF File Format and Procedural Model Descriptions}
+
+\href{../ndf-file-format/ndf-file-format.tex}{\bf The Neurospaces
+  Description Format} or NDF file format is a declarative ASCII text
+file format indicated by the {\tt .ndf} file name extension. NDF files
+are purely declarative in nature.  Rather than giving direct access to
+procedural language constructs, NDF files integrate with a library of
+procedural algorithms.  Each algorithm in this library is a procedural
+abstraction that has full access to the model, can query it, add new
+components, and delete or modify existing components.  Alternatively
+an algorithm can analyse the model structure and report the result to
+the user.
+
+
+\subsection*{Running an Algorithm}
+\label{sec:running-an-algorithm}
+
+At compilation time the library of algorithms is integrated with the
+model-container.  Each algorithm has a unique name that can be used
+from inside an NDF file to run the algorithm.  Some algorithms may
+require the assignment of specific parameter values to determine a
+deterministic outcome.  This assignment of parameter values is given
+in the NDF file where the algorithm is referenced.  After the
+algorithm has completed, the model-container stores the parameter
+assignment and additional specific algorithm results as an algorithm
+instance.  Such an algorithm instance can then be retrieved by the
+user by name.
+
+
+\subsection*{An Example}
+\label{sec:an-example}
+
+The following examples runs the algorithm with name 'Grid3D' and
+assigns the name 'GranulePopulation' to the algorithm instance.  The
+outcome of this NDF snippet will be 6240 neurons instantiated from the
+prototype ``Granule\_cell'' and laid out in 3D space.
+
+\begin{center}
+% \begin{linenumbers}
+ % \begin{boxedminipage}{13cm}
+\begin{verbatim}
+  POPULATION GranulePopulation
+    ALGORITHM Grid3D
+      GranuleGrid
+      PARAMETERS
+        PARAMETER ( PROTOTYPE = "Granule_cell" ),
+        PARAMETER ( X_COUNT = 120.0 ),
+        PARAMETER ( X_DISTANCE = 2.5e-05 ),
+        PARAMETER ( Y_COUNT = 26.0 ),
+        PARAMETER ( Y_DISTANCE = 1.875e-05 ),
+        PARAMETER ( Z_COUNT = 2.0 ),
+        PARAMETER ( Z_DISTANCE = 2e-5 ),
+      END PARAMETERS
+    END ALGORITHM
+  END POPULATION
+\end{verbatim}
+%  \end{boxedminipage}
+%\end{linenumbers}
+\end{center}
+
+\subsection*{Summary}
+
+The model-container algorithm library complements the NDF file format
+with procedural descriptions.  Algorithms in this library include
+Grid3D (to define a 3D grid of other components), Spines (to add
+spines to a morphology by calculating surface area corrections or by
+attaching them given a prototype spine), ProjectionVolume and
+ProjectionRandomized (to create projections and connections between
+two populations of neurons) and Randomize (to randomize certain
+parameters of a named model)
+
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
