@@ -1,0 +1,88 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{lineno}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+
+\href{../model-variables/model-variables.tex}{\bf Physical Processes and Model Variables}
+
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{The Model of a Connection}
+
+Connections are made between event-generators and event-receivers.
+The Neurospaces / GENESIS 3 model-container defines a template for
+event-receiving entities.  Projections then run
+\href{../ndf-procedural-description/ndf-procedural-description.tex}{algorithms}
+that instantiate these entities and attach them pre-synaptically to
+event-generators and post-synaptically to continuous-time state
+variables.  The template attributes of 'delay and 'weight' are
+inherited by the template instantiations created by the projection
+algorithms.
+
+%A change to the template changes the synapse model without changing the
+%projection structure nor the projection algorithm.
+
+
+\section*{Computing Connections}
+
+For most network models connections are algorithmically calculated,
+for example based on the distance between neurons and the synaptic
+contact points in the dendrite.  That is why the model-container
+contains special {algorithms} to compute the connections between
+neurons.
+
+\section*{Storing Connections}
+
+The connections in a network model can be stored in two different ways:
+
+\begin{itemize}
+\item Connections can be enumerated in the NDF file.  For example:
+\begin{verbatim}
+  CONNECTION_GROUP NMDA
+    CONNECTION n1
+      PARAMETERS
+        PARAMETER ( PRE = Fiber[0]/spikegen ),
+        PARAMETER ( POST = Granule[0]/Granule_soma/mf_NMDA/synapse ),
+        PARAMETER ( WEIGHT = 1.0 ),
+        PARAMETER ( DELAY = 0.0 ),
+      END PARAMETERS
+    END CONNECTION
+    CONNECTION n2
+      PARAMETERS
+        PARAMETER ( PRE = Fiber[1]/spikegen ),
+        PARAMETER ( POST = Granule[0]/Granule_soma/mf_NMDA/synapse ),
+        PARAMETER ( WEIGHT = 1.0 ),
+        PARAMETER ( DELAY = 0.0 ),
+      END PARAMETERS
+    END CONNECTION
+  END CONNECTION_GROUP
+\end{verbatim}
+\item Because connections in a large network model easily outnumber
+  the other components of a model, the model-container can store them
+  in a memory efficient way.  Most algorithms that compute the
+  connections in a network will store them in memory in a compact
+  manner.  Some algorithms may compute the connections on the fly when
+  they are needed.  This includes algorithms that compress the
+  connection matrix.
+\end{itemize}
+
+
+
+\subsection*{Summary}
+
+\end{document}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
