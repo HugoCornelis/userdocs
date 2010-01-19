@@ -13,7 +13,7 @@ use YAML;
 
 my $option_verbose;
 my $option_tags = [];
-
+my $option_regex = "";
 
 my $parse_debug = 0;
 
@@ -500,6 +500,26 @@ sub main
 
 	my $documents_tag = Load(`userdocs-tag-filter 2>&1 "published"`);
 
+	#
+	# Perform a grep on the document names if
+	# option is present. 
+	#
+	if($option_regex ne "")
+	{
+	  my @tmp = @$documents_tag;
+
+	  @$documents_tag = ();
+
+	  foreach (@tmp)
+	  {
+	    if( $_ =~ m/$option_regex/)
+	    {
+	      push(@$documents_tag,$_);
+	    }
+	  }
+
+	}
+
 
 
 
@@ -526,6 +546,8 @@ sub main
 	s(/$)();
     }
 	keys %$documents;
+
+
 
     # prepare directory structure
 
@@ -714,6 +736,7 @@ sub read_cmd_line
     my $result
 	= GetOptions(
 		     "help!" => \$option_help,
+		     "regex=s" => \$option_regex,
 		     "tags=s" => $option_tags,
 		     "verbose+" => \$option_verbose,
 		     "version" => \$option_version,
