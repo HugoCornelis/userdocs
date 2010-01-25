@@ -1,0 +1,88 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{De Schutter: Purkinje Cell Model}
+
+\subsection*{Source}
+
+De Schutter E \& Bower JM (1994) An active membrane model of the cerebellar Purkinje cell II. Simulation of synaptic responses. {\it Journal of Nerurophysiology}. {\bf 71}: 401--419.
+
+\subsection*{Climbing Fiber Synapses}
+\subsubsection*{SYNAPTIC LOCATIONS}It is well known that in adults the climbingfiber input to a single Purkinje cell is provided by a singleclimbing fiber synapse evokes an all-or-none massive response,neuron in the inferior olive\,\cite{Ito:1984uq} and that this contact ismade on the smooth branches of the Purkinje cell dendritic tree,from close to the soma up to almost the top of the tree\,\cite{Palay:1974fk}.
+We modeled the climbing fiber input by placingsynapses from a single axon on all compartments of the mainand smooth dendrites of the cell (see Fig. 1 in\,\cite{deschutter94:_purkin_i}).
+
+\subsubsection*{SYNAPTIC PHARMACOLOGY AND KINETICS}
+Activation of the climbing fiber synapse evokes an all-or-none massive responsecalled the complex spike\,\cite{Eccles:1966kx, Llinas:1980vn}, which involves activation of dendritic Ca$^{2+}$ channels\,\cite{Knopfel:1991ys, Konnerth:1992zr, R:1980pi, Miyakawa:1992ly}.Climbing fiber inputs are known tobe mediated by $\alpha$-amino-3-hydroxy+methyl-4-isoxazoleprowiczpionic acid (AMPA) receptors\,\cite{Knopfel:1990ve, Llano:1991qf}.
+In the model, activation kinetics were based on data fromspinal cord and hippocampal neurons\,\cite{Forsythe:1988bh, Holmes:1963dq, Nelson:1986cr},
+with an opening time constant of 0.5\,ms and a closing time constant of 1.2\,ms(peak at 0.8\,ms). Ca$^{2+}$ inflow through this receptor was not modeled,
+although it might be present\,\cite{Brorson:1992nx}. This synapse had a reversal potential of 0\,mV\,\cite{Cull-Candy:1989oq, Mayer:1987kl} .
+\subsubsection*{SYNAPTIC CONDUCTANCE}
+
+The conductance of each climbingfiber synaptic connection is unknown and was therefore treated asa free parameter in the model. Model tuning resulted in the selectionof two different values of maximum synaptic conductance($\bar g$): 7.5\,mS/cm$^2$ for the main dendrite and 15\,mS/cm$^2$ for thesmooth dendrites. Assuming a total of 300 synaptic contacts\,\cite{Ito:1984uq}, each with the same synaptic conductance, our valuescorrespond to a conductance of 6.2\,nS at each synaptic contact.
+\subsubsection*{SYNAPTIC SPECIALIZATIONS}
+
+Climbing fiber synapses areknown to occur on a specialized ``stubby protuberance'' with ashort, smooth stem\,\cite{Palay:1974fk}. We did not,however, explicitly model these structures because we do not expecttheir absence in the model to affect the voltage transientscaused by climbing fiber activation. Such smooth spines are unlikelyto result in much signal attenuation\,\cite{Rall:1990tg}and all spines on any particular compartment receive synchronously 
+the same synaptic input from a single climbing fiber\,\cite{Ito:1984uq}.
+
+\subsubsection*{SYNAPTIC ACTIVATION}
+
+The climbing fiber synapses were fired asa volley, with the main dendrite being activated before the moredistal smooth dendrites. The delay between first and last activatedsynaptic conductance was 0.9\,ms\,\cite{Llinas:1980vn}.
+
+\subsection*{Granule Cell Synapses}
+
+\subsubsection*{SYNAPTIC LOCATIONS}
+
+In the model we placed granule cell synapseson all dendrites with diameters $\sim$3.17\,$\mu$m\,\cite{Palay:1974fk}.
+These synapses are made on dendritic spines\,\cite{M:1988bh} 
+that have been explicitly modeled for eachsynaptic contact (see below).
+\subsubsection*{SYNAPTIC PHARMACOLOGY AND KINETICS}
+
+These excitatory inputs to the Purkinje cell are also mediated by AMPA receptors
+\,\cite{Farrant:1991hc, Garthwaite:1989ij, Lambolez:1992bs}
+as well as metabotropic receptors\,\cite{Blackstone:1989fu, Glaum:1992kl, Vranesic:2qa}. Accordingly,we modeled this excitatory input with the same kinetics asfor the climbing fiber, again ignoring possible Ca$^{2+}$- associated effects.
+\subsubsection*{SYNAPTIC CONDUCTANCE}
+
+The maximum conductance of asingle parallel fiber synapseis also unknown but seems to be variable\,\cite{Hirano:1986fv, Ito:1989dz}. We used a value of 0.7\,
+nS for $\bar g$ that falls in the range of values (0.2--50\,nS) that have beenused in other models using glutamate synaptic transmission\,\cite{R:1989cr, W:1991qa, Miller:1985mi, Rapp-M:1992kx, Wehmeier:1989pi, Wilson:1989ff, Zador:1990lh}. This synapse also had a reversalpotential of 0\,mV\,\cite{Cull-Candy:1989oq, Mayer:1987kl}.
+
+\subsubsection*{NUMBERS OF SYNAPSES}
+
+It is known that each Purkinje cell receives$\sim$150,000 granule cell synapses\,\cite{Harvey:1991xz}.
+Given computing resources it was not possible in thecurrent simulation to model all these inputs. Accordingly, in mostof the simulationsp resentedin this paper, granule cell inputs weredelivered on 1,474 spines ( 1\,\% of real), i.e., one on each modeledspiny dendritic compartment. This simplification has two consequences.First, there are a large number of dendritic spines missingfrom the model. This was compensated for by adding dendriticmembrane (see\,\cite{R:1989cr, Rapp-M:1992kx}).Second, many synaptic inputs are missing. Under the conditionsof random, asynchronous inputs simulated here, we compensatedfor this missing  input by increasing the firing rate of each synapse.A similar approach has been taken by other Purkinje cell modelers\,\cite{Rapp-M:1992kx}.
+Assuming a linear scaling and simulating 1\,\%of the inputs, an asynchronous firing rate of 1\,Hz in the modelwould thus correspond to an average firing rate of $\sim$-0.01\,Hz forreal parallel fibers. We will show in the RESULTS section that thisscaling was appropriate for the current model. All synaptic inputfiring rates mentioned are unscaled unless explicitly stated.
+\subsubsection*{SYNAPTIC SPECIALIZATIONS}
+
+Granule cell synaptic inputs areknown to terminate on dendritic spines\,\cite{Harvey:1991xz, Palay:1974fk}.
+On the basis of electron microscopic(EM) reconstructions of rat Purkinje cell spines\,\cite{M:1988bh}
+we assumed a density of 13 spines per 1\,$\mu$mdendritic length, resulting in a total of 144,456 spines. Most ofthese spines have narrow-diameter spine necks and it is likely thatthey have a significant effect on the electrical effects of granule cellsynaptic inputs\,\cite{Rall:1990tg}. For this reason, whengranule cell synaptic effects were studied in the model, spines wereexplicitly simulated using two compartments each. One compartmentrepresented a spherical spine head with a diameter of 0.54\,$\mu$m,
+whereas the second compartment represented the cylindricalspine neck with a diameter of 0.20\,$\mu$m and a length of 0.66\,$\mu$m\,\cite{M:1988bh}. These dimensions resulted in a membranesurface per spine of 1.33\,$\mu$m$^2$.
+
+Reducing the number of granule cell inputs in the model alsohad the effect of reducing the total number of spines. Given theenormous number of theses pines on a normal Purkinje cell, simplyleaving their membrane area out of the model would significantlyaffect simulation results. In our previous efforts to modelthe electrical (not synaptic) properties of the Purkinje cell\,\cite{deschutter94:_purkin_i}
+the influence of these dendritic spineswas approximated by increasing the membrane surface of compartmentsof the region of the dendrite on which spines occur\,\cite{R:1989cr, Jaslove:1992fu, Jaslove:1992fu}.
+The same approach was used here when granule cell synaptic effectswere not being simulated. However, for those simulations that didrelate to granule cell input, the total membrane surface was keptconstant by subtracting the membrane surface of modeled spines(i.e., 1.33\,$\mu$m$^2$ for each spine) from the membrane surface of thedendritic compartment to which they were connected. As already mentioned,
+when no granule cell inputs were modeled,the simulation was run without spines (i.e., $N_s = 0$), as wasdone in the preceding paper\,\cite{deschutter94:_purkin_i}.
+\subsubsection*{SYNAPTIC ACTIVATION}
+
+Parallel fiber synaptic input was modeledas an asynchronous process\,\cite{Bernard:1991ye}.Activation of each modeled synapse was triggered independentlyby a random number generator, which generated a Poisson distributionaround a mean frequency of input.
+
+\subsection*{Stellate Cell Synapses}
+
+
+\subsection*{Basket Cell Synapses}
+
+\bibliographystyle{plain}
+\bibliography{../tex/bib/g3-refs}
+
+\end{document}
