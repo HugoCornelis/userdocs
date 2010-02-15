@@ -211,25 +211,30 @@ variables are).
 \end{figure}
 
 A scripting layer allows the simulation system to be driven from
-multiple scripting languages. Python and Perl are currently supported, as is (for backward compatibility) the GENESIS SLI. The G-3 Graphic User Interface or GUI ({\bf G-Tube}), shown at the top of Figure~\ref{fig:cbi-arch},
-is entirely developed in Python.  It allows models to be imported from
-databases or constructed from scratch, the exploration of model
-structure and parameters, and the visualization of variables and model
-behavior.
+multiple scripting languages. Python and Perl are currently supported,
+as is (for backward compatibility) the GENESIS SLI. The G-3 Graphic
+User Interface or GUI ({\bf G-Tube}), shown at the top of
+Figure~\ref{fig:cbi-arch}, is entirely being developed in Python.  It
+allows models to be imported from databases or constructed from
+scratch, the exploration of model structure and parameters, and the
+visualization of variables and model behavior.
 
 \subsection{The CBI Federated Software Architecture}
 
-The CBI (Computational Biology Initiative) federated software architecture
-provides a modular paradigm that places stand-alone software
-components into logical relationships. Each software module is an independent and standalone component such that development and maintenance can be implemented concurrently. This leads to a federated software architecture that exists as an ecology of software components that are CBI compliant. In this it shares a number of
-ideas with the well-known three-tier architecture paradigm.  The
-distinguishing feature of the CBI architecture is that the back end
-comprises mathematical solvers rather than relational databases.  The
-data layers in the CBI architecture correspond to high-level data
-associated with biological concepts and extend to low level data such
-as numerical values. The benefit of this layering of data is that it
-allows the mathematical and biological aspects of a model to be
-distinguished and separated.
+The CBI (Computational Biology Initiative) federated software
+architecture provides a modular paradigm that places stand-alone
+software components into logical relationships.
+% Each software module is an independent and standalone component such that development and maintenance can be implemented concurrently. This leads to a federated software architecture that exists as an ecology of software components that are CBI compliant. 
+In this it shares a number of ideas with the well-known three-tier
+architecture paradigm\cite{Eckerson1995}.  The distinguishing feature
+of the CBI architecture is that the data layers in the CBI
+architecture correspond to high-level data associated with biological
+concepts and extend to low level data such as numerical values.  The
+benefit of this layering of data is that it allows the mathematical
+and biological aspects of a model to be distinguished and separated
+with as a consequence that the back end comprises mathematical solvers
+rather than relational databases as is the case in a traditional
+three-tier software architecture.
 
 Clear delineation of the components in the CBI architecture allows both
 developers and users to choose to contribute to a single component
@@ -255,11 +260,13 @@ individual components can be independently updated, enhanced, or
 replaced when needed, thus the life cycle of a modular architecture is
 smoother than that of a non-scalable application.
 
-The Neurospaces project (http://www.neurospaces.org/) provides
-core software components of the G-3
-simulator\,\cite{cornelis03:_neuros}. These include, (1) the {\bf Model
-  Container}: Stores two representations of a model, the first is
-conceptual and can be regarded as an enumeration of biological
+Much existing software such as GUI libraries and plotting libraries,
+are application neutral.  Other software packages are tailored to the
+needs of computational neuroscience.  The Neurospaces project
+(http://www.neurospaces.org/) provides core software components of the
+G-3 simulator\,\cite{cornelis03:_neuros}. These include, (1) the {\bf
+  Model Container}: Stores two representations of a model, the first
+is conceptual and can be regarded as an enumeration of biological
 concepts and their relationships, the second is an expanded
 mathematical representation that, if complete, can be simulated, (2)
 {\bf Heccer}: A fast compartmental solver based on the GENESIS {\it
@@ -268,26 +275,27 @@ other scripting languages, (3) {\bf SSP} (Simple Scheduler in Perl):
 Binds {\bf Heccer} and the {\bf Model\,Container}, and activates them
 correctly, such that they work together on a single simulation, (4)
 {\bf Studio} and {\bf G-Tube}: Contain graphical tools for model
-construction, exploration and simulation, (5) {\bf G-Shell} (G-3 interactive Shell):
-Dynamically loads other software components in an interactive
-environment, and the (6) {\bf Project\,Browser}: For inspection of projects
-and simulation results. For completeness we also mention (7) {\bf
-  NS-SLI}: The G-3 component that provides backward compatibility for
-the GENESIS 2 SLI. All software can be downloaded from the GENESIS web site
+construction, exploration and simulation, (5) {\bf G-Shell} (G-3
+interactive Shell): Dynamically loads other software components in an
+interactive environment, and the (6) {\bf Project\,Browser}: For
+inspection of projects and simulation results. For completeness we
+also mention (7) {\bf NS-SLI}: The G-3 component that provides
+backward compatibility for the GENESIS 2 SLI. All software can be
+downloaded from the GENESIS web site
 (http://genesis-sim.org/download/) and extensive installation
 instructions with examples are available from the GENESIS
 documentation website
 (http://www.genesis-sim.org/userdocs/genesis-installation/genesis-installation.html).
 
-Much existing software such as GUI libraries and plotting
-libraries, are application neutral.  Other software packages are
-tailored to the needs of computational neuroscience.  The CBI federated
-software architecture provides a framework for integration of a functioning
-simulator using a scripting language, web services and other
-integration technology.  Thus, the software architecture provides
-an extremely plastic environment within which independent components can
-be integrated with scripting languages of choice.  Here we
-specifically illustrate the use of Perl and Python for this purpose.
+The CBI federated software architecture provides a framework for the
+integration of independent software components into a functioning
+simulator using a scripting language of choice.
+% Thus, the software
+%architecture provides an extremely plastic environment within which
+%independent components can be integrated with scripting languages of
+%choice.
+Here we specifically illustrate the use of Perl and Python for this
+purpose.
 
 \subsection{Perl}
 
