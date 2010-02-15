@@ -704,16 +704,13 @@ obtained with:
 
 \subsection{Interactive Query and Simulation}
 
-The {\bf Model\,Container} `knows' about biological concepts such as a neuron
-morphology.  From the primary morphology structure it defines derived
-attributes such as total cell volume and the number of somatopetal
-branch points given the name of a dendritic segment.
-
-The {\bf G-Shell} integrates other software components into an
-interactive environment that can be used to explore a
-model, for example structural aspects such as morphology, and to query
-derived attributes such as total volume and surface area.  The {\bf
-  G-Shell} is started from a UNIX system shell with:
+The {\bf G-Shell} is a G-3 software component that integrates other
+software components and makes their functions available through an
+interactive environment.  Coded in Perl, the {\bf G-Shell} is a
+communication abstraction layer for other software components such as
+the {\bf Model\,Container}, {\bf Heccer}, {\bf SSP} and the {\bf
+  Studio}.  After the {\bf G-Shell} has been started from a system
+shell with
 
 {\footnotesize
 \begin{verbatim}
@@ -721,19 +718,48 @@ derived attributes such as total volume and surface area.  The {\bf
 \end{verbatim}
 }
 
-After the {\bf G-Shell} has been started, the command:
+the list of loaded software components is printed to the screen after
+issuing the command:
 
 {\footnotesize
+\begin{verbatim}
+   list components
+\end{verbatim}
+}
+
+Each loaded software component will be shown with associated status
+information helping in the diagnosis of possible problems.  For
+example after correct initialization of the {\bf Model\,Container} its
+status information will be shown as:
+
+{\footnotesize
+\begin{verbatim}
+  model-container:
+    description: internal storage for neuronal models
+    integrator: Neurospaces::Integrators::Commands
+    module: Neurospaces
+    status: loaded
+    type:
+      description: intermediary
+      layer: 2
+\end{verbatim}
+}
+
+Integration of the {\bf G-Shell} with the {\bf Model\,Container}
+allows for real-time analysis of the quantitative and structural
+aspects of a neuronal morphology.  The library of model components
+that is installed with the {\bf Model\,Container} provides a
+definition of a model Purkinje cell in the file {\it
+  cells/purkinje/edsjb1994.ndf}.  {\footnotesize
 \begin{verbatim}
    ndf_load cells/purkinje/edsjb1994.ndf
 \end{verbatim}
 }
 
-will load the given file with a declarative specification of a
-cerebellar Purkinje cell.
-
-Alternatively, if the model is encoded in a GENESIS 2 SLI script the
-command {\it ndf\_load} can be replaced with {\it sli\_load}:
+will make the model Purkinje cell available for interactive analysis.
+Alternatively, if the model is encoded in a GENESIS 2 SLI script with
+name {\it PurkM9\_model/CURRENT9.g} the command {\it ndf\_load} can be
+replaced with {\it sli\_load}:
 
 {\footnotesize
 \begin{verbatim}
@@ -742,8 +768,8 @@ command {\it ndf\_load} can be replaced with {\it sli\_load}:
 }
 
 This command imports the model that is specified in the SLI script
-without running the simulation.  A similar command is provided to
-interface with the PyNN network modeling
+without running the simulation.  A similar command ({\it pynn\_load})
+is in development to interface with the PyNN network modeling
 environment\,\cite{andrew08:_pynn}.
 
 Given the name of one of its dendritic segments, the number of branch
@@ -759,7 +785,7 @@ can be obtained with:
 \end{verbatim}
 }
 
-After finding a suitable dendritic segment, a given synaptic channel can
+After finding a suitable dendritic segment, its synaptic channel can
 be stimulated with a precomputed spike train that is stored in a file
 with, for example, the filename {\it event\_data/events.yml}:
 
