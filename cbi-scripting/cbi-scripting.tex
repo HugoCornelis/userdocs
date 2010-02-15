@@ -1179,16 +1179,16 @@ provided by the {\bf G-Shell}. It allows the state-of-the-art rendering
 functions of Blender to be used to validate and analyze models of the morphology
 of small dendritic segments obtained from electron microscopy data.
 
-Past research has shown that the balance
-between excitation and inhibition plays an important role in dendritic
-processing in cerebellar Purkinje cells\,\cite{santamaria02:_modul_purkin,
-  mittmann07:_linkin_purkin}.  However, the spatial resolution of the
-models employed in such studies was limited by the available reconstruction
-techniques.  To overcome this problem, over the last several years
-we have used electron microscopy in conjunction with
-Reconstruct\,\cite{jc05:_recon} to obtain more precise morphologies of
-small segments of Purkinje cell dendrites\,\cite{huo09:_purkin,
-  cornelis08:_model_neuros_genes}).
+%Past research has shown that the balance between excitation and
+%inhibition plays an important role in dendritic processing in
+%cerebellar Purkinje cells\,\cite{santamaria02:_modul_purkin,
+%  mittmann07:_linkin_purkin}.  However, the spatial resolution of the
+%models employed in such studies was limited by the available
+%reconstruction techniques.  
+Over the last several years electron microscopy (EM) in conjunction
+with Reconstruct\,\cite{jc05:_recon} has been used to obtain precise
+morphologies of small segments of Purkinje cell
+dendrites\,\cite{huo09:_purkin, cornelis08:_model_neuros_genes}).
 
 \begin{figure}[ht]
   \centering
@@ -1199,10 +1199,11 @@ small segments of Purkinje cell dendrites\,\cite{huo09:_purkin,
 
 % \noindent{\bf Hugo: Show Python interface snippet.}
 
-Special purpose software has been written to convert Reconstruct data
-for importation into the {\bf Model\,Container}.  The {\it
-  Reconstruct\,Interface} converts the Reconstruct application into a
-G-3 simulator component by making it CBI compliant.
+%Special purpose software has been written to convert Reconstruct data
+%for importation into the {\bf Model\,Container}.
+The {\it Reconstruct\,Interface} converts the Reconstruct application
+into a G-3 simulator component by making it CBI compliant and allows
+to import Reconstruct data into the {\bf Model\,Container}.
 %  It converts
 %contours exported by the Reconstruct software to the declarative NDF
 %format (the file format used by G-3). 
@@ -1212,10 +1213,11 @@ equivalent cylinders suitable for cable modeling.
 % The core of these algorithms
 %implements geometrical transformations such that EM contours are
 %extracted to provide equivalent cylinders suitable for cable modeling.
-The geometrical properties of the cylinders are stored in the native G-3 file format as NDF files. Algorithms provided by the {\bf Model\,Container} link them with
-the cable parameters required by the mathematical solvers.  A
-simulation can then be run with the {\it read} and {\it run} methods
-given above.
+The geometrical properties of the cylinders are stored in the native
+G-3 file format and algorithms provided by the {\bf Model\,Container}
+link them with the cable parameters required by the mathematical
+solvers.  A simulation can then be run with the {\it read} and {\it
+  run} methods given above.
 
 The necessary conversion algorithms are accessible from the
 {\bf Model\,Container} via Python.  The Python interface of Blender links it to the G-3
