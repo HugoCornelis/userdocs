@@ -469,21 +469,21 @@ a simulator with a user-friendly interface.
 \subsection{A Python Enabled Neural Simulator}
 \label{ss-apens}
 
-Python uses modules to group related functions together.  The G-3 Python
-bindings use modules to separate interfaces for
+Both Perl and Python use modules to group related functions together.
+The G-3 scripting bindings use modules to separate interfaces for
 simple models with many default settings (e.g. to start a new research
 project) from more complicated interfaces that expose the full
 functionality of the simulator.
 
-As an example the {\it Neurospaces.SingleCellContainer} module
-contains functions to simplify the simulation of single neuron models.
-This module is a front-end to the {\it Neurospaces} module.  {\it
-  Neurospaces} interfaces with the {\bf Model\,Container} which is coded in
-an efficient system programming language.  Likewise, {\it
-  Heccer.SimpleHeccer} is a wrapper module around the {\bf Heccer}
-component which in turn is an interface to the low-level single neuron
-solver.  Other components are under construction to facilitate network
-modeling.
+As an example the Python {\it Neurospaces.SingleCellContainer} module
+contains functions to simplify the storage of single neuron models in
+computer memory.  This module is a simplified front-end to the more
+complicated {\it Neurospaces} module.  {\it Neurospaces} interfaces
+with the {\bf Model\,Container} which is coded in an efficient system
+programming language.  Likewise, {\it Heccer.SimpleHeccer} is a
+wrapper module around the {\bf Heccer} component which in turn is an
+interface to the low-level single neuron solver.  Other components are
+under construction to facilitate network modeling.
 
 Here we show a simple high-level Python script\,\footnote{The given code
   is written for clarity of the paper rather than for compactness or
@@ -497,9 +497,10 @@ and {\tt CM}, respectively).  These parameters are given by their
 specific values as commonly reported in the literature, instead of
 their actual values scaled to the compartment surface area as used by
 a mathematical solver\,\cite{cornelis04:_neuros_param_handl}. This
-script runs a single simulation, but it can also be imported as a
-Python module, thus allowing access to the function {\it
-  run\_simulation}.  We call this Python module {\it example}.
+script defines a Python function {\it run\_simulation} and runs it
+when invoked from a shell command line.  The script can also be
+imported as a Python module, thus allowing access to the function.  We
+call this Python module {\it example}.
 
 {\vspace*{1mm}
  { \footnotesize
@@ -511,7 +512,7 @@ import sys
 sys.path.append('/usr/local/glue/swig/python')
 import Neurospaces.SingleCellContainer
 
-# A function to run a simulation.
+# A function to run a simulation of a single cylindrical segment.
 
 def run_simulation(simulationtime):
    
@@ -534,8 +535,8 @@ def run_simulation(simulationtime):
     s.parameter("INJECT", 1e-9)
 
     # second example: use a wildcard to activate endogenous synapses
-    Neurospaces.SingleCellContainer.query("setparameterconcept spine::/Purk_spine/head/par 25")
-    Neurospaces.SingleCellContainer.query("setparameterconcept thickd::gaba::/Purk_GABA 1")
+    Neurospaces.SingleCellContainer.query("setparameter spine::/Purk_spine/head/par 25")
+    Neurospaces.SingleCellContainer.query("setparameter thickd::gaba::/Purk_GABA 1")
     
     # redirect output to the given file
     Neurospaces.SingleCellContainer.set_output_filename("/tmp/output")
@@ -565,15 +566,16 @@ running more realistic multicompartment models based on morphological
 data.  To illustrate this flexibility we now compare the above Python
 script with alternative implementations in C and the GENESIS 2 SLI.
 
-There is an abundance of low level detail in the C code that
+In the C code there is an abundance of low level detail that
 interfaces directly to the solver.  For example compartments are
 identified by their position in an array, and parameters such as {\tt
   RM} and {\tt CM} must be provided as an ordered sequence of their
 actual values (scaled to the compartment surface area).
 
 The complexity of the GENESIS SLI interface falls between that of the
-Python and Perl interfaces, and the C code interface.  While compartments have
-names, parameter values are given in a format used by solvers.
+Python and Perl interfaces, and the C code interface.  While
+compartments and parameters have names, numerical values are given in
+a format used by solvers.
 
 %\begin{figure}[ht]
 %  \centering
@@ -657,13 +659,14 @@ step 0.5 -time
 }
 %\end{figure}
 
-While Python bindings are suitable for construction of toy models from
-scratch, it is better to use a domain specific language to construct
-the various parts of a model. For example, the {\bf Model\,Container} is
-installed with a library of model components where the
-standard Hodgkin-Huxley channels are provided in the file {\it
-  channels/hodgkin-huxley.ndf}.  These channels can be included in the
-{\it example} given above by adding the Python statements:
+While Python and Perl bindings are suitable for construction of toy
+models from scratch, it is better to use a domain specific language to
+construct the various parts of a model. For example, the {\bf
+  Model\,Container} is installed with a library of domain specific
+model components where the standard Hodgkin-Huxley channels are
+provided in the file {\it channels/hodgkin-huxley.ndf}.  These
+channels can be included in the {\it example} given above by adding
+the Python statements:
 
 {\footnotesize
 %  \resetlinenumber[23]
@@ -688,9 +691,10 @@ statement:
 \end{verbatim}
 }
 
-The structure of the model can then be analyzed.  For example, the
-names of the most distal segment of each dendrite can be obtained
-with:
+After importation the {\bf Model\,Container} provides a set of
+functions to analyze the structure of the model morphology.  For
+example, the names of the most distal segment of each dendrite can be
+obtained with:
 
 {\footnotesize
 \begin{verbatim}
