@@ -869,15 +869,15 @@ event dispatching loop, usually called the {\it main\,loop}.
 %How to
 %setup communication between a main loop and simple actions such as
 %starting and stopping a simulation is specific to the GUI library.
-Both the binding between button click and event, and the visual layout
-of most contemporary GUI applications is conveniently constructed
-using one of a number of available user interface builders.
-Additional bindings are required to implement the bindings for
-simulator specific events such as starting and stopping a simulation.
-
-We are currently working on integration of the G-3 platform and the
-freely available {\it wxWidgets} library and its Python module {\it
-  wxPython}.
+The binding between button click event and the {\it main\,loop}, and
+the visual layout of most contemporary GUI applications is
+conveniently constructed using one of a number of available user
+interface builders.
+%  Additional bindings are required to integrate
+%simulator specific events such as starting and stopping a simulation.
+%We are currently working on bindings between the G-3 platform and the
+%freely available {\it wxWidgets} library and its Python front end {\it
+%  wxPython}.
 % commented out Wednesday, Dec 2, 2009
 %
 % The script now handles the plotting on it's own via the DataPlot class,
@@ -886,37 +886,40 @@ freely available {\it wxWidgets} library and its Python module {\it
 %A Python interface to a 2D plotting library ({\it
 %  matplotlib}) can be used to produce publication quality figures in a
 %variety of hardcopy formats.
-We also employ {\it wxFormBuilder}\,\footnote{A user interface
-  designer for the {\it wxPython} toolkit and the Linux desktop
-  environment GNOME, available from http://wxformbuilder.org/.} which
-allows a user to construct a GUI with visual elements such as menus
-and buttons, and write a description of the elements to a file
-readable via Python bindings known as an XML Resource File (XRC).
-Additional G-3 specific data bindings ensure that, for example, the
-data produced by a mathematical solver flows to a widget that plots
-the value of a variable against time.  This functionality replaces the
-GENESIS 2 XODUS paradigm that required SLI scripting to connect GUI
-components to model components and simulation actions, with a
-contemporary paradigm that separates simulator and model scripts from
-GUI related statements.
+{\it wxFormBuilder}\,\footnote{A user interface designer for the {\it
+    wxPython} toolkit and the Linux desktop environment GNOME,
+  available from http://wxformbuilder.org/.} is such an interface
+builder which allows a user to construct a GUI with visual elements
+such as menus and buttons, and write a description of the elements and
+their bindings to a file known as an XML resource file (XRC).  The GUI
+definitions in this file can then be rendered with the freely
+available {\it wxWidgets} library and its Python front end {\it
+  wxPython}.  Further integration with additional G-3 specific data
+bindings ensures that, for example, the data produced by a
+mathematical solver flows to a widget that plots the value of a
+variable against time.  This functionality replaces the GENESIS 2
+XODUS paradigm that required SLI scripting to connect GUI components
+to model components and simulation actions, with a contemporary
+paradigm that separates simulator and model scripts from GUI related
+statements.
 
 In the following example we create a {\it wxPython} application class
 called {\it G3App} which demonstrates the Python scripting needed to
-connect software components required to build a small GUI for
-G-3.  We specifically show how to initialize the application
-(implementation of method {\it OnInit}), how to run a simple
-simulation (method {\it OnRun}), and how to plot output (method {\it
-  Plot}).  For this, it is assumed that a XRC file with the name {\it
-  G3.xrc} can be found that describes a GUI with one frame (here, {\it
-  mainFrame}) which allows the simulation duration to be set via a
-text control and contains a button to start the simulation.
+connect software components required to build a small GUI for G-3.  We
+specifically show how to initialize the application (implementation of
+method {\it OnInit}), how to run a simple simulation based on the
+previous {\it example} (method {\it OnRun}), and how to plot output
+(method {\it Plot}).  For this, it is assumed that a XRC file with the
+name {\it G3.xrc} can be found that describes a GUI with one frame
+(here, {\it mainFrame}) which allows the simulation duration to be set
+via a text control and contains a button to start the simulation.
 
 The first lines of code in the script load the necessary Python
 modules which then load low-level libraries coded in a system
 programming language.  The importation of {\it example} makes the
 previously defined function {\it run\_simulation} available.  The {\it
   DataPlot} class is a specialized class to read in GENESIS data
-output and load it into a {\it wxPython} plot widget.  The import for
+output and load it into a {\it wxPython} plot widget.  The import of
 {\it wx} references a system wide install of {\it wxPython} and makes
 the GUI functions of {\it wxWidgets} available to our script.
 
@@ -957,15 +960,15 @@ load the XML resource file previously created using {\it
 }
 
 The GUI elements are then retrieved from the XRC specification and
-made available as Python objects.  Each declared object can be
+made available as Python objects.  Each declared element can be
 retrieved via its name:
 
 {\footnotesize
    \linenumbers
  \begin{verbatim}
         self.frame = self.res.LoadFrame(None, 'mainFrame')
-        self.runButton = xrc.XRCCTRL(self.frame, 'runButton')
         self.durationTextCtrl = xrc.XRCCTRL(self.frame,'durationTextCtrl')
+        self.runButton = xrc.XRCCTRL(self.frame, 'runButton')
  \end{verbatim}
 }
 
@@ -1151,10 +1154,13 @@ if __name__ == '__main__':
 
 %end --->
 
-In this example we have shown how the CBI architecture allows for
+In this example we have shown how the CBI architecture defines a
 separation between GUI statements and peripheral code such as input
-and output specifications, and model construction.  Besides allowing common GUI construction kits to be used for the development of
-research and educational projects, the approach also allows interfacing to more specialized GUI kits.  This is illustrated with the following example.
+and output specifications, and model construction.  Besides allowing
+common GUI construction kits to be used for the development of
+research and educational projects, the approach also allows
+interfacing to more specialized GUI kits.  This is illustrated with
+the following example.
 
 \subsection{Interfacing GENESIS with Blender}
 
