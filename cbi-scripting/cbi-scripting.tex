@@ -14,7 +14,7 @@
 \title{\bf Federated Scripting in the GENESIS 3.0 Neural Simulation
   Platform}
 
-\author{Cornelis H.$^1$ Rodriguez A. L.$^1$ Joe J. L.$^2$ Coop A. D.$^1$ Bower J. M.$^1$\\
+\author{Cornelis H.$^1$ Rodriguez A. L.$^1$ Coop A. D.$^1$ Bower J. M.$^1$\\
   {\small 1. University of Texas Health Science Center at San Antonio.} \\
   {\small 2. College of Medicine, Wonkwang University, Republic of Korea.}
 }
@@ -1239,6 +1239,15 @@ generation of 3D crossections and 2D cuts also becomes possible.
 
 \section{Discussion}
 
+The rearchitectured GENESIS software design, G-3, conforms to the CBI
+federated software architecture.  In this paradigm, model parameters
+are stored separately from stimulation protocols and the way
+simulations are run.  The stand-alone nature of the individual
+software components has the consequence that they can now easily be
+interfaced and bound to scripting technology.
+
+
+
 The current
 generation of neural simulators can be characterized as software
 applications that support a user workflow extending from model
@@ -1259,13 +1268,8 @@ The G-3 platform now provides an alternative approach that uses scripting to con
 software to general purpose software and integrate it into a next
 generation neural simulator.  The advantage is that third party software
 libraries and applications become available for users, for example,
-Blender, {\it matplotlib}, and Glade, among many others. This has
-become possible due to the rearchitectured GENESIS software design
-where G-3 now conforms to the CBI federated software architecture. In this paradigm, model parameters are stored separately from stimulation
-protocols and the way simulations are run. It is the stand-alone
-nature of the individual software components and the fact that they
-can now easily be interfaced that facilitates continued software
-development and increased user-friendliness.
+Blender, {\it matplotlib}, and {\it wxFormBuilder}, among many others. This has
+become possible 
 
 \subsection{Other Software Components}
 
@@ -1375,6 +1379,12 @@ provides for progressive federated software development.
 
 %Using Python for integration makes
 %the application much more accessible to users.
+
+\section*{Acknowledgements}
+We thank Joe Ja-Lyoung for fruitful discussion and for his parallel
+work on a new Python implementation of GENESIS available from
+http://sourceforge.net/.  Joe works at the College of Medicine of the
+Wonkwang University, Republic of Korea..
 
 
 % ********************** Back matter ********************************
