@@ -299,7 +299,28 @@ purpose.
 
 \subsection{Perl}
 
-Perl was one of the first open source scripting languages. First released in 1987 [http://groups.google.com/group/comp.sources.unix/msg/bb3ee125385ae25f?pli=1], it is unique in that it is very much informed by linguistic principles. Originally developed as a scripting language for UNIX, it aimed to blend the ease of use of the UNIX shell with the power and flexibility of a system programming language like C. With over 20 years of development and nearly half a million lines of code, Perl now runs on over 100 different platforms [ref: http://www.perl.org/about.html]. Currently, there are over 18,000 open source modules available from the Comprehensive Perl Archive Network (CPAN). Perl source code has been certified to contain 0.03 defects per 1000 lines of code [http://scan.coverity.com/rung2.html]. In December 2009, nearly 2.7\,\%of all lines of programming code were written in Perl to make it the 9th most popular programming language\,\cite{software09:_tiobe_progr_commun_index}.
+Perl was one of the first open source scripting languages. First
+released in 1987
+[http://groups.google.com/group/comp.sources.unix/msg/bb3ee125385ae25f?pli=1],
+it is unique in that it is very much informed by linguistic
+principles.  Originally developed as a scripting language for UNIX, it
+aimed to blend the ease of use of the UNIX shell with the power and
+flexibility of a system programming language like C.  With over 20
+years of development and nearly half a million lines of code, Perl now
+runs on over 100 different platforms [ref:
+http://www.perl.org/about.html].  Currently, there are over 18,000
+open source modules available from the Comprehensive Perl Archive
+Network (CPAN), assisting in system integration, scientific
+application, and user interface development.  Via the CPAN Inline
+module, Perl integrates seemlessly with both system programming
+languages such as C and C++, and scripting languages including Python.
+Perl supports object-oriented programming, functional programming and
+procedural programming paradigms.  Perl source code has been certified
+to contain 0.03 defects per 1000 lines of code
+[http://scan.coverity.com/rung2.html].  In December 2009, nearly
+2.7\,\%of all lines of programming code were written in Perl to make
+it the 9th most popular programming
+language\,\cite{software09:_tiobe_progr_commun_index}.
 
 \subsection{Python}
 
@@ -321,33 +342,34 @@ scripting or automation interfaces.
 \subsection{Meta-Programming in Perl and Python}
 
 Meta-programming is a programming technique where a program generates
-a new program and then executes it.  We used this technique for the G-3
-Python bindings to generate an additional layer of Python code that
-provides increased flexibility for the definition of models and
-simulations.  The key Python primitive used is a data structure that
-defines high-level interfaces.  During program initialization this
-data structure is translated into strings containing Python code such as
-class and method definitions. These, in turn, are then bound to the run-time
-environment using the Python\,{\it eval} function.
+a new program and then executes it.  Application of this technique for
+the G-3 Perl and Python bindings allows for the generation of an
+additional layer of script code that provides increased flexibility
+for the definition of models and simulations.  A predefined Perl or
+Python data structure defines high-level interfaces and is translated
+into strings containing Perl or Python code such as class and method
+definitions.  These, in turn, are then bound to the run-time
+environment using the Perl or Python\,{\it eval} functions during
+program initialization.
 
 \subsection{SWIG for Federated Software Integration}
 
-SWIG was chosen to facilitate the use of Perl and Python bindings in G-3. It is
-a software development tool that connects programs written in C and
-C++ with high-level scripting languages, such as Python and Perl. For
-the CBI architecture, it provides control over most aspects of wrapper
-generation and automates the generation of the required Python
-interfaces. SWIG uses a layered approach to build Python extension
-modules where different parts are defined in either C or
-Python. The C layer contains low-level wrappers whereas the Python
-code is used to define high-level features.  Considerably more
-flexibility is obtained by generating code in both languages as an
-extension module can be enhanced with support code in either language.
-Table~\ref{tab:cbi-codecounts} gives an overview of the resulting
-code.  As expected, low-level software components emphasize
+SWIG was chosen to facilitate the use of Perl and Python bindings in
+G-3. It is a software development tool that connects programs written
+in C and C++ with high-level scripting languages. For the CBI
+architecture, it provides control over most aspects of wrapper
+generation and automates the generation of the required Perl and
+Python interfaces. SWIG uses a layered approach to build extension
+modules where different parts are defined in either C or the chosen
+scripting language. The C layer contains low-level wrappers whereas
+the script code is used to define high-level features.  Considerably
+more flexibility is obtained by generating code in both languages as
+an extension module can be enhanced with support code in either
+language.  Table~\ref{tab:cbi-codecounts} gives an overview of the
+resulting code.  As expected, low-level software components emphasize
 low-level languages and have more lines of code, whereas, high-level
-software components emphasize high-level languages and have fewer lines
-of code.
+software components emphasize high-level languages and have fewer
+lines of code.
 
 \begin{table}[h]
   \centering
