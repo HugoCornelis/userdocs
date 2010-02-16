@@ -1274,26 +1274,22 @@ for integration using existing scripting technology.  Examples include
 an interactive simulation of a Purkinje cell model after unitary
 synaptic stimulation using a predefined spike train stored in a file.
 
-Finally, we note that we have developed a serial communication
-framework for event delivery of action potentials to postsynaptic
-targets.  Called the Discrete Event System (DES), this software
-component is integrated with the mathematical solvers of G-3 using
-either Perl or Python.  Because it is optimized for communication over
-serial hardware, DES can be extended to support communication frameworks
-for parallel hardware such as those provided by the MOOSE
-simulator\,\cite{ray08:_pymoos} and the MUSIC
-framework\,\cite{ekeberg08:_music_multis_coord}.
 
+\paragraph{Extensibility in The G-3 Software Federation}
 
-\paragraph{The G-3 Software Federation}
+One of the advantage of the CBI federated software architecture is
+that third party software libraries become available for users.  For
+example, {\it wxFormBuilder} can be used to generate GUI bindings for
+{\it wxPython} and integrate them with the G-3 software platform.
 
-To demonstrate the power of our approach, we have interfaced G-3 with
-Reconstruct and Blender. This novel software platform has been used
-for visual inspection and validation of reconstructed dendrites by
-connecting a model to the geometrical and analytical tools provided by
-the Blender plugin library.  Further, we note that it is also possible
-to use Blender to instantiate neural simulations and, for example, to
-collect simulation output data for movie generation.
+To demonstrate the additional power of our approach, we have
+interfaced G-3 with Reconstruct and Blender. This novel software
+platform has been used for visual inspection and validation of
+reconstructed dendrites by connecting a model to the geometrical and
+analytical tools provided by the Blender plugin library.  Further, we
+note that it is also possible to use Blender to instantiate neural
+simulations and, for example, to collect simulation output data for
+movie generation.
 
 Complementary functionality to that provided by interfacing G-3 with
 Blender would be available after interfacing G-3 with {\it
@@ -1308,6 +1304,27 @@ design\,\cite{crook07:_morph}, and can be connected to Python
 applications (e.g.  see http://www.jython.org/). In principle this
 allows it to be integrated with other simulators that have Python
 bindings, including NEURON and NEST.
+
+The NeuroMorpho.Org database of neuronal morphologies
+(http://www.neuromorpho.org/) is a centrally curated inventory of
+digitally reconstructed neurons\,\cite{ascoli06:_mobil}.  The digital
+reconstruction of neuronal arborizations is an important step in the
+quantitative investigation of cellular neuroanatomy.  Allowing
+extensive morphometric analysis, it is the first step toward
+implementation of biophysical models of electrophysiology.  Direct
+interfacing of the functions of the {\bf Model\,Container} would
+accelerate the development for neuronal models by providing a direct
+link with data from experiments.
+
+Finally, we note that we have developed a serial communication
+framework for event delivery of action potentials to postsynaptic
+targets.  Called the Discrete Event System (DES), this software
+component is integrated with the mathematical solvers of G-3 using
+either Perl or Python.  Because it is optimized for communication over
+serial hardware, DES can be extended to support communication frameworks
+for parallel hardware such as those provided by the MOOSE
+simulator\,\cite{ray08:_pymoos} and the MUSIC
+framework\,\cite{ekeberg08:_music_multis_coord}.
 
 Thus, the CBI software architecture provides an extremely plastic
 environment within which independent components can be integrated with
@@ -1330,7 +1347,7 @@ simplicity\,\cite{goodman08:_brian}.
 For these monolithic software applications, interoperability can be
 implemented using the standard languages for model exchange such as
 NeuroML\,\cite{nigel01:_towar_neurom} and
-NineML\,\cite{gortechnikov10:_ninem_user_layer} and PyNN for
+NineML\,\cite{gortechnikov10:_ninem_user_layer}, and PyNN for
 simulator-independent specification of neuronal network models in
 Python\,\cite{andrew08:_pynn}.
 
@@ -1338,8 +1355,8 @@ The G-3 platform now provides an alternative approach that uses
 scripting to connect neuroscience specific software to general purpose
 software and integrate it into a next generation neural simulator.
 The advantage is that third party software libraries and applications
-become available for users, for example, Blender, {\it matplotlib},
-and {\it wxFormBuilder}, among many others.
+become available for users, for example, Blender, and {\it
+  wxFormBuilder}, among many others.
 
 
 \subsection{Federated Software Development in Neuroscience}
