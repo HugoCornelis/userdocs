@@ -1239,24 +1239,65 @@ generation of 3D crossections and 2D cuts also becomes possible.
 
 \section{Discussion}
 
-\paragraph{The G-3 Federation consists of GENESIS and Neurospaces}
+\paragraph{From a Monolithic Software Application to a Modular Framework}
+The development of the GENESIS simulator was initiated during the
+eighties through research projects that address specific scientific
+questions in computational neuroscience.  Software development was
+then continued with a life cycle of research project extensions.  For
+example the libraries for kinetic pathway modeling were added for
+projects investigating how signalling networks store learned
+behaviour\,\cite{bhalla99:_emerg} and how light regulates release from
+intracellular calcium stores for
+photoreception\,\cite{blackwell00:_eviden_distin_light_induc_calcium}.
+The fast implicit solver was developed with the specific focus of
+Purkinje cell
+modeling\,\cite{deschutter94:_purkin_i}\cite{deschutter94:_purkin_ii}.
+More recently synaptic learning rules were
+implemented\,\cite{guenay08:_chann_densit_distr_explain_spikin}.  In
+principle this process can continue forever.  However, this repetitive
+extension of the GENESIS simulator with source code of diverse
+functions has ultimately made the code structure so complicated that
+it becomes difficult, if not impossible, to extend.  The resulting
+source code has become 'monolithic' and its life cycles moved from
+extension to maintenance.
 
 In the paradigm of the CBI federated software architecture, model
 parameters are stored separately from stimulation protocols and the
-way simulations are run.  The implementation of individual software
-components has the consequence that they can now easily be interfaced
-and bound to third party libraries and applications using existing
-scripting technology.
+way simulations are run.  This facilitates the development of
+individual software components for G-3 to process these quantities in
+their domain.  As examples we have shown functions of the {\bf
+  Model\,Container} to query the structure of a neuronal morphology,
+how to run a simple model using {\bf Heccer}.
 
-A key enabling property of G-3 is that it stores model parameters
-separately from stimulation protocols and the way simulations are run.
-By defining clear functional
-boundaries of the core software components such as the {\bf
-  Model\,Container} and the mathematical solvers, we also provide
-clear interfaces for integration.
-%We have outlined an ecology of
-%software components that are CBI compliant and that integrate with the
-%G-3 simulator.
+The CBI federated software architecture also defines clear boundaries
+for integration using existing scripting technology.  Examples include
+an interactive simulation of a Purkinje cell model after unitary
+synaptic stimulation using a predefined spike train stored in a file.
+
+Finally, we note that we have developed a serial communication
+framework for event delivery of action potentials to postsynaptic
+targets.  Called the Discrete Event System (DES), this software
+component is integrated with the mathematical solvers of G-3 using
+either Perl or Python.  Because it is optimized for communication over
+serial hardware, DES can be extended to support communication frameworks
+for parallel hardware such as those provided by the MOOSE
+simulator\,\cite{ray08:_pymoos} and the MUSIC
+framework\,\cite{ekeberg08:_music_multis_coord}.
+
+
+\paragraph{The G-3 Software Federation}
+
+To demonstrate the power of our approach, we have interfaced G-3 with
+Reconstruct and Blender. This novel software platform has been used
+for visual inspection and validation of reconstructed dendrites by
+connecting a model to the geometrical and analytical tools provided by
+the Blender plugin library.  Further, we note that it is also possible
+to use Blender to instantiate neural simulations and, for example, to
+collect simulation output data for movie generation.
+
+Thus, the CBI software architecture provides an extremely plastic
+environment within which independent components can be integrated with
+a scripting language of choice.
 
 
 \paragraph{Implications for Interoperability}
@@ -1291,29 +1332,8 @@ The advantage is that third party software libraries and applications
 become available for users, for example, Blender, {\it matplotlib},
 and {\it wxFormBuilder}, among many others.
 
-Finally, we note that we have developed a serial communication
-framework for event delivery of action potentials to postsynaptic
-targets.  Called the Discrete Event System (DES), this software
-component is integrated with the mathematical solvers of G-3 using
-either Perl or Python.  Because it is optimized for communication over
-serial hardware, DES can be extended to support communication frameworks
-for parallel hardware such as those provided by the MOOSE
-simulator\,\cite{ray08:_pymoos} and the MUSIC
-framework\,\cite{ekeberg08:_music_multis_coord}.
-
-
-\subsection{User Extensibility}
-
-\paragraph{Neuroscience Specific Extensions}
-\paragraph{Other Extensions}
 
 \subsection{Federated Software Development in Neuroscience}
-
-To demonstrate the power of our approach, we have interfaced G-3 with Blender. This novel software platform has been used for visual inspection and validation of
-reconstructed dendrites by connecting a model to the geometrical and
-analytical tools provided by the Blender plugin library.  Further, we note that it
-is also possible to use Blender to instantiate neural simulations and,
-for example, to collect simulation output data for movie generation.
 
 Complementary functionality to that provided by interfacing G-3 with
 Blender would be available after interfacing G-3 with {\it
