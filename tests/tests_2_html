@@ -499,9 +499,11 @@ options :
 		    {
 			# output source code
 
-			#! guessing turned on to turn executables into highligted source code.
+			#! guessing turned on when need to turn executables into highligted source code.
 
-			my $source_information = output_source($file, $model, { guessing => 0, }, );
+			my $guessing = `pwd` =~ /heccer/;
+
+			my $source_information = output_source($file, $model, { guessing => $guessing, }, );
 
 			my $source_anchor = defined $source_information->{result_anchor} ? " href=\"$source_information->{result_anchor}\"" . $source_information->{result_anchor} : "" ;
 
