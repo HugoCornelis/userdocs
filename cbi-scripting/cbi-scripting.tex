@@ -1239,22 +1239,26 @@ generation of 3D crossections and 2D cuts also becomes possible.
 
 \section{Discussion}
 
-Software libraries can be divided into application specific and
-application neutral categories.  Through the Neurospaces project,
-GENESIS now provides a series of software components specific to
-neuroscience applications.  The advantage is that scripting languages
-such as Python and Perl become a powerful integration tool to connect
-these components to general purpose libraries for visualization,
-rendering, and GUI development.  Although the Python bindings of the G-3
-simulator embed the same powerful concepts as the GENESIS SLI, their
-purpose is different.  While the SLI had as major goals the
-integration of model components, output collection, and running
-simulations, the primary goal of scripting languages such as Perl and
-Python has become application integration.
+The Python bindings of the G-3 simulator embed similar concepts to the
+GENESIS SLI, although their purpose is different.  While the SLI had
+as major goals the integration of model components, running
+simulations, and output collection, the primary goal of scripting
+languages such as Perl and Python has become application integration.
 
-\paragraph{From a Monolithic Software Application to a Modular Framework}
+Software libraries can either provide general support or can be
+tailored for specific scientific disciplines.  Through the Neurospaces
+project, GENESIS now provides a series of software components that
+support computational modeling in the neurosciences.  The advantage is
+that scripting languages such as Python and Perl become a powerful
+integration tool to connect these neuroscience components to general
+purpose libraries for GUI application development, result
+visualization and data analysis.
+
+
+\subsection{From a Monolithic Software Application to a Modular
+  Framework}
 The development of the GENESIS simulator was initiated during the
-eighties through research projects that address specific scientific
+eighties through research projects that addressed specific scientific
 questions in computational neuroscience.  Software development was
 then continued with a life cycle of research project extensions.  For
 example the libraries for kinetic pathway modeling were added for
@@ -1263,37 +1267,41 @@ behaviour\,\cite{bhalla99:_emerg} and how light regulates release from
 intracellular calcium stores for
 photoreception\,\cite{blackwell00:_eviden_distin_light_induc_calcium}.
 The fast implicit solver was developed with the specific focus of
-Purkinje cell
-modeling\,\cite{deschutter94:_purkin_i, deschutter94:_purkin_ii}.
-More recently synaptic learning rules were
+Purkinje cell modeling\,\cite{deschutter94:_purkin_i,
+  deschutter94:_purkin_ii} and more recently synaptic learning rules
+have been
 implemented\,\cite{guenay08:_chann_densit_distr_explain_spikin}.  In
-principle this process can continue forever.  However, repetitive
-extension of the GENESIS simulator with source code of diverse
-functions has ultimately made the code structure so complicated that
-it becomes difficult, if not impossible, to extend it further.  The
-resulting GENESIS 2 source code has become 'monolithic' and recent
-decrease in user contribution is indication that its life cycles has
-moved from extension to maintenance.
+principle such linear or single-threaded development processes can
+continue forever.  However, repetitive extension of the GENESIS
+simulator with source code of diverse functions and origin had
+ultimately made the code structure so complicated that it became
+difficult, if not impossible, to extend it.  Because of the density of
+the GENESIS 2 source code the application had become 'monolithic' and
+this marginalized user contribution to simulation functionality.  This
+suggested that the software life cycle has moved from extension to
+maintenance\marginpar{citation here}.
 
 In the paradigm of the CBI federated software architecture, model
-parameters are stored separately from stimulation protocols and the
-way simulations are run.  This facilitates the development of
-individual software components for GENESIS 3 (G-3) to store and
-process these quantities separately.  As examples we have shown
-functions of the {\bf Model\,Container} to query the structure of a
-neuronal morphology, how to run a simple model using {\bf Heccer}.
-This approach greatly simplifies the development and maintenance of a
-single software component.
+parameters are stored separately from stimulus protocols and the way
+simulations are run.  This facilitates the development of individual
+software components for GENESIS 3 (G-3) to store and process these
+quantities separately.  As examples we have shown functionality of the
+{\bf Model\,Container} to query the structure of a neuronal morphology
+and how to run a simple model using {\bf Heccer}.  The CBI federated
+software architecture greatly simplifies the development and
+maintenance of individual software components.  It also defines clear
+boundaries for integration using existing scripting technology.
+Examples include, an interactive simulation of a Purkinje cell model
+after unitary synaptic stimulation using a predefined spike train
+stored in a file.  This way software improvements can be achieved
+using parallel software development processes for stand-alone software
+components rather than linear ones for a centrally developed software
+applications.
 
-The CBI federated software architecture also defines clear boundaries
-for integration using existing scripting technology.  Examples include,
-an interactive simulation of a Purkinje cell model after unitary
-synaptic stimulation using a predefined spike train stored in a file.
 
+\subsection{Extensibility in The G-3 Software Federation}
 
-\paragraph{Extensibility in The G-3 Software Federation}
-
-One of the advantage of the CBI federated software architecture is
+An important benefit of the CBI federated software architecture is
 that third party software libraries become available for users.  For
 example, {\it wxFormBuilder} can be used to generate GUI bindings for
 {\it wxPython} and integrate them with the G-3 software platform.
@@ -1305,9 +1313,8 @@ reconstructed dendrites by connecting a model to the geometrical and
 analytical tools provided by the Blender plugin library.  Further, we
 note that it is also possible to use Blender to instantiate neural
 simulations and, for example, to collect simulation output data for
-movie generation.  The next paragraphs give an overview of our ongoing
-efforts to interface the G-3 simulator with external libraries and
-applications.
+movie generation.  We now give an overview of our ongoing efforts to
+interface the G-3 simulator with external libraries and applications.
 
 Complementary functionality to that provided by interfacing G-3 with
 Blender would be available after interfacing G-3 with {\it
@@ -1318,81 +1325,75 @@ biologically realistic neurons\,\cite{gleeson05:_build_networ_model,
 latest NeuroML specifications (see http://www.neuroml.org,
 http://www.morphml.org/), can be used to visually validate network
 layout and design\,\cite{crook07:_morph}, and can be connected to
-Python applications (e.g.  see http://www.jython.org/). In principle
+Python applications (e.g.  see http://www.jython.org/).  In principle
 this allows it to be integrated with other simulators that have Python
-bindings, including NEURON and NEST.
+bindings, including NEURON, NEST and G-3.
 
 A serial communication framework for event delivery of action
-potentials to postsynaptic targets is currently under development.
-Called the Discrete Event System (DES), this software component is
-integrated with the mathematical solvers of G-3 using either Perl or
-Python.  Because it is optimized for communication over serial
-hardware, DES can be extended to support communication frameworks for
-parallel hardware such as those provided by the MOOSE
+potentials to postsynaptic targets has been developed.  Called the
+Discrete Event System (DES), this software component is integrated
+with the mathematical solvers of G-3 using either Perl or Python.
+Because it is optimized for communication over serial hardware, DES
+can be extended to support communication frameworks for parallel
+hardware such as those provided by the MOOSE
 simulator\,\cite{ray08:_pymoos} and the MUSIC
 framework\,\cite{ekeberg08:_music_multis_coord}.
 
-The NeuroMorpho.org database of neuronal morphologies
+The NeuroMorpho.Org database of neuronal morphologies
 (http://www.neuromorpho.org/) is a centrally curated inventory of
 digitally reconstructed neurons\,\cite{ascoli06:_mobil}.  The digital
-reconstruction of neuronal arborizations is an important step in the
+reconstruction of neuronal arborization is an important step in the
 quantitative investigation of cellular neuroanatomy.  Allowing
 extensive morphometric analysis, it is the first step toward
 implementation of biophysical models of electrophysiology.  Direct
-interfacing of the functions of the {\bf Model\,Container} accelerate
-the development for neuronal models by providing a direct link with
-data from experiments.  Preliminar implementations of this
-functionality is currently part of the G-3 automated test framework.
+interfacing with the functionality of the {\bf Model\,Container}
+accelerates the development of neuronal models by providing a direct
+link with data from experiments.  Preliminary implementations of this
+functionality is now part of an automated test framework for G-3.
 
 G-3 also significantly extends the ability of GENESIS to directly
 interact with experimental technologies such as open source dynamic
 clamp software.  As an example the modular approach taken by the RTXI
 platform for dynamic
 clamp\,\cite{bettencourt08:_effec_imper_dynam_clamp, dorval01:_real}
-and the modular structure of G-3 effectively mean that the solver,
-{\bf Heccer}, can be directly integrated as an RTXI plug-in, thereby
-greatly simplifying the required software development.
+and the modular structure of G-3 mean that the solver, {\bf Heccer},
+can be directly integrated as an RTXI plug-in.  This greatly
+simplifies the required software development.
 
-Thus, the CBI software architecture provides an extremely plastic
-environment within which independent components can be integrated with
-a scripting language of choice.
+Ultimately, the extensibility of the CBI federated software
+architecture provides an extremely plastic environment within which
+independent components can be integrated with a scripting language of
+choice.
 
 
-\paragraph{Implications for Interoperability}
+\subsection{Implications for Interoperability}
 
 The current generation of neural simulators can be characterized as
 software applications that support a user workflow extending from
-model construction to data analysis.  Many of these simulators come
-with Python bindings, ranging from Monte-Carlo simulators for
-reaction-diffusion systems\,\cite{wils09:_steps} and dedicated large
-network simulators\,\cite{eppler08:_pynes} to the general purpose
-NEURON and GENESIS 2 simulators\,\cite{hines09:_neuron_python,
-  bower98:_book_genes}.  Some of these simulators use Python because
-of its ease of use\,\cite{pecevski09:_pcsim} and
-simplicity\,\cite{goodman08:_brian}.
+model construction to data analysis.  Many of these simulators support
+Python bindings because of their ease of use\,\cite{pecevski09:_pcsim}
+and simplicity\,\cite{goodman08:_brian}.  They range from Monte-Carlo
+simulators for reaction-diffusion systems\,\cite{wils09:_steps} and
+dedicated large network simulators\,\cite{eppler08:_pynes} to the
+general purpose NEURON and GENESIS 2
+simulators\,\cite{hines09:_neuron_python, bower98:_book_genes}.
 
-For these monolithic software applications, interoperability can be
-implemented using the standard languages for model exchange such as
-NeuroML\,\cite{nigel01:_towar_neurom} and
-NineML\,\cite{gortechnikov10:_ninem_user_layer}, and PyNN for
-simulator-independent specification of neuronal network models in
-Python\,\cite{andrew08:_pynn}.
+For these simulators interoperability is more easily implemented using
+the emerging languages for model exchange such as
+NeuroML\,\cite{nigel01:_towar_neurom},
+NineML\,\cite{gortechnikov10:_ninem_user_layer} and
+PyNN\,\cite{andrew08:_pynn}.  The G-3 platform now provides an
+alternative approach that uses scripting to connect neuroscience
+specific software to general purpose software and integrate it into a
+next generation neural simulator.
 
-The G-3 platform now provides an alternative approach that uses
-scripting to connect neuroscience specific software to general purpose
-software and integrate it into a next generation neural simulator.
-The advantage is that third party software libraries and applications
-become available for users, for example, Blender, and {\it
-  wxFormBuilder} among many others.
-
-
-\paragraph{Federated Software Development in Neuroscience}
+\subsection{Federated Software Development in Neuroscience}
 
 Processes of software development have traditionally been described as
 either cathedral-style where there is a closed developer group under
 central direction and software releases are infrequent, or,
 alternatively, bazaar-style where the software is developed by
-volunteers and software releases are done early and
+volunteers and software releases occur early and
 often\,\cite{raymond01:_cathed_bazaar, citeulike:126678}.
 %Brooks' Law and Linus' Law.
 %Currently, successful open source software development 
@@ -1402,18 +1403,19 @@ often\,\cite{raymond01:_cathed_bazaar, citeulike:126678}.
 %model pervasive in the commercial world and, on the other hand, also
 %depart from the flat structure of the open source development
 %``bazaar''\,\cite{Open-Source03theecology}.
-When the cathederal-style of software development leads to a single
-threaded development cycle most suitable to commercial applications,
-the bazaar-style leads to multi-threaded development cycles of
-applications that come in different flavours\,\footnote{A typical
-  example is the family of editors based on Emacs.}.
+While the cathederal-style of software development leads to a
+single-threaded development cycle commonly used commercial
+applications, the bazaar-style leads to multi-threaded development
+cycles of applications that come in different flavours\,\footnote{A
+  typical example is the family of editors based on Emacs.}.
 
-Here, we have outlined an alternative that follows the component based
-approach to open source software development (for other examples of
-this approach to neural simulation see\,\cite{schuermann09:_neuron,
-  nordlie09:_visual}).  Our approach has given rise to an ecology of
-software components.  Gluing these components together can be done in
-a variety of ways and we have given examples that use Perl and Python.
+Here, based on the CBI paradigm, we have outlined a solution for
+multi-threaded development of software components for neuroscience
+(for other examples of this approach to neural simulation
+see\,\cite{schuermann09:_neuron, nordlie09:_visual}).  Our approach
+gives rise to an ecology of software components, that can be glued
+together in a variety of ways.  We have given examples that use Python
+and Perl.
 %Here, we have illustrated the relationship between Python and the G-3
 %simulator.  We have focused on a simple but comprehensive example, the
 %running of a single compartment neuron and the plotting of its
