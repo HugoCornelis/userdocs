@@ -578,72 +578,120 @@ Python and Perl interfaces, and the C code interface.  While
 compartments and parameters have names, numerical values are given in
 a format used by solvers.
 
+%%\begin{figure}[ht]
+%%  \centering
+%{\vspace*{3mm} \footnotesize
+%  \begin{minipage}{1\linewidth}
+    
+%    \begin{minipage}[t]{.50\linewidth}
+%{\bf C Code Implementation}
+%\resetlinenumber
+%\begin{verbatim}
+%#include "heccer/compartment.h"
+%struct Compartment compSoma =
+%{
+% // type of structure
+% { MATH_TYPE_Compartment, },
+
+% -1,  // no parent compartment
+% 4.57537e-11, // Cm
+% -0.08,       // Em
+% -0.068,      // InitVm
+% 1e-9,        // Inject
+% 360502,      // Ra
+% 3.58441e+08, // Rm
+%};
+
+%//  compartment and channel mapping
+%int piC2m[] = { 0, -1, };
+
+%// model definition
+%struct Intermediary inter =
+%{ 1, &compSoma, NULL, piC2m, };
+
+%// main simulation script
+%#include "main.c"
+
+%\end{verbatim}
+%    \end{minipage}
+%    \begin{minipage}[t]{.50\linewidth}
+%{\bf GENESIS 2 SLI Implementation}
+%\resetlinenumber
+%\begin{verbatim}
+
+
+%create neutral /cell
+%create compartment /cell/soma
+
+%setfield /cell/soma dia 2e-05
+%setfield /cell/soma len 4.47e-05
+
+%setfield /cell/soma Cm 4.60608e-11
+%setfield /cell/soma Em -0.0800
+%setfield /cell/soma Vm_init -0.068
+%setfield /cell/soma Ra 355711
+%setfield /cell/soma Rm 3.56051e+08
+
+%setfield /cell/soma inject 1e-9
+
+
+
+
+
+
+
+%reset
+%step 0.5 -time
+%\end{verbatim}
+%    \end{minipage}
+%%    \begin{minipage}{.50\linewidth}
+%%\begin{verbatim}
+%%Compare GENESIS SLI \& G-3 C code \& G-3 perl \& G-3 Python
+%%\end{verbatim}
+%%    \end{minipage}
+%%    \begin{minipage}{.50\linewidth}
+%%\begin{verbatim}
+%%Compare GENESIS SLI \& G-3 C code \& G-3 perl \& G-3 Python
+%%\end{verbatim}
+%%    \end{minipage}
+%  \end{minipage}
+%  \linenumbers
+%  \vspace*{1mm}
+%}
+%%\end{figure}
+
 %\begin{figure}[ht]
 %  \centering
-{\vspace*{3mm} \footnotesize
-  \begin{minipage}{1\linewidth}
-    
-    \begin{minipage}[t]{.50\linewidth}
-{\bf C Code Implementation}
-\resetlinenumber
-\begin{verbatim}
-#include "heccer/compartment.h"
-struct Compartment compSoma =
-{
- // type of structure
- { MATH_TYPE_Compartment, },
 
- -1,  // no parent compartment
- 4.57537e-11, // Cm
- -0.08,       // Em
- -0.068,      // InitVm
+\begin{tabular}{ l l }
+    {\bf C Code Implementation} & {\bf GENESIS 2 SLI Implementation} \\
+%    \resetlinenumber
+\#include "heccer/compartment.h" & \\
+struct Compartment compSoma = & \\
+\{ & \\
+ // type of structure & create neutral /cell \\
+ { MATH\_TYPE\_Compartment, }, & create compartment /cell/soma \\
+ & setfield /cell/soma dia 2e-05 \\
+ -1,  // no parent compartment & setfield /cell/soma len 4.47e-05 \\
+ 4.57537e-11, // Cm & setfield /cell/soma Cm 4.60608e-11 \\
+ -0.08,       // Em & setfield /cell/soma Em -0.0800 \\
+ -0.068,      // InitVm & setfield /cell/soma Vm\_init -0.068 \\
  1e-9,        // Inject
- 360502,      // Ra
- 3.58441e+08, // Rm
-};
-
-//  compartment and channel mapping
-int piC2m[] = { 0, -1, };
-
-// model definition
-struct Intermediary inter =
-{ 1, &compSoma, NULL, piC2m, };
-
-// main simulation script
-#include "main.c"
-
-\end{verbatim}
-    \end{minipage}
-    \begin{minipage}[t]{.50\linewidth}
-{\bf GENESIS 2 SLI Implementation}
-\resetlinenumber
-\begin{verbatim}
-
-
-create neutral /cell
-create compartment /cell/soma
-
-setfield /cell/soma dia 2e-05
-setfield /cell/soma len 4.47e-05
-
-setfield /cell/soma Cm 4.60608e-11
-setfield /cell/soma Em -0.0800
-setfield /cell/soma Vm_init -0.068
-setfield /cell/soma Ra 355711
-setfield /cell/soma Rm 3.56051e+08
-
-setfield /cell/soma inject 1e-9
-
-
-
-
-
-
-
-reset
-step 0.5 -time
-\end{verbatim}
-    \end{minipage}
+ 360502,      // Ra & setfield /cell/soma Ra 355711 \\
+ 3.58441e+08, // Rm & setfield /cell/soma Rm 3.56051e+08 \\
+\}; & \\
+ & setfield /cell/soma inject 1e-9 \\
+//  compartment and channel mapping & \\
+int piC2m[] = { 0, -1, }; & \\
+ & \\
+// model definition & \\
+struct Intermediary inte r = & \\
+\{ 1, \&compSoma, NULL, piC2m, \}; & \\
+ & \\
+// main simulation script & \\
+\#include "main.c" & reset \\
+ & step 0.5 -time \\
+\end{tabular}
 %    \begin{minipage}{.50\linewidth}
 %\begin{verbatim}
 %Compare GENESIS SLI \& G-3 C code \& G-3 perl \& G-3 Python
@@ -654,11 +702,13 @@ step 0.5 -time
 %Compare GENESIS SLI \& G-3 C code \& G-3 perl \& G-3 Python
 %\end{verbatim}
 %    \end{minipage}
-  \end{minipage}
-  \linenumbers
-  \vspace*{1mm}
-}
+%  \end{minipage}
+%  \linenumbers
+%  \vspace*{1mm}
+%}
 %\end{figure}
+
+\vspace*{1cm}
 
 While Python and Perl bindings are suitable for construction of toy
 models from scratch, it is better to use a domain specific language to
