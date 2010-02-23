@@ -57,30 +57,82 @@ De Schutter E \& Bower JM (1994) An active membrane model of the cerebellar Purk
 \caption{$\bar g$ for the voltage and Ca$^{2+}$-dependent channels in 2 different versions of the Purkinje cell model.}
 \begin{tabular}{ l c c c c c c }  
                     &                     &                                          &                                       &                     &                            &                                                       \\
-                    & \multicolumn{3}{ c} {\bf PM9 Model} &  \multicolumn{3}{ c} {\bf PM10 Model}                                                                                   \\{\bf Name} & {\bf Soma} & {\bf Main Dendrite}       & {\bf Rest of Dendrite} & {\bf Soma} & {\bf Main Dendrite} & {\bf Rest of Dendrite}          \\NaF            & 7,500          & 0.0                                   & 0.0                                & 7,500          & 0.0                     & 0.0                                                  \\NaP            & 1.0              & 0.0                                    & 0.0                               & 1.0               & 0.0                     & 0.0                                                  \\CaP            & 0.0              & 4.5                                    & 4.5                               & 0.0               & 4.0                     & 4.5                                                  \\CaT            & 0.5              & 0.5                                    & 0.5                                & 0.5               & 0.5                     & 0.5                                                  \\Kh               & 0.3              & 0.0                                    & 0.0                               & 0.3               & 0.0                     & 0.0                                                  \\Kdr             & 600.0          & 60.0                                  & 0.0                               & 900.0           & 90.0                   & 0.0                                                  \\KM              & 0.040         & 0.010                                & 0.013                          & 0.140           & 0.040                 & 0.013                                             \\KA              &15.0             & 2.0                                     & 0.0                              & 15.0             & 2.0                      & 0.0                                                  \\KC              & 0.0              & 80.0                                   & 80.0                            & 0.0               & 80.0                    & 80.0                                                \\K2              & 0.0              & 0.39                                    & 0.39                            & 0.0               & 0.39                   & 0.39                                                \\
+                    & \multicolumn{3}{ c} {\bf PM9 Model} &  \multicolumn{3}{ c} {\bf PM10 Model}                                                                                   \\
+{\bf Name} & {\bf Soma} & {\bf Main Dendrite}       & {\bf Rest of Dendrite} & {\bf Soma} & {\bf Main Dendrite} & {\bf Rest of Dendrite}          \\
+NaF            & 7,500          & 0.0                                   & 0.0                                & 7,500          & 0.0                     & 0.0                                                  \\
+NaP            & 1.0              & 0.0                                    & 0.0                               & 1.0               & 0.0                     & 0.0                                                  \\
+CaP            & 0.0              & 4.5                                    & 4.5                               & 0.0               & 4.0                     & 4.5                                                  \\
+CaT            & 0.5              & 0.5                                    & 0.5                                & 0.5               & 0.5                     & 0.5                                                  \\
+Kh               & 0.3              & 0.0                                    & 0.0                               & 0.3               & 0.0                     & 0.0                                                  \\
+Kdr             & 600.0          & 60.0                                  & 0.0                               & 900.0           & 90.0                   & 0.0                                                  \\
+KM              & 0.040         & 0.010                                & 0.013                          & 0.140           & 0.040                 & 0.013                                             \\
+KA              &15.0             & 2.0                                     & 0.0                              & 15.0             & 2.0                      & 0.0                                                  \\
+KC              & 0.0              & 80.0                                   & 80.0                            & 0.0               & 80.0                    & 80.0                                                \\
+K2              & 0.0              & 0.39                                    & 0.39                            & 0.0               & 0.39                   & 0.39                                                \\
                    &                     &                                            &                                      &                     &                             &                                                         \\
-\multicolumn{7}{l}{Extent of the main dendrite is shown in Fig.\,1.}                                                                                                                                 \\\multicolumn{7}{l}{$\bar g$: maximum conductance mS/cm$^2$. For other abbreviations, see Table\,1, above.}                                                \\
+\multicolumn{7}{l}{Extent of the main dendrite is shown in \href{../pub-purkinje-deschutter-fig-1/pub-purkinje-deschutter-fig-1.tex}{\bf Fig.\,1}.}                                                                                                                                 \\
+\multicolumn{7}{l}{$\bar g$: maximum conductance mS/cm$^2$. For other abbreviations, see Table\,1, above.}                                                \\
 \multicolumn{7}{l}{}                                                                                                                                                                                                                   \\
 \end{tabular}
 \end{table}
 
 \subsubsection*{Estimating channel conductances}
 
-Constructing an accuraterepresentation of an ionic channel also requires an estimate ofthe channel $\bar g$. However, channel conductance values measured involtage-clamp experiments are often quite variable (McCormickand Huguenard 1992) and are only indicative. For this reason,channel $\bar g$s in the model were not based on experimental measurements\,[S:1993dz, De-Schutter-E:1993fu].
+Constructing an accurate
+representation of an ionic channel also requires an estimate of
+the channel $\bar g$. However, channel conductance values measured in
+voltage-clamp experiments are often quite variable\,\cite{McCormick:1992fk} and are only indicative. For this reason,
+channel $\bar g$s in the model were not based on experimental measurements\,\cite{S:1993dz, De-Schutter-E:1993fu}.
 
 \subsubsection*{Estimating channel densities}
 
 Having established and parameterized the equations governing the
-voltage-dependent behavior of the ionic conductances in thiscell, it was necessary to determine the channel densities in themodel. Because precise information on channel densities is nottechnically obtainable, channel densities, usually expressed as $\bar g$,are largely a free parameter in detailed single-cell models\,\cite{S:1993dz, L:1992kl, W:1991qa, Traub-R-D:1991mi}.In the present model, simulations were started using initialguesses for the $\bar g$ of the different channels in four zones of the cell,i.e. the soma, the main dendrite, the smooth dendrites, and thespiny dendrites (see Fig. 1). $\bar g$s were then altered until the modelcould reproduce the characteristic firing behavior of Purkinje cellsduring current injection in vitro\,\cite{R:1980ly, R:1980pi},as described in Figs. 3--7. During this optimizationprocess it was not necessary to distinguish betweenthe smooth and spiny dendrites. In addition, optimal performancerequired that the Kdr and A currents be present in themain dendrite as well as in the soma.Also, several combinations of $\bar g$ were found that could account forthe responses of Purkinje cells to current injection. For contrast,versions PM9 and PM10 are presented, where PM10 representsa Purkinje cell with higher K$^+$ channel densities, i.e., a leakier
+voltage-dependent behavior of the ionic conductances in this
+cell, it was necessary to determine the channel densities in the
+model. Because precise information on channel densities is not
+technically obtainable, channel densities, usually expressed as $\bar g$,
+are largely a free parameter in detailed single-cell models\,\cite{S:1993dz, L:1992kl, W:1991qa, Traub-R-D:1991mi}.
+
+In the present model, simulations were started using initial
+guesses for the $\bar g$ of the different channels in four zones of the cell,
+i.e. the soma, the main dendrite, the smooth dendrites, and the
+spiny dendrites (see Fig. 1). $\bar g$s were then altered until the model
+could reproduce the characteristic firing behavior of Purkinje cells
+during current injection in vitro\,\cite{R:1980ly, R:1980pi},
+as described in Figs. 3--7. During this optimization
+process it was not necessary to distinguish between
+the smooth and spiny dendrites. In addition, optimal performance
+required that the Kdr and A currents be present in the
+main dendrite as well as in the soma.
+
+Also, several combinations of $\bar g$ were found that could account for
+the responses of Purkinje cells to current injection. For contrast,
+versions PM9 and PM10 are presented, where PM10 represents
+a Purkinje cell with higher K$^+$ channel densities, i.e., a leakier
 cell.
-\subsubsection*{Temperature dependence of channel kinetics}
 
-Temperatureis a well-known critical parameter for channel kinetics\,\cite{B:1991zr}.
-In the current simulations the in vivo and in vitro dataused to tune the model were collected at 37\,$^\circ$\,C whereas all of thepublished voltage-clamp data were obtained at room temperature.Assuming a Q\,10 factor of 3\,\cite{L:1952fv} all rate constants were multiplied by a factor of 5.
-\subsubsection*{Modeling calcium concentrations}
+\subsubsection*{Temperature dependence of channel kinetics}
 
-In the present model realistic simulation of Ca$^{2+}$ concentrations was not attempted. However, computation of Ca$^{2+}$ concentrations was required to activate theKC and K2 channels. Because these channels are assumed to besensitive to the quickly changing, high Ca$^{2+}$ concentrations justbelow the membrane surface\,\cite{L:1989ff}, Ca$^{2+}$ concentrations were 
-computed in a thin submembrane shell\,\cite{D:1982lh}. These shells integrated the full Ca$^{2+}$ inflow throughthe CaP and CaT channels. Their volume and decay time constantswere initially free parameters in the model. The model tuningresulted in shells 0.2\,$\mu$m deep with a decay time of 0.1\,ms.The basal internal Ca$^{2+}$ concentration was 0.040\,$\mu$M; the outsideconcentration was constant at 2.4\,mM. These concentrationswere also used to compute Nernst potentials\,\cite{B:1991zr} for theCaP and CaT currents.
+Temperature is a well-known critical parameter for channel kinetics\,\cite{B:1991zr}.
+In the current simulations the in vivo and in vitro data
+used to tune the model were collected at 37\,$^\circ$\,C whereas all of the
+published voltage-clamp data were obtained at room temperature.
+Assuming a Q\,10 factor of 3\,\cite{L:1952fv} all rate constants were multiplied by a factor of 5.
+
+\subsubsection*{Modeling calcium concentrations}
+
+In the present model realistic simulation of Ca$^{2+}$ concentrations was not attempted. However, computation of Ca$^{2+}$ concentrations was required to activate the
+KC and K2 channels. Because these channels are assumed to be
+sensitive to the quickly changing, high Ca$^{2+}$ concentrations just
+below the membrane surface\,\cite{L:1989ff}, Ca$^{2+}$ concentrations were 
+computed in a thin submembrane shell\,\cite{D:1982lh}. These shells integrated the full Ca$^{2+}$ inflow through
+the CaP and CaT channels. Their volume and decay time constants
+were initially free parameters in the model. The model tuning
+resulted in shells 0.2\,$\mu$m deep with a decay time of 0.1\,ms.
+The basal internal Ca$^{2+}$ concentration was 0.040\,$\mu$M; the outside
+concentration was constant at 2.4\,mM. These concentrations
+were also used to compute Nernst potentials\,\cite{B:1991zr} for the
+CaP and CaT currents.
 
 \bibliographystyle{plain}
 \bibliography{../tex/bib/g3-refs}
