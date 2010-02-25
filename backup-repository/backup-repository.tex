@@ -76,15 +76,15 @@ For this to succeed you must be given write permission on the backup server's re
 
 There are two files which manage permissions in monotone:
 \begin{itemize}
-   \item[]{\it $\sim$/.monotone/read\_permissions}: Determines who can read your repositories. 
-   \item[]{\it $\sim$/.monotone/write\_permissions}: Determines who can write to your repositories. 
+   \item[]{\it $\sim$/.monotone/read-permissions}: Determines who can read your repositories. 
+   \item[]{\it $\sim$/.monotone/write-permissions}: Determines who can write to your repositories. 
 \end{itemize}
 To allow all users to {\it pull} from your repositories enter:
 \begin{verbatim}
    pattern "*"  
       allow "*"
 \end{verbatim}
-into your {\it ~/.monotone/read\_permissions} file.
+into your {\it ~/.monotone/read-permissions} file.
 
 To allow users to write to your repositories they must first have their public key stored on your databases. You can check to see which keys are currently present via the command:
 \begin{verbatim}
@@ -98,7 +98,7 @@ when you are in your project workspace directory. This will list a hash along wi
    2d451ae15d697afb4f92cb04ca7a582c90434130 user3@gmail.com
    cbc91b2ec1d19e95f64cb164cc2166f4bdfe7bf4 user4@email.com
 \end{verbatim}
-Now if a user has a public key present, all that needs to be done is to enter each identifier email you wish to give access once per line in the file {\it $\sim$/.monotone/write\_permissions}. The following {\it write\_permissions} file will grant {\it user2}, {\it user3}, and {\it user4} access, since they already have a corresponding key stored in the repository:
+Now if a user has a public key present, all that needs to be done is to enter each identifier email you wish to give access once per line in the file {\it $\sim$/.monotone/write-permissions}. The following {\it write-permissions} file will grant {\it user2}, {\it user3}, and {\it user4} access, since they already have a corresponding key stored in the repository:
 \begin{verbatim}
    user2@email.com
    user3@email.com
