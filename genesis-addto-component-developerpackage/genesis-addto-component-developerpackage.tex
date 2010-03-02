@@ -141,4 +141,115 @@ To extend the functionality of a pre-existing GENESIS {\bf Component} see \href{
 
 To extend the functionality of GENESIS by adding a new {\bf Component} see \href{../genesis-add-object-solver/genesis-add-object-solver.tex}{\bf Add Solver Object}.
 
+\subsection*{Detailed Example}
+
+As a modeling project grows, it may become necessary to create and maintain a new software component. We now show in detail how to add a new software component to the {\it DeveloperPackage} as well as how to create the corresponding monotone repository on a repository server. For this example, we will be adding a new package called the {\it exchange} package.
+
+\subsubsection*{Adding a new component to the {\it DeveloperPackage}}
+
+To add a new package to the system you must first make the script {\it neurospaces\_build} aware of your package. First locate the package matrix in {\it neurospaces\_build}:
+\begin{verbatim}
+   my $all_packages
+\end{verbatim}
+Next we must add an entry for our package, first we must designate a port number for performing {\it push}, {\it pull}s and {\it sync}s. The current port numbers in use range between 4692 ({\bf N S-SLI}) to 4700 ({\it userdocs}), so it is safe to designate port 4701 as the port for the {\it exchange} package.
+
+{\bf WARNING:} Make absolutely certain that no two packages point to the same port number. Two packages attempting to {\it sync} to the same port number can result in a corruption of your repository.
+
+Now we add our entry complete with port number:
+\begin{verbatim}
+   exchange => {
+      dependencies => {
+         'model-container' => 'for storing the model in computer memory',
+      },
+      directory => "$ENV{HOME}/neurospaces_project/exchange/source/snapshots/0",
+      order => 1.5,
+      version_control => {
+         port_number => 4701,
+         repository => "$ENV{HOME}/neurospaces_project/MTN/exchange.mtn",
+      },
+      version_script => 'neurospaces_exchange --version',
+    },
+\end{verbatim}
+Here we add an entry to the package matrix (a Perl hash) with the following attributes.
+\begin{itemize}
+   \item {\bf dependencies:} List of package dependencies with a string message delimited by commas.
+   \item {\bf directory:} The target directory for checking out source code.
+   \item {\bf order:} A weight value which designates the order to perform pulls, pushes and syncs in
+   \item {\bf version\_control:} Designates the port number and mtn file to use for version control
+   \item {\bf version\_script:} Command to give the version number. 
+\end{itemize}
+
+\subsubsection*{Creating a new repository on the server}
+
+For more context regarding the central server setup, see \href{../installatio-debian-server/installation-debian-server.tex}{\bf Installation\,Debian\,Server}.
+
+In this scenario a user has created the {\it exchange} package and wants to share the code by propagating it via the central repository. There are three machines:
+\begin{itemize}
+   \item {\bf User1:} Created the {\it exchange} package and has a monotone repository on their machine they'd like to share.
+   \item {\bf User2:} Another user which would like to have access to the {\it exchange} package.
+   \item {\bf repo:} A centralized server that serves the monotone repositories. 
+\end{itemize}
+First the the administrator of the repo initializes a new repository in the same location indicated in the directory hash from the values in the package matrix from {\it neurospaces\_build}. As the dedicated monotone user on the repo we execute this command to create a blank repository:
+\begin{verbatim}
+   mtn --db=~/neurospaces_project/MTN/exchange.mtn
+\end{verbatim}
+Next we need to add the public keys for {\tt User1} and {\tt User2} to the blank repository. To add their public keys you must first obtain them either via a secure transfer (encrypted email or {\it im}) or you can get it from a pre-existing repository via a command like this:
+\begin{verbatim}
+   mtn --db=~/neurospaces_project/MTN/heccer.mtn pubkey user1@email.com >~/user1.pubkey
+\end{verbatim}
+Once they're in files you can read them into the blank exchange repository:
+\begin{verbatim}
+   cat ~/user1.pubkey ~/user2.pubkey | mtn --db=~/neurospaces_project/MTN/exchange.mtn read
+\end{verbatim}
+Now with the blank repository in place with the users public keys, the {\it exchange} package can be served via {\it neurospaces\_serve} as well as {\it sync}ed and {\it pull}ed via {\it neurospaces\_sync} and {\it neurospaces\_pull} respectively. With the modified {\it neurospaces\_build} from the previous section installed on all of the users machines we can serve the repositories on the repo via:
+\begin{verbatim}
+   sudo -H -u monotone nohup neurospaces_serve &
+\end{verbatim}
+So the code sharing scenario can be illustrated like this:
+
+\begin{figure}[h]
+\centering
+   \includegraphics[scale=0.5]{figures/repo1.eps}
+%   \caption{ }
+   \label{fig:R1}
+\end{figure}
+
+{\tt User1} has the complete set of code in his repository for the exchange package. The repo serves an empty repository on a designated port for the exchange package. {\tt User 2} has no repository or code yet.
+
+\begin{figure}[h]
+\centering
+   \includegraphics[scale=0.5]{figures/repo2.eps}
+%   \caption{ }
+   \label{fig:R2}
+\end{figure}
+
+{\tt User1} performs a {\it sync}, which pushes all code revisions to the repo exchange repository.
+
+\begin{figure}[h]
+\centering
+   \includegraphics[scale=0.5]{figures/repo3.eps}
+%   \caption{ }
+   \label{fig:R3}
+\end{figure}
+
+The repo now has a complete set of code for the exchange package.
+
+\begin{figure}[h]
+\centering
+   \includegraphics[scale=0.5]{figures/repo4.eps}
+%   \caption{ }
+   \label{fig:R4}
+\end{figure}
+
+{\tt User2} wants to download the {\it exchange} package, so they first perform a {\it neurospaces\_create\_directories} to create the checkout directories for source code. {\tt User2} can now perform a {\it pull}, which will automatically create their {\it exchange.mtn} repository in the correct location and make a connection to the repo to {\it pull} a complete set of source code revisions.
+
+\begin{figure}[h]
+\centering
+   \includegraphics[scale=0.5]{figures/repo5.eps}
+%   \caption{ }
+   \label{fig:R5}
+\end{figure}
+
+Now {\tt User1} and {\tt User2} have a all code revisions and can collaborate work via the centralized repository.
+
 \end{document}
