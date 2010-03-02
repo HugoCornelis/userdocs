@@ -1,0 +1,77 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{De Schutter: Purkinje Cell Model}
+
+\subsection*{Source}
+
+De Schutter E \& Bower JM (1994) An active membrane model of the cerebellar Purkinje cell II. Simulation of synaptic responses. {\it Journal of Nerurophysiology}. {\bf 71}: 401--419.
+
+\subsection*{Climbing Fiber Synapses}
+\subsubsection*{SYNAPTIC LOCATIONS}
+It is well known that in adults the climbing
+fiber input to a single Purkinje cell is provided by a single
+climbing fiber synapse evokes an all-or-none massive response,
+neuron in the inferior olive\,\cite{Ito:1984uq} and that this contact is
+made on the smooth branches of the Purkinje cell dendritic tree,
+from close to the soma up to almost the top of the tree\,\cite{Palay:1974fk}.
+We modeled the climbing fiber input by placing
+synapses from a single axon on all compartments of the main
+and smooth dendrites of the cell (see Fig. 1 in\,\cite{deschutter94:_purkin_i}).
+
+\subsubsection*{SYNAPTIC PHARMACOLOGY AND KINETICS}
+Activation of the climbing fiber synapse evokes an all-or-none massive response
+called the complex spike\,\cite{Eccles:1966kx, Llinas:1980vn}, which involves activation of dendritic Ca$^{2+}$ channels\,\cite{Knopfel:1991ys, Konnerth:1992zr, R:1980pi, Miyakawa:1992ly}.
+Climbing fiber inputs are known to
+be mediated by $\alpha$-amino-3-hydroxy+methyl-4-isoxazolepropionic acid (AMPA) receptors\,\cite{Knopfel:1990ve, Llano:1991qf}.
+In the model, activation kinetics were based on data from
+spinal cord and hippocampal neurons\,\cite{Forsythe:1988bh, Holmes:1963dq, Nelson:1986cr},
+with an opening time constant of 0.5\,ms and a closing time constant of 1.2\,ms
+(peak at 0.8\,ms). Ca$^{2+}$ inflow through this receptor was not modeled,
+although it might be present\,\cite{Brorson:1992nx}. This synapse had a reversal potential of 0\,mV\,\cite{Cull-Candy:1989oq, Mayer:1987kl} .
+
+\subsubsection*{SYNAPTIC CONDUCTANCE}
+
+The conductance of each climbing
+fiber synaptic connection is unknown and was therefore treated as
+a free parameter in the model. Model tuning resulted in the selection
+of two different values of maximum synaptic conductance
+($\bar g$): 7.5\,mS/cm$^2$ for the main dendrite and 15\,mS/cm$^2$ for the
+smooth dendrites. Assuming a total of 300 synaptic contacts\,\cite{Ito:1984uq}, each with the same synaptic conductance, our values
+correspond to a conductance of 6.2\,nS at each synaptic contact.
+
+\subsubsection*{SYNAPTIC SPECIALIZATIONS}
+
+Climbing fiber synapses are
+known to occur on a specialized ``stubby protuberance'' with a
+short, smooth stem\,\cite{Palay:1974fk}. We did not,
+however, explicitly model these structures because we do not expect
+their absence in the model to affect the voltage transients
+caused by climbing fiber activation. Such smooth spines are unlikely
+to result in much signal attenuation\,\cite{Rall:1990tg}
+and all spines on any particular compartment receive synchronously 
+the same synaptic input from a single climbing fiber\,\cite{Ito:1984uq}.
+
+\subsubsection*{SYNAPTIC ACTIVATION}
+
+The climbing fiber synapses were fired as
+a volley, with the main dendrite being activated before the more
+distal smooth dendrites. The delay between first and last activated
+synaptic conductance was 0.9\,ms\,\cite{Llinas:1980vn}.
+
+\bibliographystyle{plain}
+\bibliography{../tex/bib/g3-refs}
+
+\end{document}
