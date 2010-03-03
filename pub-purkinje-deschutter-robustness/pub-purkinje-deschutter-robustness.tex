@@ -1,0 +1,45 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{De Schutter: Purkinje Cell Model}
+
+\subsection*{Source}
+
+De Schutter E \& Bower JM (1994) An active membrane model of the cerebellar Purkinje cell II. Simulation of synaptic responses. {\it Journal of Nerurophysiology}. {\bf 71}: 401--419.
+
+\subsection*{Robustness of modeling results}
+
+Having tuned the model to replicate in vitro responses to current injection, we ran several simulations to test the robustness of the basic model. These tests helped to build confidence that the model has biological validity.
+\subsubsection*{VARIATIONS IN PURKINJE CELL MORPHOLOGY}
+
+Initial modeling experiments were based on the anatomic reconstruction of one particular Purkinje cell. Accordingly, it was important to determine the sensitivity of the results to this particular morphology. To do this, identical channel equations and densities (PM\,9) were placed into two additional Purkinje cells, reconstructedby\,\cite{Rapp-P:1994qf}; the results are shown in Fig.\,8.
+In both cells the response properties of the model fell well within the normal variation seen in Purkinje cell recordings. Simulations of current injections in the soma produced the same typical pattern as in our model of Purkinje {\it cell\,1} (Fig.\,3), i.e., at low intensities steady firing of fast somatic spikes superimposed on an increasing plateau potential and at higher intensities the presence of dendritic Ca$^{2+}$ spikes. The details of these firing patterns were, however, quite different for the three cells. {\it Cell\,2} is smaller than {\it cell\,1} (Fig.\,1) and thus had a larger $R_N$\,\cite{Rapp-P:1994qf}. As a consequence, the Na$^+$ currents caused a more pronounced plateau potential and the somatic spikes were less well repolarized. This resulted in a progressive attenuation of spike amplitude because of incomplete removal of inactivation of NaF current. Note, however, that despite this buildup of inactivation, spiking did not saturate at a depolarized level during the 1.5\,nA current injection, whereas it did in {\it cell\,3} (not shown). The firing pattern of {\it cell\,3} is more similar to that of {\it cell\,1}, but with a shift in the $f-I$ curve. This can be explained by the small soma and short, thin main dendrite, which caused a smaller total Kdr and KM conductances in the model of this cell (Table\,2).
+\subsubsection*{RESPONSES TO CHANNEL BLOCKERS}
+
+A second measure of model robustness is the ability to replicate physiological data in response to standard channel blockers. In this case we compared model results with those of\,\cite{R:1980ly} in response to both Na$^+$ and Ca$^{2+}$ channel blockers while holding all other model parameters fixed.
+Figure 9$A$ shows a simulation of TTX block (the conductance of the NaF and NaP channels was set to 0) during a 1.0\,nA current injection. Note that the somatic recording showed only attenuated dendritic spikes in the soma, there were no fast somatic spikes, and that there was a sustained plateau potential after the end of the current injection. Subthreshold current injection (0.1\,nA) only evoked the plateau current. Similar to the results of\,\cite{R:1980ly} (their Fig.\,6), Na$^+$ channel blockers selectively interfered with somatic spikes while having little effect on dendritic spiking and plateau potentials. However, the dendritic spikes in the model were smaller and less sharp than those in experimental recordings. Also, contrary to experimental results, the plateau potential did not decay.
+From these simulations one can conclude that dendritic spiking in the model was caused by the slow progressivedepolarization induced by the current injection, not by the larger depolarizations during fast somatic spikes.
+A simulation of Co$^{2+}$ block (the conductance of CaT and CaP currents was set to 0) is shown in Fig. 9$B$. Current injection caused a slow depolarizing response that generated fast somatic action potentials. With increasing amplitude of currents there was less delay before the first action potential, but the spikes also decreased in amplitude and saturated at a sustained plateau depolarization of about -30\,mV. These results are comparable with experimental recordings, except that higher-amplitude current injections were necessary in the model to obtain saturation of spiking. As in the case of\,\cite{R:1980ly} (their Fig.\,8), Ca$^{2+}$ channel blockers selectively interfered with dendritic spikes while leaving somatic plateau potentials and somatic spiking intact. However, because the depolarization could not evoke dendritic Ca2+ spikes, there was also no Ca$^{2+}$-activated hyperpolarization to repolarize the cell and the model settled in sustained plateaus with high-intensity current injection. The model thus confirmed the importance of dendritic Ca$^{2+}$-activated K$^+$ conductances in repolarizing the somatic depolarizing spike bursts.
+\subsubsection*{ROBUSTNESS TO CHANGES IN CHANNEL DENSITIES}
+
+As described elsewhere, the principle parameters used to tune this model to the current injection data were the distribution and density of specific ion channels. Although Table 2\,described the final distribution for this model, it was also important to determine how sensitive the modeling results were to these particular density values.
+A full search of the 10,000 dimensional parameter space for this model would have been computationally prohibitive (see\,\cite{S:1993dz}). Accordingly, the approach we have taken involved examining the effect of changing the density of a single-channel type on the physiological responses to current injection in the soma. The results showed, perhaps not surprisingly, that small-amplitude currents like NaP and CaT currents, KA, or KM couldbe completely removed with little effect, except for small changes in firing frequency. The same was true for increasing KA or KM by a factor of 2 or 3. Similar increases in NaP or CaT currents, however, caused fast spiking in the soma to saturate (as in Fig.\,3$D$) at lower current amplitudes and could turn the cell into a spontaneously firing or bursting neuron.
+The model was more sensitive to changes of the conductances involved in spike generation and repolarization.Small changes resulted in a shift of the $f-I$ curve and of the current amplitude at which dendritic spiking started.Changes in the dendritic currents involved in spiking could suppress all dendritic spiking (reducing CaP current by$\geq$\,20\,\%, increasing Kdr by $\geq$\,40\,\%, KC by 25\,\%, or K2 by 10\,\%) or make dendritic bursting the unique mode of firing of the cell (reducing NaF current by 50\,\%, increasing CaP current by 50\,\%, or decreasing Kdr by 20\,\% or KC or K2 by 10\,\%). NaF current could be reduced by 70\,\% before NaF spikes disappeared.
+The model was thus sensitive to small changes in density of CaP, KC, and K2 currents; in other words, the region ofparameter space that generated correct model responses was not very large for these currents. Note, however, thatlarger changes could be applied to these channel densities if one of the other current densities was changed in the opposite direction. The model was less sensitive to changes in the other currents, like for example the densities of voltage-dependent K$^+$ currents (cf. Table\,2).
+
+\bibliographystyle{plain}
+\bibliography{../tex/bib/g3-refs}
+
+\end{document}
