@@ -1,0 +1,53 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{De Schutter: Purkinje Cell Model}
+
+\subsection*{Source}
+
+De Schutter E \& Bower JM (1994) An active membrane model of the cerebellar Purkinje cell II. Simulation of synaptic responses. {\it Journal of Nerurophysiology}. {\bf 71}: 401--419.
+
+\subsection*{Tuning the model to replicate in vitro current injections}
+
+The final stage of constructing a complex realistic model involves tuning model parameters to replicate well-described properties of the neuron in question\,\cite{S:1993dz}. Once the model is tuned, additional questions can be explored by holding model parameters fixed and applying different types of inputs (see\,\cite{deschutter94:_purkin_ii}).
+Here we  describe the results of optimizing the Purkinje cell model to replicate the characteristic firing patterns of Purkinje cells in slices during current injection in the soma or dendrites. This optimization, or tuning, primarily involved changing the densities and distributions of the different voltage sensitive channels and the decay time constant of the Ca$^{2+}$ concentrations until the model generated biologically realistic output. Due primarily to the work of\,\cite{R:1980ly, R:1980pi}, considerable information is available concerning the intracellular response properties of cerebellar Purkinje cells to current injection in vitro in the slice preparation in the presence and absence of different channel blockers. Accordingly, all the following statements about normal Purkinje cell behavior refer to their work unless a different study is cited.
+
+\subsubsection*{NaF SPIKES}
+
+In intracellular recordings in brain slice preparations some Purkinje cells are silent; others fire spontaneously. Our model is quiet without stimulation, with a stable resting potential of -68\,mV. For intrasomatic current injections below the spiking threshold, no somatic spikes could be generated regardless of the length of the current pulses (simulation results not shown). Low-amplitude current injections in Purkinje cell somata above this threshold caused firing of fast somatic spikes, with the relatively high minimum spike frequency (30--40\,Hz) characteristic of these cells (Figs. 3$A$, 4$A$ and $B$, and 6$A$). Somatic firing frequency increased relatively rapidly with current amplitude (range 22--250\,Hz).
+In in vitro intracellular recordings there is often a delay between the onset of the current injection and the occurrence of the first somatic spike, which decreases with increasing amplitude of current. This variable delay was also present in the simulations (Figs. 3--5 and 6$B$). Note also that in Fig. 4$D$ we reproduce another phenomenon observed in slice. When the injected current amplitude became too high, somatic spiking saturated at a depolarized level of about -30\,mV. This saturation could be reversed either spontaneously (at this current amplitude) or by shutting off the current.
+\subsubsection*{CALCIUM SPIKES}
+
+As the current amplitude injected in a Purkinje cell increases, dendritic Ca$^{2+}$ spikes become apparent as depolarizing spike bursts in the soma. Again, the model reproduced this behavior reasonably well (Figs. 3$B$ and $C$, and 4$C$ and $D$). In experimental somatic recordings the transition between simple spikes and depolarizing spike bursts is abrupt, whereas the model often showed one or two small bursts before a full dendritic spike became apparent.
+The transitions between the firing of simple somatic spikes and the firing of dendritic spikes causes a break in the linearity of the frequency current ($f-I$) curve, with a second, shallower slope above this transition. Our $f-I$ curves (Fig. 6$A$) were remarkably similar to those published by\,\cite{R:1980ly} (their Fig. 5). In the model, dendritic spike firing frequency remained relatively constant (16--19\,Hz in both models) once the threshold was crossed and was rather insensitive to the current amplitude.
+
+\subsubsection*{PLATEAU POTENTIALS}
+
+Current injection steps are often followed by a prolonged plateau potential. In our simulations this phenomenon was always observed after short current steps around firing threshold (Fig. 5) and sometimes after longer current steps also (Fig. 4A). In the model these plateau potentials resulted in depolarizations of between -49 and -55\,mV. Similar prolonged plateau potentials after the end of a current injection were found by\,\cite{R:1980ly} (compare their Fig. 5D with our Fig. 3A). However, in the experimental data these plateaus decay over a time course of $\sim$\,100 ms, whereas in the model they often did not decay at all (Fig. 5).
+\subsubsection*{COMPARISON OF SOMATIC AND DENDRITIC RECORDINGS}
+Paired intracellular somatic and dendritic recordings in slice have demonstrated that somatic action potentials do not propagate far into the dendrite. Thus recordings of the main dendrites of Purkinje cells often reveal somatic action potentials as only small wavelets. When the membrane potentials in the soma and large proximal dendrites were compared in the model, a similar result was observed (Figs. 3, 4, and 7). Further, using the model it was possible to demonstrate that the action potential did not propagate into spiny dendrites (a location that electrophysiologists cannot record from), even those relatively close to the soma (Figs. 3, 4, and 10$A$).
+Paired intracellular somatic and dendritic recordings have also suggested that the Ca$^{2+}$ spiking, responsible for the depolarizing spike bursts observed in the soma during higher-amplitude current injections, has a dendritic origin. As shown in Figs. 3$B$ and $C$, and 4$C$ and $D$, this was also the case in the model.
+\subsubsection*{RESPONSE TO DENDRITIC CURRENT INJECTIONS}
+
+The model was also able to replicate previously reported responses to direct current injection into Purkinje cell dendrites (Fig. 7). As in the physiological recordings, low-amplitude current injection resulted only in attenuated somatic spikes, whereas these spikes were interrupted by dendritic Ca$^{2+}$ spikes with larger current injections. Under these circumstances the onset of the bursting behavior was almost immediate as compared with somatic recordings. Note also the burst occurring after the end of the 2.0\,nA current injection.
+\subsubsection*{VARIABILITY IN PURKINJE CELL RESPONSE PROPERTIES}
+
+In slice preparations, different Purkinje cells often have quite different firing patterns, especially as concerns the pattern of interacting somatic and dendritic spikes (Fig. 11 in\,\cite{R:1980ly} and the slope of the $f-I$ curve. However, a compartmental model is deterministic, i.e., always producing the same output for a given input. Variability in response properties comes about only as a result of varying parameters in the model.
+In the case of the current model, we found that all of the reported variations in firing patterns could be obtained by simply changing the density of K$^+$ conductances in the soma and the main dendrite of the model. Figures 3 and 4 compare the firing of a model with low K$^+$ conductance (PM9) with a model with high K$^+$ conductance (PM\,10). Although these models were similar in all responses described so far, they showed richly different patterns of somatic firing that encompassed most of the observed ones. Compare, for example, the somatic responses toward the end of the current injections in Figs. 3, $B$ and $C$, and 4$D$ and after the current step in Fig. 3$D$. The higher K$^+$ channel densities in model PM\,10 made the soma also less excitable, resulting in a shallower $f-I$ curve (Fig. 6A).
+
+\bibliographystyle{plain}
+\bibliography{../tex/bib/g3-refs}
+
+\end{document}
