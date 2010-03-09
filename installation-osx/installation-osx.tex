@@ -28,7 +28,7 @@ Installation requires executing the following major steps:
 
 Install the following packages:
 \begin{itemize}
-   \item[]\href{http://monotone.ca/}{\bf monotone-0.40:} (or higher).
+   \item[]\href{http://monotone.ca/}{\bf monotone-0.44:} (or higher).
    \item[]{\bf Xcode Tools:} The Apple Development Toolset. Xcode is available on Disk 2 of the Mac OSX installer set of DVDs under optional install. The package is called {\it  XcodeTools.mpkg}. It is also available from the \href{http://developer.apple.com/technology/xcode.html}{\bf Apple Developer Website}. In the latter case  you will need a valid Apple ID to log in and access the developer page.
    
    {\bf WARNING:} The compilers available from MacPorts should NOT be used for installation (see below). Prior to installing the {\it DeveloperPackage} you should check which Perl libraries OSX uses with ``{\tt  which perl}''. This should return {\tt  /usr/bin/perl}. If the response is {\tt /opt/local/bin/perl}, there is a MacPorts installation of Perl. This is most easily corrected by removing the MacPorts path {\it /opt/local/bin} from your path in the {\it .profile} file in your home directory. To do this open the  {\it .profile} file in an editor and convert the line (or similar):
@@ -45,6 +45,7 @@ by removing {\it /opt/local/bin} to give:
    \item[]Install the following Perl dependencies via CPAN:
       \begin{itemize}
          \item YAML
+         \item Digest::SHA
          \item Inline
          \item Parse::RecDescent
          \item Expect (and its dependency perl-IO)
