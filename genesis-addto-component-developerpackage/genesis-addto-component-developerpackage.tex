@@ -147,11 +147,11 @@ As a modeling project grows, it may become necessary to create and maintain a ne
 
 \subsubsection*{Adding a new component to the {\it DeveloperPackage}}
 
-To add a new package to the system you must first make the script {\it neurospaces\_build} aware of your package. First locate the package matrix in {\it neurospaces\_build}:
+To add a new package to the system you must first make the script {\it neurospaces\_build} aware of your package. First locate the \href{../developer-package/developer-package.tex}{package matrix} in {\it neurospaces\_build}:
 \begin{verbatim}
    my $all_packages
 \end{verbatim}
-Next we must add an entry for our package, first we must designate a port number for performing {\it push}, {\it pull}s and {\it sync}s. The current port numbers in use range between 4692 ({\bf N S-SLI}) to 4700 ({\it userdocs}), so it is safe to designate port 4701 as the port for the {\it exchange} package.
+Next we must add an entry for our package, first we must designate a port number for performing {\it push}, {\it pull}s and {\it sync}s. The current port numbers in use range between 4692 ({\bf NS-SLI}) to 4700 ({\it userdocs}), so it is safe to designate port 4701 as the port for the {\it exchange} package.
 
 {\bf WARNING:} Make absolutely certain that no two packages point to the same port number. Two packages attempting to {\it sync} to the same port number can result in a corruption of your repository.
 
