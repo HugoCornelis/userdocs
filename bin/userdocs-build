@@ -11,11 +11,11 @@ use Getopt::Long;
 use YAML;
 
 
-my $option_verbose;
-my $option_tags = [];
+my $option_parse_only = 0;
 my $option_regex = "";
+my $option_tags = [];
+my $option_verbose;
 
-my $parse_debug = 0;
 
 sub build_document
 {
@@ -32,7 +32,10 @@ sub build_document
 	print "$0: entering $directory\n";
     }
 
-    chdir $directory;
+    if (!chdir $directory)
+    {
+	die "$0: *** Error: cannot change to directory $directory";
+    }
 
 
     # Load the descriptor for special parameters if present.
@@ -197,7 +200,7 @@ sub build_document
 
 		my $filename_base = get_relative_path($document);
 
-		if($parse_debug == 0)
+		if($option_parse_only == 0)
 		{
 		  system "latex -halt-on-error '$filename'";
 
@@ -221,7 +224,7 @@ sub build_document
 
 		    chdir "ps";
 
-		    if($parse_debug == 0)
+		    if($option_parse_only == 0)
 		    {
 		      system "dvips '../$filename_base.dvi' -o '$filename_base.ps'";
 		    }
@@ -246,7 +249,7 @@ sub build_document
 
 		    chdir "pdf";
 
-		    if($parse_debug == 0)
+		    if($option_parse_only == 0)
 		    {
 		      system "ps2pdf '../ps/$filename_base.ps' '$filename_base.pdf'";
 		    }
@@ -300,7 +303,7 @@ sub build_document
 
 		    # generate html output
 		    
-		    if($parse_debug == 0)
+		    if($option_parse_only == 0)
 		    {
 		      system "htlatex '$filename'";
 		    }
@@ -736,6 +739,7 @@ sub read_cmd_line
     my $result
 	= GetOptions(
 		     "help!" => \$option_help,
+		     "parse-only!" => \$option_parse_only,
 		     "regex=s" => \$option_regex,
 		     "tags=s" => $option_tags,
 		     "verbose+" => \$option_verbose,
@@ -767,8 +771,13 @@ publication.  Arguments on the command line are taken as documents
 that need to be build.  If no arguments are given, all documents will
 be build.
 
+synopsis:
+    $0 <document name1> <document name2> ...
+
 options:
     --help            print usage information.
+    --parse-only      only execute parse commands, without actually building documentation.
+    --regex           selects documents by name (default is all).
     --tags            process the documents with these tags, multiple tags options may be given.
     --version         give version information.
     --v|verbose       tell what is being done, specify multiple times to get more feedback.
