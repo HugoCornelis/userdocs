@@ -285,6 +285,10 @@ sub build_document
 
 		    $source_file->close();
 
+		    # update the bibliographic reference
+
+		    $source_text =~ s(\\bibliography{\.\./tex/bib/)(\\bibliography{\.\./\.\./\.\./tex/bib/)g;
+
 		    # update html links to their proper file types.
 
 		    my $source_html = update_html($descriptor,$source_text);
@@ -305,7 +309,10 @@ sub build_document
 		    
 		    if($option_parse_only == 0)
 		    {
-		      system "htlatex '$filename'";
+			system "latex '$filename'";
+			system "makeindex -c '$filename_base'";
+			system "bibtex '$filename_base'";
+			system "htlatex '$filename'";
 		    }
 
 		    if ($option_verbose)
