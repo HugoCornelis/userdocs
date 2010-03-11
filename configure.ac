@@ -57,13 +57,20 @@ AC_CHECK_PROGS(HTLATEX, htlatex,[
 dnl USERDOCS_FILES=`find . -name "*.tex" && find . -name "*.pdf" && find . -name "*.txt" | perl -pe 's/\n/ /g' `
 dnl AC_SUBST(USERDOCS_FILES)
 
+PERL_MODULES=`(cd perl && find . -name "*.pm" | perl -pe 's/\n/ /g')`
+AC_SUBST(PERL_MODULES)
+
+PERL_DATA=`(cd perl && find . -name "numbers-7x11.txt" | perl -pe 's/\n/ /g')`
+AC_SUBST(PERL_DATA)
+
 # determine the test library to install
 
 TEST_SPECIFICATION_FILES=`/bin/echo -n "tests/introduction.html " && find tests/specifications -name "*.t" && find tests/specifications/strings -name "*.txt" && find tests/data -name "*.yml" | perl -pe 's/\n/ /g' `
 AC_SUBST(TEST_SPECIFICATION_FILES)
 
 
-AC_CONFIG_FILES([Makefile])
+AC_CONFIG_FILES([Makefile
+		 perl/Makefile])
 
 AC_OUTPUT
 
