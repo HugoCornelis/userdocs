@@ -63,6 +63,73 @@ models\,\cite{cornelis08:_model_neuros_genes}.
 
 \section{Introduction}
 
+Content: Introduce G-2, G-2 monolith, apply modularization, use
+gluing.
+
+first paragraph section~\ref{sec:from-monol-softw}, first paragraph
+section~\ref{sec:genesis}, fourth paragraph section~\ref{sec:genesis}.
+
+Then move current intro about scripting to discussion.
+
+GENESIS is a general purpose simulation platform that was originally
+developed to support the simulation of neural systems ranging from
+subcellular components and biochemical reactions to complex models of
+single neurons, simulations of large networks, and systems-level
+models.
+%  It was one of the first broad scale modeling systems in
+%computational biology to encourage modelers to develop and share model
+%features and components.
+%For these people, it was the object-oriented
+%approach taken by the simulator along with its high-level simulation
+%language that allowed the exchange, modification, and reuse of models
+%or model components.
+% It was this community of developers and
+% users that ultimately drove the development of the GENESIS platform.
+The software development of the GENESIS simulator was initiated during
+the eighties through research projects that addressed specific
+scientific questions in computational neuroscience.  The development
+was then continued with a life cycle of research project extensions.
+For example the libraries for kinetic pathway modeling were added for
+projects investigating how signalling networks store learned
+behaviour\,\cite{bhalla99:_emerg} and how light regulates release from
+intracellular calcium stores for
+photoreception\,\cite{blackwell00:_eviden_distin_light_induc_calcium}.
+The fast implicit solver was developed with the specific focus of
+complex Purkinje cell modeling\,\cite{deschutter94:_purkin_i,
+  deschutter94:_purkin_ii} and more recently synaptic learning rules
+have been
+implemented\,\cite{guenay08:_chann_densit_distr_explain_spikin}.  In
+principle such linear or single-threaded development processes can
+continue forever.  However, repetitive extension of the GENESIS
+simulator with source code of diverse functions and origin had
+ultimately made the code structure so complicated that it became
+difficult, if not impossible, to extend it.  Because of the density of
+the GENESIS 2 (G-2) source code the application had become
+'monolithic' and this marginalized user contribution to simulation
+functionality.  This suggested that the software life cycle has moved
+from extension to maintenance\marginpar{citation here} and releases
+and updates have become less frequent.
+
+%Because of its wide adoption G-2 facilitated model sharing and the
+%exchange, modification and reuse of model components through the
+%object-oriented approach taken by its high-level simulation language
+%(the SLI).  The SLI had as major goals the integration of model
+%components, running simulations, and output collection.
+
+G-3 is a major revision and update of the GENESIS system.  The core
+simulator functionality has been restructured, with a more modern
+modular design (the CBI federated software architecture, described
+below).  This not only results in improved simulator performance and
+portability, but also allows the use of alternate script parsers and
+user interfaces, as well as the ability to communicate with other
+modeling programs and environments. The CBI federated software
+architecture is specifically designed to support the integration of
+these stand-alone software components and applications by using
+integration technologies such as modern scripting languages.
+
+
+\vspace{1cm}
+
 Historically, there have been fundamental differences between the Unix
 shells and system programming languages such as C or C++ and
 scripting languages such as
@@ -1287,11 +1354,12 @@ generation of 3D crossections and 2D cuts also becomes possible.
 
 \section{Discussion}
 
-The Python bindings of the G-3 simulator embed similar concepts to the
-GENESIS SLI, although their purpose is different.  While the SLI had
-as major goals the integration of model components, running
-simulations, and output collection, the primary goal of scripting
-languages such as Perl and Python has become application integration.
+The Python and Perl bindings of the G-3 simulator embed similar
+concepts to the GENESIS SLI, although their purpose is different.
+While the SLI had as major goals the integration of model components,
+running simulations, and output collection, the primary goal of
+scripting languages such as Perl and Python has become application
+integration.
 
 Software libraries can either provide general support or can be
 tailored for specific scientific disciplines.  Through the Neurospaces
