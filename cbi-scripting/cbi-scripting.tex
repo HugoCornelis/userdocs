@@ -123,7 +123,7 @@ languages.
 
 \section{Methods \& Software}
 
-\subsection{GENESIS}
+\subsection{GENESIS 2}
 \label{sec:genesis}
 GENESIS is a general purpose simulation
 platform that was developed to support the simulation of neural
@@ -155,55 +155,26 @@ A high-level simulation language, the GENESIS SLI\,\footnote{Note: The
   GENESIS SLI interface is the standard scripting language of GENESIS
   2. It is also supported by G-3 with the backward compatibility
   component {\bf NS-SLI}.}, provided a framework within which a
-modeler could easily extend the capabilities of
-the simulator and manipulate models or model components by exchange, modification, and reuse. The SLI interprets statements in the
-GENESIS simulation language, and constitutes the operating system
-`shell'. User-defined SLI scripts were used to glue the pieces of a
-simulation together. The graphical objects used to define the front
-end of a simulation and GENESIS data handlers were all controlled from
-SLI scripts.
+modeler could easily extend the capabilities of the simulator and
+manipulate models or model components by exchange, modification, and
+reuse. The SLI interprets statements in the GENESIS simulation
+language, and constitutes the operating system `shell'. User-defined
+SLI scripts were used to glue the pieces of a simulation together. The
+graphical objects used to define the front end of a simulation and
+GENESIS data handlers were all controlled from SLI scripts.
 
-G-3 is a major revision and update of the GENESIS system.  The core
-simulator functionality has been restructured, with a more modern modular
-design (the CBI federated software architecture, described below). This not
-only results in improved simulator performance and portability, but
-also allows the use of alternate script parsers and user interfaces,
-as well as the ability to communicate with other modeling programs and
-environments. The CBI federated software architecture is specifically designed
-to support the integration of these stand-alone software components
-and applications by using modern integration technologies.
+Developed by Michael Vanier in the late 1990's, PyGENESIS was a
+version of GENESIS that replaced the standard GENESIS SLI with a
+Python interface\,\cite{vanier97:_genes_python}.  This Python-enabled
+version of GENESIS was never publicly released due to the then
+immaturity of Python as a scripting language.  However, with the
+current sophistication of the Python platform and development of G-3
+as a federated software architecture, Python interfaces have been
+developed for several of the simulator core components.  While it is
+possible to drive each component in isolation from these interfaces,
+in the next sections, we focus on how they may be integrated to create
+a simulator with a user-friendly interface.
 
-The core components of the architecture are shown in
-Figure~\ref{fig:cbi-arch}. On the bottom left are databases of
-neuronal models or experimental data that can be accessed by the
-simulator. Optional model processors (e.g. the reConstruct interface) load a model into the {\bf Model\,Container}.  The {\bf Model\,Container}
-stores a model in memory and makes it available to other software
-components in different formats.  One function of the {\bf Model\,Container}
-is to translate biological concepts and properties into mathematical
-concepts that can be understood by the mathematical solvers. Thus,
-importantly and unlike other existing neural simulators, the
-mathematical solvers are independent of the biological representation
-of a model. A simulation controller orchestrates and synchronizes
-the actions taken by the {\bf Model\,Container} (e.g. when to load a model,
-the definition of the stimulus, and when to export a model) and
-mathematical solvers (when to fetch the model from the {\bf Model\,Container}, when to start the calculations, and what the output
-variables are).
-
-\begin{figure}[ht]
-  \centering
-    \includegraphics[scale=0.4]{figures/G3arch.eps}
-  \caption{Relation of components in the CBI architecture.}
-  \label{fig:cbi-arch}
-\end{figure}
-
-A scripting layer allows the simulation system to be driven from
-multiple scripting languages. Python and Perl are currently supported,
-as is (for backward compatibility) the GENESIS SLI. The G-3 Graphic
-User Interface or GUI ({\bf G-Tube}), shown at the top of
-Figure~\ref{fig:cbi-arch}, is entirely being developed in Python.  It
-allows models to be imported from databases or constructed from
-scratch, the exploration of model structure and parameters, and the
-visualization of variables and model behavior.
 
 \subsection{The CBI Federated Software Architecture}
 
@@ -222,29 +193,33 @@ As a consequence, the simulator back end comprises mathematical solvers
 rather than relational databases as is the case in a traditional
 three-tier software architecture.
 
-Clear delineation of the components in the CBI architecture allows both
-developers and users to choose to contribute to a single component
-with limited complexity, instead of being forced to contribute to the
-whole simulator and be exposed to tremendous complexity. Within the
-CBI paradigm each software component is self contained and can be run independently. This facilitates the
+Clear delineation of the components in the CBI architecture allows
+both developers and users to choose to contribute to a single
+component with limited complexity, instead of being forced to
+contribute to the whole simulator and be exposed to tremendous
+complexity. Within the CBI paradigm each software component is self
+contained and can be run independently. This facilitates the
 interoperability of software obtained from different sources and has
 several important advantages, including: (1) Reduced complexity of
 software components compared to a unitary system, (2) simplified
 documentation of components in terms of inputs and outputs, (3) easy
 incorporation or removal of individual components as required, (4)
 simplified development and testing of components as stand alone
-components, and (5) clear delineation of scope for the development of new
-components. The federated approach provides three significant advantages
-for software development: (1) components can be run separately on
-different machines, for example, {\bf G-Tube} and the modeling environment
-might run locally, while the mathematical solvers run elsewhere, either serially
-or in parallel, on more powerful machines, (2) decomposition of an
-application into multiple software components allows reuse and
-extension of individual components, whether stand alone or otherwise,
-clearly facilitating model development and research progress, and (3)
-individual components can be independently updated, enhanced, or
-replaced when needed, thus the life cycle of a modular architecture is
-smoother than that of a non-scalable application.
+components, and (5) clear delineation of scope for the development of
+new components. The federated approach provides three significant
+advantages for software development: (1) components can be run
+separately on different machines, for example, the GUI and the
+modeling environment might run locally, while the mathematical solvers
+run elsewhere, either serially or in parallel, on more powerful
+machines, (2) decomposition of an application into multiple software
+components allows reuse and extension of individual components,
+whether stand alone or otherwise, clearly facilitating model
+development and research progress, and (3) individual components can
+be independently updated, enhanced, or replaced when needed, thus the
+life cycle of a modular architecture is smoother than that of a
+non-scalable application.
+
+\subsection{G-3 as an CBI Compliant Simulator}
 
 Much existing software such as GUI libraries and plotting libraries,
 are application neutral.  Other software packages are tailored to the
@@ -272,6 +247,42 @@ downloaded from the GENESIS web site
 instructions with examples are available from the GENESIS
 documentation website
 (http://www.genesis-sim.org/userdocs/genesis-installation/genesis-installation.html).
+Simulator correctness can be established by running the automated
+regression and integration tests.
+
+The core components of the architecture are shown in
+Figure~\ref{fig:cbi-arch}. On the bottom left are databases of
+neuronal models or experimental data that can be accessed by the
+simulator. Optional model processors (e.g. the reConstruct interface)
+load a model into the {\bf Model\,Container}.  The {\bf
+  Model\,Container} stores a model in memory and makes it available to
+other software components in different formats.  One function of the
+{\bf Model\,Container} is to translate biological concepts and
+properties into mathematical concepts that can be understood by the
+mathematical solvers. Thus, importantly and unlike other existing
+neural simulators, the mathematical solvers are independent of the
+biological representation of a model. A simulation controller
+orchestrates and synchronizes the actions taken by the {\bf
+  Model\,Container} (e.g. when to load a model, the definition of the
+stimulus, and when to export a model) and mathematical solvers (when
+to fetch the model from the {\bf Model\,Container}, when to start the
+calculations, and what the output variables are).
+
+\begin{figure}[ht]
+  \centering
+    \includegraphics[scale=0.4]{figures/G3arch.eps}
+  \caption{Relation of components in the CBI architecture.}
+  \label{fig:cbi-arch}
+\end{figure}
+
+A scripting layer allows the simulation system to be driven from
+multiple scripting languages. Python and Perl are currently supported,
+as is (for backward compatibility) the GENESIS SLI. The G-3 Graphic
+User Interface or GUI ({\bf G-Tube}), shown at the top of
+Figure~\ref{fig:cbi-arch}, is entirely being developed in Python.  It
+allows models to be imported from databases or constructed from
+scratch, the exploration of model structure and parameters, and the
+visualization of variables and model behavior.
 
 The CBI federated software architecture provides a framework for the
 integration of independent software components into a functioning
@@ -439,18 +450,6 @@ lines of code.
 
 
 \section{Results}
-
-Developed by Michael Vanier in the late 1990's, PyGENESIS was a
-version of GENESIS that replaced the standard GENESIS SLI with a
-Python interface\,\cite{vanier97:_genes_python}.  This Python-enabled
-version of GENESIS was never publicly released due to the then
-immaturity of Python as a scripting language.  However, with the
-current sophistication of the Python platform and development of G-3
-as a federated software architecture, Python interfaces have been
-developed for several of the simulator core components.  While it is
-possible to drive each component in isolation from these interfaces,
-in the next sections, we focus on how they may be integrated to create
-a simulator with a user-friendly interface.
 
 \subsection{A Python Enabled Neural Simulator}
 \label{ss-apens}
