@@ -330,18 +330,18 @@ Simulator correctness can be established by running the automated
 regression and integration tests.
 
 The core components of the architecture are shown in
-Figure~\ref{fig:cbi-arch}. On the bottom left are databases of
-neuronal models or experimental data that can be accessed by the
-simulator. Optional model processors (e.g. the reConstruct interface)
-load a model into the {\bf Model\,Container}.  The {\bf
-  Model\,Container} stores a model in memory and makes it available to
-other software components in different formats.  One function of the
-{\bf Model\,Container} is to translate biological concepts and
-properties into mathematical concepts that can be understood by the
-mathematical solvers. Thus, importantly and unlike other existing
-neural simulators, the mathematical solvers are independent of the
-biological representation of a model. A simulation controller
-orchestrates and synchronizes the actions taken by the {\bf
+Figure~\ref{fig:cbi-arch}\marginpar{move to CBI section}. On the
+bottom left are databases of neuronal models or experimental data that
+can be accessed by the simulator. Optional model processors (e.g. the
+reConstruct interface) load a model into the {\bf Model\,Container}.
+The {\bf Model\,Container} stores a model in memory and makes it
+available to other software components in different formats.  One
+function of the {\bf Model\,Container} is to translate biological
+concepts and properties into mathematical concepts that can be
+understood by the mathematical solvers. Thus, importantly and unlike
+other existing neural simulators, the mathematical solvers are
+independent of the biological representation of a model. A simulation
+controller orchestrates and synchronizes the actions taken by the {\bf
   Model\,Container} (e.g. when to load a model, the definition of the
 stimulus, and when to export a model) and mathematical solvers (when
 to fetch the model from the {\bf Model\,Container}, when to start the
