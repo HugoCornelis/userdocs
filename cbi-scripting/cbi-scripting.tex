@@ -63,14 +63,6 @@ models\,\cite{cornelis08:_model_neuros_genes}.
 
 \section{Introduction}
 
-Content: Introduce G-2, G-2 monolith, apply modularization, use
-gluing.
-
-first paragraph section~\ref{sec:from-monol-softw}, first paragraph
-section~\ref{sec:genesis}, fourth paragraph section~\ref{sec:genesis}.
-
-Then move current intro about scripting to discussion.
-
 GENESIS is a general purpose simulation platform that was originally
 developed to support the simulation of neural systems ranging from
 subcellular components and biochemical reactions to complex models of
@@ -128,82 +120,6 @@ the integration of stand-alone software components and applications by
 using common integration technologies such as modern scripting
 languages.
 
-
-\vspace{1cm}
-
-Historically, there have been fundamental differences between the Unix
-shells and system programming languages such as C or C++ and scripting
-languages such as Perl\,\cite{wall99:_perl_progr_refer_guide},
-Python\,\cite{martelli06:_python_nutsh},
-Rexx\,\cite{ohara88:_moder_progr_using_rexx},
-Tcl\,\cite{ousterhout94:_tcl_tk_toolk}, and Visual Basic.  System
-programming languages start from the most primitive computer elements,
-usually the `words' of memory. They are designed to manage the
-complexity of building data structures and algorithms from scratch and
-usually require pre-declared data types.  Alternatively, scripting
-languages as a replacement for shell scripts and shell communication
-pipes are designed for `gluing': they assume the existence of a set of
-powerful components and are intended primarily for connecting
-components together.
-%They
-%are also often small, lightweight languages, suitable for embedding,
-%and provide higher levels of programming in an interpreted development
-%environment.
-In this way, scripting languages operate at a higher level than system programming
-languages in the sense that on average a single statement does more
-work. For example, a typical statement in a system programming
-language executes about five machine instructions, whereas in a
-scripting language hundreds or thousands of machine instructions may
-be executed\,\cite{ousterhout98:_scrip}.
-
-%9.  L. Wall, T. Christiansen, and R. Schwartz, Programming Perl, Second Edition, O'Reilly and Associates, ISBN 1-56592-149-6, 1996.
-%4. M. Lutz, Programming Python, O'Reilly, ISBN 1-56592-197-6, 1996.
-%6. R. O'Hara and D. Gomberg, Modern Programming Using REXX, Prentice Hall, ISBN 0-13-597329-5, 1988.
-%8.  J. Ousterhout, Tcl and the Tk Toolkit, Addison-Wesley, ISBN 0-201-63337-X, 1994.
-% 1. John K. Ousterhout (1998) Scripting: Higher Level Programming for the 21st Century. IEEE COMPUTER 31: 23-30.
-
-A scripting language is not a replacement for a system programming
-language or vice versa. Each is suited to a different set of tasks. The power of scripting languages arises from the fact that they are typically loosely typed and do not need a
-visible compilation step. This simplifies connectivity between components
-and allows for rapid prototyping of a software system.
-For example, for gluing and system integration, applications can be developed
-five to ten times faster with a scripting language when compared with system programming languages which
-require large amounts of `boilerplate' and conversion code to connect
-the pieces, functionality that is implicit in scripting languages. When
-execution speed is key, a system programming language can often run
-several orders of magnitude faster than a scripting language due to the requirement of
-fewer run-time checks.
-
-The strongly typed nature of system programming languages discourages
-reuse. Scripting languages, on the other hand, have actually
-stimulated significant software reuse. They use a model where
-interesting components are built in a system programming language and
-then glued together into applications using a scripting language.
-This division of labor provides a natural framework for reusability.
-Components are designed to be reusable, and there are well-defined
-interfaces between components and scripts that make them easy to use.
-In this sense scripting and system programming are symbiotic. Used
-together, they produce programming environments of exceptional power:
-system programming languages are used to create functional components
-which are then assembled using scripting languages.
-
-In summary, system programming languages are well suited to building
-components where the complexity is in the data structures and
-algorithms, while scripting languages are well suited for integrating
-applications where the complexity is in the connections. With an
-increasing requirement for software integration, scripting is
-providing an important programming paradigm.
-
-Here, we illustrate the use of the general purpose scripting languages such as Python and Perl
-for making high performance simulation software coded in system
-programming languages accessible to neuroscientists and biologists.
-
-%http://en.wikipedia.org/wiki/Scripting\_languages
-%Historical overview
-
-%http://www.google.com/trends?q=perl\%2C+Python
-
-%http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html
 
 \section{Methods \& Software}
 
@@ -1441,7 +1357,7 @@ Blender would be available after interfacing G-3 with {\it
 designed to simplify the development of complex networks of
 biologically realistic neurons\,\cite{gleeson05:_build_networ_model,
   gleeson07}.  Implemented in Java, {\it neuro}Construct uses the
-latest NeuroML specifications (see http://www.neuroml.org,
+latest NeuroML specifications (see http://www.neuroml.org/,
 http://www.morphml.org/), can be used to visually validate network
 layout and design\,\cite{crook07:_morph}, and can be connected to
 Python applications (e.g.  see http://www.jython.org/).  In principle
@@ -1463,12 +1379,12 @@ The NeuroMorpho.Org database of neuronal morphologies
 digitally reconstructed neurons\,\cite{ascoli06:_mobil}.  The digital
 reconstruction of neuronal arborization is an important step in the
 quantitative investigation of cellular neuroanatomy.  Allowing
-extensive morphometric analysis, it is the first step toward
+extensive morphometric analysis, it is the first step in the
 implementation of biophysical models of electrophysiology.  Direct
 interfacing with the functionality of the {\bf Model\,Container}
 accelerates the development of neuronal models by providing a direct
 link with data from experiments.  Preliminary implementations of this
-functionality is now part of an automated test framework for G-3.
+functionality are now part of an automated test framework for G-3.
 
 G-3 also significantly extends the ability of GENESIS to directly
 interact with experimental technologies such as open source dynamic
@@ -1485,7 +1401,85 @@ independent components can be integrated with a scripting language of
 choice.
 
 
-\subsection{Implications for Interoperability}
+\subsection{Comparison with the Historical Context of Scripting
+  Languages}
+
+Historically, there have been fundamental differences between the Unix
+shells and system programming languages such as C or C++ and scripting
+languages such as Perl\,\cite{wall99:_perl_progr_refer_guide},
+Python\,\cite{martelli06:_python_nutsh},
+Rexx\,\cite{ohara88:_moder_progr_using_rexx},
+Tcl\,\cite{ousterhout94:_tcl_tk_toolk}, and Visual Basic.  System
+programming languages start from the most primitive computer elements,
+usually the `words' of memory. They are designed to manage the
+complexity of building data structures and algorithms from scratch and
+usually require pre-declared data types.  Alternatively, scripting
+languages as a replacement for shell scripts and shell communication
+pipes are designed for `gluing': they assume the existence of a set of
+powerful components and are intended primarily for connecting
+components together.
+%They
+%are also often small, lightweight languages, suitable for embedding,
+%and provide higher levels of programming in an interpreted development
+%environment.
+In this way, scripting languages operate at a higher level than system programming
+languages in the sense that on average a single statement does more
+work. For example, a typical statement in a system programming
+language executes about five machine instructions, whereas in a
+scripting language hundreds or thousands of machine instructions may
+be executed\,\cite{ousterhout98:_scrip}.
+
+%9.  L. Wall, T. Christiansen, and R. Schwartz, Programming Perl, Second Edition, O'Reilly and Associates, ISBN 1-56592-149-6, 1996.
+%4. M. Lutz, Programming Python, O'Reilly, ISBN 1-56592-197-6, 1996.
+%6. R. O'Hara and D. Gomberg, Modern Programming Using REXX, Prentice Hall, ISBN 0-13-597329-5, 1988.
+%8.  J. Ousterhout, Tcl and the Tk Toolkit, Addison-Wesley, ISBN 0-201-63337-X, 1994.
+% 1. John K. Ousterhout (1998) Scripting: Higher Level Programming for the 21st Century. IEEE COMPUTER 31: 23-30.
+
+A scripting language is not a replacement for a system programming
+language or vice versa. Each is suited to a different set of tasks. The power of scripting languages arises from the fact that they are typically loosely typed and do not need a
+visible compilation step. This simplifies connectivity between components
+and allows for rapid prototyping of a software system.
+For example, for gluing and system integration, applications can be developed
+five to ten times faster with a scripting language when compared with system programming languages which
+require large amounts of `boilerplate' and conversion code to connect
+the pieces, functionality that is implicit in scripting languages. When
+execution speed is key, a system programming language can often run
+several orders of magnitude faster than a scripting language due to the requirement of
+fewer run-time checks.
+
+The strongly typed nature of system programming languages discourages
+reuse. Scripting languages, on the other hand, have actually
+stimulated significant software reuse. They use a model where
+interesting components are built in a system programming language and
+then glued together into applications using a scripting language.
+This division of labor provides a natural framework for reusability.
+Components are designed to be reusable, and there are well-defined
+interfaces between components and scripts that make them easy to use.
+In this sense scripting and system programming are symbiotic. Used
+together, they produce programming environments of exceptional power:
+system programming languages are used to create functional components
+which are then assembled using scripting languages.
+
+In summary, system programming languages are well suited to building
+components where the complexity is in the data structures and
+algorithms, while scripting languages are well suited for integrating
+applications where the complexity is in the connections. With an
+increasing requirement for software integration, scripting is
+providing an important programming paradigm.
+
+Here, we illustrate the use of the general purpose scripting languages such as Python and Perl
+for making high performance simulation software coded in system
+programming languages accessible to neuroscientists and biologists.
+
+%http://en.wikipedia.org/wiki/Scripting\_languages
+%Historical overview
+
+%http://www.google.com/trends?q=perl\%2C+Python
+
+%http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html
+
+
+\subsection{Implications for Neuronal Simulator Interoperability}
 
 The current generation of neural simulators can be characterized as
 software applications that support a user workflow extending from
@@ -1524,11 +1518,11 @@ often\,\cite{raymond01:_cathed_bazaar, citeulike:126678}.
 %model pervasive in the commercial world and, on the other hand, also
 %depart from the flat structure of the open source development
 %``bazaar''\,\cite{Open-Source03theecology}.
-While the cathederal-style of software development leads to a
-single-threaded development cycle commonly used commercial
-applications, the bazaar-style leads to multi-threaded development
-cycles of applications that come in different flavours\,\footnote{A
-  typical example is the family of editors based on Emacs.}.
+While cathederal-style software development leads to a single-threaded
+development cycle commonly used by commercial applications, the
+bazaar-style leads to multi-threaded development cycles of
+applications that come in different flavours\,\footnote{A typical
+  example is the family of editors based on Emacs.}.
 
 Here, based on the CBI paradigm, we have outlined a solution for
 multi-threaded development of software components for neuroscience
