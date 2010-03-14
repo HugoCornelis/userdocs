@@ -1403,9 +1403,10 @@ simulator with source code of diverse functions and origin had
 ultimately made the code structure so complicated that it became
 difficult, if not impossible, to extend it.  Because of the density of
 the GENESIS 2 source code the application had become 'monolithic' and
-this marginalized user contribution to simulation functionality.  This
-suggested that the software life cycle has moved from extension to
-maintenance\marginpar{citation here}.
+this marginalized user contribution to simulation functionality.
+%This
+%suggested that the software life cycle has moved from extension to
+%maintenance\marginpar{citation here}.
 
 In the paradigm of the CBI federated software architecture, model
 parameters are stored separately from stimulus protocols and the way
@@ -1421,8 +1422,8 @@ Examples include, an interactive simulation of a Purkinje cell model
 after unitary synaptic stimulation using a predefined spike train
 stored in a file.  This way software improvements can be achieved
 using parallel software development processes for stand-alone software
-components rather than linear ones for a centrally developed software
-application.
+components rather than linear ones typical for a centrally developed
+software application.
 
 
 \subsection{Extensibility in The G-3 Software Federation}
@@ -1483,8 +1484,8 @@ clamp software.  As an example the modular approach taken by the RTXI
 platform for dynamic
 clamp\,\cite{bettencourt08:_effec_imper_dynam_clamp, dorval01:_real}
 and the modular structure of G-3 mean that the solver, {\bf Heccer},
-can be directly integrated as an RTXI plug-in.  This greatly
-simplifies the required software development.
+can be directly integrated as an RTXI plug-in\marginpar{cite CNS
+  poster}.  This greatly simplifies the required software development.
 
 Ultimately, the extensibility of the CBI federated software
 architecture provides an extremely plastic environment within which
@@ -1506,11 +1507,11 @@ general purpose NEURON and GENESIS 2
 simulators\,\cite{hines09:_neuron_python, bower98:_book_genes}.
 
 For these simulators interoperability is more easily implemented using
-the emerging languages for model exchange such as
+one of the emerging standards for model exchange such as
 NeuroML\,\cite{nigel01:_towar_neurom},
 NineML\,\cite{gortechnikov10:_ninem_user_layer} and
 PyNN\,\cite{andrew08:_pynn}.  While dedicated G-3 modules supporting
-the use of these interoperability standards are currently in
+the use of these interoperability standards are currently under
 development, the G-3 platform now also provides an alternative
 approach that uses scripting to connect neuroscience specific software
 to general purpose software and integrate it into a next generation
@@ -1541,22 +1542,13 @@ applications that come in different flavours\,\footnote{A typical
 Here, based on the CBI paradigm, we have outlined a solution for
 multi-threaded development of software components for neuroscience
 (for other examples of this approach to neural simulation
-see\,\cite{schuermann09:_neuron, nordlie09:_visual}).  Our approach
-gives rise to an ecology of software components, that can be glued
-together in a variety of ways.  We have given examples that use Python
-and Perl.
-%Here, we have illustrated the relationship between Python and the G-3
-%simulator.  We have focused on a simple but comprehensive example, the
-%running of a single compartment neuron and the plotting of its
-%membrane potential. The purpose is to demonstrate the advantages of
-%using high-level scripting languages such as Perl and/or Python for binding the
-%independent stand-alone components of G-3. In the process of achieving this goal, we have defined an ecology of holistic dynamic interactions between G-3 software components.
-%It is an approach that
-%simplifies the extension, modification, and customization of the
-%GENESIS platform, not only for developers but also most importantly
-%for users.
+see\,\cite{schuermann09:_neuron, nordlie09:_visual}).  We have given
+examples that use Python and Perl.
+
 Employed in this way, the modularized design of the G-3 simulator
-provides for progressive federated software development.
+gives rise to an ecology of software components that can be glued
+together in a variety of ways providing for progressive federated
+software development.
 
 
 %\subsection{Future Directions}
