@@ -295,7 +295,7 @@ maintenance can be implemented concurrently.
 The core components of the architecture are shown in
 Figure~\ref{fig:cbi-arch}. On the bottom left are databases of
 neuronal models or experimental data that can be accessed by the
-simulator. Optional model processors (e.g. the {\it reConstruct} interface, http://synapses.clm.utexas.edu/tools/reconstruct/reconstruct.stm)
+simulator. Optional model processors (e.g. the Reconstruct interface, http://synapses.clm.utexas.edu/tools/reconstruct/reconstruct.stm)
 load a model into the {\bf Model\,Container}.  The {\bf
   Model\,Container} stores a model in memory and makes it available to
 other software components in different formats.  One function of the
@@ -552,7 +552,7 @@ functionality of the simulator.
 As an example the Python {\it Neurospaces.SingleCellContainer} module
 contains functions to simplify the storage of single neuron models in
 computer memory.  This module is a simplified front-end to the more
-complicated {\it Neurospaces} module.  {\it Neurospaces} interfaces
+complicated Neurospaces module.  Neurospaces interfaces
 with the {\bf Model\,Container} which is coded in an efficient system
 programming language.  Likewise, {\it Heccer.SimpleHeccer} is a
 wrapper module around the {\bf Heccer} component which in turn is an
@@ -963,7 +963,7 @@ connected to model components from within the SLI.  Rather than
 providing a full GUI instance, the flexibility of XODUS came from its
 infrastructure which allowed modelers to easily develop new GUIs
 dedicated to their research and teaching projects\,\footnote{The
-  official GENESIS 2 software distribution contains both simple and
+  official G-2 software distribution contains both simple and
   sophisticated example GUIs.}.  However, the XODUS paradigm
 inevitably allowed modelers to contaminate their model script with GUI
 related statements.
@@ -1014,21 +1014,21 @@ interface builders.
   available from http://wxformbuilder.org/.} is such an interface
 builder which allows a user to construct a GUI with visual elements
 such as menus and buttons, and write a description of the elements and
-their bindings to a file known as an XML resource file (XRC).  The GUI
+their bindings to a file known as an XML resource (XRC) file.  The GUI
 definitions in this file can then be rendered with the freely
 available {\it wxWidgets} library and its Python front end {\it
   wxPython}.  Further integration with additional G-3 specific data
 bindings ensures that, for example, the data produced by a
 mathematical solver flows to a widget that plots the value of a
-variable against time.  This functionality replaces the GENESIS 2
-XODUS paradigm that required SLI scripting to connect GUI components
-to model components and simulation actions, with a contemporary
+variable against time.  This functionality replaces the G-2
+XODUS paradigm, that required SLI scripting to connect GUI components
+to model components and simulation actions, with a more contemporary
 paradigm that separates simulator and model scripts from GUI related
 statements.
 
 In the following example we create a {\it wxPython} application class
-called {\it G3App} which demonstrates the Python scripting needed to
-connect software components required to build a small GUI for G-3.  We
+called {\it G3App}. This demonstrates the Python scripting required to
+connect the software components that create a small GUI for G-3.  We
 specifically show how to initialize the application (implementation of
 method {\it OnInit}), how to run a simple simulation based on the
 previous {\it example} (method {\it OnRun}), and how to plot output
@@ -1066,8 +1066,7 @@ our {\it G3App} class is declared to inherit the functions of the {\it
  \begin{verbatim}
 class G3App(wx.App):
 
-    def OnInit(self):
- \end{verbatim}
+    def OnInit(self): \end{verbatim}
 }
 
 After correct system initialization, application specific
@@ -1078,8 +1077,7 @@ load the XML resource file previously created using {\it
 {\footnotesize
    \linenumbers
  \begin{verbatim}
-        self.res = xrc.XmlResource('G3.xrc')
- \end{verbatim}
+        self.res = xrc.XmlResource('G3.xrc') \end{verbatim}
 }
 
 The GUI elements are then retrieved from the XRC specification and
@@ -1091,8 +1089,7 @@ retrieved via its name:
  \begin{verbatim}
         self.frame = self.res.LoadFrame(None, 'mainFrame')
         self.durationTextCtrl = xrc.XRCCTRL(self.frame,'durationTextCtrl')
-        self.runButton = xrc.XRCCTRL(self.frame, 'runButton')
- \end{verbatim}
+        self.runButton = xrc.XRCCTRL(self.frame, 'runButton') \end{verbatim}
 }
 
 After retrieving the run button, we bind it to the method {\it OnRun}
@@ -1103,8 +1100,7 @@ method.
 {\footnotesize
    \linenumbers
  \begin{verbatim}
-        self.frame.Bind(wx.EVT_BUTTON, self.OnRun, self.runButton)
- \end{verbatim} 
+        self.frame.Bind(wx.EVT_BUTTON, self.OnRun, self.runButton) \end{verbatim} 
 }
 
 % The following Python code reads the Glade XML file and connects a
@@ -1311,12 +1307,12 @@ of small dendritic segments obtained from electron microscopy data.
 Over the last several years electron microscopy (EM) in conjunction
 with Reconstruct\,\cite{jc05:_recon} has been used to obtain precise
 morphologies of small segments of Purkinje cell
-dendrites\,\cite{huo09:_purkin, cornelis08:_model_neuros_genes}).
+dendrites\,\cite{huo09:_purkin, cornelis08:_model_neuros_genes}.
 
 \begin{figure}[ht]
   \centering
     \includegraphics[scale=0.5]{figures/blender-python-bw.eps}
-  \caption{Blender image of Purkinje neuron dendritic segment}
+  \caption{Blender image of Purkinje neuron dendritic segment.}
   \label{fig:cbi-blender}
 \end{figure}
 
@@ -1324,7 +1320,7 @@ dendrites\,\cite{huo09:_purkin, cornelis08:_model_neuros_genes}).
 
 %Special purpose software has been written to convert Reconstruct data
 %for importation into the {\bf Model\,Container}.
-The {\it Reconstruct\,Interface} converts the Reconstruct application
+The Reconstruct interface converts the Reconstruct application
 into a G-3 simulator component by making it CBI compliant. This allows
 Reconstruct data to be imported into the {\bf Model\,Container}.
 %  It converts
@@ -1361,7 +1357,7 @@ generation of 3D crossections and 2D cuts also becomes possible.
 \section{Discussion}
 
 The Python and Perl bindings of the G-3 simulator embed similar
-concepts to the GENESIS SLI, although their purpose is different.
+concepts to the G-2 SLI, although their purpose is different.
 While the SLI had as major goals the integration of model components,
 running simulations, and output collection, the primary goal of
 scripting languages such as Perl and Python has become application
@@ -1369,16 +1365,16 @@ integration.
 
 Software libraries can either provide general support or can be
 tailored for specific scientific disciplines.  Through the Neurospaces
-project, GENESIS now provides a series of software components that
-support computational modeling in the neurosciences.  The advantage is
-that scripting languages such as Python and Perl become a powerful
-integration tool to connect these neuroscience components to general
+project, GENESIS now provides a series of independent software components that can be combined to
+support computational modeling in the neurosciences.  Scripting 
+languages such as Python and Perl then provide powerful
+integration tools to connect these software components to general
 purpose libraries for GUI application development, result
 visualization and data analysis.
 
 
-\subsection{From a Monolithic Software Application to a Modular
-  Framework}
+\subsection{From Monolithic Software Applications to Modular
+  Frameworks}
 \label{sec:from-monol-softw}
 The development of the GENESIS simulator was initiated during the
 eighties through research projects that addressed specific scientific
@@ -1396,32 +1392,31 @@ have been
 implemented\,\cite{guenay08:_chann_densit_distr_explain_spikin}.  In
 principle such linear or single-threaded development processes can
 continue forever.  However, repetitive extension of the GENESIS
-simulator with source code of diverse functions and origin had
+simulator with source code of diverse functions and origin
 ultimately made the code structure so complicated that it became
-difficult, if not impossible, to extend it.  Because of the density of
-the GENESIS 2 source code the application had become 'monolithic' and
-this marginalized user contribution to simulation functionality.
+difficult, if not impossible, to extend.  Because of the density of
+the G-2 source code the application became become 'monolithic' and 
+user contributions to simulation functionality were minimalized.
 %This
 %suggested that the software life cycle has moved from extension to
 %maintenance\marginpar{citation here}.
 
 In the paradigm of the CBI federated software architecture, model
-parameters are stored separately from stimulus protocols and the way
-simulations are run.  This facilitates the development of individual
-software components for GENESIS 3 (G-3) to store and process these
-quantities separately.  As examples we have shown functionality of the
-{\bf Model\,Container} to query the structure of a neuronal morphology
+parameters are stored and processed separately from stimulus protocols and the way
+simulations are run.  This greatly facilitates the development and
+maintenance of individual
+software components for G-3.  As examples of the added functionality this approach 
+allows, we have shown the ability of the
+{\bf Model\,Container} to query the structure of a neuronal morphology,
 and how to run a simple model using {\bf Heccer}.  The CBI federated
-software architecture greatly simplifies the development and
-maintenance of individual software components.  It also defines clear
+software architecture also defines clear
 boundaries for integration using existing scripting technology.
-Examples include, an interactive simulation of a Purkinje cell model
-after unitary synaptic stimulation using a predefined spike train
-stored in a file.  This way software improvements can be achieved
+For example, an interactive simulation of a Purkinje cell model
+after unitary synaptic stimulation can be connected to a predefined spike train
+stored in a file.  In this way software improvements can be achieved
 using parallel software development processes for stand-alone software
-components rather than linear ones typical for a centrally developed
-software application.
-
+components rather than the more linear ones typical of centrally developed
+monolithic software applications.
 
 \subsection{Extensibility in The G-3 Software Federation}
 
@@ -1451,7 +1446,7 @@ http://www.morphml.org/), can be used to visually validate network
 layout and design\,\cite{crook07:_morph}, and can be connected to
 Python applications (e.g.  see http://www.jython.org/).  In principle
 this allows it to be integrated with other simulators that have Python
-bindings, including NEURON, NEST and G-3.
+bindings, including NEURON, NEST, and G-3.
 
 A serial communication framework for event delivery of action
 potentials to postsynaptic targets has been developed.  Called the
@@ -1472,12 +1467,12 @@ extensive morphometric analysis, it is the first step in the
 implementation of biophysical models of electrophysiology.  Direct
 interfacing with the functionality of the {\bf Model\,Container}
 accelerates the development of neuronal models by providing a direct
-link with data from experiments.  Preliminary implementations of this
+link to data from experiments.  Preliminary implementations of this
 functionality are now part of an automated test framework for G-3.
 
 G-3 also significantly extends the ability of GENESIS to directly
 interact with experimental technologies such as open source dynamic
-clamp software.  As an example the modular approach taken by the RTXI
+clamp software.  As an example, the modular approach taken by the RTXI
 platform for dynamic
 clamp\,\cite{bettencourt08:_effec_imper_dynam_clamp, dorval01:_real}
 and the modular structure of G-3 mean that the solver, {\bf Heccer},
@@ -1560,18 +1555,10 @@ software development.
 %the application much more accessible to users.
 
 \section*{Acknowledgements}
-Hugo Cornelis is partially supported by the CREA Financing program
-(CREA/07/027) of the K.U.Leuven.
+We acknowledge Ja-Lyoung Joe of the College of Medicine, Wonkwang University, Republic of Korea, both for fruitful discussion and for his parallel work on a new Python implementation of GENESIS available from
+http://sourceforge.net/. We also thank the Computational Biology Initiative at UTSA (http://www.cbi.utsa.edu) for their excellent support when installing and updating G-3 on their computers.
 
-We thank the Computational Biology Initiative at UTSA
-(http://www.cbi.utsa.edu) for their excellent support when installing
-and updating G-3 on their computers.
-
-We acknowledge Ja-Lyoung Joe for fruitful discussion and for his
-parallel work on a new Python implementation of GENESIS available from
-http://sourceforge.net/.  Lyoung works at the College of Medicine of
-the Wonkwang University, Republic of Korea.
-
+Hugo Cornelis is partially supported by the CREA Financing program (CREA/07/027) of the K.U.Leuven, Belgium, EU. Both Hugo Cornelis and Allan D. Coop are partially supported by NIH grant 3 R01 NS049288-06S1 to James M Bower.
 
 % ********************** Back matter ********************************
 % Bibliography
