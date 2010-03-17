@@ -66,11 +66,6 @@ sub build
     if ($self->is_obsolete())
     {
 	print "This document is obsolete, skipping.\n";
-
-	if ($options->{verbose})
-	{
-	    print "$0: leaving $directory\n";
-	}
     }
 
     # if we find a makefile
