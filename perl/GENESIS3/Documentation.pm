@@ -53,6 +53,13 @@ sub build
 	die "$0: *** Error: cannot change to directory $directory";
     }
 
+    # read the descriptor
+
+    if ($self->read_descriptor())
+    {
+	return "cannot read descriptor for $self->{name}";
+    }
+
     # check for the obsolete tag first so we don't end up doing
     # any extra work.
 
@@ -75,7 +82,7 @@ sub build
 	system "make build_document";
     }
 
-    # Here we check for the redirect attribute and perform actions as 
+    # Here we check for the redirect attribute and perform actions as
     # necessary.
 
     elsif ($self->is_redirect())
@@ -108,85 +115,7 @@ sub build
     }
     else
     {
-	# find relevant source files
-
-	my $filenames = $self->filenames();
-
-	# loop over source files
-
-	foreach my $filename (@$filenames)
-	{
-	    # for latex sources
-
-	    if ($filename =~ /\.tex$/)
-	    {
-		chdir "output";
-
-		# prepare output: general latex processing
-
-		$filename =~ m((.*)\.tex$);
-
-		# Remove references to self, as well as any empty itemize blocks
-		# since the itemize blocks kill the cron job. After we remove
-		# the references and resave the file.
-
-		if ($filename =~ m/contents-level[1234567]/)
-		{
-		    # read latex source
-
-		    use IO::File;
-
-		    my $source_file = IO::File->new("<../$filename");
-
-		    my $source_text = join "", <$source_file>;
-
-		    $source_file->close();
-
-		    my @name = split(/\./,$filename);
-
-		    $source_text =~ s(\\item \\href\{\.\.\/$name[0]\/$name[0]\.\w+\}\{\\bf \\underline\{.*\}\})( )g;
-
-		    # If we have nothing but whitespace in between the itemize tags, remove
-		    # the whole line.
-
-		    $source_text =~ s(\\begin\{itemize\}\s+\\end\{itemize\})( )g;
-
-
-		    open(OUTPUT,">$filename");
-		
-		    print OUTPUT $source_text;
-		    close(OUTPUT);
-		}
-
-		my $filename_base = get_relative_path($directory);
-
-		if ($options->{parse_only} == 0)
-		{
-		    $self->build_dvi($filename, $filename_base);
-		}
-
-		# generate ps output
-
-		$self->build_ps($filename, $filename_base);
-
-		# generate pdf output
-
-		$self->build_pdf($filename, $filename_base);
-
-		# generate html output
-
-		$self->build_html($filename, $filename_base);
-
-		chdir "..";
-	    }
-
-	    # else unknown source file type
-
-	    else
-	    {
-		print "$0: unknown file type for $filename";
-	    }
-	}
+	$self->build_latex();
     }
 
     if ($options->{verbose})
@@ -215,6 +144,96 @@ sub build_html
     my $directory = $self->{name};
 
     file_copy($self->{descriptor}->{'document name'}, 'html');
+}
+
+
+sub build_latex
+{
+    my $self = shift;
+
+    my $options = shift;
+
+    my $directory = $self->{name};
+
+    # find relevant source files
+
+    my $filenames = $self->filenames();
+
+    # loop over source files
+
+    foreach my $filename (@$filenames)
+    {
+	# for latex sources
+
+	if ($filename =~ /\.tex$/)
+	{
+	    chdir "output";
+
+	    # prepare output: general latex processing
+
+	    $filename =~ m((.*)\.tex$);
+
+	    # Remove references to self, as well as any empty itemize blocks
+	    # since the itemize blocks kill the cron job. After we remove
+	    # the references and resave the file.
+
+	    if ($filename =~ m/contents-level[1234567]/)
+	    {
+		# read latex source
+
+		use IO::File;
+
+		my $source_file = IO::File->new("<../$filename");
+
+		my $source_text = join "", <$source_file>;
+
+		$source_file->close();
+
+		my @name = split(/\./,$filename);
+
+		$source_text =~ s(\\item \\href\{\.\.\/$name[0]\/$name[0]\.\w+\}\{\\bf \\underline\{.*\}\})( )g;
+
+		# If we have nothing but whitespace in between the itemize tags, remove
+		# the whole line.
+
+		$source_text =~ s(\\begin\{itemize\}\s+\\end\{itemize\})( )g;
+
+
+		open(OUTPUT,">$filename");
+		
+		print OUTPUT $source_text;
+		close(OUTPUT);
+	    }
+
+	    my $filename_base = get_relative_path($directory);
+
+	    if ($options->{parse_only} == 0)
+	    {
+		$self->build_2_dvi($filename, $filename_base);
+
+		# generate ps output
+
+		$self->build_2_ps($filename, $filename_base);
+
+		# generate pdf output
+
+		$self->build_2_pdf($filename, $filename_base);
+
+		# generate html output
+
+		$self->build_2_html($filename, $filename_base);
+	    }
+
+	    chdir "..";
+	}
+
+	# else unknown source file type
+
+	else
+	{
+	    print "$0: unknown file type for $filename";
+	}
+    }
 }
 
 
@@ -295,6 +314,8 @@ sub build_2_html
 
     my $filename_base = shift;
 
+    my $options = shift;
+
     mkdir 'html';
     mkdir 'html/figures';
 
@@ -321,7 +342,7 @@ sub build_2_html
 
     # update html links to their proper file types.
 
-    my $source_html = update_html($descriptor,$source_text);
+    my $source_html = update_html($self->{descriptor}, $source_text);
 
     # write converted source
 
@@ -362,6 +383,8 @@ sub build_2_pdf
 
     my $filename_base = shift;
 
+    my $options = shift;
+
     mkdir "pdf";
 
     if ($options->{verbose})
@@ -392,6 +415,8 @@ sub build_2_ps
     my $filename = shift;
 
     my $filename_base = shift;
+
+    my $options = shift;
 
     mkdir "ps";
 
@@ -581,6 +606,8 @@ sub is_png
 
 sub is_obsolete
 {
+    my $self = shift;
+
     return $self->has_tag('obsolete');
 }
 
@@ -641,5 +668,8 @@ sub read_descriptor
 	return '';
     }
 }
+
+
+1;
 
 
