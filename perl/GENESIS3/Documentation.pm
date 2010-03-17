@@ -9,6 +9,29 @@ use strict;
 package GENESIS3::Documentation;
 
 
+package GENESIS3::Documentation::Descriptor;
+
+
+sub has_tag
+{
+    my $self = shift;
+
+    my $tag = shift;
+
+    my $tags = $self->{tags};
+
+    foreach (@$tags)
+    {
+	if ( $tag eq $_ )
+	{
+	    return 1;
+	}
+    }
+
+    return 0;
+}
+
+
 package GENESIS3::Documentation::Document;
 
 
@@ -18,7 +41,7 @@ sub build
 
     my $options = shift;
 
-    my $directory = $self->{directory};
+    my $directory = $self->{name};
 
     if ($options->{verbose})
     {
@@ -30,102 +53,58 @@ sub build
 	die "$0: *** Error: cannot change to directory $directory";
     }
 
-
-    # Load the descriptor for special parameters if present.
-
-    my $descriptor = YAML::LoadFile('descriptor.yml');
-
-
-
-    #
     # check for the obsolete tag first so we don't end up doing
     # any extra work.
-    #
-    if (tag_defined($descriptor,'obsolete'))
+
+    if ($self->is_obsolete())
     {
-      print "This document is obsolete, skipping.\n";
+	print "This document is obsolete, skipping.\n";
 
-      if ($options->{verbose})
-      {
-	print "$0: leaving $directory\n";
-      }
-
-      chdir '..';
-      return;
+	if ($options->{verbose})
+	{
+	    print "$0: leaving $directory\n";
+	}
     }
-
-
-
-    #
-    # Here we check for the redirect attribute and perform actions as 
-    # necessary.
-    #
-    if (defined $descriptor->{redirect})
-    {
-      create_http_redirect($directory, $descriptor->{redirect});
-      chdir '..';
-      return;
-    }
-
-    # Note: This tag handles special cases for pdf.
-    # Should expand it to allow maybe a "filetype" attribute
-    # to check for so that it can copy over other file types.
-    if (tag_defined($descriptor,'pdf'))
-    {
-	file_copy($descriptor->{'document name'},'pdf');
-#       print "\n\nThe document ";
-#       print $descriptor->{'document name'};
-#       print " is a pdf file, copying it over to the output directory\n\n";
-
-#       system "mkdir -p output/ps";
-#       system "mkdir -p output/pdf";
-#       system "mkdir -p output/html";
-#       system "cp *.pdf output/html";
-#       system "cp *.pdf output/ps";
-#       system "cp *.pdf output/pdf";
-
-	chdir '..';
-	return;
-    }
-    elsif (tag_defined($descriptor,'mp3'))
-    {
-	file_copy($descriptor->{'document name'},'mp3');
-	chdir '..';
-	return;
-    }
-    elsif (tag_defined($descriptor,'wav'))
-    {
-	file_copy($descriptor->{'document name'},'wav');
-	chdir '..';
-	return;
-    }
-    elsif (tag_defined($descriptor,'html'))
-    {
-	file_copy($descriptor->{'document name'},'html');
-	chdir '..';
-	return;
-    }
-    elsif (tag_defined($descriptor,'png'))
-    {
-	file_copy($descriptor->{'document name'},'png');
-	chdir '..';
-	return;
-    }
-    elsif (tag_defined($descriptor,'ps'))
-    {
-	file_copy($descriptor->{'document name'},'ps');
-	chdir '..';
-	return;
-    }
-
 
     # if we find a makefile
 
-    if (-f 'Makefile')
+    elsif (-f 'Makefile')
     {
 	# that is what we use
 
 	system "make build_document";
+    }
+
+    # Here we check for the redirect attribute and perform actions as 
+    # necessary.
+
+    elsif ($self->is_redirect())
+    {
+	$self->build_redirect();
+    }
+    elsif ($self->is_pdf())
+    {
+	$self->build_pdf();
+    }
+    elsif ($self->is_mp3())
+    {
+	$self->build_mp3();
+    }
+    elsif ($self->is_wav())
+    {
+	$self->build_wav();
+    }
+    elsif ($self->is_html())
+    {
+	$self->build_html();
+    }
+    elsif ($self->is_png())
+    {
+	$self->build_png();
+    }
+    elsif ($self->is_ps())
+    {
+	$self->build_ps();
     }
     else
     {
@@ -169,6 +148,7 @@ sub build
 
 		    # If we have nothing but whitespace in between the itemize tags, remove
 		    # the whole line.
+
 		    $source_text =~ s(\\begin\{itemize\}\s+\\end\{itemize\})( )g;
 
 
@@ -182,126 +162,20 @@ sub build
 
 		if ($options->{parse_only} == 0)
 		{
-		    system "latex -halt-on-error '$filename'";
-
-		    system "makeindex -c '$filename_base'";
-
-		    system "bibtex '$filename_base'";
-
-		    system "latex '$filename'";
-		    system "latex '$filename'";
+		    $self->build_dvi($filename, $filename_base);
 		}
 
 		# generate ps output
 
-		{
-		    mkdir "ps";
-
-		    if ($options->{verbose})
-		    {
-			print "$0: entering ps\n";
-		    }
-
-		    chdir "ps";
-
-		    if ($options->{parse_only} == 0)
-		    {
-			system "dvips '../$filename_base.dvi' -o '$filename_base.ps'";
-		    }
-
-		    if ($options->{verbose})
-		    {
-			print "$0: leaving ps\n";
-		    }
-
-		    chdir "..";
-		}
+		$self->build_ps($filename, $filename_base);
 
 		# generate pdf output
 
-		{
-		    mkdir "pdf";
-
-		    if ($options->{verbose})
-		    {
-			print "$0: entering pdf\n";
-		    }
-
-		    chdir "pdf";
-
-		    if ($options->{parse_only} == 0)
-		    {
-			system "ps2pdf '../ps/$filename_base.ps' '$filename_base.pdf'";
-		    }
-
-		    if ($options->{verbose})
-		    {
-			print "$0: leaving pdf\n";
-		    }
-
-		    chdir "..";
-		}
+		$self->build_pdf($filename, $filename_base);
 
 		# generate html output
 
-		{
-		    mkdir 'html';
-		    mkdir 'html/figures';
-
-		    if ($options->{verbose})
-		    {
-			print "$0: entering html\n";
-		    }
-
-		    chdir "html";
-
-		    # read latex source
-
-		    use IO::File;
-
-		    my $source_file = IO::File->new("<../$filename");
-
-		    my $source_text = join "", <$source_file>;
-
-		    $source_file->close();
-
-		    # update the bibliographic reference
-
-		    $source_text =~ s(\\bibliography{\.\./tex/bib/)(\\bibliography{\.\./\.\./\.\./tex/bib/)g;
-
-		    # update html links to their proper file types.
-
-		    my $source_html = update_html($descriptor,$source_text);
-
-		    # write converted source
-
-		    $source_file = IO::File->new(">$filename");
-
-		    print $source_file $source_html;
-
-		    $source_file->close();
-
-		    # copy figures
-
-		    system "cp -rp ../figures/* figures/";
-
-		    # generate html output
-
-		    if ($options->{parse_only} == 0)
-		    {
-			system "latex '$filename'";
-			system "makeindex -c '$filename_base'";
-			system "bibtex '$filename_base'";
-			system "htlatex '$filename'";
-		    }
-
-		    if ($options->{verbose})
-		    {
-			print "$0: leaving html\n";
-		    }
-
-		    chdir "..";
-		}
+		$self->build_html($filename, $filename_base);
 
 		chdir "..";
 	    }
@@ -324,13 +198,231 @@ sub build
 }
 
 
+sub build_redirect
+{
+    my $self = shift;
+
+    my $directory = $self->{name};
+
+    create_http_redirect($directory, $self->{descriptor}->{redirect});
+}
+
+
+sub build_html
+{
+    my $self = shift;
+
+    my $directory = $self->{name};
+
+    file_copy($self->{descriptor}->{'document name'}, 'html');
+}
+
+
+sub build_pdf
+{
+    my $self = shift;
+
+    my $directory = $self->{name};
+
+    file_copy($self->{descriptor}->{'document name'}, 'pdf');
+}
+
+
+sub build_png
+{
+    my $self = shift;
+
+    my $directory = $self->{name};
+
+    file_copy($self->{descriptor}->{'document name'}, 'png');
+}
+
+
+sub build_ps
+{
+    my $self = shift;
+
+    my $directory = $self->{name};
+
+    file_copy($self->{descriptor}->{'document name'}, 'ps');
+}
+
+
+sub build_mp3
+{
+    my $self = shift;
+
+    my $directory = $self->{name};
+
+    file_copy($self->{descriptor}->{'document name'}, 'mp3');
+}
+
+
+sub build_wav
+{
+    my $self = shift;
+
+    my $directory = $self->{name};
+
+    file_copy($self->{descriptor}->{'document name'}, 'wav');
+}
+
+
+sub build_2_dvi
+{
+    my $self = shift;
+
+    my $filename = shift;
+
+    my $filename_base = shift;
+
+    system "latex -halt-on-error '$filename'";
+
+    system "makeindex -c '$filename_base'";
+
+    system "bibtex '$filename_base'";
+
+    system "latex '$filename'";
+    system "latex '$filename'";
+}
+
+
+sub build_2_html
+{
+    my $self = shift;
+
+    my $filename = shift;
+
+    my $filename_base = shift;
+
+    mkdir 'html';
+    mkdir 'html/figures';
+
+    if ($options->{verbose})
+    {
+	print "$0: entering html\n";
+    }
+
+    chdir "html";
+
+    # read latex source
+
+    use IO::File;
+
+    my $source_file = IO::File->new("<../$filename");
+
+    my $source_text = join "", <$source_file>;
+
+    $source_file->close();
+
+    # update the bibliographic reference
+
+    $source_text =~ s(\\bibliography{\.\./tex/bib/)(\\bibliography{\.\./\.\./\.\./tex/bib/)g;
+
+    # update html links to their proper file types.
+
+    my $source_html = update_html($descriptor,$source_text);
+
+    # write converted source
+
+    $source_file = IO::File->new(">$filename");
+
+    print $source_file $source_html;
+
+    $source_file->close();
+
+    # copy figures
+
+    system "cp -rp ../figures/* figures/";
+
+    # generate html output
+
+    if ($options->{parse_only} == 0)
+    {
+	system "latex '$filename'";
+	system "makeindex -c '$filename_base'";
+	system "bibtex '$filename_base'";
+	system "htlatex '$filename'";
+    }
+
+    if ($options->{verbose})
+    {
+	print "$0: leaving html\n";
+    }
+
+    chdir "..";
+}
+
+
+sub build_2_pdf
+{
+    my $self = shift;
+
+    my $filename = shift;
+
+    my $filename_base = shift;
+
+    mkdir "pdf";
+
+    if ($options->{verbose})
+    {
+	print "$0: entering pdf\n";
+    }
+
+    chdir "pdf";
+
+    if ($options->{parse_only} == 0)
+    {
+	system "ps2pdf '../ps/$filename_base.ps' '$filename_base.pdf'";
+    }
+
+    if ($options->{verbose})
+    {
+	print "$0: leaving pdf\n";
+    }
+
+    chdir "..";
+}
+
+
+sub build_2_ps
+{
+    my $self = shift;
+
+    my $filename = shift;
+
+    my $filename_base = shift;
+
+    mkdir "ps";
+
+    if ($options->{verbose})
+    {
+	print "$0: entering ps\n";
+    }
+
+    chdir "ps";
+
+    if ($options->{parse_only} == 0)
+    {
+	system "dvips '../$filename_base.dvi' -o '$filename_base.ps'";
+    }
+
+    if ($options->{verbose})
+    {
+	print "$0: leaving ps\n";
+    }
+
+    chdir "..";
+}
+
+
 sub copy
 {
     my $self = shift;
 
     my $options = shift;
 
-    my $directory = $self->{directory};
+    my $directory = $self->{name};
 
     if ($options->{verbose})
     {
@@ -428,6 +520,7 @@ sub filenames
 
     my $result
 	= [
+	   sort
 	   map
 	   {
 	       chomp; $_
@@ -436,6 +529,117 @@ sub filenames
 	  ];
 
     return $result;
+}
+
+
+sub has_tag
+{
+    my $self = shift;
+
+    my $tag = shift;
+
+    if ($self->read_descriptor())
+    {
+	return "cannot read descriptor for $self->{name}";
+    }
+
+    return $self->{descriptor}->has_tag($tag);
+}
+
+
+sub is_html
+{
+    my $self = shift;
+
+    return $self->has_tag('html');
+}
+
+
+sub is_mp3
+{
+    my $self = shift;
+
+    return $self->has_tag('mp3');
+}
+
+
+sub is_pdf
+{
+    my $self = shift;
+
+    return $self->has_tag('pdf');
+}
+
+
+sub is_png
+{
+    my $self = shift;
+
+    return $self->has_tag('png');
+}
+
+
+sub is_obsolete
+{
+    return $self->has_tag('obsolete');
+}
+
+
+sub is_ps
+{
+    my $self = shift;
+
+    return $self->has_tag('ps');
+}
+
+
+sub is_redirect
+{
+    my $self = shift;
+
+    if ($self->read_descriptor())
+    {
+	return "cannot read descriptor for $self->{name}";
+    }
+
+    return defined $self->{descriptor}->{redirect};
+}
+
+
+sub is_wav
+{
+    my $self = shift;
+
+    return $self->has_tag('wav');
+}
+
+
+sub read_descriptor
+{
+    my $self = shift;
+
+    my $filename = $self->{name} . "/descriptor.yml";
+
+    if ($self->{descriptor})
+    {
+	return '';
+    }
+
+    eval
+    {
+	$self->{descriptor} = YAML::LoadFile($filename);
+    };
+
+    if ($@)
+    {
+	return $@;
+    }
+    else
+    {
+	bless $self->{descriptor}, "GENESIS3::Documentation::Descriptor";
+
+	return '';
+    }
 }
 
 
