@@ -1,0 +1,150 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Mercurial Testing}
+
+\subsection*{Pulling code remotely}
+
+Pulling code in monotone requires a two step process. First you must create the SQLite database, then you must connect to the remote repository to pull the data. A third step is needed to check out your code from the local database you created into a workspace.  In mercurial a single command ‘clone’ can remotely connect and set up a workspace for you. 
+
+\subsubsection*{In monotone}
+	
+
+\subsubsection*{In mercurial}
+
+\begin{verbatim}
+   $mtn –-db=project.mtn db init
+   $mtn --db=project.mtn pull repo.com “*”
+   $mtn –-db=project.mtn --branch=”head” co project
+   $hg clone http://repo.com/project
+\end{verbatim}
+ 
+\noindent{\bf Advantage:} mercurial
+
+
+\subsection*{Data Format}
+
+Monotone stores files in a flat SQLite database file while Mercurial stores a collection of {\it diff} files with the suffix {\tt .i}  in a similar fashion to CVS.  In mercurial there is a {\tt *.i} file for every file that is in the manifest. The repository state and all files are tracked in a manifest in both programs, monotones is in a {\tt \_MTN} directory in the working directory, mercurials is in a {\tt .hg} directory in the working directory.
+
+Monotone seems to be easier to deal with as you can simply send a person the flat SQLite file and they can check out a workspace from the file.  Also the flat files are easier to store for backup purposes. \\
+
+\noindent{\bf Advantage:} monotone             
+
+ 
+
+\subsection*{Trust Model}
+
+Monotone employs the use of encrypted keys for tagging a revision to show who performed the action.  Keys must be generated for private repository use and public keys from other users must be added to a repository to allow access remotely.  Keys are stored in a {\it ~/.monotone} directory along with other monotone options. Mercurial has no such model, instead you simply create a file in your home directory called {\it ~/.hgrc} with a line of data like this:
+
+\begin{verbatim} 
+   [ui]
+   your_username = FirstName LastName youremail@host.com
+\end{verbatim}
+ 
+This checks in a revision with this user data.  The only user verification is done via the webserver configuration when serving over the internet. \\
+
+\noindent{\bf Advantage:} monotone
+
+\subsection*{Multiple Heads}
+
+Both monotone and mercurial support ongoing multiple heads which can be merged via a {\tt merge} parameter.  To view the multiple heads on a branch you use a {\tt heads} parameter.
+
+\subsubsection*{Monotone}
+	
+
+\subsubsection*{Mercurial}
+
+\begin{verbatim}
+   $mtn heads –branch=<branch #>
+   $hg heads -b
+\end{verbatim}
+ 
+\subsection*{Individual Syncing of Repositories}
+
+Both mercurial and monotone allow a user to serve their local repository to allow syncing between individual machines. 
+
+\subsubsection*{Monotone}
+	
+
+\subsubsection*{Mercurial}
+
+\begin{verbatim}
+   $ mtn serve –bind=<address>:<port #>
+   $ hg serve –a <address> -p <port #>
+\end{verbatim}
+ 
+Difference is mercurial runs as a lightweight webserver while monotone simply serves it’s own protocol.  A mercurial repository being served from a machine can be browsed via a web browser by pointing it to
+\begin{verbatim}
+   http://<hg machine address>:<port #>/
+\end {verbatim}
+A handy feature but not a necessary one.
+
+\subsection*{Syncing Repositories}
+
+Mercurial does not have a {\tt sync} option like monotone. All mercurial transactions are done via {\tt push} and {\tt pull}, both of which are supported in a similar fashion to monotone.  The {\tt push} option copies all local changes to the remote host and {\tt pull} copies any differences in the remote host to your local repository.  The {\tt sync} parameter in monotone performs both a {\tt push} and {\tt pull}.
+
+\subsection*{Repository Serving for a Central Repository}
+
+Monotone comes complete with it’s own networking functionality for serving a repository over the internet via a command (and it’s own designated port number).  In order for a user to {\tt sync} to a repository you serve from your machine you must first have added their public key to your database.  The same keys outlined in the trust model are used for verification in monotone.  Monotone has an issue in that it has no bundled package for setting up a server. In order to get monotone to run as a daemon process a custom script must be coded and a new non-root user created on the system to ensure security.
+
+In mercurial you serve a repository via a web server and cgi script. The cgi script comes bundled with the mercurial package.  All that is needed is to set the path in the third line of the bundled script to point to the project path and to set some apache2 directives so that it can be served over http. The mercurial client user needs to set this line in their {\it ~/.hgrc file}:
+
+\begin{verbatim} 
+   [web]
+   allow_push = your_username
+   push_ssl = false
+\end{verbatim}
+ 
+The mercurial server must set up passwords and users that they want to allow via a password file created by apaches {\it htpasswd} command.   The http process handles all of the networking similar to subversion only without needing it’s own module.
+
+{\bf Note:} In a future update, mercurial developers are planning to add LDAP support; something that is not possible with the current networking functionality of monotone.   If this is done in a timely fashion (in the GENESIS development timeline) then developers can be added to the {\it nsdevelopers} group (or put into a new LDAP group) to allow known individuals to contribute to a particular module via their {\bf cbi} or {\bf genesis-sim.org} username and password.
+
+\subsection*{Ignoring/Adding/Removing Files}
+
+For ignoring files monotone and mercurial use a {\tt .mtn-ignore} and {\tt .hgignore} file respectively.  Monotone supports regular expressions, mercurial supports both regular expressions and globs.  Monotones ignore file is processed via the lua hooks while mercurials is processed via pythons internal gob and regex functionality.  
+
+\subsubsection*{Monotone}
+	
+
+\subsubsection*{Mercurial}
+
+\begin{verbatim}
+   *Makefile$
+   *Makefile\.in$
+   .*\.output$
+   .*\@\.[ch]
+   ^aclocal\.m4$
+	
+   syntax: glob
+   *Makefile
+   *.output
+   
+   syntax: regex
+   .*Makefile\.in$
+   .*\@\.[ch]
+   ^aclocal\.m4$
+\end{verbatim}
+ 
+Converting over to mercurial is easy, the {\it .mtn-ignore} file is processed as a {\it regex}. 
+
+Adding files in both is performed via an {\it add} option. Dropping files is done with a {\tt drop} in monotone and a {\tt remove} in mercurial respectively.  Mercurial also has an {\tt addremove} option for adding all new files and deleting all missing files in one operation.
+
+\subsection*{Certificates}
+
+Monotone implements a certificate system where a user can create a statement, which is a key value pair, and bind it to a particular revision.  This statement can then be signed with a certificate that identifies the user who created the statement for the revision. This ensures that users can determine which revisions are from core developers and pass the current test framework.
+
+Mercurial has a term for this same implementation called ``Arbitrary Metadata'' which is not supported at this time.  There is currently a TODO regarding this in the mercurial wiki.
+
+\end{document}
