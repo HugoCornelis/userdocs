@@ -809,7 +809,7 @@ sub update_html
     # If we have nothign but whitespace in between the itemize tags, remove
     # the whole line.
 
-    #! this is a duplicate, see above
+    #! this is a duplicated statement / operation, see above
 
     $source_text =~ s(\\begin\{itemize\}\s+\\end\{itemize\})( )g;
 
@@ -822,15 +822,16 @@ sub update_html
     # for the pdf tag. Operation is a bit expensive.
     # NOTE: Duplicates some code from userdocs-tag-replace-items
 
-    my $pdf_text = `userdocs-tag-filter 2>&1 pdf published`;
-    my $published_pdfs = Load($pdf_text);
+    my $published_pdfs_yaml = `userdocs-tag-filter 2>&1 pdf published`;
 
-    my @published_pdfs_relative = get_relative_paths($published_pdfs);
+    my $published_pdfs = Load($published_pdfs_yaml);
 
-    my $pdf;
-
-    foreach $pdf (@published_pdfs_relative)
+    foreach my $published_pdf (@$published_pdfs)
     {
+	$published_pdf =~ /.*\/(.*)/;
+
+	my $pdf = $1;
+
 	$source_text =~ s(\\href\{\.\./$pdf/$pdf\.html)(\\href\{../$pdf/$pdf.pdf)g;
     }
 
