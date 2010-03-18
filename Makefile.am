@@ -5,7 +5,6 @@ SUBDIRS = perl
 dist_bin_SCRIPTS = \
 	bin/userdocs-build \
 	bin/userdocs-check \
-	bin/userdocs-copy \
 	bin/userdocs-sync \
 	bin/userdocs-tag-filter \
 	bin/userdocs-tag-replace-items \
