@@ -43,6 +43,13 @@ sub build
 
     my $directory = $self->{name};
 
+    # read the descriptor
+
+    if ($self->read_descriptor())
+    {
+	return "cannot read descriptor for $self->{name}";
+    }
+
     if ($options->{verbose})
     {
 	print "$0: entering $directory\n";
@@ -51,13 +58,6 @@ sub build
     if (!chdir $directory)
     {
 	die "$0: *** Error: cannot change to directory $directory";
-    }
-
-    # read the descriptor
-
-    if ($self->read_descriptor())
-    {
-	return "cannot read descriptor for $self->{name}";
     }
 
     # check for the obsolete tag first so we don't end up doing
@@ -204,7 +204,7 @@ sub build_latex
 
 	    my $filename_base = $1;
 
-	    if ($options->{parse_only} == 0)
+	    if (!$options->{parse_only})
 	    {
 		# generate ps output
 
@@ -360,7 +360,7 @@ sub build_2_html
 
     # generate html output
 
-    if ($options->{parse_only} == 0)
+    if (!$options->{parse_only})
     {
 	#t some of these were already done by ->build_2_dvi()
 
@@ -403,7 +403,7 @@ sub build_2_pdf
 
     chdir "pdf";
 
-    if ($options->{parse_only} == 0)
+    if (!$options->{parse_only})
     {
 	system "ps2pdf '../ps/$filename_base.ps' '$filename_base.pdf'";
     }
@@ -441,7 +441,7 @@ sub build_2_ps
 
     chdir "ps";
 
-    if ($options->{parse_only} == 0)
+    if (!$options->{parse_only})
     {
 	system "dvips '../$filename_base.dvi' -o '$filename_base.ps'";
     }
@@ -824,7 +824,7 @@ sub update_html
 
     my $published_pdfs_yaml = `userdocs-tag-filter 2>&1 pdf published`;
 
-    my $published_pdfs = Load($published_pdfs_yaml);
+    my $published_pdfs = YAML::Load($published_pdfs_yaml);
 
     foreach my $published_pdf (@$published_pdfs)
     {
