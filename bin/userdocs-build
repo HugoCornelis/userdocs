@@ -132,9 +132,11 @@ sub main
 		 },
 		);
 
+	# copy the document sources to the build directory
+
 	$document->copy( { verbose => $option_verbose, }, );
 
-	#t need userdocs-tag-replace-items here:
+	# expand document keywords
 
 	if ($contents_documents->{$document_name})
 	{
@@ -148,7 +150,11 @@ sub main
 	    }
 	}
 
+	# build the document with the expansions
+
 	$document->build( { verbose => $option_verbose, }, );
+
+	# copy the result to the destination directory
 
 	$document->prepare_publish_document( { verbose => $option_verbose, }, );
     }
