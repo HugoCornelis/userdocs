@@ -200,7 +200,9 @@ sub build_latex
 		close(OUTPUT);
 	    }
 
-	    my $filename_base = get_relative_path($directory);
+	    $directory =~ /.*\/(.*)/;
+
+	    my $filename_base = $1;
 
 	    if ($options->{parse_only} == 0)
 	    {
@@ -634,6 +636,113 @@ sub is_wav
 }
 
 
+sub new
+{
+    my $package = shift;
+
+    my $options = shift;
+
+    my $self
+	= {
+	   %$options,
+	  };
+
+    bless $self, $package;
+
+    return $self;
+}
+
+
+sub prepare_publish_document
+{
+    my $self = shift;
+
+    my $options = shift;
+
+    my $directory = $self->{name};
+
+    if ($options->{verbose})
+    {
+	print "$0: entering $directory\n";
+    }
+
+    if (!chdir $directory)
+    {
+	die "$0: *** Error: cannot change to directory $directory";
+    }
+
+    # read the descriptor
+
+    if ($self->read_descriptor())
+    {
+	return "cannot read descriptor for $self->{name}";
+    }
+
+    # check for the obsolete tag first so we don't end up doing
+    # any extra work.
+
+    if ($self->is_obsolete())
+    {
+	print "This document is obsolete, skipping.\n";
+    }
+
+    # if we find a makefile
+
+    elsif (-f 'Makefile' )
+    {
+	# that is what we use
+
+	system "make prepare_publish_document";
+    }
+
+    # no makefile
+
+    else
+    {
+	# find relevant output containing generated files
+
+	my $outputs
+	    = [
+	       'output/html',
+	      ];
+
+	# loop over source files
+
+	foreach my $output (@$outputs)
+	{
+	    my @tmp = split /\//, $directory;
+
+	    my $target_directory = $tmp[-1];
+
+	    if ($options->{verbose})
+	    {
+		print "$0: copying files for $directory to html/htdocs/neurospaces_project/userdocs/$target_directory\n";
+	    }
+
+	    # put it in the place for publication.
+
+	    mkdir "../html/htdocs/neurospaces_project/userdocs/$target_directory";
+
+	    #! note: -pr for BSD (MAC) compatibility.
+
+	    system "cp -pr $output/* '../html/htdocs/neurospaces_project/userdocs/$target_directory'";
+
+	    if ($?)
+	    {
+		print "$0: cp '$output' failed for $directory (error code $?)\n";
+	    }
+	}
+    }
+
+    if ($options->{verbose})
+    {
+	print "$0: leaving $directory\n";
+    }
+
+    chdir '..';
+}
+
+
 sub read_descriptor
 {
     my $self = shift;
@@ -678,6 +787,54 @@ sub source_filenames
 	  ];
 
     return $result;
+}
+
+
+#
+# Function to update any links in the html that it outputs
+# to the userdocs system. Handles special cases.
+#
+
+sub update_html
+{
+    my $descriptor = shift;
+    my $source_text = shift;
+
+    print "--- Updating html links ---\n";
+
+    $source_text =~ s(\\href\{\.\./([^}]*)\.pdf)(\\href\{../$1.html)g;
+
+    $source_text =~ s(\\href\{\.\./([^}]*)\.tex)(\\href\{../$1.html)g;
+
+    # If we have nothign but whitespace in between the itemize tags, remove
+    # the whole line.
+
+    #! this is a duplicate, see above
+
+    $source_text =~ s(\\begin\{itemize\}\s+\\end\{itemize\})( )g;
+
+    # convert eps links to png links
+
+    $source_text =~ s(\\includegraphics\{figures/([^}]*)\.eps)(\\href\{figures/$1.png)g;
+
+    # here we handle special cases for pdf files. Since several files in the 
+    # documentation can be pdf we need to check all of the published docs
+    # for the pdf tag. Operation is a bit expensive.
+    # NOTE: Duplicates some code from userdocs-tag-replace-items
+
+    my $pdf_text = `userdocs-tag-filter 2>&1 pdf published`;
+    my $published_pdfs = Load($pdf_text);
+
+    my @published_pdfs_relative = get_relative_paths($published_pdfs);
+
+    my $pdf;
+
+    foreach $pdf (@published_pdfs_relative)
+    {
+	$source_text =~ s(\\href\{\.\./$pdf/$pdf\.html)(\\href\{../$pdf/$pdf.pdf)g;
+    }
+
+    return $source_text;
 }
 
 
