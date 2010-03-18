@@ -1,6 +1,6 @@
 # integrator between neurospaces_build and the documentation system.
 
-SUBDIRS =
+SUBDIRS = perl
 
 dist_bin_SCRIPTS = \
 	bin/userdocs-build \
