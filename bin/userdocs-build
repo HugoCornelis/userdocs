@@ -6,6 +6,27 @@
 use strict;
 
 
+BEGIN
+{
+    #! make check
+
+    push @INC, '../perl';
+    #! make distcheck
+
+    push @INC, '../../perl';
+
+    #! normal run
+
+    push @INC, './perl';
+
+    #! after install
+
+    push @INC, '/usr/local/glue/swig/perl';
+}
+
+
+use GENESIS3::Documentation;
+
 use Getopt::Long;
 
 use YAML;
@@ -15,476 +36,6 @@ my $option_parse_only = 0;
 my $option_regex = "";
 my $option_tags = [];
 my $option_verbose;
-
-
-sub build_document
-{
-    my $document = shift;
-
-#     $document = m((.*)/(.*));
-
-    my $directory = $document;
-
-#    my $filename = $2;
-
-    if ($option_verbose)
-    {
-	print "$0: entering $directory\n";
-    }
-
-    if (!chdir $directory)
-    {
-	die "$0: *** Error: cannot change to directory $directory";
-    }
-
-
-    # Load the descriptor for special parameters if present.
-
-    my $descriptor = YAML::LoadFile('descriptor.yml');
-
-
-
-    #
-    # check for the obsolete tag first so we don't end up doing
-    # any extra work.
-    #
-    if(tag_defined($descriptor,'obsolete'))
-    {
-      print "This document is obsolete, skipping.\n";
-
-      if ($option_verbose)
-      {
-	print "$0: leaving $directory\n";
-      }
-
-      chdir '..';
-      return;
-    }
-
-
-
-    #
-    # Here we check for the redirect attribute and perform actions as 
-    # necessary.
-    #
-    if(defined $descriptor->{redirect})
-    {
-      create_http_redirect($document,$descriptor->{redirect});
-      chdir '..';
-      return;
-    }
-
-    # Note: This tag handles special cases for pdf.
-    # Should expand it to allow maybe a "filetype" attribute
-    # to check for so that it can copy over other file types.
-    if(tag_defined($descriptor,'pdf'))
-    {
-      file_copy($descriptor->{'document name'},'pdf');
-#       print "\n\nThe document ";
-#       print $descriptor->{'document name'};
-#       print " is a pdf file, copying it over to the output directory\n\n";
-
-#       system "mkdir -p output/ps";
-#       system "mkdir -p output/pdf";
-#       system "mkdir -p output/html";
-#       system "cp *.pdf output/html";
-#       system "cp *.pdf output/ps";
-#       system "cp *.pdf output/pdf";
-
-      chdir '..';
-      return;
-    }
-    elsif(tag_defined($descriptor,'mp3'))
-    {
-      file_copy($descriptor->{'document name'},'mp3');
-      chdir '..';
-      return;
-    }
-    elsif(tag_defined($descriptor,'wav'))
-    {
-      file_copy($descriptor->{'document name'},'wav');
-      chdir '..';
-      return;
-    }
-    elsif(tag_defined($descriptor,'html'))
-    {
-      file_copy($descriptor->{'document name'},'html');
-      chdir '..';
-      return;
-    }
-    elsif(tag_defined($descriptor,'png'))
-    {
-      file_copy($descriptor->{'document name'},'png');
-      chdir '..';
-      return;
-    }
-    elsif(tag_defined($descriptor,'ps'))
-    {
-      file_copy($descriptor->{'document name'},'ps');
-      chdir '..';
-      return;
-    }
-
-
-    # if we find a makefile
-
-    if (-f 'Makefile')
-    {
-	# that is what we use
-
-	system "make build_document";
-    }
-    else
-    {
-	# find relevant source files
-
-	my $filenames
-	    = [
-	       map
-	       {
-		   chomp; $_
-	       }
-	       `ls *.tex`,
-	      ];
-
-	# loop over source files
-
-	foreach my $filename (@$filenames)
-	{
-
-
-
-	    # for latex sources
-
-	    if ($filename =~ /\.tex$/)
-	    {
-		chdir "output";
-
-		# prepare output: general latex processing
-
-		$filename =~ m((.*)\.tex$);
-
-		#
-		# Remove references to self, as well as any empty itemize blocks
-		# since the itemize blocks kill the cron job. After we remove
-		# the references and resave the file.
-		#
-		if( $filename =~ m/contents-level[1234567]/)
-		{
-
-		  # read latex source
-
-		  use IO::File;
-
-		  my $source_file = IO::File->new("<../$filename");
-
-		  my $source_text = join "", <$source_file>;
-
-		  $source_file->close();
-
-		  my @name = split(/\./,$filename);
-
-		  $source_text =~ s(\\item \\href\{\.\.\/$name[0]\/$name[0]\.\w+\}\{\\bf \\underline\{.*\}\})( )g;
-
-		  # If we have nothing but whitespace in between the itemize tags, remove
-		  # the whole line.
-		  $source_text =~ s(\\begin\{itemize\}\s+\\end\{itemize\})( )g;
-
-
-		  open(OUTPUT,">$filename");
-		
-		  print OUTPUT $source_text;
-		  close(OUTPUT);
-
-		}
-
-		my $filename_base = get_relative_path($document);
-
-		if($option_parse_only == 0)
-		{
-		  system "latex -halt-on-error '$filename'";
-
-		  system "makeindex -c '$filename_base'";
-
-		  system "bibtex '$filename_base'";
-
-		  system "latex '$filename'";
-		  system "latex '$filename'";
-		}
-
-		# generate ps output
-
-		{
-		    mkdir "ps";
-
-		    if ($option_verbose)
-		    {
-			print "$0: entering ps\n";
-		    }
-
-		    chdir "ps";
-
-		    if($option_parse_only == 0)
-		    {
-		      system "dvips '../$filename_base.dvi' -o '$filename_base.ps'";
-		    }
-
-		    if ($option_verbose)
-		    {
-			print "$0: leaving ps\n";
-		    }
-
-		    chdir "..";
-		}
-
-		# generate pdf output
-
-		{
-		    mkdir "pdf";
-
-		    if ($option_verbose)
-		    {
-			print "$0: entering pdf\n";
-		    }
-
-		    chdir "pdf";
-
-		    if($option_parse_only == 0)
-		    {
-		      system "ps2pdf '../ps/$filename_base.ps' '$filename_base.pdf'";
-		    }
-
-		    if ($option_verbose)
-		    {
-			print "$0: leaving pdf\n";
-		    }
-
-		    chdir "..";
-		}
-
-		# generate html output
-
-		{
-		    mkdir 'html';
-		    mkdir 'html/figures';
-
-		    if ($option_verbose)
-		    {
-			print "$0: entering html\n";
-		    }
-
-		    chdir "html";
-
-		    # read latex source
-
-		    use IO::File;
-
-		    my $source_file = IO::File->new("<../$filename");
-
-		    my $source_text = join "", <$source_file>;
-
-		    $source_file->close();
-
-		    # update the bibliographic reference
-
-		    $source_text =~ s(\\bibliography{\.\./tex/bib/)(\\bibliography{\.\./\.\./\.\./tex/bib/)g;
-
-		    # update html links to their proper file types.
-
-		    my $source_html = update_html($descriptor,$source_text);
-
-		    # write converted source
-
-		    $source_file = IO::File->new(">$filename");
-
-		    print $source_file $source_html;
-
-		    $source_file->close();
-
-		    # copy figures
-
-		    system "cp -rp ../figures/* figures/";
-
-		    # generate html output
-		    
-		    if($option_parse_only == 0)
-		    {
-			system "latex '$filename'";
-			system "makeindex -c '$filename_base'";
-			system "bibtex '$filename_base'";
-			system "htlatex '$filename'";
-		    }
-
-		    if ($option_verbose)
-		    {
-			print "$0: leaving html\n";
-		    }
-
-		    chdir "..";
-		}
-
-		chdir "..";
-	    }
-	    
-	    # else unknown source file type
-	    else
-	    {
-		print "$0: unknown file type for $filename";
-	    }
-	}
-    }
-
-    if ($option_verbose)
-    {
-	print "$0: leaving $directory\n";
-    }
-
-    chdir '..';
-}
-
-
-
-
-#
-# Function to update any links in the html that it outputs
-# to the userdocs system. Handles special cases.
-#
-sub update_html
-{
-  my $descriptor = shift;
-  my $source_text = shift;
-
-  print "--- Updating html links ---\n";
-
-  $source_text =~ s(\\href\{\.\./([^}]*)\.pdf)(\\href\{../$1.html)g;
-
-  $source_text =~ s(\\href\{\.\./([^}]*)\.tex)(\\href\{../$1.html)g;
-
-  #
-  # since the bog links are not html they need to stay as pdf.
-  # This just changes them back. 
-  #$source_text =~ s(\\href\{\.\./bog-ch\d/(bog-ch\d)\.html)(\\href\{../$1/$1.pdf)g;
-
-  #remove any of the links to itself if it's a contents file.
-  #X this has been moved up earlier in the code
-  #XX readded this code because the previous code doesn't seem to be getting triggered.
-
-  #   		    if( $filename =~ m/contents-level1/)
-  #   		    {
-  
-  #   		      my @name = split(/\./,$filename);
-
-  #   		      $source_text =~ s(\\item \\href\{\.\.\/\.\/$name[0]\/.*\.html\}\{\\bf \\underline\{.*\}\})( )g;
-  
-  #   		    }
-
-  # 		    # If we have nothign but whitespace in between the itemize tags, remove
-  # 		    # the whole line.
-  $source_text =~ s(\\begin\{itemize\}\s+\\end\{itemize\})( )g;
-
-  # convert eps links to png links
-
-  $source_text =~ s(\\includegraphics\{figures/([^}]*)\.eps)(\\href\{figures/$1.png)g;
-
-
-  # here we handle special cases for pdf files. Since several files in the 
-  # documentation can be pdf we need to check all of the published docs
-  # for the pdf tag. Operation is a bit expensive.
-  # NOTE: Duplicates some code from userdocs-tag-replace-items
-  my $pdf_text = `userdocs-tag-filter 2>&1 pdf published`;
-  my $published_pdfs = Load($pdf_text);
-
-  my @published_pdfs_relative = get_relative_paths($published_pdfs);
-
-  my $pdf;
-  foreach $pdf (@published_pdfs_relative)
-  {
-
-    $source_text =~ s(\\href\{\.\./$pdf/$pdf\.html)(\\href\{../$pdf/$pdf.pdf)g;
-
-
-  }
-
-
-  return $source_text;
-
-}
-
-
-#
-# args ($path)
-#
-# shortens the full paths returned by the descriptor
-# finds.
-sub get_relative_path
-{
-  my $path = shift;
-
-  my @tmp = split(/\//,$path);
-
-  my $relative_path = $tmp[-1];
-
-  return $relative_path;
-
-}
-
-
-
-#
-# args (@paths)
-#
-# converts an array of absolute paths to relative ones.
-#
-sub get_relative_paths
-{
-
-  my $fullpaths = shift;
-  my @relative_paths;
-
-  my $path;
-  foreach (@$fullpaths)
-  {
-
-    $path = get_relative_path($_);
-
-    push(@relative_paths,$path)
-
-  }
-
-  return @relative_paths;
-
-}
-
-
-
-
-
-# A tag to check for in the given descriptor.
-#  arg1 descriptor containing tags
-#  arg2 tag to search for.
-#
-# ($descriptor,$tag)
-#
-sub tag_defined
-{
-  my $descriptor = shift;
-  my $tag = shift;
-
-  my $tags = $descriptor->{tags};
-
-  foreach (@$tags)
-  {
-
-    if( $tag eq $_ )
-    {
-      return 1;
-    }
-  }
-
-  return 0;
-
-}
-
 
 
 sub main
@@ -549,16 +100,6 @@ sub main
 	      };
     }
 
-    # make sure document names are 'compliant'
-
-    map
-    {
-	s(/$)();
-    }
-	keys %$documents;
-
-
-
     # prepare directory structure
 
     `mkdir -p html/htdocs/neurospaces_project/userdocs/`;
@@ -568,174 +109,50 @@ sub main
 	print "$0: no documents to build\n";
     }
 
-    foreach my $document (keys %$documents)
+    my $contents_documents
+	= {
+	   'contents-level1' => 1,
+	   'contents-level2' => 1,
+	   'contents-level3' => 1,
+	   'contents-level4' => 1,
+	   'contents-level5' => 1,
+	   'contents-level6' => 1,
+	   'contents-level7' => 1,
+	  };
+
+    foreach my $document_name (keys %$documents)
     {
+	$document_name =~ s(/$)();
 
-	build_document($document);
-    }
+	my $document
+	    = GENESIS3::Documentation::Document->new
+		(
+		 {
+		  name => $document_name,
+		 },
+		);
 
-    foreach my $document (keys %$documents)
-    {
-	prepare_publish_document($document);
-    }
-}
+	$document->copy( { verbose => $option_verbose, }, );
 
+	#t need userdocs-tag-replace-items here:
 
-#
-#
-#
-sub create_http_redirect
-{
-  my $document = shift;
-  my $redirect_url = shift;
-
-  print "\n\nThe document ";
-  print $document;
-  print " is an http redirect to a website.\n\n";
-
-  print "Entering the $document directory ";
-  chdir $document;
-  print `pwd`;
-  print "\n\n";
-
-
-  print  "-- creating directories --\n";
-  system "mkdir -p output/ps";
-  system "mkdir -p output/pdf";
-  system "mkdir -p output/html";
-
-
-
-  print "-- creating html file --\n";
-
-  my @tmp = split(/\//,$document);
-
-  my $doctitle = $tmp[-1];
-
-  my $html_document = $document . "/" . $doctitle  . ".html";
-
-  open(OUTPUT,">$html_document");
-  print OUTPUT "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n<html>\n  <head>\n    <title>";
-  print OUTPUT $html_document . " (http redirect)";
-  print OUTPUT "</title>\n  </head>\n  <body><meta http-equiv=\"refresh\" content=\"0;URL=";
-  print OUTPUT $redirect_url;
-  print OUTPUT "\">\n  </body>\n</html>\n\n";
-  close(OUTPUT);
-
-  
-  print "-- copying redirect file to output directories\n";
-
-  system "cp -f $html_document output/ps";
-  system "cp -f $html_document output/pdf";
-  system "cp -f $html_document output/html";
-
-  print "-- Done --\n\n";
-  return;
-}
-
-
-
-#
-# ($documentname,$filetype)
-#
-# Takes a particular file type to use an as extension for copying
-# data to an output folder.
-sub file_copy
-{
-  my $documentname = shift;
-  my $filetype = shift;
-
-  print "\n\nThe document ";
-  print $documentname;
-  print " is a $filetype file, copying it over to the output directory\n\n";
-
-  system "mkdir -p output/ps";
-  system "mkdir -p output/pdf";
-  system "mkdir -p output/html";
-  system "cp *.$filetype output/html";
-  system "cp *.$filetype output/ps";
-  system "cp *.$filetype output/pdf";
-  return;
-
-}
-
-
-
-sub prepare_publish_document
-{
-    my $document = shift;
-
-#     $document = m((.*)/(.*));
-
-    my $directory = $document;
-
-#     my $filename = $2;
-
-    if ($option_verbose)
-    {
-	print "$0: entering $directory\n";
-    }
-
-    chdir $directory;
-
-    # if we find a makefile
-
-    if (-f 'Makefile')
-    {
-	# that is what we use
-
-	system "make prepare_publish_document";
-    }
-
-    # no makefile
-
-    else
-    {
-	# find relevant output containing generated files
-
-	my $outputs
-	    = [
-	       'output/html',
-	      ];
-
-	# loop over source files
-
-	foreach my $output (@$outputs)
+	if ($contents_documents->{$document_name})
 	{
+	    my $command = "userdocs-tag-replace-items $document_name $document_name/$document_name.tex --verbose";
 
-	    my @tmp = split(/\//,$directory);
-
-	    my $target_directory = $tmp[-1];
-
-	    if ($option_verbose)
-	    {
-		print "$0: copying files for $directory to html/htdocs/neurospaces_project/userdocs/$target_directory\n";
-	    }
-
-	    # put it in the place for publication.
-
-	    mkdir "../html/htdocs/neurospaces_project/userdocs/$target_directory";
-
-	    #! note: -pr for BSD (MAC) compatibility.
-
-	    system "cp -pr $output/* '../html/htdocs/neurospaces_project/userdocs/$target_directory'";
-
+	    system $command;
 
 	    if ($?)
 	    {
-		print "$0: cp '$output' failed for $directory (error code $?)\n";
+		print "$0: *** error: Failed to execute ($command)\n";
 	    }
 	}
-    }
 
-    if ($option_verbose)
-    {
-	print "$0: leaving $directory\n";
-    }
+	$document->build( { verbose => $option_verbose, }, );
 
-    chdir '..';
+	$document->prepare_publish_document( { verbose => $option_verbose, }, );
+    }
 }
-
 
 
 sub read_cmd_line

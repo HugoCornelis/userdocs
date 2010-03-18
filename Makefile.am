@@ -143,14 +143,6 @@ website-clean:
 	$(RM) -fr html/htdocs/neurospaces_project/userdocs/
 
 website-prepare:
-	userdocs-copy --tags contents-level1 --tags contents-level2 --tags contents-level3 --tags contents-level4 --tags contents-level5 --tags contents-level6 --tags contents-level7 --verbose
-	userdocs-tag-replace-items contents-level1 contents-level1/contents-level1.tex --verbose
-	userdocs-tag-replace-items contents-level2 contents-level2/contents-level2.tex --verbose
-	userdocs-tag-replace-items contents-level3 contents-level3/contents-level3.tex --verbose
-	userdocs-tag-replace-items contents-level4 contents-level4/contents-level4.tex --verbose
-	userdocs-tag-replace-items contents-level5 contents-level5/contents-level5.tex --verbose
-	userdocs-tag-replace-items contents-level6 contents-level6/contents-level6.tex --verbose
-	userdocs-tag-replace-items contents-level7 contents-level7/contents-level7.tex --verbose
 	userdocs-build --tags contents-level1 --tags contents-level2 --tags contents-level3 --tags contents-level4 --tags contents-level5 --tags contents-level6 --tags contents-level7 --verbose
 
 website-upload: website-clean website-prepare html-upload
