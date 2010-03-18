@@ -122,166 +122,6 @@ sub build
 }
 
 
-sub build_redirect
-{
-    my $self = shift;
-
-    my $directory = $self->{name};
-
-    create_http_redirect($directory, $self->{descriptor}->{redirect});
-}
-
-
-sub build_html
-{
-    my $self = shift;
-
-    my $directory = $self->{name};
-
-    build_file_copy($self->{descriptor}->{'document name'}, 'html');
-}
-
-
-sub build_latex
-{
-    my $self = shift;
-
-    my $options = shift;
-
-    my $directory = $self->{name};
-
-    # find relevant source files
-
-    my $filenames = $self->source_filenames();
-
-    # loop over source files
-
-    foreach my $filename (@$filenames)
-    {
-	# for latex sources
-
-	if ($filename =~ /\.tex$/)
-	{
-	    chdir "output";
-
-	    # prepare output: general latex processing
-
-	    $filename =~ m((.*)\.tex$);
-
-	    # Remove references to self, as well as any empty itemize blocks
-	    # since the itemize blocks kill the cron job. After we remove
-	    # the references and resave the file.
-
-	    if ($filename =~ m/contents-level[1234567]/)
-	    {
-		# read latex source
-
-		use IO::File;
-
-		my $source_file = IO::File->new("<../$filename");
-
-		my $source_text = join "", <$source_file>;
-
-		$source_file->close();
-
-		my @name = split(/\./,$filename);
-
-		$source_text =~ s(\\item \\href\{\.\.\/$name[0]\/$name[0]\.\w+\}\{\\bf \\underline\{.*\}\})( )g;
-
-		# If we have nothing but whitespace in between the itemize tags, remove
-		# the whole line.
-
-		$source_text =~ s(\\begin\{itemize\}\s+\\end\{itemize\})( )g;
-
-
-		open(OUTPUT,">$filename");
-		
-		print OUTPUT $source_text;
-		close(OUTPUT);
-	    }
-
-	    $directory =~ /.*\/(.*)/;
-
-	    my $filename_base = $1;
-
-	    if (!$options->{parse_only})
-	    {
-		# generate ps output
-
-		$self->build_2_ps($filename, $filename_base);
-
-		# generate pdf output
-
-		$self->build_2_pdf($filename, $filename_base);
-
-		# generate html output
-
-		$self->build_2_html($filename, $filename_base);
-	    }
-
-	    chdir "..";
-	}
-
-	# else unknown source file type
-
-	else
-	{
-	    print "$0: unknown file type for $filename";
-	}
-    }
-}
-
-
-sub build_pdf
-{
-    my $self = shift;
-
-    my $directory = $self->{name};
-
-    build_file_copy($self->{descriptor}->{'document name'}, 'pdf');
-}
-
-
-sub build_png
-{
-    my $self = shift;
-
-    my $directory = $self->{name};
-
-    build_file_copy($self->{descriptor}->{'document name'}, 'png');
-}
-
-
-sub build_ps
-{
-    my $self = shift;
-
-    my $directory = $self->{name};
-
-    build_file_copy($self->{descriptor}->{'document name'}, 'ps');
-}
-
-
-sub build_mp3
-{
-    my $self = shift;
-
-    my $directory = $self->{name};
-
-    build_file_copy($self->{descriptor}->{'document name'}, 'mp3');
-}
-
-
-sub build_wav
-{
-    my $self = shift;
-
-    my $directory = $self->{name};
-
-    build_file_copy($self->{descriptor}->{'document name'}, 'wav');
-}
-
-
 sub build_2_dvi
 {
     my $self = shift;
@@ -455,6 +295,192 @@ sub build_2_ps
 }
 
 
+# ($directory, $filetype)
+#
+# Takes a particular file type to use an as extension for copying
+# data to an output folder.
+
+sub build_file_copy
+{
+    my $documentname = shift;
+
+    my $filetype = shift;
+
+    print "\n\nThe document ";
+    print $documentname;
+    print " is a $filetype file, copying it over to the output directory\n\n";
+
+    system "mkdir -p output/ps";
+    system "mkdir -p output/pdf";
+    system "mkdir -p output/html";
+    system "cp *.$filetype output/html";
+    system "cp *.$filetype output/ps";
+    system "cp *.$filetype output/pdf";
+
+    return;
+}
+
+
+sub build_html
+{
+    my $self = shift;
+
+    my $directory = $self->{name};
+
+    build_file_copy($self->{descriptor}->{'document name'}, 'html');
+}
+
+
+sub build_latex
+{
+    my $self = shift;
+
+    my $options = shift;
+
+    my $directory = $self->{name};
+
+    # find relevant source files
+
+    my $filenames = $self->source_filenames();
+
+    # loop over source files
+
+    foreach my $filename (@$filenames)
+    {
+	# for latex sources
+
+	if ($filename =~ /\.tex$/)
+	{
+	    chdir "output";
+
+	    # prepare output: general latex processing
+
+	    $filename =~ m((.*)\.tex$);
+
+	    # Remove references to self, as well as any empty itemize blocks
+	    # since the itemize blocks kill the cron job. After we remove
+	    # the references and resave the file.
+
+	    if ($filename =~ m/contents-level[1234567]/)
+	    {
+		# read latex source
+
+		use IO::File;
+
+		my $source_file = IO::File->new("<../$filename");
+
+		my $source_text = join "", <$source_file>;
+
+		$source_file->close();
+
+		my @name = split(/\./,$filename);
+
+		$source_text =~ s(\\item \\href\{\.\.\/$name[0]\/$name[0]\.\w+\}\{\\bf \\underline\{.*\}\})( )g;
+
+		# If we have nothing but whitespace in between the itemize tags, remove
+		# the whole line.
+
+		$source_text =~ s(\\begin\{itemize\}\s+\\end\{itemize\})( )g;
+
+
+		open(OUTPUT,">$filename");
+		
+		print OUTPUT $source_text;
+		close(OUTPUT);
+	    }
+
+	    $directory =~ /.*\/(.*)/;
+
+	    my $filename_base = $1;
+
+	    if (!$options->{parse_only})
+	    {
+		# generate ps output
+
+		$self->build_2_ps($filename, $filename_base);
+
+		# generate pdf output
+
+		$self->build_2_pdf($filename, $filename_base);
+
+		# generate html output
+
+		$self->build_2_html($filename, $filename_base);
+	    }
+
+	    chdir "..";
+	}
+
+	# else unknown source file type
+
+	else
+	{
+	    print "$0: unknown file type for $filename";
+	}
+    }
+}
+
+
+sub build_pdf
+{
+    my $self = shift;
+
+    my $directory = $self->{name};
+
+    build_file_copy($self->{descriptor}->{'document name'}, 'pdf');
+}
+
+
+sub build_png
+{
+    my $self = shift;
+
+    my $directory = $self->{name};
+
+    build_file_copy($self->{descriptor}->{'document name'}, 'png');
+}
+
+
+sub build_ps
+{
+    my $self = shift;
+
+    my $directory = $self->{name};
+
+    build_file_copy($self->{descriptor}->{'document name'}, 'ps');
+}
+
+
+sub build_mp3
+{
+    my $self = shift;
+
+    my $directory = $self->{name};
+
+    build_file_copy($self->{descriptor}->{'document name'}, 'mp3');
+}
+
+
+sub build_redirect
+{
+    my $self = shift;
+
+    my $directory = $self->{name};
+
+    create_http_redirect($directory, $self->{descriptor}->{redirect});
+}
+
+
+sub build_wav
+{
+    my $self = shift;
+
+    my $directory = $self->{name};
+
+    build_file_copy($self->{descriptor}->{'document name'}, 'wav');
+}
+
+
 sub copy
 {
     my $self = shift;
@@ -526,28 +552,56 @@ sub copy
 }
 
 
-# ($directory, $filetype)
-#
-# Takes a particular file type to use an as extension for copying
-# data to an output folder.
-
-sub build_file_copy
+sub create_http_redirect
 {
-    my $documentname = shift;
+    my $document = shift;
 
-    my $filetype = shift;
+    my $redirect_url = shift;
+
+    my $options = shift;
+
+    $document->copy( $options, );
 
     print "\n\nThe document ";
-    print $documentname;
-    print " is a $filetype file, copying it over to the output directory\n\n";
+    print $document;
+    print " is an http redirect to a website.\n\n";
 
+    #t need userdocs-tag-replace-items here:
+
+    print "Entering the $document directory ";
+    chdir $document;
+    print `pwd`;
+    print "\n\n";
+
+
+    print  "-- creating directories --\n";
     system "mkdir -p output/ps";
     system "mkdir -p output/pdf";
     system "mkdir -p output/html";
-    system "cp *.$filetype output/html";
-    system "cp *.$filetype output/ps";
-    system "cp *.$filetype output/pdf";
 
+    print "-- creating html file --\n";
+
+    my @tmp = split(/\//,$document);
+
+    my $doctitle = $tmp[-1];
+
+    my $html_document = $document . "/" . $doctitle  . ".html";
+
+    open(OUTPUT,">$html_document");
+    print OUTPUT "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n<html>\n  <head>\n    <title>";
+    print OUTPUT $html_document . " (http redirect)";
+    print OUTPUT "</title>\n  </head>\n  <body><meta http-equiv=\"refresh\" content=\"0;URL=";
+    print OUTPUT $redirect_url;
+    print OUTPUT "\">\n  </body>\n</html>\n\n";
+    close(OUTPUT);
+
+    print "-- copying redirect file to output directories\n";
+
+    system "cp -f $html_document output/ps";
+    system "cp -f $html_document output/pdf";
+    system "cp -f $html_document output/html";
+
+    print "-- Done --\n\n";
     return;
 }
 
