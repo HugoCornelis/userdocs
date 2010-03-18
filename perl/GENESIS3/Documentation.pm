@@ -138,7 +138,7 @@ sub build_html
 
     my $directory = $self->{name};
 
-    file_copy($self->{descriptor}->{'document name'}, 'html');
+    build_file_copy($self->{descriptor}->{'document name'}, 'html');
 }
 
 
@@ -152,7 +152,7 @@ sub build_latex
 
     # find relevant source files
 
-    my $filenames = $self->filenames();
+    my $filenames = $self->source_filenames();
 
     # loop over source files
 
@@ -204,8 +204,6 @@ sub build_latex
 
 	    if ($options->{parse_only} == 0)
 	    {
-		$self->build_2_dvi($filename, $filename_base);
-
 		# generate ps output
 
 		$self->build_2_ps($filename, $filename_base);
@@ -238,7 +236,7 @@ sub build_pdf
 
     my $directory = $self->{name};
 
-    file_copy($self->{descriptor}->{'document name'}, 'pdf');
+    build_file_copy($self->{descriptor}->{'document name'}, 'pdf');
 }
 
 
@@ -248,7 +246,7 @@ sub build_png
 
     my $directory = $self->{name};
 
-    file_copy($self->{descriptor}->{'document name'}, 'png');
+    build_file_copy($self->{descriptor}->{'document name'}, 'png');
 }
 
 
@@ -258,7 +256,7 @@ sub build_ps
 
     my $directory = $self->{name};
 
-    file_copy($self->{descriptor}->{'document name'}, 'ps');
+    build_file_copy($self->{descriptor}->{'document name'}, 'ps');
 }
 
 
@@ -268,7 +266,7 @@ sub build_mp3
 
     my $directory = $self->{name};
 
-    file_copy($self->{descriptor}->{'document name'}, 'mp3');
+    build_file_copy($self->{descriptor}->{'document name'}, 'mp3');
 }
 
 
@@ -278,7 +276,7 @@ sub build_wav
 
     my $directory = $self->{name};
 
-    file_copy($self->{descriptor}->{'document name'}, 'wav');
+    build_file_copy($self->{descriptor}->{'document name'}, 'wav');
 }
 
 
@@ -298,6 +296,8 @@ sub build_2_dvi
 
     system "latex '$filename'";
     system "latex '$filename'";
+
+    $self->{build_2_dvi} = 1;
 }
 
 
@@ -310,6 +310,11 @@ sub build_2_html
     my $filename_base = shift;
 
     my $options = shift;
+
+    if (!$self->{build_2_dvi})
+    {
+	$self->build_2_dvi($filename, $filename_base, $options);
+    }
 
     mkdir 'html';
     mkdir 'html/figures';
@@ -355,6 +360,8 @@ sub build_2_html
 
     if ($options->{parse_only} == 0)
     {
+	#t some of these were already done by ->build_2_dvi()
+
 	system "latex '$filename'";
 	system "makeindex -c '$filename_base'";
 	system "bibtex '$filename_base'";
@@ -379,6 +386,11 @@ sub build_2_pdf
     my $filename_base = shift;
 
     my $options = shift;
+
+    if (!$self->{build_2_dvi})
+    {
+	$self->build_2_dvi($filename, $filename_base, $options);
+    }
 
     mkdir "pdf";
 
@@ -412,6 +424,11 @@ sub build_2_ps
     my $filename_base = shift;
 
     my $options = shift;
+
+    if (!$self->{build_2_dvi})
+    {
+	$self->build_2_dvi($filename, $filename_base, $options);
+    }
 
     mkdir "ps";
 
@@ -463,7 +480,7 @@ sub copy
     {
 	# find relevant source files
 
-	my $filenames = $self->filenames();
+	my $filenames = $self->source_filenames();
 
 	# loop over source files
 
@@ -486,7 +503,6 @@ sub copy
 		{
 
 		    system "cp -rfp figures output/";
-
 		}
 	    }
 
@@ -513,7 +529,7 @@ sub copy
 # Takes a particular file type to use an as extension for copying
 # data to an output folder.
 
-sub file_copy
+sub build_file_copy
 {
     my $documentname = shift;
 
@@ -531,24 +547,6 @@ sub file_copy
     system "cp *.$filetype output/pdf";
 
     return;
-}
-
-
-sub filenames
-{
-    my $self = shift;
-
-    my $result
-	= [
-	   sort
-	   map
-	   {
-	       chomp; $_
-	   }
-	   `ls *.tex`,
-	  ];
-
-    return $result;
 }
 
 
@@ -662,6 +660,24 @@ sub read_descriptor
 
 	return '';
     }
+}
+
+
+sub source_filenames
+{
+    my $self = shift;
+
+    my $result
+	= [
+	   sort
+	   map
+	   {
+	       chomp; $_
+	   }
+	   `ls *.tex`,
+	  ];
+
+    return $result;
 }
 
 
