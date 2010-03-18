@@ -560,13 +560,9 @@ sub create_http_redirect
 
     my $options = shift;
 
-    $document->copy( $options, );
-
     print "\n\nThe document ";
     print $document;
     print " is an http redirect to a website.\n\n";
-
-    #t need userdocs-tag-replace-items here:
 
     print "Entering the $document directory ";
     chdir $document;
