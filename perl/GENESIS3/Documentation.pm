@@ -9,6 +9,36 @@ use strict;
 package GENESIS3::Documentation;
 
 
+package GENESIS3::Documentation::Publications;
+
+
+our $all_publication_results;
+
+
+sub insert_publication_production_result
+{
+    my $document_name = shift;
+
+    my $result = shift;
+
+    $all_publication_results->{$document_name} = $result;
+}
+
+
+sub publish_production_results
+{
+    use YAML;
+
+    print Dump( { all_publication_results => $all_publication_results, }, );
+}
+
+
+sub start_publication_production
+{
+    $all_publication_results = {};
+}
+
+
 package GENESIS3::Documentation::Descriptor;
 
 
@@ -829,9 +859,9 @@ sub has_tag
 
     my $tag = shift;
 
-    if ($self->read_descriptor())
+    if (!$self->{descriptor})
     {
-	return "cannot read descriptor for $self->{name}";
+	die "$0: internal error: document descriptor used in sub has_tag(), but it has not been read yet.";
     }
 
     return $self->{descriptor}->has_tag($tag);
@@ -890,9 +920,9 @@ sub is_redirect
 {
     my $self = shift;
 
-    if ($self->read_descriptor())
+    if ($self->{descriptor})
     {
-	return "cannot read descriptor for $self->{name}";
+	die "$0: internal error: document descriptor used in sub is_redirect(), but it has not been read yet.";
     }
 
     return defined $self->{descriptor}->{redirect};
@@ -932,6 +962,13 @@ sub prepare_publish_document
 
     my $result;
 
+    # read the descriptor
+
+    if ($self->read_descriptor())
+    {
+	$result = "cannot read descriptor for $self->{name}";
+    }
+
     my $directory = $self->{name};
 
     if ($options->{verbose})
@@ -942,13 +979,6 @@ sub prepare_publish_document
     if (!chdir $directory)
     {
 	return "cannot change to directory $directory";
-    }
-
-    # read the descriptor
-
-    if ($self->read_descriptor())
-    {
-	$result = "cannot read descriptor for $self->{name}";
     }
 
     # check for the obsolete tag first so we don't end up doing
