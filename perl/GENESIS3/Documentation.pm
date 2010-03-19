@@ -560,11 +560,11 @@ sub build_latex
 
 		# generate pdf output
 
-		$result = $result and $self->build_2_pdf($filename, $filename_base);
+		$result = $result or $self->build_2_pdf($filename, $filename_base);
 
 		# generate html output
 
-		$result = $result and $self->build_2_html($filename, $filename_base);
+		$result = $result or $self->build_2_html($filename, $filename_base);
 	    }
 
 	    chdir "..";
