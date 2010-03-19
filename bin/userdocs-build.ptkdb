@@ -3,20 +3,11 @@ $files = {
                                        {
                                          'expr' => undef,
                                          'value' => '1',
-                                         'text' => '	$document->build( { verbose => $option_verbose, }, );
+                                         'text' => '	if ($document_name !~ m/$option_regex/)
 ',
                                          'fname' => 'bin/userdocs-build',
                                          'type' => 'user',
-                                         'line' => '602'
-                                       },
-                                       {
-                                         'expr' => undef,
-                                         'value' => '1',
-                                         'text' => '    foreach my $tag (@$option_tags)
-',
-                                         'fname' => 'bin/userdocs-build',
-                                         'type' => 'user',
-                                         'line' => 528
+                                         'line' => '106'
                                        }
                                      ]
          };
@@ -27,6 +18,10 @@ $expr_list = [
                },
                {
                  'expr' => '`pwd`',
+                 'depth' => -1
+               },
+               {
+                 'expr' => '$document_name',
                  'depth' => -1
                }
              ];

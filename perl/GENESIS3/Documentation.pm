@@ -41,13 +41,15 @@ sub build
 
     my $options = shift;
 
+    my $result;
+
     my $directory = $self->{name};
 
     # read the descriptor
 
     if ($self->read_descriptor())
     {
-	return "cannot read descriptor for $self->{name}";
+	$result = "cannot read descriptor for $self->{name}";
     }
 
     if ($options->{verbose})
@@ -57,7 +59,7 @@ sub build
 
     if (!chdir $directory)
     {
-	die "$0: *** Error: cannot change to directory $directory";
+	$result = "cannot change to directory $directory";
     }
 
     # check for the obsolete tag first so we don't end up doing
@@ -75,6 +77,11 @@ sub build
 	# that is what we use
 
 	system "make build_document";
+
+	if ($?)
+	{
+	    $result = 'make build_document failed';
+	}
     }
 
     # Here we check for the redirect attribute and perform actions as
@@ -82,35 +89,35 @@ sub build
 
     elsif ($self->is_redirect())
     {
-	$self->build_redirect();
+	$result = $self->build_redirect();
     }
     elsif ($self->is_pdf())
     {
-	$self->build_pdf();
+	$result = $self->build_pdf();
     }
     elsif ($self->is_mp3())
     {
-	$self->build_mp3();
+	$result = $self->build_mp3();
     }
     elsif ($self->is_wav())
     {
-	$self->build_wav();
+	$result = $self->build_wav();
     }
     elsif ($self->is_html())
     {
-	$self->build_html();
+	$result = $self->build_html();
     }
     elsif ($self->is_png())
     {
-	$self->build_png();
+	$result = $self->build_png();
     }
     elsif ($self->is_ps())
     {
-	$self->build_ps();
+	$result = $self->build_ps();
     }
     else
     {
-	$self->build_latex();
+	$result = $self->build_latex();
     }
 
     if ($options->{verbose})
@@ -119,6 +126,8 @@ sub build
     }
 
     chdir '..';
+
+    return $result;
 }
 
 
@@ -132,14 +141,56 @@ sub build_2_dvi
 
     system "latex -halt-on-error '$filename'";
 
+    if ($?)
+    {
+	print "------------------ Error: latex -halt-on-error '$filename' failed\n";
+
+	return "latex -halt-on-error '$filename' failed";
+    }
+
+    #! note: both makeindex and bibtex produce error returns when
+    #! there is no correct configuration for them in the latex file, we
+    #! ignore these error returns
+
     system "makeindex -c '$filename_base'";
+
+#     if ($?)
+#     {
+# 	print "------------------ Error: makeindex -c '$filename_base'\n";
+
+# 	return "makeindex -c '$filename_base'";
+#     }
 
     system "bibtex '$filename_base'";
 
-    system "latex '$filename'";
+#     if ($?)
+#     {
+# 	print "------------------ Error: bibtex '$filename_base'\n";
+
+# 	return "bibtex '$filename_base'";
+#     }
+
     system "latex '$filename'";
 
+    if ($?)
+    {
+	print "------------------ Error: latex '$filename'\n";
+
+	return "latex '$filename'";
+    }
+
+   system "latex '$filename'";
+
+    if ($?)
+    {
+	print "------------------ Error: latex '$filename'\n";
+
+	return "latex '$filename'";
+    }
+
     $self->{build_2_dvi} = 1;
+
+    return undef;
 }
 
 
@@ -153,12 +204,20 @@ sub build_2_html
 
     my $options = shift;
 
+    my $result;
+
     if (!$self->{build_2_dvi})
     {
-	$self->build_2_dvi($filename, $filename_base, $options);
+	my $build_error = $self->build_2_dvi($filename, $filename_base, $options);
+
+	if ($build_error)
+	{
+	    return $build_error;
+	}
     }
 
     mkdir 'html';
+
     mkdir 'html/figures';
 
     if ($options->{verbose})
@@ -198,6 +257,11 @@ sub build_2_html
 
     system "cp -rp ../figures/* figures/";
 
+#     if ($?)
+#     {
+# 	return "cp -rp ../figures/* figures/";
+#     }
+
     # generate html output
 
     if (!$options->{parse_only})
@@ -205,10 +269,38 @@ sub build_2_html
 	#t some of these were already done by ->build_2_dvi()
 
 	system "latex '$filename'";
+
+	if ($?)
+	{
+	    $result = "latex '$filename'";
+	}
+
+	#! note: both makeindex and bibtex produce error returns when
+	#! there is no correct configuration for them in the latex file, we
+	#! ignore these error returns
+
 	system "makeindex -c '$filename_base'";
+
+# 	if ($?)
+# 	{
+# 	    $result = "makeindex -c '$filename_base'";
+# 	}
+
 	system "bibtex '$filename_base'";
+
+# 	if ($?)
+# 	{
+# 	    $result = "bibtex '$filename_base'";
+# 	}
+
 	system "htlatex '$filename'";
-    }
+
+	if ($?)
+	{
+	    $result = "htlatex '$filename'";
+	}
+
+   }
 
     if ($options->{verbose})
     {
@@ -216,6 +308,8 @@ sub build_2_html
     }
 
     chdir "..";
+
+    return $result;
 }
 
 
@@ -229,9 +323,16 @@ sub build_2_pdf
 
     my $options = shift;
 
+    my $result;
+
     if (!$self->{build_2_dvi})
     {
-	$self->build_2_dvi($filename, $filename_base, $options);
+	my $build_error = $self->build_2_dvi($filename, $filename_base, $options);
+
+	if ($build_error)
+	{
+	    return $build_error;
+	}
     }
 
     mkdir "pdf";
@@ -246,6 +347,12 @@ sub build_2_pdf
     if (!$options->{parse_only})
     {
 	system "ps2pdf '../ps/$filename_base.ps' '$filename_base.pdf'";
+
+	if ($?)
+	{
+	    $result = "ps2pdf '../ps/$filename_base.ps' '$filename_base.pdf'";
+	}
+
     }
 
     if ($options->{verbose})
@@ -254,6 +361,8 @@ sub build_2_pdf
     }
 
     chdir "..";
+
+    return $result;
 }
 
 
@@ -267,9 +376,16 @@ sub build_2_ps
 
     my $options = shift;
 
+    my $result;
+
     if (!$self->{build_2_dvi})
     {
-	$self->build_2_dvi($filename, $filename_base, $options);
+	my $build_error = $self->build_2_dvi($filename, $filename_base, $options);
+
+	if ($build_error)
+	{
+	    return $build_error;
+	}
     }
 
     mkdir "ps";
@@ -284,6 +400,12 @@ sub build_2_ps
     if (!$options->{parse_only})
     {
 	system "dvips '../$filename_base.dvi' -o '$filename_base.ps'";
+
+	if ($?)
+	{
+	    $result = "dvips '../$filename_base.dvi' -o '$filename_base.ps'";
+	}
+
     }
 
     if ($options->{verbose})
@@ -292,6 +414,8 @@ sub build_2_ps
     }
 
     chdir "..";
+
+    return $result;
 }
 
 
@@ -311,13 +435,48 @@ sub build_file_copy
     print " is a $filetype file, copying it over to the output directory\n\n";
 
     system "mkdir -p output/ps";
+
+    if ($?)
+    {
+	return "mkdir -p output/ps";
+    }
+
     system "mkdir -p output/pdf";
+
+    if ($?)
+    {
+	return "mkdir -p output/pdf";
+    }
+
     system "mkdir -p output/html";
+
+    if ($?)
+    {
+	return "mkdir -p output/html";
+    }
+
     system "cp *.$filetype output/html";
+
+    if ($?)
+    {
+	return "cp *.$filetype output/html";
+    }
+
     system "cp *.$filetype output/ps";
+
+    if ($?)
+    {
+	return "cp *.$filetype output/ps";
+    }
+
     system "cp *.$filetype output/pdf";
 
-    return;
+    if ($?)
+    {
+	return "cp *.$filetype output/pdf";
+    }
+
+    return undef;
 }
 
 
@@ -327,7 +486,7 @@ sub build_html
 
     my $directory = $self->{name};
 
-    build_file_copy($self->{descriptor}->{'document name'}, 'html');
+    return build_file_copy($self->{descriptor}->{'document name'}, 'html');
 }
 
 
@@ -336,6 +495,8 @@ sub build_latex
     my $self = shift;
 
     my $options = shift;
+
+    my $result;
 
     my $directory = $self->{name};
 
@@ -356,6 +517,8 @@ sub build_latex
 	    # prepare output: general latex processing
 
 	    $filename =~ m((.*)\.tex$);
+
+	    my $filename_base = $1;
 
 	    # Remove references to self, as well as any empty itemize blocks
 	    # since the itemize blocks kill the cron job. After we remove
@@ -382,30 +545,26 @@ sub build_latex
 
 		$source_text =~ s(\\begin\{itemize\}\s+\\end\{itemize\})( )g;
 
-
 		open(OUTPUT,">$filename");
 		
 		print OUTPUT $source_text;
+
 		close(OUTPUT);
 	    }
-
-	    $directory =~ /.*\/(.*)/;
-
-	    my $filename_base = $1;
 
 	    if (!$options->{parse_only})
 	    {
 		# generate ps output
 
-		$self->build_2_ps($filename, $filename_base);
+		$result = $self->build_2_ps($filename, $filename_base);
 
 		# generate pdf output
 
-		$self->build_2_pdf($filename, $filename_base);
+		$result = $result or $self->build_2_pdf($filename, $filename_base);
 
 		# generate html output
 
-		$self->build_2_html($filename, $filename_base);
+		$result = $result or $self->build_2_html($filename, $filename_base);
 	    }
 
 	    chdir "..";
@@ -418,6 +577,8 @@ sub build_latex
 	    print "$0: unknown file type for $filename";
 	}
     }
+
+    return undef;
 }
 
 
@@ -427,7 +588,7 @@ sub build_pdf
 
     my $directory = $self->{name};
 
-    build_file_copy($self->{descriptor}->{'document name'}, 'pdf');
+    return build_file_copy($self->{descriptor}->{'document name'}, 'pdf');
 }
 
 
@@ -437,7 +598,7 @@ sub build_png
 
     my $directory = $self->{name};
 
-    build_file_copy($self->{descriptor}->{'document name'}, 'png');
+    return build_file_copy($self->{descriptor}->{'document name'}, 'png');
 }
 
 
@@ -447,7 +608,7 @@ sub build_ps
 
     my $directory = $self->{name};
 
-    build_file_copy($self->{descriptor}->{'document name'}, 'ps');
+    return build_file_copy($self->{descriptor}->{'document name'}, 'ps');
 }
 
 
@@ -457,7 +618,7 @@ sub build_mp3
 
     my $directory = $self->{name};
 
-    build_file_copy($self->{descriptor}->{'document name'}, 'mp3');
+    return build_file_copy($self->{descriptor}->{'document name'}, 'mp3');
 }
 
 
@@ -467,7 +628,7 @@ sub build_redirect
 
     my $directory = $self->{name};
 
-    create_http_redirect($directory, $self->{descriptor}->{redirect});
+    return create_http_redirect($directory, $self->{descriptor}->{redirect});
 }
 
 
@@ -477,7 +638,7 @@ sub build_wav
 
     my $directory = $self->{name};
 
-    build_file_copy($self->{descriptor}->{'document name'}, 'wav');
+    return build_file_copy($self->{descriptor}->{'document name'}, 'wav');
 }
 
 
@@ -486,6 +647,8 @@ sub copy
     my $self = shift;
 
     my $options = shift;
+
+    my $result;
 
     my $directory = $self->{name};
 
@@ -503,6 +666,12 @@ sub copy
 	# that is what we use
 
 	system "make copy_document";
+
+	if ($?)
+	{
+	    $result = "make copy_document";
+	}
+
     }
     else
     {
@@ -527,10 +696,20 @@ sub copy
 
 		system "cp $filename output/";
 
-		if (-d "figures")
+		if ($?)
+		{
+		    $result = "cp $filename output/";
+		}
+		elsif (-d "figures")
 		{
 
 		    system "cp -rfp figures output/";
+
+		    if ($?)
+		    {
+			$result = "cp -rfp figures output/";
+		    }
+
 		}
 	    }
 
@@ -539,6 +718,8 @@ sub copy
 	    else
 	    {
 		print "$0: unknown file type for $filename";
+
+		$result = "unknown file type for $filename";
 	    }
 	}
     }
@@ -549,6 +730,8 @@ sub copy
     }
 
     chdir '..';
+
+    return $result;
 }
 
 
@@ -559,6 +742,8 @@ sub create_http_redirect
     my $redirect_url = shift;
 
     my $options = shift;
+
+    my $result;
 
     print "\n\nThe document ";
     print $document;
@@ -571,9 +756,27 @@ sub create_http_redirect
 
 
     print  "-- creating directories --\n";
+
     system "mkdir -p output/ps";
+
+    if ($?)
+    {
+	$result = "mkdir -p output/ps";
+    }
+
     system "mkdir -p output/pdf";
+
+    if ($?)
+    {
+	$result = "mkdir -p output/pdf";
+    }
+
     system "mkdir -p output/html";
+
+    if ($?)
+    {
+	$result = "mkdir -p output/html";
+    }
 
     print "-- creating html file --\n";
 
@@ -594,11 +797,29 @@ sub create_http_redirect
     print "-- copying redirect file to output directories\n";
 
     system "cp -f $html_document output/ps";
+
+    if ($?)
+    {
+	$result = "cp -f $html_document output/ps";
+    }
+
     system "cp -f $html_document output/pdf";
+
+    if ($?)
+    {
+	$result = "cp -f $html_document output/pdf";
+    }
+
     system "cp -f $html_document output/html";
 
+    if ($?)
+    {
+	$result = "cp -f $html_document output/html";
+    }
+
     print "-- Done --\n\n";
-    return;
+
+    return $result;
 }
 
 
@@ -709,6 +930,8 @@ sub prepare_publish_document
 
     my $options = shift;
 
+    my $result;
+
     my $directory = $self->{name};
 
     if ($options->{verbose})
@@ -718,14 +941,14 @@ sub prepare_publish_document
 
     if (!chdir $directory)
     {
-	die "$0: *** Error: cannot change to directory $directory";
+	return "cannot change to directory $directory";
     }
 
     # read the descriptor
 
     if ($self->read_descriptor())
     {
-	return "cannot read descriptor for $self->{name}";
+	$result = "cannot read descriptor for $self->{name}";
     }
 
     # check for the obsolete tag first so we don't end up doing
@@ -743,6 +966,12 @@ sub prepare_publish_document
 	# that is what we use
 
 	system "make prepare_publish_document";
+
+	if ($?)
+	{
+	    $result = "make prepare_publish_document";
+	}
+
     }
 
     # no makefile
@@ -779,8 +1008,9 @@ sub prepare_publish_document
 
 	    if ($?)
 	    {
-		print "$0: cp '$output' failed for $directory (error code $?)\n";
+		$result = "cp -pr $output/* '../html/htdocs/neurospaces_project/userdocs/$target_directory'";
 	    }
+
 	}
     }
 
@@ -790,6 +1020,8 @@ sub prepare_publish_document
     }
 
     chdir '..';
+
+    return $result;
 }
 
 
@@ -817,7 +1049,7 @@ sub read_descriptor
     {
 	bless $self->{descriptor}, "GENESIS3::Documentation::Descriptor";
 
-	return '';
+	return undef;
     }
 }
 

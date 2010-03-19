@@ -57,12 +57,12 @@ The Neurospaces tester needs to know certain things about your machine before te
 
 It is normal that a software package has multiple {\it tests.config} files, e.g. in several directories.
 
-The config file defines a Perl hash (we plan to also support \href{http://www.json.org/}{\bf JSON}). In the test specifications, this hash is available in the variable {\tt main::config}. So to access the {\tt core\_directory} entry in the hash, you have
+The {\it tests.config} file defines a Perl hash (we plan to also support \href{http://www.json.org/}{\bf JSON}). In the test specifications, this hash is available in the variable {\tt main::config}. So to access the {\tt core\_directory} entry in the hash, you have
 \begin{verbatim}
-   $main::config->{core\_directory}
+$main::config->{core\_directory}
 \end{verbatim}
-Here is an example:
 
+Here is an example script:
 \begin{verbatim}
 #!/usr/bin/perl -w
 
@@ -92,14 +92,14 @@ my $config
 return $config;
 \end{verbatim}
 
-\subsubsection*{Details}
+\subsection*{Definitions}
 
 \begin{itemize}
-\item {\tt core\_directory:} The directory with the source code of your package. Tests can use this directory to read files.
-\item {\bf description:} A short description of the tests.
-\item {\tt outputs\_dir:} Defines the directory where the htmlified test specifications are located (generated using {\it tests\_2\_html}).
-\item {\tt package:} Contains package version information.
-\item {\tt tests\_dir:} Contains the directory where to search for test specifications with the {\tt .t} suffix. 
+   \item[]{\tt core\_directory:} The directory that contains the source code of your package. Tests can use this directory to read files.
+   \item[]{\tt description:} Short (few words) description of the tests.
+   \item[]{\tt outputs\_dir:} Defines the directory where the {\bf htmlified} test specifications (generated using {\it tests\_2\_html}) are located.
+   \item[]{\tt package:} Contains package version information.
+   \item[]{\tt tests\_dir:} Contains the directory to be searched for test specifications with the {\bf .t} suffix. 
 \end{itemize}
 
 \subsection*{Tester Specifications}
