@@ -33,7 +33,7 @@ use YAML;
 
 
 my $option_parse_only = 0;
-my $option_regex = "";
+my $option_regex = ".*";
 my $option_tags = [];
 my $option_verbose;
 
@@ -50,7 +50,11 @@ sub main
 	   {
 	       $_ => 1,
 	   }
-	   @ARGV,
+	   (
+	    @ARGV
+	    ? @ARGV
+	    : @{ local $/ ; Load(`userdocs-tag-filter 2>&1 "published"`) },
+	   ),
 	  };
 
     # get all documents selected by tags
@@ -59,30 +63,7 @@ sub main
     {
 	local $/;
 
-	my $documents_tag = Load(`userdocs-tag-filter 2>&1 "published"`);
-
-	#
-	# Perform a grep on the document names if
-	# option is present. 
-	#
-	if($option_regex ne "")
-	{
-	  my @tmp = @$documents_tag;
-
-	  @$documents_tag = ();
-
-	  foreach (@tmp)
-	  {
-	    if( $_ =~ m/$option_regex/)
-	    {
-	      push(@$documents_tag,$_);
-	    }
-	  }
-
-	}
-
-
-
+	my $documents_tag = Load(`userdocs-tag-filter 2>&1 "published" "$tag"`);
 
 	if (!scalar @$documents_tag)
 	{
@@ -94,9 +75,9 @@ sub main
 	       %$documents,
 	       map
 	       {
-		   $_ => 1,
+		   $_ => $tag,
 	       }
-	       @{ $documents_tag  },
+	       @$documents_tag,
 	      };
     }
 
@@ -124,6 +105,15 @@ sub main
     {
 	$document_name =~ s(/$)();
 
+	$document_name =~ s(.*/)();
+
+	chomp $document_name;
+
+	if ($document_name !~ m/$option_regex/)
+	{
+	    next;
+	}
+
 	my $document
 	    = GENESIS3::Documentation::Document->new
 		(
@@ -134,7 +124,12 @@ sub main
 
 	# copy the document sources to the build directory
 
-	$document->copy( { verbose => $option_verbose, }, );
+	my $copy_error = $document->copy( { verbose => $option_verbose, }, );
+
+	if ($copy_error)
+	{
+	    print "$0: *** Error: for document $document_name: failed to copy ($copy_error)\n";
+	}
 
 	# expand document keywords
 
@@ -146,17 +141,28 @@ sub main
 
 	    if ($?)
 	    {
-		print "$0: *** error: Failed to execute ($command)\n";
+		print "$0: *** Error: for document $document_name: failed to execute ($command, $?)\n";
 	    }
 	}
 
 	# build the document with the expansions
 
-	$document->build( { verbose => $option_verbose, }, );
+	my $build_error = $document->build( { verbose => $option_verbose, }, );
+
+	if ($build_error)
+	{
+	    print "$0: *** Error: for document $document_name: failed to build ($build_error)\n";
+	}
 
 	# copy the result to the destination directory
 
-	$document->prepare_publish_document( { verbose => $option_verbose, }, );
+	my $publish_error = $document->prepare_publish_document( { verbose => $option_verbose, }, );
+
+	if ($publish_error)
+	{
+	    print "$0: *** Error: for document $document_name: failed to publish ($publish_error)\n";
+	}
+
     }
 }
 
