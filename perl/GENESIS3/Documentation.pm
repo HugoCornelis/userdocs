@@ -41,9 +41,9 @@ sub build
 
     my $options = shift;
 
-    my $directory = $self->{name};
-
     my $result;
+
+    my $directory = $self->{name};
 
     # read the descriptor
 
@@ -204,6 +204,8 @@ sub build_2_html
 
     my $options = shift;
 
+    my $result;
+
     if (!$self->{build_2_dvi})
     {
 	my $build_error = $self->build_2_dvi($filename, $filename_base, $options);
@@ -270,7 +272,7 @@ sub build_2_html
 
 	if ($?)
 	{
-	    return "latex '$filename'";
+	    $result = "latex '$filename'";
 	}
 
 	#! note: both makeindex and bibtex produce error returns when
@@ -281,21 +283,21 @@ sub build_2_html
 
 # 	if ($?)
 # 	{
-# 	    return "makeindex -c '$filename_base'";
+# 	    $result = "makeindex -c '$filename_base'";
 # 	}
 
 	system "bibtex '$filename_base'";
 
 # 	if ($?)
 # 	{
-# 	    return "bibtex '$filename_base'";
+# 	    $result = "bibtex '$filename_base'";
 # 	}
 
 	system "htlatex '$filename'";
 
 	if ($?)
 	{
-	    return "htlatex '$filename'";
+	    $result = "htlatex '$filename'";
 	}
 
    }
@@ -307,7 +309,7 @@ sub build_2_html
 
     chdir "..";
 
-    return undef;
+    return $result;
 }
 
 
@@ -320,6 +322,8 @@ sub build_2_pdf
     my $filename_base = shift;
 
     my $options = shift;
+
+    my $result;
 
     if (!$self->{build_2_dvi})
     {
@@ -346,7 +350,7 @@ sub build_2_pdf
 
 	if ($?)
 	{
-	    return "ps2pdf '../ps/$filename_base.ps' '$filename_base.pdf'";
+	    $result = "ps2pdf '../ps/$filename_base.ps' '$filename_base.pdf'";
 	}
 
     }
@@ -358,7 +362,7 @@ sub build_2_pdf
 
     chdir "..";
 
-    return undef;
+    return $result;
 }
 
 
@@ -371,6 +375,8 @@ sub build_2_ps
     my $filename_base = shift;
 
     my $options = shift;
+
+    my $result;
 
     if (!$self->{build_2_dvi})
     {
@@ -397,7 +403,7 @@ sub build_2_ps
 
 	if ($?)
 	{
-	    return "dvips '../$filename_base.dvi' -o '$filename_base.ps'";
+	    $result = "dvips '../$filename_base.dvi' -o '$filename_base.ps'";
 	}
 
     }
@@ -409,7 +415,7 @@ sub build_2_ps
 
     chdir "..";
 
-    return undef;
+    return $result;
 }
 
 
@@ -490,6 +496,8 @@ sub build_latex
 
     my $options = shift;
 
+    my $result;
+
     my $directory = $self->{name};
 
     # find relevant source files
@@ -550,15 +558,15 @@ sub build_latex
 	    {
 		# generate ps output
 
-		$self->build_2_ps($filename, $filename_base);
+		$result = $self->build_2_ps($filename, $filename_base);
 
 		# generate pdf output
 
-		$self->build_2_pdf($filename, $filename_base);
+		$result = $result and $self->build_2_pdf($filename, $filename_base);
 
 		# generate html output
 
-		$self->build_2_html($filename, $filename_base);
+		$result = $result and $self->build_2_html($filename, $filename_base);
 	    }
 
 	    chdir "..";
@@ -642,6 +650,8 @@ sub copy
 
     my $options = shift;
 
+    my $result;
+
     my $directory = $self->{name};
 
     if ($options->{verbose})
@@ -661,7 +671,7 @@ sub copy
 
 	if ($?)
 	{
-	    return "make copy_document";
+	    $result = "make copy_document";
 	}
 
     }
@@ -690,17 +700,16 @@ sub copy
 
 		if ($?)
 		{
-		    return "cp $filename output/";
+		    $result = "cp $filename output/";
 		}
-
-		if (-d "figures")
+		elsif (-d "figures")
 		{
 
 		    system "cp -rfp figures output/";
 
 		    if ($?)
 		    {
-			return "cp -rfp figures output/";
+			$result = "cp -rfp figures output/";
 		    }
 
 		}
@@ -711,6 +720,8 @@ sub copy
 	    else
 	    {
 		print "$0: unknown file type for $filename";
+
+		$result = "unknown file type for $filename";
 	    }
 	}
     }
@@ -722,7 +733,7 @@ sub copy
 
     chdir '..';
 
-    return undef;
+    return $result;
 }
 
 
@@ -733,6 +744,8 @@ sub create_http_redirect
     my $redirect_url = shift;
 
     my $options = shift;
+
+    my $result;
 
     print "\n\nThe document ";
     print $document;
@@ -750,21 +763,21 @@ sub create_http_redirect
 
     if ($?)
     {
-	return "mkdir -p output/ps";
+	$result = "mkdir -p output/ps";
     }
 
     system "mkdir -p output/pdf";
 
     if ($?)
     {
-	return "mkdir -p output/pdf";
+	$result = "mkdir -p output/pdf";
     }
 
     system "mkdir -p output/html";
 
     if ($?)
     {
-	return "mkdir -p output/html";
+	$result = "mkdir -p output/html";
     }
 
     print "-- creating html file --\n";
@@ -789,26 +802,26 @@ sub create_http_redirect
 
     if ($?)
     {
-	return "cp -f $html_document output/ps";
+	$result = "cp -f $html_document output/ps";
     }
 
     system "cp -f $html_document output/pdf";
 
     if ($?)
     {
-	return "cp -f $html_document output/pdf";
+	$result = "cp -f $html_document output/pdf";
     }
 
     system "cp -f $html_document output/html";
 
     if ($?)
     {
-	return "cp -f $html_document output/html";
+	$result = "cp -f $html_document output/html";
     }
 
     print "-- Done --\n\n";
 
-    return undef;
+    return $result;
 }
 
 
@@ -919,6 +932,8 @@ sub prepare_publish_document
 
     my $options = shift;
 
+    my $result;
+
     my $directory = $self->{name};
 
     if ($options->{verbose})
@@ -935,7 +950,7 @@ sub prepare_publish_document
 
     if ($self->read_descriptor())
     {
-	return "cannot read descriptor for $self->{name}";
+	$result = "cannot read descriptor for $self->{name}";
     }
 
     # check for the obsolete tag first so we don't end up doing
@@ -956,7 +971,7 @@ sub prepare_publish_document
 
 	if ($?)
 	{
-	    return "make prepare_publish_document";
+	    $result = "make prepare_publish_document";
 	}
 
     }
@@ -995,7 +1010,7 @@ sub prepare_publish_document
 
 	    if ($?)
 	    {
-		return "cp -pr $output/* '../html/htdocs/neurospaces_project/userdocs/$target_directory'";
+		$result = "cp -pr $output/* '../html/htdocs/neurospaces_project/userdocs/$target_directory'";
 	    }
 
 	}
@@ -1008,7 +1023,7 @@ sub prepare_publish_document
 
     chdir '..';
 
-    return undef;
+    return $result;
 }
 
 
