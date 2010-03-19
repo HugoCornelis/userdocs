@@ -518,6 +518,8 @@ sub build_latex
 
 	    $filename =~ m((.*)\.tex$);
 
+	    my $filename_base = $1;
+
 	    # Remove references to self, as well as any empty itemize blocks
 	    # since the itemize blocks kill the cron job. After we remove
 	    # the references and resave the file.
@@ -549,10 +551,6 @@ sub build_latex
 
 		close(OUTPUT);
 	    }
-
-	    $directory =~ /.*\/(.*)/;
-
-	    my $filename_base = $1;
 
 	    if (!$options->{parse_only})
 	    {
