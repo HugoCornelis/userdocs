@@ -19,17 +19,16 @@
 
 Pulling code in monotone requires a two step process. First you must create the SQLite database, then you must connect to the remote repository to pull the data. A third step is needed to check out your code from the local database you created into a workspace.  In mercurial a single command ‘clone’ can remotely connect and set up a workspace for you. 
 
-\subsubsection*{In monotone}
-	
-
-\subsubsection*{In mercurial}
-
-\begin{verbatim}
-   $mtn –-db=project.mtn db init
-   $mtn --db=project.mtn pull repo.com “*”
-   $mtn –-db=project.mtn --branch=”head” co project
-   $hg clone http://repo.com/project
-\end{verbatim}
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|l|l|}  \hline
+   {\bf In monotone}                                                                      & {\bf In mercurial}                                        \\ \hline
+   {\tt \$ mtn –-db=project.mtn db init}                                       & {\tt \$ hg clone http://repo.com/project}  \\
+   {\tt \$ mtn --db=project.mtn pull repo.com “*”}                     &                                                                       \\
+   {\tt \$ mtn –-db=project.mtn --branch=”head” co project}  &                                                                       \\ \hline
+  \end{tabular}
+}
  
 \noindent{\bf Advantage:} mercurial
 
@@ -41,8 +40,6 @@ Monotone stores files in a flat SQLite database file while Mercurial stores a co
 Monotone seems to be easier to deal with as you can simply send a person the flat SQLite file and they can check out a workspace from the file.  Also the flat files are easier to store for backup purposes. \\
 
 \noindent{\bf Advantage:} monotone             
-
- 
 
 \subsection*{Trust Model}
 
@@ -61,35 +58,38 @@ This checks in a revision with this user data.  The only user verification is do
 
 Both monotone and mercurial support ongoing multiple heads which can be merged via a {\tt merge} parameter.  To view the multiple heads on a branch you use a {\tt heads} parameter.
 
-\subsubsection*{Monotone}
-	
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|l|l|}  \hline
+   {\bf In monotone}                                        & {\bf In mercurial}    \\ \hline
+   {\tt \$ mtn heads –branch=<branch \#>} & {\tt \$ hg heads -b} \\ \hline
+  \end{tabular}
+  \vspace{5mm}
+}
 
-\subsubsection*{Mercurial}
-
-\begin{verbatim}
-   $mtn heads –branch=<branch #>
-   $hg heads -b
-\end{verbatim}
+\noindent{\bf Advantage:} appears even
  
 \subsection*{Individual Syncing of Repositories}
 
 Both mercurial and monotone allow a user to serve their local repository to allow syncing between individual machines. 
 
-\subsubsection*{Monotone}
-	
-
-\subsubsection*{Mercurial}
-
-\begin{verbatim}
-   $ mtn serve –bind=<address>:<port #>
-   $ hg serve –a <address> -p <port #>
-\end{verbatim}
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|l|l|}  \hline
+   {\bf In monotone}                                                 & {\bf In mercurial}                                           \\ \hline
+   {\tt \$ mtn serve –bind=<address>:<port \#>} & {\tt \$ hg serve -a <address> -p <port \#>} \\ \hline
+  \end{tabular}
+}
  
 Difference is mercurial runs as a lightweight webserver while monotone simply serves it’s own protocol.  A mercurial repository being served from a machine can be browsed via a web browser by pointing it to
 \begin{verbatim}
    http://<hg machine address>:<port #>/
 \end {verbatim}
-A handy feature but not a necessary one.
+A handy feature but not a necessary one. \\
+
+\noindent{\bf Advantage:} appears even
 
 \subsection*{Syncing Repositories}
 
@@ -109,37 +109,36 @@ In mercurial you serve a repository via a web server and cgi script. The cgi scr
  
 The mercurial server must set up passwords and users that they want to allow via a password file created by apaches {\it htpasswd} command.   The http process handles all of the networking similar to subversion only without needing it’s own module.
 
-{\bf Note:} In a future update, mercurial developers are planning to add LDAP support; something that is not possible with the current networking functionality of monotone.   If this is done in a timely fashion (in the GENESIS development timeline) then developers can be added to the {\it nsdevelopers} group (or put into a new LDAP group) to allow known individuals to contribute to a particular module via their {\bf cbi} or {\bf genesis-sim.org} username and password.
+{\bf Note:} In a future update, mercurial developers are planning to add LDAP support; something that is not possible with the current networking functionality of monotone.   If this is done in a timely fashion (in the GENESIS development timeline) then developers can be added to the {\it nsdevelopers} group (or put into a new LDAP group) to allow known individuals to contribute to a particular module via their {\bf cbi} or {\bf genesis-sim.org} username and password. \\
+
+\noindent{\bf Advantage:} mercurial
 
 \subsection*{Ignoring/Adding/Removing Files}
 
 For ignoring files monotone and mercurial use a {\tt .mtn-ignore} and {\tt .hgignore} file respectively.  Monotone supports regular expressions, mercurial supports both regular expressions and globs.  Monotones ignore file is processed via the lua hooks while mercurials is processed via pythons internal gob and regex functionality.  
 
-\subsubsection*{Monotone}
-	
+{
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|l|l|}  \hline
+   {\bf In monotone}                                                 & {\bf In mercurial}                                                          \\ \hline
+   {\tt .$^*$Makefile\$}                                             & {\tt syntax:regex}                                                          \\
+   {\tt .$^*$Makefile\textbackslash.in\$}               & {\tt .$^*$Makefile\textbackslash.in\$}                       \\
+   {\tt .$^*$\textbackslash.output\$}                      & {\tt .$^*$\textbackslash@\textbackslash.[ch]}          \\
+   {\tt .$^*$\textbackslash@\textbackslash.[ch]} & {\tt  \^{}aclocal\textbackslash.m4\$}                          \\
+   {\tt  \^{}aclocal\textbackslash.m4\$}                  &                                                                                         \\
+                                                                                   & {\tt syntax: glob}                                                            \\
+                                                                                   & {\tt $^*$Makefile}                                                          \\ 
+                                                                                   & {\tt $^*$.output}                                                             \\ \hline
+  \end{tabular}
+ \vspace{5mm}
+ }
 
-\subsubsection*{Mercurial}
-
-\begin{verbatim}
-   *Makefile$
-   *Makefile\.in$
-   .*\.output$
-   .*\@\.[ch]
-   ^aclocal\.m4$
-	
-   syntax: glob
-   *Makefile
-   *.output
-   
-   syntax: regex
-   .*Makefile\.in$
-   .*\@\.[ch]
-   ^aclocal\.m4$
-\end{verbatim}
- 
 Converting over to mercurial is easy, the {\it .mtn-ignore} file is processed as a {\it regex}. 
 
-Adding files in both is performed via an {\it add} option. Dropping files is done with a {\tt drop} in monotone and a {\tt remove} in mercurial respectively.  Mercurial also has an {\tt addremove} option for adding all new files and deleting all missing files in one operation.
+Adding files in both is performed via an {\it add} option. Dropping files is done with a {\tt drop} in monotone and a {\tt remove} in mercurial, respectively.  Mercurial also has an {\tt addremove} option for adding all new files and deleting all missing files in one operation. \\
+
+\noindent{\bf Advantage:} mercurial (slightly)
 
 \subsection*{Certificates}
 
