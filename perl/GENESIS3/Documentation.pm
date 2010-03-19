@@ -143,27 +143,39 @@ sub build_2_dvi
 
     if ($?)
     {
+	print "------------------ Error: latex -halt-on-error '$filename' failed\n";
+
 	return "latex -halt-on-error '$filename' failed";
     }
 
+    #! note: both makeindex and bibtex produce error returns when
+    #! there is no correct configuration for them in the latex file, we
+    #! ignore these error returns
+
     system "makeindex -c '$filename_base'";
 
-    if ($?)
-    {
-	return "makeindex -c '$filename_base'";
-    }
+#     if ($?)
+#     {
+# 	print "------------------ Error: makeindex -c '$filename_base'\n";
+
+# 	return "makeindex -c '$filename_base'";
+#     }
 
     system "bibtex '$filename_base'";
 
-    if ($?)
-    {
-	return "bibtex '$filename_base'";
-    }
+#     if ($?)
+#     {
+# 	print "------------------ Error: bibtex '$filename_base'\n";
+
+# 	return "bibtex '$filename_base'";
+#     }
 
     system "latex '$filename'";
 
     if ($?)
     {
+	print "------------------ Error: latex '$filename'\n";
+
 	return "latex '$filename'";
     }
 
@@ -171,6 +183,8 @@ sub build_2_dvi
 
     if ($?)
     {
+	print "------------------ Error: latex '$filename'\n";
+
 	return "latex '$filename'";
     }
 
@@ -241,10 +255,10 @@ sub build_2_html
 
     system "cp -rp ../figures/* figures/";
 
-    if ($?)
-    {
-	return "cp -rp ../figures/* figures/";
-    }
+#     if ($?)
+#     {
+# 	return "cp -rp ../figures/* figures/";
+#     }
 
     # generate html output
 
@@ -259,19 +273,23 @@ sub build_2_html
 	    return "latex '$filename'";
 	}
 
+	#! note: both makeindex and bibtex produce error returns when
+	#! there is no correct configuration for them in the latex file, we
+	#! ignore these error returns
+
 	system "makeindex -c '$filename_base'";
 
-	if ($?)
-	{
-	    return "makeindex -c '$filename_base'";
-	}
+# 	if ($?)
+# 	{
+# 	    return "makeindex -c '$filename_base'";
+# 	}
 
 	system "bibtex '$filename_base'";
 
-	if ($?)
-	{
-	    return "bibtex '$filename_base'";
-	}
+# 	if ($?)
+# 	{
+# 	    return "bibtex '$filename_base'";
+# 	}
 
 	system "htlatex '$filename'";
 
