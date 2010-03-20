@@ -920,7 +920,7 @@ sub is_redirect
 {
     my $self = shift;
 
-    if ($self->{descriptor})
+    if (!$self->{descriptor})
     {
 	die "$0: internal error: document descriptor used in sub is_redirect(), but it has not been read yet.";
     }
