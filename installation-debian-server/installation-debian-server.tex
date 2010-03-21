@@ -198,6 +198,12 @@ The neurospaces tester (neurospaces\_cron) is a script which performs a routine 
 
 When the script is set up, it ensures that errors within the system are reported in a timely fashion. This is just an overview of what needs to be done to set up the environment for the tester script to run. For more information on {\it neurospaces\_cron}, such as configuration options, see the \href{../neurospaces-cron/neurospaces-cron.tex}{\bf neurospaces-cron} document. 
 
+\subsubsection*{Dependencies}
+\begin{itemize}
+\item[]{\bf mailutils} (for checking emails)
+\item[]{\bf exim4} (for sending emails)
+\end{itemize}
+
 \subsubsection*{Sending mail}
 
 By default Debian is configured for local mail only. To send email over the internet you will need to set the {\it dc\_eximconfig\_configtype} option in the file {\it /etc/exim4/update-exim4.conf.conf} from {\tt local} to {\tt internet}.
@@ -228,12 +234,14 @@ The directories {\it /var/www/tests}, {\it /var/www/doxygen} , and {\it /var/www
 
 To build the user documentation you need to install \LaTeX\,\,and the following dependencies via the Debian installer {\it apt-get}:
 \begin{itemize}
-   \item[]{\bf tetex-base}
-   \item[]{\bf tetex-bin}
-   \item[]{\bf tetex-doc} (Might not need to install this as it may be included with {\it tetex-base})
-   \item[]{\bf tetex-extra}
-   \item[]{\bf tex4ht}
-   \item[]{\bf webcheck} (For link checking) 
+\item[]{\bf mailutils} (for checking emails)
+\item[]{\bf exim4} (for sending emails)
+\item[]{\bf tetex-base}
+\item[]{\bf tetex-bin}
+\item[]{\bf tetex-doc} (Might not need to install this as it may be included with {\it tetex-base})
+\item[]{\bf tetex-extra}
+\item[]{\bf tex4ht}
+\item[]{\bf webcheck} (For link checking) 
 \end{itemize}
 For Level 6 documentation you need to install:
 \begin{itemize}
