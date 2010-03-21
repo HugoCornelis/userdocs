@@ -176,9 +176,9 @@ sub main
 	    print "$0: *** Error: for document $document_name: failed to publish ($publish_error)\n";
 	}
 
-	if ($build_error
-	    or $copy_error
-	    or $publish_error)
+# 	if ($build_error
+# 	    or $copy_error
+# 	    or $publish_error)
 	{
 	    GENESIS3::Documentation::Publications::insert_publication_production_result
 		    (
