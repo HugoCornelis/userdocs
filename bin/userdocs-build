@@ -42,6 +42,15 @@ sub main
 {
     read_cmd_line();
 
+    # switch to the build directory
+
+    my $build_directory = "$ENV{HOME}/neurospaces_project/userdocs/source/snapshots/0/";
+
+    if (!chdir $build_directory)
+    {
+	die "$0: cannot change to the build directory ($build_directory)";
+    }
+
     # get all documents from the command line
 
     my $documents
@@ -167,9 +176,9 @@ sub main
 	    print "$0: *** Error: for document $document_name: failed to publish ($publish_error)\n";
 	}
 
-	if ($build_error
-	    or $copy_error
-	    or $publish_error)
+# 	if ($build_error
+# 	    or $copy_error
+# 	    or $publish_error)
 	{
 	    GENESIS3::Documentation::Publications::insert_publication_production_result
 		    (
@@ -241,7 +250,6 @@ options:
     --v|verbose       tell what is being done, specify multiple times to get more feedback.
 
 example usage:
-    userdocs-copy documentation-homepage
     userdocs-build documentation-homepage
     firefox html/htdocs/neurospaces_project/userdocs/documentation-homepage/documentation-homepage.html
 
