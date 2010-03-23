@@ -23,7 +23,7 @@ To learn how to add a new document to the GENESIS version control system see \hr
 
 \subsection*{Location of GENESIS Documentation}
 
-Following a \href{../genesis-installation/genesis-installation.tex}{\bf Developer Installation} the documents that make up the GENESIS Documentation System are located in your local workspace. The default location of your local workspace is:
+Following a \href{../genesis-installation/genesis-installation.tex}{\bf Developer\,Installation} the documents that make up the GENESIS Documentation System are located in your local workspace. The default location of your local workspace is:
 \begin{verbatim}
     ~/neurospaces_project/userdocs/source/snapshots/0
 \end{verbatim}
@@ -100,12 +100,17 @@ You can also specify multiple document names to create a series of documents:
 
 For more details see \href{../document-create-manual/document-create-manual.tex}{\bf Manual\,Document\,Creation}. The remaining steps in document creation are currently manual.
 
-\item[]{\bf Add any related document hyperlinks:} Hyperlinks to one or more related documents are by default located at the beginning of each document source {\tt .tex} file following the {\bf Related Documentation} heading. The generation of these links is controlled by a tagging construct which is automatically expanded whenever the document system is rebuilt:
+\item[]{\bf Add Related Document Hyperlinks:} Hyperlinks to one or more related documents are by default located at the beginning of each document source {\tt .tex} file following the {\bf Related Documentation} heading. There are two ways to add links here:
+\begin{itemize}
+\item[] {\bf Hyperlinks to Manually Created GENESIS Documentation:} For Level\, 1 and 2 documentation, this is done in the usual way with the \LaTeX\, {\it href} command. See \href{../NewDocument/NewDocument.tex}{\bf New\,Document} for an implementation example .
+
+\item[] {\bf Hyperlinks to Automatically Generated GENESIS Documentation:} Hyperlinks to the automatically generated documentation of Levels\,3--7 requires a tagging construct. This is by default located at the beginning of each document source {\tt .tex} file following the {\bf Related Documentation} heading. The generation of these links is controlled by a tagging construct which is automatically expanded whenever the document system is rebuilt:
 \begin{verbatim}
    % start: userdocs-tag-replace-items <related-do-nothing>
    % end: userdocs-tag-replace-items <related-do-nothing>
 \end{verbatim}
-The default tag for the related hyperlink system is {\tt <related-do-nothing>}, which allows a document to be created and published in the absence of any related hyperlinks. 
+
+The default tag for this system is {\tt <related-do-nothing>}, which allows a document to be created and published in the absence of any related hyperlinks. 
 
 More than one related document hyperlink can be added to a document by the addition of tags you create that replace the default tag. For example:
 \begin{verbatim}
@@ -113,13 +118,14 @@ More than one related document hyperlink can be added to a document by the addit
    % end: userdocs-tag-replace-items <your-tag-name1> <your-tag-name2> <your-tag-name3> . . .
 \end{verbatim}
 
-As in the above example, the related tag(s) should have the following form:
+As shown in the above example, the related tag(s) should have the following form:
 \begin{verbatim}
    related-<your-tag-name1>
 \end{verbatim}
-where {\tt <your-tag-name1>} is replaced by an identifier you create. Importantly, this tag must also be placed in the {\it descriptor.yml} file of the document you want the hyperlink to reference.
+where {\tt <your-tag-name1>} is replaced by an identifier you create. % Importantly, this tag must also be placed in the {\it descriptor.yml} file of the document you want the hyperlink to reference.
 
-{\bf Note:} The default related document hyperlink {\tt related-do-nothing} relies on a document called \href{../do-nothing/do-nothing.tex}{\it do-nothing.tex}. 
+{\bf Note:} The default related document hyperlink {\tt related-do-nothing} relies on a document called \href{../do-nothing/do-nothing.tex}{\it do-nothing.tex}.
+\end{itemize}
 
 \item[]{\bf Update the descriptor.yml file:} Each directory/file in the GENESIS Documentation System is tagged on the basis of its content, for example:
 
