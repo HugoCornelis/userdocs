@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w
+#!/usr/bin/perl -
 #!/usr/bin/perl -d:ptkdb -w
 #
 
@@ -814,7 +814,8 @@ sub create_http_redirect
 
     my $doctitle = $tmp[-1];
 
-    my $html_document = $document . "/" . $doctitle  . ".html";
+    #my $html_document = $document . "/" . $doctitle  . ".html";
+    my $html_document = $doctitle  . ".html";
 
     open(OUTPUT,">$html_document");
     print OUTPUT "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n<html>\n  <head>\n    <title>";
