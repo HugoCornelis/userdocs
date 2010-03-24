@@ -126,57 +126,37 @@ sub main
 		 },
 		);
 
-	# copy the document sources to the build directory
+	# loop over all documentation operations
 
-	my $copy_error = $document->copy( { verbose => $option_verbose, }, );
+	my $operation_result = {};
 
-	if ($copy_error)
+	foreach my $operation (
+			       qw(copy
+				  expand
+				  build
+				  publish
+				)
+			      )
 	{
-	    print "$0: *** Error: for document $document_name: failed to copy ($copy_error)\n";
+	    # execute the operation
+
+	    my $error = $document->$operation( { verbose => $option_verbose, }, );
+
+	    if ($error)
+	    {
+		$operation_result->{"${operation}_error"} = $error;
+
+		print "$0: *** Error: for document $document_name: $operation operation failed ($error)\n";
+
+		last;
+	    }
 	}
 
-	# expand keywords and snippets inside the document source
-
-	my $expansion_error = $document->expand( { verbose => $option_verbose, }, );
-
-	if ($expansion_error)
-	{
-	    print "$0: *** Error: for document $document_name: failed to expand ($expansion_error)\n";
-	}
-
-	# build the document with the expansions
-
-	my $build_error = $document->build( { verbose => $option_verbose, }, );
-
-	if ($build_error)
-	{
-	    print "$0: *** Error: for document $document_name: failed to build ($build_error)\n";
-	}
-
-	# copy the result to the destination directory
-
-	my $publish_error = $document->prepare_publish_document( { verbose => $option_verbose, }, );
-
-	if ($publish_error)
-	{
-	    print "$0: *** Error: for document $document_name: failed to publish ($publish_error)\n";
-	}
-
-# 	if ($build_error
-# 	    or $copy_error
-# 	    or $publish_error)
-	{
-	    GENESIS3::Documentation::Publications::insert_publication_production_result
-		    (
-		     $document_name,
-		     {
-		      '1. copy_error' => $copy_error,
-		      '2. expansion_error' => $expansion_error,
-		      '3. build_error' => $build_error,
-		      '4. publish_error' => $publish_error,
-		     }
-		    );
-	}
+	GENESIS3::Documentation::Publications::insert_publication_production_result
+		(
+		 $document_name,
+		 $operation_result,
+		);
     }
 
     # now also publish the publication production results

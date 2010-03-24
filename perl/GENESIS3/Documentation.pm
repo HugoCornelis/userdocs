@@ -998,7 +998,7 @@ sub new
 }
 
 
-sub prepare_publish_document
+sub publish
 {
     my $self = shift;
 
