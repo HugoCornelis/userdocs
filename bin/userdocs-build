@@ -103,17 +103,6 @@ sub main
 	print "$0: no documents to build\n";
     }
 
-    my $contents_documents
-	= {
-	   'contents-level1' => 1,
-	   'contents-level2' => 1,
-	   'contents-level3' => 1,
-	   'contents-level4' => 1,
-	   'contents-level5' => 1,
-	   'contents-level6' => 1,
-	   'contents-level7' => 1,
-	  };
-
     foreach my $document_name (sort keys %$documents)
     {
 	$document_name =~ s(/$)();
@@ -144,18 +133,13 @@ sub main
 	    print "$0: *** Error: for document $document_name: failed to copy ($copy_error)\n";
 	}
 
-	# expand document keywords
+	# expand keywords and snippets inside the document source
 
-	if ($contents_documents->{$document_name})
+	my $expansion_error = $document->expand( { verbose => $option_verbose, }, );
+
+	if ($expansion_error)
 	{
-	    my $command = "userdocs-tag-replace-items $document_name $document_name/$document_name.tex --verbose";
-
-	    system $command;
-
-	    if ($?)
-	    {
-		print "$0: *** Error: for document $document_name: failed to execute ($command, $?)\n";
-	    }
+	    print "$0: *** Error: for document $document_name: failed to expand ($expansion_error)\n";
 	}
 
 	# build the document with the expansions
@@ -184,9 +168,10 @@ sub main
 		    (
 		     $document_name,
 		     {
-		      '1. build_error' => $build_error,
-		      '2. copy_error' => $copy_error,
-		      '3. publish_error' => $publish_error,
+		      '1. copy_error' => $copy_error,
+		      '2. expansion_error' => $expansion_error,
+		      '3. build_error' => $build_error,
+		      '4. publish_error' => $publish_error,
 		     }
 		    );
 	}

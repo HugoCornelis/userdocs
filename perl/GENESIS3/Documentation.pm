@@ -854,6 +854,45 @@ sub create_http_redirect
 }
 
 
+sub expand
+{
+    my $self = shift;
+
+    my $options = shift;
+
+    my $result;
+
+    # expand document keywords
+
+    my $contents_documents
+	= {
+	   'contents-level1' => 1,
+	   'contents-level2' => 1,
+	   'contents-level3' => 1,
+	   'contents-level4' => 1,
+	   'contents-level5' => 1,
+	   'contents-level6' => 1,
+	   'contents-level7' => 1,
+	  };
+
+    my $document_name = $self->{name};
+
+    if ($contents_documents->{$document_name})
+    {
+	my $command = "userdocs-tag-replace-items $document_name $document_name/$document_name.tex --verbose";
+
+	system $command;
+
+	if ($?)
+	{
+	    $result = "for document $document_name: failed to execute ($command, $?)\n";
+	}
+    }
+
+    return $result;
+}
+
+
 sub has_tag
 {
     my $self = shift;
