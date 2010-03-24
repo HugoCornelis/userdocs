@@ -6,6 +6,27 @@
 use strict;
 
 
+BEGIN
+{
+    #! make check
+
+    push @INC, '../perl';
+    #! make distcheck
+
+    push @INC, '../../perl';
+
+    #! normal run
+
+    push @INC, './perl';
+
+    #! after install
+
+    push @INC, '/usr/local/glue/swig/perl';
+}
+
+
+use GENESIS3::Documentation;
+
 use Getopt::Long;
 
 use YAML;
@@ -22,54 +43,6 @@ $program_name =~ s/.*\///;
 my $option_help;
 my $option_remove;
 my $option_verbose;
-
-
-
-
-#
-# args ($path)
-#
-# shortens the full paths returned by the descriptor
-# finds.
-sub get_relative_path
-{
-  my $path = shift;
-
-  my @tmp = split(/\//,$path);
-
-  my $relative_path = $tmp[-1];
-
-  return $relative_path;
-
-}
-
-
-
-#
-# args (@paths)
-#
-# converts an array of absolute paths to relative ones.
-#
-sub get_relative_paths
-{
-
-  my $fullpaths = shift;
-  my @relative_paths;
-
-  my $path;
-  foreach (@$fullpaths)
-  {
-
-    $path = get_relative_path($_);
-
-    push(@relative_paths,$path)
-
-  }
-
-  return @relative_paths;
-
-}
-
 
 
 sub read_cmd_line
@@ -100,25 +73,6 @@ options :
     }
 
 }
-
-
-sub tag_expander
-{
-    my $tag = shift;
-
-    # expand the tag to its contents
-
-    undef $/;
-
-
-    my $result = YAML::Load(`userdocs-tag-filter '$tag'`);
-
-    # return result
-
-    return $result;
-}
-
-
 
 
 # A tag to check for in the given descriptor.
@@ -290,42 +244,65 @@ sub main
 
     else
     {
-	# expand the tag to its items
+	# expand the tag to its documents
 
-	my $items = tag_expander($tag);
+	my $tagged_documents;
 
+	{
+	    undef $/;
 
-	# This is to convert the full pathnames returned
-	# in tag_expander to relative ones since it breaks
-	# the links.
-	my @items_relative = get_relative_paths($items);
+	    $tagged_documents = YAML::Load(`userdocs-tag-filter '$tag'`);
+	}
 
-	my $items_expanded
+	# generate a latex snippets for each of the tagged documents
+
+	my $tagged_documents_expanded
 	    = [
-	       #t grep only those that have a 'published' tag
+	       # insert links with underlined text
 
 	       map
 	       {
 		   "\\item \\href{../$_/$_.pdf}{\\bf \\underline{$_}}\n\n";
 	       }
+
+	       # sort alphabetically
+
 	       sort
-	       @items_relative,
+
+	       # convert to relative paths
+
+	       map
+	       {
+		   /.*\/(.*)/;
+
+		   $1;
+	       }
+	       @$tagged_documents,
 	      ];
 
-	#my $items_expanded_text = join "", @$items_expanded
-	my $items_expanded_text = update_links(@$items_expanded);
+	# update the links in each snippet
 
-	$replacement = "\\begin{itemize}\n\n$items_expanded_text\n\\end{itemize}\n\n";
+	my $tagged_documents_expanded_text = update_links(@$tagged_documents_expanded);
+
+	$replacement = "\\begin{itemize}\n\n$tagged_documents_expanded_text\n\\end{itemize}\n\n";
     }
 
-    # loop over all files
+    # loop over all documents
 
-    foreach my $file (@$files)
+    foreach my $document_name (@$files)
     {
+	my $document
+	    = GENESIS3::Documentation::Document->new
+		(
+		 {
+		  name => $document_name,
+		 },
+		);
+
 	if ($option_verbose)
 	{
 	    print STDERR "---------------------------------------------------------------------\n";
-	    print STDERR "Expanding in \"$file\"\n";
+	    print STDERR "Expanding in \"$document_name\"\n";
 	}
 
 	my $content;
@@ -333,7 +310,7 @@ sub main
 	{
 	    # slurp content
 
-	    open my $descriptor, $file
+	    open my $descriptor, $document_name
 		or die $!;
 	    undef $/;
 	    $content = <$descriptor>;
@@ -354,7 +331,7 @@ sub main
 
 		if ($option_verbose)
 		{
-		    print STDERR "For $file: found $program_name $tag, expanding ... \n";
+		    print STDERR "For $document_name: found $program_name $tag, expanding ... \n";
 		}
 
 		# replace the next line with the new text
@@ -365,7 +342,7 @@ sub main
 
 		if ($option_verbose)
 		{
-		    print STDERR "For $file: new content at position $position is $replacement\n";
+		    print STDERR "For $document_name: new content at position $position is $replacement\n";
 		}
 
 		pos($content) = $position;
@@ -373,7 +350,7 @@ sub main
 
 	    if ($option_verbose)
 	    {
-		print STDERR "Done for $file\n";
+		print STDERR "Done for $document_name\n";
 		print STDERR "---------------------------------------------------------------------\n\n";
 	    }
 
@@ -383,7 +360,7 @@ sub main
 	    {
 		# replace the file
 
-		open my $descriptor, ">$file"
+		open my $descriptor, ">$document_name"
 		    or die $!;
 		print $descriptor $content;
 		close $descriptor;
