@@ -25,15 +25,15 @@ In this second of two introductory tutorials you will be guided through a brief 
 
 A large number of predefined model neurons come bundled with the GENESIS distribution. The command:
 \begin{verbatim}
-    genesis > show_library
+    genesis > library_show
 \end{verbatim}
 lists the available model libraries. Example library files can be found with:
 \begin{verbatim}
-    genesis > show_library ndf examples
+    genesis > library_show ndf examples
 \end{verbatim}
 You can display the contents of the single cell library with:
 \begin{verbatim}
-    genesis > show_library ndf cells
+    genesis > library_show ndf cells
 \end{verbatim}
 which returns in part:
 \begin{verbatim}
@@ -48,7 +48,7 @@ This indicates the existence of a directory in the library where one or more Pur
 
 The contents of the {\it purkinje} directory can be displayed with:
 \begin{verbatim}
-    genesis > show_library ndf cells/purkinje
+    genesis > library_show ndf cells/purkinje
     ---
     ndf_library:
      cells/purkinje:
@@ -115,7 +115,7 @@ The ability to change the current working element allows us to either check the 
 \begin{verbatim}
     genesis > pwe
     /Purkinje/segments/b3s45[10]
-    genesis > show_model_parameters .
+    genesis > model_parameter_show .
     ---
        'parameter name': SURFACE
        type: number
@@ -124,12 +124,12 @@ The ability to change the current working element allows us to either check the 
        'parameter name': ELEAK
        type: number
        value: -0.08
-    genesis > show_parameter /Purkinje/segments/b3s45[10] RM
+    genesis > parameter_show /Purkinje/segments/b3s45[10] RM
     value = 3    
-    genesis > set_model_parameter /Purkinje/segments/b3s45[10] RM 2.0
-    genesis > show_parameter /Purkinje/segments/b3s45[10] RM
+    genesis > model_parameter_add /Purkinje/segments/b3s45[10] RM 2.0
+    genesis > parameter_show /Purkinje/segments/b3s45[10] RM
     value = 2
-    genesis > show_parameter_scaled /Purkinje/segments/b3s45[10] RM
+    genesis > parameter_scaled_show /Purkinje/segments/b3s45[10] RM
     scaled value = 1.29328e+10
 \end{verbatim}
 
@@ -241,7 +241,7 @@ setting the maximum conductance of the $Ca_T$ channels located at the soma. To f
 \end{verbatim}
 The value of model parameters for $Ca_T$ channels located at the soma can then be found with:
 \begin{verbatim}
-   genesis > show_model_parameters /Purkinje/segments/soma/cat
+   genesis > model_parameter_show /Purkinje/segments/soma/cat
      -
        'parameter name': G_MAX
        type: number
@@ -250,11 +250,11 @@ The value of model parameters for $Ca_T$ channels located at the soma can then b
 \end{verbatim}
 The runtime value of {\tt G\_MAX} can then be set with the following command:
 \begin{verbatim}
-   genesis > set_runtime_parameter /Purkinje/segments/soma/cat G_MAX 4
+   genesis > runtime_parameter_add /Purkinje/segments/soma/cat G_MAX 4
 \end{verbatim}
 To check that the parameter value has been correctly set, enter:
 \begin{verbatim}
-   genesis > show_runtime_parameters /Purkinje/segments/soma/cat G_MAX
+   genesis > runtime_parameter_show /Purkinje/segments/soma/cat G_MAX
    ---
    runtime_parameters:
       - component_name: /Purkinje/segments/soma/cat
@@ -264,7 +264,7 @@ To check that the parameter value has been correctly set, enter:
 \end{verbatim}
 {\bf Note:} Only the run time value of this parameter has been altered. The default value defined by the model is unaffected:
 \begin{verbatim}
-   genesis > show_model_parameters /Purkinje/segments/soma/cat
+   genesis > model_parameter_show /Purkinje/segments/soma/cat
      -
        'parameter name': G_MAX
        type: number
@@ -279,12 +279,12 @@ There are currently three ways to provide stimulation inputs to a single cell mo
 
 A 2\,nA current injection can be applied to the soma with the following command:
 \begin{verbatim}
-   genesis > set_runtime_parameter /Purkinje/segments/soma INJECT 2e-9
+   genesis > runtime_parameter_add /Purkinje/segments/soma INJECT 2e-9
 \end{verbatim}
 
 Information about these runtime parameters can be obtained with:
 \begin{verbatim}
-   genesis > show_runtime_parameters
+   genesis > runtime_parameter_show
    ---
    runtime_parameters:
       - component_name: /Purkinje/segments/soma
@@ -308,15 +308,15 @@ RTXI is a collaborative open-source software development project aimed at produc
    \item{\bf Endogenous Poissonian Synaptic Activation:} This provides the simplest way to activate synapses.
    \paragraph{Excitatory:} The following command applies a Poisson stream of event times at 25\,Hz to glutamate synapses on spine heads.
 \begin{verbatim}
-genesis > set_runtime_parameter spine::/Purk_spine/head/par FREQUENCY 25
+genesis > runtime_parameter_add spine::/Purk_spine/head/par FREQUENCY 25
 \end{verbatim}
    \paragraph{Inhibitory:} The following command applies a Poisson stream of event times at 1\,Hz to GABAergic synapses on dendrites flagged as thick.
 \begin{verbatim}
-genesis > set_runtime_parameter thickd::gaba::/Purk_GABA FREQUENCY 1
+genesis > runtime_parameter_add thickd::gaba::/Purk_GABA FREQUENCY 1
 \end{verbatim}
 Information about the run time parameters that have been set can be obtained with:
 \begin{verbatim}
-genesis > show_runtime_parameters
+genesis > runtime_parameter_show
 \end{verbatim}
 which for the endogenous excitatory and inhibitory Poissonian synaptic activation set above would return:
 \begin{verbatim} 
@@ -335,12 +335,12 @@ runtime_parameters:
    
    After identifying which synapses should be activated, e.g.
    \begin{verbatim}
-genesis > show_parameter /Purkinje/segments/b1s06[182] SOMATOPETAL_BRANCHPOINTS
+genesis > parameter_show /Purkinje/segments/b1s06[182] SOMATOPETAL_BRANCHPOINTS
    value = 23 
    \end{verbatim}
    The event list can then be attached to the spine heads of the specified dendritic segment:
    \begin{verbatim}
-genesis > set_runtime_parameter /Purkinje/segments/b1s06[182]/Purkinje_spine_0/head/par/synapse EVENT_FILENAME event_data/events.yml
+genesis > runtime_parameter_add /Purkinje/segments/b1s06[182]/Purkinje_spine_0/head/par/synapse EVENT_FILENAME event_data/events.yml
    \end{verbatim}   
 \end{enumerate}
 
@@ -348,8 +348,8 @@ genesis > set_runtime_parameter /Purkinje/segments/b1s06[182]/Purkinje_spine_0/h
 
 Outputs can be specified from any number of compartments and can consist of any variable known to the mathematical solvers. For example, the following commands will define simulation outputs from the soma for the membrane potential ($V_m$) and calcium concentration ($[Ca]_{in}$):
 \begin{verbatim}
-   genesis > add_output /Purkinje/segments/soma Vm
-   genesis > add_output /Purkinje/segments/soma/ca_pool Ca
+   genesis > output_add /Purkinje/segments/soma Vm
+   genesis > output_add /Purkinje/segments/soma/ca_pool Ca
 \end{verbatim}
 
 \subsection*{Check Simulation}
