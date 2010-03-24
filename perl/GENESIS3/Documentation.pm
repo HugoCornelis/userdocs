@@ -862,7 +862,7 @@ sub expand
 
     my $result;
 
-    # expand document keywords
+    # expand contents of each level of the documentation
 
     my $contents_documents
 	= {
@@ -888,6 +888,10 @@ sub expand
 	    $result = "for document $document_name: failed to execute ($command, $?)\n";
 	}
     }
+
+    #t expand related documentation links
+
+    #t expand dynamically generated snippets
 
     return $result;
 }
