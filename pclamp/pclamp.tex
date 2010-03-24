@@ -37,7 +37,7 @@ It is assumed that you are familiar with the contents of the following GENESIS d
 	
 	\item{\bf Check to see if the input class template for the perfect clamp is available in the shell:}
 	\begin{verbatim}
-	   genesis > list inputclass_templates
+	   genesis > inputclass_templates_show
 	\end{verbatim}
 	This request should generate the following output:
 	\begin{verbatim}
@@ -57,13 +57,13 @@ It is assumed that you are familiar with the contents of the following GENESIS d
 
 	\item{\bf Create the voltage clamp circuitry object:} Enter the following commands on a single input line:
 	\begin{verbatim}
-	   genesis > add_inputclass perfectclamp voltage_clamp_protocol name voltage_clamp_protocol command -0.060
+	   genesis > inputclass_add perfectclamp voltage_clamp_protocol name voltage_clamp_protocol command -0.060
 	\end{verbatim}
 	These commands create a voltage clamp object with a command voltage or holding potential of -60\,mV. (Remember that GENESIS uses SI units.)
 	
 	\item{\bf Check that the voltage clamp object has been created:}
 	\begin{verbatim}
-	   genesis > list inputclasses
+	   genesis > inputclass_show
 	\end{verbatim}
 	This request should generate a description of the voltage clamp object you have just created:
 	\begin{verbatim}
@@ -82,12 +82,12 @@ It is assumed that you are familiar with the contents of the following GENESIS d
 \begin{enumerate}
 	\item{\bf Apply the voltage clamp at the Purkinje cell soma:}
 	\begin{verbatim}
-	   genesis > add_input voltage_clamp_protocol /Purkinje/segments/soma Vm
+	   genesis > input_add voltage_clamp_protocol /Purkinje/segments/soma Vm
 	\end{verbatim}
 	
 	\item{\bf Check that the voltage clamp has been correctly applied:}
 	\begin{verbatim}
-	   genesis > show_inputs
+	   genesis > input_add
 	\end{verbatim}
 	This request should return information about the voltage clamp input applied to the Purkinje cell soma:
 	\begin{verbatim}
@@ -102,13 +102,13 @@ It is assumed that you are familiar with the contents of the following GENESIS d
 \begin{enumerate}
 	\item{\bf Create the current clamp circuitry object:} Enter the following commands on a single input line:
 	\begin{verbatim}
-	   genesis > add_inputclass perfectclamp current_clamp_protocol name current_clamp_protocol command 1e-9
+	   genesis > inputclass_add perfectclamp current_clamp_protocol name current_clamp_protocol command 1e-9
 	\end{verbatim}
 	These commands create a current clamp object with a command current of 1\,nA. (Remember that GENESIS uses SI units.)
 	
 	\item{\bf Check that the current clamp object has been created:}
 	\begin{verbatim}
-	   genesis > list inputclasses
+	   genesis > inputclass_show
 	\end{verbatim}
 	This request should generate a description of the current clamp object you have just created:
 	\begin{verbatim}
@@ -127,12 +127,12 @@ It is assumed that you are familiar with the contents of the following GENESIS d
 \begin{enumerate}	
 	\item{\bf Apply the current clamp at the Purkinje cell soma:}
 	\begin{verbatim}
-	   genesis > add_input current_clamp_protocol /Purkinje/segments/soma INJECT
+	   genesis > input_add current_clamp_protocol /Purkinje/segments/soma INJECT
 	\end{verbatim}
 	
 	\item{\bf Check that the current clamp has been correctly applied:}
 	\begin{verbatim}
-	   genesis > show_inputs
+	   genesis > input_show
 	\end{verbatim}
 	This request should return information about the current clamp input applied to the Purkinje cell soma:
 	\begin{verbatim}
@@ -147,18 +147,18 @@ It is assumed that you are familiar with the contents of the following GENESIS d
 \begin{enumerate}
 	\item{\bf Add an output for the somatic clamp:}
 	\begin{verbatim}
-	   genesis  > add_output /Purkinje/segments/soma Vm
+	   genesis  > output_add /Purkinje/segments/soma Vm
 	\end{verbatim}
 	
 	\item{\bf Add a dendritic output:} Similarly, we can add an output for the voltage clamp to one or more dendritic compartments.
 	\begin{verbatim}
-	   genesis > add_output /Purkinje/segments/b0s01[56] Vm
-	   genesis > add_output /Purkinje/segments/b1s06[137] Vm
+	   genesis > output_add /Purkinje/segments/b0s01[56] Vm
+	   genesis > output_add /Purkinje/segments/b1s06[137] Vm
 	   . . .
 	\end{verbatim}
 	{\bf Note:} For the model cell loaded, you can identify the path and name of dendritic segments with the following command:
 	\begin{verbatim}
-	   genesis > list-elements /Purkinje/segments
+	   genesis > list_elements /Purkinje/segments
 	\end{verbatim}	
 	This generates a (long) list of all segments in the morphology of the cell that is loaded. For more information about traversing the cell model see \href{../tutorial2/tutorial2.tex}{Tutorial 2}.
 \end{enumerate}
