@@ -18,10 +18,10 @@ In this first of two introductory tutorials you will be guided through a brief s
 \begin{verbatim}
     create cell /n
     create segment /n/soma
-    set_model_parameter /n/soma Vm_init -0.068
+    model_parameter_add /n/soma Vm_init -0.068
     . . .
-    set_runtime_parameter /n/soma INJECT 2e-9
-    add_output /n/soma Vm
+    runtime_parameter_add /n/soma INJECT 2e-9
+    output_add /n/soma Vm
     run /n 0.1
     simulation_state_save /n
     . . . 
@@ -98,13 +98,13 @@ Note that the {\it create} command only operates on single elements, whereas, th
 
 Once the element {\it /n/soma} exists, we can set (1) morphological  parameters of the segment such as the diameter ({\tt DIA}) and length ({\tt LENGTH}), (2) passive parameters such as  the membrane resistance ($R_M$), axial resistance ($R_A$), membrane capacitance ($C_M$), and the leak conductance ($E_{leak}$), and (3) initialize segment parameter values such as the initial membrane potential ($Vm_{init}$), e.g.
 \begin{verbatim}
-    genesis > set_model_parameter /n/soma DIA 2e-5
-    genesis > set_model_parameter /n/soma LENGTH 4.47e-5
-    genesis > set_model_parameter /n/soma CM 0.0164
-    genesis > set_model_parameter /n/soma RM 1.500
-    genesis > set_model_parameter /n/soma RA 2.50
-    genesis > set_model_parameter /n/soma ELEAK -0.080
-    genesis > set_model_parameter /n/soma Vm_init -0.0680
+    genesis > model_parameter_add /n/soma DIA 2e-5
+    genesis > model_parameter_add /n/soma LENGTH 4.47e-5
+    genesis > model_parameter_add /n/soma CM 0.0164
+    genesis > model_parameter_add /n/soma RM 1.500
+    genesis > model_parameter_add /n/soma RA 2.50
+    genesis > model_parameter_add /n/soma ELEAK -0.080
+    genesis > model_parameter_add /n/soma Vm_init -0.0680
 \end{verbatim}
 
 Importantly, remember that GENESIS assumes parameter values are in SI units, which in the case of $C_M$ is Farads$\cdot$m$^{-2}$ ($F/m^2$) and for $R_M$ and $R_A$ Amperes$\cdot$m$^{-2}$ ($A/m^2$).
@@ -113,13 +113,13 @@ Importantly, remember that GENESIS assumes parameter values are in SI units, whi
 
 In the case of our simple single compartment cell, the model is most easily explored by checking parameter values. It is particularly useful to check them at this stage in the work flow, to ensure that they have been correctly set. For example to check {\tt CM}
 \begin{verbatim}
-    genesis > show_parameter /n/soma CM
+    genesis > parameter_show /n/soma CM
         value = 0.0164
 \end{verbatim}
 
 We now also demonstrate a powerful new feature of GENESIS. That is, although we have set only the model parameters {\tt RM} and {\tt CM}, we can query our model for the membrane time constant {\tt TAU} (from $\tau$ = {\tt RM}$\cdot${\tt CM}). This is possible as, through the \href{../model-container/model-container.tex}{Model Container}, the GENESIS shell is aware of neuronal morphology, membrane, and intracellular parameters. The Model Container can infer a number of properties about an element and it will calculate and provide derived parameter values when the GENESIS shell is queried. This is made possible by the hierarchical relations maintained by the Model Container between an element and its parents, children, and sibling's parameters. For example,
 \begin{verbatim}
-    genesis > show_parameter /n/soma TAU
+    genesis > parameter_show /n/soma TAU
         value = 0.0246
 \end{verbatim}
 
@@ -156,7 +156,7 @@ Simulation inputs typically involve synaptic activation. However, as in this int
 
 Having created a passive neuron, we can now define the output, typically the membrane potential ($V_m$)
 \begin{verbatim}
-   genesis > add_output /n/soma Vm
+   genesis > output_add /n/soma Vm
 \end{verbatim}
 By default, simulation output is placed in the file {\it /tmp/output}, where it can be viewed following termination of the simulation with
 \begin{verbatim}
