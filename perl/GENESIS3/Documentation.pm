@@ -9,6 +9,62 @@ use strict;
 package GENESIS3::Documentation;
 
 
+our $documents;
+
+
+sub find_documentation
+{
+    use YAML;
+
+    my $args = shift;
+
+    my $names = $args->{names} || [];
+
+    my $tags = $args->{tags} || [];
+
+    # get all documents explicitly asked for
+
+    $documents
+	= {
+	   map
+	   {
+	       $_ => 1,
+	   }
+	   (
+	    @$names
+	    ? @$names
+	    : @{ local $/ ; @{$args->{tags}} ? [] : Load(`userdocs-tag-filter 2>&1 "published"`) },
+	   ),
+	  };
+
+    # get all documents selected by tags
+
+    foreach my $tag (@$tags)
+    {
+	local $/;
+
+	my $documents_tag = Load(`userdocs-tag-filter 2>&1 "published" "$tag"`);
+
+	if (!scalar @$documents_tag)
+	{
+	    next;
+	}
+	
+	$documents
+	    = {
+	       %$documents,
+	       map
+	       {
+		   $_ => $tag,
+	       }
+	       @$documents_tag,
+	      };
+    }
+
+    return $documents;
+}
+
+
 package GENESIS3::Documentation::Publications;
 
 
