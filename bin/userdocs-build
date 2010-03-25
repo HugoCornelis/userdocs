@@ -34,6 +34,9 @@ use YAML;
 
 $SIG{__DIE__}
     = sub {
+
+	GENESIS3::Documentation::Publications::publish_production_results();
+
 	use Carp;
 
 	confess @_;
