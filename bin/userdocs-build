@@ -53,6 +53,7 @@ $SIG{INT}
     };
 
 
+my $option_check;
 my $option_dry_run;
 my $option_parse_only = 0;
 my $option_regex = ".*";
@@ -130,13 +131,18 @@ sub main
 
 	    my $operation_result = {};
 
-	    foreach my $operation (
-				   qw(copy
-				      expand
-				      build
-				      publish
-				    )
-				  )
+	    my $operations
+		= [
+		   $option_check
+		   ? 'check'
+		   : qw(copy
+			expand
+			build
+			publish
+		      )
+		  ];
+
+	    foreach my $operation (@$operations)
 	    {
 		# execute the operation
 
@@ -173,6 +179,7 @@ sub read_cmd_line
 
     my $result
 	= GetOptions(
+		     "check!" => \$option_check,
 		     "dry-run!" => \$option_dry_run,
 		     "help!" => \$option_help,
 		     "parse-only!" => \$option_parse_only,
@@ -211,6 +218,7 @@ synopsis:
     $0 <document name1> <document name2> ...
 
 options:
+    --check           check documentation filesystem correctness.
     --dry-run         print what documents would be build without actually building them.
     --help            print usage information.
     --parse-only      only execute parse commands, without actually building documentation.

@@ -61,3 +61,42 @@ sub main
 main()
 
 
+# #!/usr/bin/perl -w
+# #!/usr/bin/perl -d:ptkdb -w
+# #
+
+
+# use strict;
+
+
+# use Getopt::Long;
+
+# use YAML;
+
+
+# my $option_regex_selector;
+# my $option_tags = [];
+# my $option_verbose;
+
+# {
+#     my $result
+# 	= GetOptions
+# 	    (
+# 	     "regex-selector=s" => \$option_regex_selector,
+# 	     "tags=s" => $option_tags,
+# 	     "v|verbose+" => \$option_verbose,
+# 	    );
+
+#     if (!$result)
+#     {
+# 	die "$0: *** Error: Error in option processing";
+#     }
+# }
+
+# my $regex_options = defined $option_regex_selector ? "--regex '$option_regex_selector' " : '';
+# my $tags_options = scalar @$option_tags ? (join "--tag ", @$option_tags) : '';
+# my $verbose_options = defined $option_verbose ? "--verbose " x $option_verbose : '';
+
+# system "userdocs-build --check $verbose_options $regex_options $tags_options";
+
+

@@ -728,6 +728,31 @@ sub build_wav
 }
 
 
+sub check
+{
+    my $self = shift;
+
+    my $options = shift;
+
+    my $result;
+
+    print "Checking $self->{name}\n";
+
+    if ($self->read_descriptor())
+    {
+	$result = "cannot read descriptor for $self->{name}";
+    }
+
+    if (!$self->{descriptor}->{tags}
+	|| ref $self->{descriptor}->{tags} !~ /ARRAY/)
+    {
+	$result = "invalid tag specification";
+    }
+
+    return $result;
+}
+
+
 sub copy
 {
     my $self = shift;
