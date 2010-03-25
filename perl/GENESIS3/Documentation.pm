@@ -133,9 +133,11 @@ sub build
 
     # read the descriptor
 
-    if ($self->read_descriptor())
+    my $descriptor_error = $self->read_descriptor();
+
+    if ($descriptor_error)
     {
-	$result = "cannot read descriptor for $self->{name}";
+	$result = "cannot read descriptor for $self->{name} ($descriptor_error)";
     }
 
     if ($options->{verbose})
@@ -738,9 +740,11 @@ sub check
 
     print "Checking $self->{name}\n";
 
-    if ($self->read_descriptor())
+    my $descriptor_error = $self->read_descriptor();
+
+    if ($descriptor_error)
     {
-	$result = "cannot read descriptor for $self->{name}";
+	$result = "cannot read descriptor for $self->{name} ($descriptor_error)";
     }
 
     if (!$self->{descriptor}->{tags}
@@ -970,9 +974,34 @@ sub expand
 	}
     }
 
-    #t expand related documentation links
+#     # expand related documentation links
+
+#     if (not $result)
+#     {
+# 	# loop over all related information tags
+
+# 	my $related_tags = $self->related_tags();
+
+# 	foreach my $related_tag (@$related_tags)
+# 	{
+# 	    # expand the document
+
+# 	    my $command = "userdocs-tag-replace-items $related_tag $document_name/$document_name.tex --verbose";
+
+# 	    system $command;
+
+# 	    if ($?)
+# 	    {
+# 		$result = "for document $document_name: failed to execute ($command, $?)\n";
+
+# 		last;
+# 	    }
+# 	}
+#     }
 
     #t expand dynamically generated snippets
+
+    # return result
 
     return $result;
 }
@@ -1089,9 +1118,11 @@ sub publish
 
     # read the descriptor
 
-    if ($self->read_descriptor())
+    my $descriptor_error = $self->read_descriptor();
+
+    if ($descriptor_error)
     {
-	$result = "cannot read descriptor for $self->{name}";
+	$result = "cannot read descriptor for $self->{name} ($descriptor_error)";
     }
 
     my $directory = $self->{name};
@@ -1208,6 +1239,35 @@ sub read_descriptor
     }
 }
 
+
+sub related_tags
+{
+    my $self = shift;
+
+    my $result;
+
+    my $descriptor_error = $self->read_descriptor();
+
+    if ($descriptor_error)
+    {
+	$result = "cannot read descriptor for $self->{name} ($descriptor_error)";
+    }
+
+    my $tags = $self->{descriptor}->{tags};
+
+    $result = [];
+
+    foreach my $tag (@$tags)
+    {
+	if ($tag =~ /^related-/)
+	{
+	    push @$result, $tag;
+	}
+    }
+
+    return $result;
+}
+	
 
 sub source_filenames
 {
