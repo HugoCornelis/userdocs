@@ -32,6 +32,24 @@ use Getopt::Long;
 use YAML;
 
 
+$SIG{__DIE__}
+    = sub {
+	use Carp;
+
+	confess @_;
+    };
+
+
+$SIG{INT}
+    = sub {
+	use Carp;
+
+	confess @_;
+
+	exit 1;
+    };
+
+
 my $option_parse_only = 0;
 my $option_regex = ".*";
 my $option_tags = [];
