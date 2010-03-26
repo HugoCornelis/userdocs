@@ -25,7 +25,60 @@
 
 \item {\bf Xrefactory cross references:} A {\it cronjob} which builds a set of html pages built in \href{http://www.xref-tech.com/xrefactory/main.html}{\bf Xrefactory} that lists function references.  Requires Xrefactory with a configuration file that has been specifically configured for the GENESIS project directory tree. 
 
+\item {\bf cronjobs:} The genesis repository repo-genesis3.cbi.utsa.edu executes the following cronjobs:
+
+\begin{itemize}
+\item[] {\bf neurospaces\_cron - Executes at 12:01am, 8:00 am, 8:00 pm:}
+	\item {\it configuration details:} 
+\begin{itemize}
+
+	\item Email notification from address g3tester@repo-genesis3.cbi.utsa.edu
+	\item Log output to /var/www/html/tests, served over the web at \href{http://repo-genesis3.cbi.utsa.edu/tests/}{\it http://repo-genesis3.cbi.utsa.edu/tests/}
+	\item Logrotate for 100 logs
 \end{itemize}
+		
+\item[] {\bf neurospaces\_cron (static installation) \- goes off at 4:00 am, 4:00 pm:}
+	\item {\it configuration details:} 
+\begin{itemize}
+
+	\item Email notification from address g3tester@repo-genesis3.cbi.utsa.edu
+	\item Log output to /var/www/html/tests, served over the web at \href{http://repo-genesis3.cbi.utsa.edu/tests/}{\it http://repo-genesis3.cbi.utsa.edu/tests/}
+	\item Logrotate for 100 logs
+\end{itemize}
+
+\item[] {\bf neurospaces\_cron \- 12:01 pm:}
+	\item {\it configuration details:} 
+\begin{itemize}
+
+	\item Email notification from address g3tester@repo-genesis3.cbi.utsa.edu
+	\item Log output to /var/www/html/tests, served over the web at \href{http://repo-genesis3.cbi.utsa.edu/tests/}{\it http://repo-genesis3.cbi.utsa.edu/tests/}
+	\item Logrotate for 100 logs
+	\item Build doxygen to /var/www/html/doxygen, served over the web at \href{http://repo-genesis3.cbi.utsa.edu/doxygen}{\it http://repo-genesis3.cbi.utsa.edu/doxygen}
+	\item Build Regression test output to /var/www/html/regtests, served over the web at \href{http://repo-genesis3.cbi.utsa.edu/regtests}{\it http://repo-genesis3.cbi.utsa.edu/regtests}
+\end{itemize}
+
+\item[] {\bf userdocs\_cron \- Executes every 2 hours:}
+	\item {\it configuration details:} 
+\begin{itemize}
+
+	\item Log output to /var/www/html/tests, served over the web at \href{http://repo-genesis3.cbi.utsa.edu/tests/}{\it http://repo-genesis3.cbi.utsa.edu/tests/}
+	\item Documentation is served over the web at \href{http://repo-genesis3.cbi.utsa.edu/userdocs/}{\it http://repo-genesis3.cbi.utsa.edu/userdocs/}
+\end{itemize}
+
+\item[] {\bf xrefdocs \- 1:01 am:}
+\begin{itemize}
+	\item Builds the xrefactory documentation every morning. 
+\end{itemize}
+\end{itemize}
+
+\end{itemize}
+
+
+
+
+
+
+
 
 \subsection*{\bf darwin.cbi.utsa.edu}
 
@@ -35,6 +88,25 @@
 
 \item {\bf Automated user documentation:} Builds the \href{../documentation-overview/documentation-overview.tex}{\bf GENESIS Documentation System} and puts it on a link available from the GENESIS website.  Uses {\it htlatex} and is very resource intensive.  See \href{../userdocs-cron/userdocs-cron.tex}{\it userdocs-cron}.
 
+
+\item {\bf cronjobs:} The genesis web server darwin.cbi.utsa.edu executes the following cronjobs:
+\begin{itemize}
+	\item {\bf userdocs\_cron - Executes every 6 hours:}
+	\item {\it configuration details:} 
+	\begin{itemize} 
+	\item Email notification from address genesis@darwin.cbi.utsa.edu
+	\item Log output to /home/genesis, not served over the web
+	\item Documentation is served over the web at \href{http://genesis-sim.org/userdocs}{\it http://genesis-sim.org/userdocs}
+	\end{itemize}
 \end{itemize}
+\end{itemize}
+
+
+
+
+
+
+
+
 
 \end{document}
