@@ -1,0 +1,45 @@
+The GENESIS (GEneral NEural SImulation System,
+http://genesis-sim.org/) simulation platform was one of the first
+broad-scale modeling systems in computational biology to encourage
+modelers to develop and share model features and components.
+Supported by a large developer community the GENESIS simulator
+participated in innovative simulator technologies such as
+benchmarking, parallelization and declarative model specification and
+it was the first neural simulator to define binding for the Python
+scripting language.
+
+An important feature of the latest version of GENESIS, GENESIS 3.0
+(G-3), is that it decomposes into self-contained software components,
+that conform to the CBI simulator architecture.  This federated
+architecture allows separate scripting bindings to be defined for the
+mathematical solvers and the GUI, as well as for other necessary
+simulator components.
+
+Python and Perl are scripting languages that provide rich sets of
+freely available open source libraries.  With a clean dynamic
+object-oriented design producing highly readable code, Python and Perl
+are widely employed in specialized areas of software component
+integration.  SWIG (Simplified Wrapper and Interface Generator)
+examines an application programming interface (API) and makes it
+available to a scripting language of choice.  This way the software
+components of the G-3 simulator can be glued together, instantiated
+and connected to external libraries and applications from user-defined
+scripts in either Python or Perl.
+
+We illustrate this approach with examples using Python scripting.  The
+first example uses a mathematical solver as a stand-alone software
+component driven from a Python script that generates and runs a simple
+single compartment model neuron.  This script is then contrasted with
+C code and GENESIS 2 (G-2) implementations that connect to the same
+mathematical solver.  The second example interfaces the mathematical
+solver to a modeling environment for the exploration of a neuron
+morphology from an interactive command-line and a graphical shell.
+The third example applies scripting bindings to connect the G-3
+simulator to external graphical libraries and an open source 3D
+content creation suite. This allows us to visualize 3D models based on
+electron microscopy and convert them to computational models.
+
+Employed this way the stand-alone software components of the G-3
+simulator provide a framework for progressive federated development in
+the computational neurosciences.
+

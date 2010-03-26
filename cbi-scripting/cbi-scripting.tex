@@ -29,7 +29,7 @@ modelers to develop and share model features and components.
 Supported by a large developer community the GENESIS simulator
 participated in innovative simulator technologies such as
 benchmarking\,\cite{bhalla92:_rallp},
-parallelization\cite{goddard98:_book_genes} and declarative model
+parallelization\,\cite{goddard98:_book_genes} and declarative model
 specification\,\cite{nigel01:_towar_neurom} and it was the first
 neural simulator to define binding for the Python scripting
 language\,\cite{vanier97:_genes_python}.
@@ -55,8 +55,8 @@ integration\,\cite{thiruvathukal01:_web_progr_python,
 SWIG (Simplified Wrapper and Interface
 Generator\,\cite{08:_simpl_wrapp_inter_gener}) examines an application
 programming interface (API) and makes it available to a scripting
-language of choice.  This way the software components of the GENESIS
-3.0 simulator can be glued together, instantiated and connected to
+language of choice.  This way the software components of the G-3
+simulator can be glued together, instantiated and connected to
 external libraries and applications from user-defined scripts in
 either Python or Perl.
 
@@ -69,17 +69,17 @@ either Python or Perl.
 %minimize the maintenance costs of existing code and simplify addition
 %of new functionality\,\cite{08:_swig_python,08:_swig_perl}.
 
-We illustrate this approach with examples.  The first example uses a
+We illustrate this approach with examples using Python scripting.  The first example uses a
 mathematical solver as a stand-alone software component driven from a
 Python script that generates and runs a simple single compartment
-model neuron.  The Python script is then contrasted with C code and
+model neuron.  This script is then contrasted with C code and
 GENESIS 2 (G-2) implementations that connect to the same mathematical
-solver.  The second example glues the mathematical solver to a
+solver.  The second example interfaces the mathematical solver to a
 modeling environment for the exploration of a neuron morphology from
 an interactive command-line and a graphical shell.  The third example
-applies the scripting bindings to connect the G-3 simulator to
+applies scripting bindings to connect the G-3 simulator to
 external graphical libraries and an open source 3D content creation
-suite.  We use these bindings to visualize 3D models based on electron
+suite. This allows us to visualize 3D models based on electron
 microscopy and convert them to computational
 models\,\cite{cornelis08:_model_neuros_genes}.
 
@@ -772,7 +772,7 @@ a format used by solvers.
 struct Compartment compSoma = & \\
 \{ & \\
  // type of structure & create neutral /cell \\
- { MATH\_TYPE\_Compartment, }, & create compartment /cell/soma \\
+ \{ MATH\_TYPE\_Compartment, \}, & create compartment /cell/soma \\
  & setfield /cell/soma dia 2e-05 \\
  -1,  // no parent compartment & setfield /cell/soma len 4.47e-05 \\
  4.57537e-11, // Cm & setfield /cell/soma Cm 4.60608e-11 \\
@@ -1485,8 +1485,8 @@ Because it is optimized for communication over serial hardware, DES
 can be extended to support communication frameworks for parallel
 hardware such as those provided by the MOOSE
 simulator\,\cite{ray08:_pymoos} and the MUSIC
-framework\,\cite{ekeberg08:_music_multis_coord,
-  djurfeldt10:_run_time_inter_between_neuron}.
+framework\,\cite{djurfeldt10:_run_time_inter_between_neuron}.
+%ekeberg08:_music_multis_coord,
 
 The NeuroMorpho.Org database of neuronal morphologies
 (http://www.neuromorpho.org/) is a centrally curated inventory of
@@ -1595,7 +1595,9 @@ Hugo Cornelis is partially supported by the CREA Financing program (CREA/07/027)
 % Bibliography
 \cleardoublepage
 \pagenumbering{roman}
-\bibliographystyle{abbrv}
+%\bibliographystyle{cell}
+\bibliographystyle{apalike}
+%\bibliographystyle{abbrv}
 %\bibliography{DDDAS_bib_library}
 %\bibliography{crest2008,Qian,DDDAS_bib_library}
 \bibliography{../tex/bib/g3-refs}
