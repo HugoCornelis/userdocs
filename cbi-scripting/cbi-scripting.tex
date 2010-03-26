@@ -772,7 +772,7 @@ a format used by solvers.
 struct Compartment compSoma = & \\
 \{ & \\
  // type of structure & create neutral /cell \\
- { MATH\_TYPE\_Compartment, }, & create compartment /cell/soma \\
+ \{ MATH\_TYPE\_Compartment, \}, & create compartment /cell/soma \\
  & setfield /cell/soma dia 2e-05 \\
  -1,  // no parent compartment & setfield /cell/soma len 4.47e-05 \\
  4.57537e-11, // Cm & setfield /cell/soma Cm 4.60608e-11 \\
@@ -1485,8 +1485,8 @@ Because it is optimized for communication over serial hardware, DES
 can be extended to support communication frameworks for parallel
 hardware such as those provided by the MOOSE
 simulator\,\cite{ray08:_pymoos} and the MUSIC
-framework\,\cite{ekeberg08:_music_multis_coord,
-  djurfeldt10:_run_time_inter_between_neuron}.
+framework\,\cite{djurfeldt10:_run_time_inter_between_neuron}.
+%ekeberg08:_music_multis_coord,
 
 The NeuroMorpho.Org database of neuronal morphologies
 (http://www.neuromorpho.org/) is a centrally curated inventory of
@@ -1595,7 +1595,9 @@ Hugo Cornelis is partially supported by the CREA Financing program (CREA/07/027)
 % Bibliography
 \cleardoublepage
 \pagenumbering{roman}
-\bibliographystyle{abbrv}
+%\bibliographystyle{cell}
+\bibliographystyle{apalike}
+%\bibliographystyle{abbrv}
 %\bibliography{DDDAS_bib_library}
 %\bibliography{crest2008,Qian,DDDAS_bib_library}
 \bibliography{../tex/bib/g3-refs}
