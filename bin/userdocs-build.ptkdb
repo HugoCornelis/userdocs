@@ -3,13 +3,24 @@ $files = {
                                        {
                                          'expr' => undef,
                                          'value' => '1',
-                                         'text' => '	if ($document_name !~ m/$option_regex/)
+                                         'text' => '		my $error = $document->$operation( { verbose => $option_verbose, }, );
 ',
                                          'fname' => 'bin/userdocs-build',
                                          'type' => 'user',
-                                         'line' => '106'
+                                         'line' => '149'
                                        }
-                                     ]
+                                     ],
+           '_<perl/GENESIS3/Documentation.pm' => [
+                                                   {
+                                                     'expr' => undef,
+                                                     'value' => '1',
+                                                     'text' => '	my $related_tags = $self->related_tags();
+',
+                                                     'fname' => 'perl/GENESIS3/Documentation.pm',
+                                                     'type' => 'user',
+                                                     'line' => '983'
+                                                   }
+                                                 ]
          };
 $expr_list = [
                {
@@ -22,6 +33,10 @@ $expr_list = [
                },
                {
                  'expr' => '$document_name',
+                 'depth' => -1
+               },
+               {
+                 'expr' => '$operation',
                  'depth' => -1
                }
              ];
