@@ -43,7 +43,7 @@ sub find_documentation
     {
 	local $/;
 
-	my $documents_tag = Load(`userdocs-tag-filter 2>&1 "published" "$tag"`);
+	my $documents_tag = Load(`userdocs-tag-filter 2>&1 "$tag"`);
 
 	if (!scalar @$documents_tag)
 	{

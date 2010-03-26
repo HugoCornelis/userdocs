@@ -142,7 +142,10 @@ website-clean:
 	$(RM) -fr html/htdocs/neurospaces_project/userdocs/
 
 website-prepare:
-	userdocs-build --tags level1 --tags level2 --tags level3 --tags level4 --tags level5 --tags level6 --tags level7 --verbose
+	userdocs-build --tags published
+
+website-prepare-local:
+	userdocs-build --tags local --tags published
 
 website-upload: website-clean website-prepare html-upload
 
