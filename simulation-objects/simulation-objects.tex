@@ -15,13 +15,19 @@
 
 \section*{Simulation Objects}
 
-Simulation objects are defined at the lowest level of the \href{../genesis-overview/genesis-overview.tex}{\bf CBI\,Federated\,Software\,Architecture}. They comprise everything that is declared as a solver object in a \href{../ssp/ssp.tex}{\bf SSP} file.
+Simulation objects are defined at the lowest level of the
+\href{../genesis-overview/genesis-overview.tex}{\bf
+  CBI\,Federated\,Software\,Architecture}.  They comprise everything
+that is declared as a solver object in a \href{../ssp/ssp.tex}{\bf
+  SSP} file.
 
 \begin{itemize}
 
 \item {\bf Input objects:}
    \begin{itemize}
-      \item \href{../pclamp/pclamp.tex}{\bf Perfect\,Clamp} utility
+   \item \href{../pclamp/pclamp.tex}{\bf Perfect\,Clamp} utility for
+     injecting a constant value into a simulation, for instance to
+     create a voltage clamp or current clamp protocol.
    \end{itemize}
    
 \item{\bf Mathematical solvers:}
@@ -31,7 +37,12 @@ Simulation objects are defined at the lowest level of the \href{../genesis-overv
    
 \item {\bf Output objects:}
    \begin{itemize}
-      \item {\it asc\_out:} ascii output file object. Currently part of \href{../nssli/nssli.tex}{\bf NS-SLI} supporting \href{../backward-compatibility/backward-compatibility.tex}{\bf Backward-Compatibility} and shipped with the {\bf Heccer} software component)
+   \item {\it OutputGenerator:} ascii output file object shipped with
+     the {\bf Heccer} software component).
+   \item {\it asc\_out:} ascii output file object.  Currently part of
+     \href{../nssli/nssli.tex}{\bf NS-SLI} supporting
+     \href{../backward-compatibility/backward-compatibility.tex}{\bf
+       Backward-Compatibility}.
    \end{itemize}
 
 \end{itemize}
