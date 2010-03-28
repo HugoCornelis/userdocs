@@ -4,6 +4,7 @@
 \usepackage{color}
 \usepackage{url}
 \usepackage[colorlinks=true]{hyperref}
+\usepackage{scrtime}
 
 \begin{document}
 
@@ -17,11 +18,13 @@
 
 \subsection*{\bf repo-genesis3.cbi.utsa.edu}
 
+The GENESIS Server System as of date: {\bf\today, \thistime}
+
 \begin{itemize}
 
-\item {\bf monotone repository:} Serves the \href{http://www.monotone.ca/}{\bf monotone} repositories for the GENESIS project. Uses a port for each package to be served over the Internet.
+\item {\bf monotone repository:} Serves the \href{http://www.monotone.ca/}{\bf monotone} repositories for the GENESIS project. Uses a separate port for the source code of each \href{../genesis-components/genesis-components.tex}{software component} to be served over the Internet.
 
-\item {\bf \href{../neurospaces-tester/neurospaces-tester.tex}{Automated tester}:} A {\it cronjob} which performs a test of all packages available over the repository.  It takes at least 45 minutes to complete the tests. To serve tester output over the internet a directory owned by the non-privileged user that the {\it cronjob} runs as must be configured to be served over the internet.
+\item {\bf \href{../neurospaces-tester/neurospaces-tester.tex}{Automated tester}:} A {\it cronjob} which performs a test of all packages available over the repository.  It currently takes at least 45 minutes to complete the tests. To serve tester output over the internet a directory owned by the non-privileged user that the {\it cronjob} runs as must be configured to be served over the internet.
 
 \item {\bf Xrefactory cross references:} A {\it cronjob} which builds a set of html pages built in \href{http://www.xref-tech.com/xrefactory/main.html}{\bf Xrefactory} that lists function references.  Requires Xrefactory with a configuration file that has been specifically configured for the GENESIS project directory tree. 
 
@@ -67,7 +70,7 @@
 
 \item[] {\bf xrefdocs \- 1:01 am:}
 \begin{itemize}
-	\item Builds the xrefactory documentation every morning. 
+	\item Builds the xrefactory documentation every morning.  This documentation is available as \href{../contents-level6/contents-level6.tex}{level6} and \href{../contents-level7/contents-level7.tex}{level7} documentation.
 \end{itemize}
 \end{itemize}
 
@@ -86,7 +89,7 @@
 
 \item {\bf genesis-sim.org website:} The website for GENESIS uses the \href{http://drupal.org/}{\bf Drupal CMS} which requires \href{http://www.php.net/}{\bf php5} and a \href{http://www.mysql.com/}{\bf MYSQL} database.
 
-\item {\bf Automated user documentation:} Builds the \href{../documentation-overview/documentation-overview.tex}{\bf GENESIS Documentation System} and puts it on a link available from the GENESIS website.  Uses {\it htlatex} and is very resource intensive.  See \href{../userdocs-cron/userdocs-cron.tex}{\it userdocs-cron}.
+\item {\bf Automated user documentation:} Builds the \href{../documentation-overview/documentation-overview.tex}{\bf GENESIS Documentation System} and puts it on a link available from the GENESIS website.  Supports \LaTeX by use of {\it htlatex} and is very resource intensive.  Also supports {\bf doc}, {\bf rtf}, {\bf txt}, {\bf html}, {\bf ps}, {\bf pdf} and multimedia formats such as {\bf mpg} and {\bf wav}.  See also \href{../userdocs-cron/userdocs-cron.tex}{\it userdocs-cron}.
 
 
 \item {\bf cronjobs:} The genesis web server darwin.cbi.utsa.edu executes the following cronjobs:
