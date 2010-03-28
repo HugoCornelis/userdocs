@@ -85,7 +85,26 @@ sub publish_production_results
 {
     use YAML;
 
+    my $result;
+
     print Dump( { all_publication_results => $all_publication_results, }, );
+
+    use IO::File;
+
+    my $results = IO::File->new(">/tmp/all_publication_results");
+
+    if ($results)
+    {
+	print $results Dump( { all_publication_results => $all_publication_results, }, );
+    }
+    else
+    {
+	print "$0: *** Error: cannot all_publication_results write to /tmp/all_publication_results\n";
+
+	$result = "cannot all_publication_results write to /tmp/all_publication_results";
+    }
+
+    return $result;
 }
 
 
