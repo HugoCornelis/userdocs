@@ -72,7 +72,7 @@ sub main
   try_to("make website-prepare -C ~/neurospaces_project/userdocs/source/snapshots/0/ > $output_path",1);
 
   # now do a link check.
-  try_to("make webcheck -C ~/neurospaces_project/userdocs/source/snapshots/0/ > $output_path",1);
+  try_to("make webcheck -C ~/neurospaces_project/userdocs/source/snapshots/0/ >> $output_path",1);
 
   my $text = produce_email_text();
 
@@ -107,9 +107,28 @@ sub produce_email_text
 
   if (defined $configuration->{URL})
   {
-      $status_message .= "Check the test output over the web via this link " . $configuration->{URL} . "\n";
+      $status_message .= "Check the output over the web via this link " . $configuration->{URL} . "\n";
   }
 
+
+  # add the publication report produced during the build
+
+  use IO::File;
+
+  my $publication_report_file = IO::File->new("</tmp/all_publication_results");
+
+  if ($publication_report_file)
+  {
+      local $/;
+
+      my $publication_report = <$publication_report_file>;
+
+      $status_message .= "\n" . $publication_report . "\n";
+  }
+  else
+  {
+      $status_message .= "\nunable to read a publication report (error opening /tmp/all_publication_results\n\n";
+  }
 
   #
   # Now find all of the log files and check for error messages

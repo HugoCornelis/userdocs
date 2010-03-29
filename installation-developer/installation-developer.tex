@@ -117,7 +117,34 @@ There are developer friendly frontends to the {\it neurospaces\_build} script in
 \item[]{\it neurospaces\_update}\,\,\,Update local source code using the repositories locally stored on your computer (so this is a local operation). 
 \end{itemize}
 
-\section*{Developing Sources}
+\section*{Global Resources}
+
+A GENESIS 3 developer keeps his developer resources in the directory
+
+\begin{verbatim}
+   $HOME/neurospaces_project/
+\end{verbatim}
+
+In this directory we find a subdirectory for each of the
+\href{../genesis-components/genesis-components.tex}{software
+  components} he is currently developing.
+
+Besides the directories associated with software components, we also
+find directories for local documentation ({\bf
+  \$HOME/neurospaces\_project/docs}) and for source code repositories
+for the \href{../version-control/version-control.tex}{version control
+  systems} that require a dedicated directory for this.  {\bf
+  \$HOME/neurospaces\_project/\_MTN} is such a directory.
+
+A personal text file {\bf TODO.txt} keeps track of items that wait
+local implementation, but maybe are only indirectly related to GENESIS
+3 development.  This file is commonly formatted according to the
+\href{http://www.gnu.org/software/emacs/}{emacs}
+\href{http://www.emacswiki.org/emacs/OutlineMode}{outline major mode}.
+The emacs outline mode can be converted to latex and HTML when needed.
+
+
+\section*{Developing Sources of Software Components}
 
 %Here we describe the directory structure used for GENESIS development.
 
@@ -133,6 +160,13 @@ The source code of a software component is normally put in the directory:
 \begin{verbatim}
    $HOME/neurospaces_project/<package-name>/source/ <programming language>/snapshots/<branch name>/
 \end{verbatim}
+Each branch of development can have its own {\bf TODO.txt} in the
+emacs major mode to keep track of items that wait implementation and
+are directly related to the functionality offered by that software
+component.
+\begin{verbatim}
+   $HOME/neurospaces_project/<package-name>/source/ <programming language>/snapshots/<branch name>/TODO.txt
+\end{verbatim}
 Other resources are put in other directories: For example, documents that are not part of the distribution can be put under:
 \begin{verbatim}
    $HOME/neurospaces_project/<package-name>/docs/
@@ -141,6 +175,7 @@ Archived patches are located in:
 \begin{verbatim}
    $HOME/neurospaces_project/<package-name>/source/ <programming language>/patches/ 
 \end{verbatim}
+
 
 \subsection*{Basic Directory Layout}
 

@@ -149,7 +149,7 @@ website-prepare-local:
 
 website-upload: website-clean website-prepare html-upload
 
-webcheck: website-prepare
+webcheck:
 	rm -rf html/htdocs/neurospaces_project/userdocs/webcheck
 	mkdir html/htdocs/neurospaces_project/userdocs/webcheck
 	webcheck -o html/htdocs/neurospaces_project/userdocs/webcheck html/htdocs/neurospaces_project/userdocs --redirects=10
