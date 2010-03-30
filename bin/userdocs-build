@@ -158,11 +158,14 @@ sub main
 		}
 	    }
 
-	    GENESIS3::Documentation::Publications::insert_publication_production_result
-		    (
-		     $document_name,
-		     $operation_result,
-		    );
+	    if (scalar %$operation_result)
+	    {
+		GENESIS3::Documentation::Publications::insert_publication_production_result
+			(
+			 $document_name,
+			 $operation_result,
+			);
+	    }
 	}
 
 	# now also publish the publication production results
