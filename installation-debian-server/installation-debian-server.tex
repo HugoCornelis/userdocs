@@ -25,6 +25,52 @@ This is a guide for setting up an independent version of the GENESIS software pl
 
 The installation will also require some administrator access to create directories with certain user permissions. 
 
+\section*{Install the Developer Package}
+
+\subsection*{Dependencies}
+
+\begin{itemize}
+   \item[]{\bf Install {\it gcc}:} Install gcc by executing the following command as root:
+   \begin{verbatim}
+      apt-get install gcc
+   \end{verbatim}
+   
+   \item[]{\bf Install {\it autotools}:} By default, Debian usually doesn't have development tools installed. You will need to use {\it apt-get} to install and make {\it automake} with the following commands:
+   \begin{verbatim}
+      apt-get install automake apt-get install make
+   \end{verbatim}
+   
+   \item[]{\bf Install Perl Dependencies:} Install the following Perl modules from CPAN:
+     \begin{itemize}
+        \item[]{\bf YAML}
+        \item[]{\bf IO::Pty}
+        \item[]{\bf Expect}
+        \item[]{\bf Data::Comparator}
+        \item[]{\bf File::Find::Rule}
+        \item[]{\bf Inline}
+     \end{itemize}
+     {\bf Note:} You must install {\it gcc} first in order to compile Perl modules from CPAN.     
+
+   \item[]{\bf Additional Dependencies:} The following additional dependencies must be installed via {\it apt-get}:
+     \begin{itemize}
+        \item[]{\bf psmisc} (for the {\it killall} command)
+        \item[]{\bf daemon} (to run {\it neurospaces\_serve} as a daemon process)
+        \item[]{\bf sudo}
+        \item[]{\bf libncurses5-dev}
+        \item[]{\bf flex}
+        \item[]{\bf bison}
+        \item[]{\bf swig}
+        \item[]{\bf libperl-dev}
+        \item[]{\bf libreadline5-dev}
+        \item[]{\bf python-dev}
+     \end{itemize}
+\end{itemize}
+
+Now perform a
+\href{../installation-developer/installation-developer.tex}{developer
+  installation of GENESIS}.
+
+
 \section*{Setting up the Web Server}
 
 Test run output as well as generated html files from programs like Xrefactory and Doxygen need to be accessible over the internet. This is a guide to adding the Apache2 rules to set up a directory that will have its contents displayed via a http server.
@@ -67,47 +113,6 @@ For each directory you'd like to serve you must add a block and an alias. After 
    apache2ctl restart
 \end{verbatim}
 The \textit{apache2ctl} script comes standard with Apache 2. However if it is not present in your installation, you can restart Apache via the init script \textit{/etc/init.d/apache2} with a ``restart'' argument. You should now be able to view the contents of the directory {\it /var/www/tests} from your URL suffixed with your alias.
-
-\section*{Install the Developer Package}
-
-\subsection*{Dependencies}
-
-\begin{itemize}
-   \item[]{\bf Install {\it gcc}:} Install gcc by executing the following command as root:
-   \begin{verbatim}
-      apt-get install gcc
-   \end{verbatim}
-   
-   \item[]{\bf Install {\it autotools}:} By default, Debian usually doesn't have development tools installed. You will need to use {\it apt-get} to install and make {\it automake} with the following commands:
-   \begin{verbatim}
-      apt-get install automake apt-get install make
-   \end{verbatim}
-   
-   \item[]{\bf Install Perl Dependencies:} Install the following Perl modules from CPAN:
-     \begin{itemize}
-        \item[]{\bf YAML}
-        \item[]{\bf IO::Pty}
-        \item[]{\bf Expect}
-        \item[]{\bf Data::Comparator}
-        \item[]{\bf File::Find::Rule}
-        \item[]{\bf Inline}
-     \end{itemize}
-     {\bf Note:} You must install {\it gcc} first in order to compile Perl modules from CPAN.     
-
-   \item[]{\bf Additional Dependencies:} The following additional dependencies must be installed via {\it apt-get}:
-     \begin{itemize}
-        \item[]{\bf psmisc} (for the {\it killall} command)
-        \item[]{\bf daemon} (to run {\it neurospaces\_serve} as a daemon process)
-        \item[]{\bf sudo}
-        \item[]{\bf libncurses5-dev}
-        \item[]{\bf flex}
-        \item[]{\bf bison}
-        \item[]{\bf swig}
-        \item[]{\bf libperl-dev}
-        \item[]{\bf libreadline5-dev}
-        \item[]{\bf python-dev}
-     \end{itemize}
-\end{itemize}
 
 \section*{Set up the Monotone Repository Server}
 
