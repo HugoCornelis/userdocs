@@ -66,10 +66,49 @@ The installation will also require some administrator access to create directori
      \end{itemize}
 \end{itemize}
 
-Now perform a
+Now perform an incomplete
 \href{../installation-developer/installation-developer.tex}{developer
-  installation of GENESIS}.
+  installation of GENESIS}:
 
+\begin{enumerate}
+\item {\bf Create the correct directory layout:}
+\begin{verbatim}
+	neurospaces_create_directories
+\end{verbatim}
+  
+\item {\bf Pull all the code from the remote repositories:}
+\begin{verbatim}
+	neurospaces_pull
+\end{verbatim}
+
+\item {\bf Create workspace with up to date source code:}
+\begin{verbatim}
+	neurospaces_update
+\end{verbatim}
+
+\item {\bf Generate make files:}
+\begin{verbatim}
+	neurospaces_configure
+\end{verbatim}
+
+\item {\bf Clean all workspaces:} (Used when upgrading {\it DeveloperPackage}, or following a build to remove previously built files).
+\begin{verbatim}
+	neurospaces_clean
+\end{verbatim}
+
+\end{enumerate}
+
+
+\subsection*{Configure the developer package}
+
+Configure the developer package for non-automated merges: paste the
+following code to the configuration file with name {\it
+  /etc/neurospaces/developer/build.yml}:
+
+\begin{verbatim}
+---
+no_automated_merges: 1
+\end{verbatim}
 
 \section*{Setting up the Web Server}
 
