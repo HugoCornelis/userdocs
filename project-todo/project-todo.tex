@@ -151,15 +151,6 @@ Others that need implementation:
   and the annotations provided by DAVIS are already sufficient.
 \end{itemize}
 
-\subsection{Descriptor file tags recognized by {\it neurospaces\_cron} (2)}
-
-The following tag should be recognized by the documentation build
-system (cf. draft, published):
-\begin{itemize}
-    \item[]{\bf - local} Private (local) documentation publication.
-\end{itemize}
-
-
 \subsection{Incorrect path to NDF model file corrupts G-Shell}
 \begin{verbatim}
 dhcp-129-111-247-96:0 adcmobile$ genesis-g3
@@ -983,6 +974,25 @@ Allan Coop, Hugo Cornelis, Mando Rodriguez, Dave Beeman, James Bower.
 
 
 \section{DONE List}
+
+\subsection{Descriptor file tags recognized by {\it neurospaces\_cron} (2)}
+
+The following tag should be recognized by the documentation build
+system (cf. draft, published):
+\begin{itemize}
+    \item[]{\bf - local} Private (local) documentation publication.
+\end{itemize}
+
+The {\bf local} tag is currently implemented by invoking the following
+command from a UNIX shell:
+
+\begin{verbatim}
+ $ userdocs-build --tags local
+\end{verbatim}
+
+This commands build a local website of all the documents that have the
+tag 'local'.
+
 
 \subsection{Implement more consistent G-Shell command names}
 
