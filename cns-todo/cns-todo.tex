@@ -36,81 +36,67 @@ This TODO list was built on \today, \thistime.
 
 \section{TODO List}
 
-\subsection{symmetric compartments}
+\subsection{Add Network Modeling Support}
 
-Implement symmetric compartments.  We will have to decide how to do
-this: core implementation, or converting each symmetric compartment to
-two asymmetric compartments.  This will also likely involve core
-design decisions, because the model-container does not distinguish
-between symmetric and asymmetric compartments (only the solvers do).
+Network modeling support still requires substantial development on one
+software component, and also impacts other software components.
 
-{
+\begin{itemize}
+\item DES
+  \begin{itemize}
+  \item instantiation of DES queuer stand-alone (DONE)
+  \item instantiation of DES distributor stand-alone (DONE)
+  \item tests of DES stand-alone (DONE)
+  \end{itemize}
+\item model-container
+  \begin{itemize}
+  \item instantiation of projections/connections by model-container (DONE)
+  \item inspection of projections/connections by model-container API (DONE)
+  \end{itemize}
+\item SSP
+  \begin{itemize}
+  \item instantiation of DES queuer from SSP (partial)
+  \item instantiation of DES distributor from SSP (partial)
+  \item translation of model-container connections to DES connections (partial)
+  \item tests for SSP
+  \end{itemize}
+\item G-Shell
+  \begin{itemize}
+  \item add integration commands to G-Shell
+  \item tests for G-Shell
+  \end{itemize}
+\item backward compatibility
+  \begin{itemize}
+  \item integration of planar/volume connect command
+  \item tests for backward compatibility
+  \end{itemize}
+\end{itemize}
+
+
+\begin{center}
   \vspace{5mm}
   \centering
   \begin{tabular}{|c|c|}
     \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
-    \hline
     Time Estimate
-    & \\
-    \hline
-    Assigned to
-    & Hugo \& Mando \\
-    \hline
-  \end{tabular}
-}
-
-
-\subsection{SSP Optimizer}
-
-The SSP optimizer uses the perl Inline module to inline C code with
-perl code.  The Inline module creates a directory hierarchy inside the
-current directory to do its work.  The Inline module must be
-configured to do this in a standard directory, where all users share
-the result.
-
-The installation of SSP must run SSP to do the compilation of the
-optimizer, and install it afterwards.  This is to avoid race
-conditions between simultaneously running ssp processes.
-
-{
-  \vspace{5mm}
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
-    \hline
-    Time Estimate
-    & 2 days \\
+    & 2 weeks \\
     \hline
     Assigned to
     & Hugo \\
     \hline
   \end{tabular}
-}
+\end{center}
 
 
-\subsection{Daily Releases and Release Labels}
+\subsection{Model\,Container}
+Complete the implementation of the {\it ndf\_save} command.  Add tests for
+saving a full model, saving a library of models and saving a
+modularized part of a model.
 
-The installer scripts can update the release labels in the source code
-automatically, and check them in into the source code repositories.
-The checkin should be done on a branch 'dist' to prevent contamination
-of the default '0' branch with versions that reconfigure the software
-with new release labels.
-
-The checkin should be made visible from the repository server (ie. the
-tester should push its changes from its repository to the server
-repository).
-
-{
+\begin{center}
   \vspace{5mm}
   \centering
   \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
     \hline
     Time Estimate
     & 3 days \\
@@ -119,135 +105,50 @@ repository).
     & Hugo \\
     \hline
   \end{tabular}
-}
+\end{center}
 
 
-\subsection{gshell python}
+\subsection{symmetric compartments 1}
 
-Document the python dependencies of the gshell.
+Implement symmetric compartments.  We will have to decide how to do
+this: core implementation, or converting each symmetric compartment to
+two asymmetric compartments.  This will also likely involve core
+design decisions, because the model-container does not distinguish
+between symmetric and asymmetric compartments (only the solvers do).
 
-Currently the gshell requires Inline::Python as a recommended option
-to be installed.
-
-{
+\begin{center}
   \vspace{5mm}
   \centering
   \begin{tabular}{|c|c|}
     \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
-    \hline
     Time Estimate
-    & 1 day \\
-    \hline
-    Assigned to
     & \\
     \hline
+    Assigned to
+    & Hugo \& Mando \\
+    \hline
   \end{tabular}
-}
+\end{center}
 
 
-\subsection{Source code Configuration}
+\subsection{symmetric compartments 2}
 
-Fix automake scripts to detect different operating systems 
-and build makefiles accordingly:
+Connect the NEURON compartmental solver to the model-container.
 
-
-\begin{itemize}
-\item {\it Fedora 11}: Compensate for libhistory being built into the
-  installed libc.
-\item {\it BSD}: Not currently supported.
-\item {\it Solaris 10}: Not currently supported.
-\end{itemize}
-
-{
+\begin{center}
   \vspace{5mm}
   \centering
   \begin{tabular}{|c|c|}
     \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
-    \hline
     Time Estimate
-    & 2 Days\\
+    & \\
     \hline
     Assigned to
-    & Mando \\
+    & Hugo \\
     \hline
   \end{tabular}
-}
+\end{center}
 
-
-\subsection{Packaging and Distribution (for the alpha1 Release)}
-
-Packaging involves the creation of tarballs with source code to the
-creation of binary packages for different OSs.
-
-For packaging and distribution of the alpha release of GENESIS\,3.0,
-each software component must implement the following makefile targets:
-
-\begin{itemize}
-\item {\it dist}: for creation of the tarball with source code.
-  Create an installer script that builds the tarball of each package
-  (neurospaces\_dist) (DONE).
-\item {\it pkg-deb}: for creation of a binary archive for debian based
-  Linux distributions (including Ubuntu). - (DONE)
-\item {\it pkg-rpm}: for creation of a binary archive for rpm based Linux
-  distributions (such as Redhat and Fedora). - (IN PROGRESS)
-\item MAC .dmg file. - (IN PROGRESS)
-\end{itemize}
-
-An additional package must be created that has all other software
-components of GENESIS\,3 as dependencies.  An installer script must
-be created that builds all the OS specific archives and puts them in a
-common directory (neurospaces\_dist\_archives).
-
-Communicate with the previous debian maintainers about this.  They are
-Sam Hocevar (Debian packages) sam+deb at zoy.org and Matt Zimmerman
-mdz at csh.rit.edu
-
-{
-  \vspace{5mm}
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
-    \hline
-    Time Estimate
-    & 4 days \\
-    \hline
-    Assigned to
-    & Mando \\
-    \hline
-  \end{tabular}
-}
-
-
-
-\subsection{QueryHandlerPrintSpikeRecieverCount() on MAC OSX}
-
-There is an issue with executing {\bf ./neurospacesparse -v 1 -q
-  legacy/networks/supernetwork.ndf} on mac osx. The system stalls on a
-call to the function QueryHandlerPrintSpikeRecieverCount() with no CPU
-activity.
-
-{
-  \vspace{5mm}
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
-    \hline
-    Time Estimate
-    & 1 day for a detailed diagnosis \\
-    \hline
-    Assigned to
-    & Mando \\
-    \hline
-  \end{tabular}
-}
 
 \subsection{Benchmarking}
 
@@ -261,13 +162,10 @@ environments:
 \item G-Shell (GENESIS\,3 interactive simulation environment).
 \end{itemize}
 
-{
+\begin{center}
   \vspace{5mm}
   \centering
   \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
     \hline
     Time Estimate
     & 1 day \\
@@ -276,34 +174,8 @@ environments:
     & Hugo \\
     \hline
   \end{tabular}
-}
+\end{center}
 
-
-\subsection{Report Document for Testers}
-
-Construct a report document with instructions for alpha and beta
-testers.  The instructions consist of installation instructions and a
-questionnaire about basic application functionality.
-
-Questionnaire must be put on the website.
-
-
-{
-  \vspace{5mm}
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
-    \hline
-    Time Estimate
-    & 3 days \\
-    \hline
-    Assigned to
-    &  Allan and Dave? \\
-    \hline
-  \end{tabular}
-}
 
 \subsection{Demonstration Scripts}
 
@@ -331,13 +203,10 @@ scripts:
   \end{itemize}
 \end{itemize}
 
-{
+\begin{center}
   \vspace{5mm}
   \centering
   \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
     \hline
     Time Estimate
     & 2 days per scripting language \\
@@ -346,7 +215,7 @@ scripts:
     & Allan and Dave? \\
     \hline
   \end{tabular}
-}
+\end{center}
 
 
 \subsection{Release Notes}
@@ -400,13 +269,10 @@ scripts:
   \end{itemize}
 \end{itemize}
 
-{
+\begin{center}
   \vspace{5mm}
   \centering
   \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
     \hline
     Time Estimate
     & 2 days \\
@@ -415,62 +281,172 @@ scripts:
     & Allan and Dave \\
     \hline
   \end{tabular}
-}
+\end{center}
 
 
-\subsection{Add Network Modeling Support}
+\subsection{Announce GENESIS\,3 alpha1}
 
-Network modeling support still requires substantial development on one
-software component, and also impacts other software components.
+Compose an announcement of the GENESIS\,3 alpha1 release to the
+connectionist, compneuro and genesis-users email lists.  Signed with
+Allan Coop, Hugo Cornelis, Mando Rodriguez, Dave Beeman, James Bower.
 
-\begin{itemize}
-\item DES
-  \begin{itemize}
-  \item instantiation of DES queuer stand-alone (DONE)
-  \item instantiation of DES distributor stand-alone (DONE)
-  \item tests of DES stand-alone (DONE)
-  \end{itemize}
-\item model-container
-  \begin{itemize}
-  \item instantiation of projections/connections by model-container (DONE)
-  \item inspection of projections/connections by model-container API (DONE)
-  \end{itemize}
-\item SSP
-  \begin{itemize}
-  \item instantiation of DES queuer from SSP (partial)
-  \item instantiation of DES distributor from SSP (partial)
-  \item translation of model-container connections to DES connections (partial)
-  \item tests for SSP
-  \end{itemize}
-\item G-Shell
-  \begin{itemize}
-  \item add integration commands to G-Shell
-  \item tests for G-Shell
-  \end{itemize}
-\item backward compatibility
-  \begin{itemize}
-  \item integration of planar/volume connect command
-  \item tests for backward compatibility
-  \end{itemize}
-\end{itemize}
-
-
-{
+\begin{center}
   \vspace{5mm}
   \centering
   \begin{tabular}{|c|c|}
     \hline
-    Notes
-    & Is this required for alpha1 Release 3.0 ?? \\
+    Time Estimate
+    & \\
+    \hline
+    Assigned to
+    & \\
+    \hline
+  \end{tabular}
+\end{center}
+
+
+\subsection{Report Document for Testers}
+
+Construct a report document with instructions for alpha and beta
+testers.  The instructions consist of installation instructions and a
+questionnaire about basic application functionality.
+
+Questionnaire must be put on the website.
+
+
+\begin{center}
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
     \hline
     Time Estimate
-    & 2 weeks \\
+    & 3 days \\
+    \hline
+    Assigned to
+    &  Allan and Dave? \\
+    \hline
+  \end{tabular}
+\end{center}
+
+
+\subsection{Packaging and Distribution (for the alpha1 Release)}
+
+Packaging involves the creation of tarballs with source code to the
+creation of binary packages for different OSs.
+
+For packaging and distribution of the alpha release of GENESIS\,3.0,
+each software component must implement the following makefile targets:
+
+\begin{itemize}
+\item {\it dist}: for creation of the tarball with source code.
+  Create an installer script that builds the tarball of each package
+  (neurospaces\_dist) (DONE).
+\item {\it pkg-deb}: for creation of a binary archive for debian based
+  Linux distributions (including Ubuntu). - (DONE)
+\item {\it pkg-rpm}: for creation of a binary archive for rpm based Linux
+  distributions (such as Redhat and Fedora). - (IN PROGRESS)
+\item MAC .dmg file. - (IN PROGRESS)
+\end{itemize}
+
+An additional package must be created that has all other software
+components of GENESIS\,3 as dependencies.  An installer script must
+be created that builds all the OS specific archives and puts them in a
+common directory (neurospaces\_dist\_archives).
+
+Communicate with the previous debian maintainers about this.  They are
+Sam Hocevar (Debian packages) sam+deb at zoy.org and Matt Zimmerman
+mdz at csh.rit.edu
+
+\begin{center}
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Time Estimate
+    & 4 days \\
+    \hline
+    Assigned to
+    & Mando \\
+    \hline
+  \end{tabular}
+\end{center}
+
+
+\subsection{Daily Releases and Release Labels}
+
+The installer scripts can update the release labels in the source code
+automatically, and check them in into the source code repositories.
+The checkin should be done on a branch 'dist' to prevent contamination
+of the default '0' branch with versions that reconfigure the software
+with new release labels.
+
+The checkin should be made visible from the repository server (ie. the
+tester should push its changes from its repository to the server
+repository).
+
+\begin{center}
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Time Estimate
+    & 3 days \\
     \hline
     Assigned to
     & Hugo \\
     \hline
   \end{tabular}
-}
+\end{center}
+
+
+\subsection{Source code Configuration}
+
+Fix automake scripts to detect different operating systems 
+and build makefiles accordingly:
+
+
+\begin{itemize}
+\item {\it Fedora 11}: Compensate for libhistory being built into the
+  installed libc.
+\item {\it BSD}: Not currently supported.
+\item {\it Solaris 10}: Not currently supported.
+\end{itemize}
+
+\begin{center}
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Time Estimate
+    & 2 Days\\
+    \hline
+    Assigned to
+    & Mando \\
+    \hline
+  \end{tabular}
+\end{center}
+
+
+\subsection{QueryHandlerPrintSpikeRecieverCount() on MAC OSX}
+
+There is an issue with executing {\bf ./neurospacesparse -v 1 -q
+  legacy/networks/supernetwork.ndf} on mac osx. The system stalls on a
+call to the function QueryHandlerPrintSpikeRecieverCount() with no CPU
+activity.
+
+\begin{center}
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Time Estimate
+    & 1 day for a detailed diagnosis \\
+    \hline
+    Assigned to
+    & Mando \\
+    \hline
+  \end{tabular}
+\end{center}
 
 
 \subsection{GUI: Construct Model}
@@ -495,13 +471,10 @@ software component, and also impacts other software components.
   have the GUI open them in a web browser of html widget.
 \end{itemize}
 
-{
+\begin{center}
   \vspace{5mm}
   \centering
   \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
     \hline
     Time Estimate
     & 2 - 3 weeks \\
@@ -510,7 +483,7 @@ software component, and also impacts other software components.
     & Mando \\
     \hline
   \end{tabular}
-}
+\end{center}
 
 
 \subsection{GUI: Run Simulation (2)}
@@ -522,13 +495,10 @@ software component, and also impacts other software components.
 \item Runtime Option: create a menu for adding runtime options.
 \end{itemize}
 
-{
+\begin{center}
   \vspace{5mm}
   \centering
   \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
     \hline
     Time Estimate
     & 2 - 3 days \\
@@ -537,7 +507,7 @@ software component, and also impacts other software components.
     & Mando \\
     \hline
   \end{tabular}
-}
+\end{center}
 
 
 \subsection{GUI: Output}
@@ -547,13 +517,10 @@ software component, and also impacts other software components.
 \item Mathematica: Create export menu/functionality for Mathematica.
 \end{itemize}
 
-{
+\begin{center}
   \vspace{5mm}
   \centering
   \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
     \hline
     Time Estimate
     & 1 - 2 weeks \\
@@ -562,7 +529,7 @@ software component, and also impacts other software components.
     & Mando \\
     \hline
   \end{tabular}
-}
+\end{center}
 
 
 \subsection{GUI: Iterators}
@@ -574,13 +541,10 @@ lists all the scripts found in this directory, clicking on one of them
 runs the appropriate script.  The script generates SSP configuration
 files that can be loaded into the GUI.
 
-{
+\begin{center}
   \vspace{5mm}
   \centering
   \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
     \hline
     Time Estimate
     & 1 week \\
@@ -589,7 +553,7 @@ files that can be loaded into the GUI.
     & Mando \\
     \hline
   \end{tabular}
-}
+\end{center}
 
 
 \subsection{GUI: Other}
@@ -597,13 +561,10 @@ files that can be loaded into the GUI.
 \item Screenshot functionality for plot and explore model.
 \end{itemize}
 
-{
+\begin{center}
   \vspace{5mm}
   \centering
   \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
     \hline
     Time Estimate
     & 1 week \\
@@ -612,77 +573,76 @@ files that can be loaded into the GUI.
     & Mando \\
     \hline
   \end{tabular}
-}
-
-
-\subsection{Model\,Container}
-Complete the implementation of the {\it ndf\_save} command.  Add tests for
-saving a full model, saving a library of models and saving a
-modularized part of a model.
-
-{
-  \vspace{5mm}
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
-    \hline
-    Time Estimate
-    & 3 days \\
-    \hline
-    Assigned to
-    & Hugo \\
-    \hline
-  \end{tabular}
-}
+\end{center}
 
 
 \subsection{Documentation Framing}
 
 Look and feel of documentation website.
 
-{
+\begin{center}
   \vspace{5mm}
   \centering
   \begin{tabular}{|c|c|}
-    \hline
-    Notes
-    & Required for beta1 Release 3.0 \\
     \hline
     Time Estimate
     & 3 days \\
     \hline
     Assigned to
-    & Mando and Allan \\
+    & \\
     \hline
   \end{tabular}
-}
+\end{center}
 
 
 
-\subsection{Announce GENESIS\,3 alpha1}
+\subsection{gshell python}
 
-Compose an announcement of the GENESIS\,3 alpha1 release to the
-connectionist, compneuro and genesis-users email lists.  Signed with
-Allan Coop, Hugo Cornelis, Mando Rodriguez, Dave Beeman, James Bower.
+Document the python dependencies of the gshell.
 
-{
+Currently the gshell requires Inline::Python as a recommended option
+to be installed.
+
+\begin{center}
   \vspace{5mm}
   \centering
   \begin{tabular}{|c|c|}
     \hline
-    Notes
-    & Required for alpha1 Release 3.0 \\
+    Time Estimate
+    & 1 day \\
+    \hline
+    Assigned to
+    & \\
+    \hline
+  \end{tabular}
+\end{center}
+
+
+\subsection{SSP Optimizer}
+
+The SSP optimizer uses the perl Inline module to inline C code with
+perl code.  The Inline module creates a directory hierarchy inside the
+current directory to do its work.  The Inline module must be
+configured to do this in a standard directory, where all users share
+the result.
+
+The installation of SSP must run SSP to do the compilation of the
+optimizer, and install it afterwards.  This is to avoid race
+conditions between simultaneously running ssp processes.
+
+\begin{center}
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
     \hline
     Time Estimate
-    & \\
+    & 2 days \\
     \hline
     Assigned to
     & Hugo \\
     \hline
   \end{tabular}
-}
+\end{center}
 
 
 \section{DONE List}
