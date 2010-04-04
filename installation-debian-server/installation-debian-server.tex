@@ -27,6 +27,8 @@ The installation will also require some administrator access to create directori
 
 \section*{Install the Developer Package}
 
+It is advised not to install the developer package as the root user, but instead install it as a regular user for instance with name g3tester.
+
 \subsection*{Dependencies}
 
 \begin{itemize}
@@ -101,8 +103,16 @@ Now perform an incomplete
 
 \subsection*{Configure the developer package}
 
-Configure the developer package for non-automated merges: paste the
-following code to the configuration file with name {\it
+For a default installation the developer package assumes it is being
+used by a software developer, but for a server installation, this is
+not the case.  Certain operations performed by the developer package
+sometimes require manual corrections, something not always possible on
+a server.  The tools in the developer package need to know that these
+operations should not be performed.
+
+Automated merges is one of these operations.  To configure the
+developer package for non-automated merges, paste the following code
+to the configuration file with name {\it
   /etc/neurospaces/developer/build.yml}:
 
 \begin{verbatim}
