@@ -983,7 +983,7 @@ sub expand
 
     if ($contents_documents->{$document_name})
     {
-	my $command = "userdocs-tag-replace-items $document_name $document_name/$document_name.tex --verbose";
+	my $command = "userdocs-tag-replace-items $document_name $document_name/output/$document_name.tex --verbose";
 
 	system $command;
 
@@ -993,30 +993,30 @@ sub expand
 	}
     }
 
-#     # expand related documentation links
+    # expand related documentation links
 
-#     if (not $result)
-#     {
-# 	# loop over all related information tags
+    if (not $result)
+    {
+	# loop over all related information tags
 
-# 	my $related_tags = $self->related_tags();
+	my $related_tags = $self->related_tags();
 
-# 	foreach my $related_tag (@$related_tags)
-# 	{
-# 	    # expand the document
+	foreach my $related_tag (@$related_tags)
+	{
+	    # expand the document
 
-# 	    my $command = "userdocs-tag-replace-items $related_tag $document_name/$document_name.tex --verbose";
+	    my $command = "userdocs-tag-replace-items $related_tag $document_name/output/$document_name.tex --verbose";
 
-# 	    system $command;
+	    system $command;
 
-# 	    if ($?)
-# 	    {
-# 		$result = "for document $document_name: failed to execute ($command, $?)\n";
+	    if ($?)
+	    {
+		$result = "for document $document_name: failed to execute ($command, $?)\n";
 
-# 		last;
-# 	    }
-# 	}
-#     }
+		last;
+	    }
+	}
+    }
 
     #t expand dynamically generated snippets
 
