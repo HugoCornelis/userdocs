@@ -150,16 +150,26 @@ Connect the NEURON compartmental solver to the model-container.
 \end{center}
 
 
-\subsection{Benchmarking}
+\subsection{Simulator Performance Benchmarking}
 
-Test the performance of the Purkinje cell in each of the following
-environments:
+Performance Benchmarking is traditionally classified in phases of
+model-construction time and simulation run-time.  Test the performance
+of the Purkinje cell in each of the following environments:
 
 \begin{itemize}
-\item GENESIS\,2 (old GENESIS\,2 enviroment).
-\item NS-SLI (GENESIS\,3--GENESIS\,2 backward compatibility).
-\item SSP (GENESIS\,3 batch simulation environment).
-\item G-Shell (GENESIS\,3 interactive simulation environment).
+\item GENESIS\,2 (old GENESIS\,2 enviroment).  What is the time taken
+  by the simulator to run 1 second of simulation in G-2?
+\item NS-SLI (GENESIS\,3--GENESIS\,2 backward compatibility).  What is
+  the time taken when running 1 second of simulation in G-3 using the
+  the NS-SLI module to read the original G-2 scripts that encode the
+  Purkinje cell model?
+\item SSP (GENESIS\,3 batch simulation environment).  What is the time
+  taken when running 1 second of simulation in G-3 from a UNIX shell
+  command line with the Purkinje cell model encoded in NDF format?
+\item G-Shell (GENESIS\,3 interactive simulation environment).  What
+  is the time taken when running 1 second of simulation in G-3 from
+  the interactive G-3 shell with the Purkinje cell model encoded in
+  NDF format?
 \end{itemize}
 
 \begin{center}
