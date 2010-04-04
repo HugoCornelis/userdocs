@@ -1,4 +1,4 @@
-#!/usr/bin/perl -w 
+#!/usr/bin/perl -w
 #!/usr/bin/perl -w -d:ptkdb
 #
 
@@ -40,6 +40,7 @@ $program_name =~ s/.*\///;
 
 # parse options
 
+my $option_exclude = [];
 my $option_help;
 my $option_remove;
 my $option_verbose;
@@ -50,6 +51,7 @@ sub read_cmd_line
     my $result
 	= GetOptions
 	    (
+	     "exclude=s" => $option_exclude,
 	     "help!" => \$option_help,
 	     "remove!" => \$option_remove,
 	     "v|verbose+" => \$option_verbose,
@@ -64,6 +66,7 @@ $0: replace tags with the itemized contents in a set of documents.
 $0 <options> <tag> <document1> ...
 
 options :
+    --exclude         exclude this document from the expansion (may be given multiple times).
     --help            print usage information.
     --remove          remove content between delimiters.
     --verbose         set verbosity level.
@@ -71,6 +74,17 @@ options :
 
 	exit 1;
     }
+
+    my $exclude
+	= {
+	   map
+	   {
+	       $_ => 1;
+	   }
+	   @$option_exclude,
+	  };
+
+    $option_exclude = $exclude;
 
 }
 
@@ -268,6 +282,13 @@ sub main
 	       # sort alphabetically
 
 	       sort
+
+	       # exclude excluded documents
+
+	       grep
+	       {
+		   not $option_exclude->{$_};
+	       }
 
 	       # convert to relative paths
 

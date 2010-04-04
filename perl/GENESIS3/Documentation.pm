@@ -983,13 +983,13 @@ sub expand
 
     if ($contents_documents->{$document_name})
     {
-	my $command = "userdocs-tag-replace-items $document_name $document_name/output/$document_name.tex --verbose";
+	my $command = "userdocs-tag-replace-items '$document_name' '$document_name/output/$document_name.tex' --verbose";
 
 	system $command;
 
 	if ($?)
 	{
-	    $result = "for document $document_name: failed to execute ($command, $?)\n";
+	    $result = "for document '$document_name': failed to execute ($command, $?)\n";
 	}
     }
 
@@ -1005,13 +1005,13 @@ sub expand
 	{
 	    # expand the document
 
-	    my $command = "userdocs-tag-replace-items $related_tag $document_name/output/$document_name.tex --verbose";
+	    my $command = "userdocs-tag-replace-items $related_tag '$document_name/output/$document_name.tex' --verbose --exclude '$document_name'";
 
 	    system $command;
 
 	    if ($?)
 	    {
-		$result = "for document $document_name: failed to execute ($command, $?)\n";
+		$result = "for document '$document_name': failed to execute ($command, $?)\n";
 
 		last;
 	    }
