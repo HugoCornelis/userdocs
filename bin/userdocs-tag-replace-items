@@ -301,11 +301,18 @@ sub main
 	       @$tagged_documents,
 	      ];
 
-	# update the links in each snippet
+	if (scalar @$tagged_documents_expanded)
+	{
+	    # update the links in each snippet
 
-	my $tagged_documents_expanded_text = update_links(@$tagged_documents_expanded);
+	    my $tagged_documents_expanded_text = update_links(@$tagged_documents_expanded);
 
-	$replacement = "\\begin{itemize}\n\n$tagged_documents_expanded_text\n\\end{itemize}\n\n";
+	    $replacement = "\\begin{itemize}\n\n$tagged_documents_expanded_text\n\\end{itemize}\n\n";
+	}
+	else
+	{
+	    $replacement = '';
+	}
     }
 
     # loop over all documents
