@@ -1,0 +1,33 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{De Schutter: Purkinje Cell Model}
+
+\subsection*{Morphology}
+
+The morphology of the models was based on a detailed light
+microscopic reconstruction of horseradish peroxidase-filledguinea pig Purkinje cells by M. Rapp of the Hebrew University ofJerusalem, Israel\,\cite{Rapp-M:1992kx, Rapp-P:1994qf}. All simulations wereperformed with a model using the morphology of {\it cell I} of Rapp etal.\,\cite{Rapp-P:1994qf} unless otherwise noted. We applied the same shrinkagefactor of 10\,\% as did Rapp.
+The final model described here contained 1,600 compartments.As is standard for compartmental modeling\,\cite{rall62:_theor, W:1964oq},this number was determined by the morphology of the cell and bysimulation requirements for numerical accuracy. In particular,when active channels are used, it has been previously shown thatthe electrotonic length of compartments should be $<$\,0.05\,$\lambda$\,\cite{W:1966ve}.
+In our model, the passive electrotonic length of single compartmentsranged from 0.009 to 0.05\,$\lambda$. Because these electrotoniclengths were short, we were able to use more computationallyefficient asymmetric compartments (this GENESIS object correspondsto a three-element segment, as described by\,\cite{Segev-I:1985kl}. 
+Simulations done with and without asymmetric compartmentsconfirmed that the difference in input resistance ($R_{\mbox N}$) andsystem time constant ($\tau_0$) for a passive membrane model was$<$\,1\,\%.A rat Purkinje cell is known to have $\sim$\,150,000 dendritic spines\,\cite{Harvey:1991xz}. 
+However, because the morphologicaldata used to build the current model were obtained with lightmicroscopic techniques, the location and shapes of dendriticspines for the reconstructed cell were not known. Accordingly,spines were not simulated. Instead, membrane surface was addedto the spiny dendritic compartments (defined as dendrites with adiameter $\sim$\,3.17\,$\mu$m) to compensate for missing 
+spines\,\cite{R:1989cr, Rapp-M:1992kx}. On the basis of published
+electron microscopic (EM) reconstructions of rat Purkinje cell
+spines\,\cite{M:1988bh} we assumed a density of 13spines per 1\,$\mu$m dendritic length, with a membrane surface for aspine of 1.33 $\mu$m$^2$\,\cite{M:1988bh}.
+
+\bibliographystyle{plain}
+\bibliography{../tex/bib/g3-refs}
+
+\end{document}
