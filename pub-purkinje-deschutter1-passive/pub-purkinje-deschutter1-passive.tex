@@ -1,0 +1,29 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{De Schutter: Purkinje Cell Model}
+
+\subsection*{Passive Membrane Parameters}
+
+initially used the same parameters as previously published by \,\cite{Rapp-M:1992kx}. 
+Accordingly, membrane capacitance was set at1.64\,pF/cm$^2$, membrane resistance ($R_{\mbox{m}}$) was 0.44\,k$\Omega\cdot$cm$^2$ in thesoma and 110\,k$\Omega\cdot$cm$^2$ in the dendrites, and axial resistance wasgiven a value of 250\,k$\Omega\cdot$cm. With these parameters we obtained a$\tau_)$ of 46\,ms and an $R_{\mbox{m}}$ of 12.6 M$\Omega$, which is almost identical to thevalues of 46\,ms and 12.9 M$\Omega$ reported by\,\cite{Rapp-M:1992kx}.However, initial simulations with active membrane showed that itwas not possible to reproduce the characteristic firing pattern ofPurkinje cells with these membrane parameters. In particular, thelow $R_{\mbox{m}}$ value in the soma caused a huge current sink, so that themodel could not fire somatic Na$^+$ spikes. For this reason themodel presented here had an $R_{\mbox{m}}$ of 10\,k$\Omega\cdot$cm$^2$ in the soma and 
+30 k$\Omega\cdot$cm$^2$ in the rest of the cell, which are comparable with valuesfor $R_{\mbox{m}}$ in other neuron models\,\cite{R:1992ys}. Thismodel had an $R_{\mbox{m}}$of 19.6\,M$\Omega$ 
+under conditions of simulated externalCs$^+$ block (i.e., Kdr, KM, and Kh channels blocked;\,\cite{Hille:1991zr}) 
+which is a realistic $R_{\mbox{m}}$ value for Purkinje cells in slice\,\cite{R:1980ly}.
+
+\bibliographystyle{plain}
+\bibliography{../tex/bib/g3-refs}
+
+\end{document}
