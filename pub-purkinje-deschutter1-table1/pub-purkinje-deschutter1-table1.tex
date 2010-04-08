@@ -1,0 +1,47 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{De Schutter: Purkinje Cell Model}
+
+\subsection*{Table\,1}
+
+\begin{table}[h]
+\caption{$E_r$, and the parameters to \href{../pub-purkinje-deschutter1-equations/pub-purkinje-deschutter1-equations.tex}{\bf Eq.\,1-5} for the conductance of voltage- and Ca$^{2+}$-dependent channels n the model, and abbreviations for the different ionic channels.}        
+\begin{tabular}{ l l l l l l l l l l l l l }
+                                             &                                                                         &              &                       &         &                                                      &        &          &           &                &         &          &             \\
+   {\bf Name}                        & {\bf Abbreviation}                                         & {$E_r$} & {\bf Factor} & $P$ & $A$                                             & $B$ & $C$ & $D$   & $E$       & $F$ & $G$  & $H$   \\
+   Fast sodium                     & NaF                                                                & 45          & $m$             & 3      & 35.0                                            & 0      & 5       & -10.0 & 7.0         & 0     & 65     & 20.0   \\
+                                              &                                                                         &               & $h$              & 1      & 0.255                                          & 1      & 80     & 10.0  & 7.5         & 0     & -3      & -18.0  \\
+   Persistent sodium          & NaP                                                                & 45          & $m$             & 3      & 200.0                                          & 1      & -18    & -16.0 & 25.0      & 1     & 58     & 8.0      \\
+   P calcium                         & CaP                                                                & 135       & $m$             & 1      & 8.5                                               & 1      & -8      & -12.5 & 35.0      & 1     & 74     & 14.5    \\
+                                              &                                                                         &               & $h$              & 1      & 0.0015                                        & 1      & 29     & 8.0    & 0.0055  & 1     & 23     & -8.0    \\
+   T calcium                         & CaT                                                                 & 135      & $m$              & 1      & 2.60                                             & 1      & 21    & -8.0   & 0.180     & 1     & 40     & 4.0     \\
+                                             &                                                                          &              & $h$               & 1      & 0.0025                                        & 1      & 40    & 8.0     & 0.190    & 1      & 50    & -10.0  \\
+   Anomalous rectifier       & Kh\,\cite{Spain-W-J:1987ij}                         & -30       &                       &         &                                                      &         &          &           &                &         &          &            \\
+   Delayed rectifier            & Kdr\,\cite{Yamada-W:1989bs}                    & -85       &                       &         &                                                      &         &          &           &                &         &          &            \\
+   Persistant potassium    & KM\,$^\ddag$\,\cite{Yamada-W:1989bs} & -85       &                       &         &                                                      &         &          &           &                &         &          &            \\
+   A                                       & KA                                                                   & -85       & $m$              & 4      & 1.40                                             & 1      & 27    & -12.0  & 0.490    & 1      & 30    & 4.0     \\
+                                             &                                                                         &              & $h$               & 1      & 0.0175                                        & 1      & 50    & 8.0    & 1.30       & 1      & 13    & -10.0  \\
+   BK calcium-activated    & KC                                                                  & -85       & $m$               & 1      & 7.5, $\alpha_m$ is constant   & 10    &          &           & 0.110    & 0      & -35   & 14.9   \\
+                                             &                                                                         &              & $z$                & 2      & 4.00                                            & 2      &          &           &                &         &          &            \\
+   K2 calcium activated     & K2                                                                   & -85       & $m$              & 1      & 25.0, $\alpha_m$ is constant & 10   &          &           & 0.075     & 0     & 5       & 10.0   \\
+                                             &                                                                         &              & $z$               & 2      & 0.20                                             & 2     &          &           &                &         &          &            \\
+                                             &                                                                         &              &                       &         &                                                      &        &          &           &                &         &          &             \\
+   \multicolumn{13}{l} {$^\ddag$\,Adjusted value: All rate constants $\times 5$. $E_r$: reversal potential, $m$: voltage-dependent activation gate, $h$: voltage-dependent inactivation gate, $z$: Ca$^{2+}$-dependent activation gate, $\alpha_m$: voltage-independent activation.}
+\end{tabular}
+\end{table}
+
+
+\end{document}
