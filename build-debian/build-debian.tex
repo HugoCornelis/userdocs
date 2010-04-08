@@ -63,7 +63,7 @@ The control file is a series of fields which correspond to information about the
 \end{itemize}
 Example taken from the {\it DeveloperPackage}:
 \begin{verbatim}
-   Source: neurospaces-developer-package
+   Source: Developer
    Section: Science 
    Priority: optional
    Maintainer: Hugo Cornelis [hugo.cornelis@gmail.com]
@@ -89,7 +89,7 @@ This is a log of the changes made to the package by the maintainer. This file ha
 
 Example from the {\it DeveloperPackage}.
 \begin{verbatim}
-   neurospaces-developer-package (alpha.1) dapper; urgency=low
+   Developer (alpha.1) dapper; urgency=low
       * First release packaged for ubuntu
       -- Hugo Cornelis <hugo.cornelis@gmail.com>  Sat, 8 Aug 2009 14:45:16 +0000
 \end{verbatim}
@@ -114,8 +114,17 @@ The package identifier must be identical in the following locations:
 \end{itemize}
 Otherwise the build will fail. A log of a Debian build can be found in {\it build\_debian.log} file in the top level directory.
 
-\subsubsection*{View files}
+\subsubsection*{Checking your package}
 
-Once you have your {\bf .deb} file in the top level source directory, you can view its contents using the {\it deb-gview} application. This program is available from the Synaptic Package Manager and apt-get.
+Once you have your {\bf .deb} file in the top level source directory there are a couple ways you can go about verifying its contents. 
+
+If you wish to view the package contents via a gui interface, there is {\it deb-gview} which is available via {\it apt-get} and the synaptic package manager. Opening  the resulting package in {\it deb-gview} you get a nice listing of all the files in the package as well as the package information:
+
+
+\includegraphics[scale=0.4]{figures/deb-gview.eps}
+
+You can also verify package contents via the command line using {\it lintian}, which is also available via apt-get and synaptic package manager. In addition to verifying the package contents, {\it lintian} will point out errors in the package build data. 
+
+
 
 \end{document}
