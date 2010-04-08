@@ -90,7 +90,7 @@ There are four simple steps to the creation of a new document within the GENESIS
 \begin{verbatim}
    userdocs-create <my-document>
 \end{verbatim}
-This command creates a new document folder/directory and its sub-directories by copying the template {\it NewDocument} file and assigning the given document name to both the documentation folder (here, for example, it would be {\it my-document}) and the default documentation file it contains (here, {\it my-document.tex}).
+This command creates a new document folder/directory and its sub-directories by copying the template {\it NewDocument} file and assigning the given document name to both the documentation folder (here, for example, it would be {\it my-document}) and the default documentation file it contains (here, {\it my-document.tex}). It also inserts a description and a document name into the {\it descriptor.yml} file.
 
 You can also specify multiple document names to create a series of documents:
 \begin{verbatim}
@@ -228,6 +228,15 @@ Other useful tags include:
 \item[]{\bf Update the\,{\it figures} folder:} Place any figures or images, etc that your source document file contains in the\,{\it figures} directory.
 
 \end{enumerate}
+
+\subsection*{Incorporate References in Your Document}
+
+The GENESIS Documentation System currently supports \href{http://www.bibtex.org/}{\bf BibTeX} by default. The two \LaTeX commands at the end of the {\it NewDocument} template enable this functionality. They are:
+\begin{verbatim}
+   \bibliographystyle{plain}
+   \bibliography{../tex/bib/g3-refs.bib}
+\end{verbatim}
+These commands allow you to define a citation style for your references and give the location of a file that complies with the BibTex file format requirements and contains your bibliography. Currently, the default name of this file is {\it g3-refs.bib}. It contains all the references for the \href{../publication/publication.tex}{\bf GENESIS Publication System}.
 
 \subsection*{Incorporate a Pre-existing Document, File, or Video}
 
