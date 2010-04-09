@@ -1,0 +1,72 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{De Schutter: Purkinje Cell Model}
+
+
+\subsection*{Morphology Discretization}
+
+All simulations were performed with a model using the morphology of {\it cell I} of Rapp et
+al. (1994) unless otherwise noted.
+   
+Because electrotonic
+lengths were short, more computationally
+efficient asymmetric compartments (this GENESIS object corresponds
+to a three-element segment, as described by\,\cite{Segev-I:1985kl}) could be used. Simulations done with and without asymmetric compartments
+confirmed that the difference in input resistance ($R_N$) and
+system time constant ($\tau_0$) for a passive membrane model was
+$<$\,1\,\%.
+
+In an active membrane compartment the total $R_m$ is variable,
+resulting in a continuously changing space constant and electrotonic 
+length\,\cite{Bernander-O:1991tg, Rapp-M:1992kx}.
+The total $R_m$ ($RTM_n$) of a compartment $n$ at a specific time was
+computed as the sum of all conductances $[ G(V, [ Ca^{2+}] ,t)$ from Eqn.\,(\ref{eqn:el1}) and the passive component, $RM_n$, determined by $R_m$
+
+\begin{equation}
+\label{eqn:el1}
+   RTM_n(t) = \frac{1}{\frac{1}{RM_n}+\Sigma G_n(V,[ Ca^{2+}] ,t)}
+\end{equation}
+
+The compartment's space constant $\lambda_n$ could be derived from $RTM_n$, its axial resistance $RIn$, and its length $L_n$
+
+\begin{equation}
+   \lambda_n(t) = \sqrt{\frac{L^2_nRTM_n(t)}{RI_n}}
+\end{equation}
+
+The compartment's electrotonic length was the ratio of its length, 
+$L_n$, over the space constant, $\lambda_n$. The electronic distance
+between two compartments was computed as the sum of the electronic
+lengths of all intervening compartments.
+
+For those simulations that
+related to granule cell input, the total membrane surface was kept
+constant by subtracting the membrane surface of modeled spines
+from the membrane surface of the
+dendritic compartment to which they were connected.
+For a spiny dendritic compartment with length $L$ and diameter $D$, the
+membrane surface ($S$ in $\mu$m$^2$), used for the computation of compartment
+membrane capacitance and resistance\,\cite{R:1989cr, Rapp-M:1992kx},
+depended thus also on the number
+of simulated spines ($N_s$) connected to that compartment
+
+\begin{equation}
+   S = L\cdot D\cdot \pi + 1.33(13\cdot L - N_s)
+\end{equation}
+
+\bibliographystyle{plain}
+\bibliography{../tex/bib/g3-refs}
+
+\end{document}
