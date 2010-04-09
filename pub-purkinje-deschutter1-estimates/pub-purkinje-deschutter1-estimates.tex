@@ -23,7 +23,7 @@ However, all the necessary data are rarely available for any
 particular neuron. For this reason it is usually necessary to obtain
 kinetic information from a variety of sources.
 
-\subsubsection*{Estimates of other parameters for ionic channels}
+\subsection*{Estimating channel conductances}
 
 Constructing an accurate
 representation of an ionic channel also requires an estimate of
@@ -31,7 +31,24 @@ the channel $\bar g$. However, channel conductance values measured in
 voltage-clamp experiments are often quite variable\,\cite{McCormick:1992fk} and are only indicative. For this reason,
 channel $\bar g$s in the model were not based on experimental measurements\,\cite{S:1993dz, De-Schutter-E:1993fu}.
 
-\subsubsection*{Temperature dependence of channel kinetics}
+\subsection*{Estimating channel densities}
+
+Having established and parameterized the equations governing the
+voltage-dependent behavior of the ionic conductances in this
+cell, it was necessary to determine the channel densities in the
+model. Because precise information on channel densities is not
+technically obtainable, channel densities, usually expressed as $\bar g$,
+are largely a free parameter in detailed single-cell models\,\cite{S:1993dz, L:1992kl, W:1991qa, Traub-R-D:1991mi}.
+
+\subsection*{Estimates of other parameters for ionic channels}
+
+Constructing an accurate
+representation of an ionic channel also requires an estimate of
+the channel $\bar g$. However, channel conductance values measured in
+voltage-clamp experiments are often quite variable\,\cite{McCormick:1992fk} and are only indicative. For this reason,
+channel $\bar g$s in the model were not based on experimental measurements\,\cite{S:1993dz, De-Schutter-E:1993fu}.
+
+\subsection*{Temperature dependence of channel kinetics}
 
 Temperature is a well-known critical parameter for channel kinetics\,\cite{Hille:1991zr}.
 In the current simulations the in vivo and in vitro data
@@ -39,7 +56,7 @@ used to tune the model were collected at 37\,$^\circ$\,C whereas all of the
 published voltage-clamp data were obtained at room temperature.
 Assuming a Q\,10 factor of 3\,\cite{L:1952fv} all rate constants were multiplied by a factor of 5.
 
-\subsubsection*{Modeling calcium concentrations}
+\subsection*{Modeling calcium concentrations}
 
 In the present model realistic simulation of Ca$^{2+}$ concentrations was not attempted. However, computation of Ca$^{2+}$ concentrations was required to activate the
 KC and K2 channels. Because these channels are assumed to be
