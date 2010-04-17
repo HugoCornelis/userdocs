@@ -157,6 +157,8 @@ sub build
     if ($descriptor_error)
     {
 	$result = "cannot read descriptor for $self->{name} ($descriptor_error)";
+
+	return $result;
     }
 
     if ($options->{verbose})
@@ -167,6 +169,8 @@ sub build
     if (!chdir $directory)
     {
 	$result = "cannot change to directory $directory";
+
+	return $result;
     }
 
     # check for the obsolete tag first so we don't end up doing
@@ -764,6 +768,8 @@ sub check
     if ($descriptor_error)
     {
 	$result = "cannot read descriptor for $self->{name} ($descriptor_error)";
+
+	return $result;
     }
 
     if (!$self->{descriptor}->{tags}
@@ -1001,6 +1007,13 @@ sub expand
 
 	my $related_tags = $self->related_tags();
 
+	if (not ref $related_tags)
+	{
+	    $result = $related_tags;
+
+	    return $result;
+	}
+
 	foreach my $related_tag (@$related_tags)
 	{
 	    # expand the document
@@ -1142,6 +1155,8 @@ sub publish
     if ($descriptor_error)
     {
 	$result = "cannot read descriptor for $self->{name} ($descriptor_error)";
+
+	return $result;
     }
 
     my $directory = $self->{name};
@@ -1270,6 +1285,8 @@ sub related_tags
     if ($descriptor_error)
     {
 	$result = "cannot read descriptor for $self->{name} ($descriptor_error)";
+
+	return $result;
     }
 
     my $tags = $self->{descriptor}->{tags};
