@@ -1,0 +1,341 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-notes-dave-g2
+% end: userdocs-tag-replace-items related-notes-dave-g2
+
+\section*{Notes on Converting the Traub94 Model from G-2 to G-3}
+
+\begin{verbatim}
+
+
+
+UGTD/Tutorials/cells/traub94 - *asymmetric - 64 compartment -
+traub94proto.g uses vdep_channel
+with table for C current - I need to convert to new way with "instant"
+field.
+
+I'll start with files from traub95
+
+traub95cell1-gr.g 
+graphics1.g 
+
+traub94chans.g - created from traub94proto.g, with
+K_C and K_Cs (soma) taken from traub91.
+
+
+protodefs.g based on traub95 version, mostly taken from traub94.g
+traub94.g has a plain vanilla simplecell interface, and no view.
+
+[dbeeman@chuck traub94]$ cp -p  ../traub95/graphics1.g .
+[dbeeman@chuck traub94]$ cp -p  ../traub95/traub95cell1-gr.g .
+[dbeeman@chuck traub94]$ mv traub95cell1-gr.g traub94cell1-gr.g
+
+Edit to give:
+
+str cellfile = "traub94.p"
+str outfile = "traub94_Vm.out"
+int hflag = 0 ===> only at first
+str graphlabel = "Traub (1994) 64 compartment CA3 pyramidal cell: " @ {cellfile}
+
+
+NOTE: the README doesn't say how many compts - this is what readcell reports 
+
+reading 'CA3.p'.... 
+CA3.p read: 66 compartments, 388 channels, 0 shells, 193 others
+two of these are concens, so the info from UGTD is probably correct
+
+These are asymmetric compartments.  Of, course, I never checked
+Sampat's implementation or results.  But the comparison should
+be to the G2 version traub94.g
+
+cp -p CA3.p traub94.p
+
+$ mv traub94_Vm.out traub94-nohsolve_Vm.out
+Now run with hsolve
+
+float injcurrent = 0.3e-9
+
+hsolve changes the location of the final solitary spike just before 0.1
+sec, as does the time step.  When change dt from 25 to 20 usec in
+the original traub94.g, with the vdep_channels, I get the same results
+(visual comparison of side by side plots) as with traub94cell1-gr.g
+
+So, that was easy.  traub94cell1.g - the batch/non-graphics version
+gives same results.  I now need to make the pulsegen versions.
+Again, it will be easiest to copy
+
+../traub95/graphics.g (use as-is)
+../traub95/traub95cell.g - edit strings, injection
+
+Simulation Script:  traub94cell.g
+/library
+** Warning - during SETUP of /cell/solve: src /injectpulse/injcurr of
+message 3 to /cell/soma is not hsolved.
+
+As with the pulsed traub95, there is a little difference in the location of
+the last spike from the steady current.  I'm pretty sure that it is from
+a delay of a time step before the injection is applied.
+
+reset
+showfield /cell/soma inject
+inject               = 0
+step
+time = 0.000020 ; step = 1
+showfield /cell/soma inject
+inject		     = 0
+step
+time = 0.000040 ; step = 2          
+showfield /cell/soma inject
+inject               = 2.999999971e-10
+
+What about g3 on traub94cell1.g ?
+
+rmb dir *.g
+
+Oh fuck - this deleted *.g and my backups :-(
+At least it will be easy to recreate them from the notes above.
+
+I think traub94cell1.g traub94cell1-gr.g traub94cell.g traub94cell-gr.g
+should be OK.  Fortunately I have protodefs.g and traub94chans.g on lapchuck
+DONE
+
+[dbeeman@chuck traub94]$ genesis-g3
+Welcome to the GENESIS 3 shell
+genesis > sli_run traub94cell1.g
+
+Similar warnings as for traub95cell1.g about
+
+Warning: Tabchannel parameter xmin has already been set to 0.000000 for K_AHPs
+Warning: Tabchannel parameter xmax has already been set to 1000.000000 for K_AHPs
+
+similar for K_C and K_Cs - check the traub94chans.g script
+
+ it might be doubly set in these three functions - Nothing obvious, but
+they all call TABFILL on the channel gates.  However make_K_AHP_soma and
+make_K_K_AHP are virtually identical, and no warning for K_AHP.
+
+I also got the warnings about zero initial value for the concentration of
+the following: /cell/bas1_16/Ca_conc, and all the concen elements that
+have'Ca_base = 0.
+
+But, the results are different :-) it is not just that tricky end of burst
+behavior, but the shape of the APs are all wrong.  I'll save this as
+
+plotVm traub94_Vm.out traub94-default_Vm.out
+traub94_g3-g2.png with
+traub94_Vm.out (black) - g3 with sli_run
+traub94-default_Vm.out (red) - g2
+
+Once again, I need to edit README and make README.testing
+
+YET TODO - revisit traub95 g2-g3 comparisons.
+
+I got similar warnings
+Warning: Tabchannel parameter xmin has already been set to 0.000000 for
+K_C_int
+Warning: Tabchannel parameter xmax has already been set to 1000.000000 for
+K_C_int
+
+It is the one that is just like K_C.
+
+Then, the initial value warnings for the concens
+
+[dbeeman@chuck traub95]$ plotVm traub95_Vm.out traub95-default_Vm.out
+--> traub95_g3-g2.png
+
+A barely perciptble difference at the end.  But, this is a very regular
+firing cell with just a little adaptation due to Ca-dependence, rather
+than strong bursting.  Burst firing cells are a real challenge.
+
+Maybe it is time to go back to traub91 again.
+
+-----------------------------------------------------------------------------
+Mon Mar 29 15:50:34 MDT 2010
+
+I made fancier version of make_xcell in graphics.g and graphics1.g, based
+on mitral/new_mit/cellview.g, and incorporating a function set_drawrange to
+roughly scale the range of the draw widget to fit the cell.  These were
+applied to traub94, traub95, and mitral cells.	See notes in
+mitral/mitralcells.notes.
+
+I've also updated the README for traub94 and traub95.
+
+Next TODO - README.testing.
+
+----------------
+Mon Mar 29 17:13:33 MDT 2010
+
+$ genesis-g3
+Welcome to the GENESIS 3 shell
+genesis > sli_run traub94cell1.g
+
+Warning: Tabchannel parameter xmin has already been set to 0.000000 for
+K_AHPs
+Warning: Tabchannel parameter xmax has already been set to 1000.000000 for
+K_AHPs
+Warning: Tabchannel parameter xmin has already been set to 0.000000 for K_C
+Warning: Tabchannel parameter xmax has already been set to 1000.000000 for
+K_C
+Warning: Tabchannel parameter xmin has already been set to 0.000000 for
+K_Cs
+Warning: Tabchannel parameter xmax has already been set to 1000.000000 for
+K_Cs
+/
+changing clock [0] from 1 to 2e-05
+reading 'traub94.p'.... 
+traub94.p read: 66 compartments
+Crank-Nicolson. Note : applies only to hsolve elements
+time = 0.000000 ; step = 0          
+warning: cell found during solver_mathcomponent_typer()
+warning:     /cell/solve
+*** Warning: zero initial value for the concentration of the following:
+/cell/soma/Ca_concs
+*** Warning: zero initial value for the concentration of the following:
+/cell/ap5/Ca_conc
+
+...
+
+*** Warning: zero initial value for the concentration of the following:
+/cell/bas1_16/Ca_conc
+warning: cell found during solver_mathcomponent_processor()
+warning:     /cell/solve
+warning: cell found during solver_mathcomponent_finalizer()
+warning:     /cell/solve
+Using hsolve
+time = 0.000000 ; step = 0          
+Warning: Heccer object /cell exists, resetting it instead.
+
+------------------------------------------------------
+Tue Mar 30 11:49:22 MDT 2010 - analyze this as I did with traub95cell
+
+protodefs.g has, other than the functions that use setupalpha:
+make_K_AHP make_K_AHP_soma (K_AHPs) make_K_C make_K_C_soma (K_Cs)
+
+These are essentially the same as traub95
+make_K_AHP_int -- 
+  float xmin = 0.0	  float xmax = 1000.0	     int xdivs = 50
+  TABCREATE Z {xdivs} {xmin} {xmax}, fill in loop,
+  call K_AHP_int TABFILL Z 3000 0
+
+make_K_C_int --	 float	 xmin = -0.1;	float xmax = 0.05;  int xdivs = 49
+TABCREATE X {xdivs} {xmin} {xmax}, fill in loop, TABFILL
+   and same for Z gate with xmin = 0.0, xmax = 1000.0, xdivs = 50
+
+Which one of these gives the Warning - the X or Z gate?
+
+I'll now put in some debugging statements to inspect things right after
+I include protodefs.
+
+
+int debug = 1 // flag to echo additional debugging info to console
+
+if (debug)
+    echo "Executed protodefs.g to make prototypes in /library"
+    pushe /library
+    float xmax = {getfield K_AHPs Z_A->xmax}
+    float xdivs = {getfield K_AHPs Z_A->xdivs}
+    echo "K_AHPs Z_A xmax = " {xmax} "K_AHPs Z_A xdivs = " {xdivs} 
+    float A1499 = {getfield K_AHPs Z_A->table[1499]}
+    echo "Z_A [1499] = " {A1499}
+
+    echo "Executed protodefs.g to make prototypes in /library"
+    float xmax = {getfield K_Cs Z_A->xmax}
+    float xdivs = {getfield K_Cs Z_A->xdivs}
+    echo "K_Cs Z_A xmax = " {xmax} "K_Cs Z_A xdivs = " {xdivs} 
+    float A1499 = {getfield K_Cs Z_A->table[1499]}
+    echo "Z_A [1499] = " {A1499}
+    pope
+end
+
+Under G2:
+Simulation Script:  traub94cell1.g
+/library
+/
+Executed protodefs.g to make prototypes in /library
+/library
+K_AHPs Z_A xmax =  1000 K_AHPs Z_A xdivs =  3000
+Z_A [1499] =  9.929944753
+Executed protodefs.g to make prototypes in /library
+K_Cs Z_A xmax =  1000 K_Cs Z_A xdivs =  3000
+Z_A [1499] =  1
+/
+changing clock [0] from 1 to 2e-05
+reading 'traub94.p'.... 
+
+This is consistent with the way the tables are filled, and what I see
+with showfield K_Cs *
+
+$ genesis-g3
+Welcome to the GENESIS 3 shell
+genesis > sli_run traub94cell1.g
+
+.simrc-ns-sli has been executed!
+Simulation Script:  traub94cell1.g
+/library
+Warning: Tabchannel parameter xmin has already been set to 0.000000 for
+K_AHPs
+Warning: Tabchannel parameter xmax has already been set to 1000.000000 for
+K_AHPs
+Warning: Tabchannel parameter xmin has already been set to 0.000000 for K_C
+Warning: Tabchannel parameter xmax has already been set to 1000.000000 for
+K_C
+Warning: Tabchannel parameter xmin has already been set to 0.000000 for
+K_Cs
+Warning: Tabchannel parameter xmax has already been set to 1000.000000 for
+K_Cs
+/
+Executed protodefs.g to make prototypes in /library
+/library
+Warning: No heccer found for %s->%s.
+
+<traub94cell1.g> line 53
+** Error - could not find 'K_AHPs'
+<traub94cell1.g> line 53
+** Error - CastToFloat: NULL string
+
+    52      pushe /library
+    53      float xmax = {getfield K_AHPs Z_A->xmax}
+    54	    float xdivs = {getfield K_AHPs Z_A->xdivs}
+
+If I change this to give the full path:
+    52      pushe /library
+    53      float xmax = {getfield /library/K_AHPs Z_A->xmax}
+    54	    float xdivs = {getfield /library/K_AHPs Z_A->xdivs}
+I get a slightly different error:
+<traub94cell1.g> line 53
+** Error - could not get the value for field '/library/K_AHPs->Z_A->xmax'
+<traub94cell1.g> line 53
+** Error - CastToFloat: NULL string
+
+as if it didn't find the channel without the full path.  With the full
+path, it may have used the wrong synatax to access the information:
+
+'/library/K_AHPs->Z_A->xmax' instead of '/library/K_AHPs Z_A->xmax'
+
+
+Question:  Why don't I have this problem in traub91?
+Answer: I do.  See g2-Scripts/traub91/traubcell.notes
+
+------------------
+Thu Apr  1 14:22:34 MDT 2010
+
+changed the debug flag to 0, to avoid G3 problems, and put latest scripts
+in test-traub94cell-v0/
+
+\end{verbatim}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
