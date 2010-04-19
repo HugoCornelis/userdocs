@@ -1,0 +1,67 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-notes-dave-g2
+% end: userdocs-tag-replace-items related-notes-dave-g2
+
+\section*{Notes on Converting the Traub94 Model from G-2 to G-3}
+
+\begin{verbatim}
+
+This directory contains versions of the cell simulation for testing of the
+cell model that is described in README.
+
+The files are:
+
+traub94cell.g - the main script, using a pulsegen
+traub94cell1.g - a version for G3 testing without the pulsegen
+traub94cell1-gr.g - interactive mode with batch=0, graphics=1.
+graphics.g - graphics functions to be included if graphics flag is set
+graphics1.g - graphics functions to be used without the pulsgen
+protodefs.g - creates prototype channels and elements in /library
+traub94chans.g - function defs to create the channels, included by protodefs
+traub94.p - cell parameter file with 64 asymmetric compartments
+traub94-default_Vm.out - soma Vm using default simulation parameters
+
+traub94cell.notes - notes taken while developing and testing the scripts
+
+The default version of the script uses the flags:
+
+int batch = 1 // if (batch) run simulation with default injcurrent, tmax
+int graphics = 0     // display control panel, graphs
+int file_out = 1     // write output to a file
+int hflag = 1    // GENESIS 2 - use hsolve if hflag = 1
+int chanmode = 3 // hsolve mode for GENESIS 2
+
+int debug = 0 // flag to echo additional debugging info to console
+If this is set to 1, it tries to examine fields of the K_C_int tables,
+and produces errors under G3.
+
+The result of running the script traub94cell1.g under GENESIS version 2.2
+is in the file traub94-default_Vm.out.
+
+These are results obtained by running the script under genesis-g3 with
+"sli_run":
+
+See traub94cell.notes and the image traub94_g3-g2.png
+
+There are warnings about Tabchannel parameter xmax has already been set,
+and the results for G3 are clearly wrong.
+
+\end{verbatim}
+
+\end{document}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

@@ -69,6 +69,8 @@ sub main
 
   try_to("neurospaces_clean --regex userdocs",1);
 
+#   try_to("userdocs-check > $output_path",1);
+
   try_to("make website-prepare -C ~/neurospaces_project/userdocs/source/snapshots/0/ > $output_path",1);
 
   # now do a link check.
