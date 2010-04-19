@@ -1,0 +1,91 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Integrating new functionality into the G-Shell}
+
+Previously we created a solver object called PulseGen\{\}. In this document we will outline the process for adding our objects functionality to the gshell. Up to this point, the PulseGen\{\} Object should:
+
+\begin{itemize}
+\item[] Have a symbol complete with parameters in the Model Container as outlined \href{../genesis-extend-model-container/genesis-extend-model-container.tex}{\bf here.}
+\item[] Have a corresponding \href{../genesis-add-object-solver/genesis-add-object-solver.tex}{\bf solver object} with \href{../genesis-create-test-heccer/genesis-create-test-heccer.tex}{\bf tests} to verify it's working correctly.
+\item[] Have a \href{../genesis-add-swigbinding-heccer/genesis-add-swigbinding-heccer.tex}{\bf SWIG binding} to make the solver useable from Perl.
+\item[] Be callable from \href{../genesis-add-feature-ssp.tex}{\bf SSP}.
+\end{itemize} 
+
+Now to make our solver object useable from the {\bf ghsell} we must add code to some sections of the {\it GENESIS.pm} Perl module located in the directory:
+
+
+\begin{itemize}
+\item[] {\it \~/neurospaces\_project/gshell/source/snapshots/0/perl/}
+\end{itemize}
+
+
+\subsection*{Add the PulseGen\{\} Object to the Input Classes}
+
+Since the PulseGen\{\} is a standalone solver object, it must be imported into the {\bf gshell} as an input class. To make the {\bf gshell} aware of the presence of our solver object, we must add an entry for it to the module variable {\it \$all\_inputclass\_templates} located in the {\it GENESIS.pm} file. Here we add a hash entry for our pulsegen object to the inputclass template variable. 
+
+
+\begin{verbatim}
+
+our $all_inputclass_templates 
+  = {
+    perfectclamp => {
+                      module_name => 'Heccer',
+                      options => {
+                                  name => 'name of this inputclass',
+                                  command => 'command value',
+                                 },
+                      package => 'Heccer::PerfectClamp',
+			       },
+    pulsegen => {
+                  module_name => 'Heccer',
+                  options => {
+                              name => 'name of this inputclass',
+                              command => 'command value',
+                              },
+                  package => 'Heccer::PulseGen',
+                },
+    };
+\end{verbatim}
+
+Our entry is named {\bf pulsegen} and should have three keys:
+
+\begin{itemize}
+\item[] {\bf module\_name}: Since our PulseGen\{\} simulation object was compiled into the {\bf Heccer} package we list it for the module name.
+\item[] {\bf options}: This set of subkeys are options to pass to our object to set parameters for the inputclass. (note: need to use my own keys here.)
+\item[] {\bf package}: This key gives the callable object from the SWIG binding so the {\bf gshell} can utilize it correctly.
+\end{itemize}
+
+You can check to see if the {\bf gshell} properly reads the template by typing {\it list template\_classes} on the {\bf gshell} prompt:
+
+\begin{verbatim}
+	genesis > list inputclass_templates                                                   
+	all input class templates:
+	  perfectclamp:
+	    module_name: Heccer
+	    options:
+	      command: command value
+	      name: name of this inputclass
+	    package: Heccer::PerfectClamp
+	  pulsegen:
+	    module_name: Heccer
+	    options:
+	      command: command value
+	      name: name of this inputclass
+	    package: Heccer::PulseGen
+\end{verbatim}
+
+
+\end{document}
