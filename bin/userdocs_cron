@@ -1,6 +1,7 @@
 #!/usr/bin/perl
 #!/usr/bin/perl -w -d:ptkdb
 
+
 use strict;
 use Getopt::Long;
 use YAML;
@@ -36,7 +37,7 @@ sub main
 
 
   if ($option_config)
-  {
+    {
     parse_config_file($option_config);
   }
 
@@ -76,14 +77,15 @@ sub main
   # now do a link check.
   try_to("make webcheck -C ~/neurospaces_project/userdocs/source/snapshots/0/ >> $output_path",1);
 
+
+  copy_html_data();
+
+  set_index_page();
+
   my $text = produce_email_text();
 
   try_to_mail("Userdocs cron has finished.",
 	      "Userdocs has finished building.\n\n" . $text);
-
-  copy_html_data();
-
-
 }
 
 
@@ -449,6 +451,86 @@ sub rotate_logs
 
   return;
 
+}
+
+
+#
+# This sets a "index.html" sim link to the documentation
+# homepage. In the future this will set up the documentation
+# frame, now it just puts in a list of documents.
+#
+sub set_index_page
+{
+
+
+  if(not defined $configuration->{HTMLDIR})
+  {
+    return;
+  }
+
+  my $index_file = $configuration->{HTMLDIR} . "/userdocs/index.html";
+
+  open(INDEX,">$index_file") or die "cannot open file for writing: $!";
+
+  my $html_starter = "<!DOCTYPE html PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">
+<html>
+<head>
+  <meta
+ content=\"text/html; charset=ISO-8859-1\"
+ http-equiv=\"content-type\">
+  <title>GENESIS Documentation System</title>
+</head>
+<body>
+For the documentation homepage please click <a
+ href=\"documentation-homepage/documentation-homepage.html\">here.</a>
+<br>
+<br>
+This is a listing of all published documents in the documentation
+system. <br>
+<br>
+<br>
+<ul>
+";
+
+  # Start off the index page. 
+  print INDEX $html_starter;
+
+
+  my $documentlist = `userdocs-tag-filter published`;
+
+  my $tmp = YAML::Load($documentlist);
+
+  my @published_documents = @$tmp;
+
+  foreach (@published_documents)
+  {
+
+    my $descriptor_file = $_ . "/descriptor.yml";
+
+    my $descriptor = YAML::LoadFile($descriptor_file);
+
+    my @dirs = split(/\//,$_);
+
+    my $documentname = $dirs[-1];
+
+    print INDEX "<li><a href=\"";
+
+    print INDEX $documentname . "/" . $documentname . ".html";
+
+    print INDEX "\">";
+
+    print INDEX $descriptor->{'document name'};
+
+    print INDEX "</a></li>\n";
+
+
+  }
+
+  print INDEX "</ul>\n</body>\n</html>\n";
+
+  close INDEX;
+
+  print "Done constructing index page\n";
 }
 
 
