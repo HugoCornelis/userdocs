@@ -1,0 +1,31 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{De Schutter: Purkinje Cell Model}
+
+\subsection*{PLATEAU POTENTIALS}
+
+Current injection steps are often followedby a prolonged plateau potential. In our simulationsthis phenomenon was always observed after short currentsteps around firing threshold (\href{../pub-purkinje-deschutter1-fig-5/pub-purkinje-deschutter1-fig-5.tex}{\bf Fig.\,5}) and sometimes afterlonger current steps also (\href{../pub-purkinje-deschutter1-fig-4/pub-purkinje-deschutter1-fig-4.tex}{\bf Fig.\,4{\it A}}). In the model theseplateau potentials resulted in depolarizations of between-49 and -55\,mV. Similar prolonged plateau potentialsafter the end of a current injection were found by\,\cite{R:1980pi} (compare their Fig. 5 D with our \href{../pub-purkinje-deschutter1-fig-3/pub-purkinje-deschutter1-fig-3.tex}{\bf Fig.\,3{\it A}}). However, in the experimental data these plateaus decayover a time course of $\sim$\,100\,ms, whereas in the modelthey often did not decay at all (\href{../pub-purkinje-deschutter1-fig-5/pub-purkinje-deschutter1-fig-5.tex}{\bf Fig.\,5}).
+
+The model also generated longer duration plateau-type
+potentials that have been shown toexist in this neuron\,\cite{Jaeger:1991kh, R:1980pi, Llinas:1992rq}. 
+It has been demonstrated physiologicallythat current injection generates a plateau potentialin the soma of the cell that is dependent on Na+ conductances.The model generated Na$^+$-dependent somaticplateaus (Figs. \href{../pub-purkinje-deschutter1-fig-9/pub-purkinje-deschutter1-fig-9.tex}{\bf 9{\it B}} and \href{../pub-purkinje-deschutter1-fig-11/pub-purkinje-deschutter1-fig-11.tex}{\bf 11}). However, it is debated in theliterature whether such persistent Na$^+$ currents rely on aspecial channel (NaP) or depend on the NaF channel itself\,\cite{Alzheimer:1993fk, C-R-French:1990uq, Kay:1990kx}.In our model the somatic plateau potential was mainlycarried by NaF channels in the form of a so-called windowcurrent, although the model also included the experimentallydemonstrated NaP channel\,\cite{Kay:1990kx}. Theplateau-related current in the model flowed through NaFchannels at a potential where the steady-state activationand inactivation curves (\href{../pub-purkinje-deschutter1-conductance1-naf1/pub-purkinje-deschutter1-conductance1-naf1.tex}{\bf Fig. 2{\it A}}) overlap. Although thismechanism was robust in the model, one argument againstthe existence of such a window current is that it is based ona wrong model of inactivation, because Na$^+$ channel inactivationis probably not voltage dependent\,\cite{Aldrich:1987uq}. 
+If this is in fact correct, then the term in ourequations for steady-state inactivation would be meaningless.Although this possible inaccuracy in the Hodgkin-Huxley model of inactivation\,\cite{hodgkin52:_quantitative_description} means that our resultsare not conclusive, the model at least suggests that theremay not be a need for separate NaP channels to explainsomatic plateaus. In our simulations the NaP channel actuallyprimarily affected the $f-I$ curve.
+The model also generated dendritic plateau potentials(Figs.\,\href{../pub-purkinje-deschutter1-fig-9/pub-purkinje-deschutter1-fig-9.tex}{\bf 9} and\,\href{../pub-purkinje-deschutter1-fig-11/pub-purkinje-deschutter1-fig-11.tex}{\bf 11}) that have recently been described in moredetail\,\cite{Jaeger:1991kh} and that may be particularlyimportant during synaptic activation of the Purkinjecell by peripheral stimuli\,\cite{Thompson:1991ac}. Inthe model these dendritic plateau potentials were carriedlargely by the CaP channels, because the CaT channel inactivatedtoo rapidly to play a major role. In this case againthe plateau response resulted from a window current-likemechanism very similar to that found with the NaF channelsin the soma, because the dendritic plateau currentthrough the CaP channel occurred at a potential where theCaP channel does not inactivate completely. As a consequencethese dendritic plateau potentials did not wane inthe model as they do in slice preparations.
+
+\bibliographystyle{plain}
+\bibliography{../tex/bib/g3-refs.bib}
+
+\end{document}

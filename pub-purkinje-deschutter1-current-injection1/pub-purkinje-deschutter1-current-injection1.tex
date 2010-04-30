@@ -1,0 +1,49 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{De Schutter: Purkinje Cell Model}
+
+\subsection*{Tuning the model to replicate in vitro current injections}
+
+The transitions between the firing of simple somatic spikes and the firing of dendritic spikes causes a break in the linearity of the frequency current ($f-I$) curve, with a second, shallower slope above this transition. Our $f-I$ curves (\href{../pub-purkinje-deschutter1-fig-6/pub-purkinje-deschutter1-fig-6.tex}{\bf Fig. 6$A$}) were remarkably similar to those published by\,\cite{R:1980ly} (their Fig. 5). In the model, dendritic spike firing frequency remained relatively constant (16--19\,Hz in both models) once the threshold was crossed and was rather insensitive to the current amplitude.
+
+\subsection*{Replication of current injection results}
+
+This paper principally concerns the simulation of Purkinje cell responses to current injection in the slice preparation\,\cite{Hounsgaard:1988nx, R:1980ly, R:1980pi, Llinas:1992rq}. We believe that overall the model does a good job of simulating these experimental results.
+
+\subsubsection*{SOMATIC AND DENDRITIC FIRING PATTERNS}
+
+As demonstrated in Figs. 3-7, both the somatic and dendritic firing patterns were reproduced well. In particular, at low-level current intensities the model fired only fast somatic spikes
+after a delay. At higher current amplitudes these fast Na$^+$
+spikes were interrupted by dendritic Ca$^{2+}$ spikes that were
+caused by activation of the CaP channel. The model also
+replicated the experimental $f-I$ curves well.
+
+One aspect of Purkinje cells in slice preparations that we
+have not addressed explicitly is the tendency for Purkinje
+cells to become spontaneously active\,\cite{R:1980ly}. This could be achieved in the model by introducing
+a bit of bias current. However, there are numerous ways
+in which this could be done. For example, increasing the
+amount of NaP or CaT channels would introduce such a
+current, as would decreasing any of the K$^+$ currents or the
+leak in the model. In other words, there might be many
+ways in which Purkinje cells could become spontaneously
+firing cells, because modulating the conductivity of any of
+six different channels would be sufficient.
+
+\bibliographystyle{plain}
+\bibliography{../tex/bib/g3-refs.bib}
+
+\end{document}
