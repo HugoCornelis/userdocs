@@ -481,60 +481,79 @@ Total of $test_report->{global}->{test_count} tests (encountered $error_count er
 
 		my $arguments = $command_definition->{arguments};
 
-		if ($spawn_new)
+		# if the command can be executed
+
+		if (-x $command)
 		{
-		    if ($exp)
+		    if ($spawn_new)
 		    {
-			# terminate the previous command
+			if ($exp)
+			{
+			    # terminate the previous command
 
-			#t could be that the hard_close() call is needed because
-			#t neurospaces uses readline, not sure needs investigation,
-			#t perhaps.
+			    #t could be that the hard_close() call is needed because
+			    #t neurospaces uses readline, not sure needs investigation,
+			    #t perhaps.
 
-			$exp->hard_close();
+			    $exp->hard_close();
+			}
+
+			# create a new Expect object by spawning a new process with the new command
+
+			$exp = Expect->new();
+
+			#! see the expect manual for this one
+
+			$exp->raw_pty(1);
+
+			# 		    $exp->slave->stty(qw(raw -echo));
+
+			$exp->spawn
+			    (
+			     (
+			      $option_trace
+			      ? ("strace", "-f")
+			      : ()
+			     ),
+			     $command,
+			     @$arguments
+			    )
+				or die "$0: cannot spawn $command: $!\n";
+
+			# set the running_command_definition
+
+			$running_command_definition = $new_command_definition;
+
+			print "*** Executing $command " . (join ' ', map { "'$_'" } @$arguments) . "\n";
+
+			# remember to do startup testing
+
+			$test_startup = 1;
+
+			# there were no side effects yet
+
+			$previous_side_effects = 0;
 		    }
+		    else
+		    {
+			print "*** Recycling $command " . (join ' ', map { "'$_'" } @$arguments) . "\n";
 
-		    # create a new Expect object by spawning a new process with the new command
-
-		    $exp = Expect->new();
-
-		    #! see the expect manual for this one
-
-		    $exp->raw_pty(1);
-
-# 		    $exp->slave->stty(qw(raw -echo));
-
-		    $exp->spawn
-			(
-			 (
-			  $option_trace
-			  ? ("strace", "-f")
-			  : ()
-			 ),
-			 $command,
-			 @$arguments
-			)
-			    or die "$0: cannot spawn $command: $!\n";
-
-		    # set the running_command_definition
-
-		    $running_command_definition = $new_command_definition;
-
-		    print "*** Executing $command " . (join ' ', map { "'$_'" } @$arguments) . "\n";
-
-		    # remember to do startup testing
-
-		    $test_startup = 1;
-
-		    # there were no side effects yet
-
-		    $previous_side_effects = 0;
+			$test_startup = 0;
+		    }
 		}
 		else
 		{
-		    print "*** Recycling $command " . (join ' ', map { "'$_'" } @$arguments) . "\n";
+		    my $error = "$command is not executable";
 
-		    $test_startup = 0;
+ 		    report_error_add
+			(
+			 {
+			  description => $description,
+			  error => $error,
+			  module_name => $module_name,
+			 },
+			);
+
 		}
 	    }
 
