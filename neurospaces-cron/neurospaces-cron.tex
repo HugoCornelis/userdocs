@@ -43,6 +43,7 @@ The  {\it neurospaces\_cron} configuration file is a YAML formatted file contain
    \item[]{\bf REGTESTURL:} http link to serve regression test html output.
    \item[]{\bf LOGROTATE:} The number of output logs to rotate on successive runs.   
    \item[]{\bf NOCHECK:} If set to True, the cronjob will not run tests to check the source code. Proceeds as normal when set to False. This option case insensetive. 
+   \item[]{\bf PKGDEB:} Directory to place built Debian packages.
 \end{itemize}
 
 \subsubsection*{Example configuration file:}
@@ -60,6 +61,7 @@ REGTESTOUTPUT: /var/www/regtests
 REGTESTURL: http://repo-genesis3.cbi.utsa.edu/regtests
 LOGROTATE: 10
 NOCHECK: False
+PKGDEB: /var/www/debian
 
 \end{verbatim}
 
