@@ -1,0 +1,39 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{De Schutter: Purkinje Cell Model}
+
+\subsection*{MODEL ROBUSTNESS}
+
+The primary parameters searched in 
+this model involved the locations and densities of the differentchannels. Although the complexity of the currentmodel has not allowed us to undertake a full parameter
+search, as has been done in some other recent modelingstudies\,\cite{S:1993dz}, we have explored in detailvariations on key parameters to examine the overallrobustness of the results. As can be expected from a modelthat shows so much response variability, it was found to bequite robust to changes in channel densities.
+Results were most sensitive to changes in the densities ofthe CaP, KC, and K2 channels. However, these three channelsare actually tied together, i.e., modifying the density ofone of them will change the activation of the other twoduring the dendritic spiking cycle. They are also linkedthrough our simple representation of Ca$^{2+}$ concentration,which drives activation of the KC and K2 channels. For thisreason, robustness of the model could be maintained over awider range of channel densities for even these conductances,provided more than one channel density waschanged at once. In fact, the initial process of model tuningprimarily involved manually changing the densities of thesethree channels in an effort to obtain correct levels of dendriticexcitability.
+
+\section*{Robustness of modeling results}
+
+Having tuned the model to replicate in vitro responses to current injection, we ran several simulations to test the robustness of the basic model. These tests helped to build confidence that the model has biological validity.
+
+\subsection*{VARIATIONS IN PURKINJE CELL MORPHOLOGY}
+
+Initial modeling experiments were based on the anatomic reconstruction of one particular Purkinje cell. Accordingly, it was important to determine the sensitivity of the results to this particular morphology. To do this, identical channel equations and densities (PM\,9) were placed into two additional Purkinje cells, reconstructed
+by\,\cite{Rapp-P:1994qf}; the results are shown in \href{../pub-purkinje-deschutter1-fig-8/../pub-purkinje-deschutter1-fig-8.tex}{\bf Fig.\,8}.
+
+In both cells the response properties of the model fell well within the normal variation seen in Purkinje cell recordings. Simulations of current injections in the soma produced the same typical pattern as in our model of Purkinje {\it cell\,1} (\href{../pub-purkinje-deschutter1-fig-3/pub-purkinje-deschutter1-fig-3.tex}{\bf Fig.\,3}), i.e., at low intensities steady firing of fast somatic spikes superimposed on an increasing plateau potential and at higher intensities the presence of dendritic Ca$^{2+}$ spikes. The details of these firing patterns were, however, quite different for the three cells. {\it Cell\,2} is smaller than {\it cell\,1} (\href{../pub-purkinje-deschutter1-fig-1/pub-purkinje-deschutter1-fig-1.tex}{\bf Fig.\,1}) and thus had a larger $R_N$\,\cite{Rapp-P:1994qf}. As a consequence, the Na$^+$ currents caused a more pronounced plateau potential and the somatic spikes were less well repolarized. This resulted in a progressive attenuation of spike amplitude because of incomplete removal of inactivation of NaF current. Note, however, that despite this buildup of inactivation, spiking did not saturate at a depolarized level during the 1.5\,nA current injection, whereas it did in {\it cell\,3} (not shown). The firing pattern of {\it cell\,3} is more similar to that of {\it cell\,1}, but with a shift in the $f-I$ curve. This can be explained by the small soma and short, thin main dendrite, which caused a smaller total Kdr and KM conductances in the model of this cell (\href{../pub-purkinje-deschutter1-table2/pub-purkinje-deschutter1-table2.tex}{\bf Table\,2}).
+
+\bibliographystyle{plain}
+\bibliography{../tex/bib/g3-refs}
+
+\end{document}
