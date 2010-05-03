@@ -122,7 +122,7 @@ clean-local: website-clean
 #	$(RM) -fr $(srcdir)/hierarchy/output
 #	$(RM) -rf $(top_srcdir)/docs/html
 
-TESTS = $(srcdir)/tests/neurospaces_harness
+TESTS = /usr/local/bin/neurospaces_harness
 
 test: check
 
