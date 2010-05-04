@@ -119,6 +119,10 @@ clean-local: website-clean
 	$(RM) -fr `find $(srcdir) -name _Inline`
 	$(RM) -rf */output/*
 	$(RM) -f */*.log
+	$(RM) -rf *.deb
+	$(RM) -f *.changes
+	$(RM) -f *.dsc
+	$(RM) -f build_debian.log
 #	$(RM) -fr $(srcdir)/hierarchy/output
 #	$(RM) -rf $(top_srcdir)/docs/html
 
