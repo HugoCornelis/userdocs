@@ -88,26 +88,6 @@ software component, and also impacts other software components.
 \end{center}
 
 
-\subsection{Model\,Container}
-Complete the implementation of the {\it ndf\_save} command.  Add tests for
-saving a full model, saving a library of models and saving a
-modularized part of a model.
-
-\begin{center}
-  \vspace{5mm}
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Time Estimate
-    & 1 week \\
-    \hline
-    Assigned to
-    & Hugo \\
-    \hline
-  \end{tabular}
-\end{center}
-
-
 \subsection{symmetric compartments (1)}
 
 Implement symmetric compartments.  We will have to decide how to do
@@ -634,6 +614,39 @@ to be installed.
 
 
 \section{DONE List}
+
+
+\subsection{Model\,Container}
+Complete the implementation of the {\it ndf\_save} command.  Add tests for
+saving a full model, saving a library of models and saving a
+modularized part of a model.
+
+\begin{center}
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Time Estimate
+    & 1 week \\
+    \hline
+    Assigned to
+    & Hugo \\
+    \hline
+  \end{tabular}
+\end{center}
+
+\begin{itemize}
+\item there is now an export library function in the model-container
+  that exports all the components of a model in the private model
+  section of an NDF file.
+\item The model is then trivially instantiated in the public model
+  section.
+\item There is also an export all function in the model-container that
+  can save a modularized part of a model (but you loose the
+  relationships between individual model components).
+\item The gshell ndf\_save command is trivially linked to the export
+  library function.
+\end{itemize}
 
 
 \subsection{SSP Optimizer}
