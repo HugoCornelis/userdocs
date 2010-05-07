@@ -1,0 +1,60 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Limitations of the model}
+
+The current model is an advancement in modeling thePurkinje cell, but as any computer model, it must be seen asa limited representation of reality\,\cite{Bower:1992vn}.Thus, although the model replicated the basic features ofthe response of this cell to current injection quite well, it didnot simulate all details of the several generated responseproperties perfectly. For example, the simulated dendritetended to be a bit too excitable, so that a small spike oftenoccurred at the beginning of a low-amplitude current injection,followed by a plateau potential (\href{../pub-purkinje-deschutter1-fig-3/pub-purkinje-deschutter1-fig-3.tex}{\bf Figs.\,3{\it A}} and \href{../pub-purkinje-deschutter1-fig-4/pub-purkinje-deschutter1-fig-4.tex}{\bf 4{\it A,B}}).In experimental data, low-amplitude current injectionsdo not result in this firing pattern\,\cite{R:1980ly, R:1980pi}. 
+Similarly, at higher current amplitudes fullblowndendritic spikes were often preceded by smaller Ca$^{2+}$spikes (\href{../pub-purkinje-deschutter1-fig-3/pub-purkinje-deschutter1-fig-3.tex}{\bf Fig.\,3{\it B,C}}). Also, the prolonged plateau potentialsafter current injections did not decay properly (\href{../pub-purkinje-deschutter1-fig-5/pub-purkinje-deschutter1-fig-5.tex}{\bf Fig.\,5}).
+
+We believe that an important reason for limitations inmodel performance is the lack of critical experimental data.Because this is the first description of this model, the followingsections discuss the limitations posed by the lack of datain some detail.
+
+\subsection*{MORPHOLOGICAL DATA}
+
+At the most basic level, the model
+was based on a light microscopic reconstruction of the Purkinjecell, effectively limiting the resolution of the model tobranches $\sim$\,1\,$\mu$m in diameter. However, it is known thatPurkinje cells have many branches smaller than this diameter\,\cite{Gundappa-Sulur:1990bs, Palay:1974fk}. 
+On the basis of this information we estimate thatour model may be lacking $\sim$\,10\,\% of the total dendrite. However,we also believe that for the purposes of the currentpaper this inaccuracy is relatively unimportant. First, thispaper primarily concerns Purkinje cell responses to currentinjections into the soma or the smooth dendrites. Second,an analysis of previously published EM data that examinedthe dendritic spines in detail\,\cite{M:1988bh, Harvey:1991xz} 
+suggests that the inaccuracies inthe total spine surface area and in the shrinkage factor usedin the original reconstruction\,\cite{Rapp-M:1994qf} were of thesame order as the missing dendritic membrane.
+
+\subsection*{DATA FROM DIFFERENT ANIMALS}
+
+A second limitation of
+the current model is that model parameters were based on amixing of data obtained from the two different species usedmost commonly in cerebellar physiology and anatomy, ratsand guinea pigs. For example, the morphological reconstructionon which the basic structure of the model is basedrepresents a guinea pig Purkinje cell\,\cite{Rapp-M:1994qf},whereas the EM data on which we based the size and distributionof spines were obtained in the rat\,\cite{M:1988bh}. 
+Likewise, most of the voltage-clamp data camefrom rat Purkinje cells\,\cite{Gahwiler:1989fk, Hirano:1989uq, Kaneda:1990ys, Regan:1991ly}, 
+although we compared model outputs to current injectiondata obtained in the guinea pig slice\,\cite{R:1980ly, R:1980pi}. 
+Although in principle one would prefer to basethe entire model on data from a single species, the lack ofavailable data makes species mixing quite common in modernmodeling efforts (cf.\,\cite{bhalla92:_rallp, W:1991qa, McCormick:1992fk, Traub-R-D:1991mi}. 
+Furthermore, in the current case there isno evidence that these species differ substantially in theproperties of their Purkinje cells.
+\subsection*{NaF CHANNELS}
+
+As was pointed out in \href{../pub-purkinje-deschutter1-conductance1-naf/pub-purkinje-deschutter1-conductance1-naf.tex}{\bf METHODS}, voltage-clamp data on Purkinje cell fast Na$^+$ channels are incomplete.This resulted in a number of anomalies in ourequations for the NaF current that could not be resolvedwithout better experimental data. Because of the potentialimportance of the window current in the generation of Na$^+$plateau potentials (see above) a better description of theNaF current would be useful.
+First of all, the equations were accurate for voltages up to-10\,mV, but beyond this level the activation time constantbecame too fast (\href{../pub-purkinje-deschutter1-conductance1-naf/pub-purkinje-deschutter1-conductance1-naf.tex}{\bf Fig.\,2{\it A}}). However, because of the all-or nonenature of action potentials this discrepancy did notaffect modeling results.
+Second, at rest (-68\,mV) 73\,\% of the NaF channels wereinactivated and during current injections 294\,\% of thechannels were always inactivated. This necessitated an unphysiologicallyhigh density of NaF channels in the soma(total conductance 7,500\,mS/cm$^2$). However, because ofthe continuous inactivation, the real $\bar g$ was $\sim$\,2,000\,mS/cm$^2$, 
+comparable with, for example, an Na$^+$ conductanceof $\sim$\,1,000\,mS/cm$^2$ (20$^\circ$\,C) for a rat node of 
+Ranvier\,\cite{Neumcke:1982qa}, but much larger than the15\,mS/cm$^2$ (22$^\circ$\,C) reported for the somata of freshly dissociatedhippocampal neurons\,\cite{Sah:1988fv}. This differencecan be explained by the absence of an axon initialsegment in the model. This was not included in the modelbecause the reconstruction of the Purkinje cell did not containthe axon. During the tuning phase of the model somesimulations were performed with a model including anaxon initial segment\,\cite{Somogyi:1976dz} butthese showed no qualitative differences compared with thestandard model.
+\subsection*{Ca$^{2+}$-ACTIVATED K$^+$ CHANNELS}
+
+It is of more concern thatthe Ca$^{2+}$-activated K$^+$ currents that are known to exist inthe Purkinje cell and that have a substantial influence onmodel behavior have not been described adequately in thiscell with voltage-clamp techniques.
+From experimental data it is quite likely that the Purkinjecell membrane contains several types of Ca$^{2+}$-activatedK$^+$ channels\,\cite{Gruol:1991dz}. This is not surprisingconsidering that the BK channel alone seems to have$>$\,100 expression variants\,\cite{Adelman:1992fu}. Withoutmore detailed Purkinje cell data, in the current model wehave attempted to cover the effects of these diverse channelsby including only two Ca$^{2+}$-activated K$^+$ channels, aKC and a K2 channel. As described in\,\href{pub-purkinje-deschutter1-conductance1-kc/pub-purkinje-deschutter1-conductance1-kc.tex}{\bf KC} and\,\href{pub-purkinje-deschutter1-conductance1-k2/pub-purkinje-deschutter1-conductance1-k2.tex}{\bf K2}, thesechannels have quite different activation characteristics,with the KC channel requiring high Ca$^{2+}$ concentrationsand large depolarizations whereas the K2 channel activatesat low Ca$^{2+}$ concentrations and small depolarizations. Byusing two relative extremes of what could very well be acontinuous distribution of slightly different Ca$^{2+}$-activatedK$^+$ channels\,\cite{Latorre:1989fu} we hoped to approximatethe behavior of the whole population.
+In the absence of good Purkinje cell data on these channelswe initially borrowed the kinetic description for the BK
+conductance (KC) from simulations of the bullfrog sympatheticganglion\,\cite{Yamada-W:1989bs}. However, in Purkinjecell simulations these channels activated too quickly,so that dendritic Ca$^{2+}$  channels could not generate full Ca$^{2+}$ spikes. Accordingly, we modified the channel descriptionequations to include an explicit time constant for Ca$^{2+}$ activationthat mimicked the experimentally observed delay inonset of this conductance\,\cite{Ikemoto:1989lh}. The resultingKC equation reproduced several characteristics of theBK channel well, among them the two separate Ca$^{2+}$ activationsteps with a delay, the additional voltage-independentopen-closed transition with typical time constants,and voltage threshold. However, some other reported characteristicsare not captured by our equations. For example,a simple horizontal shift of the open probability versus voltage($P_O/V$) curve on changes in Ca$^{2+}$ concentration has beenreported\,\cite{Gola:1990pi, Moczydlowski:1983qa}, 
+whereas our equations only scale the amplitude ofthe $P_O/V$ curve (\href{../pub-purkinje-deschutter1-conductance1-kc1/pub-purkinje-deschutter1-conductance1-kc1.tex}{\bf Fig.\,2{\it G}}). In addition, the BK channel alsoseems to have a fast Ca$^{2+}$-related deactivation\,\cite{Ikemoto:1989lh}, 
+whereas in our model Ca$^{2+}$ activation and Ca$^{2+}$ deactivation had the same time constants. The most substantialdifference between the data and our equations isthat the experimental data predict that the $\bar g$ does not dependon Ca$^{2+}$ concentration, so that at very low Ca$^{2+}$ concentrationsextremely high depolarizations can still fullyopen the channel and vice versa. In our equations g waslimited by the Ca$^{2+}$ concentration. However, because thePurkinje cell dendrite never depolarized enough to openBK channels at low Ca$^{2+}$ concentrations and because Ca$^{2+}$ never reached the saturating concentration for opening allBK channels, the model operated in a region of parameterspace where the effective difference between equations andexperimental data is minimal.
+The presence of the K2 channel was based on singlechannelrecordings\,\cite{Gruol:1991dz}, but few kinetic datawere available. We have therefore combined data from similarchannels in synaptosomal membranes\,\cite{Farley:1988tw, Reinhart1989:xe}. 
+However, the experimentaldata remain very incomplete. On the basis of our results,we believe that a better characterization of this channel isessential for a further refinement of the model.There is also evidence in Purkinje cells for a K$^+$ channelthat causes slow afterhyperpolarizations (referred to as K7by\,\cite{Gruol:1991dz}), but we did not model this conductance.This channel resembles the SK channel or AHP conductancethat causes slow afterhyperpolarizations in otherneurons\,\cite{Lancaster:1991ye, Latorre:1989fu}. It isbelieved to be sensitive to low Ca$^{2+}$ concentrations withslow activation kinetics\,\cite{Pennefeather:1990kl}. We didnot include this channel in the model because the modelcomputed only quickly changing Ca$^{2+}$ concentrations, butthe SK channel would be expected to sense mainly slowertransients. The fact that the model could reproduce most ofthe physiological characteristics of Purkinje cells leads us tosuggest that, if present, SK channels play a minor role in theshort-term response to current injections.
+
+\bibliographystyle{plain}
+\bibliography{../tex/bib/g3-refs}
+
+
+\end{document}
