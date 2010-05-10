@@ -1,0 +1,125 @@
+#!/usr/bin/perl -w
+#!/usr/bin/perl -w -d:ptkdb
+#
+
+
+use strict;
+
+
+use Getopt::Long;
+
+use YAML;
+use Data::Dumper;
+
+my $option_verbose;
+my $option_tags = [];
+
+
+#! These are constants for now
+
+my $userdocs_directory = "$ENV{HOME}/neurospaces_project/userdocs/source/snapshots/0";
+my $userdocs_repo = "$ENV{HOME}/neurospaces_project/MTN/userdocs.mtn";
+
+
+#
+# (src_document dst_document)
+#
+#
+#
+sub rename_document
+{
+
+
+  my $srcdoc = shift;
+  my $dstdoc = shift;
+
+  unless(-d $srcdoc)
+  {
+    die "No document directory named $srcdoc\n";
+  }
+
+  my $descriptor_file = $srcdoc . "/descriptor.yml";
+
+  unless(-e $descriptor_file)
+  {
+    die "Document $srcdoc has no descriptor file present.\n";
+  }
+
+
+  chdir "$userdocs_directory";
+
+  if(-d $dstdoc)
+  {
+    die "Document with destination name already exists.\n";
+  }
+
+  # monotone seems to want the trailing slash so just being cautious
+  # and including it. 
+  my $srcdoc_dir = $srcdoc;
+  if( substr($srcdoc_dir,-1,1) ne '/' )
+  {
+    $srcdoc_dir = $srcdoc . '/';
+  }
+
+  my $dstdoc_dir = $dstdoc;
+  if( substr($dstdoc_dir,-1,1) ne '/' )
+  {
+    $dstdoc_dir = $dstdoc . '/';
+  }
+
+  # update monotone repo by using monotones rename (aka mv) commmand
+  system "mtn mv $srcdoc_dir $dstdoc_dir";
+
+  # the tex file must now be moved in the workspace.
+  my $oldfile = $dstdoc_dir . $srcdoc . ".tex";
+  my $newfile = $dstdoc_dir . $dstdoc . ".tex";
+
+  system "mtn mv $oldfile $newfile";
+
+
+  print "Finished renaming $srcdoc to $dstdoc\n";
+
+}
+
+
+sub usage
+{
+  print "$0 <source document> <destination document>\n";
+  exit;
+}
+
+sub main
+{
+
+
+  if( $#ARGV != 1 )
+  {
+    usage();
+  }
+
+  my $src = $ARGV[0];
+  my $dst = $ARGV[1];
+
+
+  print "Rename document $src to $dst?\n>> ";
+  chomp(my $choice = <STDIN>);
+
+  if( $choice eq 'y' )
+  {
+    rename_document($src,$dst);
+  }
+  else
+  {
+    print "No rename performed\n";
+    return;
+  }
+
+  print "\nDone!";
+
+}
+
+
+
+main();
+
+

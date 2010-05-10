@@ -9,7 +9,8 @@ dist_bin_SCRIPTS = \
 	bin/userdocs-tag-filter \
 	bin/userdocs-tag-replace-items \
 	bin/userdocs-version \
-	bin/userdocs-create
+	bin/userdocs-create \
+	bin/userdocs-rename
 
 dist_noinst_SCRIPTS = \
 	MonotoneSetup.txt \
