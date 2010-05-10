@@ -1,0 +1,115 @@
+#!/usr/bin/perl -w
+#!/usr/bin/perl -w -d:ptkdb
+#
+
+
+use strict;
+
+
+use Getopt::Long;
+
+use YAML;
+use Data::Dumper;
+
+my $option_verbose;
+my $option_tags = [];
+
+
+#! These are constants for now
+
+my $userdocs_directory = "$ENV{HOME}/neurospaces_project/userdocs/source/snapshots/0";
+my $userdocs_repo = "$ENV{HOME}/neurospaces_project/MTN/userdocs.mtn";
+
+
+#
+# (src_document dst_document)
+#
+#
+#
+sub rename_document
+{
+
+
+  my $srcdoc = shift;
+  my $dstdoc = shift;
+
+  my $srcdoc_dir = $userdocs_directory . "/" . $srcdoc;
+  my $dstdoc_dir = $userdocs_directory . "/" . $dstdoc;
+
+  unless(-d $srcdoc_dir)
+  {
+    die "No document rirectory named $srcdoc\n";
+  }
+
+  my $descriptor_file = $srcdoc_dir . "/descriptor.yml";
+
+  unless(-e $descriptor_file)
+  {
+    die "Document $srcdoc has no descriptor file present.\n";
+  }
+
+
+  chdir "$userdocs_directory";
+
+  unless(-d $dstdoc_dir)
+  {
+    die "Document with destination name already exists.\n";
+  }
+
+  system "cp -rf $srcdoc $dstdoc";
+
+  my $olddoc = $dstdoc . "/" . $srcdoc . ".tex";
+  my $newdoc = $dstdoc . "/" . $dstdoc . ".tex";
+  system "mv -f $olddoc $newdoc";
+
+
+  # update monotone repo.
+  system "mtn drop $srcdoc --recursive";
+  system "rm -rf $srcdoc";
+
+  system "mtn add $dstdoc --recursive";
+
+}
+
+
+sub usage
+{
+  print "$0 <source document> <destination document>\n";
+  exit;
+}
+
+sub main
+{
+
+
+  if( $#ARGV != 1 )
+  {
+    usage();
+  }
+
+  my $src = $ARGV[0];
+  my $dst = $ARGV[1];
+
+
+  print "Rename document $src to $dst?\n>> ";
+  chomp(my $choice = <STDIN>);
+
+  if( $choice eq 'y' )
+  {
+    rename_document($src,$dst);
+  }
+  else
+  {
+    print "No rename performed\n";
+    return;
+  }
+
+  print "\nDone!";
+
+}
+
+
+
+main();
+
+
