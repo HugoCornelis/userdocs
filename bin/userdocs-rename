@@ -33,15 +33,12 @@ sub rename_document
   my $srcdoc = shift;
   my $dstdoc = shift;
 
-  my $srcdoc_dir = $userdocs_directory . "/" . $srcdoc;
-  my $dstdoc_dir = $userdocs_directory . "/" . $dstdoc;
-
-  unless(-d $srcdoc_dir)
+  unless(-d $srcdoc)
   {
-    die "No document rirectory named $srcdoc\n";
+    die "No document directory named $srcdoc\n";
   }
 
-  my $descriptor_file = $srcdoc_dir . "/descriptor.yml";
+  my $descriptor_file = $srcdoc . "/descriptor.yml";
 
   unless(-e $descriptor_file)
   {
@@ -51,23 +48,36 @@ sub rename_document
 
   chdir "$userdocs_directory";
 
-  unless(-d $dstdoc_dir)
+  if(-d $dstdoc)
   {
     die "Document with destination name already exists.\n";
   }
 
-  system "cp -rf $srcdoc $dstdoc";
+  # monotone seems to want the trailing slash so just being cautious
+  # and including it. 
+  my $srcdoc_dir = $srcdoc;
+  if( substr($srcdoc_dir,-1,1) ne '/' )
+  {
+    $srcdoc_dir = $srcdoc . '/';
+  }
 
-  my $olddoc = $dstdoc . "/" . $srcdoc . ".tex";
-  my $newdoc = $dstdoc . "/" . $dstdoc . ".tex";
-  system "mv -f $olddoc $newdoc";
+  my $dstdoc_dir = $dstdoc;
+  if( substr($dstdoc_dir,-1,1) ne '/' )
+  {
+    $dstdoc_dir = $dstdoc . '/';
+  }
+
+  # update monotone repo by using monotones rename (aka mv) commmand
+  system "mtn mv $srcdoc_dir $dstdoc_dir";
+
+  # the tex file must now be moved in the workspace.
+  my $oldfile = $dstdoc_dir . $srcdoc . ".tex";
+  my $newfile = $dstdoc_dir . $dstdoc . ".tex";
+
+  system "mtn mv $oldfile $newfile";
 
 
-  # update monotone repo.
-  system "mtn drop $srcdoc --recursive";
-  system "rm -rf $srcdoc";
-
-  system "mtn add $dstdoc --recursive";
+  print "Finished renaming $srcdoc to $dstdoc\n";
 
 }
 
