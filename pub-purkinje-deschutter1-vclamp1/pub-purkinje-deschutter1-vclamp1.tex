@@ -1,0 +1,43 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Fidelity of voltage clamps of Purkinje cells}
+
+Constructing a realisticmodel of a neuron relies on the availability of high qualitydata, especially from voltage-clamp experiments. However,once constructed, the model itself can be used to explorethe likely value of the voltage-clamp experiments themselves.For example, using voltage-clamp techniques, Regehr\,\cite{Regehr:1992tg} have recently proposed that Na+ channelsare present in the (distal) dendrite as well as the soma of thePurkinje cell. They based this claim on the fact that they
+could measure fast inward currents with whole-cell patchclamps of axotomized Purkinje cells under conditions ofgood voltage control in the soma. However, it has beensuggested that in these experiments the soma itself may nothave been adequately clamped\,\cite{Sugimori:1992hc}.
+Using the model, we have found that the presence ofactive dendritic membrane had a dramatic effect on theelectrotonic length of the Purkinje cell and thus the abilityto achieve an adequate space clamp\,\cite{Rall:1985ys}.Passive membrane models predict that Purkinje cells areelectrotonically compact, with a length of $\approx$ 0.3\,X\,\cite{P:1985mb}. 
+Rapp et al.\,\cite{Rapp-M:1992kx} have pointed out that the largesynaptic input the Purkinje cell receives could increase thislength by a factor of 2.4. Our model shows that during adendritic spike the electrotonic distance to the top of thedendrite increased by a factor of 3 compared with a passivemembrane dendrite. Between spikes the length was also increased,but less. Thus the state of activation of the dendriticchannels also made a significant difference in theelectrotonic length of the dendrite. Similarly, activation ofdendritic channels also caused a very bad space clamp, especiallyin the depolarizing direction. We have assumed thatthe application of Cs$^+$ externally and EGTA internallyblocked most K$^+$ currents completely\,\cite{Hille:1991zr}. If thiswas not the case, K$^+$ currents would contribute only a smallconductance compared with the CaP conductance and similarresults would be obtained.
+Our results suggest that space clamp is extremely bad inadult Purkinje cells, with a significant divergence from theholding potential at only 50\,$\mu$m from the soma for depolarizingpotentials. Therefore it is possible that the Na$^+$currents recorded by Regehr et al.\,\cite{Regehr:1992tg} are carried byNa$^+$ channels located in the very proximal parts of themain dendrite. In our present model, we have confinedNa$^+$ channels to the soma, because several other studies,including TTX binding\,\cite{Llinas:1992rq}, dendriticpatch recordings (ibid.), and imaging with a fluorescentNa$^+$ indicator\,\cite{Lasser-Ross:1992ij} demonstratedNa$^+$ channels only on the soma and axon of thePurkinje cell.
+Using the model, we can predict that space clamps couldbe somewhat improved if Ca$^{2+}$ channels were also blocked,but this was not the case in most reported whole-cell patchclampstudies\,\cite{Kaneda:1990ys, Llano:1991qf, Regan:1991ly, Regehr:1992tg}. 
+Note that if the CaP channeldoes not inactivate, as has been reported by\,\cite{Usowicz:1992qf}, 
+one cannot remove the Ca$^{2+}$ conductance bysteady depolarization as has been claimed in some studies\,\cite{Llano:1991qf}. 
+In dissociated Purkinje cells, wherelarge parts of the dendritic tree may be amputated, spaceclamp can also assumed to be better. Thus the ``whole-cell''patch-clamp method may be appropriate to measure ioniccurrents in soma and proximal dendrite in dissociated, culturedPurkinje cells. Equations for several channels used inour model were based on this approach\,\cite{Hirano:1989uq, Kaneda:1990ys, Regan:1991ly}.
+
+Finally, our ultimate objective in constructing this modelwas to explore synaptic influences on Purkinje cell firingpatterns.
+
+\subsection*{EFFECT ON VOLTAGE-CLAMP EXPERIMENTS}
+
+Ultimately, the significance of active membrane properties on the electrotoniclength of a Purkinje cell is related to its integration ofsynaptic input. That is the subject of the accompanyingpaper. However, the electrotonic structure of the Purkinjecell is also relevant to the feasibility and interpretation ofvoltage-clamp experiments. Recently several groups have
+reported results of whole-cell patch clamps of Purkinje cells
+\,\cite{Hirano:1989uq, Kaneda:1990ys, Llano:1991qf, Regan:1991ly, Regehr:1992tg}. 
+An important question in interpreting the data from such studies iswhether an adequate space clamp was achieved\,\cite{Rall:1985ys}.
+To test the general difficulty of having a good spaceclamp of a cell the size and complexity of the Purkinje cellwe simulated a voltage clamp in our basic model. The resultsshown in \href{../pub-purkinje-deschutter1-fig-13/pub-purkinje-deschutter1-fig-13.tex}{\bf Fig.\,13} clearly indicate that it is very difficultand likely impossible to establish a good space clamp of anadult Purkinje cell.
+To model voltage clamps under conditions similar to theones used by experimentalists\,\cite{Llano:1991qf} we simulatedexternal Cs$^{2+}$ block of Kdr, KM, and Kh channels\,\cite{Hille:1991zr}and inactivation of all Ca$^{2+}$-activated K$^{+}$channels because of the presence of ethylene glycolbis($\beta$-aminoethyl ether)-{\it N,N,N,N}-tetraacetic acid (EGTA)in the internal solution. The model was clamped at fourvoltages [-100\,mV, -68\,mV (resting potential), -40\,mV,and +40\,mV] and allowed to stabilize to a steady state,which took about one simulated second. The space clampwas always bad, because the cell was never isopotential(even at -68\,mV the distal spiny dendrite had a potential of-67.47\,mV). The clamp was, however, especially bad inthe depolarized direction. Any step above -50\,mV resultedin activation of the Ca$^{2+}$ channels in the model, causing aclear spike in the dendrites \href{../pub-purkinje-deschutter1-fig-13/pub-purkinje-deschutter1-fig-13.tex}{\bf Fig.\,13A\,and\,B}). In the steadystate, the distal dendrite had potentials that diverged up to$\pm$40\,mV from the holding potential in the soma, becausethe CaP channel did not inactivate completely. The modeldid not achieve a steady state for voltage steps between -50and -25\,mV because the membrane potential oscillated inthe whole dendritic tree.
+Figure \href{../pub-purkinje-deschutter1-fig-13/pub-purkinje-deschutter1-fig-13.tex}{\bf\,13C} shows the membrane potential at increasingdistances from the soma for different control voltages. Itdemonstrates that even the proximal dendrite was notclamped well. During depolarizing voltage-clamp steps themembrane potential differed from the holding potential by$\geq$10\,mV at a distance of only 25\,$\mu$m from the soma.
+
+\bibliographystyle{plain}
+\bibliography{../tex/bib/g3-refs.bib}
+
+\end{document}
