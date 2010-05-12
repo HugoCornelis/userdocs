@@ -55,7 +55,13 @@ packages specific for your Operating System.  This is the most convenient way to
 \item {\it monotone}
 \end{itemize} 
 
-\subsection*{Required Libraries}
+\section*{Required Libraries}
+
+This section lists some libraries required by GENESIS3 in order to compile from source or do development. Lists are separated by operating system. 
+
+\subsection*{Libraries for Ubuntu}
+
+To install these packages use the {\it apt-get} command via the command line, or the synaptic package manager. 
 
 \begin{itemize}
 \item {\it libc6-dev}
@@ -68,6 +74,20 @@ packages specific for your Operating System.  This is the most convenient way to
 \item {\it readline-dev}
 \item {\it python-dev} (for your python version)
 \end{itemize} 
+
+
+\subsection*{Libraries for Fedora}
+
+To install packages in Fedora use the {\it yum} utility from the command line. Since {\it yum} repositories typically contain different versions of the same package for various architectures, you must know your machines architecture type and insert it place of "arch" in the package name. The usual architecture types are x86\_64, i586 and i686.
+
+\begin{itemize}
+\item {\it ncurses-devel.arch}
+\item {\it perl-devel.arch}
+\item {\it readline-devel.arch}
+\item {\it python-devel.arch}
+\end{itemize}
+
+
 
 \subsection*{Required Perl Modules}
 
@@ -89,5 +109,47 @@ are likely available as packages for your Linux distribution or vendor.
    \item Digest::SHA
    \item Inline::Python
 \end{itemize}
+
+\subsection*{Trouble Shooting}
+
+Periodically the build of a Perl module can fail and requires a workaround to get it installed. A common error that occurs is a failure to produce a Makefile as in this example with Data::Utilities :
+
+\begin{verbatim}
+	Checking if your kit is complete...
+	Looks good
+	Writing Makefile for Data::Utilities
+	Use of uninitialized value in concatenation (.) or string at /usr/lib/perl5/5.10.0/CPAN.pm line 7652.
+	Alert: no Build file available for 'make ' in cwd[/root/.cpan/build/Data-Utilities-0.04-MT2keD]. Danger, Will Robinson!
+	Can't exec "./Build": No such file or directory at /usr/lib/perl5/5.10.0/CPAN.pm line 7698.
+	  CORNELIS/Data-Utilities-0.04.tar.gz
+	  ./Build -- NOT OK
+	Running Build test
+	  Can't test without successful make
+	Running Build install
+	  Make had returned bad status, install seems impossible
+	Failed during this command:
+	 CORNELIS/Data-Utilities-0.04.tar.gz          : make NO
+\end{verbatim} 
+
+In the event this happens it's often possible to manually build the module by entering the package directory and creating the Makefile via the modules Perl script. As shown in the output, CPAN downloaded and unzipped the package to the directory /root/.cpan/build/Data-Utilities-0.04-MT2keD. So to manually build the makefile and module we perform this series of commands:
+
+\begin{verbatim}
+cd /root/.cpan/build/Data-Utilities-0.04-MT2keD
+\end{verbatim}
+
+Now create the makefile:
+
+\begin{verbatim}
+perl Makefile.PL
+\end{verbatim}
+
+At this point a {\it Makefile} will be present, all that needs to be done is to build and install:
+
+\begin{verbatim}
+make
+sudo make install
+\end{verbatim}
+
+The module should now be in your Perl library. 
 
 \end{document}
