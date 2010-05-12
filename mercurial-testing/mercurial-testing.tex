@@ -15,22 +15,49 @@
 
 \section*{Mercurial Testing}
 
+\subsection*{Merging}
+
+From Jim Decker on the monotone mailing list:
+
+Mercurial merges can only be done through a workspace.
+
+In Mercurial merge must be done through a workspace, so in order to
+just merge two heads, If I had work in progress in the tree, I have to
+clone the repository to another directory, check out the source(ya
+that's the same step), and then do the merging; A commit from a merge
+cannot be done with relative paths like 'I want to commit just this
+part of the tree', you have to commit the whole thing, so work in
+progress changes would get mixed up in the whole thing.  The revisions
+to merge are all in the repository, so why does it require a
+workspace?!  Git does the same thing in this respect.
+
+\noindent{\bf Advantage:} likely monotone
+
+\subsection*{Branching}
+
+From Jim Decker on the monotone mailing list:
+
+Rebasing to another branch in mercurial and git are both very slow.
+
+(coming from branch)
+mtn update -r h:branch1  (takes like 3 seconds, 6 if i count the time
+it scrolls text)
+hg update -r h:branch1  (takes like a minute)
+
+and there were more files changed in the mtn difference between
+branches than were changes in mercurial.
+
+git also gave me a huge hassle rebasing to another branch... I had
+minor edits in the files, and it had no idea what to do with that...
+and revert didn't work.
+
+\noindent{\bf Advantage:} likely monotone
+
 \subsection*{Pulling code remotely}
 
-Pulling code in monotone requires a two step process. First you must create the SQLite database, then you must connect to the remote repository to pull the data. A third step is needed to check out your code from the local database you created into a workspace.  In mercurial a single command ‘clone’ can remotely connect and set up a workspace for you. 
-
-{
-  \vspace{5mm}
-  \centering
-  \begin{tabular}{|l|l|}  \hline
-   {\bf In monotone}                                                                      & {\bf In mercurial}                                        \\ \hline
-   {\tt \$ mtn –-db=project.mtn db init}                                       & {\tt \$ hg clone http://repo.com/project}  \\
-   {\tt \$ mtn --db=project.mtn pull repo.com “*”}                     &                                                                       \\
-   {\tt \$ mtn –-db=project.mtn --branch=”head” co project}  &                                                                       \\ \hline
-  \end{tabular}
-}
- 
-\noindent{\bf Advantage:} mercurial
+Both monotone and mercurial provide a 'clone' operation for this
+purpose.  There is no noticeable difference between monotone and
+mercurial.
 
 
 \subsection*{Data Format}
