@@ -3,13 +3,11 @@
 %define _bindir		/usr/local/bin
 %define _mandir		/usr/local/share/man/man1
 
-# $Format: "%define name	${package}"$
 %define name	userdocs
 %define release		1
 
 
-# $Format: "%define version 	${label}"$
-%define version 	0dba0d488a40d87421a3b431fe43fcb89ead3642.0
+%define version 	userdocs.6
 %define buildroot 	%{_topdir}/%{name}-%{version}-root
 
 BuildRoot:		%{buildroot}
@@ -64,7 +62,7 @@ make install prefix=$RPM_BUILD_ROOT/usr/local
 #/usr/share/
 
 
-%doc %attr(0444,root,root) docs
+#%doc %attr(0444,root,root) docs
 #%doc %attr(0444,root,root) /usr/local/share/man/man1/wget.1
 # need to put whatever docs to link to here.
 
