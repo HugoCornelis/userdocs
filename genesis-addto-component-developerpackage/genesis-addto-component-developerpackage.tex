@@ -17,13 +17,17 @@
 
 GENESIS contains many software components. The source code of the most
 important ones are publicly available from a central repository. (The
-server {\tt repo-genesis3} is coded as the default server in
-the \href{../developer-package/developer-package.tex}{\it DeveloperPackage}, 
-a default that can be overwritten using command line
-options.) Other software components can be made available from other
-sources. The {\it DeveloperPackage}, when configured correctly,
-automatically incorporates software components from geographically
-distributed sources. The addition of a new software component to GENESIS is the equivalent to adding a new column to the associative array constructed by the {\it DeveloperPackage}. 
+server {\tt repo-genesis3} is coded as the default server in the
+\href{../developer-package/developer-package.tex}{\it
+  DeveloperPackage}, a default that can be overwritten using command
+line options, see also
+\href{../backup-repository/backup-repository.tex}{configuration of a
+  backup repository}.) Other software components can be made available
+from other sources. The {\it DeveloperPackage}, when configured
+correctly, automatically incorporates software components from
+geographically distributed sources. The addition of a new software
+component to GENESIS is the equivalent to adding a new column to the
+associative array constructed by the {\it DeveloperPackage}.
 
 New software components can be added to the configuration of the {\it
   neurospaces\_build} script of the {\it DeveloperPackage}. All the other tools of the
@@ -43,13 +47,12 @@ Use the command line arguments ``{\tt --enable <your-software> --regex <your-sof
 \item {\bf Add the new software component to the configuration of the {\it neurospaces\_build} script:} As an example, for the component named {\tt <your-software>}, you would add the following code block to the configuration file:
 \begin{verbatim}
 	'<your-software>' => {
-	   './configure' => ['--with-delete-operation'],
 	   directory => "$ENV{HOME}/neurospaces_project/<your-software>/source/snapshots/0",
-	   disabled => 0,
-	   order => 1,
-	   target_name => '<your-software>',
+	   disabled => 0,  # 0 means enabled,
+                   # or fill in the reason why the component is disabled
+	   order => 14,  # a value relative to the order of the other components
 	   version_control => {
-	      port_number => 4693,
+	      port_number => 4693,  # beware of TCP port clashes
 	      repository => "$ENV{HOME}/neurospaces_project/MTN/<your-software>.mtn",
 	   },
 },
@@ -58,17 +61,32 @@ Use the command line arguments ``{\tt --enable <your-software> --regex <your-sof
   found, the build order, and version control information ({\bf Note:}
   the server port number cannot be changed at anytime). The {\tt \$} indicates a terminal prompt.
 
+  It is common practice to first disable the new software component
+  inside the {\it neurospaces\_build} script during the early phases
+  of development.  The component can then be enabled on selected
+  machines by adding the following code to the configuration file with
+  name {\it /etc/neurospaces/developer/build.yml}:
+
+\begin{verbatim}
+---
+all_packages:
+  <your-software>:
+    disabled: '0'
+\end{verbatim}
+
+
+
 \item {\bf Create the correct directory layout:}
 \begin{verbatim}
-   $ neurospaces_create_directories
+   $ neurospaces_create_directories --regex <your-software>
 \end{verbatim}
   
 \item {\bf Create the monotone repository:}
 \begin{verbatim}
-   $ neurospaces_init
+   $ neurospaces_init --regex <your-software>
 \end{verbatim}
 
-\item {\bf Populate the new project with files:} Use monotone to check in your modifications regularly (see \href{../version-control/version-control.tex}{\bf Version\,Control} for more details).
+\item {\bf Populate the new project with files:} Use monotone to check in your modifications regularly (see~\href{../version-control/version-control.tex}{\bf Version\,Control} for more details).
 
 \end{enumerate}
 
@@ -84,7 +102,8 @@ your machine to serve the source code.
     neurospaces\_serve} command to make the source code available over
   the internet.  If you are only serving your own software component,
   use the ``{\tt --enable <your-software> --regex <your-software>}''
-  command line arguments.
+  command line arguments if necessary (see also above about enabling
+  and disabling components for selected PCs).
   
 \item {\bf Synchronize your private monotone repository:} After the
   server has been configured the developer package tools can be used to
@@ -101,8 +120,24 @@ The following steps will enable others to access your new software.
 \begin{itemize}
 
 \item {\bf Get a version of the developer package that contains the
-    configuration for the new software component.}
-  
+    configuration for the new software component.}  See
+  the~\href{../developer-package/developer-package.tex}{\it
+    DeveloperPackage}
+
+  You can then enable the new component using {\it --regex} and {\it
+    --enable} command line options, or alternatively it can be enabled
+  permanently on selected machines by adding the following code to the
+  configuration file with name {\it
+    /etc/neurospaces/developer/build.yml}:
+
+\begin{verbatim}
+---
+all_packages:
+  <your-software>:
+    disabled: '0'
+\end{verbatim}
+
+
 \item {\bf Create the correct directory layout:}
 \begin{verbatim}
 	neurospaces_create_directories
@@ -133,8 +168,8 @@ The following steps will enable others to access your new software.
 \begin{verbatim}
 	neurospaces_install --configure
 \end{verbatim}
-  The ``{\tt --configure}'' argument enables configuration, which is
-  needed for a new software component.
+  The ``{\tt --configure}'' argument enables source code
+  configuration, which is needed for a new software component.
 \end{itemize}
 
 To extend the functionality of a pre-existing GENESIS {\bf Component} see \href{../genesis-extend-model-container/genesis-extend-model-container.tex}{\bf Extending the Model\,Container}.
