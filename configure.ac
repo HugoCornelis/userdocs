@@ -6,7 +6,7 @@ dnl
 
 AC_PREREQ(2.59)
 
-# $Format: "AC_INIT(${package}, ${label}, ${email})"$
+# $Format: "AC_INIT(${package}, ${major}.${minor}.${micro}-${label}, ${email})"$
 AC_INIT(userdocs, userdocs.6, hugo.cornelis@gmail.com)
 
 
@@ -17,7 +17,7 @@ dnl dnl all subdirs
 
 dnl AC_CONFIG_SUBDIRS(tests/code glue)
 
-# $Format: "AM_INIT_AUTOMAKE(${package}, ${label})"$
+# $Format: "AM_INIT_AUTOMAKE(${package}, ${major}.${minor}.${micro}-${label})"$
 AM_INIT_AUTOMAKE(userdocs, userdocs.6)
 
 
