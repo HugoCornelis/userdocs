@@ -35,7 +35,7 @@ If you don't feel comfortable doing this, you should get your systems administra
 \section*{Software Dependencies for Developer Installation}
 
 This is a general list of dependencies for configuring a computer for
-GENESIS software development.  Also look at the list of \href{../tested-distributions/tested-distributions.tex}{\bf Tested Operating Systems} to see what distributions have actually
+GENESIS software development.  Also look at the list of \href{../tested-distributions/tested-distributions.tex}{\bf Tested\,Operating\,Systems} to see what distributions have actually
 been tested.
 
 Most of the required programs, libraries and modules are available as
@@ -112,7 +112,7 @@ are likely available as packages for your Linux distribution or vendor.
 
 \subsection*{Trouble Shooting}
 
-Periodically the build of a Perl module can fail and requires a workaround to get it installed. A common error that occurs is a failure to produce a Makefile as in this example with Data::Utilities :
+Periodically the build of a Perl module can fail and requires a workaround to get it installed. A common error that occurs is a failure to produce a {\it Makefile} as in this example with {\tt Data::Utilities} :
 
 \begin{verbatim}
 	Checking if your kit is complete...
@@ -131,13 +131,13 @@ Periodically the build of a Perl module can fail and requires a workaround to ge
 	 CORNELIS/Data-Utilities-0.04.tar.gz          : make NO
 \end{verbatim} 
 
-In the event this happens it's often possible to manually build the module by entering the package directory and creating the Makefile via the modules Perl script. As shown in the output, CPAN downloaded and unzipped the package to the directory /root/.cpan/build/Data-Utilities-0.04-MT2keD. So to manually build the makefile and module we perform this series of commands:
+In the event this happens it's often possible to manually build the module by entering the package directory and creating the {\it Makefile} via the module's Perl script. As shown in the output, CPAN downloaded and unzipped the package to the directory {\it /root/.cpan/build/Data-Utilities-0.04-MT2keD}. So to manually build the {\it Makefile} and module we perform this series of commands:
 
 \begin{verbatim}
 cd /root/.cpan/build/Data-Utilities-0.04-MT2keD
 \end{verbatim}
 
-Now create the makefile:
+Now create the {\it Makefile}:
 
 \begin{verbatim}
 perl Makefile.PL
