@@ -7,7 +7,7 @@ dnl
 AC_PREREQ(2.59)
 
 # $Format: "AC_INIT(${package}, ${major}.${minor}.${micro}-${label}, ${email})"$
-AC_INIT(userdocs, userdocs.6, hugo.cornelis@gmail.com)
+AC_INIT(userdocs, 0.0.0-alpha, hugo.cornelis@gmail.com)
 
 
 AC_CONFIG_SRCDIR([configure.ac])
@@ -18,7 +18,7 @@ dnl dnl all subdirs
 dnl AC_CONFIG_SUBDIRS(tests/code glue)
 
 # $Format: "AM_INIT_AUTOMAKE(${package}, ${major}.${minor}.${micro}-${label})"$
-AM_INIT_AUTOMAKE(userdocs, userdocs.6)
+AM_INIT_AUTOMAKE(userdocs, 0.0.0-alpha)
 
 
 # Checks for programs.
