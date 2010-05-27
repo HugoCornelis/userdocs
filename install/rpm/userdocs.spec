@@ -32,6 +32,8 @@ Group: 			Science
 Vendor: 		Hugo Cornelis <hugo.cornelis@gmail.com>
 Packager: 		Mando Rodriguez <mandorodriguez@gmail.com>
 URL:			http://www.neurospaces.org
+AutoReqProv:		no
+
 
 %description
 This userdocs system is a set of perl scripts used for catagorizing documentation into a seven level heiarchy via a tagging system. The scripts compile documents via LateX and produce pdf, ps, and html output. The seven levels range from documentation required by the user to technical detail of a specific implementation. Each level can include specifics about compatibility and portability. Because backward compatibility is defined as a user requirement, the documentation for backward compatibility falls under the first two levels. The package itself comes with all of the current documentation for GENESIS 3, this allows users to ammend to these docs as they see fit.
