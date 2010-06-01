@@ -43,7 +43,15 @@ The  {\it neurospaces\_cron} configuration file is a YAML formatted file contain
    \item[]{\bf REGTESTURL:} http link to serve regression test html output.
    \item[]{\bf LOGROTATE:} The number of output logs to rotate on successive runs.   
    \item[]{\bf NOCHECK:} If set to True, the cronjob will not run tests to check the source code. Proceeds as normal when set to False. This option case insensetive. 
+   \item[]{\bf NOPULL:} If set to True the cronjob will not perform a pull from the developer repository.
+   \item[]{\bf NOINSTALL:} If set to True the cronjob will not install the packages on the machine.
+   \item[]{\bf NOUNINSTALL:} If set to True the cronjob will not perform a final uninstall of the system before exiting.
    \item[]{\bf PKGDEB:} Directory to place built Debian packages.
+   \item[]{\bf PKGDEBURL:} The URL to serve Debian packages from.
+   \item[]{\bf RPMDIR:} Directory to place build RPM packages.
+   \item[]{\bf RPMURL:} The URL to serve RPM packages from.
+   \item[]{\bf SRCDIST:} Directory to place built source tarballs.
+   \item[]{\bf SRCDISTURL:} The URL to serve source tarballs from.
 \end{itemize}
 
 \subsubsection*{Example configuration file:}
