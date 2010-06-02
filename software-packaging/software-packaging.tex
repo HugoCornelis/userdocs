@@ -1,0 +1,82 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Software Packaging for GENESIS 3}
+
+In some cases, it is not always ideal to use a \href{../installation-developer/installation-developer.tex}{Developer Installation}.  A user or system administrator may simply wish to install binaries. Thanks to the \href{../developer-package/developer-package.tex}{Developer Package} there are utilities for creating RPM and Debian packages, as well as source tarballs. The scripts to perform these actions are:
+
+\begin{itemize}
+\item[] {\bf neurospaces\_pkgtar:} Creates source tarballs for each package.
+\item[] {\bf neurospaces\_pkgrpm:} Creates binary and source RPMs for each package.
+\item[] {\bf neurospaces\_pkgdeb:} Creates a Debian installer for each package. 
+\end{itemize}
+
+With these scripts, a developer can create packages from their own developer installation with a single command. This way it is possible to create your own changes on your machine, and distribute those changes for a user via a specially made package. 
+
+
+\section*{Release Variables}
+
+By default aspects of the package produced such as: version number, release label, packager email, and the package name, are defined in the \href{../release-expand/release-expand.tex}{Release expand configuration}. A typical release-expand.config file will look like this:
+
+\begin{verbatim}
+	#!/usr/bin/perl -w
+
+	my $config
+	    = {
+	       files => [
+			 './bin/neurospaces_build',
+			 './bin/neurospaces_versions',
+			 './configure.ac',
+			 './install/rpm/developer.spec',
+			 './tests.config',
+			 './tests/tests.config',
+			],
+	       labels => {
+			  email => 'my@email.com',
+			  label => 'alpha',
+			  major => '0',
+			  minor => '0',
+			  micro => '0',
+			  monotone_id => `mtn automate get_current_revision_id`,
+			  package => 'developer',
+			 },
+	      };
+
+	return $config;
+\end{verbatim}
+
+To change release information, simple update values in the {\it labels hash}. 
+
+\section*{neurospaces\_pkg(rpm|tar|deb)}
+
+To build a package for all GENESIS 3 components, simply invoke one of the neurospaces\_pkg* family of scripts on the command line. There are flags available to allow for control over which packages you want built, where to store the built packages, and the release information to tag your distributions with. The flags are:
+
+\begin{itemize}
+\item[] {\bf --regex:} A regular expression for choosing which components to create a package for. 
+\item[] {\bf --dir:} A directory to place the generated packages.
+\item[] {\bf --release-tag:} A release label for your packages. (overrides the value in release-expand.config)
+\item[] {\bf --version-tag:} The version number for your package. (overrides the value in release-expand.config)
+\end{itemize}
+
+For an example, suppose I wish to create an rpm package for only the model container, with a special release tag "Newest". I want my package in a special drop directory that a user can access. I invoke {\bf neurospaces\_pkgrpm} with the following arguments:
+
+\begin{verbatim}
+neurospaces_rpm --regex model-container --dir /my/drop/directory --release-tag Newest 
+\end{verbatim}
+
+On my 64-bit intel based machine, the resulting file is named {\bf model-container-0.0.0-Newest.x86\_64.rpm}, and it is stored in my given drop directory. The architecture section of the file "x86\_64" was added automatically my the RPM build.
+
+
+\end{document}
