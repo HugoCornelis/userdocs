@@ -118,12 +118,15 @@ dist-keywords:
 clean-local: website-clean
 	find $(srcdir) -type d -exec chmod -R u+w \{\} \;
 	$(RM) -fr `find $(srcdir) -name _Inline`
-	$(RM) -rf */output/*
-	$(RM) -f */*.log
-	$(RM) -rf *.deb
-	$(RM) -f *.changes
-	$(RM) -f *.dsc
-	$(RM) -f build_debian.log
+	$(RM) -rf $(top_srcdir)/*/output/*
+	$(RM) -f $(top_srcdir)/*/*.log
+	$(RM) -rf $(top_srcdir)/*.deb
+	$(RM) -f $(top_srcdir)/*.changes
+	$(RM) -f $(top_srcdir)/*.dsc
+	$(RM) -f $(top_srcdir)/build_debian.log
+	$(RM) -rf $(top_srcdir)/RPM_BUILD
+	$(RM) -f $(top_srcdir)/build_rpm.log
+	$(RM) -f $(top_srcdir)/userdocs-*.tar.gz
 #	$(RM) -fr $(srcdir)/hierarchy/output
 #	$(RM) -rf $(top_srcdir)/docs/html
 
