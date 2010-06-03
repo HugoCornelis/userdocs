@@ -57,7 +57,7 @@ By default aspects of the package produced such as: version number, release labe
 	return $config;
 \end{verbatim}
 
-To change release information, simple update values in the {\it labels hash}. 
+To change release information, simply update values in the {\it labels| hash. 
 
 \section*{neurospaces\_pkg(rpm|tar|deb)}
 
@@ -66,17 +66,33 @@ To build a package for all GENESIS 3 components, simply invoke one of the neuros
 \begin{itemize}
 \item[] {\bf --regex:} A regular expression for choosing which components to create a package for. 
 \item[] {\bf --dir:} A directory to place the generated packages.
-\item[] {\bf --release-tag:} A release label for your packages. (overrides the value in release-expand.config)
-\item[] {\bf --version-tag:} The version number for your package. (overrides the value in release-expand.config)
+\item[] {\bf --release-tag:} A release label for your packages. Must not contain any dashes. (overrides the value in release-expand.config)
+\item[] {\bf --version-tag:} The version number for your package. Must be in the form major.minor.micro with no dashes. (overrides the value in release-expand.config)
 \end{itemize}
 
-For an example, suppose I wish to create an rpm package for only the model container, with a special release tag "Newest". I want my package in a special drop directory that a user can access. I invoke {\bf neurospaces\_pkgrpm} with the following arguments:
+For an example, I wish to create an RPM package for only the model container, with a special release tag "Newest". I want my package in a special drop directory that a user can access. I invoke {\bf neurospaces\_pkgrpm} with the following arguments:
 
 \begin{verbatim}
 neurospaces_rpm --regex model-container --dir /my/drop/directory --release-tag Newest 
 \end{verbatim}
 
 On my 64-bit intel based machine, the resulting file is named {\bf model-container-0.0.0-Newest.x86\_64.rpm}, and it is stored in my given drop directory. The architecture section of the file "x86\_64" was added automatically my the RPM build.
+
+For another example, I wish to create tarballs of all packages, tag it with the current date "6.3.2010" and place them all in a directory called "/var/www/tarballs".  I use the {\bf neurospaces\_pkgtar} command with the following arguments:
+
+\begin{verbatim}
+neurospaces_pkgtar --dir /var/www/tarballs --release-tag 6.3.2010
+\end{verbatim}
+
+This quickly gives us all of our tarballs in our directory:
+
+\begin{verbatim}
+	developer-0.0.0-6.3.2010.tar.gz		ns-sli-0.0.0-6.3.2010.tar.gz
+	exchange-0.0.0-6.3.2010.tar.gz		ssp-0.0.0-6.3.2010.tar.gz
+	gshell-0.0.0-6.3.2010.tar.gz		studio-0.0.0-6.3.2010.tar.gz
+	heccer-0.0.0-6.3.2010.tar.gz		userdocs-0.0.0-6.3.2010.tar.gz
+	model-container-0.0.0-6.3.2010.tar.gz
+\end{verbatim}
 
 
 \end{document}
