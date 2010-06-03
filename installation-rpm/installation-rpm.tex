@@ -1,0 +1,72 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Installing from RPMS}
+
+\href{http://rpm.org}{\bf RPM (RPM Package Manager format)} is a well known software package format used in many Linux distributions. To make installation easier, the components of GENESIS 3 are available in RPM packages \href{http://repo-genesis3.cbi.utsa.edu/rpm/}{here}. To be able to run the \href{../gshell/gshell.tex}{\bf gshell} to go through \href{../tutorial1/tutorial1.tex}{tutorial 1}, you need to install the following software components:
+
+\begin{itemize}
+	\item[] {\bf heccer}
+	\item[] {\bf model-container}
+	\item[] {\bf ns-sli}
+	\item[] {\bf ssp}
+\end{itemize}
+
+To install an rpm (in this case the model-container), you would use the following options with the {\bf rpm} command:
+
+\begin{verbatim}
+rpm -ivh model-container-0.0.0-alpha.x86_64.rpm
+\end{verbatim}
+
+A prompt will appear showing the installation progress. If an error occurs, such as a missing dependency, it will be printed on the screen. 
+
+
+\section*{Viewing RPM contents}
+
+If you wish to view the contents of an RPM package you can do so with the following flags:
+
+\begin{verbatim}
+rpm -qlp developer-0.0.0-alpha.noarch.rpm
+\end{verbatim}
+
+A snippet of the output shows the listing of all files and directories that are to be created on the target machine:
+
+\begin{verbatim}
+	/usr/local
+	/usr/local/bin
+	/usr/local/bin/mcad2doxy
+	/usr/local/bin/mtn-ancestors
+	/usr/local/bin/neurospaces_build
+	/usr/local/bin/neurospaces_check
+	/usr/local/bin/neurospaces_clean
+	/usr/local/bin/neurospaces_clone
+	/usr/local/bin/neurospaces_configure
+	/usr/local/bin/neurospaces_countcode
+	/usr/local/bin/neurospaces_create_directories
+	/usr/local/bin/neurospaces_cron
+	/usr/local/bin/neurospaces_dist
+	/usr/local/bin/neurospaces_docs
+	/usr/local/bin/neurospaces_harness
+	/usr/local/bin/neurospaces_init
+	/usr/local/bin/neurospaces_install
+	/usr/local/bin/neurospaces_kill_servers
+	/usr/local/bin/neurospaces_packages
+	/usr/local/bin/neurospaces_pkgdeb
+	/usr/local/bin/neurospaces_pkgrpm
+	/usr/local/bin/neurospaces_pkgtar
+\end{verbatim}
+
+
+\end{document}
