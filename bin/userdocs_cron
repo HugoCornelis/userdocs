@@ -380,7 +380,7 @@ sub rotate_logs
 {
 
   my $output_dir = $configuration->{OUTPUTDIR};
-  my $logname = $output_filename;
+  my $logname =  $option_output_directory . "/" . $output_filename;
   my $numlogs  = -1;
 
   if(not defined $configuration->{LOGROTATE})
