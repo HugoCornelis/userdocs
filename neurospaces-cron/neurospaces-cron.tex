@@ -107,4 +107,24 @@ Since it is desirable to restrict a regular user to commands they absolutely nee
 \end{verbatim}
 This limits the user {\tt g3tester} to executing only the commands {\it neurospaces\_cron} and {\it make}, without requiring a password. More commands can be added as needed simply by appending them to the list with a space delimiter. 
 
+\subsection*{Logging}
+
+By default, the cron daemon will usually not log anything. To turn on logging you need to add a line to the system log configuration. In debian the file you need to edit is {\bf /etc/rsyslog.conf}. Before proceeding, it's a good idea to make a backup copy of your system log configuration. Open the file with your favorite text editor and add this line:
+
+\begin{verbatim}
+cron.* -/var/log/cron.log
+\end{verbatim}
+
+You can change /var/log/cron.log to the file of your choice. Once your change is in place restart the system log daemon. 
+
+\begin{verbatim}
+/etc/init.d/rsyslog restart
+\end{verbatim}
+
+Not that on a Red Hat system the file you need to edit is {\it /etc/syslog.conf} and you restart the daemon via the command:
+
+\begin{verbatim}
+/etc/rc.d/init.d/syslog restart
+\end{verbatim}
+
 \end{document}
