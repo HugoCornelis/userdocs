@@ -9,8 +9,8 @@
 \section*{GENESIS: Documentation}
 
 {\bf Related Documentation:}
-% start: userdocs-tag-replace-items related-do-nothing
-% end: userdocs-tag-replace-items related-do-nothing
+% start: userdocs-tag-replace-items related-genesis-systems
+% end: userdocs-tag-replace-items related-genesis-systems
 
 \section*{Neurospaces Tester}
 
@@ -27,16 +27,28 @@ It includes:
 \item Built in support for application specific libraries.
 \item Interaction with the environment, including environment variables.
 \item Running the application in a {\it chrooted} environment.
-\item Conversion of the test cases to {\tt html}. 
+\item Conversion of the test cases to {\tt html}.
+\item A human readable description of the functions provided by the
+  tested application.
 \end{itemize}
 
-Despite the wealth of functionality, using and configuring the tester is quite simple (see below for more). The latest version of the tester framework can be found in the {\it ModelContainer} package at the \href{http://www.neurospaces.org/}{\bf Neurospaces website}. The same framework is used for regression testing of all GENESIS related software.
+Despite the wealth of functionality, using and configuring the tester
+is quite simple (see below for more). The latest version of the tester
+framework can be found in the
+\href{../developer-package/developer-package.tex}{\it
+  DeveloperPackage}. The same framework is used for regression testing
+of all GENESIS related software.
 
 The Neurospaces tester is written in \href{http://www.perl.org/}{\bf Perl}. Knowledge of Perl is not necessary to be able to work with the tester. Basic knowledge of Perl might be handy, and is now explained.
 
 \subsection*{Tester Calling}
 
-The most convenient way to call the tester is by doing ``{\tt make check}''. For GENESIS software packages, this calls {\tt tests/neurospaces\_harness}, a Perl script that runs all the {\tt TesterSpecifications} found in {\it tests/specifications}.
+The most convenient way to call the tester is by doing ``{\tt make
+  check}''. For
+\href{../genesis-components/genesis-components.tex}{GENESIS software
+  packages}, this calls {\tt neurospaces\_harness}, a Perl script that
+runs all the tester specifications found in {\it
+  tests/specifications}.
 
 \begin{itemize}
 \item {\it neurospaces\_harness}: Runs all test specifications found in the specifications directory. A test specification ends in the suffix {\tt .t}.
@@ -59,7 +71,7 @@ It is normal that a software package has multiple {\it tests.config} files, e.g.
 
 The {\it tests.config} file defines a Perl hash (we plan to also support \href{http://www.json.org/}{\bf JSON}). In the test specifications, this hash is available in the variable {\tt main::config}. So to access the {\tt core\_directory} entry in the hash, you have
 \begin{verbatim}
-$main::config->{core\_directory}
+$main::config->{core_directory}
 \end{verbatim}
 
 Here is an example script:
@@ -104,7 +116,12 @@ return $config;
 
 \subsection*{Tester Specifications}
 
-A tester specification is contained in a file with a name that has a suffix of {\tt .t}. The tester specification tells the tester what application to run, with what command line, command line options, and under what environment. It is possible to change directory before the application gets executed, or to change to a {\it chrooted} environment by using shell pipelines.
+A tester specification is contained in a file with a name that has a
+suffix of {\tt .t}.  The tester specification tells the tester what
+application to run, with what command line, command line options, and
+under what environment.  It is possible to change directory before the
+application gets executed, or to change to a {\it chrooted}
+environment.
 
 After running the application, the tester communicates with the application over {\it stdin/stdout/stderr} (general socket communication under development). The output read from {\it stdout/sterr} is checked with expected output (literal output or regular expressions), and mismatches are reported.
 
@@ -112,7 +129,7 @@ Multiple writes to and reads from the application are possible.
 
 If, for whatever reason, the same application is started in more than one test specification, the running application is `recycled' (unless the {\tt side\_effects} option is used, see below).
 
-If there was configuration in effect for an application specific library, the library is checked for changes after a test has been performed. Changes to the library are not allowed.
+If there was configuration in effect for an application specific library, the library is checked for changes after a test has been performed.  Changes to the library are not allowed.
 
 \subsubsection*{Test Specifications}
 
