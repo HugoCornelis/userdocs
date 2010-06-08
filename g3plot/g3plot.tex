@@ -16,7 +16,7 @@
 Dave Beeman (dbeeman@dogstar.colorado.edu)\\
 Based on {\it fplot.py} for plotting the membrane potential from the G-3 implementation of {\it tutorial4} written by Karthikeyan Subramanian (kartikznov@gmail.com)
 
-\section*{G3Plot (ver. 0.55)}
+\section*{G3Plot (Ver. 0.55)}
 
 This is a preliminary version of a collection of stand-alone Python-based
 graphical utilities for plotting the output of GENESIS simulations.  The
@@ -31,8 +31,8 @@ wide variety of plots, accompanied by a Navigation Toolbar that allows
 for panning and zooming of plots, and saving to publication quality
 PNG format images.
 
-To run these scripts, you need Python V2.5 or later,
-and the \href{http://sourceforge.net/projects/matplotlib}{\bf Matplotlib\,library\,for\,Python}.  
+To run these scripts, you need Python Ver.\,2.5 or later,
+and the {\it Matplotlib} library for Python.  
 The installation instructions
 explain other requirememts, such as {\it NumPy} (numerical libraries for Python)
 that are usually installed along with Python on most Linux systems.
@@ -48,15 +48,17 @@ Neuroinformatics special issue on \href{http://frontiersin.org/neuroscience/neur
 Brief description of the scripts and their usage:
 
 \begin{itemize}
-\item{\it fplot.py} Plot files of one ({\it x},{\it y}) pair,
-or (time,$V_m$) pair per line from a single file given as the argument, e.g.
+\item \href{../g3plot-fplot/g3plot-fplot.tex}{\it fplot.py}\\
+Plot files of one ({\it x},{\it y}) pair,
+or (time,\,$V_m$) pair per line from a single file given as the argument, e.g.
 \begin{verbatim}
    fplot.py Vm.out
 \end{verbatim}
 
-\item{\it plotVm.py} An extended version of {\it fplot.py} that uses the {\it Matplotlib}
+\item \href{../g3plot-plotVm/g3plot-plotVm.tex}{\it plotVm.py}\\
+An extended version of {\it fplot.py} that uses the {\it Matplotlib}
 object-oriented classes, instead of the Matlab-like {\it pylab} commands.  It
-takes multiple wildcarded filenames as a argumments, and plots them in
+takes multiple wildcarded filenames as arguments, and plots them in
 different colors on the same axes, e.g.
 \begin{verbatim}
    plotVm.py Vm.out pyr4*.out
@@ -67,7 +69,8 @@ handy for quickly comparing the results of current injection simulations.
 The ({\it x},{\it y}) coordinates of a point on the graph can be displayed in the
 Navigation Toolbar by positioning the cursor over it.
 
-\item{\it rasterplot.py} Similar to {\it plotVm}, but specialized for creating raster
+\item \href{../g3plot-rasterplot/g3plot-rasterplot.tex}{\it rasterplot.py}\\
+Similar to {\it plotVm}, but specialized for creating raster
 plots of firing times for a group of neurons.  It takes a single filename
 as argument, with a line for each cell containing the spike times separated
 by spaces.  The times are plotted as dots with the time on the x-axis and
@@ -85,8 +88,9 @@ Figure\,\ref{fig:g3p-1} shows a plot generated with
    rasterplot.py spike_times.txt
 \end{verbatim}
 
-\item{\it G3Plot.py} Enhanced version of {\it plotVm} that wraps {\it Matplotlib}
-plots within a {\it wxPytho}n GUI.  It has several fancy Help menu features
+\item \href{../g3plot-G3Plot/g3plot-G3Plot.tex}{\it G3Plot.py}\\
+Enhanced version of {\it plotVm} that wraps {\it Matplotlib}
+plots within a {\it wxPython} GUI.  It has several fancy Help menu features
 and plotting options to illustrate the
 capabilities of {\it wxWidgets} as a GUI for displaying simulation results in
 Python.  It can either take the filename list as arguments, or to be
@@ -119,7 +123,8 @@ The screen dump was produced with the following command and arguments:
    G3Plot.py pyr4*.out Vm.out
 \end{verbatim}
 
-\item{\it rowrateplot.py} This is a utility for analyzing network activity by
+\item \href{../g3plot-rowrateplot/g3plot-rowrateplot.tex}{\it rowrateplot.py}\\
+This is a utility for analyzing network activity by
 displaying a filled contour map of spike frequency vs. simulation time for
 groups of neurons.  It takes a single filename as argument, with a line for
 each time step containing the simulation time, followed by the average
@@ -154,21 +159,26 @@ parameters to balance excitation and inhibition.
 
 \begin{itemize}
 
-\item {\it Vm.out} Typical membrane potential from {\it simplecell} current injection.
+\item {\it Vm.out}\\
+Typical membrane potential from {\it simplecell} current injection.
 
-\item {{\it pyr4\_Vm.out}, {\it pyr4a\_Vm.out}} Membrane potential from 0.5\,nA injection to
+\item {{\it pyr4\_Vm.out}, {\it pyr4a\_Vm.out}}\\
+Membrane potential from 0.5\,nA injection to
 soma of symmetric and asymmetric layer 4 pyramidal cell models.
 
-\item {\it spike\_times.txt} Sample output for a raster plot, produced by {\it raster\_data.g}.
+\item {\it spike\_times.txt}\\
+Sample output for a raster plot, produced by {\it raster\_data.g}.
 
-\item{raster\_data.g} A G-2 script to generate sample spike time data for
+\item{\it raster\_data.g}\\
+A G-2 script to generate sample spike time data for
 {\it rasterplot.py}. It creates an array of 128 unconnected single compartment
 cells based on {\it basic-cell.p}.  The {\it setrandfield} command is used to provide
 injection currents randomly distributed within the range 0.27--0.33\,nA.  It uses \href{http://www.genesis-sim.org/GENESIS/Hyperdoc/Manual-19.html}{\bf XODUS}
 graphics (which is optional) and some features of the table object
 that have not yet been implemented to produce the output file {\it spike\_times.txt}.
 
-\item{spike\_freq\_HD2500-11p.txt} Output of network simulation run {\tt HD2500-11p}
+\item{\it spike\_freq\_HD2500-11p.txt}\\
+Output of network simulation run {\tt HD2500-11p}
     for average spike frequency of each row vs. time.
 
 \item{\bf basic-cell.p} The cell parameter file for the single compartment neuron.
@@ -187,7 +197,7 @@ warning message:
 coordinates of the cursor in the Navigation Toolbar.  This is a very handy
 feature of {\it plotVm.py}, when measuring action potential times and amplitudes.
 
-Note that {\it G3Plot.py} uses the {\it Matplotlib} backend API for embedding in {\it wxPython},
+{\bf Note:} {\it G3Plot.py} uses the {\it Matplotlib} backend API for embedding in {\it wxPython},
 {\it matplotlib.backends.backend\_wxagg NavigationToolbar2WxAgg}.  The other
 scripts, which do not use {\it wxPython}, use {\it matplotlib.pyplot.figure}, which has
 the Toolbar built in.  Possibly, there is a setting to enable this feature
