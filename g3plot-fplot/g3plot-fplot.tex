@@ -1,0 +1,26 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+{\\\bf Contributed By:}\\
+Karthikeyan Subramanian (kartikznov@gmail.com)\\
+
+\section*{\it fplot.py}
+
+Plot ({\it x},{\it y}) pairs e.g. the time vs. membrane potential. 
+
+\begin{verbatim}
+!/usr/bin/env pythonimport sys, osimport pylabdef plot(filename):    print 'Plotting %s' % filename    pylab.plotfile(filename, cols=(0,1), delimiter=' ', subplots=False)    pylab.show()if __name__ == "__main__":    try:        filename = sys.argv[1]        if os.path.exists(filename):                        plot(filename)        else:            print '**Error: Incorrect file name or path specified.'    except:        print 'incorrect filename'        sys.exit()
+\end{verbatim}
+
+\end{document}
