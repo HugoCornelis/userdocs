@@ -1,0 +1,90 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:} \\
+\href{../genesis-system/genesis-system.tex}{\bf GENESIS\,System}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Developer Installation Fedora 12}
+
+Installing GENESIS on Fedora 12 requires executing the following major steps. {\bf Note}: Installation requires administrator privileges.
+\begin{itemize}
+   \item[] Prepare and upgrade the system software.
+   \item[] Download and install the {\it DeveloperPackage}.
+   \item[] Install the software packages.
+   \item[] Check if the installation was successful. 
+\end{itemize}
+
+\subsection*{Prepare and upgrade the system software}
+
+\begin{itemize}
+   \item[] Install the following packages using the System --$>$ Administration -$>$ Add/Remove Software menu.
+      \begin{itemize}
+         \item perl-CPAN (only required to run tests, see below)
+         \item perl-YAML
+         \item perl-Inline
+%         \item perl-Parse-RecDescent
+         \item perl-Expect (and its dependency perl-IO)
+         \item perl-ExtUtils-Embed
+         \item LWP::Simple
+         \item Parse-RecDescent
+         \item readline
+         \item readline-devel
+         \item perl-Term-ReadLine-Gnu
+         \item tetex-tex4ht
+         \item \href{http://monotone.ca/}{\bf monotone-0.44} or higher and its dependency--the crypto libraries. You only need to install the client package (not the server package) 
+      \end{itemize}
+   \item[] Install the dependencies for running tests:
+      \begin{itemize}
+         \item {\tt perl -MCPAN -e 'install Test::More}'
+         \item {\tt perl -MCPAN -e 'install Clone}'
+         \item {\tt perl -MCPAN -e 'install Data::Utilities}'
+         \item {\tt perl -MCPAN -e 'install File::Find::Rule}'
+         \item {\tt perl -MCPAN -e 'install Digest::SHA}' 
+      \end{itemize}
+      {\bf Note:} The running of tests is optional, but strongly advised.
+ \end{itemize}
+
+ For {\bf G-Tube} the packages {\it wxPython} and
+ {\it wxPython-devel} and their dependencies must be installed.
+ 
+\subsection*{Download and install the {\it DeveloperPackage}}
+
+\begin{enumerate}
+   \item Download the latest version of the {\it DeveloperPackage}, available from \href{http://sourceforge.net/projects/neurospaces/files/}{\bf Sourceforge}. It is called {\it developer-release-label.tar.gz}, where {\it release-label} is the current release identifier.
+   \item Change to the directory where you downloaded the file.
+   \item Unpack the archive by typing ``{\tt tar xfz developer-release-label.tar.gz}''.
+   \item Change to the directory with the content of the archive by typing ``{\tt cd developer-release-label}.
+   \item Configure by typing ``{\tt ./configure}''.
+   \item Compile by typing ``{\tt make}''.
+   \item Install by typing ``{\tt sudo make install}''  (requires administrator privileges). 
+\end{enumerate}
+
+\subsection*{Install software packages}
+
+\begin{enumerate}
+   \item Use the installer script to create the correct directory layout by typing ``{\tt neurospaces\_create\_directories}''.
+   \item Pull the archives of the source code by typing ``{\tt neurospaces\_pull}''.
+   \item Update the source code in the working directories by typing ``{\tt neurospaces\_update}''.
+   \item Generate {\it make} files by typing ``{\tt neurospaces\_configure}''.
+   \item Compile and install the software by typing ``{\tt neurospaces\_install}''.
+\end{enumerate}
+
+\subsection*{Check if installation was successful}
+
+This step is optional.
+\begin{itemize}
+   \item[] Run tests of all the packages and save tester output to a file  by typing ``{\tt neurospaces\_check >/tmp/check.out 2>\&1}''.
+   \item[] Check the output by typing ``{\tt less /tmp/check.out}''. Importantly, search for lines containing the string {\tt error\_count}.
+\end{itemize}
+ 
+\end{document}
