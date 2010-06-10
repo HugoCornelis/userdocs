@@ -9,6 +9,7 @@ use YAML;
 
 my $output_filename = "userdocs_cron.out";
 
+my $descriptor_check = "";
 
 #
 # options
@@ -48,6 +49,8 @@ sub main
 
   $ENV{PATH} .= ':/bin:/usr/bin:/usr/local/bin';
 
+  chdir '${HOME}/neurospaces_project/userdocs/source/snapshots/0/';
+
   # first we update the developer package to pick up 
   # any build script changes. 
 
@@ -71,6 +74,9 @@ sub main
   try_to("neurospaces_clean --regex userdocs",1);
 
 #   try_to("userdocs-check > $output_path",1);
+
+  # collect the descriptor check info for the email
+  $descriptor_check = `userdocs-check`;
 
   try_to("make website-prepare -C ~/neurospaces_project/userdocs/source/snapshots/0/ > $output_path",1);
 
@@ -133,6 +139,14 @@ sub produce_email_text
   {
       $status_message .= "\nunable to read a publication report (error opening /tmp/all_publication_results\n\n";
   }
+
+
+
+  if($descriptor_check ne "")
+  {
+    $status_message .= "\nDescriptor file check:\n" .$descriptor_check . "\n\n";
+  }
+
 
   #
   # Now find all of the log files and check for error messages
