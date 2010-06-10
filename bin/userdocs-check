@@ -28,7 +28,7 @@ sub main
     foreach (@$all_documentation_descriptors)
     {
 
-	print "Checking $_ :\t";
+	#print "Checking $_ :\t";
 
 	eval
 	{
@@ -37,7 +37,7 @@ sub main
 	    if (defined $descriptor)
 	    {
 
-		print "is valid\n";
+		#print "is valid\n";
 
 	    }
 	    else
@@ -49,7 +49,7 @@ sub main
 
 	if ($@)
 	{
-	    print "contains malformed YAML ($@)\n";
+	    print "$_ contains malformed YAML ($@)\n";
 
 	}
 
