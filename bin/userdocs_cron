@@ -141,6 +141,10 @@ sub produce_email_text
   }
 
 
+  if($descriptor_check ne "")
+  {
+    $message .= "\nDescriptor file check:\n" .$descriptor_check . "\n\n";
+  }
 
   #
   # Now find all of the log files and check for error messages
