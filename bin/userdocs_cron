@@ -8,8 +8,8 @@ use YAML;
 
 
 my $output_filename = "userdocs_cron.out";
-
 my $descriptor_check = "";
+my $document_root = "$ENV{HOME}/neurospaces_project/userdocs/source/snapshots/0";
 
 #
 # options
@@ -49,7 +49,7 @@ sub main
 
   $ENV{PATH} .= ':/bin:/usr/bin:/usr/local/bin';
 
-  my $userdocs_directory = "$ENV{HOME}/neurospaces_project/userdocs/source/snapshots/0";
+  my $userdocs_directory = $document_root;
 
   # first we update the developer package to pick up 
   # any build script changes. 
@@ -386,6 +386,15 @@ sub parse_config_file
 
   }
 
+
+  if(defined $configuration->{DOCUMENTROOT})
+  {
+
+    chomp($configuration->{DOCUMENTROOT});
+    $document_root = $configuration->{DOCUMENTROOT};
+    print "\tThe root directory for all documents is $document_root\n";
+
+  }
 
   print "Done Parsing $config_file:\n";
 
