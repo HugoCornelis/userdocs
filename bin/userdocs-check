@@ -6,15 +6,57 @@
 use strict;
 
 
+use Getopt::Long;
 use YAML;
+
+my $option_directory = 0;
+my $option_help = 0;
+my $option_verbose = 0;
+
+my $result
+= GetOptions
+  (
+   "directory=s" => \$option_directory,
+   "help!" => \$option_help,
+   "verbose!" => \$option_verbose,
+  );
+
+if (!$result)
+{
+  die "$0: *** Error: Error in option processing";
+}
 
 
 
 $SIG{__WARN__} = sub { die $_[0] };
 
 
+
+sub usage
+{
+  print 
+    "
+    --help        print this help message.
+    --directory   The directory to scan for descriptor files.
+    --verbose     Prints output on every descriptor processed.
+";
+}
+
 sub main
 {
+
+
+    if($option_help)
+    {
+      usage();
+    }
+
+    my $directory = ".";
+
+    if($option_directory)
+    {
+      $directory = $option_directory;
+    }
 
     my $all_documentation_descriptors
 	= [
@@ -22,13 +64,15 @@ sub main
 	   {
 	       chomp; $_
 	   }
-	   `find . -name "descriptor.yml"`,
+	   `find $directory -name "descriptor.yml"`,
 	  ];
 
     foreach (@$all_documentation_descriptors)
     {
-
-	#print "Checking $_ :\t";
+        if($option_verbose)
+	{
+	  print "Checking $_ :\t";
+	}
 
 	eval
 	{
@@ -36,8 +80,10 @@ sub main
 
 	    if (defined $descriptor)
 	    {
-
-		#print "is valid\n";
+	        if($option_verbose)
+		{
+		  print "is valid\n";
+		}
 
 	    }
 	    else
