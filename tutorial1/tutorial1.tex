@@ -61,7 +61,7 @@ The remainder of this tutorial assumes that you are working within the GENESIS s
 
 \subsection*{Create Model}
 
-As the \href{../workflow-user/workflow-user.tex}{GENESIS user workflow} suggests, a simple single compartment cell model can be created within the GENESIS shell. In this exercise we will create and simulate a passive compartment. How to import a model into the GENESIS shell is described in \href{../tutorial2/tutorial2.tex}{Tutorial 2}.
+As the \href{../workflow-user/workflow-user.tex}{GENESIS\,User\,Workflow} suggests, a simple single compartment cell model can be created within the GENESIS shell. In this exercise we will create and simulate a passive compartment. How to import a model into the GENESIS shell is described in \href{../tutorial2/tutorial2.tex}{\bf Tutorial \,2}.
 
 \subsubsection*{Creating and deleting elements}
 
@@ -117,7 +117,7 @@ In the case of our simple single compartment cell, the model is most easily expl
         value = 0.0164
 \end{verbatim}
 
-We now also demonstrate a powerful new feature of GENESIS. That is, although we have set only the model parameters {\tt RM} and {\tt CM}, we can query our model for the membrane time constant {\tt TAU} (from $\tau$ = {\tt RM}$\cdot${\tt CM}). This is possible as, through the \href{../model-container/model-container.tex}{Model Container}, the GENESIS shell is aware of neuronal morphology, membrane, and intracellular parameters. The Model Container can infer a number of properties about an element and it will calculate and provide derived parameter values when the GENESIS shell is queried. This is made possible by the hierarchical relations maintained by the Model Container between an element and its parents, children, and sibling's parameters. For example,
+We now also demonstrate a powerful new feature of GENESIS. That is, although we have set only the model parameters {\tt RM} and {\tt CM}, we can query our model for the membrane time constant {\tt TAU} (from $\tau$ = {\tt RM}$\cdot${\tt CM}). This is possible as, through the \href{../model-container/model-container.tex}{\bf Model\,Container}, the GENESIS shell is aware of neuronal morphology, membrane, and intracellular parameters. The Model Container can infer a number of properties about an element and it will calculate and provide derived parameter values when the GENESIS shell is queried. This is made possible by the hierarchical relations maintained by the Model Container between an element and its parents, children, and sibling's parameters. For example,
 \begin{verbatim}
     genesis > parameter_show /n/soma TAU
         value = 0.0246
@@ -129,7 +129,7 @@ Saving a model is as simple as issuing the ``{\tt ndf\_save}'' command with an a
 \begin{verbatim}
    genesis > ndf_save /n myneuron.ndf
 \end{verbatim}
-The model is then saved in the \href{../ndf-file-format/ndf-file-format.tex}{NDF format}. The default location for {\it ndf\_save} (as given in the above example) is the directory where you started GENESIS. However, the file can be saved at another location by giving the absolute path, e.g.
+The model is then saved in the \href{../ndf-file-format/ndf-file-format.tex}{\bf NDF} format. The default location for {\it ndf\_save} (as given in the above example) is the directory where you started GENESIS. However, the file can be saved at another location by giving the absolute path, e.g.
 \begin{verbatim}
    genesis > ndf_save /n /tmp/myneuron.ndf
 \end{verbatim}
@@ -146,7 +146,7 @@ Once a model has been saved, the next time GENESIS is run the file can be loaded
 
 \subsection*{Define Simulation Constants}
 
-The GENESIS shell distinguishes between model parameters such as those used to build our simple single compartment model, i.e. those generated above by the {\it create} command, and parameters that do not alter the model but only affect model behavior at run-time during a simulation, e.g. the maximum conductance of the $Ca_T$ channels located in the soma. However, as in this introductory tutorial we have constructed a passive compartment, a description of how to define simulation constants is delayed until \href{../tutorial2/tutorial2.tex}{Tutorial 2}.  
+The GENESIS shell distinguishes between model parameters such as those used to build our simple single compartment model, i.e. those generated above by the {\it create} command, and parameters that do not alter the model but only affect model behavior at run-time during a simulation, e.g. the maximum conductance of the $Ca_T$ channels located in the soma. However, as in this introductory tutorial we have constructed a passive compartment, a description of how to define simulation constants is delayed until \href{../tutorial2/tutorial2.tex}{Tutorial\,2}.  
 
 \subsection*{Define Simulation Inputs}
 
@@ -221,6 +221,6 @@ This will print the values in {\it /tmp/output} to the screen.
 
 {\bf Note:} Most common UNIX shell commands can be run in the {\bf G-Shell} if passed as arguments to the {\tt sh} command.
 
-The next and second of two introductory tutorials (\href{../tutorial2/tutorial2.tex}{Tutorial 2}) deals with use of the GENESIS shell with a multi-compartment model neuron. It employs a pre-existing model, the De Schutter and Bower (1994) Purkinje cell.
+The next and second of two introductory tutorials (\href{../tutorial2/tutorial2.tex}{\bf Tutorial\,2}) deals with use of the GENESIS shell with a multi-compartment model neuron. It employs a pre-existing model, the De Schutter and Bower (1994) Purkinje cell.
 
 \end{document}
