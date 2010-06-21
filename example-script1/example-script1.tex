@@ -24,24 +24,26 @@ Here is a simple example complete with values that you can cut and paste into th
 create cell /n
 create segment /n/soma
 
-set_model_parameter /n/soma Vm_init -0.068
-set_model_parameter /n/soma CM 0.0164
-set_model_parameter /n/soma RM 1.500
-set_model_parameter /n/soma RA 2.500
-set_model_parameter /n/soma ELEAK -0.080
+model_parameter_add /n/soma Vm_init -0.068
+model_parameter_add /n/soma CM 0.0164
+model_parameter_add /n/soma RM 1.500
+model_parameter_add /n/soma RA 2.500
+model_parameter_add /n/soma ELEAK -0.080
 
-set_model_parameter /n/soma LENGTH 4.47e-5
-set_model_parameter /n/soma DIA 2e-5
+model_parameter_add /n/soma LENGTH 4.47e-5
+model_parameter_add /n/soma DIA 2e-5
 
-set_runtime_parameter /n/soma INJECT 2e-9
-add_output /n/soma Vm
+runtime_parameter_add /n/soma INJECT 2e-9
+output_add /n/soma Vm
 
-run /n 0.001
+run /n 0.05
+
+quit
 \end{verbatim}
 To view output within the {\bf G-Shell} type
 \begin{verbatim}
    genesis> sh cat /tmp/output
 \end{verbatim}
-{\bf Note:} The model given above is actually a GENESIS script file. It can be cut and pasted to a text file, made executable with ``{\tt chmod u+x <file-name>}'' and run directly from a command line prompt.
+{\bf Note:} The model given above is actually a GENESIS script file. It can be cut and pasted to a text file and run from a command line prompt using the command ``{\tt genesis-g3 <file-name>}''.
 
 \end{document}
