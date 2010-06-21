@@ -313,4 +313,25 @@ The following CPAN modules for Perl must also be installed:
    \item[]{\bf HTML::Template}
 \end{itemize}
 
+
+\subsection*{Configuration}
+
+The generated {\bf image size} in the html pages can be set in the {\bf tex4ht.env} configuration found. On Red Hat/CentOS it is located at:
+
+\begin{verbatim}
+	/usr/share/texmf/tex4ht/base/unix/tex4ht.env
+\end{verbatim}
+
+On Debian systems it is located at:
+
+\begin{verbatim}
+	/usr/share/texmf/tex4ht/tex4ht.env
+\end{verbatim}
+
+To change the image resolution you can add options to the {\bf Gconvert} line in the configuration file. The flag {\bf density} can have the it's dimensions altered to produce larger images during the conversion. Here's an example line:
+
+\begin{verbatim}
+	Gconvert -crop 0x0 -density 500x500 -geometry 25% -transparency  '#FFFFFF' tex4ht.ps %%3
+\end{verbatim}
+
 \end{document}

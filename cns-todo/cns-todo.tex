@@ -88,27 +88,14 @@ software component, and also impacts other software components.
 \end{center}
 
 
-\subsection{symmetric compartments (1)}
+\subsection{ns-sli installed G-2 scripts}
 
-Implement symmetric compartments.  We will have to decide how to do
-this: core implementation, or converting each symmetric compartment to
-two asymmetric compartments.  This will also likely involve core
-design decisions, because the model-container does not distinguish
-between symmetric and asymmetric compartments (only the solvers do).
-
-\begin{center}
-  \vspace{5mm}
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Time Estimate
-    & \\
-    \hline
-    Assigned to
-    & Hugo \& Mando \\
-    \hline
-  \end{tabular}
-\end{center}
+\begin{itemize}
+\item The tests scripts of ns-sli are not included in the tarball.  As
+  a consequence they are not inluded in the rpm nor deb packages.
+\item Change loop: Mando's change solved this, Hugo undid the change
+  for reasons mentioned in an email from Hugo to Mando.
+\end{itemize}
 
 
 \subsection{symmetric compartments (2)}
@@ -175,7 +162,7 @@ scripts:
 \begin{itemize}
 \item Purkinje Cell Scripts from Erik De Schutter: some of the scripts
   are used for regression tests (and work correctly).  Other Purkinje
-  cell scripts still need validation (DONE).
+  cell scripts still need validation.
 \item Rallpacks: for benchmarking it would be useful to implement
   scripts for the rallpack standard.  To show the relationships
   between the different GENESIS\,3 interfaces, it is useful to
@@ -208,6 +195,14 @@ scripts:
 \end{center}
 
 
+\subsection{Cleanup Packages Archive}
+
+There are redundant packages and directories in
+http://repo-genesis3.cbi.utsa.edu/deb/ and other download directories.
+Ideally there is only one directory for each set of deb packages, and
+all the deb packages are listed there as one flat list.
+
+
 \subsection{Release Notes}
 
 \begin{itemize}
@@ -227,24 +222,28 @@ scripts:
       \item Does the purkinje cell and its various stimulation protocols.
       \item please try your simulations and report problems
       \end{itemize}
-    \item NeuroML support.
+    \item NeuroML support (passive compartments).
     \item PyNN support, placeholder for an interface to PyNN through the
       {\it pynn\_load} command
     \end{itemize}
   \item Installation.
     \begin{itemize}
-    \item Compile a list of dependencies.
-    \item Create an integrated installation tar ball or so.
-    \item add deb and rpm packages.
+    \item Compile a list of dependencies (DONE, see installation documentation).
+    \item Create an integrated installation tar ball or so (DONE, on repo).
+    \item add deb and rpm packages (DONE, on the repo, see other point).
       % (http://www.artificialworlds.net/blog/2007/02/22/creating-deb-and-rpm-packages/).
+    \item Release levels: G-3 Hacker (coherent release for technical
+      users), G-3 Intermediate (also for script users, includes python
+      for the creation of GUIs and projects), G-3 Full (include
+      complete GUI).
     \item Release plan: alpha, beta, full release.
-    \item Synchronize userdocs and wiki installation docs.
+    \item Synchronize userdocs and wiki installation docs (DONE).
     \end{itemize}
   \item Mailing lists, discussion boards and other genesis related systems.
     \begin{itemize}
     \item What are they used for?
     \item What do we want them to be used for? Why?
-    \item Add {\ hg} repository.
+    \item Add {\ hg} repository (unnecessary?).
     \item Add bulletin boards and mailing lists.
     \item Add NS related systems.
       \begin{itemize}
@@ -335,16 +334,11 @@ each software component must implement the following makefile targets:
   Create an installer script that builds the tarball of each package
   (neurospaces\_dist) (DONE).
 \item {\it pkg-deb}: for creation of a binary archive for debian based
-  Linux distributions (including Ubuntu). - (DONE)
+  Linux distributions (including Ubuntu). - (95\%)
 \item {\it pkg-rpm}: for creation of a binary archive for rpm based Linux
-  distributions (such as Redhat and Fedora). - (IN PROGRESS - 90\%)
-\item MAC .dmg file. - (IN PROGRESS)
+  distributions (such as Redhat and Fedora). - (DONE)
+\item MAC .dmg file. - (60\%)
 \end{itemize}
-
-An additional package must be created that has all other software
-components of GENESIS\,3 as dependencies.  An installer script must
-be created that builds all the OS specific archives and puts them in a
-common directory (neurospaces\_dist\_archives).
 
 Communicate with the previous debian maintainers about this.  They are
 Sam Hocevar (Debian packages) sam+deb at zoy.org and Matt Zimmerman
@@ -376,6 +370,10 @@ with new release labels.
 The checkin should be made visible from the repository server (ie. the
 tester should push its changes from its repository to the server
 repository).
+
+Currently date based.  This does not work with distributed version
+control.  The only way to version files in a distributed environment
+is using the version control identifiers.
 
 \begin{center}
   \vspace{5mm}
@@ -412,28 +410,6 @@ and build makefiles accordingly:
     \hline
     Time Estimate
     & 2 Days\\
-    \hline
-    Assigned to
-    & Mando \\
-    \hline
-  \end{tabular}
-\end{center}
-
-
-\subsection{QueryHandlerPrintSpikeRecieverCount() on MAC OSX}
-
-There is an issue with executing {\bf ./neurospacesparse -v 1 -q
-  legacy/networks/supernetwork.ndf} on mac osx. The system stalls on a
-call to the function QueryHandlerPrintSpikeRecieverCount() with no CPU
-activity. - (DONE)
-
-\begin{center}
-  \vspace{5mm}
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Time Estimate
-    & 1 day for a detailed diagnosis \\
     \hline
     Assigned to
     & Mando \\
@@ -575,6 +551,9 @@ files that can be loaded into the GUI.
 
 Look and feel of documentation website.
 
+Check what options of the framing functions of tex4ht can be used.
+
+
 \begin{center}
   \vspace{5mm}
   \centering
@@ -613,8 +592,64 @@ to be installed.
 \end{center}
 
 
+\subsection{symmetric compartments (1)}
+
+Redundant with the other entry of symmetric compartments.
+
+Implement symmetric compartments.  We will have to decide how to do
+this: core implementation, or converting each symmetric compartment to
+two asymmetric compartments.  This will also likely involve core
+design decisions, because the model-container does not distinguish
+between symmetric and asymmetric compartments (only the solvers do).
+
+\begin{center}
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Time Estimate
+    & \\
+    \hline
+    Assigned to
+    & Hugo \& Mando \\
+    \hline
+  \end{tabular}
+\end{center}
+
+
 \section{DONE List}
 
+
+\subsection{QueryHandlerPrintSpikeRecieverCount() on MAC OSX}
+
+There is an issue with executing {\bf ./neurospacesparse -v 1 -q
+  legacy/networks/supernetwork.ndf} on mac osx. The system stalls on a
+call to the function QueryHandlerPrintSpikeRecieverCount() with no CPU
+activity. - (DONE)
+
+\begin{center}
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Time Estimate
+    & 1 day for a detailed diagnosis \\
+    \hline
+    Assigned to
+    & Mando \\
+    \hline
+  \end{tabular}
+\end{center}
+
+
+\subsection{Packaging and Distribution (for the alpha1 Release)}
+
+Postponed:
+
+An additional package must be created that has all other software
+components of GENESIS\,3 as dependencies.  An installer script must
+be created that builds all the OS specific archives and puts them in a
+common directory (neurospaces\_dist\_archives).
 
 \subsection{Model\,Container}
 Complete the implementation of the {\it ndf\_save} command.  Add tests for
