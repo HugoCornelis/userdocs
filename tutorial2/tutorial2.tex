@@ -111,7 +111,12 @@ or by making the chosen element the current working element via the {\it ce} (ch
     . . .
     - /Purkinje/segments/b3s45[10]/Purkinje_spine_0
 \end{verbatim}
-The ability to change the current working element allows us to either check the value of the model parameters associated with the current working element (such as {\tt RM} or {\tt CM}) via the command {\it show\_model\_parameters}, change default parameter values via the {\it set\_model\_parameter} command or view the scaled value of the parameter via the command {\it show\_parameter\_scaled}, for example:
+The ability to change the current working element allows us to either
+check the value of the model parameters associated with the current
+working element (such as {\tt RM} or {\tt CM}) via the command {\it
+  model\_parameter\_show}, change default parameter values via the
+{\it model\_parameter\_set} command or view the scaled value of the
+parameter via the command {\it parameter\_scaled\_show}, for example:
 \begin{verbatim}
     genesis > pwe
     /Purkinje/segments/b3s45[10]
@@ -136,7 +141,7 @@ The ability to change the current working element allows us to either check the 
 {\bf Note:}
 
 \begin{itemize}
-\item The commands {\it ce}, {\it set\_model\_parameter}, and {\it show\_parameter} currently only accept the full path name (e.g. {\it  /Purkinje/segments/b3s45[10]}) to a segment even if the parameter to be queried or changed is in the current working element. % or just the segment name itself (as given in the above example).  Parameter values associated with a given element can be changed using either the full path name or making the given segment the current working element (as with the above example).
+%\item The commands {\it ce}, {\it set\_model\_parameter}, and {\it show\_parameter} currently only accept the full path name (e.g. {\it  /Purkinje/segments/b3s45[10]}) to a segment even if the parameter to be queried or changed is in the current working element. % or just the segment name itself (as given in the above example).  Parameter values associated with a given element can be changed using either the full path name or making the given segment the current working element (as with the above example).
 
 \item In the {\bf G-Shell} the commands ``{\bf .}'' and ``{\bf ..}'' operate in the same way as when employed to traverse the Unix file system (see \href{../unix-linux/unix-linux.tex}{\bf Introduction\,to\,Unix\,and\,the\,Linux\,Graphical\,Desktop}). The ``{\bf ..}'' operator may be chained, e.g. ``{\bf ../../../}''.
 
