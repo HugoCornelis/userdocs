@@ -340,12 +340,13 @@ runtime_parameters:
    
    After identifying which synapses should be activated, e.g.
    \begin{verbatim}
-genesis > parameter_show /Purkinje/segments/b1s06[182] SOMATOPETAL_BRANCHPOINTS
+genesis > morphology_summarize /Purkinje
+genesis > parameter_show /Purkinje/segments/branchlets/b1s06/b1s06[182] SOMATOPETAL_BRANCHPOINTS
    value = 23 
    \end{verbatim}
    The event list can then be attached to the spine heads of the specified dendritic segment:
    \begin{verbatim}
-genesis > runtime_parameter_add /Purkinje/segments/b1s06[182]/Purkinje_spine_0/head/par/synapse EVENT_FILENAME event_data/events.yml
+genesis > runtime_parameter_add /Purkinje/segments/branchlets/b1s06/b1s06[182]/Purkinje_spine_0/head/par/synapse EVENT_FILENAME event_data/events.yml
    \end{verbatim}   
 \end{enumerate}
 
@@ -382,14 +383,14 @@ A simulation can be returned to its initial state, where the time step of the si
 
 The state of a simulation can be saved to a file name of your choosing, for example:
 \begin{verbatim}
-   genesis > simulation_state_save /Purkinje /<directory path>/<file name>.ndf
+   genesis > model_state_save /Purkinje /<directory path>/<file name>.ndf
 \end{verbatim}
 This command saves the state of a model to a file at the given location following the last update time step of a run. In the absence of a directory path, the file is saved by default in the current directory, i.e. the directory from which the {\bf G-Shell} was initiated.
 
 A simulation can then be initiated from this saved 
 state with the command 
 \begin{verbatim}
-   genesis > simulation_state_load /<directory path>/<file name>.ndf 
+   genesis > model_state_load /<directory path>/<file name>.ndf 
 \end{verbatim}
 The next {\it run} command will then start the simulation from this reinitialized state.
 
