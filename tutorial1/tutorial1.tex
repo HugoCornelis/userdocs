@@ -23,7 +23,7 @@ In this first of two introductory tutorials you will be guided through a brief s
     runtime_parameter_add /n/soma INJECT 2e-9
     output_add /n/soma Vm
     run /n 0.1
-    simulation_state_save /n
+    model_state_save /n /tmp/state
     . . . 
     sh cat /tmp/output
     . . . 
@@ -201,11 +201,11 @@ There are several commands associated with the ability to start, stop, or contin
 
 It may also be convenient to start a simulation from a predefined state. To do this, the state of the simulation is saved to a file name of your choosing. For example,
 \begin{verbatim}
-    genesis > simulation_state_save /n <file name>
+    genesis > model_state_save /n <file name>
 \end{verbatim}
 saves the state of the model following the last update time step of a run to a file with the given name. A simulation can then be initiated from this saved state with the command 
 \begin{verbatim}
-    genesis > simulation_state_load <file name>
+    genesis > model_state_load <file name>
 \end{verbatim}
 The next {\it run} command will then start the simulation from this reinitialized state. Such functionality provides a convenient way to save different states of a simulation. In particular, it is useful for initiating a simulation following a startup period, thereby eliminating the continual rerunning of a simulation through startup calculations. Also, as a model only exists in memory for the duration of a GENESIS session, the {\tt simulation\_state\_save} command  is the only way that the state of a simulation can be saved between GENESIS sessions.
 
