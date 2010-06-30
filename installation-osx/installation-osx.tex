@@ -14,7 +14,8 @@
 % start: userdocs-tag-replace-items related-do-nothing
 % end: userdocs-tag-replace-items related-do-nothing
 
-\section*{Developer Installation Mac OSX}
+
+\section*{Developer Installation From Source On Mac OSX}
 
 The procedure for the installation of GENESIS on a Mac OSX is similar to that for a Linux build on a regular PC. The major difference is that it requires build tools for the Mac. These are somewhat hidden on disk 2 of the Mac OS installation disks. Installation requires administrator privileges. ({\bf Note:} Some installation must be done from the Terminal). If you do not have administrator privileges you should contact your system administrator for help. The Terminal can be found in the Applications --$>$ Utilities folder. For regular use of GENESIS it is convenient to place a Terminal in the dock for easy access.
 Installation requires executing the following major steps:
@@ -97,6 +98,14 @@ Once these have completed the installation can be tested with the following comm
 This will perform a series of regression tests and save the output to file. The output can be checked by typing ``{\tt less /tmp/check.out}''. Importantly, search for lines containing the string {\tt error\_count} that will indicate any inconsistencies with the installation.
 
 {\bf Note:} The running of tests is optional, but strongly advised.
+
+
+
+\section*{Installation From Packages}
+
+	Easiest method to install GENESIS 3 on Mac OSX is via installation packages available \href{http://repo-genesis3.cbi.utsa.edu/osx/}{\bf here}. The packages install all compiled programs and scripts. However the prerequisite modules for {\bf Perl} and {\bf Python} must still be installed. 
+	
+	Required modules are listed in the \href{../genesis-dependencies/genesis-dependencies.tex}{\bf GENESIS dependencies} document. Note the above rule about {\it macports} still applies and the standard perl for Mac OSX at {\bf /usr/bin/perl} should be the one invoked when pulling packages from {\bf CPAN}.
 
 
 \end{document}
