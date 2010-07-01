@@ -123,9 +123,8 @@ clean-local: website-clean
 	$(RM) -rf $(top_srcdir)/*.deb
 	$(RM) -f $(top_srcdir)/*.changes
 	$(RM) -f $(top_srcdir)/*.dsc
-	$(RM) -f $(top_srcdir)/build_debian.log
-	$(RM) -rf $(top_srcdir)/RPM_BUILD
-	$(RM) -f $(top_srcdir)/build_rpm.log
+	$(RM) -f $(top_srcdir)/build_*.log
+	$(RM) -rf $(top_srcdir)/*_BUILD
 	$(RM) -f $(top_srcdir)/userdocs-*.tar.gz
 #	$(RM) -fr $(srcdir)/hierarchy/output
 #	$(RM) -rf $(top_srcdir)/docs/html
