@@ -1,0 +1,49 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{System Administration Log}
+
+This is a document listing all of all administration done on machines used in the GENESIS project.
+
+\subsection*{repo-genesis3.cbi.utsa.edu}
+
+The repository machine serves the source code for the GENESIS project as well as periodically performing automated source code checks. This machine also has a running web server that hosts the projects: doxgen documentation, regression tests, and various package distributions.
+
+\begin{itemize}
+\item[] {\bf Admin:} Mando
+\item[] {\bf Date:} 7/2/2010 
+\item[] {\bf Actions:} Removed simrc file in g3tester home directory after fixing the problem with finding the simrc in the executable directory.
+\end{itemize}
+
+
+\subsection*{darwin.cbi.utsa.edu}
+
+This machine hosts the GENESIS website as well as the output from the user documentation system. All of this is done through a single non-root user account.
+
+\begin{itemize}
+\item[] {\bf Admin:} Mando
+\item[] {\bf Date:} 7/2/2010
+\item[] {\bf Actions:} Did work on the website software. 
+\end{itemize}
+
+
+\subsection*{Mac Tester}
+
+The Mac tester is an iMac machine located at {\bf CBI} that runs the tester on a cronjob. It is also used for debugging and building packages for 32-bit Mac OSX Snow Leopard.
+
+
+
+
+\end{document}
