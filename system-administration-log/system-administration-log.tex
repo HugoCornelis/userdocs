@@ -19,12 +19,13 @@ This is a document listing all of all administration done on machines used in th
 
 \subsection*{repo-genesis3.cbi.utsa.edu}
 
-The repository machine serves the source code for the GENESIS project as well as periodically performing automated source code checks. This machine also has a running web server that hosts the projects: doxgen documentation, regression tests, and various package distributions.
+The repository machine serves the source code for the GENESIS project as well as periodically performing automated source code checks. This machine also has a running web server that hosts the projects: doxygen documentation, regression tests, and various package distributions.
 
 \begin{itemize}
 \item[] {\bf Admin:} Mando
 \item[] {\bf Date:} 7/2/2010 
 \item[] {\bf Actions:} Removed simrc file in g3tester home directory after fixing the problem with finding the simrc in the executable directory.
+\item[] {\bf Impact:} The .simrc-ns-sli file in the home directory was masking a bug in determining the simrc file in the executable directory. Removing the file has no negative impact on cron testing of source code. 
 \end{itemize}
 
 
@@ -36,6 +37,7 @@ This machine hosts the GENESIS website as well as the output from the user docum
 \item[] {\bf Admin:} Mando
 \item[] {\bf Date:} 7/2/2010
 \item[] {\bf Actions:} Did work on the website software. 
+\item[] {\bf Impact:} N/A
 \end{itemize}
 
 
