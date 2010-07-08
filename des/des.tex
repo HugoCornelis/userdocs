@@ -1,0 +1,48 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+\section*{DES: the discrete event system}
+
+The {\it D}iscrete {\it E}vent {\it S}ystem is used for abstract
+modeling of action potentials. This functionality is needed for
+running network simulations. Action potentials generated at the soma
+of one neuron, are translated to a discrete event, that is delivered
+at a synaptic target of a connected neuron. The {\it DES} component
+borrows ideas from previous research in discrete event simulation.
+
+From a software architecture viewpoint, {\it DES} is a separate
+solver: it simulates action potential propagation in an efficient way.
+Splitting this functionality from the rest of the simulator,
+facilitates customization for modeling of sophisticated learning
+rules, especially related to STDP, diffusion and spillover.
+
+Internally, the discrete event system contains two subcomponents, one
+component for event distribution that contains a connectivity matrix,
+a second component for event queuing.
+
+\subsection*{DES Features}
+
+\begin{itemize}
+\item a single event to many targets.
+\item queues the event whenever applicable.
+\item allows for easy customization, e.g. to associate 'secondary'
+  data with a connection, like weight, delay and other data specific
+  for the model.
+\end{itemize}
+
+Note: at the time of writing this component is distributed as part of the Heccer package. This is likely to change in the near future. 
+
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
