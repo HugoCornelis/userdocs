@@ -15,7 +15,42 @@
 
 \subsection*{Backward Compatibility}
 
-GENESIS is backward compatible with \href{http://genesis-sim.org/GENESIS/genesis-ftp/}{GENESIS Release 2.3} for all functionality of \href{http://genesis-sim.org/GENESIS/illtuts/purkinje.html}{Tutorial 9--The Purkinje Tutorial}. In doing this, backward compatibility supports the major functionalities of the GENESIS Script Language Interpreter.
+G-2 is a complicated software application, therefore being compatible
+with G-2 is a challenge.  Clarity plays an important role in addressing
+any challenge, so let's define what we mean with G-2 compatibility.
+
+\begin{itemize}
+\item G-2 is a simulator that is useful for batch jobs, taking input
+  and producing output on a filesystem.  A software application is
+  {\bf G-2 black-box compatible} when it produces the same output
+  files as G-2, given the same input files.
+\item G-2 can be used as an interactive application, where the user
+  issues commands, checks the output on the screen and takes further
+  actions that depends on the output on the screen.  An application is
+  {\bf G-2 interactive compatible} when it allows the user to issue
+  those same commands and it prints the same information onto the
+  screen.
+\item G-2 can be extended by users at the source code level.  An
+  application is {\bf G-2 extensible} when it can be extended with the
+  same source code as for G-2.
+\end{itemize}
+
+
+We currently have nice examples in the ns-sli test specification of
+G-2 black-box compatibility.  For example, given the SLI scripts of
+the purkinje cell, they produce ascii output files with complex spikes
+and typical somatic responses to current injections.  Some of the
+output files were generated using G-2 and are used by the regression
+tester to test the functionality G-3.
+
+
+GENESIS-3 is fully backward compatible with
+\href{http://genesis-sim.org/GENESIS/genesis-ftp/}{GENESIS Release
+  2.3} for all functionality of
+\href{http://genesis-sim.org/GENESIS/illtuts/purkinje.html}{Tutorial
+  9--The Purkinje Tutorial}. In doing this, backward compatibility
+supports the major functionalities of the GENESIS Script Language
+Interpreter.
 
 \subsection*{Scope}
 
