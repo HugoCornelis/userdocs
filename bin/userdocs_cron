@@ -10,6 +10,7 @@ use YAML;
 my $output_filename = "userdocs_cron.out";
 my $descriptor_check = "";
 my $document_root = "$ENV{HOME}/neurospaces_project/userdocs/source/snapshots/0";
+my $htaccess_file = "";
 
 #
 # options
@@ -81,12 +82,23 @@ sub main
   try_to("make website-prepare -C ~/neurospaces_project/userdocs/source/snapshots/0/ > $output_path",1);
 
   # now do a link check.
-  try_to("make webcheck -C ~/neurospaces_project/userdocs/source/snapshots/0/ >> $output_path",1);
+  my $webcheck_path = `which webcheck`;
 
+  if($webcheck_path ne "")
+  {
+
+    try_to("make webcheck -C ~/neurospaces_project/userdocs/source/snapshots/0/ >> $output_path",1);
+
+  }
 
   copy_html_data();
 
   set_index_page();
+
+  if($htaccess_file ne "")
+  {
+    copy_htacces_file();
+  }
 
   my $text = produce_email_text();
 
@@ -396,6 +408,18 @@ sub parse_config_file
 
   }
 
+
+  if(defined $configuration->{HTACCESS})
+  {
+
+    chomp($configuration->{HTACCESS});
+    $htaccess_file = $configuration->{HTACCESS};
+    print "\tThe htaccess file to use is $htaccess_file\n";
+
+  }
+
+
+
   print "Done Parsing $config_file:\n";
 
 }
@@ -563,6 +587,23 @@ system. <br>
   print "Done constructing index page\n";
 }
 
+
+#
+# This sub routine just copies an .htaccess file to the root web directory.
+#
+sub copy_htacces_file
+{
+
+  my $target_htaccess_file = $option_html_output_directory . "/userdocs/.htaccess";
+
+  if(-e $htaccess_file)
+  {
+
+    system "cp $htaccess_file $target_htaccess_file";
+
+  }
+
+}
 
 
 
