@@ -21,6 +21,39 @@ Sumatra already has project migration problems?
 \item {\bf Sumatra already has project migration problems?:} In such an early phase of development we must try to avoid such things
 with the GUI at all cost.  I never had any problem with the project browser.
 
+\item {\bf Failure of {\it neurospaces\_check} on the Mac}: This includes {\tt TIMEOUT} and {\tt numerical\_compare()} errors:
+\begin{verbatim}
+dhcp-129-111-247-96:~ adcmobile$ grep 'error_count' /tmp/check.out 2>&1
+ neurospaces > *** Error: 1:TIMEOUT (Can we succesfully initialize a projectionquery that indexes all projections ?, nesting.t, error_count 1)
+*** Error: 1:TIMEOUT (Can we succesfully reinitialize a projectionquery that indexes all projections ?, nesting.t, error_count 2)
+ neurospaces > *** Error: 1:TIMEOUT (How many connections do we have on the first subnetwork, second mossy fiber ?, nesting.t, error_count 3)
+*** Error: 1:TIMEOUT (How many connections do we have on the first subnetwork, granule cell 5481, mossy fiber AMPA channel ?, nesting.t, error_count 4)
+*** Error: 1:TIMEOUT (How many connections do we have on the first subnetwork, granule cell 481, mossy fiber AMPA channel ?, nesting.t, error_count 5)
+*** Error: 1:TIMEOUT (What is the number of connections on the AMPA channel of the first Golgi cell in network 0 ?, nesting.t, error_count 6)
+*** Error: 1:TIMEOUT (What is the number of connections on the AMPA channel of the first Golgi cell in network 1 ?, nesting.t, error_count 7)
+*** Error: 1:TIMEOUT (What is the number of connections on the AMPA channel of the first Golgi cell in network 2 ?, nesting.t, error_count 8)
+ neurospaces > *** Error: 1:TIMEOUT (Can we find all the parameters of the purkinje cell ?, parameteroperations.t, error_count 9)
+  error_count: 9
+  error_count: 0
+  error_count: 0
+  error_count: 0
+*** Error: numerical_compare(): one empty string, the other not. (Can we run an original GENESIS 2 script that loads a passive version of the purkinje cell (1) ?, tools/purk2m9.t, error_count 1)
+*** Error: numerical_compare(): one empty string, the other not. (Can we run an original GENESIS 2 script that loads a passive version of the purkinje cell (2) ?, tools/purk2m9.t, error_count 2)
+ neurospaces > *** Error: 1:TIMEOUT (Are the soma coordinates correct ?, tools/readcell.t, error_count 3)
+genesis #0 > *** Error: 1:TIMEOUT (Do we see the dumped model from heccer, traub91_asym_simple3 ?, traub91.t, error_count 4)
+genesis #0 > *** Error: 1:TIMEOUT (Do we see the dumped model from heccer, traub91_asym_simple2 ?, traub91.t, error_count 5)
+*** Error: numerical_compare(): numbers differ above accuracy ($numbers1->[$index] != $numbers2->[$index]), aborting with an error (Does the simulation produce the correct output (2)?, traub94.t, error_count 6)
+*** Error: expected_output does not match application_output (Does the simulation produce the correct output (2)?, traub95.t, error_count 7)
+  error_count: 7
+*** Error: 3:Child PID 29526 exited with status 0 (Is the exported NDF valid?, neuroml/loading.t, error_count 1)
+  error_count: 1
+*** Error: numerical_compare(): one empty string, the other not. (Does the simulation produce the correct output (1)?, ndf_save.t, error_count 1)
+*** Error: numerical_compare(): one empty string, the other not. (Is the generated output correct (1)?, sli.t, error_count 2)
+  error_count: 2
+  error_count: 0
+  error_count: 0
+dhcp-129-111-247-96:~ adcmobile$\end{verbatim}
+
 \end{enumerate}
 
 \end{document}
