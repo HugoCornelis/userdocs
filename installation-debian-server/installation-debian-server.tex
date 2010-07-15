@@ -120,6 +120,15 @@ to the configuration file with name {\it
 no_automated_merges: 1
 \end{verbatim}
 
+This setting prevents the server to get stuck on merge conflicts that
+can arise from the automated merges by the developer package.  Because
+the server only pulls from the central repository, a merge on the
+server is unique to the server.  The subsequents merges of the merge
+node or any of its descendants can give rise to merge conflicts unique
+to the repository on the server, and unresolvable without logging in
+on the server.
+
+
 \section*{Setting up the Web Server}
 
 Test run output as well as generated html files from programs like Xrefactory and Doxygen need to be accessible over the internet. This is a guide to adding the Apache2 rules to set up a directory that will have its contents displayed via a http server.
