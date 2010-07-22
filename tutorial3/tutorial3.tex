@@ -1,0 +1,305 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-tutorial
+% end: userdocs-tag-replace-items related-tutorial
+
+\section*{Convert a GENESIS\,2 Simulation to GENESIS\,3}
+
+\subsection*{Background}
+
+In \href{../tutorial1/tutorial1.tes}{\bf Tutorial\,1}, you learned to use the GENESIS Interactive Shell (\href{../gshell/gshell.tex}{\bf G-Shell})
+to create a simple cell, explore it, and run the simulation from the
+{\bf G-shell} command line.
+
+\href{../tutorial2/tutorial2.tex}{\bf Tutorial\,2} continues to show how to load and simulate predefined model
+neurons that come bundled with the GENESIS distribution in the single
+cell model library.  As with the Purkinje cell model used in the
+tutorial these have been saved in the library in \href{../ndf-file-format/ndf-file-format.tex}{\bf NDF\,format}.
+
+Of course, as mentioned in Tutorial\,2, it would be very difficult to create a large multi-compartmental
+cell model by entering commands in the {\bf G-shell}.
+
+In the future, GENESIS will support import of models represented in
+neural exchange formats such as NeuroML (neuroml.org), and from scripts
+that use a Python-based scripting language.  This tutorial is devoted
+to the process of loading existing GENESIS 2 simulation scripts into
+the G-shell, running them, and converting them to GENESIS 3.
+
+In GENESIS 2, scripts are interpreted by the Script Language
+Interpreter (SLI), so these scripts are in the "SLI format".  The
+process of creating a simulation in this format is described with
+examples in the GENESIS Modeling Tutorial
+(http://www.genesis-sim.org/GENESIS/UGTD/Tutorials/genprog/genprog.html)
+for GENESIS 2.  This is part of a larger package "The Ultimate GENESIS
+Tutorial Distribution" (http://www.genesis-sim.org/GENESIS/UGTD.html)
+that is gradually being converted to GENESIS 3.  Some familiarity with
+the GENESIS Modeling Tutorial section "Building a cell the easy way",
+is assumed in what follows below.
+
+The simulation script used as an example in "Building a cell the easy
+way" is called simplecell.g, and it uses the cell reader with the file
+cell.p to create a simple two-compartment neuron.  The soma
+compartment /cell/soma contains Hodgkin-Huxley type voltage-activated
+sodium and potassium channels (implemented as tabchannels), and the single
+dendrite compartment /cell/dend contains excitatory and inhibitory
+synaptically activated channels (implemented as synchans).
+
+Although many GENESIS 2 scripts may be run or imported with little or no
+modification, there are a few differences between GENESIS 2 and GENESIS 3
+that may require some changes.
+
+In GENESIS 2, there is no distinction between objects that are used to
+represent biological models (e.g. compartments and channels), device
+objects that are used to provide input to the model (e.g. a pulsegen or
+randomspike), those that provide output (e.g. {\it asc\_file} or {\it disk\_out}),
+analysis objects (e.g. various modes of the {\it table} object, {\it interspike},
+{\it autocor}r, or {\it peristim} objects), or graphical objects for control or
+visualization.  All of these may be freely combined in any desired
+manner in a GENESIS 2 script.  This accounts for the great versatility
+and flexibility of scripted GENESIS simulations.
+
+Although GENESIS 3 aims for nearly complete backwards compatibility
+with GENESIS 2, this does not extend to the XODUS graphical objects and
+commands, which are based on 1990's X window system widgets.  Modern
+Python-based graphics are being developed for GENESIS 3, which will
+allow the scriptable construction of custom GUIs by the user.
+However, these will not be an attempt to reproduce the old XODUS
+widgets and commands.
+
+Also, the GENESIS 3 Workflow Diagram (link) makes a distinction between
+these different functionalities, based on a modeling or experimental
+paradigm involving an iterative process of model design, experimental
+design (e.g. providing stimuli to the model), running the simulation, and
+output and analysis of results.  The CBI Architecture (link) incorporates
+this separation of functionality into the internal representation of the
+simulation.  Commands given in the G-shell allow these to be incorporated
+into G3, while retaining the flexibility of G2.
+
+[Hugo and Allan, can you improve on this description?  I had intended
+ the paragraphs above to be an overview and set up for the final
+ unwritten section on incorporating ones input, output, and analysis
+ code from the G2 script into G3.]
+
+For these reasons, it is best to separate these functional categories
+by making changes to the SLI script that will facilitate conversion.
+
+Excluding the initial comments, the original {\it simplecell.g} script reads:
+\begin{verbatim}
+   // Create a library of prototype elements to be used by the cell reader
+   include protodefs
+
+   float tmax = 0.5                // simulation time in sec
+   float dt = 0.00005              // simulation time step in sec
+   setclock  0  {dt}               // set the simulation clock
+
+   // include the graphics functions
+   include graphics
+
+   readcell cell.p /cell
+
+   // make the control panel
+   make_control
+
+   // make the graph to display soma Vm and pass messages to the graph
+   make_Vmgraph
+   addmsg /cell/soma /data/voltage PLOT Vm *volts *red
+
+   setfield /control/Injection value 0.5e-9
+   set_inject /control/Injection  // set initial injection from Injection dialog
+
+   check
+   reset
+\end{verbatim}
+
+Fortunately, as in most GENESIS 2 scripts, the graphical commands have
+been isolated to the included script {\it graphics.g}.   For use with GENESIS 3,
+this file should not be included, and there will need to be commands
+that write equivalent simulation results to files, instead of a graph.
+
+The example script simplecell-g3.g (link to simplecell-g3.g) illustrates
+how the orignal script can be reorganized to run under either GENESIS
+2 or 3.  When creating GENESIS 2 scripts that will eventually be converted
+to run under GENESIS 3, the organization described below will help you
+to avoid potential problems under GENESIS 3.
+
+By defining some Boolean constants at the begining of the script,
+you can easily change between running with GENESIS 2 and XODUS graphics,
+and GENESIS 3 in batch mode with output to a file.
+\begin{verbatim}
+   int batch = 1        // if (batch) then run a default simulation
+   int graphics = 0     // display control panel, graphs
+   int file_out = 1     // write output to a file
+\end{verbatim}
+The script defines and uses the functions
+\begin{itemize}
+\item {\it make\_cell} Creates the cell, using {\it readcell} and the cell parameter file
+     {\it cell.p}.  The {\it protodefs.g} file defines the prototype channels and
+     other elements referenced by {\it cell.p}.
+
+\item {\it make\_input} Provides input to the cell.  In this case it merely
+     sets the {\tt /cell/soma inject} field to the desired value of injection
+     current.
+
+\item {\it make\_output} Provides output of the {\tt /cell/soma Vm}  to a file, using
+     an {\it asc\_file} object.
+
+\item {\it step\_tmax} Runs the simulation for a time {\tt tmax}, and optionally
+     echoes information to the {\bf G-Shell}, such as start and end times of a
+     run.
+\end{itemize}
+These are used in the main section of the simulation, which reads:
+\begin{verbatim}
+ make_cell // creates a cell with a soma and a dend compartment
+ make_input // provides input to the cell
+ if (graphics)
+     // include any graphics functions
+     include graphics
+     .... (other graphics commands not shown here)
+ end
+
+ if (file_out)
+    make_output // provides output of the results to a file
+ end
+
+ check
+ reset
+
+ if (batch)
+     step {tmax} -time
+ end
+\end{verbatim}
+
+\subsection*{Running the simulation in backwards compatibility mode}
+
+The first step in converting the simulation is to verify that
+it will execute without errors under the G-shell using the ns-sli
+module.  This runs the simulation under the backwards compatibility
+mode.  This will be somewhat slower than in native G3 mode, and does not
+provide the advanced features of G3, but is recommended, to be sure that
+the model can be converted.  The steps are simply:
+\begin{verbatim}
+   $ genesis-g3
+
+   Welcome to the GENESIS 3 shell
+   genesis > sli_run simplecell-g3.g
+\end{verbatim}
+The output should be similar to that when running under GENESIS 2.  In fact,
+it was not strictly necessary to isolate the code for providing input
+and output to separate functions, in order for the simulation to
+run properly in {\bf NS-SLI} mode.
+
+\subsection*{Converting the cell model to NDF format}
+
+To make full use of the capabilities of GENESIS, the cell model should
+be converted into NDF format.  This can be done with the {\it sli\_load}
+and {\it ndf\_save} commands that are available in the {\bf G-Shell}:
+\begin{verbatim}
+   $ genesis-g3
+
+   Welcome to the GENESIS 3 shell
+   genesis > sli_load simplecell-g3.g
+\end{verbatim}
+To be sure that you remember the name that was assigned to your cell model
+({\tt /cell}, in the {\it simplecell-g3.g} script) give the command:
+\begin{verbatim}
+   genesis > list_elements
+   ---
+   - /proto
+   - /output
+   - /library
+   - /cell
+\end{verbatim}
+These are in fact the element trees that were created when the simulation
+was run in GENESIS 2, or with {\it sli\_run} in the {\bf G-Shell}.  If you like, you can
+dig deeper with commands such as {\tt list\_elements /cell/soma}.
+
+
+At this point you can explore the loaded model with some of the other tools
+provided by the {\bf G-Shell}.  Don't forget to use {\tt help commands} to obtain
+a list of commands available in the current version of the {\bf G-Shell}, in
+addition to those described in Tutorials 1 and 2.
+
+%[This could be filled out with more examples, e.g. how to use "explore".
+% Allan or Hugo, do you have any suggestions?]
+
+The final step is to save the cell representation to NDF format,
+specifying the file name for the saved representation:
+\begin{verbatim}
+   genesis > ndf_save /cell/** simplecell-g3.ndf
+   genesis > quit
+\end{verbatim}
+
+\subsection*{Running the converted cell model in the G-Shell}
+
+Now, we are ready to load and run the model in NDF format.
+\begin{verbatim}
+   $ genesis-g3
+   Welcome to the GENESIS 3 shell
+   genesis > ndf_load simplecell-g3.ndf
+\end{verbatim}
+At this point, you can explore the model as before, using the examples
+given in Tutorial 2 for the {\tt /Purkinje} model.  The simplest
+way to provide stimuli to the model and to output the results
+is to use the built-in {\bf G-Shell} tools for this, rather than scripting
+your own input and output functions.  Some of these are also illustrated
+in Tutorial 2.
+
+Provide current injection:
+\begin{verbatim}
+   genesis > runtime_parameter_add /cell/soma INJECT 0.5e-9
+\end{verbatim}
+
+Provide output of the soma membrane potential to a file, specifying
+a filename other than the default:
+\begin{verbatim}
+   genesis > output_add /cell/soma Vm
+   genesis > output_filename simplecell-g3-ndf_Vm.out
+\end{verbatim}
+
+Finally run the simulation on the model "/cell" for 0.5 seconds:
+\begin{verbatim}
+   genesis > run /cell 0.5
+\end{verbatim}
+
+The G3Plot toolkit (link to docs) is a suite of Python-based tools under
+development for visualizing and analyzing the output of GENESIS
+simulations.  Many of the tools are based on \href{http://matplotlib.sourceforge.net/}{\bf Matplotlib} that allow analysis
+capabilities similar to Matlab to be provided within GENESIS.
+In the future, these will be integrated into GENESIS for direct use
+without the necessity of creating files.
+
+At present, if the G3Plot toolkit has been installed, the results from
+{\it simplecell-g3.ndf} may be compared with those from the GENESIS 2 run of
+{\it simplecell-g3.g} with the command
+\begin{verbatim}
+   $ G3Plot.py simplecell-g3-ndf__Vm.out Vm.out
+\end{verbatim}
+
+\subsection*{Converting user-defined input and output functions}
+
+Although the {\bf G-Shell} will continue to gain more paradigms for model
+input or output that will be sufficient for most single cell modeling,
+it will sometimes be necessary to script custom functions in GENESIS 2
+to provide unique capabilities.  This is particularly likely to be
+true with network simulations.
+
+The following section of this tutorial deals with ways to import the {\it make\_input} and
+{\it make\_output} functions above into the the {\it G-Shell}, and save them as part
+of a complete GENESIS simulation.
+
+\noindent UNDER CONSTRUCTION--To be continued in a future version of Tutorial 3.
+
+\bibliographystyle{plain}
+\bibliography{../tex/bib/g3-refs.bib}
+
+\end{document}
