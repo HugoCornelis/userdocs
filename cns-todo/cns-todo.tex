@@ -117,6 +117,54 @@ Connect the NEURON compartmental solver to the model-container.
 \end{center}
 
 
+\subsection{Slow operations on MAC OSX}
+
+Heavy memory operations such as {\bf pqsetall} run slowly on Mac OSX to the point of causing several tests to fail. Test errors are inconsistent, and different tests will fail on different test runs.
+
+\begin{center}
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Time Estimate
+    & ? day for a detailed diagnosis \\
+    \hline
+    Assigned to
+    & Mando \\
+    \hline
+  \end{tabular}
+\end{center} 
+
+
+\subsection{Stalling error on MAC OSX}
+
+There is an issue with stalling on the Mac OSX Leopard. The result is a stalled process with no CPU activity. The error is inconsistent and only seems to occur when the target machine is running other high memory tasks. From examining the state of the process during the lock it appears to be a system lock on a print statement. 
+
+The stall error currently occurs during the nesting.t test sometime after {\bf pqsetall} has been called. 
+
+A similar problem was found \href{http://lists.apple.com/archives/darwin-dev/2008/Jan/msg00139.html}{here} on the Apple forums.
+
+The same type of stall occurred previously when running the command {\bf ./neurospacesparse -v 1 -q legacy/networks/supernetwork.ndf} in the model container function QueryHandlerPrintSpikeRecieverCount() . This stall error has not been observed in well over a year when running this command and currently does not produce it.
+
+A comment has been placed in the section of code in the model container where the error occurs at line 6133 in querymachine.c.
+
+Previous measures to diagnose were to use the {\bf Instruments} application \(A trace program\) to see exactly where the process was locking, which lead to discovering the information on the Apple forums. 
+
+\begin{center}
+  \vspace{5mm}
+  \centering
+  \begin{tabular}{|c|c|}
+    \hline
+    Time Estimate
+    & ? day for a detailed diagnosis \\
+    \hline
+    Assigned to
+    & Mando \\
+    \hline
+  \end{tabular}
+\end{center}
+
+
 \subsection{Simulator Performance Benchmarking}
 
 Performance Benchmarking is traditionally classified in phases of
@@ -618,29 +666,6 @@ between symmetric and asymmetric compartments (only the solvers do).
 
 
 \section{DONE List}
-
-
-\subsection{QueryHandlerPrintSpikeRecieverCount() on MAC OSX}
-
-There is an issue with executing {\bf ./neurospacesparse -v 1 -q
-  legacy/networks/supernetwork.ndf} on mac osx. The system stalls on a
-call to the function QueryHandlerPrintSpikeRecieverCount() with no CPU
-activity. - (DONE)
-
-\begin{center}
-  \vspace{5mm}
-  \centering
-  \begin{tabular}{|c|c|}
-    \hline
-    Time Estimate
-    & 1 day for a detailed diagnosis \\
-    \hline
-    Assigned to
-    & Mando \\
-    \hline
-  \end{tabular}
-\end{center}
-
 
 \subsection{Packaging and Distribution (for the alpha1 Release)}
 
