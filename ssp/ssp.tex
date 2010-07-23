@@ -286,12 +286,12 @@ The progress of multiple simulations can then be monitored with:
 To properly interface with {\bf SSP} you need to use these perl subroutines:
 
 \begin{itemize}
-\item[] {\bf compile}
-\item[] {\bf instantiate_inputs}
-\item[] {\bf instantiate_outputs}
-\item[] {\bf connect}
-\item[] {\bf initiate}
-\item[] {\bf optimize}
+\item[] {\bf compile} Compiles the solver configurations into C code and instantiates schedules.
+\item[] {\bf instantiate\_inputs} Links solver inputs to services in {\bf SSP}.
+\item[] {\bf instantiate\_outputs} Links solver outputs to services in {\bf SSP}. 
+\item[] {\bf connect} Connects the numerical solvers and the event processors.
+\item[] {\bf initiate} Sets all schedules to 0 steps and time 0.
+\item[] {\bf optimize} Performs optimization to all loaded schedules.
 \end{itemize}
 
 \end{document}
