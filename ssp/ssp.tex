@@ -26,11 +26,6 @@ In summary {\bf SSP}:
 \item {\bf Is configurable}. 
 \end{itemize}
 
-\subsection*{The SSP Interface}
-
-Working on this.
-
-
 \subsection*{The SSP Configuration File}
 
 Below is a typical configuration file for {\bf SSP}. It first configures {\bf SSP} to use the\,{\bf Model\,Container} for internal storage of biological models. It then instructs {\bf SSP} to load a model called \,{\it cells/tensizesp.ndf}, and to instantiate a solver called\,{\bf Heccer} for that part of the model ({\it /tensizesp}). The simulation of the model is run using the\,{\it apply} entry in the configuration file.
@@ -285,5 +280,18 @@ The progress of multiple simulations can then be monitored with:
    tail -f schedules.out
 \end{verbatim}
 {\bf SSP} schedules are specified in \href{http://www.yaml.org/}\bf {YAML} format, an easy to understand format for na\"{i}ve computer users. As white space is  used to structure the content of information, YAML is white space sensitive. Indentation is used to define the hierarchical depth of an entry, while newlines are used to terminate an entry. This results in a very easy to understand format. All the examples given above employ YAML syntax. Importantly, by far the majority of scripting languages have built-in support for YAML data structures. 
+
+\subsection*{The SSP Interface}
+
+To properly interface with {\bf SSP} you need to use these perl subroutines:
+
+\begin{itemize}
+\item[] {\bf compile}
+\item[] {\bf instantiate_inputs}
+\item[] {\bf instantiate_outputs}
+\item[] {\bf connect}
+\item[] {\bf initiate}
+\item[] {\bf optimize}
+\end{itemize}
 
 \end{document}
