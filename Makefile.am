@@ -61,6 +61,7 @@ dist_noinst_SCRIPTS = \
 	installation-fedora10/installation-fedora10.tex
 	installation-osx/installation-osx.tex
 	installation-ubuntu-lennysid/installation-ubuntu-lennysid.tex
+	installation-ubuntu-lucid/installation-ubuntu-lucid.tex
 	installation-user/installation-user.tex	developer-package/developer-package.tex \
 	mercurial-testing/mercurial-testing.tex \
 	model-container/model-container.tex \
