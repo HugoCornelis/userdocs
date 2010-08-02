@@ -15,23 +15,50 @@
 
 \section*{Documentation Workflow}
 
-Developers use the \href{http://code.google.com/p/neurospaces/wiki/Index}{\bf Google\,Neurospaces} site to write documentation. To do this requires a gmail account. You can get a free gmail account by going to \href{http://www.google.com/}{\bf http://www.google.com/} and selecting the gmail link at the top of the page. Once you have an account, contact the \href{http://www.genesis-sim.org/contact}{\bf GENESIS\,Administrator} to request developer access to the wiki.
+Developers use the
+\href{http://code.google.com/p/neurospaces/wiki/Index}{\bf
+  Google\,Neurospaces} site to write documentation. To do this
+requires a gmail account. You can get a free gmail account by going to
+\href{http://www.google.com/}{\bf http://www.google.com/} and
+selecting the gmail link at the top of the page. Once you have an
+account, contact the \href{http://www.genesis-sim.org/contact}{\bf
+  GENESIS\,Administrator} to request developer access to the wiki.
 \begin{enumerate}
-\item Documentation supervisor visits the \href{http://code.google.com/p/neurospaces/w/list}{\bf wiki\,pages} and identifies any that are new.
-\item{\bf Create new document:} A \href{../NewDocument/NewDocument.tex}{\bf NewDocument} is \href{../document-create/document-create.tex}{\bf created} and the wiki documentation converted.
-\item{\bf Document integration:} The new document is integrated into the GENESIS documentation system with the following steps:
+\item Documentation supervisor visits the
+  \href{http://code.google.com/p/neurospaces/w/list}{\bf wiki\,pages}
+  and identifies any that are new.
+\item{\bf Create new document:} A
+  \href{../NewDocument/NewDocument.tex}{\bf NewDocument} is
+  \href{../document-create/document-create.tex}{\bf created} and the
+  wiki documentation converted.
+\item{\bf Document integration:} The new document is integrated into
+  the GENESIS documentation system with the following steps:
 \begin{itemize}
-\item  After a wiki page has been converted, it must be given a ``{\tt G3doc}'' label.
-\item The GENESIS Documentation file name the wiki page has been converted to must be placed at the head of the wiki page, e.g. ``{\tt G3 doc: <file-name>}''
-\item A ``{\tt -\,wiki}'' tag must be inserted into the {\it descriptor.yml} file associated with the new GENESIS document.
-\item The wiki page is deprecated by insertion of the ``{\tt Deprecated}'' label.
+\item After a wiki page has been converted, it must be given a ``{\tt
+    G3doc}'' label.
+\item The GENESIS Documentation file name the wiki page has been
+  converted to must be placed at the head of the wiki page, e.g.
+  ``{\tt G3 doc: <file-name>}''
+\item A ``{\tt -\,wiki}'' tag must be inserted into the {\it
+    descriptor.yml} file associated with the new GENESIS document.
+\item The wiki page is deprecated by insertion of the ``{\tt
+    Deprecated}'' label.
 \end{itemize}
-\item {\bf Final step:} Add the name of the new document to the {\it Makefile.am} file located in the current branch of your {\it userdocs} repository and perform a ``{\tt mtn ci}'' and ``{\tt userdocs-sync}''
+\item {\bf Final step:} Add the name of the new document to the {\it
+    Makefile.am} file located in the current branch of your {\it
+    userdocs} repository and perform a ``{\tt mtn ci}'' and ``{\tt
+    userdocs-sync}''
 \end{enumerate}
 
 {\bf Note 1:} Not all the converted pages need to be fully finished.
 
-{\bf Note 2:} Changes to the documentation (but not the wiki) automatically propagate to the GENESIS website.
+{\bf Note 2:} Changes to the documentation (but not the wiki)
+automatically propagate to the GENESIS website.
 
-{\bf Note 3:} As the process of converting wiki pages to GENESIS documentation is manual, it is important to not add new content to a wiki page once either a ``{\tt G3 Doc: <file-name>}'' appears and/or the ``{\tt G3doc}'' label is added. Further additions/changes should only be made directly to the document once it appears in the GENESIS Documentation System.
+{\bf Note 3:} As the process of converting wiki pages to GENESIS
+documentation is manual, it is important to not add new content to a
+wiki page once either a ``{\tt G3 Doc: <file-name>}'' appears and/or
+the ``{\tt G3doc}'' label is added. Further additions/changes should
+only be made directly to the document once it appears in the GENESIS
+Documentation System.
 \end{document}
