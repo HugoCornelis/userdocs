@@ -35,6 +35,7 @@
 
 From a file storage perspective a project consists of a directory containing all files in the users workspace along with a {\bf yaml} file that bears the same name as the project. The {\bf yaml} file provides a mapping for all of the files in the project directory so that they can be loaded by the appropriate data management objects within the GUI.
 
+
 \subsection*{Object Relationships}
 
 	The {\bf g-tube} is set up with a set of "management" classes; their purpose is to provide high level control for the GUI to work with all of the underlying systems, without allowing code from unrelated systems to interlace with one another.
@@ -46,6 +47,15 @@ From a file storage perspective a project consists of a directory containing all
 	\item[] {\bf Publication Manager:} Manages the atoms tagged as part of a publication.
 	\item[] {\bf Review Manager:} Manages the compiled publication atoms for review.
 \end{itemize}
+
+
+\begin{figure}[ht]
+   \centering
+   \includegraphics[scale=0.6]{figures/Overview.eps}
+   \caption{{\bf Object overview:} A general overview of class relationships within the g-tube.}
+   \label{figure: 1}
+\end{figure}
+
 
 The management objects allows for basic list operations such as adding, deleting, and editing members. Management objects encapsulate {\bf wxPython} operations for allowing the end user to perform these actions graphically.
 
@@ -81,70 +91,25 @@ Presentation of widgets is implemented with the {\bf wxPython} Advanced User Int
 
 \section*{Procedural Design}
 
-Working.
+\subsection*{Development Tools}
 
+	The implementation of the {\bf g-tube} is done in {\bf Python} using the {\bf wxPython} widget toolkit. The {\bf wxPython} toolkit is a Python extension module of the popular {wxWidgets} coss-platform GUI library. This allows the user to create widgets with the look and feel of the host operating system while using the powerful {\bf Python} language. {\bf wxPython} is open source, has many contributors, boasts a large collection of example tutorials and documentation, and possesses one of the friendliest communities.
+	
+Other external Python modules used include:
 
-
-
-
-
-
-
-\begin{itemize}
-\item[]  {\bf The Documentation Identifier:} This may be replaced by a descriptor of the type of documentation you have developed, for example {\bf Introduction} or {\bf Tutorial}, etc.
-\item[]{\bf Related Documentation Heading:} Followed by a hyperlink list of any related documentation.
-\item[] {\bf New Document Heading:} Should be replaced with the title of your document. {\bf Note:} In your document (the \LaTeX\,\,source documentation file--{\it NewDocument.tex}) all text below the {\bf New Document} heading should be replaced with your own content. See \href{../document-create/document-create.tex}{\bf Create\,Document} for further information.
+\begin{itemize}	
+\item[] {\bf yaml:} For parsing and loading configuration and data files.
+\item[] {\bf matplotlib:} Provides more refined plot panels.
 \end{itemize}
 
-\subsection*{Help with \LaTeX\,Documentation}
+Higher level GUI construction is done using \href{http://xrced.sourceforge.net/}{\bf XRCed}, a simple graphical editor that creates Python classes with embedded (or externally loaded) \href{http://wiki.wxpython.org/XRCTutorial}{\bf XRC} files. 
 
-\subsubsection*{Text color}
 
-Text in your document can be colorized  with the command
-\begin{verbatim}
-    \textcolor{red}{text}
-\end{verbatim}
-for example \textcolor{red}{\bf This is IMPORTANT}, \textcolor{green}{green} and \textcolor{blue}{blue} are also recognized arguments.
 
-\subsubsection*{Hyperlinks}
 
-Two classes of hyperlink exist in the GENESIS Documentation System:
 
-\begin{itemize}
-\item[{\bf A.}]{\bf Static Hyperlinks:} 
-   \begin{itemize}
-      \item{\bf Local links:} These are produced with the command:
-\begin{verbatim}
-   \href{../NewDocument/NewDocument.tex}{NewDocument}}
-\end{verbatim}
-for example \href{../NewDocument/NewDocument.tex}{NewDocument} references this document.
-Note that these links may not work in your \LaTeX\,{\tt pdf} file viewer, but should be testable with the \href{http://get.adobe.com/reader/}{Acrobat Reader} or \href{http://www.adobe.com/products/acrobatpro/tryout.html}{Acrobat Professional} packages.
-      \item {\bf Remote links:} These use the {\tt href} command in a slightly different way:
-\begin{verbatim}
-    \href{http://www.genesis-sim.org/documentation}{GENESIS Documentation}
-\end{verbatim}
-for example see \href{http://www.genesis-sim.org/documentation}{GENESIS Documentation}. Note that these links do not wrap automatically at the end of a line even outside of the {\tt verbatim} environment.
-\end{itemize}
 
-\item[{\bf B.}]{\bf Reference Hyperlinks:} See \href{../document-create/document-create.tex}{Document Creation} for further details on managing reference hyperlinks.
 
-\end{itemize}
 
-\subsubsection*{Figures}
-
-Figures can easily be added with the following code:
-
-\begin{verbatim}
-\begin{figure}[h]
-   \centering
-   \includegraphics[scale=0.6]{figures/dummyfig.eps}
-   \caption{{\bf A Dummy Figure:} Example of Latex code to incorporate
-      a figure into documentation.}
-   \label{fig:df-1}
-\end{figure}
-\end{verbatim}
-
-\bibliographystyle{plain}
-\bibliography{../tex/bib/g3-refs.bib}
 
 \end{document}
