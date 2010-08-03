@@ -53,6 +53,8 @@ sub create_new_document
 
   system "cp -f $userdocs_directory/$template/$template.tex $documentname.tex";
 
+  system "cp -f $userdocs_directory/$template/figures/* figures";
+
   #
   # Add the $document to the descriptor yaml file. The user can make it more
   # user readable. Prevents people from making multiple documents show up as 
