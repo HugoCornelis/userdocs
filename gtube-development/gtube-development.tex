@@ -15,21 +15,20 @@
 
 \section*{g-tube Development Design}
 
-	This document outlines the design process employed in the development of the {\bf g-tube}, a graphical user interface which brings all components of the {\bf GENESIS3} system together. With the {\bf g-tube} a user can load, create and run models, track all aspects of the simulation including the schedule, parameters, models, underlying software versions, and directly load the output of simulation runs into {\bf Atoms} that can be processed into tables, plots, and formatted text suitable for inserting into publications. The end result of a {\bf g-tube project} will be a compiled electronic publication, containing the finalized document, with all of the data used to generate the figures {\bf tag-associated}  with the model experiment runs. 
+	This document outlines the design process employed in the development of the {\bf g-tube}, a graphical user interface which brings all components of the {\bf GENESIS3} system together. With the {\bf g-tube} a user can load, create and run models, track all aspects of the simulation including the schedule, parameters, models, underlying software versions, and directly load the output of simulation runs into {\bf Atoms} that can be processed into tables, plots, and formatted text suitable for inserting into manuscripts. The end result of a {\bf g-tube project} will be a compiled electronic publication, containing the finalized document, with all of the data used to generate the figures {\bf tag-associated}  with the model experiment runs. 
 
 
 \section*{Data Design}
 
 \subsection*{Project Specification}
 
-	A project is a class data structure that is used to track all work done by the user within the {\bf g-tube}. Projects are treated as a combination of categorized lists of data that grow and shrink as the user works. Data tracked includes:
+	A project is a class data structure that is used to track all work done by the user within the {\bf g-tube}. Projects are treated as a combination of categorized lists of data that grow and shrink as the user goes through the {\bf user workflow}. Data tracked includes:
 	
 \begin{itemize}
 	\item[] Project name.
 	\item[] List of associated models and their states.
-	\item[] List of working atoms.
-	\item[] List of publication atoms.
-	\item[] Publication pages.
+	\item[] List of atoms.
+	\item[] Manuscript pages.
 	\item[] GUI perspective state.
 \end{itemize}
 
@@ -40,27 +39,38 @@ From a file storage perspective a project consists of a directory containing all
 	The {\bf g-tube} is set up with a set of "management" classes; their purpose is to provide high level control for the GUI to work with all of the underlying systems, without allowing code from unrelated systems to interlace with one another. This separation allows these complex data management classes to be developed and tested separately.
 
 \begin{itemize}
-	\item[] {\bf Project Manager:} Loads or creates a project specification and allows for creating, deleting and editing Model, Atom, Publication, and Review management objects.
-	\item[] {\bf Model Manager:} Manages a list of models associated with the current project.
-	\item[] {\bf Atom Manager:} Manages a list of all of the working atoms in the current project. 
-	\item[] {\bf Publication Manager:} Manages the atoms tagged as part of a publication.
-	\item[] {\bf Review Manager:} Manages the compiled publication atoms for review.
+	\item[] {\bf Project Manager:} Loads or creates a project specification and allows for creating, deleting and editing Model, Atom, Manuscript, and Review management objects.
+	\item[] {\bf G3 User Workflow Manager:} Manages a list of models associated with the current project, along with model states and {\bf SSP} configurations.
+	\item[] {\bf Atom Manager:} Manages a list of all of the atoms in the current project. 
+	\item[] {\bf Manuscript Manager:} Manages the atoms tagged as part of a manuscript.
+	\item[] {\bf Review Manager:} Manages the compiled manuscript atoms for review.
 \end{itemize}
 
 \begin{figure}[ht]
    \centering
-   \includegraphics[scale=0.6]{figures/Overview.eps}
+   \includegraphics[scale=0.35]{figures/Overview.eps}
    \caption{{\bf Object overview:} A general overview of class relationships within the g-tube.}
    \label{figure: 1}
 \end{figure}
 
-The management objects allows for basic list operations such as adding, deleting, and editing members. Management objects encapsulate {\bf wxPython} operations for allowing the end user to perform these actions graphically by drawing their control widgets to the Main Frame.
+The Atom management object allows for basic list operations such as adding, deleting, and editing members. Manuscript and Review managers are subclasses of the Atom manager, that display tag-filtered views of atoms in the project workspace. Management objects encapsulate {\bf wxPython} operations for allowing the end user to perform these actions graphically by drawing their control widgets to the Main Frame. 
 
 \subsection*{Model Object}
 
 	To constrain the complexities of interfacing with the whole of the {\bf GENESIS3} system, modeling functionality is isolated to a single class. In principle this should allow other simulators to be encapsulated within the same abstract data type so long it is mapped to the predefined inputs and outputs the {\bf ModelManager} uses to communicate with the rest of the system.
 	Currently interfacing is done via the {\bf gshell} over file descriptors via the object class called {\it bridge}. 
 	
+\subsection*{Project Explorer Tabs}
+
+	To navigate the various files the user works with in a project there are four tabs which correspond to each management class. Each tab functionality is categorized as such:
+	
+\begin{itemize}
+\item[] G3 Workflow
+\item[] Content Selection
+\item[] Model Validation
+\item[] Review Validation
+\end{itemize}
+
 
 \section*{Architecture Design}
 
@@ -82,8 +92,8 @@ Presentation of widgets is implemented with the {\bf wxPython} Advanced User Int
 
 \begin{itemize}
 \item[] {\bf Toolbar Dock:} Holds icon labeled buttons for performing many shortcuts within the system. Toolbars can be removed from the dock and allows to float at different areas of the screen.
-\item[] {\bf Left Dock:} The primary dock for explorer widgets used to manage data in the {\bf Model}, {\bf Atom}, {\bf Publication}, and {\bf Review} workspaces.
-\item[] {\bf Center Tabbed Notebook:} The "main" workspace. All data selected from a workspace via an explorer will be displayed in a Tab in the Center Notebook. E.G Editable Documents, Publication Atoms, Plots from simulation.
+\item[] {\bf Left Dock:} The primary dock for explorer widgets used to manage data in the {\bf Model}, {\bf Atom}, {\bf Manuscript}, and {\bf Review} workspaces.
+\item[] {\bf Center Tabbed Notebook:} The "main" workspace. All data selected from a workspace via an explorer will be displayed in a Tab in the Center Notebook. E.G Editable Documents, Manuscript Atoms, Plots from simulation.
 \item[] {\bf Right Dock:} Primarily used to hold widgets for editing attributes (such as tags) to the current working tab in the Center Notebook.
 \item[] {\bf Bottom Dock:} Primarily holds widgets that output data from the underlying system. E.G Console output from the {\bf g-tube}, model status, error messages.
 \end{itemize}
