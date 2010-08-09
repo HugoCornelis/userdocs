@@ -86,7 +86,14 @@ all_packages:
    $ neurospaces_init --regex <your-software>
 \end{verbatim}
 
-\item {\bf Populate the new project with files:} Use monotone to check in your modifications regularly (see~\href{../version-control/version-control.tex}{\bf Version\,Control} for more details).
+\item {\bf Populate the new project with files:} Use monotone to check
+  in your modifications regularly
+  (see~\href{../version-control/version-control.tex}{\bf
+    Version\,Control} for more details).  As a first step you
+  initialize your local workspace using the command:
+\begin{verbatim}
+    mtn --db=~/neurospaces_project/MTN/<your-software>.mtn --branch="0" setup .
+\end{verbatim}
 
 \end{enumerate}
 
