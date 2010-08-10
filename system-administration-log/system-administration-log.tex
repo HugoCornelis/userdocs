@@ -25,6 +25,27 @@ The repository machine serves the source code for the GENESIS project as well as
 \begin{itemize}
 \item[] {\bf Admin:} Hugo
 \item[] {\bf Date:} 8/10/2010 
+\item[] {\bf Actions:} Upgrade the monotone repository to version 0.48
+  (mtn db migrate). Manual upgrade of the developer package
+  (neurospaces\_pull, neurospaces\_update, neurospaces\_install on the
+  developer package only).  Then as the monotone user:
+  neurospaces\_create\_directories and neurospaces\_init --regex
+  experiment.
+\begin{verbatim}
+as monotone: cat monotone_keys/mando.pubkey monotone_keys/hugo.pubkey monotone_keys/allan.pubkey | mtn --db=~/neurospaces_project/MTN/experiment.mtn read
+as root: sudo -H -u monotone nohup neurospaces_serve &
+on my laptop: neurospaces_sync
+\end{verbatim}
+\item[] {\bf Reason:} Developer package configuration was updated with
+  the experiment software package.  The experiment monotone server
+  must be created and started manually.
+\item[] {\bf Impact:} All repositories (includes the experiment
+  repository) should be up and running again.
+\end{itemize}
+
+\begin{itemize}
+\item[] {\bf Admin:} Hugo
+\item[] {\bf Date:} 8/10/2010 
 \item[] {\bf Actions:} Check if the repo was already reinstalled.
 \item[] {\bf Reason:} Check if the repo was already reinstalled.
 \item[] {\bf Impact:} None.
