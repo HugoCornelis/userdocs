@@ -50,7 +50,7 @@ Use the command line arguments ``{\tt --enable <your-software> --regex <your-sof
 	   directory => "$ENV{HOME}/neurospaces_project/<your-software>/source/snapshots/0",
 	   disabled => 0,  # 0 means enabled,
                    # or fill in the reason why the component is disabled
-	   order => 14,  # a value relative to the order of the other components
+	   order => 14,  # a (float) value relative to the order of the other components
 	   version_control => {
 	      port_number => 4693,  # beware of TCP port clashes
 	      repository => "$ENV{HOME}/neurospaces_project/MTN/<your-software>.mtn",
@@ -86,8 +86,15 @@ all_packages:
    $ neurospaces_init --regex <your-software>
 \end{verbatim}
 
-\item {\bf Populate the new project with files:} Use monotone to check in your modifications regularly (see~\href{../version-control/version-control.tex}{\bf Version\,Control} for more details).
-
+\item {\bf Populate the new project with files:} Use monotone to check
+  in your modifications regularly.  As a first step you initialize
+  your local workspace using the command:
+\begin{verbatim}
+    mtn --db=~/neurospaces_project/MTN/<your-software>.mtn --branch="0" setup .
+\end{verbatim}
+  Then use the other monotone commands to track your sources
+  (see~\href{../version-control/version-control.tex}{\bf
+    Version\,Control} for more details)
 \end{enumerate}
 
 \subsubsection*{Making a new software component available to others}
