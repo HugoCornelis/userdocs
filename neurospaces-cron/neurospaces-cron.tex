@@ -89,6 +89,42 @@ which would make the {\it cron} job run every eight hours.
 
 {\bf Note:} The {\tt g3tester} is a user set up for permissions to perform a {\tt sudo make install}, and {\tt sudo make uninstall}. To set up a regular user to use sudo, add them to the {\it /etc/sudoers} file (see next section).
 
+\subsubsection*{Testing the cron daemon}
+
+Bad syntax in your crontab file can prevent any of the jobs from executing. If you want to test if your cronjobs are going off you can use the wall command. The wall command sends a message to the terminal of all users logged in. Check your system for the proper way to call it via:
+
+\begin{verbatim}
+	man wall
+\end{verbatim}
+
+Some systems have it invoked as:
+
+\begin{verbatim}
+	wall "my message"
+\end{verbatim}
+
+While some call it with a file containing your broadcast message as an argument:
+
+\begin{verbatim}
+	man mymessage.txt
+\end{verbatim}
+
+Simply enter a line in your crontab like this:
+
+\begin{verbatim}
+		* * * * * root wall /etc/mymessage.txt
+\end{verbatim}
+
+This will send the broadcast message every minute, so if you don't see any output on your screen you know something is wrong.
+
+Alternatively you can also have a command that just outputs the date to a file every minute:
+
+\begin{verbatim}
+		* * * * * root date >> /tmp/cronout.txt
+\end{verbatim}
+
+Then you can just check the output file for a date message for every minute. This is probably better to use if the machine has many users that you don't wish to disturb with a terminal message.
+
 \subsection*{The Sudoers File}
 
 The sudoers file grants a particular user the privileges to run a command or set of commands in superuser mode. The file is located at {\it /etc/sudoers}. There are variables in the file which must be set to allow a regular user to perform the {\it neurospaces\_cron} tests as they require GENESIS components to be installed and uninstalled to the system.
