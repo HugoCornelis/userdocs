@@ -39,7 +39,8 @@ It is advised not to install the developer package as the root user, but instead
    
    \item[]{\bf Install {\it autotools}:} By default, Debian usually doesn't have development tools installed. You will need to use {\it apt-get} to install and make {\it automake} with the following commands:
    \begin{verbatim}
-      apt-get install automake apt-get install make
+      apt-get install automake 
+      apt-get install make
    \end{verbatim}
    
    \item[]{\bf Install Perl Dependencies:} Install the following Perl modules from CPAN:
@@ -50,6 +51,7 @@ It is advised not to install the developer package as the root user, but instead
         \item[]{\bf Data::Comparator}
         \item[]{\bf File::Find::Rule}
         \item[]{\bf Inline}
+		\item[]{\bf LWP::Simple} (For neurospaces_serve)
      \end{itemize}
      {\bf Note:} You must install {\it gcc} first in order to compile Perl modules from CPAN.     
 
@@ -133,11 +135,24 @@ on the server.
 
 Test run output as well as generated html files from programs like Xrefactory and Doxygen need to be accessible over the internet. This is a guide to adding the Apache2 rules to set up a directory that will have its contents displayed via a http server.
 
+\subsection*{\it Install Apache}
+
+First install Apache2 via the apt-get command as follows:
+
+\begin{verbatim}
+apt-get apache2
+\end{verbatim}
+
 \subsection*{\it DocumentRoot}
 
 The {\it DocumentRoot} is the publicly available directory displayed when a user visits the bare URL for your server with a web browser (example: http://myserver.edu). If you want data to be available over the web, you can simply place it in the document root. If you place a file named {\it mydata} in the {\it DocumentRoot}, it will be available at the URL http://myserver.edu/mydata.
 
-The default DocumentRoot on a debian server installation is ``/var/www/html''. 
+The default DocumentRoot on a debian server installation is usually ``/var/www/html''. You can change the default template by editing the file:
+
+\begin{verbatim}
+/etc/apache2/sites-available
+\end{verbatim}
+
 
 If you want directories in another location on the machine to be displayed via the URL with a suffix see the next section.
 
