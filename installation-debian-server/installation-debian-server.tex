@@ -337,6 +337,21 @@ The following CPAN modules for Perl must also be installed:
    \item[]{\bf HTML::Template}
 \end{itemize}
 
+\subsubsection*{Server Configurations}
+
+To set the clock for the server from the command line install {\bf ntpdate} via apt-get as follows:
+
+\begin{verbatim}
+apt-get install ntpdate
+\end{verbatim}
+
+Then execute the command:
+
+\begin{verbatim}
+/etc/network/if-up.d/ntpdate
+\end{verbatim}
+
+This will sync the server to a NTP server.
 
 \subsection*{Configuration}
 
