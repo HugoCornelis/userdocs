@@ -30,12 +30,18 @@ The repository machine serves the source code for the GENESIS project as well as
 \begin{itemize}
 \item[] Needed more packages installed for doxygen, source-highlight, tex, etc. 
 \item[] Added and documented how to install a package to set the clock time.
+\item[] Cronjob for Noon did not go off so testing crontab with a wall command:
+\begin{verbatim}
+	* * * * * root wall /etc/testmsg
+\end{verbatim}
+Where testmsg is a text file with a broadcast message.
 \end{itemize}
 	
 \item[] {\bf Impact:} 
 \begin{itemize}
 \item[] Doxygen documentation should be updated with graphs and regression tests should be updated on cronrun. 
 \item[] Time is properly set on the server.
+\item[] cron daemon was verified to work correctly.
 \end{itemize}
 \end{itemize}
 
