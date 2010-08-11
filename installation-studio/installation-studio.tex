@@ -1,0 +1,42 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+
+\section*{Installation Mac OSX} (Not finished yet)
+
+
+You will need the following software packages installed:
+
+\begin{itemize}
+\item[] Gtk2
+\item[] glib2-devel (not sure but it may be included in Gtk2)
+\end{itemize}
+
+The only easy ways to install Gtk2 is through \href{http://www.macports.org/}{macports} or \href{http://www.finkproject.org/}{Fink}. Make sure that {\bf gtk-config} is in your path after installation so that {\bf Perl} Maker can see it when configuring bindings. 
+
+\textcolor{red}{\bf Note} make sure that you do not use the {\bf macports} version of {\bf Perl} when building the Perl SWIG bindings. This can result in bus errors when trying to load even simple models.
+
+Once this is installed you can install the following {\bf Perl} modules from CPAN:
+
+\begin{itemize}
+\item[] Gtk2 (Rest of them should be installed )
+\item[] Gtk2/Install/Files
+\item[] Pango
+\item[] Glib
+\end{itemize}
+
+
+
+\end{document}
