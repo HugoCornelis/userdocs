@@ -13,20 +13,6 @@ my $option_directory = 0;
 my $option_help = 0;
 my $option_verbose = 0;
 
-my $result
-= GetOptions
-  (
-   "directory=s" => \$option_directory,
-   "help!" => \$option_help,
-   "verbose!" => \$option_verbose,
-  );
-
-if (!$result)
-{
-  die "$0: *** Error: Error in option processing";
-}
-
-
 
 $SIG{__WARN__} = sub { die $_[0] };
 
@@ -44,7 +30,18 @@ sub usage
 
 sub main
 {
+    my $result
+	= GetOptions
+	    (
+	     "directory=s" => \$option_directory,
+	     "help!" => \$option_help,
+	     "verbose!" => \$option_verbose,
+	    );
 
+    if (!$result)
+    {
+	die "$0: *** Error: Error in option processing";
+    }
 
     if($option_help)
     {
@@ -82,14 +79,12 @@ sub main
 	    {
 	        if($option_verbose)
 		{
-		  print "is valid\n";
+		    print "is valid\n";
 		}
-
 	    }
 	    else
 	    {
-
-		print "is empty\n";
+		print "$_ is empty\n";
 	    }
 	};
 
