@@ -16,6 +16,8 @@
 
 \section*{Installation Mac OSX} (Not finished yet)
 
+For Leopard (Mac OS X 10.5) you need to have Xcode 3.1 or later but before 3.2, a download link can be found \href{http://www.freemacware.com/freemacware-downloads/2755}{here}. Note that Xcode 3.2 will require Snow Leopard to install.
+
 
 You will need the following software packages installed:
 
@@ -26,13 +28,40 @@ You will need the following software packages installed:
 
 The only easy ways to install Gtk2 is through \href{http://www.macports.org/}{macports} or \href{http://www.finkproject.org/}{Fink}. Make sure that {\bf gtk-config} is in your path after installation so that {\bf Perl} Maker can see it when configuring bindings. 
 
+\subsection*{Using Fink (Recommended)}
+
+Open Fink Commander and install the binaries for: 
+
+\begin{itemize}
+	\item[] gtk+2
+	\item[] gtk+2-dev
+	\item[] glib2
+	\item[] glib2-dev
+	\item[] pango1
+	\item[] pango1-dev
+\end{itemize}
+
+
+\subsection*{Using Macports}
+
+Using the port command provided by macports just install gtk2 as follows:
+
+\begin{verbatim}
+sudo /opt/local/bin/port install gtk2
+\end{verbatim}
+
+The installer should fetch all prerequisites for you.
+
 \textcolor{red}{\bf Note} make sure that you do not use the {\bf macports} version of {\bf Perl} when building the Perl SWIG bindings. This can result in bus errors when trying to load even simple models.
 
-Once this is installed you can install the following {\bf Perl} modules from CPAN:
+
+
+\subsection*{Perl Dependencies}
+
+Once gtk2 and glib2 is installed you can install the following {\bf Perl} modules from CPAN:
 
 \begin{itemize}
 \item[] Gtk2 (Rest of them should be installed )
-\item[] Gtk2/Install/Files
 \item[] Pango
 \item[] Glib
 \end{itemize}
