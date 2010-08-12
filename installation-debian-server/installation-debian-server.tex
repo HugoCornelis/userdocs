@@ -337,6 +337,21 @@ The following CPAN modules for Perl must also be installed:
    \item[]{\bf HTML::Template}
 \end{itemize}
 
+\subsubsection*{Package Building Dependencies}
+
+If you want to use the server to build {\bf Debian} packages install the dependencies listed in the \href{../build-debian/build-debian.tex} document. To make things easier, you can just copy this command:
+
+\begin{verbatim}
+apt-get install dh-make dpkg-dev dpkg
+\end{verbatim}
+
+To build {\bf RPM} packages install the appropriate tools via the command:
+
+\begin{verbatim}
+apt-get install rpm
+\end{verbatim}
+
+
 \subsubsection*{Server Configurations}
 
 To set the clock for the server from the command line install {\bf ntpdate} via apt-get as follows:
