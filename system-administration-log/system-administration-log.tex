@@ -30,6 +30,31 @@ The repository machine serves the source code for the GENESIS project as well as
 \item 
 \begin{itemize}
 \item[] {\bf Admin:} Hugo
+\item[] {\bf Date:} 8/13/2010 
+\item[] {\bf Actions:} Inspecting directories inside
+  /home/g3tester/neurospaces\_project/gshell/source/snapshots/0/
+\item[] {\bf Reason:} The gshell ns-sli tests are failing, diagnosis
+  only.  It looks as if the test scripts do not produce output files
+  because the output directories do not exist.
+\begin{verbatim}
+*** Application output file: ./..//output/cell.out (in /home/g3tester/neurospaces_project/gshell/source/snapshots/0/tests)
+cat: ./..//output/cell.out: No such file or directory
+*** Expected output file: /usr/local/ns-sli/tests/specifications/strings/traub91_asym.ssp
+\end{verbatim}
+and
+\begin{verbatim}
+*** Error: 3:Child PID 8006 exited with status 11 (Do we see the simulation time after the simulation has finished ?, package gshell, sli.t, error_count 2)
+...
+*** Application output file: ./..//tests/results/PurkM9_soma_1.5nA (in /home/g3tester/neurospaces_project/gshell/source/snapshots/0/tests)
+cat: ./..//tests/results/PurkM9_soma_1.5nA: No such file or directory
+*** Expected output file: /usr/local/ns-sli/tests/specifications/strings/PurkM9_soma_1.5nA.g3-double
+\end{verbatim}
+\item[] {\bf Impact:} None.
+\end{itemize}
+
+\item 
+\begin{itemize}
+\item[] {\bf Admin:} Hugo
 \item[] {\bf Date:} 8/12/2010 
 \item[] {\bf Actions:} Attempt to install XML::Simple from CPAN.
 Got Expat.xs:12:19: error: expat.h: No such file or directory, so also installed libexpat1-dev
