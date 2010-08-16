@@ -51,12 +51,12 @@ Now that {\it PulseGen\{\}} can read in values, each parameter must be checked a
 
       my $inputclass
          = {
-               module_name => "Heccer",
+               module_name => "Experiment",
                options => {
                   command => $option_pulsegen_width1,
                   name => "pulsegen set to $option_pulsegen_width1",
                },
-               package => "Heccer::Pulsegen",
+               package => "Experiment::Pulsegen",
             };
 
       my $inputs
@@ -101,7 +101,7 @@ Here, the {\it PulseGen\{\}} object is created as an input class and all of the 
 \begin{verbatim}
 inputclasses:
   pulsegen:
-    module_name: Heccer
+    module_name: Experiment
     options:
       level1: 50.0
       width1: 3.0
@@ -111,7 +111,7 @@ inputclasses:
       delay2: 8.0
       baselevel: 10.0
       triggermode: 0
-    package: Heccer::PulseGen
+    package: Experiment::PulseGen
 \end{verbatim}
 The  {\it PulseGen\{\}} object is then "clamped" to the model's soma.
 \begin{verbatim}
@@ -128,10 +128,10 @@ An output object {\it double\_2\_ascii} is then created that writes $V_m$ to the
 \begin{verbatim}
 outputclasses:
   double_2_ascii:
-    module_name: Heccer
+    module_name: Experiment
     options:
       filename: /tmp/output
-    package: Heccer::Output
+    package: Experiment::Output
 outputs:
   - component_name: /Purkinje/segments/soma
     field: Vm

@@ -160,13 +160,6 @@ number of branch point from the soma to each tip and the number of
 primary, secondary, tertiary . . . etc, branch points.
 
 
-\subsection{Split I/O Objects from the Heccer package}
-
-The Heccer package currently contains the Heccer software component
-and various Input and Output Simulation objects.  It is better to have
-an I/O package separate from the Heccer package.
-
-
 \subsection{GShell -- Endogeneous Activation}
 
 Define GShell tests for endogeneous activation.
@@ -199,9 +192,9 @@ Implement the following SLI commands and objects:
 \item spikegen: likely requires a trivial mapping to the spikegen
   token in the model-container (DONE).
 \item delta compression of ascii files: requires the glue of the
-  Heccer::Output object to create a filesystem fifo with a dummy name,
-  bind it to a perl oneliner and pipe it to bzip2 to write compressed
-  output (Mando).
+  Experiment::Output object to create a filesystem fifo with a dummy
+  name, bind it to a perl oneliner and pipe it to bzip2 to write
+  compressed output (Mando).
 \item randomspike: likely needs network support to be finished first
   (Hugo).
 \item pulsegen: likely needs network support to be finished first
@@ -402,6 +395,13 @@ First move conceptualized items from the supplement to this TODO list.
 
 
 \section{DONE List}
+
+\subsection{Split I/O Objects from the Heccer package}
+
+The Heccer package currently contains the Heccer software component
+and various Input and Output Simulation objects.  It is better to have
+an I/O package separate from the Heccer package.
+
 
 \subsection{Perl Inline code directory}
 

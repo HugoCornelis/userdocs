@@ -19,15 +19,15 @@ This developer guide gives an example of how to add a new simulation
 object and integrate it the
 \href{../reserved-words/reserved-words.tex}{\bf Component} with
 GENESIS.  For simplicity we embed the new component in the {\bf
-  Heccer} package.  As an example we implement the pulsegen object of
-GENESIS 2.
+  Experiment} package.  As an example we implement the pulsegen object
+of GENESIS 2.
 
 \section*{Creating Source Files}
 
-First we create the following source files for the new object in the correct places in {\bf Heccer}:
+First we create the following source files for the new object in the correct places in {\bf Experiment}:
 \begin{verbatim}
    pulsegen.c
-   heccer/pulsegen.h
+   experiment/pulsegen.h
 \end{verbatim}
 
 \section*{Implementation}
@@ -36,7 +36,7 @@ First we create the following source files for the new object in the correct pla
 
 \subsubsection*{Data Structure}
 
-To keep track of all the data for the new object we define a struct(ure) which contains all of our variables. This structure is set up in the header file {\it heccer/pulsegen.h}:
+To keep track of all the data for the new object we define a struct(ure) which contains all of our variables. This structure is set up in the header file {\it experiment/pulsegen.h}:
 \begin{verbatim}
    struct simobj_PulseGen
    {
@@ -118,18 +118,18 @@ Finally, perform a step of a simulation:
 
 \subsection*{Add New Object to Make Targets}
 
-Before compiling the new simulation object you must add your source files to targets of the {\bf Heccer} package {\it Makefile.am}.
+Before compiling the new simulation object you must add your source files to targets of the {\bf Experiment} package {\it Makefile.am}.
 
 \begin{itemize}
-   \item In {\it libheccer\_a\_SOURCES} add:
+   \item In {\it libexperiment\_a\_SOURCES} add:
 \begin{verbatim}
    pulsegen.c
 \end{verbatim}
    \item In {\it nobase\_include\_HEADERS} add:
 \begin{verbatim}
-   heccer/pulsegen.h 
+   experiment/pulsegen.h 
 \end{verbatim}
 \end{itemize}
-The new simulation object will be compiled into the {\bf Heccer} library when a {\it make} is performed.
+The new simulation object will be compiled into the {\bf Experiment} library when a {\it make} is performed.
 
 \end{document}

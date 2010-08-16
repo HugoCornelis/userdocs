@@ -1,0 +1,53 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+\section*{Experiment: A Library of Stimulation and Recording Objects}
+
+The Experiment package delivers a library of stimulation and recording
+objects.
+
+\subsection*{Features}
+
+For stimulation protocols:
+\begin{itemize}
+\item Can be driven from C, Perl, SSP.
+\item Implements voltage clamp and current clamp protocols.
+\item Allows pulsed command protocols.
+\item Allows command voltages or current to be read from a file.
+\end{itemize} 
+
+For recording:
+\begin{itemize}
+\item Can be driven from C, Perl, SSP.
+\item Allows to record any computed variable to an ascii file.
+\item Allows to record spike trains.
+\end{itemize} 
+
+\subsection*{Extensions}
+\begin{itemize}
+\item
+  \href{../genesis-add-object-solver/genesis-add-object-solver.tex}{\bf
+    Create and Add New Solver Object:} Shows by example how to add a
+  new simulation object and integrate the modified component with
+  GENESIS.
+\item
+  \href{../genesis-add-swigbinding-heccer/genesis-add-swigbinding-heccer.tex}{Add
+    a SWIG binding to {\bf HECCER:}} Shows by example how to implement
+  the necessary bindings to make a
+  \href{../simulation-objects/simulation-objects.tex}{\bf
+    Simulation\,Object} callable from Perl using SWIG and integrate it
+  with \href{../ssp/ssp.tex}.
+\end{itemize}
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

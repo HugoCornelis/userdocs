@@ -88,8 +88,8 @@ Below is a slightly enhanced {\bf SSP} configuration file that performs several 
   name: pool1_feedback1
   outputclasses:
     double_2_ascii:
-      constructor: Heccer::Output
-      module_name: Heccer
+      constructor: Experiment::Output
+      module_name: Experiment
   outputs:
     - component_name: '/pool1_feedback1/segments/main[0]'
       field: Vm
@@ -178,19 +178,19 @@ Contains a set of subkeys that define how to run a schedule. Each subkey contain
 
 \subsubsection*{\tt inputclasses}
 
-This option allows you to use external simulation objects with your model. A simulation object can be something compiled into the {\bf Heccer} component, or completely stand alone. Here in this example, we load the {\it perectclamp} object which has been compiled into the {\bf Heccer} component. The {\it options} attribute allows us to set parameters for the object upon initialization. 
+This option allows you to use external simulation objects with your model. A simulation object can be something compiled into the {\bf Experiment} component, or completely stand alone. Here in this example, we load the {\it perectclamp} object which has been compiled into the {\bf Experiment} component. The {\it options} attribute allows us to set parameters for the object upon initialization. 
 
 \begin{verbatim}
 inputclasses:
   perfectclamp:
-    module_name: Heccer
+    module_name: Experiment
     options:
       filename: /usr/local/neurospaces/models/library/event_data/soma_vm_trace.yml
       name: purkinje cell perfect clamp
-    package: Heccer::PerfectClamp
+    package: Experiment::PerfectClamp
 \end{verbatim}
 
-{\it PerfectClamp} is part of the {\bf Heccer} component and takes two options, one for an identifier and one for a filename which points to a file containing event data.
+{\it PerfectClamp} is part of the {\bf Experiment} component and takes two options, one for an identifier and one for a filename which points to a file containing event data.
 
 \subsubsection*{\tt inputs}
 
@@ -220,34 +220,34 @@ This {\it inputs} block tells {\bf SSP} to connect the {\it PerfectClamp} to the
 
 \begin{itemize}
 
-\item[ ] {\tt granular\_parameters}
+\item[ ] {\tt runtime\_parameters}
 
 Allows parameters to be set at a granular level, i.e. the level of the model that the engines will get to see. For example: 
 
 \begin{verbatim}
-    granular_parameters:
+    runtime_parameters:
       - component_name: /Purkinje/segments/soma
         description: current injection into the somatic compartment.
         field: INJECT
         value: 0.2e-9
 \end{verbatim}
 
-\item[ ]{\tt conceptual\_parameters}
+%\item[ ]{\tt conceptual\_parameters}
 
-Allows parameters to be set at a conceptual level. The modeling service is responsible for propagating new values to all levels in the granular representation of the model. For example:
+%Allows parameters to be set at a conceptual level. The modeling service is responsible for propagating new values to all levels in the granular representation of the model. For example:
 
-\begin{verbatim}
-    conceptual_parameters:
-      - component_name: spinyd::gaba::/Purk_GABA
-        description: endogenous activity
-        field: FREQUENCY
-        value: 0.5
-      - component_name: spine::/Purk_spine/head/par
-        description: endogenous activity
-        field: FREQUENCY
-        value: 13
-\end{verbatim}
-When using GENESIS as the modeling service, the difference between {\tt granular\_parameters} and {\tt conceptual\_parameters} is inferred by the difference in addressing the components in the model. For example, the separator ``{\tt /}'' is used for addressing components at the granular level, whereas, the separator ``{\tt ::}'' is used to go throught the levels of the conceptual representation of the model.
+%\begin{verbatim}
+%    conceptual_parameters:
+%      - component_name: spinyd::gaba::/Purk_GABA
+%        description: endogenous activity
+%        field: FREQUENCY
+%        value: 0.5
+%      - component_name: spine::/Purk_spine/head/par
+%        description: endogenous activity
+%        field: FREQUENCY
+%        value: 13
+%\end{verbatim}
+%When using GENESIS as the modeling service, the difference between {\tt granular\_parameters} and {\tt conceptual\_parameters} is inferred by the difference in addressing the components in the model. For example, the separator ``{\tt /}'' is used for addressing components at the granular level, whereas, the separator ``{\tt ::}'' is used to go throught the levels of the conceptual representation of the model.
 
 \end{itemize}
 

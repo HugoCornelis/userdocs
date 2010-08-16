@@ -19,40 +19,40 @@ In a previous example we created a simulation object called \href{../genesis-add
 
 \subsection*{Source files}
 
-The {\it PulseGen\{\}} implementation currently resides in the {\bf Heccer} component in the files:
+The {\it PulseGen\{\}} implementation currently resides in the {\bf Experiment} component in the files:
 \begin{verbatim}
    pulsegen.c
-   heccer/pulsegen.h
+   experiment/pulsegen.h
 \end{verbatim}
 
 \subsubsection*{Perl SWIG files}
 
-{\bf Heccer} has two files where SWIG bindings are implemented:
+{\bf Experiment} has two files where SWIG bindings are implemented:
 
 \begin{verbatim}
-   glue/swig/perl/heccer.i
-   glue/swig/perl/Heccer.pm
+   glue/swig/perl/experiment.i
+   glue/swig/perl/Experiment.pm
 \end{verbatim}
 
-{\it heccer.i} is a SWIG interface file which generates C code that can be compiled and linked against Perl headers and libraries.
+{\it experiment.i} is a SWIG interface file which generates C code that can be compiled and linked against Perl headers and libraries.
 
-{\it Heccer.pm} is a Perl module that contains higher level function calls to the previously mentioned interface.
+{\it Experiment.pm} is a Perl module that contains higher level function calls to the previously mentioned interface.
 
 Here, we show how to add bindings to these files to make the {\it PulseGen\{\}} object callable.
 
-\subsubsection*{SWIG interface file {\it heccer.i}}
+\subsubsection*{SWIG interface file {\it experiment.i}}
 
-First we need to include our {\it heccer/pulsegen.h} header in the interface file in two places. At the top of the file with the other includes we add:
+First we need to include our {\it experiment/pulsegen.h} header in the interface file in two places. At the top of the file with the other includes we add:
 \begin{verbatim}
-   #include "heccer/pulsegen.h"
+   #include "experiment/pulsegen.h"
 \end{verbatim}
 For the module declaration we add it near the end like this:
 \begin{verbatim}
-   %include "heccer/pulsegen.h"
+   %include "experiment/pulsegen.h"
 \end{verbatim}
 Next we need to declare a couple of functions for retrieving object data, and for performing a step in a simulation. These functions are considered to be low level functions.
 
-The following function returns a pointer to a {\it simobj\_PulseGen{}} data structure (defined in {\it heccer/pulsegen.h}) so that the calling process can get access to the object's data:
+The following function returns a pointer to a {\it simobj\_PulseGen{}} data structure (defined in {\it experiment/pulsegen.h}) so that the calling process can get access to the object's data:
 \begin{verbatim}
    void * pulse_gen_get_driver_data(struct simobj_PulseGen *ppg)
    {
@@ -67,11 +67,11 @@ This function will be called when performing a step in a simulation:
    }
 \end{verbatim}
 
-\subsubsection*{Perl module {\it Heccer.pm}}
+\subsubsection*{Perl module {\it Experiment.pm}}
 
 In this section we define higher level functions that make use of the functions we defined in the SWIG interface file. These functions will be defined within a Perl module and be callable by other Perl programs.
 
-In our implementation files for our simulation object, {\it pulsegen.c} and {\it heccer/pulsegen.h}, we have a set of functions required for running a simulation:
+In our implementation files for our simulation object, {\it pulsegen.c} and {\it experiment/pulsegen.h}, we have a set of functions required for running a simulation:
 \begin{verbatim}
    struct simobj_PulseGen * PulseGenNew(char *pcName);
       int PulseGenFinish(struct simobj_PulseGen *ppg);
@@ -92,14 +92,14 @@ In our implementation files for our simulation object, {\it pulsegen.c} and {\it
             double *pdPulseOut
       );
 \end{verbatim}
-In our Perl module we want to create a 1-to-1 correspondence for each function. The file {\it glue/swig/perl/Heccer.pm} contains declarations for packages along with their accompanying functions.
+In our Perl module we want to create a 1-to-1 correspondence for each function. The file {\it glue/swig/perl/Experiment.pm} contains declarations for packages along with their accompanying functions.
 
 We declare a new package and then, using an existing working example for {\it PerfectClamp\{\}}, we create identical calls to our {\it PulseGen\{\}}, with some changes made to accommodate the {\it PulseGen\{\}} parameters. We are going to define a function for the following actions: {\it add}, {\it finish}, {\it get\_driver}, {\it get\_time\_step}, {\it initiate, new}, {\it report}, and {\it step}:
 
 This is our package declaration, it precedes our set of functions:
 \begin{verbatim}
-   package Heccer::PulseGen;
-   BEGIN { our @ISA = qw(Heccer::Glue); }
+   package Experiment::PulseGen;
+   BEGIN { our @ISA = qw(Experiment::Glue); }
 \end{verbatim}
 The {\it add} function adds a variable address to the {\it PulseGen\{\}} structure so that it knows where to write its output. We perform a call to {\it PulseGenAddVariable} which we created in our simulation object:
 \begin{verbatim}
@@ -172,7 +172,7 @@ The {\it new} function is the most important. It allocates and sets up a new {\i
          $self->{name} = "a pulsegen";
       }
 
-      $self->{backend} = SwiggableHeccer::PulseGenNew($self->{name});
+      $self->{backend} = SwiggableExperiment::PulseGenNew($self->{name});
 
       if (!defined $self->{backend})
       {
@@ -185,35 +185,35 @@ The {\it new} function is the most important. It allocates and sets up a new {\i
       #
       if (!defined $options->{width1})
       {   
-         return "Heccer::PulseGen constructor: width1 is not defined, cannot construct pulsegen object";
+         return "Experiment::PulseGen constructor: width1 is not defined, cannot construct pulsegen object";
       }
       elsif(!defined $options->{level1})
       {
-         return "Heccer::PulseGen constructor: level1 is not defined, cannot construct pulsegen object";
+         return "Experiment::PulseGen constructor: level1 is not defined, cannot construct pulsegen object";
       }
       elsif(!defined $options->{delay1})
       {
-         return "Heccer::PulseGen constructor: delay1 is not defined, cannot construct pulsegen object";
+         return "Experiment::PulseGen constructor: delay1 is not defined, cannot construct pulsegen object";
       }
       elsif(!defined $options->{level2})
       {
-         return "Heccer::PulseGen constructor: level2 is not defined, cannot construct pulsegen object";
+         return "Experiment::PulseGen constructor: level2 is not defined, cannot construct pulsegen object";
       }
       elsif(!defined $options->{width2})
       {
-         return "Heccer::PulseGen constructor: width2 is not defined, cannot construct pulsegen object";
+         return "Experiment::PulseGen constructor: width2 is not defined, cannot construct pulsegen object";
       }
       elsif(!defined $options->{delay2})
       {
-         return "Heccer::PulseGen constructor: delay2 is not defined, cannot construct pulsegen object";
+         return "Experiment::PulseGen constructor: delay2 is not defined, cannot construct pulsegen object";
       }
       elsif(!defined $options->{baselevel})
       {
-         return "Heccer::PulseGen constructor: baselevel is not defined, cannot construct pulsegen object";
+         return "Experiment::PulseGen constructor: baselevel is not defined, cannot construct pulsegen object";
       }
       elsif(!defined $options->{triggermode})
       {
-         return "Heccer::PulseGen constructor: triggermode is not defined, cannot construct pulsegen object";
+         return "Experiment::PulseGen constructor: triggermode is not defined, cannot construct pulsegen object";
       }
       else
       {

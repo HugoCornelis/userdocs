@@ -72,7 +72,7 @@ The Data/Control schema illustrated above was developed into a software architec
 \end{figure}
 Ideally, this architecture makes the underlying applications look to the user like a single system. This is achieved by recruiting different modules to provide the model building tools and simulator functionality required at the different stages of a project.
 
-In summary, the CBI architecture provides a template for federated software development that, at its core, contains a CBI compliant simulator (the {\bf Model\,Container}, Simulation Controller ({\bf SSP}), and Solver ({\bf Heccer}), located in the dashed box in the high level block diagram--above). It is the modularity of the architecture that simplifies connection to independent applications indirectly related to model construction and instantiation. In doing this it shares a number of ideas with the well-known three tier architectures paradigm (make link). The distinguishing feature of the CBI architecture is that the back-end comprises numerical solvers rather than relational databases.
+In summary, the CBI architecture provides a template for federated software development that, at its core, contains a CBI compliant simulator (the {\bf Model\,Container}, Simulation Controller ({\bf SSP}), Experimental Protocols ({\bf Experiment}) and Solver ({\bf Heccer}), located in the dashed box in the high level block diagram--above). It is the modularity of the architecture that simplifies connection to independent applications indirectly related to model construction and instantiation. In doing this it shares a number of ideas with the well-known three tier architectures paradigm (make link). The distinguishing feature of the CBI architecture is that the back-end comprises numerical solvers rather than relational databases.
 
 The CBI compliant simulator indicated in the previous figure is expanded in the following figure to illustrate the key components. Data layers in the CBI architecture correspond to high-level data associated with biological concepts and extend to low level data such as numerical values employed by the solvers. The benefit of this layering of data is that it allows the mathematical and biological aspects of a model to be distinguished and separated by specific Data and Function bindings.
 
@@ -108,11 +108,13 @@ The recently developed CBI simulator architecture is an open framework that also
 \begin{enumerate}
 \item \href{../model-container/model-container.tex}{\bf Model\,Container:} Middle-ware dealing with biological entities and end-user concepts instead of mathematical equations. It is a declarative model container that generates highly efficient data structures implementing biological structures and components in a uniform data model across different levels of scale. When linked to a user interface it provides an efficient way to construct, inspect, and validate models.
 
+\item \href{../experiment/experiment.tex}{\bf Experiment:} A library of experimental protocols such as voltage clamp and current clamp.
+
 \item \href{../heccer/heccer.tex}{\bf Heccer:} A fast compartmental solver based on the GENESIS {\it hsolve} routine. The design flexibility of the architecture allows Heccer to be instantiated from from C, Perl, or other scripting languages.
 
 \item {\href{../project-browser/project-browser.tex}{\bf Project\,Browser}:} A tool for inspection of projects and simulation results.
 
-\item \href{../ssp/ssp.tex}{\bf Simple\,Scheduler\,in\,Perl:} {\bf SSP} builds simulation control files and can be constructed to bind the {\bf Model\,Container} and {\bf Heccer} and activate them correctly, such that they work together on a single simulation.
+\item \href{../ssp/ssp.tex}{\bf Simple\,Scheduler\,in\,Perl:} {\bf SSP} builds simulation control files and can be constructed to bind the {\bf Model\,Container}, {\bf Experiment} and {\bf Heccer} and activate them correctly, such that they work together on a single simulation.
 
 \item \href{../studio/studio.tex}{\bf Studio:} Provides tools for graphical browsing and command line usage.
 \end{enumerate}

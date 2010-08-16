@@ -292,14 +292,14 @@ $ neurospaces_check
 \end{verbatim}
 \end{enumerate}
 
-You can then go to the directory of each individual software component, configure, compile, check, and install the given component. For example, a simple build for the components {\bf Model\,Container}, {\bf Heccer}, {\bf SSP}, and {\bf Studio} on a developer machine can be done with:  
+You can then go to the directory of each individual software component, configure, compile, check, and install the given component. For example, a simple build for the components {\bf Model\,Container}, {\bf Experiment}, {\bf Heccer}, {\bf SSP}, and {\bf Studio} on a developer machine can be done with:  
 \begin{verbatim}
-   neurospaces_build --developer --regex 'model-container|heccer|ssp|studio'
+   neurospaces_build --developer --regex 'model-container|experiment|heccer|ssp|studio'
 \end{verbatim}
 and to include running tests via the check target of the {\it make} files:
 \begin{verbatim}
    neurospaces_build --check --developer \
-      --regex 'model-container|heccer|ssp|studio'
+      --regex 'model-container|experiment|heccer|ssp|studio'
 \end{verbatim}
 However, a {\it DeveloperPackage} has been built that automates these actions while respecting the dependencies between the different components (ie. each of the mentioned steps is done for each component in the correct order).
 

@@ -42,15 +42,15 @@ Since the PulseGen\{\} is a standalone solver object, it must be imported into t
 our $all_inputclass_templates 
   = {
     perfectclamp => {
-                      module_name => 'Heccer',
+                      module_name => 'Experiment',
                       options => {
                                   name => 'name of this inputclass',
                                   command => 'command value',
                                  },
-                      package => 'Heccer::PerfectClamp',
+                      package => 'Experiment::PerfectClamp',
 			       },
     pulsegen => {
-                  module_name => 'Heccer',
+                  module_name => 'Experiment',
 				  options => {
 					    name => 'name of this inputclass',
 					    width1 => 'First pulse width',
@@ -62,7 +62,7 @@ our $all_inputclass_templates
 					    baselevel => 'The pulse base level',
 					    triggermode => 'The pulse triggermode, 0 - freerun, 1 - ext trig, 2 - ext gate',
 				  },
-                  package => 'Heccer::PulseGen',
+                  package => 'Experiment::PulseGen',
                 },
     };
 \end{verbatim}
@@ -70,7 +70,7 @@ our $all_inputclass_templates
 Our entry is named {\bf pulsegen} and should have three keys:
 
 \begin{itemize}
-\item[] {\bf module\_name}: Since our PulseGen\{\} simulation object was compiled into the {\bf Heccer} package we list it for the module name.
+\item[] {\bf module\_name}: Since our PulseGen\{\} simulation object was compiled into the {\bf Experiment} package we list it for the module name.
 \item[] {\bf options}: This set of subkeys are options to pass to our object to set parameters for the inputclass. They are the same parameters outlined in {\bf SSP} for initializing a Pulsegen\{\} object.
 \item[] {\bf package}: This key gives the callable object from the SWIG binding so the {\bf gshell} can utilize it correctly.
 \end{itemize}
@@ -81,13 +81,13 @@ You can check to see if the {\bf gshell} properly reads the template by typing {
 	genesis > list inputclass_templates                                                          
 	all input class templates:
 	  perfectclamp:
-	    module_name: Heccer
+	    module_name: Experiment
 	    options:
 	      command: command value
 	      name: name of this inputclass
-	    package: Heccer::PerfectClamp
+	    package: Experiment::PerfectClamp
 	  pulsegen:
-	    module_name: Heccer
+	    module_name: Experiment
 	    options:
 	      baselevel: The pulse base level
 	      delay1: First pulse delay
@@ -98,7 +98,7 @@ You can check to see if the {\bf gshell} properly reads the template by typing {
 	      triggermode: 'The pulse triggermode, 0 - freerun, 1 - ext trig, 2 - ext gate'
 	      width1: First pulse width
 	      width2: Second pulse width
-	    package: Heccer::PulseGen
+	    package: Experiment::PulseGen
 
 \end{verbatim}
 
