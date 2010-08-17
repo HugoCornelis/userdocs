@@ -43,7 +43,14 @@ by removing {\it /opt/local/bin} to give:
 \end{verbatim}
 {\bf Note:} Only remove the MacPorts path and leave all others alone. If you do not make this change, running GENESIS may result in a bus error as the correct Perl libraries will not be found. It may also call MacPorts versions of build tools, which can result in some undesirable behavior.  
 
+ {\bf Note:} Compiling from source will only produce executables and libraries for the host architecture. For example if you have a 64-bit system and 32-bit {\bf Perl}, the compiled {\bf SWIG} libraries will not load, giving an error similar to this:
+
+\begin{verbatim}
+	./SwiggableHeccer.dylib: mach-o, but wrong architecture at /System/Library/Perl/5.10.0/darwin-thread-multi-2level/DynaLoader.pm
+\end{verbatim}
    
+so when compiling on a machine make sure that {\bf Perl}, {\bf Python} and all of their loadable modules and libraries are of the same architecture as the host machine.
+
    \item[]Install the following Perl dependencies via CPAN:
       \begin{itemize}
          \item YAML
