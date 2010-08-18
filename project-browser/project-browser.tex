@@ -21,4 +21,53 @@ The specific aims of the {\bf Project\,Browser} are introduced in the presentati
 
 The {\bf Project\,Browser}uses distributed version control mechanisms to physically distribute your project. The coupling to a web server allows you to inspect simulations and compare their results, regardless of location. You can take a look at some \href{../project-browser-screenshots/project-browser-screenshots.tex}{\bf Project\,Browser\,screenshots}. 
 
+\subsection*{Usage}
+
+The project browser comes equipped with commands for creating a project workspace as well as simulation modules. Commands are also provided to save and check work to a version control system.
+
+\begin{itemize}
+\item[] {\bf pb-create-project}: Creates a new project-browser directory structure for storing your work.
+\item[] {\bf pb-create-module}: Creates a new neurospaces project-browser simulation module.
+\item[] {\bf pb-pull}: pulls project information from a different machine.
+\item[] {\bf pb-push}: pushes project information to a different machine.
+\item[] {\bf pb-version}: Prints the current version. 
+\end{itemize}
+
+\subsection*{Directory Structure}
+
+Upon creating a project, the {\bf Project Browser} creates a directory structure for storing all aspect of your simulation and results. 
+
+\begin{itemize}
+\item[] {\bf models}: project specific models (separate from the system wide library).
+
+\item[] {\bf morphologies}: basically the same as above, it can be used as drop box to include externally generated morphologies.
+
+\item[] {\bf morphology\_groups}: it should be possible to define groups of external resources.
+
+\item[] {\bf colormaps}: definitions of color coding for other components, such as morphologies.  I was still looking for the right format to include this, the morphologies and morphology\_groups subdirectories when I stopped development on the project-browser.
+
+\item[] {\bf scripts}: scripts that are not related to the functions of the project browser, but still part of the project.
+
+\item[] {\bf modules}: simulation configurations and output. Inside this directory, you will find a numeric subdirectory for each module of the project. The name 'modules' should be replaced with 'iterations', keeping the terminology as close to the G-3 user workflow as possible.
+
+\item[] {\bf pictures}: free format pictures.
+
+\item[] {\bf narrative\_components}: summaries and pictures of result analysis.  The result analysis is done inside the modules/ directory.
+
+\item[] {\bf papers}: unknown
+
+\item[] {\bf replicator}: unknown 
+
+\item[] {\bf summary}: unknown
+
+\end{itemize}
+
+YAML descriptor files are located in the top level directory as well as in each sub directory, allowing a user to edit all aspects of the project. By default project directories are created in:
+
+\begin{verbatim}
+/var/neurospaces/simulation_projects/
+\end{verbatim}
+
+however this can be configured to your liking.
+
 \end{document}
