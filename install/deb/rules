@@ -40,9 +40,8 @@ install: build
 	dh_clean -k
 	dh_installdirs
 
-# Add here commands to install the package into debian/heccer.
+# Add here commands to install the package into debian/userdocs.
 	echo $(CURDIR)
-	echo "userdocs Heccer"
 	$(MAKE)
 	echo "Installing userdocs to package deb"
 	$(MAKE) install DESTDIR=$(CURDIR)/debian/userdocs
