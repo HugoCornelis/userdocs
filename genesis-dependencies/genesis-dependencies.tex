@@ -110,6 +110,87 @@ are likely available as packages for your Linux distribution or vendor.
    \item Inline::Python
 \end{itemize}
 
+
+\subsection*{Note about Inline::Python}
+
+The {\bf Perl Inline::Python} is compiled against the current installed version of {\bf Python}. If you upgrade {\bf Python}, then the {\bf Inline::Python} module must be updated as well. This can be done via {\bf CPAN} as before, only now, since the module has already been installed you may get this message:
+
+\begin{verbatim}
+	Inline::Python is up to date (0.36).
+\end{verbatim}
+
+In this case you may have to "force" the installation of the module on {\bf CPAN} like so:
+
+\begin{verbatim}
+cpan[6]> force install Inline::Python
+\end{verbatim}
+
+If there are still old temp files in the {\bf CPAN} .build directory, this may still give an error and say that it is already installed. In that case there is a source tarball for Inline-Python-0.36 available in the contrib directory of the \href{../developer-package/developer-package.tex}{\bf Developer Package} ($_{\widetilde{~}}$/neurospaces\_project/developer/source/snapshots/0/contrib/). Unzip the Inline-Python-0.36.tar.gz tarball with the {\bf tar} command:
+
+\begin{verbatim}
+tar -zxvf Inline-Python-0.36.tar.gz
+\end{verbatim}
+
+Change directories into Inline-Python-0.36 directory and then start the build process my typing:
+
+\begin{verbatim}
+perl Makefile.PL
+\end{verbatim}
+
+If CPAN proceeded without an "up to date" message you should wind up at this point, same as starting the make from the tarball. If there is more than one {\bf Python} executable in your path the next line is important. The Maker will prompt you for which {\bf Python} to build against:
+
+\begin{verbatim}
+	Found these python executables on your PATH:
+	1. /Library/Frameworks/Python.framework/Versions/2.6/bin/python
+	2. /Library/Frameworks/Python.framework/Versions/Current/bin/python
+	4. /usr/bin/python
+	5. /usr/local/bin/python
+	Use which? [1] 
+\end{verbatim}
+
+You should check to see which is the default {\bf Python} that is called from your command line by performing:
+
+\begin{verbatim}
+which python
+\end{verbatim}
+
+It will print out the first {\bf Python} that is in your path. If the most recent version of {\bf Python} on your machine is not appearing, then prefix the most recent installation path to your PATH environment variable by a line similar to this in your .bashrc (or .profile if on Mac OSX):
+
+\begin{verbatim}
+	PATH="/Path/To/Most/Recent/Python/bin:${PATH}"
+	export PATH
+\end{verbatim}
+
+After selecting the {\bf Python} to build against, the Maker will create a Makefile. From this point you can build and install:
+
+\begin{verbatim}
+make
+sudo make install
+\end{verbatim}
+
+If you wish to check if the module is functioning properly there is a test script in the contrib directory called {\it pythontest}. Running this script will print out some information about the {\bf Python} environment:
+
+\begin{verbatim}
+The Inline Python caller is:  /usr/bin/perl
+The Inline Python caller should be some derivative of perl, since it is being called via the perl Inline::Python module
+
+Python version is  2.6.5 (r265:79359, Mar 24 2010, 01:32:55) 
+[GCC 4.0.1 (Apple Inc. build 5493)] 
+
+Python path is: 
+['/Users/Abominous/neurospaces_project/developer/source/snapshots/0/contrib', '/usr/local/glue/swig/python', '/usr/local/lib/wxPython-unicode-2.8.11.0/lib/python2.6/site-packages', '/usr/local/lib/wxPython-unicode-2.8.11.0/lib/python2.6/site-packages/wx-2.8-mac-unicode', '/Library/Frameworks/Python.framework/Versions/2.6/lib/python26.zip', '/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6', '/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/plat-darwin', '/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/plat-mac', '/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/plat-mac/lib-scriptpackages', '/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/lib-tk', '/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/lib-old', '/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/lib-dynload', '/Library/Frameworks/Python.framework/Versions/2.6/lib/python2.6/site-packages', '/usr/local/lib/wxPython-unicode-2.8.11.0/lib/python2.6', '/usr/local/glue/swig/python']
+
+The Python Path should match up with the proper python version of the executable.
+
+This executable path /usr/bin
+
+Performing an import check of installed GENESIS3 Python modules:
+
+Done with Python check.
+\end{verbatim}
+
+If the module is functioning properly then the Inline Python caller should be your installation of {\bf Perl}, NOT your installation of {\bf Python}. Also check to see that the directories for {\bf Python} modules from the Python path match up with your current {\bf Python} version number. Again, your "executable path" should be the path to your {\bf Perl} executable. The final check it performs is a module check of all of the installed GENESIS3 {\bf Python} modules, giving a message if one is not installed or not in your path. 
+
 \subsection*{Trouble Shooting}
 
 Periodically the build of a Perl module can fail and requires a workaround to get it installed. A common error that occurs is a failure to produce a {\it Makefile} as in this example with {\tt Data::Utilities} :
