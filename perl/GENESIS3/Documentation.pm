@@ -1031,9 +1031,62 @@ sub expand
 	}
     }
 
-    #t expand dynamically generated snippets
+    # expand dynamically generated snippets, still disabled
+
+    if (0)
+    {
+	# expand the document
+
+	my $command = "userdocs-snippet '$document_name/output/$document_name.tex' --verbose";
+
+	system $command;
+
+	if ($?)
+	{
+	    $result = "for document '$document_name': failed to execute ($command, $?)\n";
+
+	    last;
+	}
+    }
 
     # return result
+
+    return $result;
+}
+
+
+sub find_snippets
+{
+    my $self = shift;
+
+    my $snippet_directory = $self->{name} . "/snippets/";
+
+    my $snippets
+	= [
+	   map
+	   {
+	       chomp; $_
+	   }
+	   `find $snippet_directory \\! -type d -name "*[^~]"`,
+	  ];
+
+    my $result
+	= {
+	   map
+	   {
+	       my $snippet_filename = $_;
+
+	       s(.*/(.*))($1);
+
+	       $_ => GENESIS3::Documentation::Snippet->new(
+							   {
+							    filename => $snippet_filename,
+							    name => $_,
+							   },
+							  ),
+	   }
+	   @$snippets,
+	  };
 
     return $result;
 }
@@ -1369,6 +1422,106 @@ sub update_html
     }
 
     return $source_text;
+}
+
+
+package GENESIS3::Documentation::Snippet;
+
+
+sub new
+{
+    my $package = shift;
+
+    my $options = shift;
+
+    my $self
+	= {
+	   %$options,
+	  };
+
+    bless $self, $package;
+
+    return $self;
+}
+
+
+sub read_content
+{
+    my $self = shift;
+
+    if (exists $self->{content})
+    {
+	return '';
+    }
+
+    # slurp content
+
+    open my $descriptor, $self->{filename}
+	or return $!;
+
+    local $/;
+
+    $self->{content} = <$descriptor>;
+
+    close $descriptor;
+
+    return undef;
+}
+
+
+sub replacement_string
+{
+    my $self = shift;
+
+    if (exists $self->{replacement_string})
+    {
+	return $self->{replacement_string};
+    }
+
+    # read the snippet content
+
+    $self->read_content();
+
+    # loop over all backquote strings
+
+    my $content = $self->{content};
+
+    while ($content =~ m/\G.*?`([^`]*)`/gs)
+    {
+	my $position = pos($content);
+
+	# execute the command
+
+	my $command = $1;
+
+	my $replacement = `$command`;
+
+	if ($?)
+	{
+	    print STDERR "$0: *** Error: running '$command' returned status $?\n";
+	}
+
+	# replace the command with its expansion
+
+	if ($self->{verbose})
+	{
+	    print "For $self->{filename}: found $command at $position, replacing ... \n";
+	}
+
+	$content =~ s(`$command`)($replacement)g;
+
+	# set the new position
+
+	pos($content) = $position;
+    }
+
+    # fill in the replacement_string
+
+    $self->{replacement_string} = $content;
+
+    # return replacement_string
+
+    return $content;
 }
 
 
