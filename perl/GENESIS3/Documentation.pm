@@ -1048,7 +1048,7 @@ sub expand
 
     # expand dynamically generated snippets
 
-#     if (0)
+    if (-f "$document_name/output/$document_name.tex")
     {
 	# expand the document
 
