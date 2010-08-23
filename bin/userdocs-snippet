@@ -182,7 +182,7 @@ sub main
 
 		#! assertion allows '"' to be escaped with a backslash
 
-		if ($content =~ m/% start: $program_name (.*)\n(.|\n)*?% end: $program_name/g)
+		while ($content =~ m/% start: $program_name (.*)\n(.|\n)*?% end: $program_name/g)
 		{
 		    my $snippet_name = $1;
 
