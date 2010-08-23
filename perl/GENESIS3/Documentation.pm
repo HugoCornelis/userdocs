@@ -851,6 +851,21 @@ sub copy
 		    }
 
 		}
+
+		if ($?)
+		{
+		}
+		elsif (-d "snippets")
+		{
+
+		    system "cp -rfp snippets output/";
+
+		    if ($?)
+		    {
+			$result = "cp -rfp snippets output/";
+		    }
+
+		}
 	    }
 
 	    # else unknown source file type
@@ -1059,7 +1074,17 @@ sub find_snippets
 {
     my $self = shift;
 
-    my $snippet_directory = $self->{name} . "/snippets/";
+    # convert document_filename to directory where it is stored
+
+    my $document_filename = $self->{filename} || $self->{name};
+
+    # remove filename and extension from the document filename
+
+    $document_filename =~ s((.*)/.*)($1);
+
+    # construct snippets directory name
+
+    my $snippet_directory = $document_filename . "/snippets/";
 
     my $snippets
 	= [
