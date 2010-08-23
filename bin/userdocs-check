@@ -9,8 +9,8 @@ use strict;
 use Getopt::Long;
 use YAML;
 
-my $option_directory = 0;
-my $option_help = 0;
+
+my $option_directory = ".";
 my $option_verbose = 0;
 
 
@@ -18,18 +18,63 @@ $SIG{__WARN__} = sub { die $_[0] };
 
 
 
-sub usage
-{
-  print 
-    "
-    --help        print this help message.
-    --directory   The directory to scan for descriptor files.
-    --verbose     Prints output on every descriptor processed.
-";
-}
-
 sub main
 {
+    read_cmd_line();
+
+    my $result = 0;
+
+    my $all_documentation_descriptors
+	= [
+	   map
+	   {
+	       chomp; $_
+	   }
+	   `find $option_directory -name "descriptor.yml"`,
+	  ];
+
+    foreach my $documentation_descriptor (@$all_documentation_descriptors)
+    {
+        if ($option_verbose)
+	{
+	    print "Checking $documentation_descriptor :\t";
+	}
+
+	eval
+	{
+	    my $descriptor = YAML::LoadFile($documentation_descriptor);
+
+	    if (defined $descriptor)
+	    {
+	        if($option_verbose)
+		{
+		    print "is valid\n";
+		}
+	    }
+	    else
+	    {
+		print "$documentation_descriptor is empty\n";
+
+		$result = 1;
+	    }
+	};
+
+	if ($@)
+	{
+	    print "$documentation_descriptor contains malformed YAML ($@)\n";
+
+	    $result = 2;
+	}
+    }
+
+    return $result;
+}
+
+
+sub read_cmd_line
+{
+    my $option_help;
+
     my $result
 	= GetOptions
 	    (
@@ -43,63 +88,27 @@ sub main
 	die "$0: *** Error: Error in option processing";
     }
 
-    if($option_help)
+    if ($option_help)
     {
-      usage();
-    }
+	print
+	    "
 
-    my $directory = ".";
+$0: check userdocs workspace for obvious errors.
 
-    if($option_directory)
-    {
-      $directory = $option_directory;
-    }
+    --help        print this help message.
+    --directory   The directory to scan for descriptor files (default '.').
+    --verbose     Prints output on every descriptor processed.
 
-    my $all_documentation_descriptors
-	= [
-	   map
-	   {
-	       chomp; $_
-	   }
-	   `find $directory -name "descriptor.yml"`,
-	  ];
 
-    foreach (@$all_documentation_descriptors)
-    {
-        if($option_verbose)
-	{
-	  print "Checking $_ :\t";
-	}
+";
 
-	eval
-	{
-	    my $descriptor = YAML::LoadFile($_);
-
-	    if (defined $descriptor)
-	    {
-	        if($option_verbose)
-		{
-		    print "is valid\n";
-		}
-	    }
-	    else
-	    {
-		print "$_ is empty\n";
-	    }
-	};
-
-	if ($@)
-	{
-	    print "$_ contains malformed YAML ($@)\n";
-
-	}
-
+	exit 0;
     }
 
 }
 
 
-main()
+exit main();
 
 
 # #!/usr/bin/perl -w

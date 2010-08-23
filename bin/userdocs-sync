@@ -5,11 +5,18 @@
 
 use strict;
 
+system "userdocs-check";
+
+if ($?)
+{
+    die "$0: *** Error: userdocs-check says there is something wrong with your documentation workspace.";
+}
+
 system "neurospaces_sync --enable userdocs --regex userdocs --verbose";
 
 if ($?)
 {
-    die "*** Error: $0, $?";
+    die "$0: *** Error: $?";
 }
 else
 {
