@@ -1046,9 +1046,9 @@ sub expand
 	}
     }
 
-    # expand dynamically generated snippets, still disabled
+    # expand dynamically generated snippets
 
-    if (0)
+#     if (0)
     {
 	# expand the document
 
@@ -1505,7 +1505,16 @@ sub replacement_string
 
     # read the snippet content
 
-    $self->read_content();
+    my $error = $self->read_content();
+
+    if ($error)
+    {
+	#t no nice error propagation
+
+	print STDERR "$0: $error";
+
+	return undef;
+    }
 
     # loop over all backquote strings
 

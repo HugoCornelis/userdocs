@@ -5,12 +5,13 @@ SUBDIRS = perl
 dist_bin_SCRIPTS = \
 	bin/userdocs-build \
 	bin/userdocs-check \
+	bin/userdocs-create \
+	bin/userdocs-rename \
+	bin/userdocs-snippet \
 	bin/userdocs-sync \
 	bin/userdocs-tag-filter \
 	bin/userdocs-tag-replace-items \
-	bin/userdocs-version \
-	bin/userdocs-create \
-	bin/userdocs-rename
+	bin/userdocs-version
 
 dist_noinst_SCRIPTS = \
 	MonotoneSetup.txt \
