@@ -115,39 +115,6 @@ Other components:
       layer: 2
 \end{verbatim}
 
-\subsection{gshell list\_elements}
-
-The gshell command 'list\_elements' sometimes loses part of the
-output.  In the following snippet parts of the 'km' and 'kh' channels
-have disappeared:
-
-
-\begin{verbatim}
-> genesis-g3 --execute "ndf_load cells/purkinje/edsjb1994.ndf"
-Welcome to the GENESIS 3 shell
-genesis > list_elements /Purkinje/segments/soma/**
----
-- /Purkinje/segments/soma/km/km
-- /Purkinje/segments/soma/kdr/kdr_steadystate
-- /Purkinje/segments/soma/kdr/kdr_tau
-- /Purkinje/segments/soma/ka/ka_gate_activation
-- /Purkinje/segments/soma/ka/ka_gate_inactivation
-- /Purkinje/segments/soma/kh/kh
-- /Purkinje/segments/soma/nap/nap
-- /Purkinje/segments/soma/naf/naf_gate_activation
-- /Purkinje/segments/soma/naf/naf_gate_inactivation
-- /Purkinje/segments/soma/cat/cat_gate_activation
-- /Purkinje/segments/soma/cat/cat_gate_inactivation
-\end{verbatim}
-
-This is obviously wrong behavior.  The querymachine command 'expand'
-can be used to compare with the correct output.
-
-\begin{verbatim}
-genesis > querymachine expand /Purkinje/segments/soma/**
-\end{verbatim}
-
-
 \subsection{morphology\_summarize}
 
 To characterize a cell morphology it would be good to extend the
@@ -385,6 +352,39 @@ First move conceptualized items from the supplement to this TODO list.
 
 
 \section{DONE List}
+
+\subsection{gshell list\_elements}
+
+The gshell command 'list\_elements' sometimes loses part of the
+output.  In the following snippet parts of the 'km' and 'kh' channels
+have disappeared:
+
+
+\begin{verbatim}
+> genesis-g3 --execute "ndf_load cells/purkinje/edsjb1994.ndf"
+Welcome to the GENESIS 3 shell
+genesis > list_elements /Purkinje/segments/soma/**
+---
+- /Purkinje/segments/soma/km/km
+- /Purkinje/segments/soma/kdr/kdr_steadystate
+- /Purkinje/segments/soma/kdr/kdr_tau
+- /Purkinje/segments/soma/ka/ka_gate_activation
+- /Purkinje/segments/soma/ka/ka_gate_inactivation
+- /Purkinje/segments/soma/kh/kh
+- /Purkinje/segments/soma/nap/nap
+- /Purkinje/segments/soma/naf/naf_gate_activation
+- /Purkinje/segments/soma/naf/naf_gate_inactivation
+- /Purkinje/segments/soma/cat/cat_gate_activation
+- /Purkinje/segments/soma/cat/cat_gate_inactivation
+\end{verbatim}
+
+This is obviously wrong behavior.  The querymachine command 'expand'
+can be used to compare with the correct output.
+
+\begin{verbatim}
+genesis > querymachine expand /Purkinje/segments/soma/**
+\end{verbatim}
+
 
 \subsection{documentation synchronization}
 
