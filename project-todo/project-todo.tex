@@ -185,36 +185,6 @@ Others that need implementation:
   and the annotations provided by DAVIS are already sufficient.
 \end{itemize}
 
-\subsection{Incorrect path to NDF model file corrupts G-Shell}
-\begin{verbatim}
-dhcp-129-111-247-96:0 adcmobile$ genesis-g3
-Welcome to the GENESIS 3 shell
-genesis > ndf_load cells/edsjb1994_partitioned.ndf
-Could not find file (number 1, 1), path name (cells/edsjb1994_partitioned.ndf)
-Set one of the environment variables NEUROSPACES_NMC_USER_MODELS,
-NEUROSPACES_NMC_PROJECT_MODELS, NEUROSPACES_NMC_SYSTEM_MODELS or NEUROSPACES_NMC_MODELS
-to point to a library where the required model is located,
-or use the -m switch to configure where neurospaces looks for models.
-
-genesis > ndf_load cells/purkinje/edsjb1994_partitioned.ndf
-genesis-g3: Parse of cells/purkinje/edsjb1994_partitioned.ndf failed with 1 (cumulative) error.
-genesis > list_elements
----
-- /Purkinje
-genesis > delete /Purkinje
-genesis > list_elements
----
-
-genesis > ndf_load cells/purkinje/edsjb1994_partitioned.ndf
-genesis-g3: Parse of cells/purkinje/edsjb1994_partitioned.ndf failed with 1 (cumulative) error.
-genesis > exit
-dhcp-129-111-247-96:0 adcmobile$ genesis-g3
-Welcome to the GENESIS 3 shell
-
-genesis > ndf_load cells/purkinje/edsjb1994_partitioned.ndf
-genesis >
-\end{verbatim}
-
 \subsection{Model container and readline library}
 
 The model-container does not use the readline library for its
@@ -359,6 +329,37 @@ First move conceptualized items from the supplement to this TODO list.
 
 
 \section{DONE List}
+
+\subsection{Incorrect path to NDF model file corrupts G-Shell}
+\begin{verbatim}
+dhcp-129-111-247-96:0 adcmobile$ genesis-g3
+Welcome to the GENESIS 3 shell
+genesis > ndf_load cells/edsjb1994_partitioned.ndf
+Could not find file (number 1, 1), path name (cells/edsjb1994_partitioned.ndf)
+Set one of the environment variables NEUROSPACES_NMC_USER_MODELS,
+NEUROSPACES_NMC_PROJECT_MODELS, NEUROSPACES_NMC_SYSTEM_MODELS or NEUROSPACES_NMC_MODELS
+to point to a library where the required model is located,
+or use the -m switch to configure where neurospaces looks for models.
+
+genesis > ndf_load cells/purkinje/edsjb1994_partitioned.ndf
+genesis-g3: Parse of cells/purkinje/edsjb1994_partitioned.ndf failed with 1 (cumulative) error.
+genesis > list_elements
+---
+- /Purkinje
+genesis > delete /Purkinje
+genesis > list_elements
+---
+
+genesis > ndf_load cells/purkinje/edsjb1994_partitioned.ndf
+genesis-g3: Parse of cells/purkinje/edsjb1994_partitioned.ndf failed with 1 (cumulative) error.
+genesis > exit
+dhcp-129-111-247-96:0 adcmobile$ genesis-g3
+Welcome to the GENESIS 3 shell
+
+genesis > ndf_load cells/purkinje/edsjb1994_partitioned.ndf
+genesis >
+\end{verbatim}
+
 
 \subsection{gshell list\_elements}
 
