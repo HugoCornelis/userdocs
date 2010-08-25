@@ -119,7 +119,6 @@ dist-keywords:
 
 clean-local: website-clean
 	find $(srcdir) -type d -exec chmod -R u+w \{\} \;
-	$(RM) -fr `find $(srcdir) -name _Inline`
 	$(RM) -rf $(top_srcdir)/*/output/*
 	$(RM) -f $(top_srcdir)/*/*.log
 	$(RM) -rf $(top_srcdir)/*.deb
