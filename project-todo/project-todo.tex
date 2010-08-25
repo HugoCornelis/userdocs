@@ -25,8 +25,8 @@ example, subitems in the checklist can be marked with the word `DONE'.
 
 This document can grow when people add new functions that await
 implementation, and it can be consolidated by moving items that have
-been completed from the TODO list to the DONE list.  Items are never
-removed from the DONE list.
+been completed from the TODO list to the top of the DONE list.  Items
+are never removed from the DONE list.
 %  Some functions
 %are related to maintenance and they never disappear (such as Packaging
 %and Distribution).  They can be marked with 'WORKING'.
@@ -333,6 +333,65 @@ First move conceptualized items from the supplement to this TODO list.
 
 \section{DONE List}
 
+\subsection{gshell help components}
+
+Diagnosis of problem and documented procedure for troubleshooting the Inline::Python module is found in \href{../genesis-dependencies/genesis-dependencies.tex}{GENESIS dependencies} document, in the {\it Note about Inline::Python} section. (DONE)
+
+Fails on Mac OSX after reinstallation of GENESIS developer package for Python module:
+\begin{verbatim}
+Other components:
+  python:
+    description: interface to python scripting
+    module: GENESIS3::Python
+    status: |
+      Error. You have specified 'Python' as an Inline programming language.
+      
+      I currently only know about the following languages:
+          C, Foo, foo
+      
+      If you have installed a support module for this language, try deleting the
+      config file from the following Inline DIRECTORY, and run again:
+      
+          /Users/adcmobile/.genesis3/gshell/InlineCode
+      
+       at /usr/local/glue/swig/perl/GENESIS3/Python.pm line 25
+       at /usr/local/bin/genesis-g3 line 52
+      	main::__ANON__('Error. You have specified \'Python\' as an Inline programming...') called at /System/Library/Perl/5.8.8/Carp.pm line 269
+      	Carp::croak('Error. You have specified \'Python\' as an Inline programming...') called at blib/lib/Inline.pm (autosplit into blib/lib/auto/Inline/check_config_file.al) line 711
+      	Inline::check_config_file('Inline=HASH(0xa3043c)') called at /Library/Perl/5.8.8/Inline.pm line 244
+      	Inline::glue('Inline=HASH(0xa3043c)') called at /Library/Perl/5.8.8/Inline.pm line 146
+      	Inline::import('Inline', 'Python', 'import sys\x{a}sys.path.append(\'/usr/local/glue/swig/python\')\x{a}i...') called at /usr/local/glue/swig/perl/GENESIS3/Python.pm line 25
+      	GENESIS3::Python::BEGIN() called at /usr/local/glue/swig/perl/GENESIS3/Python.pm line 52
+      	eval {...} called at /usr/local/glue/swig/perl/GENESIS3/Python.pm line 52
+      	require GENESIS3/Python.pm called at (eval 41) line 3
+      	eval 'require GENESIS3::Python
+      ;' called at /usr/local/glue/swig/perl/GENESIS3.pm line 3611
+      	GENESIS3::profile_environment() called at /usr/local/glue/swig/perl/GENESIS3.pm line 3635
+      	require GENESIS3.pm called at /usr/local/bin/genesis-g3 line 256
+      	main::main() called at /usr/local/bin/genesis-g3 line 354
+      BEGIN failed--compilation aborted at /usr/local/glue/swig/perl/GENESIS3/Python.pm line 52.
+       at /usr/local/bin/genesis-g3 line 52
+      	main::__ANON__('Error. You have specified \'Python\' as an Inline programming...') called at /usr/local/glue/swig/perl/GENESIS3/Python.pm line 52
+      	require GENESIS3/Python.pm called at (eval 41) line 3
+      	eval 'require GENESIS3::Python
+      ;' called at /usr/local/glue/swig/perl/GENESIS3.pm line 3611
+      	GENESIS3::profile_environment() called at /usr/local/glue/swig/perl/GENESIS3.pm line 3635
+      	require GENESIS3.pm called at /usr/local/bin/genesis-g3 line 256
+      	main::main() called at /usr/local/bin/genesis-g3 line 354
+      Compilation failed in require at (eval 41) line 3.
+       at /usr/local/bin/genesis-g3 line 52
+      	main::__ANON__('Error. You have specified \'Python\' as an Inline programming...') called at (eval 41) line 3
+      	eval 'require GENESIS3::Python
+      ;' called at /usr/local/glue/swig/perl/GENESIS3.pm line 3611
+      	GENESIS3::profile_environment() called at /usr/local/glue/swig/perl/GENESIS3.pm line 3635
+      	require GENESIS3.pm called at /usr/local/bin/genesis-g3 line 256
+      	main::main() called at /usr/local/bin/genesis-g3 line 354
+    type:
+      description: scriptable user interface
+      layer: 2
+\end{verbatim}
+
+
 \subsection{Incorrect path to NDF model file corrupts G-Shell}
 \begin{verbatim}
 dhcp-129-111-247-96:0 adcmobile$ genesis-g3
@@ -433,12 +492,18 @@ The {\bf local} tag is currently implemented by invoking the following
 command from a UNIX shell:
 
 \begin{verbatim}
- $ userdocs-build --tags local
+  $ userdocs-build --tags local
 \end{verbatim}
 
-This commands build a local website of all the documents that have the
+This command builds a local website of all the documents that have the
 tag 'local'.
 
+\begin{verbatim}
+  $ userdocs-build --tags local --tags published
+\end{verbatim}
+
+This command builds a local website with all the published and the
+local documents.
 
 \subsection{Implement more consistent G-Shell command names}
 
@@ -1091,65 +1156,6 @@ problems. (DONE)
     \hline
   \end{tabular}
 }
-
-
-\subsection{gshell help components}
-
-Diagnosis of problem and documented procedure for troubleshooting the Inline::Python module is found in \href{../genesis-dependencies/genesis-dependencies.tex}{GENESIS dependencies} document, in the {\it Note about Inline::Python} section. (DONE)
-
-Fails on Mac OSX after reinstallation of GENESIS developer package for Python module:
-\begin{verbatim}
-Other components:
-  python:
-    description: interface to python scripting
-    module: GENESIS3::Python
-    status: |
-      Error. You have specified 'Python' as an Inline programming language.
-      
-      I currently only know about the following languages:
-          C, Foo, foo
-      
-      If you have installed a support module for this language, try deleting the
-      config file from the following Inline DIRECTORY, and run again:
-      
-          /Users/adcmobile/.genesis3/gshell/InlineCode
-      
-       at /usr/local/glue/swig/perl/GENESIS3/Python.pm line 25
-       at /usr/local/bin/genesis-g3 line 52
-      	main::__ANON__('Error. You have specified \'Python\' as an Inline programming...') called at /System/Library/Perl/5.8.8/Carp.pm line 269
-      	Carp::croak('Error. You have specified \'Python\' as an Inline programming...') called at blib/lib/Inline.pm (autosplit into blib/lib/auto/Inline/check_config_file.al) line 711
-      	Inline::check_config_file('Inline=HASH(0xa3043c)') called at /Library/Perl/5.8.8/Inline.pm line 244
-      	Inline::glue('Inline=HASH(0xa3043c)') called at /Library/Perl/5.8.8/Inline.pm line 146
-      	Inline::import('Inline', 'Python', 'import sys\x{a}sys.path.append(\'/usr/local/glue/swig/python\')\x{a}i...') called at /usr/local/glue/swig/perl/GENESIS3/Python.pm line 25
-      	GENESIS3::Python::BEGIN() called at /usr/local/glue/swig/perl/GENESIS3/Python.pm line 52
-      	eval {...} called at /usr/local/glue/swig/perl/GENESIS3/Python.pm line 52
-      	require GENESIS3/Python.pm called at (eval 41) line 3
-      	eval 'require GENESIS3::Python
-      ;' called at /usr/local/glue/swig/perl/GENESIS3.pm line 3611
-      	GENESIS3::profile_environment() called at /usr/local/glue/swig/perl/GENESIS3.pm line 3635
-      	require GENESIS3.pm called at /usr/local/bin/genesis-g3 line 256
-      	main::main() called at /usr/local/bin/genesis-g3 line 354
-      BEGIN failed--compilation aborted at /usr/local/glue/swig/perl/GENESIS3/Python.pm line 52.
-       at /usr/local/bin/genesis-g3 line 52
-      	main::__ANON__('Error. You have specified \'Python\' as an Inline programming...') called at /usr/local/glue/swig/perl/GENESIS3/Python.pm line 52
-      	require GENESIS3/Python.pm called at (eval 41) line 3
-      	eval 'require GENESIS3::Python
-      ;' called at /usr/local/glue/swig/perl/GENESIS3.pm line 3611
-      	GENESIS3::profile_environment() called at /usr/local/glue/swig/perl/GENESIS3.pm line 3635
-      	require GENESIS3.pm called at /usr/local/bin/genesis-g3 line 256
-      	main::main() called at /usr/local/bin/genesis-g3 line 354
-      Compilation failed in require at (eval 41) line 3.
-       at /usr/local/bin/genesis-g3 line 52
-      	main::__ANON__('Error. You have specified \'Python\' as an Inline programming...') called at (eval 41) line 3
-      	eval 'require GENESIS3::Python
-      ;' called at /usr/local/glue/swig/perl/GENESIS3.pm line 3611
-      	GENESIS3::profile_environment() called at /usr/local/glue/swig/perl/GENESIS3.pm line 3635
-      	require GENESIS3.pm called at /usr/local/bin/genesis-g3 line 256
-      	main::main() called at /usr/local/bin/genesis-g3 line 354
-    type:
-      description: scriptable user interface
-      layer: 2
-\end{verbatim}
 
 
 \end{document}

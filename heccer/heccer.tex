@@ -28,7 +28,12 @@ The optimization of a neuronal solver ultimately focuses on accuracy and perform
 
 {\bf Heccer} can be instantiated from C, or from Perl (or other scripting languages). It is also possible to link {\bf Heccer} directly to Matlab. {\bf Heccer} comes with \href{http://www.swig.org/}{\bf Swig} interface definitions, such that linking {\bf Heccer} to any other technologies should be easy.
 
-Adding new channel types to {\bf Heccer} can be done using callouts. The callout mechanism allows for general user extensions that contribute a current or conductance at a particular time in a simulation. {\bf Heccer} automatically integrates this contribution into the membrane potential.
+Adding new channel types to {\bf Heccer} can be done using callouts.
+The callout mechanism allows for general user extensions that
+contribute a current or conductance at a particular time in a
+simulation. {\bf Heccer} automatically integrates this contribution
+into the membrane potential.  Check the tests of the callouts for more
+information (tests/code/callout1.c and tests/code/calloutInjector.c).
 
 The source code of {\bf Heccer} contains inline developer documentation. As yet, there is no stable API but the Swig interfaces for {\bf Heccer} are not expected to change much. If you are interested in this, look at \href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/glue/swig/perl/fork4p1.source.html#line51}{a simple example} for driving {\bf Heccer} from Perl, and \href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/glue/swig/perl/pool1-feedback1.source.html#line51}{another example} with active channels and a calcium pool. {\bf Heccer} is currently capable of simulating Purkinje cells (see the \href{../purkinje-cell-model/purkinje-cell-model.tex}{\bf Purkinje\,Cell\,Model}), and, at first evaluation, runs slightly faster than {\it hsolve} (It is difficult to assess why exactly: while the {\it hsolve} implementation is much more optimized than {\bf Heccer's}, the {\bf Heccer} design is slightly better optimized than {\it hsolve}'s.).
 
@@ -36,7 +41,13 @@ The source code of {\bf Heccer} contains inline developer documentation. As yet,
 
 \begin{itemize}
 
-\item Can be driven from C, Perl, SSP, and fetches the model parameters from the \href{../model-container/model-container.tex}{\bf Model\,Container}.
+\item Can be driven from C, Perl, SSP, and fetches the model
+  parameters from the
+  \href{../model-container/model-container.tex}{\bf Model\,Container}.
+  The test specification in the Heccer package have examples of
+  C-level tests (see the tests/code/ directory) and Perl-level tests
+  (check the tests/glue/swig/perl/ directory).  The SSP package
+  defines many tests that integrate Heccer and the model-container.
 \item Computes the behaviour of single neurons.
 \item Integrates Hodgkin-Huxley-like channels.
 \item Integrates exponentially decaying calcium concentrations and Nernst potentials. Interfaces will be provided for more elaborate calcium models.
@@ -45,7 +56,7 @@ The source code of {\bf Heccer} contains inline developer documentation. As yet,
 \item All parts of a model with the same kinetics automatically share tables.
 \item Computes the contribution of one channel type to the overall dendritic current, e.g. the contribution of all calcium channels or the contribution of all persistent calcium channels.
 \item Can serialize the current neuron state to an external stream for later resuming the simulation (or for multiple use).
-\item In combination with the previous point, can be initialized from external sources.
+\item Generalizing the previous point, can be initialized from external sources.
 \item Can be used with or without the {\bf Model\,Container}. To use {\bf Heccer} without the {\bf Model\,Container}, configure the module with the command line ``{\tt ./configure --without-neurospaces}''. To use {\bf Heccer} with the {\bf Model\,Container}, the {\bf Model\,Container} must be installed before {\bf Heccer} is compiled. 
 \end{itemize}
 {\bf Heccer} has been validated with a Purkinje cell model and produces an exact match with {\it hsolve} (see the purkinje cell model and the Purkinje cell tutorial in the GENESIS simulator distribution). {\bf Heccer} is constantly undergoing regression tests. Link to  \href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/index.html}{\bf Regression\,Test\,Output}. These tests give an idea of the functionality of {\bf Heccer} as a compartmental solver.
@@ -55,7 +66,14 @@ Besides being open source, {\bf Heccer} is also hypersource and \href{http://rep
 
 \subsection*{Extending Heccer}
 \begin{itemize}
-   \item \href{../genesis-add-object-solver/genesis-add-object-solver.tex}{\bf Create and Add New Solver Object:} Shows by example how to add a new simulation object to {\bf Heccer} and integrate the modified component with GENESIS.
-   \item \href{../genesis-add-swigbinding-heccer/genesis-add-swigbinding-heccer.tex}{Add a SWIG binding to {\bf HECCER:}} Shows by example how to implement the necessary bindings to make a \href{../simulation-objects/simulation-objects.tex}{\bf Simulation\,Object} callable from Perl using SWIG.
+   \item Adding new channel types to {\bf Heccer} can be done using
+     callouts.  The callout mechanism allows for general user
+     extensions that contribute a current or conductance at a
+     particular time in a simulation. {\bf Heccer} automatically
+     integrates this contribution into the membrane potential.  Check
+     the tests of the callouts for more information
+     (tests/code/callout1.c and tests/code/calloutInjector.c).
+%   \item \href{../genesis-add-object-solver/genesis-add-object-solver.tex}{\bf Create and Add New Solver Object:} Shows by example how to add a new simulation object to {\bf Heccer} and integrate the modified component with GENESIS.
+%   \item \href{../genesis-add-swigbinding-heccer/genesis-add-swigbinding-heccer.tex}{Add a SWIG binding to {\bf HECCER:}} Shows by example how to implement the necessary bindings to make a \href{../simulation-objects/simulation-objects.tex}{\bf Simulation\,Object} callable from Perl using SWIG.
 \end{itemize}
 \end{document}
