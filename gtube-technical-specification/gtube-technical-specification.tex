@@ -76,7 +76,32 @@ The Atom management object allows for basic list operations such as adding, dele
 
 \section*{Architecture Design}
 
-Working on this.
+\subsubsection*{Plugins}
+
+Due to the unique requirements for some neuroscience projects, some aspects of the software may need to be changed. Since many newer users feel more comfortable using a user interface, allowing the gtube to let users drop in their own implementations can be beneficial. Using the powerful {\bf Python} language the {\bf gtube} will employ a true plugin based system for added extensibility beyond the scope of the initial development. Among attributes that will be extendable are:
+
+\begin{itemize}
+\item[] {\bf Simulators}: The gtube is designed to be independent of the underlying simulator (currently GENESIS3), with communication between the presentation layer and functional layer handled via a documented API. Via the API, a developer can make their own simulator compatible with the gtube such that a user familiar with the top level control of the GUI can proceed as normal after selecting a different simulator. The benefits of constraining the control of a simulator to an object are: 
+
+	\begin{itemize}
+		\item[] 1. It makes it easy to control from a gui, user interfaces are difficult to manage on simulators due to them being designed to mainly work via the command line.
+		\item[] 2. Reducing coupling between objects allows easier debugging and recovery in the event of an error.
+		\item[] 3. A well known object API with known entry and exit points is inviting for developers.
+	\end{itemize}
+		
+	
+\item[] {\bf Widgets}: One of the main strengths of GENESIS 2 was XODUS, a scriptable user interface where users can build specific guis via scripting and specialized widgets using the X11 library. However adding a new widget to XODUS isn't a job for someone new to programming, and running the newly created widget involved creating a GENESIS 2 script to properly draw it to the screen. To make it easy to add your own widgets, the gtube will employ a plugin system that can dynamically load widgets to a registry, and allow them to be called via the top level gui. 
+
+\end{itemize}
+
+Below is an example of the levels of abstraction needed to create a usable plugin system for simulator management.
+
+\begin{figure}[ht]
+   \centering
+   \includegraphics[scale=0.6]{figures/SimulatorPluginOverview.eps}
+   \caption{{\bf Simulator Plugins:} Figure shows a UML diagram of the relationships between loadable simulator objects and the Manager class of the GUI logic.}
+   \label{fig:Simulator Plugin Overview}
+\end{figure}
 
 
 \section*{Interface Design}
