@@ -66,7 +66,14 @@ Besides being open source, {\bf Heccer} is also hypersource and \href{http://rep
 
 \subsection*{Extending Heccer}
 \begin{itemize}
-   \item \href{../genesis-add-object-solver/genesis-add-object-solver.tex}{\bf Create and Add New Solver Object:} Shows by example how to add a new simulation object to {\bf Heccer} and integrate the modified component with GENESIS.
-   \item \href{../genesis-add-swigbinding-heccer/genesis-add-swigbinding-heccer.tex}{Add a SWIG binding to {\bf HECCER:}} Shows by example how to implement the necessary bindings to make a \href{../simulation-objects/simulation-objects.tex}{\bf Simulation\,Object} callable from Perl using SWIG.
+   \item Adding new channel types to {\bf Heccer} can be done using
+     callouts.  The callout mechanism allows for general user
+     extensions that contribute a current or conductance at a
+     particular time in a simulation. {\bf Heccer} automatically
+     integrates this contribution into the membrane potential.  Check
+     the tests of the callouts for more information
+     (tests/code/callout1.c and tests/code/calloutInjector.c).
+%   \item \href{../genesis-add-object-solver/genesis-add-object-solver.tex}{\bf Create and Add New Solver Object:} Shows by example how to add a new simulation object to {\bf Heccer} and integrate the modified component with GENESIS.
+%   \item \href{../genesis-add-swigbinding-heccer/genesis-add-swigbinding-heccer.tex}{Add a SWIG binding to {\bf HECCER:}} Shows by example how to implement the necessary bindings to make a \href{../simulation-objects/simulation-objects.tex}{\bf Simulation\,Object} callable from Perl using SWIG.
 \end{itemize}
 \end{document}
