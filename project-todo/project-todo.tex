@@ -333,6 +333,31 @@ First move conceptualized items from the supplement to this TODO list.
 
 \section{DONE List}
 
+\subsection{Descriptor file tags recognized by {\it neurospaces\_cron} (2)}
+
+The following tag should be recognized by the documentation build
+system (cf. draft, published):
+\begin{itemize}
+    \item[]{\bf - local} Private (local) documentation publication.
+\end{itemize}
+
+The {\bf local} tag is currently implemented by invoking the following
+command from a UNIX shell:
+
+\begin{verbatim}
+  $ userdocs-build --tags local
+\end{verbatim}
+
+This command builds a local website of all the documents that have the
+tag 'local'.
+
+\begin{verbatim}
+  $ userdocs-build --tags local --tags published
+\end{verbatim}
+
+This command builds a local website with all the published and the
+local documents.
+
 \subsection{gshell help components}
 
 Diagnosis of problem and documented procedure for troubleshooting the Inline::Python module is found in \href{../genesis-dependencies/genesis-dependencies.tex}{GENESIS dependencies} document, in the {\it Note about Inline::Python} section. (DONE)
@@ -479,25 +504,6 @@ an I/O package separate from the Heccer package.
 Create a consolidated directory for inline perl code so that Perl does not 
 constantly create "\_Inline" directories in every working directory
 that ssp and the gshell are called in. 
-
-\subsection{Descriptor file tags recognized by {\it neurospaces\_cron} (2)}
-
-The following tag should be recognized by the documentation build
-system (cf. draft, published):
-\begin{itemize}
-    \item[]{\bf - local} Private (local) documentation publication.
-\end{itemize}
-
-The {\bf local} tag is currently implemented by invoking the following
-command from a UNIX shell:
-
-\begin{verbatim}
- $ userdocs-build --tags local
-\end{verbatim}
-
-This commands build a local website of all the documents that have the
-tag 'local'.
-
 
 \subsection{Implement more consistent G-Shell command names}
 
