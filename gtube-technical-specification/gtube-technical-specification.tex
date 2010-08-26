@@ -17,6 +17,9 @@
 
 	This document outlines the design process employed in the development of the {\bf g-tube}, a graphical user interface which brings all components of the {\bf GENESIS3} system together. With the {\bf g-tube} a user can load, create and run models, track all aspects of the simulation including the schedule, parameters, models, underlying software versions, and directly load the output of simulation runs into {\bf Atoms} that can be processed into tables, plots, and formatted text suitable for inserting into manuscripts. The end result of a {\bf g-tube project} will be a compiled electronic publication, containing the finalized document, with all of the data used to generate the figures {\bf tag-associated}  with the model experiment runs. 
 
+\section*{History}
+
+	User interfaces for running simulations have always been difficult to create due to the structure of the simulators they are meant to be used for. The desire for a unified graphical environment for being able to load, run, display output, and save your simulation data has been coveted for quite some time. In GENESIS 2 a model was composed of a series of scripts, which were essentially programs often containing their own logic and flow control. Building a GUI on top of such logic is very difficult as inputs, outputs and internal data structures of the model can all be changed within the logic of the models scripts, thus making it difficult for the GUI logic to track and control all of possible use cases. With the emergence of declarative formats in computational neuroscience, the ability to build interfaces on top of models on a more general way has become more feasible.
 
 \section*{Data Design}
 
@@ -56,7 +59,7 @@ The Atom management object allows for basic list operations such as adding, dele
 
 \subsection*{Model Object}
 
-	To constrain the complexities of interfacing with the whole of the {\bf GENESIS3} system, modeling functionality is isolated to a single class. In principle this should allow other simulators to be encapsulated within the same abstract data type so long it is mapped to the predefined inputs and outputs the {\bf ModelManager} uses to communicate with the rest of the system.
+	To constrain the complexities of interfacing with the whole of the {\bf GENESIS3} system, modeling functionality is isolated to a single class. In principle this should allow other simulators to be encapsulated within the same abstract data type so long it is mapped to the predefined inputs and outputs the {\bf SimulatorManager} uses to communicate with the rest of the system.
 	Currently interfacing is done via the {\bf gshell} over file descriptors via the object class called {\it bridge}. 
 	
 \subsection*{Project Explorer Tabs}
