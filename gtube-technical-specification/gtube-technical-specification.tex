@@ -19,7 +19,7 @@
 
 \section*{History}
 
-	User interfaces for running simulations have always been difficult to create due to the structure of the simulators they are meant to be used for. The desire for a unified graphical environment for being able to load, run, display output, and save your simulation data has been coveted for quite some time. In GENESIS 2 a model was composed of a series of scripts, which were essentially programs often containing their own logic and flow control. Building a GUI on top of such logic is very difficult as inputs, outputs and internal data structures of the model can all be changed within the logic of the models scripts, thus making it difficult for the GUI logic to track and control all of possible use cases. With the emergence of declarative formats in computational neuroscience, the ability to build interfaces on top of models on a more general way has become more feasible.
+	User interfaces for running simulations have always been difficult to create due to the structure of the simulators they are meant to be used for. The desire for a unified graphical environment for being able to load, run, display output, and save your simulation data has been coveted for quite some time. In GENESIS 2 a model was composed of a series of scripts, which were essentially programs often containing their own logic and flow control. Building a GUI on top of such logic is very difficult as inputs, outputs and internal data structures of the model can all be changed within the logic of the models scripts, thus making it difficult for the GUI logic to track and control all of possible use cases. With the emergence of declarative formats in computational neuroscience, the ability to build interfaces on top of models in a more general way has become more feasible.
 
 \section*{Data Design}
 
@@ -43,10 +43,12 @@ From a file storage perspective a project consists of a directory containing all
 \begin{itemize}
 	\item[] {\bf Project Manager:} Loads or creates a project specification and allows for creating, deleting and editing Model, Atom, Manuscript, and Review management objects.
 	\item[] {\bf G3 User Workflow Manager:} Manages a list of models associated with the current project, along with model states and {\bf SSP} configurations.
+	\item[] {\bf Simulator Manager:} Manages a registry of simulators to run experiments.
 	\item[] {\bf Atom Manager:} Manages a list of all of the atoms in the current project. 
 	\item[] {\bf Manuscript Manager:} Manages the atoms tagged as part of a manuscript.
 	\item[] {\bf Review Manager:} Manages the compiled manuscript atoms for review.
 \end{itemize}
+
 
 \begin{figure}[ht]
    \centering
@@ -55,7 +57,19 @@ From a file storage perspective a project consists of a directory containing all
    \label{figure: 1}
 \end{figure}
 
+
 The Atom management object allows for basic list operations such as adding, deleting, and editing members. Manuscript and Review managers are subclasses of the Atom manager, that display tag-filtered views of atoms in the project workspace. Management objects encapsulate {\bf wxPython} operations for allowing the end user to perform these actions graphically by drawing their control widgets to the Main Frame. 
+
+\subsection*{Workflow Relationships}
+
+	Due to the nice separation of tasks in the GENESIS user workflow it is easy to disseminate responsibilities amongst higher level management classes.
+
+\begin{figure}[ht]
+   \centering
+   \includegraphics[scale=0.40]{figures/WorkflowSegmentation.eps}
+   \caption{{\bf Workflow segmentation:} A figure displaying the separation of responsibilities.}
+   \label{figure: 2}
+\end{figure}
 
 \subsection*{Model Object}
 
@@ -101,6 +115,17 @@ Below is an example of the levels of abstraction needed to create a usable plugi
    \includegraphics[scale=0.6]{figures/SimulatorPluginOverview.eps}
    \caption{{\bf Simulator Plugins:} Figure shows a UML diagram of the relationships between loadable simulator objects and the Manager class of the GUI logic.}
    \label{fig:Simulator Plugin Overview}
+\end{figure}
+
+\subsubsection*{Simulator Object}
+
+	The simulation object is designed with base classes that have functionality directly tied into the user workflow. This allows for a neater separation of code that is specific to their own tasks. The top level of the object contains the operations necessary to start, stop, and detect if the simulator is running. 
+
+\begin{figure}[ht]
+   \centering
+   \includegraphics[scale=0.6]{figures/SimulatorObject.eps}
+   \caption{{\bf Simulator Object:} Figure shows a UML diagram of the simulator object with it's inherited base classes that directly tie in to the user workflow.}
+   \label{fig:Simulator Object}
 \end{figure}
 
 
