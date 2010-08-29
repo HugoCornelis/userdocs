@@ -37,6 +37,30 @@ The repository machine serves the source code for the GENESIS project as well as
 
 \item 
 \begin{itemize}
+\item[] {\bf Admin:} Hugo
+\item[] {\bf Date:} 8/29/2010 
+\item[] {\bf Actions:} Inspecting crontab and tester configuration
+  files.
+\item[] {\bf Reason:} Sometimes the tester output of two consecutive
+  cron jobs gets concatenated into one neurospaces\_cron.stdout file.
+  This seems to happen only when the configuration file
+  ``/home/g3tester/neurospaces\_cron\_all.yml'' is used.  For those
+  runs, errors are reported twice because they occur twice in the
+  report that reports about two consecutive runs.
+  The line
+\begin{verbatim}
+LOGDIR: /var/www/html/tests/neurospaces_cron_logs
+\end{verbatim}
+  is missing from ``/home/g3tester/neurospaces\_cron\_all.yml'', such
+  that neurospaces\_cron does not rotate logs in the correct directory
+  (I guess it attempts it either in the /tmp or /root directory).
+  Inside neurospaces\_cron the function rotate\_logs() is likely also
+  responsible for partial truncation of the output file.
+\item[] {\bf Impact:} None
+\end{itemize}
+
+\item 
+\begin{itemize}
 \item[] {\bf Admin:} Mando
 \item[] {\bf Date:} 8/22/2010 
 \item[] {\bf Actions:} Removed source code directories building up during packaging.
