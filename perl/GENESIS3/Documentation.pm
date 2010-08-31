@@ -693,7 +693,7 @@ sub build_latex
 	}
     }
 
-    return undef;
+    return $result;
 }
 
 
@@ -879,7 +879,7 @@ sub build_restructured_text
 	}
     }
 
-    return undef;
+    return $result;
 }
 
 
