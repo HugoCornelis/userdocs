@@ -6,6 +6,7 @@ dist_bin_SCRIPTS = \
 	bin/userdocs-build \
 	bin/userdocs-check \
 	bin/userdocs-create \
+	bin/userdocs-pull \
 	bin/userdocs-rename \
 	bin/userdocs-snippet \
 	bin/userdocs-sync \
