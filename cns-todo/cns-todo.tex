@@ -152,9 +152,10 @@ Previous measures to diagnose were to use the {\bf Instruments} application \(A 
 
 7/25/2010: Found the point of the stall during a test run to be at the \"system \$shell\_command;\" call in neurospaces\_harness.
 
-8/30/2010: Made some changes in an attempt to remove the stalling, instead get an error at "select\$DARWIN_EXTSN" as opposed to the low level write statement "write\$NOCANCEL$UNIX2003". Stall remains so won't check in the changes since it did not fix the problem.
+8/30/2010: Made some changes in an attempt to remove the stalling, instead get an error at "select\$DARWIN\_EXTSN" as opposed to the low level write statement "write\$NOCANCEL\$UNIX2003". Stall remains so won't check in the changes since it did not fix the problem.
 
 8/31/2010: Using ptkdb and running different operating systems side by side I've narrowed down the possible error to the perl Expect module, which seems to behave a bit differently on Mac OSX compared to CentOS and Ubuntu. For the tests which start with a command that outputs expected output with a following test case that does not write, only reads this output, the output of the prompt starting the program along with the programs output is concatenated together. This causes the test to fail, but since this read only happens on the first test specification, subsequent tests pass. 
+
 \begin{center}
   \vspace{5mm}
   \centering
