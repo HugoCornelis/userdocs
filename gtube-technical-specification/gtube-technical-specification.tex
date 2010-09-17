@@ -154,23 +154,79 @@ Presentation of widgets is implemented with the {\bf wxPython} Advanced User Int
 
 \subsection*{Development Tools}
 
-	The implementation of the {\bf g-tube} is done in {\bf Python} using the {\bf wxPython} widget toolkit. The {\bf wxPython} toolkit is a Python extension module of the popular {wxWidgets} coss-platform GUI library. This allows the user to create widgets with the look and feel of the host operating system while using the powerful {\bf Python} language. {\bf wxPython} is open source, has many contributors, boasts a large collection of example tutorials and documentation, and possesses one of the friendliest communities. To ensure maximum computability across different versions of python, coding will follow the {\bf Python} Code \href{http://www.python.org/dev/peps/pep-0008/}{Style Guide} with the exception being camel case for module names, a convention inherited from wxPython.
-	
-Other external Python modules used include:
+	The implementation of the {\bf g-tube} is done in {\bf Python} using the {\bf wxPython} widget toolkit. The {\bf wxPython} toolkit is a Python extension module of the popular {wxWidgets} coss-platform GUI library. This allows the user to create widgets with the look and feel of the host operating system while using the powerful {\bf Python} language. {\bf wxPython} is open source, has many contributors, boasts a large collection of example tutorials and documentation, and possesses one of the friendliest communities. 
+
+
+The following {\bf Python} dependencies are also required:
 
 \begin{itemize}	
 \item[] {\bf yaml:} For parsing and loading configuration and data files.
 \item[] {\bf matplotlib:} Provides more refined plot panels.
+\item[] {\bf PyOpenGL:} Required for 3D graphics. Available \href{http://pyopengl.sourceforge.net/}{here.}
 \end{itemize}
 
 Higher level GUI construction is done using \href{http://xrced.sourceforge.net/}{\bf XRCed}, a simple graphical editor that creates Python classes with embedded (or externally loaded) \href{http://wiki.wxpython.org/XRCTutorial}{\bf XRC} files. 
+
+
+\subsection*{Coding Style}
+	To ensure maximum compatibility across different versions of python, coding will follow the {\bf Python} Code \href{http://www.python.org/dev/peps/pep-0008/}{Style Guide} with the exception of using camel case for module names, a convention inherited from wxPython. 
+	
+\subsubsection*{Private members}	
+	Python does not have any truly private members within classes, so prefixing with "\_" is used for weak privatizing of operations or attributes, and "\_\_" is used for strong privatizing (also called "name mangling"). Example:
+	
+\begin{verbatim}
+	class foo:
+
+	  def __init__(self,value):
+
+	    self.__my_value = value
+
+	  # top level methods
+
+	  def pub_get_value(self):
+	    return self.__priv_get_value()
+
+	  # private methods
+
+	  def __priv_get_value(self):
+	    return self.__my_value
+
+	if __name__ == '__main__':
+
+	  bar = foo(21)
+
+	  print "My value is %s\n" % bar.pub_get_value()
+\end{verbatim}
+
+The result of this script is "My value is 21". The value is set to a private internal variable {\it \_\_my\_value}. The public method {\it pub\_get\_value} calls the private method {\it \_\_priv\_get\_variable())} to retrieve the value. A direct call to {\it \_\_priv\_get\_value(} like this:
+
+\begin{verbatim}
+	if __name__ == '__main__':
+
+	  bar = foo(21)
+
+	  print "My value is %s\n" % bar.__priv_get_value()
+\end{verbatim}
+
+ will produce an error. If the private function was declared with weak privatizing using a single underscore like,  {\it \_priv\_get\_value()}, then it would be possible to call it from the main as follows:
+
+\begin{verbatim}
+	if __name__ == '__main__':
+
+	  bar = foo(21)
+
+	  print "My value is %s\n" % bar._priv_get_value()
+\end{verbatim}
+
+Privatizing was typically considered "Unpythonic," however due to potential program breaking name conflicts which can occur during inheritance, it is common to privatize methods that are not to be overridden. The {\bf gtube}, being a program that makes use of many object relationships, uses private members where appropriate.
+
 
 \subsubsection*{Engineering Tools}
 
 For UML and other software figure drawing a "project" directory has been placed in the top level source code directory. In this directory there are project files for:
 
 \begin{itemize}
-\item[] \href{http://bouml.free.fr}{\bf bouml}: A freeware cross platform UML diagramming software. It features a wealth of user \href{http://bouml.free.fr/doc/index.html}{documentation} and can export Python code from your diagrams. {\bf Bouml} is also available via apt-get on debian and ubuntu systems. It should be noted that bouml is very unforgiving in it's backward computability, so any version less than 4.22.2 will not load the versioned project in the repository.
+\item[] \href{http://bouml.free.fr}{\bf bouml}: A freeware cross platform UML diagramming software. It features a wealth of user \href{http://bouml.free.fr/doc/index.html}{documentation} and can export Python code from your diagrams. {\bf Bouml} is also available via apt-get on debian and ubuntu systems. It should be noted that bouml is very unforgiving in it's backward compatability, so any version less than 4.22.2 will not load the versioned project in the repository.
 \item[] \href{http://www.stack.nl/~dimitri/doxygen/}{\bf Doxygen}: Doxygen has a UML option that creates very nice looking diagrams with browsable code.
 \end{itemize}
 
