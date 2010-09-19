@@ -206,6 +206,10 @@ sub build
     {
 	$result = $self->build_restructured_text();
     }
+    elsif ($self->is_rich_text_format())
+    {
+	$result = $self->build_rich_text_format();
+    }
     elsif ($self->is_pdf())
     {
 	$result = $self->build_pdf();
@@ -883,6 +887,123 @@ sub build_restructured_text
 }
 
 
+sub build_rich_text_format
+{
+    my $self = shift;
+
+    my $directory = $self->{name};
+
+    my $result;
+
+    # find relevant source files
+
+    my $filenames = $self->source_filenames();
+
+    # loop over source files
+
+    foreach my $filename (@$filenames)
+    {
+	# for restructured text sources
+
+	if ($filename =~ /\.rtf$/)
+	{
+	    chdir "output";
+
+	    # prepare output: general rst processing
+
+	    $filename =~ m((.*)\.rtf$);
+
+	    my $filename_base = $1;
+
+# 	    if (!$options->{parse_only})
+	    {
+		# generate latex output
+
+		{
+		    system "unrtf '../$filename_base.rtf' --latex >'$filename_base.tex'";
+
+		    if ($?)
+		    {
+			$result = "unrtf '../$filename_base.rtf' --latex >'$filename_base.tex'";
+		    }
+
+		}
+
+		# generate html output
+
+		{
+		    mkdir 'html';
+
+		    mkdir 'html/figures';
+
+# 		    if ($options->{verbose})
+		    {
+			print "$0: entering html\n";
+		    }
+
+		    chdir "html";
+
+		    # read latex source
+
+		    use IO::File;
+
+		    my $source_file = IO::File->new("<../$filename");
+
+		    my $source_text = join "", <$source_file>;
+
+		    $source_file->close();
+
+		    $source_file = IO::File->new(">$filename");
+
+		    print $source_file $source_text;
+
+		    $source_file->close();
+
+		    # copy figures
+
+		    system "cp -rp ../figures/* figures/";
+
+		    #     if ($?)
+		    #     {
+		    # 	return "cp -rp ../figures/* figures/";
+		    #     }
+
+		    # generate html output
+
+# 		    if (!$options->{parse_only})
+		    {
+			system "unrtf '../$filename' --html >'$filename_base.html'";
+
+			if ($?)
+			{
+			    $result = "unrtf '../$filename' --html >'$filename_base.html'";
+			}
+		    }
+
+# 		    if ($options->{verbose})
+		    {
+			print "$0: leaving html\n";
+		    }
+
+		    chdir "..";
+		}
+	    }
+
+	    chdir "..";
+	}
+
+	# else unknown source file type
+
+	else
+	{
+	    print "$0: unknown file type for $filename";
+	}
+    }
+
+    return $result;
+}
+
+
 sub build_wav
 {
     my $self = shift;
@@ -965,7 +1086,7 @@ sub copy
 	{
 	    # for latex and restructured text sources
 
-	    if ($filename =~ /\.(rst|tex)$/)
+	    if ($filename =~ /\.(rst|rtf|tex)$/)
 	    {
 		# create workspace directories for generating output
 
@@ -1341,6 +1462,14 @@ sub is_restructured_text
 }
 
 
+sub is_rich_text_format
+{
+    my $self = shift;
+
+    return $self->has_tag('rtf');
+}
+
+
 sub is_wav
 {
     my $self = shift;
@@ -1544,6 +1673,7 @@ sub source_filenames
 	   }
 	   `ls *.tex`,
 	   `ls *.rst`,
+	   `ls *.rtf`,
 	  ];
 
     return $result;
