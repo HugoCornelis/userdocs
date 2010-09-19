@@ -303,7 +303,7 @@ sub build_2_dvi
 	return "latex '$filename'";
     }
 
-    $self->{build_2_dvi} = 1;
+    $self->{build_2_dvi}->{$filename} = 1;
 
     return undef;
 }
@@ -321,7 +321,7 @@ sub build_2_html
 
     my $result;
 
-    if (!$self->{build_2_dvi})
+    if (!$self->{build_2_dvi}->{$filename})
     {
 	my $build_error = $self->build_2_dvi($filename, $filename_base, $options);
 
@@ -440,7 +440,7 @@ sub build_2_pdf
 
     my $result;
 
-    if (!$self->{build_2_dvi})
+    if (!$self->{build_2_dvi}->{$filename})
     {
 	my $build_error = $self->build_2_dvi($filename, $filename_base, $options);
 
@@ -493,7 +493,7 @@ sub build_2_ps
 
     my $result;
 
-    if (!$self->{build_2_dvi})
+    if (!$self->{build_2_dvi}->{$filename})
     {
 	my $build_error = $self->build_2_dvi($filename, $filename_base, $options);
 
