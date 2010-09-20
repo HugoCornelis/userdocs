@@ -859,7 +859,12 @@ sub build_restructured_text
 
 			if ($?)
 			{
-			    $result = "rst2html '../$filename' '$filename_base.html'";
+			    system "rst2html.py '../$filename' '$filename_base.html'";
+
+			    if ($?)
+			    {
+				$result = "rst2html(.py)? '../$filename' '$filename_base.html'";
+			    }
 			}
 		    }
 
