@@ -783,34 +783,34 @@ sub build_restructured_text
 	    {
 		# generate pdf output
 
-		{
-		    mkdir "pdf";
+# 		{
+# 		    mkdir "pdf";
 
-# 		    if ($options->{verbose})
-		    {
-			print "$0: entering pdf\n";
-		    }
+# # 		    if ($options->{verbose})
+# 		    {
+# 			print "$0: entering pdf\n";
+# 		    }
 
-		    chdir "pdf";
+# 		    chdir "pdf";
 
-# 		    if (!$options->{parse_only})
-		    {
-			system "rst2pdf '../$filename_base.rst' -o '$filename_base.pdf'";
+# # 		    if (!$options->{parse_only})
+# 		    {
+# 			system "rst2pdf '../$filename_base.rst' -o '$filename_base.pdf'";
 
-			if ($?)
-			{
-			    $result = "rst2pdf '../$filename_base.rst' -o '$filename_base.pdf'";
-			}
+# 			if ($?)
+# 			{
+# 			    $result = "rst2pdf '../$filename_base.rst' -o '$filename_base.pdf'";
+# 			}
 
-		    }
+# 		    }
 
-# 		    if ($options->{verbose})
-		    {
-			print "$0: leaving pdf\n";
-		    }
+# # 		    if ($options->{verbose})
+# 		    {
+# 			print "$0: leaving pdf\n";
+# 		    }
 
-		    chdir "..";
-		}
+# 		    chdir "..";
+# 		}
 
 		# generate html output
 
