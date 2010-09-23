@@ -202,6 +202,14 @@ sub build
     {
 	$result = $self->build_redirect();
     }
+    elsif ($self->is_restructured_text())
+    {
+	$result = $self->build_restructured_text();
+    }
+    elsif ($self->is_rich_text_format())
+    {
+	$result = $self->build_rich_text_format();
+    }
     elsif ($self->is_pdf())
     {
 	$result = $self->build_pdf();
@@ -299,7 +307,7 @@ sub build_2_dvi
 	return "latex '$filename'";
     }
 
-    $self->{build_2_dvi} = 1;
+    $self->{build_2_dvi}->{$filename} = 1;
 
     return undef;
 }
@@ -317,7 +325,7 @@ sub build_2_html
 
     my $result;
 
-    if (!$self->{build_2_dvi})
+    if (!$self->{build_2_dvi}->{$filename})
     {
 	my $build_error = $self->build_2_dvi($filename, $filename_base, $options);
 
@@ -436,7 +444,7 @@ sub build_2_pdf
 
     my $result;
 
-    if (!$self->{build_2_dvi})
+    if (!$self->{build_2_dvi}->{$filename})
     {
 	my $build_error = $self->build_2_dvi($filename, $filename_base, $options);
 
@@ -489,7 +497,7 @@ sub build_2_ps
 
     my $result;
 
-    if (!$self->{build_2_dvi})
+    if (!$self->{build_2_dvi}->{$filename})
     {
 	my $build_error = $self->build_2_dvi($filename, $filename_base, $options);
 
@@ -689,7 +697,7 @@ sub build_latex
 	}
     }
 
-    return undef;
+    return $result;
 }
 
 
@@ -740,6 +748,264 @@ sub build_redirect
     my $directory = $self->{name};
 
     return create_http_redirect($directory, $self->{descriptor}->{redirect});
+}
+
+
+sub build_restructured_text
+{
+    my $self = shift;
+
+    my $directory = $self->{name};
+
+    my $result;
+
+    # find relevant source files
+
+    my $filenames = $self->source_filenames();
+
+    # loop over source files
+
+    foreach my $filename (@$filenames)
+    {
+	# for restructured text sources
+
+	if ($filename =~ /\.rst$/)
+	{
+	    chdir "output";
+
+	    # prepare output: general rst processing
+
+	    $filename =~ m((.*)\.rst$);
+
+	    my $filename_base = $1;
+
+# 	    if (!$options->{parse_only})
+	    {
+		# generate pdf output
+
+# 		{
+# 		    mkdir "pdf";
+
+# # 		    if ($options->{verbose})
+# 		    {
+# 			print "$0: entering pdf\n";
+# 		    }
+
+# 		    chdir "pdf";
+
+# # 		    if (!$options->{parse_only})
+# 		    {
+# 			system "rst2pdf '../$filename_base.rst' -o '$filename_base.pdf'";
+
+# 			if ($?)
+# 			{
+# 			    $result = "rst2pdf '../$filename_base.rst' -o '$filename_base.pdf'";
+# 			}
+
+# 		    }
+
+# # 		    if ($options->{verbose})
+# 		    {
+# 			print "$0: leaving pdf\n";
+# 		    }
+
+# 		    chdir "..";
+# 		}
+
+		# generate html output
+
+		{
+		    mkdir 'html';
+
+		    mkdir 'html/figures';
+
+# 		    if ($options->{verbose})
+		    {
+			print "$0: entering html\n";
+		    }
+
+		    chdir "html";
+
+		    # read latex source
+
+		    use IO::File;
+
+		    my $source_file = IO::File->new("<../$filename");
+
+		    my $source_text = join "", <$source_file>;
+
+		    $source_file->close();
+
+		    $source_file = IO::File->new(">$filename");
+
+		    print $source_file $source_text;
+
+		    $source_file->close();
+
+		    # copy figures
+
+		    system "cp -rp ../figures/* figures/";
+
+		    #     if ($?)
+		    #     {
+		    # 	return "cp -rp ../figures/* figures/";
+		    #     }
+
+		    # generate html output
+
+# 		    if (!$options->{parse_only})
+		    {
+			system "rst2html '../$filename' '$filename_base.html'";
+
+			if ($?)
+			{
+			    system "rst2html.py '../$filename' '$filename_base.html'";
+
+			    if ($?)
+			    {
+				$result = "rst2html(.py)? '../$filename' '$filename_base.html'";
+			    }
+			}
+		    }
+
+# 		    if ($options->{verbose})
+		    {
+			print "$0: leaving html\n";
+		    }
+
+		    chdir "..";
+		}
+	    }
+
+	    chdir "..";
+	}
+
+	# else unknown source file type
+
+	else
+	{
+	    print "$0: unknown file type for $filename";
+	}
+    }
+
+    return $result;
+}
+
+
+sub build_rich_text_format
+{
+    my $self = shift;
+
+    my $directory = $self->{name};
+
+    my $result;
+
+    # find relevant source files
+
+    my $filenames = $self->source_filenames();
+
+    # loop over source files
+
+    foreach my $filename (@$filenames)
+    {
+	# for restructured text sources
+
+	if ($filename =~ /\.rtf$/)
+	{
+	    chdir "output";
+
+	    # prepare output: general rst processing
+
+	    $filename =~ m((.*)\.rtf$);
+
+	    my $filename_base = $1;
+
+# 	    if (!$options->{parse_only})
+	    {
+		# generate latex output
+
+		{
+		    system "unrtf '../$filename_base.rtf' --latex >'$filename_base.tex'";
+
+		    if ($?)
+		    {
+			$result = "unrtf '../$filename_base.rtf' --latex >'$filename_base.tex'";
+		    }
+
+		}
+
+		# generate html output
+
+		{
+		    mkdir 'html';
+
+		    mkdir 'html/figures';
+
+# 		    if ($options->{verbose})
+		    {
+			print "$0: entering html\n";
+		    }
+
+		    chdir "html";
+
+		    # read latex source
+
+		    use IO::File;
+
+		    my $source_file = IO::File->new("<../$filename");
+
+		    my $source_text = join "", <$source_file>;
+
+		    $source_file->close();
+
+		    $source_file = IO::File->new(">$filename");
+
+		    print $source_file $source_text;
+
+		    $source_file->close();
+
+		    # copy figures
+
+		    system "cp -rp ../figures/* figures/";
+
+		    #     if ($?)
+		    #     {
+		    # 	return "cp -rp ../figures/* figures/";
+		    #     }
+
+		    # generate html output
+
+# 		    if (!$options->{parse_only})
+		    {
+			system "unrtf '../$filename' --html >'$filename_base.html'";
+
+			if ($?)
+			{
+			    $result = "unrtf '../$filename' --html >'$filename_base.html'";
+			}
+		    }
+
+# 		    if ($options->{verbose})
+		    {
+			print "$0: leaving html\n";
+		    }
+
+		    chdir "..";
+		}
+	    }
+
+	    chdir "..";
+	}
+
+	# else unknown source file type
+
+	else
+	{
+	    print "$0: unknown file type for $filename";
+	}
+    }
+
+    return $result;
 }
 
 
@@ -823,9 +1089,9 @@ sub copy
 
 	foreach my $filename (@$filenames)
 	{
-	    # for latex sources
+	    # for latex and restructured text sources
 
-	    if ($filename =~ /\.tex$/)
+	    if ($filename =~ /\.(rst|rtf|tex)$/)
 	    {
 		# create workspace directories for generating output
 
@@ -1193,6 +1459,22 @@ sub is_redirect
 }
 
 
+sub is_restructured_text
+{
+    my $self = shift;
+
+    return $self->has_tag('rst');
+}
+
+
+sub is_rich_text_format
+{
+    my $self = shift;
+
+    return $self->has_tag('rtf');
+}
+
+
 sub is_wav
 {
     my $self = shift;
@@ -1246,7 +1528,7 @@ sub publish
 
     if (!chdir $directory)
     {
-	return "cannot change to directory $directory";
+	return "cannot change to directory $directory (now in " . `pwd` . ")";
     }
 
     # check for the obsolete tag first so we don't end up doing
@@ -1395,6 +1677,8 @@ sub source_filenames
 	       chomp; $_
 	   }
 	   `ls *.tex`,
+	   `ls *.rst`,
+	   `ls *.rtf`,
 	  ];
 
     return $result;

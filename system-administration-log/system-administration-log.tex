@@ -35,13 +35,55 @@ The repository machine serves the source code for the GENESIS project as well as
 
 \begin{itemize}
 
+\item
+\begin{itemize}
+\item[] {\bf Admin:} Mando
+\item[] {\bf Date:} 9/16/2010 
+\item[] {\bf Actions:} Inspected permissions on directories served over the internet.
+\item[] {\bf Reason:} Suspected some files or directories may be owned by root instead of g3tester. Was not the case, permissions were ok.
+\item[] {\bf Impact:} None
+\end{itemize}
+	
+\item 
+\begin{itemize}
+\item[] {\bf Admin:} Mando
+\item[] {\bf Date:} 9/16/2010 
+\item[] {\bf Actions:} Retrieve a copy of the neurospaces\_cron configuration file for testing.
+\item[] {\bf Reason:} Going to retest the output of source tarballs and packages with the same configuration to check for any bugs.
+\item[] {\bf Impact:} None
+\end{itemize}
+	
+\item 
+\begin{itemize}
+\item[] {\bf Admin:} Hugo
+\item[] {\bf Date:} 8/29/2010 
+\item[] {\bf Actions:} Inspecting crontab and tester configuration
+  files.
+\item[] {\bf Reason:} Sometimes the tester output of two consecutive
+  cron jobs gets concatenated into one neurospaces\_cron.stdout file.
+  This seems to happen only when the configuration file
+  ``/home/g3tester/neurospaces\_cron\_all.yml'' is used.  For those
+  runs, errors are reported twice because they occur twice in the
+  report that reports about two consecutive runs.
+  The line
+\begin{verbatim}
+LOGDIR: /var/www/html/tests/neurospaces_cron_logs
+\end{verbatim}
+  is missing from ``/home/g3tester/neurospaces\_cron\_all.yml'', such
+  that neurospaces\_cron does not rotate logs in the correct directory
+  (I guess it attempts it either in the /tmp or /root directory).
+  Inside neurospaces\_cron the function rotate\_logs() is likely also
+  responsible for partial truncation of the output file.
+\item[] {\bf Impact:} None
+\end{itemize}
+
 \item 
 \begin{itemize}
 \item[] {\bf Admin:} Mando
 \item[] {\bf Date:} 8/22/2010 
 \item[] {\bf Actions:} Removed source code directories building up during packaging.
 \item[] {\bf Reason:} The unzipped directories were not being cleaned by the packaging process. Extra directories of code were appearing in the doxygen documentation.
-\item[] {\bf Impact:} Doxygen documentation should no longer has multiple directories of the same code listed.
+\item[] {\bf Impact:} Doxygen documentation should no longer have multiple directories of the same code listed.
 \end{itemize}
 
 \item 
@@ -263,9 +305,72 @@ on my laptop: neurospaces_sync
 
 \subsection*{darwin.cbi.utsa.edu}
 
-This machine hosts the GENESIS website as well as the output from the user documentation system. All of this is done through a single non-root user account named \'genesis\'.
+This machine hosts the GENESIS website as well as the output from the user documentation system. All of the user documentation building tasks are done through a single non-root user account named \'genesis\'.
 
 \begin{itemize}
+
+\item 
+\begin{itemize}
+\item[] {\bf Admin:} Hugo
+\item[] {\bf Date:} 9/21/2010 
+\item[] {\bf Actions:} Check for the availability of variants of the
+  script rst2pdf.
+\item[] {\bf Reason:} The rst2pdf script is not found (although
+  rst2html is).
+\item[] {\bf Impact:} None.
+\end{itemize}
+
+\item 
+\begin{itemize}
+\item[] {\bf Admin:} Hugo
+\item[] {\bf Date:} 9/21/2010 
+\item[] {\bf Actions:} Check if the document input-models-notes was
+  generated on darwin.  It looks as if the missing rst2pdf script
+  makes for a situation where the successfully build html is not
+  published.
+\item[] {\bf Reason:} input-models-notes is not available from the
+  website index page.
+\item[] {\bf Impact:} None.
+\end{itemize}
+
+\item 
+\begin{itemize}
+\item[] {\bf Admin:} Mando
+\item[] {\bf Date:} 9/20/2010 
+\item[] {\bf Actions:} Installed unrtf and docutils from source (Performed as root).
+\item[] {\bf Reason:} The rst2html and unrtf commands are not found and not on yum.
+\item[] {\bf Impact:} Documentation features should be enabled.
+\end{itemize}
+
+\item 
+\begin{itemize}
+\item[] {\bf Admin:} Hugo
+\item[] {\bf Date:} 9/20/2010 
+\item[] {\bf Actions:} Checking for the existence of the commands
+  rst2html and unrtf. 
+\item[] {\bf Reason:} The rst2html and unrtf commands are required for
+  document building.
+\item[] {\bf Impact:} None
+\end{itemize}
+	
+\item 
+\begin{itemize}
+\item[] {\bf Admin:} Hugo
+\item[] {\bf Date:} 8/31/2010
+\item[] {\bf Reason:} Checking the availability of restructured text on darwin.
+\item[] {\bf Actions:} Unsuccessful attempts to install with 'yum install python-docutils'.
+\item[] {\bf Impact:} None expected.
+\end{itemize}
+
+\item 
+\begin{itemize}
+\item[] {\bf Admin:} Mando
+\item[] {\bf Date:} 8/23/2010
+\item[] {\bf Actions:} Installed the rest of the dependencies needed to get all of GENESIS 3 working as listed in \href{../installation-fedora12/installation-fedora12.tex}. Should be noted that all installation was done via root, not the genesis user.
+\item[] {\bf Reason:} Userdocs needs the gshell functional to dynamically create documentation snippets. 
+\item[] {\bf Impact:} All tests (sans the ones with known issues) are now functional on darwin.
+\end{itemize}
+	
 \item 
 \begin{itemize}
 \item[] {\bf Admin:} Mando
@@ -325,6 +430,33 @@ System specs:
 
 \begin{itemize}
 
+\item 
+\begin{itemize}
+\item[] {\bf Admin:} Mando
+\item[] {\bf Date:} 9/14/2010
+\item[] {\bf Reason:} An error citing python as being not executable. 
+\item[] {\bf Actions:} env now finds /usr/bin before the standard mac python location. Added the standard mac location to the crontab path as it cites only the regular unix locations.
+\item[] {\bf Impact:} Test should not output an error any longer.
+\end{itemize}
+	
+\item 
+\begin{itemize}
+\item[] {\bf Admin:} Mando
+\item[] {\bf Date:} 9/9/2010
+\item[] {\bf Reason:} Observed build errors (die messages) in the tester email. 
+\item[] {\bf Actions:} Inspected project directories and performed a distclean and uninstall.
+\item[] {\bf Impact:} None
+\end{itemize}
+
+\item 
+\begin{itemize}
+\item[] {\bf Admin:} Mando
+\item[] {\bf Date:} 9/3/2010
+\item[] {\bf Reason:} Chronic test failures (which have been verified to work correctly). 
+\item[] {\bf Actions:} Examined tester expected and seen files since they can't be available over the internet.
+\item[] {\bf Impact:} As of the time of logout, None.
+\end{itemize}
+	
 \item 
 \begin{itemize}
 \item[] {\bf Admin:} Mando
