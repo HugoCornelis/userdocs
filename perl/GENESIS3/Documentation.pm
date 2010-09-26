@@ -391,7 +391,7 @@ sub build_2_html
 
 	if ($?)
 	{
-	    $result = "latex '$filename'";
+	    $result = "building $filename (latex '$filename': $?)";
 	}
 
 	#! note: both makeindex and bibtex produce error returns when
@@ -416,7 +416,7 @@ sub build_2_html
 
 	if ($?)
 	{
-	    $result = "htlatex '$filename'";
+	    $result = "building $filename (htlatex '$filename', $?)";
 	}
 
    }
@@ -469,7 +469,7 @@ sub build_2_pdf
 
 	if ($?)
 	{
-	    $result = "ps2pdf '../ps/$filename_base.ps' '$filename_base.pdf'";
+	    $result = "creating $filename_base.pdf from $filename_base.ps (ps2pdf '../ps/$filename_base.ps' '$filename_base.pdf', $?)";
 	}
 
     }
@@ -522,7 +522,7 @@ sub build_2_ps
 
 	if ($?)
 	{
-	    $result = "dvips '../$filename_base.dvi' -o '$filename_base.ps'";
+	    $result = "creating dvi from $filename (dvips '../$filename_base.dvi' -o '$filename_base.ps', $?)";
 	}
 
     }
@@ -545,13 +545,9 @@ sub build_2_ps
 
 sub build_file_copy
 {
-    my $documentname = shift;
+    my $self = shift;
 
     my $filetype = shift;
-
-    print "\n\nThe document ";
-    print $documentname;
-    print " is a $filetype file, copying it over to the output directory\n\n";
 
     system "mkdir -p output/ps";
 
@@ -578,21 +574,21 @@ sub build_file_copy
 
     if ($?)
     {
-	return "cp *.$filetype output/html";
+	return "copying $filetype files to the html output directory (cp *.$filetype output/html, $?)";
     }
 
     system "cp *.$filetype output/ps";
 
     if ($?)
     {
-	return "cp *.$filetype output/ps";
+	return "copying $filetype files to the postscript output directory (cp *.$filetype output/ps, $?)";
     }
 
     system "cp *.$filetype output/pdf";
 
     if ($?)
     {
-	return "cp *.$filetype output/pdf";
+	return "copying $filetype files to the pdf output directory (cp *.$filetype output/pdf, $?)";
     }
 
     return undef;
@@ -605,7 +601,7 @@ sub build_html
 
     my $directory = $self->{name};
 
-    return build_file_copy($self->{descriptor}->{'document name'}, 'html');
+    return $self->build_file_copy('html');
 }
 
 
@@ -707,7 +703,7 @@ sub build_pdf
 
     my $directory = $self->{name};
 
-    return build_file_copy($self->{descriptor}->{'document name'}, 'pdf');
+    return $self->build_file_copy('pdf');
 }
 
 
@@ -717,7 +713,7 @@ sub build_png
 
     my $directory = $self->{name};
 
-    return build_file_copy($self->{descriptor}->{'document name'}, 'png');
+    return $self->build_file_copy('png');
 }
 
 
@@ -727,7 +723,7 @@ sub build_ps
 
     my $directory = $self->{name};
 
-    return build_file_copy($self->{descriptor}->{'document name'}, 'ps');
+    return $self->build_file_copy('ps');
 }
 
 
@@ -737,7 +733,7 @@ sub build_mp3
 
     my $directory = $self->{name};
 
-    return build_file_copy($self->{descriptor}->{'document name'}, 'mp3');
+    return $self->build_file_copy('mp3');
 }
 
 
@@ -863,7 +859,7 @@ sub build_restructured_text
 
 			    if ($?)
 			    {
-				$result = "rst2html(.py)? '../$filename' '$filename_base.html'";
+				$result = "creating html for $filename (rst2html(.py)? '../$filename' '$filename_base.html', $?)";
 			    }
 			}
 		    }
@@ -929,7 +925,7 @@ sub build_rich_text_format
 
 		    if ($?)
 		    {
-			$result = "unrtf '../$filename_base.rtf' --latex >'$filename_base.tex'";
+			$result = "creating latex from $filename (unrtf '../$filename_base.rtf' --latex >'$filename_base.tex', $?)";
 		    }
 
 		}
@@ -981,7 +977,7 @@ sub build_rich_text_format
 
 			if ($?)
 			{
-			    $result = "unrtf '../$filename' --html >'$filename_base.html'";
+			    $result = "creating html for $filename (unrtf '../$filename' --html >'$filename_base.html', $?)";
 			}
 		    }
 
@@ -1015,7 +1011,7 @@ sub build_wav
 
     my $directory = $self->{name};
 
-    return build_file_copy($self->{descriptor}->{'document name'}, 'wav');
+    return $self->build_file_copy('wav');
 }
 
 
@@ -1041,7 +1037,7 @@ sub check
     if (!$self->{descriptor}->{tags}
 	|| ref $self->{descriptor}->{tags} !~ /ARRAY/)
     {
-	$result = "invalid tag specification";
+	$result = "invalid tag specification for $self->{name}";
     }
 
     return $result;
@@ -1075,7 +1071,7 @@ sub copy
 
 	if ($?)
 	{
-	    $result = "make copy_document";
+	    $result = "make copy_document of $self->{name}, $?";
 	}
 
     }
@@ -1104,7 +1100,7 @@ sub copy
 
 		if ($?)
 		{
-		    $result = "cp $filename output/";
+		    $result = "copying $filename to the output directory (cp $filename output/, $?)";
 		}
 		elsif (-d "figures")
 		{
@@ -1113,7 +1109,7 @@ sub copy
 
 		    if ($?)
 		    {
-			$result = "cp -rfp figures output/";
+			$result = "copying $filename/figures to the output directory (cp -rfp figures output/, $?)";
 		    }
 
 		}
@@ -1128,7 +1124,7 @@ sub copy
 
 		    if ($?)
 		    {
-			$result = "cp -rfp snippets output/";
+			$result = "copying $filename/snippets to the output directory (cp -rfp snippets output/, $?)";
 		    }
 
 		}
@@ -1140,7 +1136,7 @@ sub copy
 	    {
 		print "$0: unknown file type for $filename";
 
-		$result = "unknown file type for $filename";
+		$result = "unknown file type for $filename, expecting .rst, .rtf, or .tex filename extension";
 	    }
 	}
     }
