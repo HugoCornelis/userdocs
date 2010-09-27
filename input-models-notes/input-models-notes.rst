@@ -295,7 +295,7 @@ with the addmsg command.
 The figure below shows the relationships and messages between the objects
 that are used in function *make_pulsed_spiketrain*.
 
-.. image:: images/pulsed_spiketrain_objects.png 
+.. image:: figures/pulsed_spiketrain_objects.png 
 
 A G2 tutorial based on these examples would use figures like this to
 explain how to set up this circuitry with SLI scripting and the ``addmsg``
