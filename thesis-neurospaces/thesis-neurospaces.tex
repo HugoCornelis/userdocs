@@ -1,0 +1,212 @@
+\documentclass[a4paper,openbib,10pt]{article}
+%\documentclass[a4paper,openbib,draft]{article}
+%\usepackage[boxed]{algorithm}
+\usepackage{afterpage}
+%\usepackage{algorithmic}
+\usepackage{alltt}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{boxedminipage}
+\usepackage{calc}
+\usepackage{color}
+\usepackage{endnotes}
+\usepackage{enumerate}
+\usepackage{graphs}
+\usepackage{graphicx}
+\usepackage{indentfirst}
+\usepackage{ite}
+\usepackage{makeidx}
+%\usepackage{minitoc}
+%\usepackage{multind}
+%\usepackage{natbib}
+%usepackage{wrapfig}
+
+%\setlength{\textwidth}{15.7cm}
+%\setlength{\textheight}{25cm}
+
+%\setlength{\oddsidemargin}{0pt}
+
+%\setlength{\topmargin}{0cm}
+%\setlength{\headheight}{0cm}
+%\setlength{\headsep}{0cm}
+%\setlength{\topskip}{0cm}
+
+
+%\setlength{\textwidth}{15.7cm}
+%\setlength{\textheight}{24.2cm}
+
+%\setlength{\oddsidemargin}{0pt}
+
+%\setlength{\topmargin}{0cm}
+%\setlength{\headheight}{1cm}
+%\setlength{\headsep}{0.5cm}
+%\setlength{\topskip}{0cm}
+
+\setlength{\textwidth}{15.7cm}
+\setlength{\textheight}{22cm}
+
+\setlength{\oddsidemargin}{0pt}
+
+\setlength{\topmargin}{0cm}
+\setlength{\headheight}{1cm}
+\setlength{\headsep}{0.5cm}
+\setlength{\topskip}{0cm}
+
+%\renewcommand {\baselinestretch} {1.5}
+
+\pagestyle{headings}
+
+%\newenvironment{treegraph}{\begin{framegraph}}{\end{framegraph}}
+\newenvironment{treegraph}{\begin{graph}}{\end{graph}}
+
+\newenvironment{pagedtext}{\begin{minipage}}{\end{minipage}}
+%\newenvironment{pagedtext}{\begin{boxedminipage}}{\end{boxedminipage}}
+
+\newsavebox{\algobox}
+\newlength{\algoenumpagewidth}
+
+\newenvironment{algo-enumerate}[1][enumerate]{%
+%  \sbox{\algobox}{#1}
+  \setlength{\algoenumpagewidth}{\textwidth - 1.5cm}%
+  \begin{pagedtext}[b]{\algoenumpagewidth}%
+    \vspace{.5ex}%
+%    \begin{\usebox{\algobox}}%
+    \begin{enumerate}%
+    }%
+    {%
+%    \end{\usebox{\algobox}}%
+    \end{enumerate}%
+    \vspace{.5ex}%
+  \end{pagedtext}}
+
+\newcommand{\PrincipalSerial}{\mathrm{ID}}
+\newcommand{\PrincipalParent}{\mathrm{PA}}
+\newcommand{\PrincipalDescendants}{\mathrm{DE}}
+\newcommand{\PrincipalAncestors}{\mathrm{AN}}
+\newcommand{\PrincipalSiblings}{\mathrm{SI}}
+\newcommand{\PrincipalSiblingsLeft}{\mathrm{SI_L}}
+\newcommand{\PrincipalSiblingsRight}{\mathrm{SI_R}}
+\newcommand{\PrincipalChildren}{\mathrm{CH}}
+
+\newcommand{\PrincipalSerialA}{\mathrm{ID}^{\mathcal{A}}}
+%\newcommand{\PrincipalParentA}{\mathrm{PA}^{\mathcal{A}}}
+\newcommand{\PrincipalDescendantsA}{\mathrm{DE}^{\mathcal{A}}}
+%\newcommand{\PrincipalAncestorsA}{\mathrm{AN}^{\mathcal{A}}}
+\newcommand{\PrincipalSiblingsA}{\mathrm{SI}^{\mathcal{A}}}
+\newcommand{\PrincipalSiblingsLeftA}{\mathrm{SI^{\mathcal{A}}_L}}
+\newcommand{\PrincipalSiblingsRightA}{\mathrm{SI^{\mathcal{A}}_R}}
+%\newcommand{\PrincipalChildrenA}{\mathrm{CH}^{\mathcal{A}}}
+
+\newcommand{\PrincipalSerialAi}{\mathrm{ID}^{\mathcal{A}_i}}
+%\newcommand{\PrincipalParentAi}{\mathrm{PA}^{\mathcal{A}_i}}
+\newcommand{\PrincipalDescendantsAi}{\mathrm{DE}^{\mathcal{A}_i}}
+%\newcommand{\PrincipalAncestorsAi}{\mathrm{AN}^{\mathcal{A}_i}}
+%\newcommand{\PrincipalSiblingsAi}{\mathrm{SI}^{\mathcal{A}_i}}
+%\newcommand{\PrincipalSiblingsLeftAi}{\mathrm{SI_L}^{\mathcal{A}_i}}
+%\newcommand{\PrincipalSiblingsRightAi}{\mathrm{SI_R}^{\mathcal{A}_i}}
+%\newcommand{\PrincipalChildrenAi}{\mathrm{CH}^{\mathcal{A}_i}}
+
+\newcommand{\PrincipalSerialB}{\mathrm{ID}^{\mathcal{B}}}
+%\newcommand{\PrincipalParentB}{\mathrm{PA}^{\mathcal{B}}}
+%\newcommand{\PrincipalDescendantsB}{\mathrm{DE}^{\mathcal{B}}}
+%\newcommand{\PrincipalAncestorsB}{\mathrm{AN}^{\mathcal{B}}}
+%\newcommand{\PrincipalSiblingsB}{\mathrm{SI}^{\mathcal{B}}}
+%\newcommand{\PrincipalSiblingsLeftB}{\mathrm{SI^{\mathcal{B}}_L}}
+%\newcommand{\PrincipalSiblingsRightB}{\mathrm{SI^{\mathcal{B}}_R}}
+%\newcommand{\PrincipalChildrenB}{\mathrm{CH}^{\mathcal{B}}}
+
+\newcommand{\Root}{\mathrm{Root}}
+
+\newcommand{\Modelset}{%
+  \begin{iteblock}(1ex,1.9ex)%
+    \ITE(12.5 16.5 180 0.6) $\Delta$%
+    \ITE(-5 0 0 0.6) $\Delta$%
+  \end{iteblock}%
+}
+
+\newcommand{\URUnion}{%
+  \begin{iteblock}(3ex,1.9em)%
+    \ITE(0 11 0 1) $\bigcup$%
+    \ITE(9 16 0 0.398) $\nearrow$%
+  \end{iteblock}%
+}
+
+\newcommand{\MapstoVia}[1]{%
+  { \genfrac{}{}{0pt}{}{#1}%
+    {%
+      \genfrac{}{}{0pt}{}{\hookrightarrow}{{}^{{}^{{}^{}}}}%
+    }%
+  }%
+}
+
+\newcommand{\ClosureOver}[1]{%
+  { \genfrac{}{}{0pt}{}{#1}%
+    {%
+      \genfrac{}{}{0pt}{}{\hookrightarrow}{{}^{{}^{{}^\star}}}%
+    }%
+  }%
+}
+
+
+\newtheorem{definition}{Definition}[section]
+\newtheorem{property}{Property}[section]
+\newtheorem{algo}{Algorithm}[section]
+
+\makeindex
+\title{NeuroSpaces Software Design}
+\author{Hugo Cornelis\thanks{hugo@bbf.uia.ac.be} \\ Laboratory of \\
+  Theoretical Neurobiology \\ University of Antwerp} \date{Antwerp,
+  \today}
+
+\begin{document}
+
+\definecolor{white}{rgb}{1,1,1}
+\definecolor{grey1}{rgb}{0.1,0.1,0.1}
+\definecolor{grey2}{rgb}{0.2,0.2,0.2}
+\definecolor{grey3}{rgb}{0.3,0.3,0.3}
+\definecolor{grey4}{rgb}{0.4,0.4,0.4}
+\definecolor{grey5}{rgb}{0.5,0.5,0.5}
+\definecolor{grey6}{rgb}{0.6,0.6,0.6}
+\definecolor{grey7}{rgb}{0.7,0.7,0.7}
+\definecolor{grey8}{rgb}{0.8,0.8,0.8}
+\definecolor{grey9}{rgb}{0.9,0.9,0.9}
+\definecolor{black}{rgb}{0,0,0}
+\definecolor{red}{rgb}{1,0,0}
+\definecolor{red1}{rgb}{0.8,0,0}
+\definecolor{red2}{rgb}{0.7,0,0}
+\definecolor{red3}{rgb}{0.5,0,0}
+\definecolor{green}{rgb}{0,1,0}
+\definecolor{blue}{rgb}{0,0,1}
+
+\maketitle
+\tableofcontents
+%\newpage
+
+
+%\subsection{NeuroSpaces}
+
+
+%\subsection{Overview}
+
+%This document has two main sections:
+
+\input{included-neurospaces}
+
+\newpage
+
+\listoffigures
+
+
+\listoftables
+
+%\listofalgorithms
+
+\bibliographystyle{acm}
+
+\bibliography{informatics,neuroscience,numerics,www}
+
+\printindex
+
+\end{document}
+
