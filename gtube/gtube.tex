@@ -40,15 +40,14 @@ The block diagram given below illustrates the relationships between the software
   \label{fig:df-1}
 \end{figure}
 
-\subsection*{User Interface Functions:} {\bf G-Tube} can be initiated from either a \href{../unix-linux/unix-linux.tex}\bf {\bf UNIX\,prompt} or the \href{../gshell/gshell.tex}{\bf G-shell}. Alternatively, There is a GUI that provides backward compatibility with previous versions of GENESIS (Version 2.3 and earlier).
+\subsection*{User Interface Functions:} {\bf gtube} can be initiated from a \href{../unix-linux/unix-linux.tex}\bf {\bf UNIX\,prompt}. 
 
 \begin{itemize}
-   \item {\bf P-GUI:} This refers to the initiation of the Python/Perl enabled {\bf G-Tube} from the command line of a terminal window.
-   \item {\bf G-shell:} The same GUI can also be initiated from the G-shell.
+   \item {\bf gtube.py:} This refers to the initiation of the Python/Perl enabled {\bf G-Tube} from the command line of a terminal window.
    \item {\bf NS-SLI:} This refers to the Neurospaces Script Language Interpreter that provides backward compatibility with the Script Language Interpreter of earlier versions of GENESIS.
 \end{itemize}
 
-The Diagnostic Translator is a middle ware software component that enables interaction between the user (via a given GUI component--{\bf G-Tube}, {\bf G-Shell}, or {\bf NS-SLI}) and the \href{../model-container/model-container.tex}{\bf Model\,Container}, \href{../experiment/experiment.tex}{\bf Experiment Library}, \href{../heccer/heccer.tex}{\bf Heccer}, or \href{../ssp/ssp.tex}{\bf SSP}.
+The Diagnostic Translator (Simulator Object) is a middle ware software component that enables interaction between the user (via a given GUI component--{\bf G-Tube}, {\bf G-Shell}, or {\bf NS-SLI}) and the \href{../model-container/model-container.tex}{\bf Model\,Container}, \href{../experiment/experiment.tex}{\bf Experiment Library}, \href{../heccer/heccer.tex}{\bf Heccer}, or \href{../ssp/ssp.tex}{\bf SSP}.
 
 \section*{G-Tube Installation}
 
@@ -74,7 +73,8 @@ To install {\bf G-Tube} you need the following packages installed on your machin
       \item \href{http://www.wxpython.org/download.php}{\bf wxPython site}
       \item Direct link to \href{https://sourceforge.net/projects/wxpython/files/}{\bf Sourceforge}
    \end{itemize}
-   \item \href{http://pyyaml.org/ }{\bf PyYAML}:
+   \item \href{http://pyyaml.org/ }{\bf PyYAML}: For data and configuration handling.
+	\item \href{http://pyopengl.sourceforge.net/}{\bf PyOpenGL}: For 3D support.
 \end{itemize}
 
 \subsection*{Building wxPython from source}
