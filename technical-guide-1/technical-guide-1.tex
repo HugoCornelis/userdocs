@@ -13,7 +13,7 @@
 % start: userdocs-tag-replace-items related-do-nothing
 % end: userdocs-tag-replace-items related-do-nothing
 
-\section*{Technical Guide 1}
+\section*{Technical User Guide 1}
 
   This documents introduces the modular components of GENESIS 3.
   Following installation of the Neurospaces project packages
@@ -23,9 +23,10 @@
   This tutorial may be usefully read in conjunction with [1, 2].
 
 \section{Introduction}
-GENESIS 3 (G3) has been
+
+GENESIS 3 (G-3) has been
 developed following the Computational Biology Initiative (CBI)
-simulator functional architecture described in [1]. That document
+federated software architecture described in [1]. That document
 specifies a software architecture appropriate for a neuronal
 simulator. In such a simulator the layers of the software architecture
 naturally correspond to high- and low level data, or biological
@@ -37,7 +38,7 @@ departure from currently available neuronal simulation packages. Those
 packages are typically monolithic and expose an arbitrary mixture of
 biological and mathematical detail to the mathematical solvers and
 users. In comparison with such packages, the data layering employed by
-the G3 architecture clearly separates the mathematical details from
+the G-3 architecture clearly separates the mathematical details from
 the biological framework required for a computational model. Thus, the
 CBI functional simulator architecture has several important practical
 consequences. For the developer, it greatly reduces the tremendous
@@ -45,19 +46,20 @@ complexity of dealing with a whole simulator, and for the modeller it
 greatly increases the usability of the mathematical solvers.
 
 In this section we introduce the major components of the Neurospaces
-instantiation of G3 (NS) which includes: Neurospaces Model Container
+instantiation of G-3 (NS) which includes: Neurospaces Model Container
 (NMC) itself, and the Simple Scheduler in Perl (SSP). For completeness
-we mention Heccer, the G3 mathematical solver and Neurospaces Studio
+we mention Heccer, the G-3 mathematical solver and Neurospaces Studio
 (NSS), the NS browser and visualization tool. It is assumed that these
 modules have been installed on your computer. We will then lead you
 through the process of how they can be used to build a single
 biophysically realistic neuron model and simulation. The aim is to
-introduce the declarative programing at the root of the G3 simulator
-and develop an intuition for the practical development of G3
+introduce the declarative programing at the root of the G-3 simulator
+and develop an intuition for the practical development of G-3
 applications. Examples are given in the relevant sections below.
 
 \subsection{Neurospaces Model Container}
 \label{sec:neur-model-cont}
+
 The Neurospaces Model Container (NMC) is the software component of NS
 that reads definitions of a biological model from source files, stores
 these data in memory, and translates them to the required mathematical
@@ -68,8 +70,8 @@ is a stand-alone application that can be linked to GENESIS.  The NMC
 deals purely with the biological entities and end-user concepts
 of a biophyscally realistic model rather than the mathematical
 equations that describe a model.  It separates biological, physical
-and mathematical quantities of a simulation and 'knows' about
-biological entities such as neuronal populations, single neurons, and
+and mathematical quantities of a simulation and `knows' about
+biological entities such as neuronal circuits, single neurons, and
 their projections and connections.  It also stores specific parameter
 values obtained from the literature as well as the actual parameter
 values employed during the simulation of a model.  Functionally, the
@@ -79,6 +81,7 @@ hierarchically on their parents, children, and sibling's parameters to
 infer a number of their own properties.
 
 \subsection{Neurospaces Studio}
+
 Neurospaces Studio (NSS) is a front-end to the NMC but is not a
 graphical editor or neuron construction kit. (External applications
 such as {\it neuroConstruct}, www.neuroconstruct.org, are more suited
@@ -86,32 +89,41 @@ for that type of functionality.) Rather, NSS allows browsing,
 visualization, and validation of model parameters.
 
 \subsection{Heccer}
+
 {\it Heccer} (HEC) is a fast compartmental solver based on the {\it
   hsolve} functionality of the GENESIS simulator.
 
 \subsection{Simple Scheduler in Perl}
+
 The role of the Simple Scheduler in Perl (SSP) is to activate other
-stand-alone G3 software components according to a configurable
+stand-alone G-3 software components according to a configurable
 schedule. SSP `glues' together these independent modules to ensure
 that they are activated correctly, such that they can work together on
 a single simulation.
  
 \section{Introduction to Neurospaces}
+
 This section contains general introductory comments about getting
 started with NS.
 
 \subsection{Neurospaces Model Descriptions}
-A Neurospaces Model Description File (NDF) is the file format used to
+
+A Neurospaces Model Description File (NDF) is the format used to
 specify models, from those of intracellullar mechanisms to network
 models and morphologies.  The file format is indicated by {\tt .ndf}
-being appended to the name of a regular text file, e.g. {\tt
-  <filename>.ndf}.
+being appended to the name of a regular text file, e.g.
+\begin{verbatim}
+  <filename>.ndf}
+\end{verbatim
 
-It is possible to convert neuron morphology files to {\tt .ndf} files
-using the command {\tt morphology2ndf} (see
-section~\ref{sec:morph-conv-conf}).  A GENESIS script interface is
-currently under construction.  This interface will allow to run
-GENESIS scripts and execute the simulation, or simply convert the
+It is possible to convert neuron morphology files to NDF files
+using the command
+\begin{verbatim}
+morphology2ndf
+\end{verbatim}
+(see section~\ref{sec:morph-conv-conf}).  A GENESIS script interface is
+currently under construction.  This interface will allow 
+GENESIS scripts to be run and execute the simulation, or simply convert the
 model specified by the GENESIS scripts to Neurospaces model
 descriptions.
 
@@ -121,9 +133,10 @@ be found in section~\ref{sec:simple-single-comp}.
 
 \subsection{Overview of a NDF File}
 \label{sec:overview-ndf-file}
+
 A NDF file contains four sections. These sections are not necessarily
 filled, but they must be present in the given order.  A NDF file has
-the following general form which is described in the sections below.
+the following general form (described in the following sections).
 
 \begin{center}
   \begin{minipage}{13cm}
@@ -159,24 +172,29 @@ END PUBLIC_MODELS
 \end{center}
 
 \subsubsection{Header Section}
+
 The header must always be present and must always start with the
 interpreter sequence giving the system specific absolute path to the
 NMC executable:
 
-{\tt \#!/usr/local/bin/neurospacesparse}
+\begin{verbatim}
+\#!/usr/local/bin/neurospacesparse
+\end{verbatim}
 
 This is followed by two declarations on separate lines. The first:
-
-{\tt //-*- NEUROSPACES -*-}
-
+\begin{verbatim}
+//-*- NEUROSPACES -*-}
+\end{verbatim}
 flags an appropriate major mode and keyword highlighting for Emacs and
 XEmacs editors\footnote{The Neurospaces Emacs major mode is bundled
-  with the NMC package.}, the second declaration identifies the type
+  with the NMC package.}. The second declaration identifies the type
 of file, here:
-
+\begin{verbatim}
 {\tt NEUROSPACES NDF}
+\end{verbatim}
 
 \subsubsection{Import Section}
+
 This section declares dependencies on other NDF files with the {\tt
   FILE} keyword, e.g.
 \begin{verbatim}
@@ -187,7 +205,7 @@ END IMPORT
 
 To simplify model development, NS allows construction of NDF files
 that define different components of a model.  These files may be thought of as
-\emph{library} files.  To expedite model development, all NDF files
+library files.  To expedite model development, all NDF files
 can be shared by being imported into other NDF files.
 
 The components declared in a NDF file can be either private to that
@@ -203,11 +221,13 @@ models.  By this mechanism, NDF files containing public models, act as the
 library files that provide the basis of accelerated model development.
 
 \subsubsection{Private Model Section}
+
 These are models that are private to the NDF file that contains them.
 They may depend on imported public models of other files or be hard
 coded.
 
 \subsubsection{Public Model Section}
+
 These models are visible to the NDF files into which they are
 imported.  Typically, for example, a neuron morphology would be
 located here.  Public models may depend on private models or be hard
@@ -222,10 +242,9 @@ gives the diameter.
 
 \subsubsection{Miscellaneous}
 
-\paragraph{Units} NDF files define model components using SI Units.
+\paragraph{Units:} NDF files define model components using SI Units.
 
-\paragraph{Comment Syntax}
-Comments may be inserted into a NDF file in one of three ways:
+\paragraph{Comment Syntax:}  Comments may be inserted into a NDF file in one of three ways:
 
 \begin{itemize}
 \item[-] Unnested C comments of the normal form {\tt /* $\ldots$ */}.
@@ -233,34 +252,30 @@ Comments may be inserted into a NDF file in one of three ways:
 \item[-] Nested comments enclosed with {\tt \{*} and {\tt *\}}.
 \end{itemize}
 
-
 \subsection{Validating a Model Description File}
+
 A NDF file can be validated by invoking:
 
-\vspace{2mm}
-
-{\tt \$ neurospaces <path>/filename.ndf}
-
-\vspace{2mm}
+\begin{verbatim}
+$ neurospaces <path>/filename.ndf
+\end{verbatim}
 
 This routine parses the file and tests for the coherence of the file
 syntax. A list of NS usage option flags can be obtained with:
-
-\vspace{2mm}
-
-{\tt \$ neurospaces -h} (or {\tt --help})
-
-\vspace{2mm}
+\begin{verbatim}
+$ neurospaces -h (or --help)
+\end{verbatim}
 
 \section{A Simple Single Compartment Model}
 \label{sec:simple-single-comp}
+
 \subsection{Introduction}
 
 %For example, while dendritic
 %segments are easily obtained from an image file of morphology, channel
 %properties are often obtained from curve fitting to
 %electrophysiological data and are purely mathematical constructs.
-As mentioned in section~\ref{sec:neur-model-cont}, in GENESIS 3 the
+As mentioned in section~\ref{sec:neur-model-cont}, in G-3 the
 definitions of biological models are read by the NMC, and stored in
 memory.
 
@@ -268,7 +283,7 @@ Because computational models in neuroscience often use a mixture of
 biological and mathematical representations, the NMC is internally
 aware of these categories and is able to translate both
 representations to the numerical formats required to run a simulation
-(see figure~\ref{fig:nmc-conversions}).
+(see Fig.~\ref{fig:nmc-conversions}).
 %\begin{figure}[h]
 %  \centering
 %  \includegraphics[scale=0.4]{figures/nmc-conversions.eps}
@@ -297,34 +312,36 @@ required for a numerical solver.  This functionality is transparant to
 the user, and is explained in more detail in
 sections~\ref{sec:defining-channels} and~\ref{sec:defining-soma}.
 
+{\bf NOTE:} From a user perspective, the NMC does not make a distinction between
+biological and mathematical representations of a model.  
 
-%From a user perspective, the NMC does not make a distinction between
-%biological and mathematical representations of a model.  
-
-
-
-In the next paragraphs we outline the steps required to construct an
+In the next paragraphs we outline the steps required to construct a
 NDF file that generates a single compartment model neuron.  This model
-will be able to generate action potentials via activation of the
+will generate action potentials via activation of the
 classical fast sodium and delayed rectifying potassium conductances as
 described by Hodgkin and Huxley (HH-{\it J. Physiol.} {\bf 117}: 500).
 
 The NDF files that generate this model can be found in the model
-library at\\ {\tt /usr/local/neurospaces/models/library}. This library
-is bundled with the NMC
-\footnote{After installation, the channel descriptions can be found in the directory\\
-  `/usr/local/neurospaces/models/library/channels/hodgkin-huxley/',\\
+library bundled with the NMC\,\footnote{After installation, the channel descriptions can be found in the directory\\
+  {\it /usr/local/neurospaces/models/library/channels/hodgkin-huxley/},\\
   while the soma model definition can be found at\\
-  `/usr/local/neurospaces/models/library/segments/hodgkin\_huxley.ndf'\\
+  {\it /usr/local/neurospaces/models/library/segments/hodgkin\_huxley.nd}'\\
   and the neuron model definition at\\
-  '/usr/local/neurospaces/models/library/tests/cells/hh1.ndf'.}.
+  {\it /usr/local/neurospaces/models/library/tests/cells/hh1.ndf}.}:
+\begin{verbatim}
+/usr/local/neurospaces/models/library
+\end{verbatim}
 
 Following installation of the NS packages you should create a working
-directory for storing files used during model development (e.g. {\tt
-  mkdir $\sim$/NS/HH1}).  Example commands, indicated below by \$,
+directory for storing files used during model development, e.g.
+\begin{verbatim}
+mkdir ~/NS/HH1
+\end{verbatim}
+Example commands, indicated below by {\tt \$},
 were all issued after {\tt cd} to that directory.
 
 \subsection{The HH Gates}
+
 The HH formalism is given by sodium and potassium conductances, where
 the total HH current is given by:
 
@@ -348,17 +365,17 @@ where
 \end{equation}
 
 The behavior of the sodium conductance is determined by the kinetics
-of the 'm' and 'h' gates, and the behavior of the potassium
-conductance is determined by the kinetics of the 'n' gate.  A gate can
+of the {\it m} and {\it h} gates, and the behavior of the potassium
+conductance is determined by the kinetics of the{\it n} gate.  A gate can
 be in a permissive or non-permissive state, and an equation defines
 the gate kinetics as transitions between those two states.  The state
 of the gate is the fraction of the population of potassium channels in
 a permissive state.  It assumes a value between 0 and 1.
 
-In a NDF file a gate is defined using the \texttt{HH\_GATE} keyword.
-Inside a \texttt{HH\_GATE}, the \texttt{GATE\_KINETIC\_FORWARD}
+In a NDF file a gate is defined using the {\tt HH\_GATE} keyword.
+Inside a {\tt HH\_GATE}, the keyword {\tt GATE\_KINETIC\_FORWARD}
 defines the parameters for transition from non-permissive to
-permissive states.  The \texttt{GATE\_KINETIC\_BACKWARD} defines the
+permissive states.  The keyword {\tt GATE\_KINETIC\_BACKWARD} defines the
 parameters for the reverse transition.
 
 Since different simulators use different representations of the HH
@@ -377,7 +394,7 @@ values, that are found using the formulae:
   \tau_n(V) = \frac{ 1 }{ \alpha_n(V) + \beta_n(V) }
 \end{equation}
 
-And relate back to $\alpha$ and $\beta$ with the following equations:
+And are related to $\alpha$ and $\beta$ by the following equations:
 
 \begin{equation}
   \alpha_n(V) = \frac{ n_\infty(V) }{ \tau_n(V) }
@@ -403,15 +420,12 @@ and for converting back to the $\alpha$-$\beta$ form:
 \end{equation}
 \begin{equation}
   \alpha(V) = A(V)
-\end{equation}\marginpar{give out the relationship between these
+\end{equation}
+\marginpar{give out the relationship between these
   parameters and exponential, sigmoid, linoid in the genesis sense,
   see hh\_channel docs.}
 
-%The NMC supports the representation of the several different gate
-%descriptions reported in the literature.
-
-\paragraph{The NMC Gate Description}
-The parameter names used to define a HH-like gate are based on the
+\paragraph{The NMC Gate Description:} The parameter names used to define a HH-like gate are based on the
 above $A$-$B$ representation (a representation also used by the
 GENESIS 2 {\tt tabchan} object).  Its general form is:
 
@@ -438,7 +452,7 @@ value of zero, such that the only offset that needs to be specified is
 \item {\tt HH\_AB\_Tau}:
 \end{itemize}
 
-A last parameter is the {\tt HH\_AB\_Factor\_Flag} parameter.  It
+The last parameter is the {\tt HH\_AB\_Factor\_Flag} parameter.  It
 indicates whether the exponential factor is being used as a divisor or
 a multiplier:
 
@@ -460,7 +474,6 @@ a multiplier:
 \end{equation}
 \end{itemize}
 
-
 %\subsubsection{$\alpha$-$\beta$ based Description}
 %The parameters associated with the $\alpha$-$\beta$ form
 %are\footnote{It is currently not possible to define a gate using the
@@ -478,9 +491,9 @@ a multiplier:
 \subsection{Simple Parameter Specification}
 \label{sec:param-spec}
 
-For sake of brevity, we discuss the definition of the 'n' or
+For the sake of brevity, we discuss the definition of the {\it n} or
 activation gate\marginpar{complete explanation about activation,
-  inactivation deactivation, deinactivation}, and list the full
+  inactivation deactivation, deinactivation} and list the full
 definition of all the gates.  Then, we show how to use these gate
 definitions in the definition of a channel.
 
@@ -491,7 +504,7 @@ identical activation gates.  In
 equation~(\ref{eq:g-k}) the gate state of the
 potassium conductance is raised to the power of four.
 
-The kinetics of the individual 'n' gates of the potassium channel are
+The kinetics of the individual {\it n} gates of the potassium channel are
 determined by the functions $\alpha_h(V)$ and $\beta_h(V)$ for which
 the definitions are:
 
@@ -508,17 +521,14 @@ the definitions are:
 
 In the NMC, parameters are (name, value) tuples.  Names are simple
 labels.  Parameter values are defined using the {\tt PARAMETER} token,
-which must occur inside a {\tt PARAMETERS} token.
-
-In an NDF file these parameter names and values must be within the
-scope of a {\tt PARAMETER} token.  For example, to set {\tt HH\_AB\_Scale}
+which must occur within the scope of a {\tt PARAMETERS} token. For example, to set {\tt HH\_AB\_Scale}
 to -600.0 in the NDF file:
 
 \begin{verbatim}
         PARAMETER ( HH_AB_Scale = -600.0 ),
 \end{verbatim}
 
-The model parameters of the forward rate of the 'n' gate must be
+The model parameters of the forward rate of the {\it n} gate must be
 grouped together by using the {\tt PARAMETERS} token.  For example:
 
 \begin{verbatim}
@@ -540,11 +550,11 @@ parameters.
 
 Shared variables are declared within the component they are attached
 to by the {\tt INPUT} and {\tt OUTPUT} tokens, which must occur within
-a block of {\tt BINDABLES}.  This allows shared variables of one
+the scope of {\tt BINDABLES}.  This allows shared variables of one
 component to be bound to those of another. The binding of variables is
 done with {\tt INPUT} tokens within a block of {\tt BINDINGS}.  For
-example to declare {\tt Vm} as an input to the 'n' gate, and {\tt
-  rate} as an output of 'n' gate:
+example to declare {\tt Vm} as an input to the {\it n} gate, and {\tt
+  rate} as an output of {\it n} gate:
 
 \begin{verbatim}
     ...
@@ -554,7 +564,7 @@ example to declare {\tt Vm} as an input to the 'n' gate, and {\tt
     ...
 \end{verbatim}
 
-To bind the {\tt Vm} of the 'n' gate to the {\tt Vm} of the parent
+To bind the {\tt Vm} of the {\it n} gate to the {\tt Vm} of the parent
 component, you write:
 
 \begin{verbatim}
@@ -614,8 +624,8 @@ Similarly, for the backward rate we have:
 
 
 The final two parameters required for complete specification of the
-'n' gate of the potassium channel, are {\tt POWER}, indicating the
-power of the activation variable 'n', and {\tt state\_init}, giving
+{\it n} gate of the potassium channel, are {\tt POWER}, indicating the
+power of the activation variable {\it n}, and {\tt state\_init}, giving
 the initial state of the gate.  The reason why the initial state must
 be defined is because it is a solved variable\footnote{All parameter
   names suffixed with {\tt \_init} define the initial state of a
@@ -623,10 +633,10 @@ be defined is because it is a solved variable\footnote{All parameter
 implicitly set to the steady state value of the gate at the resting
 membrane potential.  This approach is good for gates with small time
 constants.  However, a more general approach is to initialize the
-state of the gates with values obtained after running the model (for
-more information about model initialization, see also
-section~\ref{model-initialization}\marginpar{explains a general way
-  how to obtain initial values.}).
+state of the gates with values obtained after running the model.
+% (for more information about model initialization, see also
+% section~\ref{model-initialization}, which gives a general way
+ % to obtain initial values.
 
 \begin{verbatim}
    PARAMETERS
@@ -636,13 +646,12 @@ section~\ref{model-initialization}\marginpar{explains a general way
    END PARAMETERS
 \end{verbatim}
 
-
 The {\tt HH\_GATE} token is used to combine the forward and backward
 rate definitions, which is typically put in the public model section
-of an NDF file, see figure~\ref{fig:n-gate}.
+of an NDF file.
 
-\begin{figure}[h]
-  \centering
+We are now in a position to combine the various definitions to give a complete description of the {\it n} gate specification of the HH potassium channel:
+
 \begin{verbatim}
 #!/usr/local/bin/neurospacesparse
 // -*- NEUROSPACES -*-
@@ -698,46 +707,42 @@ PUBLIC_MODELS
   END HH_AB_GATE
 END PUBLIC_MODELS
 \end{verbatim}
-  \caption{The 'n' gate specification of the HH potassium channel}
-\label{fig:n-gate}
-\end{figure}
-%\afterpage{\clearpage}
 
-As already explained, an important feature of NS is that model cells
+As explained above, an important feature of NS is that model cells
 can be constructed from a hierachy of fundamental building blocks or
-library files.  The 'n' gate that we have just defined is such a
-building block (see figure~\ref{fig:n-gate}).  It is being defined as
+library files.  The {\it n} gate that we have just defined is such a
+building block.  It is defined as
 a public model in the NDF file, such that it is available to other NDF
 files for use in a channel definition.  We choose to name the NDF file
 {\tt k\_gate.ndf}.  The channel definition is then available for
-incorporation into the model soma (described in
+incorporation into a model soma (described in
 section~\ref{sec:defining-soma}).
 
 For a more complete description of parameter and function
 specifications, see the multi-compartmental section
 (section~\ref{sec:multi-comp}).
 
-%  Functions can have regular parameters.
-%For example, the Nernst equation description of the control of the
-%potassium reversal potential by the intracellular calcium
-%concentration:
+{\bf NOTE:} Functions can have regular parameters.
+For example, the Nernst equation description of the control of the
+potassium reversal potential by the intracellular calcium concentration:
 
-%\begin{verbatim}
-%PARAMETERS
-%   PARAMETER ( Ek = NERNST
-%               (PARAMETER ( Cin = ../Ca_pool->conc ),
-%                PARAMETER ( Cout = 2.4 ),
-%                PARAMETER ( valency = ../Ca_pool->VAL ), /* 2+ */
-%                PARAMETER ( T = 37.0 ))
-%END PARAMETERS
-%\end{verbatim}
+\begin{verbatim}
+PARAMETERS
+   PARAMETER ( Ek = NERNST
+               (PARAMETER ( Cin = ../Ca_pool->conc ),
+                PARAMETER ( Cout = 2.4 ),
+                PARAMETER ( valency = ../Ca_pool->VAL ), /* 2+ */
+                PARAMETER ( T = 37.0 ))
+END PARAMETERS
+\end{verbatim}
 
-%The definition of a model is always associated with a {\tt BINDABLES}
-%specification, while the use of a {\tt CHILD} token is always
-%associated with a {\tt BINDINGS} specification.
+{\bf NOTE:} The definition of a model is always associated with a {\tt BINDABLES}
+specification, while the use of a {\tt CHILD} token is always
+associated with a {\tt BINDINGS} specification.
 
 \subsection{Defining Channels}
 \label{sec:defining-channels}
+
 Every channel model consists of a number of gates.  We have shown in
 the previous section how to define a single gate model based on the
 HH $A$-$B$ formalism.  This gate model was given the name {\tt
@@ -747,17 +752,10 @@ in other model files.
 
 To use the gate model, the public model section is imported with a
 {\tt FILE} token and assigned to a namespace, here {\tt k\_gate}.
-% (see
-%figure~\ref{fig:n-gate-import}).
+
 The {\tt ALIAS} token, {\tt HH\_K\_n}, makes the gate model available
 to the public models of the importing file:
-%  The gate model is then made available to the
-%public models of the importing file under the name {\tt HH\_K\_n} by
-%using the {\tt ALIAS} token 
 
-%\begin{figure}[h]
-\begin{center}
-%  \begin{boxedminipage}{13cm}
 \begin{verbatim}
 #!/usr/local/bin/neurospacesparse
 // -*- NEUROSPACES -*-
@@ -774,24 +772,18 @@ PRIVATE_MODELS
 END PRIVATE_MODELS
 ...
 \end{verbatim}
-\end{center}
-%  \end{boxedminipage}
 
-After definition of the 'n' gate, the potassium channel can be defined
+After definition of the {\it n} gate, the potassium channel can be defined
 using the parameters {\tt G\_MAX}, {\tt E\_REV}, and {\tt
   CHANNEL\_TYPE}.  {\tt G\_MAX} and {\tt E\_REV} define the
 conductance density and the channel reversal potential, respectively
 (see equation~(\ref{eq:hodgkin-huxley-current}),
 page~\pageref{eq:hodgkin-huxley-current}).  The third parameter, {\tt
   CHANNEL\_TYPE}, distinguishes between channels with activation gates
-only (value {\tt ``ChannelAct''}), and channels with both activation
-and inactivation gates (value {\tt ``ChannelActInact''}).  The {\tt
+only (value {\tt ChannelAct}), and channels with both activation
+and inactivation gates (value {\tt ChannelActInact}).  The {\tt
   CHILD} token links the gate with the channel model:
-%  This is
-%shown in figure~\ref{fig:n-gate-import}.
 
-\begin{center}
-%  \begin{boxedminipage}{13cm}
 \begin{verbatim}
 ...
 PUBLIC_MODELS
@@ -811,23 +803,6 @@ PUBLIC_MODELS
     END CHANNEL
 END PUBLIC_MODELS
 \end{verbatim}
-%  \end{boxedminipage}
-\end{center}
-%  \caption{Top panel: Importing the 'n' gate specification of the HH
-%    potassium channel into a new NDF file.  Bottom panel: Inserting
-%    the 'n' gate specification into the HH potassium channel}
-%\label{fig:n-gate-import}
-%\end{figure}
-%\afterpage{\clearpage}
-
-
-%\begin{figure}[h]
-%  \centering
-%  \caption{Inserting the 'n' gate specification of the HH potassium
-%    channel}
-%\label{fig:n-gate-insert}
-%\end{figure}
-%\afterpage{\clearpage}
 
 \subsection{Defining the Soma}
 \label{sec:defining-soma}
@@ -837,8 +812,8 @@ visualized as spheres.  The NMC supports both specifications.  A
 spherical representation is given by the {\tt SPHERICAL} option, and
 the {\tt DIA} parameter defines the diameter of the sphere.  For
 expediency, the spherical representation is converted to its
-cylindrical equivalent for numerical computation\footnote{Such
-  conversion was also implemented by the GENESIS 2 simulator.}.  It
+cylindrical equivalent for numerical computation\footnote{A
+  conversion also implemented by the GENESIS 2 simulator.}.  The somatic compartment
 has membrane properties, for which we have to specify the appropriate
 parameters: specific resistance {\tt RM}, specific capacitance {\tt
   CM} and the reversal potential for the leak conductance {\tt ELEAK}.
@@ -861,18 +836,12 @@ equation~(\ref{eq:hodgkin-huxley-current}), and
   \mathrm{R_m} = \frac{\mathrm{RM}}{4 \pi \left( \frac{\mathrm{DIA}}{2} \right) ^2} = \frac{\mathrm{RM}}{\pi \, (\mathrm{DIA}) ^2}
 \end{equation}
 
-%For the cylindrical representation, see section~\ref{sec:multi-comp}.
+{\bf NOTE:} For the cylindrical representation, see section~\ref{sec:multi-comp}.
 
 Just as the initial state of the gates was defined (see
 section~\ref{sec:param-spec}), the initial state of the cell membrane
 must be defined, here using the {\tt Vm\_init} parameter.
-%This is
-%given in figure~\ref{fig:soma}.
 
-%            PARAMETER ( RA = 0.3 ),
-%\begin{figure}[h]
-\begin{center}
-%  \begin{boxedminipage}{13cm}
 \begin{verbatim}
     SEGMENT soma
         ...
@@ -887,28 +856,18 @@ must be defined, here using the {\tt Vm\_init} parameter.
         ...
     END SEGMENT
 \end{verbatim}
-%  \end{boxedminipage}
-%  \caption{Soma parameter definitions}
-%\label{fig:soma}
-%\end{figure}
-\end{center}
 
 To insert the previously defined sodium and potassium channel models
 into the membrane, they are assigned as children of the soma segment.
 The channels provide a current that forms the input to the segment
-($I_\mathrm{HH}$, see equation~(\ref{eq:cable-no-space}).  The segment
+($I_\mathrm{HH}$, see equation~(\ref{eq:cable-no-space})).  The segment
 gives rise to the membrane potential, which is passed to the channels.
 The relationship between a channel and the membrane is formed by using
 shared variables that are declared using the {\tt BINDABLES} token.
 The binding of the shared variables is done with {\tt INPUT} tokens
 within a block of {\tt BINDINGS} (see also
 section~\ref{sec:param-spec}):
-% (see
-%figure~\ref{fig:soma-channel}).
 
-%\begin{figure}[h]
-\begin{center}
-%    \begin{boxedminipage}{13cm}
 \begin{verbatim}
     ...
     SEGMENT soma
@@ -941,18 +900,9 @@ section~\ref{sec:param-spec}):
     END SEGMENT
     ...
 \end{verbatim}
-\end{center}
-%  \end{boxedminipage}
-%  \caption{Soma with sodium and potassium HH-channels}
-%\label{fig:soma-channel}
-%\end{figure}
 
-The complete NDF file with the definition of the soma is shown in
-figure~\ref{fig:soma-channels-complete}.
+The complete NDF file with the definition of the soma is now given:
 
-\begin{figure}[h]
-  \centering
-%  \begin{boxedminipage}{13cm}
 \begin{verbatim}
 #!neurospacesparse
 // -*- NEUROSPACES -*-
@@ -999,15 +949,10 @@ PUBLIC_MODELS
     ALIAS soma hh_segment END ALIAS
 END PUBLIC_MODELS
 \end{verbatim}
-%  \end{boxedminipage}
-  \caption{Soma parameter definitions}
-\label{fig:soma-channels-complete}
-\end{figure}
-%\afterpage{\clearpage}
-
 
 \subsection{The Neuron Model}
 \label{sec:neuron-model}
+
 To complete the neuron model, the soma must be inserted into the model
 cell.  This is done by importing the soma definition into the private
 model section of a NDF file.  The {\tt ALIAS} token makes the
@@ -1016,7 +961,6 @@ section~\ref{sec:defining-channels}).  The model cell is then created
 using a {\tt CELL} token, and the soma segment is assigned as a child
 inside this token:
 
-\begin{center}
 \begin{verbatim}
 #!/usr/local/bin/neurospacesparse
 // -*- NEUROSPACES -*-
@@ -1038,28 +982,28 @@ PUBLIC_MODELS
     END CELL
 END PUBLIC_MODELS
 \end{verbatim}
-\end{center}
-
 
 \subsection{Running a Simulation}
 \label{sec:running-simulation}
+
 A simulation is started using the {\tt ssp} command.  This reads a SSP
 configuration file that controls the simulation, including the
 stimulation protocol and simulation output.  For expediency, the {\tt
   ssp} command has builtin configurations for running different types
 of simulation\footnote{For more information about the builtin
-  configuration, use '{\tt ssp --builtins}'.}.  The '{\tt --cell}'
+  configuration, use {\tt ssp --builtins}.}.  The {\tt --cell}
 option selects the builtin configuration for running a single neuron
 model.  The required argument is a reference to the NDF file that
 contains the model to be simulated.  First, an environment variable is
 set to instruct the NMC where to find this file:
 
-{\tt \$ export
-  NEUROSPACES\_NMC\_USER\_MODELS=/usr/local/neurospaces/models/library/examples}
-
-Then, we can run the model:
-
-{\tt \$ ssp --cell hh\_neuron.ndf}
+\begin{verbatim}
+$ export NEUROSPACES\_NMC\_USER\_MODELS=/usr/local/neurospaces/models/library/examples
+\end{verbatim}
+We can then run the model:
+\begin{verbatim}
+$ ssp --cell hh\_neuron.ndf
+\end{verbatim}
 
 The duration of the simulation and its temporal resolution are given
 respectively by the {\tt --time} and {\tt --time-step} options.  Both
@@ -1069,7 +1013,9 @@ simulation time is 50$\,$ms.
 %  The {\tt --steps} is an
 %alternative way to define the simulation time.
 
-{\tt \$ ssp --cell hh\_neuron.ndf --time 0.5}
+\begin{verbatim}
+$ ssp --cell hh\_neuron.ndf --time 0.5
+\end{verbatim}
 
 By default, the output of a simulation using the {\tt --cell}
 configuration is the membrane potential at the soma.  It is stored in
@@ -1086,12 +1032,15 @@ allow initialization of other input parameters.
 For example to inject a current into the soma with magnitude 2$\,$nA
 for the duration of the simulation:
 
-{\tt \$ ssp --cell hh\_neuron.ndf --time 0.5 --inject 2e-9}
+\begin{verbatim}
+$ ssp --cell hh\_neuron.ndf --time 0.5 --inject 2e-9
+\end{verbatim}
 
-To run the same simulation using the {\tt parameters} option:
+To run the same simulation using the {\tt --parameters} option:
 
-{\tt \$ ssp --cell hh\_neuron.ndf --time 0.5 --parameter
-  '/cell/soma->INJECT=1e-9'}
+\begin{verbatim}
+$ ssp --cell hh\_neuron.ndf --time 0.5 --parameter '/cell/soma->INJECT=1e-9'
+\end{verbatim}
 
 Here, the {\tt --parameters} option assigns a value to a model
 parameter using a syntax specific for the NMC.  Note that the use of
@@ -1104,47 +1053,33 @@ default filename for this option is inferred from the NDF filename,
 and this file is placed in the directory {\tt ./output/}, which is
 created if it does not exist.  For example, to store the somatic
 membrane potential, the command:
-
-{\tt \$ ssp --cell hh\_neuron.ndf --time 0.5 --parameter
-  '/cell/soma->INJECT=1e-9' --output '/cell/soma->Vm'}
-
+\begin{verbatim}
+$ ssp --cell hh\_neuron.ndf --time 0.5 --parameter '/cell/soma->INJECT=1e-9' --output '/cell/soma->Vm'
+\end{verbatim}
 will generate an output file named {\tt output/hh\_neuron.out}.  By
 convention, the default output filename has an {\tt .out} extension.
-The output filename can be changed using the {\tt
-  --outputclass-filename} option\marginpar{implement}.
+The output filename can be changed using the {\tt --outputclass-filename} option:\marginpar{implement}.
+\begin{verbatim}
+$ ssp --cell hh\_neuron.ndf --time 0.5 --parameter '/cell/soma->INJECT=1e-9' --output '/cell/soma->Vm' --outputclass-filename hh\_neuron/inject1e-9.out
+\end{verbatim}
+{\bf NOTE:} The {\tt ./hh\_neuron/} directory is created automatically.
 
-{\tt \$ ssp --cell hh\_neuron.ndf --time 0.5 --parameter
-  '/cell/soma->INJECT=1e-9' --output '/cell/soma->Vm'
-  --outputclass-filename hh\_neuron/inject1e-9.out}
-
-Note that the {\tt ./hh\_neuron/} directory is also created
-automatically.
-
-
-\paragraph{Synaptic stimulation}
-
-The model defined in the previous sections does not contain synapses,
+\paragraph{Synaptic stimulation}: The model defined in the previous sections does not contain synapses,
 and can only be stimulated by current injection.  Here, we first show
-how to add synapses to the model, and then how to activate the them.
+how to add synapses to the model, then how to activate the them.
 
-Synaptic activation can be done in two ways: the first method of
-activation is to set the firing frequency of spontaneous activity.
+Synaptic activation can be done in two ways. (1) Set the firing frequency of spontaneous activity.
 This frequency is a parameter of the synaptic channel, and the weight
 of the activated synapse is always one.  This type of activation is
-commonly used to simulated an in-vivo condition.
-
-The second method of activation is given by attaching a series of
+commonly used to simulated an {\it in vivo} condition. (2) Attach a series of
 precalculated synaptic event times stored in a file to the synaptic
 channel.
 
-{\tt \$ ssp --cell hh\_neuron.ndf --parameter
-  '/cell/soma/afferent[0]->INJECT=1e-9'}\marginpar{add afferents to
-  the model}
+\begin{verbatim}
+$ ssp --cell hh\_neuron.ndf --parameter '/cell/soma/afferent[0]->INJECT=1e-9'
+\end{verbatim}
+\marginpar{add afferents to the model}
 
-
-
-
-% \begin{center}
 % \begin{verbatim}
 %\$ ssp --builtins
 %/usr/local/bin/ssp <configuration>
@@ -1172,7 +1107,6 @@ schedule and the output file can be defined using the command line
 flags {\tt --set-name} and {\tt --set-outputclass-filename},
 respectively.
 
-
 \subsection{Initialization of Simulation Variables}
 
 \begin{itemize}
@@ -1180,13 +1114,12 @@ respectively.
 \item {\tt --undump-variables}
 \end{itemize}
 
-
 \section{A Multicompartmental Model}
 \label{sec:multi-comp}
 
 \subsection{Morphology}
 
-Discuss morphology2ndf overhere.
+Discuss morphology2ndf here.
 
 \subsection{Symbolic Parameter Specifications}
 
@@ -1194,27 +1127,28 @@ Discuss morphology2ndf overhere.
 %identical activation gates.  In
 %equation~(\ref{eq:hodgkin-huxley-current}) the gate state of the
 %potassium conductance is raised to the power of four.  This is given
-%by the {\tt POWER} parameter value in this example.
-% Values are either constant, point to a parameter of another symbol,
-% or have a function value.  As an example:
-%\begin{verbatim}
-%PARAMETERS
-%   PARAMETER ( DIAMETER = 0.3 ),
-%   PARAMETER ( LENGTH = ..->LENGTH ),
-%   PARAMETER ( SEED = SERIAL () )
-%END PARAMETERS
-%\end{verbatim}
-% Here, the {\tt DIAMETER} parameter has a constant value, the {\tt
-%   LENGTH} parameter is inherited from the parent component (the
-% '$..$' notation is a reference to the parent symbol\footnote{The NDF
-%   format supports both the '$..$', and $^\wedge$ notations to
-%   reference the parent symbol.  While non-technical people might
-%   prefer the $^\wedge$ notation, an informal survey suggests that
-%   technical people will prefer the '$..$' notation.}), and {\tt
-%   SEED} has a value defined by the function {\tt SERIAL()}.
+%by the {\tt POWER} parameter value in the following example.
+Values are either constant, point to a parameter of another symbol,
+or have a function value.  As an example:
+
+\begin{verbatim}
+PARAMETERS
+   PARAMETER ( DIAMETER = 0.3 ),
+   PARAMETER ( LENGTH = ..->LENGTH ),
+   PARAMETER ( SEED = SERIAL () )
+END PARAMETERS
+\end{verbatim}
+
+Here, the {\tt DIAMETER} parameter has a constant value, the {\tt
+LENGTH} parameter is inherited from the parent component (the
+'$..$' notation is a reference to the parent symbol\footnote{The NDF
+format supports both the '$..$', and $^\wedge$ notations to
+reference the parent symbol.  While non-technical people might
+prefer the $^\wedge$ notation,
+technical people will prefer the '$..$' notation.}),
+and {\tt SEED} has a value defined by the function {\tt SERIAL()}.
 
 \subsection{Running the model}
-
 
 \section{The Morphology Convertor}
 \label{sec:morph-conv-conf}
@@ -1222,56 +1156,51 @@ Discuss morphology2ndf overhere.
 A {\tt .ndf} file can be generated from a {\tt
   .swc} (or a GENESIS {\tt .p}) morphology file by running:
 
-\vspace{2mm}
-
-{\tt \$ morphology2ndf <directorypath>/fname.swc >
-  <directorypath>/fname.ndf}
-
-\vspace{2mm}
-
-Note the redirection arrow ($>$) in the above statement. A list of the
+\begin{verbatim}
+$ morphology2ndf <directorypath>/fname.swc > <directorypath>/fname.ndf
+\end{verbatim}
+{\bf NOTE:} The redirection arrow ($>$) in the above statement. A list of the
 optional conversion parameters is obtained with:
 
-\vspace{2mm}
-
-{\tt \$ morphology2ndf -h}
-
-\vspace{2mm}
+\begin{verbatim}
+$ morphology2ndf -h
+\end{verbatim}
 
 As mentioned above, neuron morphology files can be converted to NDF
 files using the command {\tt morphology2ndf}.  Under normal
 circumstances this command is called and configured automatically by
 the simulator.  The configuration of this command is done via a
 configuration file.  If a configuration file is not given as a flagged
-argument in the command line (e.g. {\tt morphology2ndf fname.swc
-  --configuration fname.config}) a default configuration file based on
+argument in the command line, e.g.
+
+\begin{verbatim}
+morphology2ndf fname.swc  --configuration fname.config
+\end{verbatim}
+a default configuration file based on
 the De Schutter \& Bower 1994 Purkinje neuron paper ({\it J.
   Neurophysiol.} {\bf 71}: 375) is used. The contents of this file
 (which is currently being used by regression tests) is obtained with:
 
-\vspace{2mm}
-
-{\tt \$ morphology2ndf --show-config}
-
-\vspace{2mm}
-
+\begin{verbatim}
+$ morphology2ndf --show-config
+\end{verbatim}
 which returns:
 
 \begin{verbatim}
 ---
 options:
   histology:
-    shrinkage: 1                                     // Multiplicative shrinkage correction factor
+    shrinkage: 1          // Multiplicative shrinkage correction factor
   relocation:
-    soma_offset: 1                                   // Boolean flag signalling relocation of origin
+    soma_offset: 1        // Boolean flag signalling relocation of origin
 prototypes:
-  aliasses:                                          // Files declaring characteristics of each morphological element
+  aliasses:               // Files declaring characteristics of each morphological element
     - segments/spines/purkinje.ndf::Purk_spine
     - tests/segments/purkinje/maind.ndf::maind
     - tests/segments/purkinje/soma.ndf::soma
     - tests/segments/purkinje/spinyd.ndf::spinyd
     - tests/segments/purkinje/thickd.ndf::thickd
-  parameter_2_prototype:                             // Given dendritic diameters partition morphological elements
+  parameter_2_prototype:  // Given dendritic diameters partition morphological elements
     - dia: 3.18e-06
       prototype: spinyd
     - dia: 7.71e-06
@@ -1341,15 +1270,15 @@ variables:
 %      y: 0
 %      z: 0
 
-We note that in the configuration file, the value indicator
-(http://www.yaml.org/refcard.html), a single colon (:), indicates an
+{\bf NOTE:} In the configuration file, the value indicator
+(http://www.yaml.org/refcard.html), a single colon {\tt :}, indicates an
 unordered list (see in above example following {\tt aliasses}) and the
 nested series indicator, a dash (-), indicates an ordered list (see in
 above example following {\tt parameter\_2\_prototype}).  Importantly,
-we note that the configuration file is white space sensitive and
+the configuration file is white space sensitive and
 tabulators are not allowed for spacing.
 
-The `aliasses' of the configuration file:
+The {\tt aliasses} of the configuration file:
 \begin{verbatim}
 prototypes:
   aliasses:
@@ -1361,12 +1290,9 @@ prototypes:
 are inserted into the scope of the IMPORT token in the NDF file during
 the command:
 
-\vspace{2mm}
-
-{\tt \$ morphology2ndf <fname>.swc --configuration <fname.config> >
-  <fname>.ndf}
-
-\vspace{2mm}
+\begin{verbatim}
+$ morphology2ndf <fname>.swc --configuration <fname.config> > <fname>.ndf
+\end{verbatim}
 
 The default entries for the key {\tt parameter\_2\_prototype}
 enumerate the {\tt prototype}(s) in order of increasing diameter.
@@ -1409,19 +1335,16 @@ exceptions given by the key {\tt name\_2\_prototype'}, such that {\tt
   morphology2ndf} can produce an exact match with the Purkinje cell
 model.
 
-Note that the inline comments included in the above examples and
+{\bf NOTE:} The inline comments included in the above examples and
 indicated by {\tt //} are inserted here for clarification but are not
 permitted in the actual configuration file. As mentioned above, the
 command line arguments to {\tt morphology2ndf} can be used to
 overwrite default configuration values before any conversion takes
 place, e.g. to change the shrinkage factor:
 
-\vspace{2mm}
-
-{\tt \$ morphology2ndf fname.swc (or .p) --configuration fname.config
-  --shrinkage 1.1111 > my.ndf}
-
-\vspace{2mm}
+\begin{verbatim}
+$ morphology2ndf fname.swc (or .p) --configuration fname.config --shrinkage 1.1111 > my.ndf
+\end{verbatim}
 
 This will replace the default shrinkage correction factor of 1 with
 the given value (1.1111) in {\tt my.ndf}.
@@ -2203,7 +2126,6 @@ the given value (1.1111) in {\tt my.ndf}.
 %declared in the specification of a model, whereas a {\tt PARAMETER} is
 %not. A list of parameter names recognized by the NS model container is
 %given in the Appendix.
-
 
 \newpage
 \section{Appendix}
