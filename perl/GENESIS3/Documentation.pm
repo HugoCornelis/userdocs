@@ -549,6 +549,8 @@ sub build_file_copy
 
     my $filetype = shift;
 
+    system "rm -fr output";
+
     system "mkdir -p output/ps";
 
     if ($?)
