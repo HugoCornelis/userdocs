@@ -294,7 +294,7 @@ representations to the numerical formats required to run a simulation
 \begin{figure}[h]
   \centering
 %  \includegraphics{figures/Conversions1.eps}
-  \includegraphics{figures/conversions.eps}
+  \includegraphics[scale=1]{figures/conversions.eps}
 %  \includegraphics[scale=0.2]{figures/matrix.png}
   \caption{NMC conversions.}
   \label{fig:nmc-conversions}
@@ -860,12 +860,12 @@ must be defined, here using the {\tt Vm\_init} parameter.
 To insert the previously defined sodium and potassium channel models
 into the membrane, they are assigned as children of the soma segment.
 The channels provide a current that forms the input to the segment
-($I_\mathrm{HH}$, see equation~(\ref{eq:cable-no-space})).  The segment
-gives rise to the membrane potential, which is passed to the channels.
-The relationship between a channel and the membrane is formed by using
-shared variables that are declared using the {\tt BINDABLES} token.
-The binding of the shared variables is done with {\tt INPUT} tokens
-within a block of {\tt BINDINGS} (see also
+($I_{\mathrm{HH}}$), see equation~(\ref{eq:cable-no-space})).  The
+segment gives rise to the membrane potential, which is passed to the
+channels.  The relationship between a channel and the membrane is
+formed by using shared variables that are declared using the {\tt
+  BINDABLES} token.  The binding of the shared variables is done with
+{\tt INPUT} tokens within a block of {\tt BINDINGS} (see also
 section~\ref{sec:param-spec}):
 
 \begin{verbatim}
