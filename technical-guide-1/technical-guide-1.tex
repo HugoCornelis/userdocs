@@ -807,16 +807,21 @@ END PUBLIC_MODELS
 \subsection{Defining the Soma}
 \label{sec:defining-soma}
 
-Historically, neuronal somas have been modeled as cylinders, but
-visualized as spheres.  The NMC supports both specifications.  A
-spherical representation is given by the {\tt SPHERICAL} option, and
-the {\tt DIA} parameter defines the diameter of the sphere.  For
-expediency, the spherical representation is converted to its
-cylindrical equivalent for numerical computation\footnote{A
-  conversion also implemented by the GENESIS 2 simulator.}.  The somatic compartment
-has membrane properties, for which we have to specify the appropriate
-parameters: specific resistance {\tt RM}, specific capacitance {\tt
-  CM} and the reversal potential for the leak conductance {\tt ELEAK}.
+%Historically, neuronal somas have been modeled as cylinders, but
+%visualized as spheres.  The NMC supports both specifications.  A
+%spherical representation is given by the {\tt SPHERICAL} option, and
+%the {\tt DIA} parameter defines the diameter of the sphere.  For
+%expediency, the spherical representation is converted to its
+%cylindrical equivalent for numerical computation\footnote{A conversion
+%  also implemented by the GENESIS 2 simulator.}.
+Historically, neuronal somas have been modeled as either cylinders or
+spheres.  Cylindrical somata have both {\tt DIA} and {\tt LENGTH}
+parameters, spherical ones have their length undefined or set to zero.
+
+The somatic compartment has membrane properties, for which we have to
+specify the appropriate parameters: specific resistance {\tt RM},
+specific capacitance {\tt CM} and the reversal potential for the leak
+conductance {\tt ELEAK}.
 
 \begin{equation}
   \label{eq:cable-no-space}
@@ -845,7 +850,6 @@ must be defined, here using the {\tt Vm\_init} parameter.
 \begin{verbatim}
     SEGMENT soma
         ...
-        OPTIONS SPHERICAL
         PARAMETERS
             PARAMETER ( Vm_init = -0.07 ),
             PARAMETER ( RM = 0.33333 ),
@@ -878,7 +882,6 @@ section~\ref{sec:param-spec}):
             INPUT k->I,
             INPUT na->I,
         END BINDINGS
-        OPTIONS SPHERICAL
         PARAMETERS
             PARAMETER ( Vm_init = -0.07 ),
             PARAMETER ( RM = 0.33333 ),
@@ -922,7 +925,6 @@ PRIVATE_MODELS
             INPUT k->I,
             INPUT na->I,
         END BINDINGS
-        OPTIONS SPHERICAL
         PARAMETERS
             PARAMETER ( Vm_init = -0.07 ),
             PARAMETER ( RM = 0.33333 ),
@@ -1435,8 +1437,6 @@ the given value (1.1111) in {\tt my.ndf}.
 %         INPUT na->Ik,
 %      END BINDINGS
 
-%      OPTIONS SPHERICAL
-
 %      PARAMETERS
 %         PARAMETER ( Vm_init = -0.07 ),
 %         PARAMETER ( RM = 0.33333 ),
@@ -1615,8 +1615,6 @@ the given value (1.1111) in {\tt my.ndf}.
 %      BINDINGS
 %         INPUT k->Ik,
 %      END BINDINGS
-
-%      OPTIONS SPHERICAL
 
 %      PARAMETERS
 %         PARAMETER ( Vm_init = -0.07 ),
@@ -1931,8 +1929,6 @@ the given value (1.1111) in {\tt my.ndf}.
 %         INPUT na->Ik,
 %      END BINDINGS
 
-%      OPTIONS SPHERICAL
-
 %      PARAMETERS
 %         PARAMETER ( Vm_init = -0.07 ),
 %         PARAMETER ( RM = 0.33333 ),
@@ -2073,8 +2069,6 @@ the given value (1.1111) in {\tt my.ndf}.
 %         INPUT k->Ik,
 %         INPUT na->Ik,
 %      END BINDINGS
-
-%      OPTIONS SPHERICAL
 
 %      PARAMETERS
 %         PARAMETER ( Vm_init = -0.07 ),
