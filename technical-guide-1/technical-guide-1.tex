@@ -138,8 +138,6 @@ A NDF file contains four sections. These sections are not necessarily
 filled, but they must be present in the given order.  A NDF file has
 the following general form (described in the following sections).
 
-\begin{center}
-  \begin{minipage}{13cm}
 \begin{verbatim}
 #!/usr/local/bin/neurospacesparse
 //-*- NEUROSPACES -*-
@@ -168,8 +166,6 @@ PUBLIC_MODELS
    END CELL
 END PUBLIC_MODELS
 \end{verbatim}
-  \end{minipage}
-\end{center}
 
 \subsubsection{Header Section}
 
@@ -284,18 +280,10 @@ biological and mathematical representations, the NMC is internally
 aware of these categories and is able to translate both
 representations to the numerical formats required to run a simulation
 (see Fig.~\ref{fig:nmc-conversions}).
-%\begin{figure}[h]
-%  \centering
-%  \includegraphics[scale=0.4]{figures/nmc-conversions.eps}
-%  \caption{NMC conversions}
-%  \label{fig:nmc-conversions}
-%\end{figure}
 
 \begin{figure}[h]
   \centering
-%  \includegraphics{figures/Conversions1.eps}
-  \includegraphics[scale=1]{figures/conversions.eps}
-%  \includegraphics[scale=0.2]{figures/matrix.png}
+  \includegraphics{figures/conversions.eps}
   \caption{NMC conversions.}
   \label{fig:nmc-conversions}
 \end{figure}
@@ -323,10 +311,10 @@ described by Hodgkin and Huxley (HH-{\it J. Physiol.} {\bf 117}: 500).
 
 The NDF files that generate this model can be found in the model
 library bundled with the NMC\,\footnote{After installation, the channel descriptions can be found in the directory\\
-  {\it /usr/local/neurospaces/models/library/channels/hodgkin-huxley/},\\
-  while the soma model definition can be found at\\
-  {\it /usr/local/neurospaces/models/library/segments/hodgkin\_huxley.nd}'\\
-  and the neuron model definition at\\
+  {\it /usr/local/neurospaces/models/library/channels/hodgkin-huxley/},
+  while the soma model definition can be found at
+  {\it /usr/local/neurospaces/models/library/segments/hodgkin\_huxley.nd}'
+  and the neuron model definition at
   {\it /usr/local/neurospaces/models/library/tests/cells/hh1.ndf}.}:
 \begin{verbatim}
 /usr/local/neurospaces/models/library
@@ -807,21 +795,16 @@ END PUBLIC_MODELS
 \subsection{Defining the Soma}
 \label{sec:defining-soma}
 
-%Historically, neuronal somas have been modeled as cylinders, but
-%visualized as spheres.  The NMC supports both specifications.  A
-%spherical representation is given by the {\tt SPHERICAL} option, and
-%the {\tt DIA} parameter defines the diameter of the sphere.  For
-%expediency, the spherical representation is converted to its
-%cylindrical equivalent for numerical computation\footnote{A conversion
-%  also implemented by the GENESIS 2 simulator.}.
-Historically, neuronal somas have been modeled as either cylinders or
-spheres.  Cylindrical somata have both {\tt DIA} and {\tt LENGTH}
-parameters, spherical ones have their length undefined or set to zero.
-
-The somatic compartment has membrane properties, for which we have to
-specify the appropriate parameters: specific resistance {\tt RM},
-specific capacitance {\tt CM} and the reversal potential for the leak
-conductance {\tt ELEAK}.
+Historically, neuronal somas have been modeled as cylinders, but
+visualized as spheres.  The NMC supports both specifications.  A
+spherical representation is given by the {\tt SPHERICAL} option, and
+the {\tt DIA} parameter defines the diameter of the sphere.  For
+expediency, the spherical representation is converted to its
+cylindrical equivalent for numerical computation\footnote{A
+  conversion also implemented by the GENESIS 2 simulator.}.  The somatic compartment
+has membrane properties, for which we have to specify the appropriate
+parameters: specific resistance {\tt RM}, specific capacitance {\tt
+  CM} and the reversal potential for the leak conductance {\tt ELEAK}.
 
 \begin{equation}
   \label{eq:cable-no-space}
@@ -850,6 +833,7 @@ must be defined, here using the {\tt Vm\_init} parameter.
 \begin{verbatim}
     SEGMENT soma
         ...
+        OPTIONS SPHERICAL
         PARAMETERS
             PARAMETER ( Vm_init = -0.07 ),
             PARAMETER ( RM = 0.33333 ),
@@ -863,6 +847,7 @@ must be defined, here using the {\tt Vm\_init} parameter.
 
 To insert the previously defined sodium and potassium channel models
 into the membrane, they are assigned as children of the soma segment.
+
 The channels provide a current that forms the input to the segment
 ($I_{\mathrm{HH}}$), see equation~(\ref{eq:cable-no-space})).  The
 segment gives rise to the membrane potential, which is passed to the
@@ -882,6 +867,7 @@ section~\ref{sec:param-spec}):
             INPUT k->I,
             INPUT na->I,
         END BINDINGS
+        OPTIONS SPHERICAL
         PARAMETERS
             PARAMETER ( Vm_init = -0.07 ),
             PARAMETER ( RM = 0.33333 ),
@@ -925,6 +911,7 @@ PRIVATE_MODELS
             INPUT k->I,
             INPUT na->I,
         END BINDINGS
+        OPTIONS SPHERICAL
         PARAMETERS
             PARAMETER ( Vm_init = -0.07 ),
             PARAMETER ( RM = 0.33333 ),
@@ -1437,6 +1424,8 @@ the given value (1.1111) in {\tt my.ndf}.
 %         INPUT na->Ik,
 %      END BINDINGS
 
+%      OPTIONS SPHERICAL
+
 %      PARAMETERS
 %         PARAMETER ( Vm_init = -0.07 ),
 %         PARAMETER ( RM = 0.33333 ),
@@ -1615,6 +1604,8 @@ the given value (1.1111) in {\tt my.ndf}.
 %      BINDINGS
 %         INPUT k->Ik,
 %      END BINDINGS
+
+%      OPTIONS SPHERICAL
 
 %      PARAMETERS
 %         PARAMETER ( Vm_init = -0.07 ),
@@ -1929,6 +1920,8 @@ the given value (1.1111) in {\tt my.ndf}.
 %         INPUT na->Ik,
 %      END BINDINGS
 
+%      OPTIONS SPHERICAL
+
 %      PARAMETERS
 %         PARAMETER ( Vm_init = -0.07 ),
 %         PARAMETER ( RM = 0.33333 ),
@@ -2069,6 +2062,8 @@ the given value (1.1111) in {\tt my.ndf}.
 %         INPUT k->Ik,
 %         INPUT na->Ik,
 %      END BINDINGS
+
+%      OPTIONS SPHERICAL
 
 %      PARAMETERS
 %         PARAMETER ( Vm_init = -0.07 ),
