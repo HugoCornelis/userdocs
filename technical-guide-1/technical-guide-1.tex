@@ -113,7 +113,7 @@ specify models, from those of intracellullar mechanisms to network
 models and morphologies.  The file format is indicated by {\tt .ndf}
 being appended to the name of a regular text file, e.g.
 \begin{verbatim}
-  <filename>.ndf}
+  <filename>.ndf
 \end{verbatim
 
 It is possible to convert neuron morphology files to NDF files
@@ -138,8 +138,6 @@ A NDF file contains four sections. These sections are not necessarily
 filled, but they must be present in the given order.  A NDF file has
 the following general form (described in the following sections).
 
-\begin{center}
-  \begin{minipage}{13cm}
 \begin{verbatim}
 #!/usr/local/bin/neurospacesparse
 //-*- NEUROSPACES -*-
@@ -168,8 +166,6 @@ PUBLIC_MODELS
    END CELL
 END PUBLIC_MODELS
 \end{verbatim}
-  \end{minipage}
-\end{center}
 
 \subsubsection{Header Section}
 
@@ -183,14 +179,14 @@ NMC executable:
 
 This is followed by two declarations on separate lines. The first:
 \begin{verbatim}
-//-*- NEUROSPACES -*-}
+//-*- NEUROSPACES -*-
 \end{verbatim}
 flags an appropriate major mode and keyword highlighting for Emacs and
 XEmacs editors\footnote{The Neurospaces Emacs major mode is bundled
   with the NMC package.}. The second declaration identifies the type
 of file, here:
 \begin{verbatim}
-{\tt NEUROSPACES NDF}
+NEUROSPACES NDF
 \end{verbatim}
 
 \subsubsection{Import Section}
@@ -284,18 +280,10 @@ biological and mathematical representations, the NMC is internally
 aware of these categories and is able to translate both
 representations to the numerical formats required to run a simulation
 (see Fig.~\ref{fig:nmc-conversions}).
-%\begin{figure}[h]
-%  \centering
-%  \includegraphics[scale=0.4]{figures/nmc-conversions.eps}
-%  \caption{NMC conversions}
-%  \label{fig:nmc-conversions}
-%\end{figure}
 
 \begin{figure}[h]
   \centering
-%  \includegraphics{figures/Conversions1.eps}
   \includegraphics{figures/conversions.eps}
-%  \includegraphics[scale=0.2]{figures/matrix.png}
   \caption{NMC conversions.}
   \label{fig:nmc-conversions}
 \end{figure}
@@ -323,10 +311,10 @@ described by Hodgkin and Huxley (HH-{\it J. Physiol.} {\bf 117}: 500).
 
 The NDF files that generate this model can be found in the model
 library bundled with the NMC\,\footnote{After installation, the channel descriptions can be found in the directory\\
-  {\it /usr/local/neurospaces/models/library/channels/hodgkin-huxley/},\\
-  while the soma model definition can be found at\\
-  {\it /usr/local/neurospaces/models/library/segments/hodgkin\_huxley.nd}'\\
-  and the neuron model definition at\\
+  {\it /usr/local/neurospaces/models/library/channels/hodgkin-huxley/},
+  while the soma model definition can be found at
+  {\it /usr/local/neurospaces/models/library/segments/hodgkin\_huxley.nd}'
+  and the neuron model definition at
   {\it /usr/local/neurospaces/models/library/tests/cells/hh1.ndf}.}:
 \begin{verbatim}
 /usr/local/neurospaces/models/library
@@ -859,6 +847,7 @@ must be defined, here using the {\tt Vm\_init} parameter.
 
 To insert the previously defined sodium and potassium channel models
 into the membrane, they are assigned as children of the soma segment.
+
 The channels provide a current that forms the input to the segment
 ($I_\mathrm{HH}$, see equation~(\ref{eq:cable-no-space})).  The segment
 gives rise to the membrane potential, which is passed to the channels.
@@ -2847,7 +2836,7 @@ The following ?? are rocognized by Neurospaces.
 \hspace*{1cm} Found at: www.neurospaces.sourceforge.net/cbi.png.\\
 2 Cornelis, H. (2003) Neurospaces software design. Unpublished Technical Report.
 
-\bibliographystyle{plain}
-\bibliography{../tex/bib/g3-refs.bib}
+%\bibliographystyle{plain}
+%\bibliography{../tex/bib/g3-refs.bib}
 
 \end{document}
