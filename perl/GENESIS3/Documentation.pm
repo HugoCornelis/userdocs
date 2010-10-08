@@ -1251,6 +1251,13 @@ sub expand
 
     my $result;
 
+    # only expand in regular latex files
+
+    if (not $self->is_latex())
+    {
+	return $result;
+    }
+
     # expand contents of each level of the documentation
 
     my $contents_documents
@@ -1387,9 +1394,11 @@ sub has_tag
 
     my $tag = shift;
 
-    if (!$self->{descriptor})
+    my $descriptor_error = $self->read_descriptor();
+
+    if ($descriptor_error)
     {
-	die "$0: internal error: document descriptor used in sub has_tag(), but it has not been read yet.";
+	die "$0: document descriptor cannot be read ($descriptor_error)";
     }
 
     return $self->{descriptor}->has_tag($tag);
@@ -1401,6 +1410,25 @@ sub is_html
     my $self = shift;
 
     return $self->has_tag('html');
+}
+
+
+sub is_latex
+{
+    my $self = shift;
+
+    return not (
+		$self->is_html()
+		or $self->is_mp3()
+		or $self->is_obsolete()
+		or $self->is_pdf()
+		or $self->is_png()
+		or $self->is_ps()
+		or $self->is_redirect()
+		or $self->is_restructured_text()
+		or $self->is_rich_text_format()
+		or $self->is_wav()
+	       );
 }
 
 
@@ -1448,9 +1476,11 @@ sub is_redirect
 {
     my $self = shift;
 
-    if (!$self->{descriptor})
+    my $descriptor_error = $self->read_descriptor();
+
+    if ($descriptor_error)
     {
-	die "$0: internal error: document descriptor used in sub is_redirect(), but it has not been read yet.";
+	die "$0: document descriptor cannot be read ($descriptor_error)";
     }
 
     return defined $self->{descriptor}->{redirect};
