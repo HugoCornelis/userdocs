@@ -59,6 +59,8 @@ position:
 
  - Experience with large scale and multi-disciplinary software projects.
 
+ - Experience with test-driven software development.
+
  - Experience with Perl and object-oriented programming languages.
 
  - Knowledge of parallel programming and numerical techniques.
