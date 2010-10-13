@@ -955,7 +955,7 @@ analysis.
 %Software libraries can either provide general support or can be
 %tailored for specific scientific disciplines.
 
-{\bf Hugo: The following lines 950-973, now commented out in the tex file are an exact replication of lines 150-174.}
+%{\bf Hugo: The following lines 950-973, now commented out in the tex file are an exact replication of lines 150-174.}
 %\subsection*{From Monolithic Software Applications to Modular
 %  Frameworks}
 %\label{sec:from-monol-softw}
@@ -1238,7 +1238,11 @@ This division of labor provides a natural framework for reusability.
 When well-defined interfaces exist between components and scripts, software reuse becomes easy.
 In this sense scripting and system programming are symbiotic. Used
 together, they produce programming environments of exceptional power where applications can be developed
-five to ten times more rapidly than when a system programming language alone is used.
+five to ten times more rapidly than when a system programming language alone is used.\\
+
+\noindent{\bf Place Figure\,3 about here.}\\
+
+Figure~\ref{fig:g3-interfacing} gives the levels of programing available in G-3. They range from the C coding employed to create the independent components, through Python and Perl interface scripting, the declarative NDF file format used for model construction and the associated reusable NDF libraries coding membrane channels and synapses, to the highest level of coding via the G-Tube GUI. Also indicated is the location of the SLI in this coding hierarchy.
 
 In summary, system programming languages are well suited for building functional software
 components where there is a requirement for computing speed because data structures and
@@ -1370,7 +1374,7 @@ of the stimulus, and when to export a model) and mathematical solvers
 start
 calculations, and what the output variables are).\\
 
-\noindent{\bf Place Figure\,3 About Here} \\
+\noindent{\bf Place Figure\,4 About Here} \\
 
 A scripting layer allows the simulation system to be driven from
 multiple scripting languages. Python and Perl are currently supported,
@@ -1507,6 +1511,18 @@ Hugo Cornelis is partially supported by the CREA Financing program (CREA/07/027)
 {\bf Image of reconstructed Purkinje neuron dendritic segment.} Blender is an open source 3D content creation suite that can be interfaced with the GENESIS neural simulation platform to replace the functionality otherwise provided by the {\bf G-Shell} (a stand-alone GENESIS component). The rendering functions of Blender can then be used to analyze the morphology of small dendritic segments imported from electron microscopy data.
 }
 \label{fig:cbi-blender}
+\end{figure}
+
+\clearpage
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=4in]{figures/g3-interfacing.eps}
+\end{center}
+\caption{
+{\bf Levels of programing in GENESIS 3.0.} The concept hierarchy used for communication by GENESIS developers. C Coding: System programing languages are used to program individual simulator components and extend simulator functionality. SLI: Indicates the level of the GENESIS Script Language Interface in the concept hierarchy. Script Languages: Python and Perl are used to interface individual simulator components. NDF: The native declarative file format used to build models and model components. NDF Libraries: Model components such as membrane channels and synapses provide a library of functional components available for accelerated model development. G-Tube: The GENESIS graphical user interface allows users to access models and model components for the rapid development of single cell and network models.
+}
+\label{fig:g3-interfacing}
 \end{figure}
 
 \clearpage
