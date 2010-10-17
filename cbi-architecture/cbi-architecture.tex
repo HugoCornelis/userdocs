@@ -1038,7 +1038,12 @@ The analysis generated the primary functions of the CBI architecture illustrated
 
 \subsubsection*{User Workflows and Biological Data}
 
-The first step in our ideal user workflow involves creating or importing a model. It maps directly to high-level biological representations via a simulator shell or GUI. This interface straddles the Control/Data divide and replaces the upper horizontal arrow connecting the Biology and User Workflow modules in Figure~\ref{fig:data-control}. It enables the workflow by assisting either the development of simple cell models from the command line of a simulator shell via the Scripting Libraries and Applications module or the importation of model descriptions via the Database Interfaces module (see Fig.~\ref{fig:cbi-architecture-simple}). File formats currently recognized include SWC, the GENESIS P format, the declarative NDF file format, and once finalized, the neuroML model specification format. Step two typically requires biological expertise and includes the definition of simulation constants, and simulation inputs and outputs. Other aspects of these two steps are covered in more detail below.
+The first step in our ideal user workflow involves creating or importing a model. It maps directly to high-level biological representations via a simulator shell or GUI. This interface straddles the Control/Data divide and replaces the upper horizontal arrow connecting the Biology and User Workflow modules in Figure~\ref{fig:data-control}. It enables the workflow by assisting either the development of simple cell models from the command line of a simulator shell via the Scripting Libraries and Applications module or the importation of model descriptions via the Database Interfaces module (see Fig.~\ref{fig:cbi-architecture-simple}). File formats currently recognized include SWC, the GENESIS P format, the declarative NDF file format, and once finalized, the NeuroML model specification format.
+
+Step two of the ideal user workflow typically requires biological
+expertise to design an experiment.  This includes the definition of
+simulation constants, and simulation inputs and outputs.  Other
+aspects of these two steps are covered in more detail below.
 
 %For example given a
 %morphology, what are the total surface and volume of the cell, convert
@@ -1528,7 +1533,7 @@ Conducting experiments and running simulations are two iterative processes indic
 \begin{center}
 \includegraphics[width=4in]{figures/matrix.eps}
 \end{center}
-\caption{ {\bf Principles concerns.}  The four fundamental building
+\caption{ {\bf Principle concerns.}  The four fundamental building
   blocks of a simulator are distinguished by separating (i) Data from
   control, and (ii) High level biological concepts from their
   mathematical implementation. In a federated architecture the only
