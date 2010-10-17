@@ -106,14 +106,15 @@ versus low-level data (numerical values) and distinguish data from
 control functions.
 
 Its independence of technology facilitates communication about similar
-concepts and functions.  It has important advantages for multiple
-independent contributions to software development.  Importantly this
-includes: (1) Complexity of individual simulator components is reduced
-compared to the complexity of a complete simulator, (2) Components can
-be documented in isolation, in terms of their inputs and outputs, (3)
-Unnecessary or obsoleted components can be easily replaced or removed,
-(4) Components can be tested stand-alone, and (5) The architecture
-clearly delineates the development scope of new components.
+concepts and functions between both users and developers.  It provides
+important advantages for multiple independent contributions to
+software development.  Importantly this includes: (1) Complexity of
+individual simulator components is reduced compared to the complexity
+of a complete simulator, (2) Components can be documented in
+isolation, in terms of their inputs and outputs, (3) Unnecessary or
+obsoleted components can be easily replaced or removed, (4) Components
+can be tested stand-alone, and (5) The architecture clearly delineates
+the development scope of new components.
 
 Here, we introduce the recently reconfigured GENESIS 3.0 neural simulator and describe how  it complies with the Computational Biology Initiative federated software architecture.
 
@@ -216,7 +217,18 @@ These software systems have been both highly successful and continued to grow in
 % Migliore, M, Cannia, C., Lytton, W.W., Markram, H. and Hines, M.L. (2006) Parallel network simulations with NEURON. J Comput Neurosci 21: 119--129.
 % Hereld M, Stevens RL, van Drongelen W \& Lee HC (2004) Developing a petascale neural simulation.  Proc 26th Ann Int Conf IEEE EMBS 2: 3999--4002.
 
-One response of the computational neuroscience community to the cumbersome nature of monolithic software applications has been the development of specialized simulators capable of modeling different levels of biological detail. For example, (1) neuroConstruct assists single neuron and network construction (Gleeson et al., 2007), (2) Nest simulates large structured network systems (Diesmann \& Gewaltig, 2001), (3) HHsim provides a graphical environment for the detailed exploration of a section of excitable membrane via the Hodgkin-Huxley equation formalism (Touretzky et al., 2004), (4) COPASSI (Hoopes et al., 2006), a SBML (Hucka et al., 2004) enabled  application for simulation and analysis of sub-cellular biochemical networks, and (5) MCell which uses Monte Carlo algorithms to track the stochastic diffusion of discrete molecules (Stiles \& Bartol, 2001). 
+One response of the computational neuroscience community to the
+cumbersome nature of monolithic software applications has been the
+development of specialized simulators capable of modeling different
+levels of biological detail. For example, (1) Nest simulates large
+structured network systems (Diesmann \& Gewaltig, 2001), (2) HHsim
+provides a graphical environment for the detailed exploration of a
+section of excitable membrane via the Hodgkin-Huxley equation
+formalism (Touretzky et al., 2004), (3) COPASSI (Hoopes et al., 2006),
+a SBML (Hucka et al., 2004) enabled application for simulation and
+analysis of sub-cellular biochemical networks, and (4) MCell which
+uses Monte Carlo algorithms to track the stochastic diffusion of
+discrete molecules (Stiles \& Bartol, 2001).
 
 % Brette R, Rudolph M, Carnevale T, Hines M, Beeman D, Bower JM, Diesmann M, Morrison A, Goodman PH, Harris FC Jr., Zirpe M, Natschl\"ager T, Pecevski D, Ermentrout B, Djurfeldt M, Lansner A, Rochel O, Vieville T, Muller E, Davison AP, Boustani S \& Destexhe (2007) Simulation of networks of spiking neurons: A review of tools and strategies. J Comput Neurosci 23: 349--398.
 % Gleeson P, Steuber V, Silver RA (2007) neuroConstruct: A Tool for Modeling Networks of Neurons in 3D Space. Neuron 54:  219-235.
@@ -230,14 +242,19 @@ The rapidly growing diversity of modeling environments and tools raises signific
 
 % Stodden V (2009) Enabling reproducible research: Open licensing for scientific innovation. Int J Commun Law Policy.
 
-Problems of incremental model extension, incomplete model specification, and reproducibility of results,  have resulted in the idea of the interoperability of neuroscience modeling software. Interoperability has been defined as ``all mechanisms that allow two or more simulators to use the same model description or to collaborate by evaluating different parts of a large neural model'' (Cannon et al., 2007), thus various forms of interoperability are possible. Two broad types have recently been identified (Cannon et al., 2007), Type\,1: Development of portable model description standards such that models built for one simulator can be run on another, i.e. the adoption of common simulation languages such as SBML (Hucka et al., 2004) or NeuroML (Goddard et al., 2001), and Type\,2: Run-time interoperability where different simulators operating on different domains interoperate at run-time either by direct coupling via simulator script languages (e.g. pyNEST--Eppler et al., 2008), indirect coupling via interpreted languages (e.g. PyNN--Davison et al., 2008), or coupling via object oriented frameworks (e.g. pyMOOSE--Ray \& Bhalla, 2008; Catacomb2--http://www.compneuro.org/catacomb/).\marginpar{HUGO--Check the accuracy of these statements}
+Problems of incremental model extension, incomplete model specification, and reproducibility of results,  have resulted in the idea of the interoperability of neuroscience modeling software. Interoperability has been defined as ``all mechanisms that allow two or more simulators to use the same model description or to collaborate by evaluating different parts of a large neural model'' (Cannon et al., 2007), thus various forms of interoperability are possible. Two broad types have recently been identified (Cannon et al., 2007), Type\,1: Development of portable model description standards such that models built for one simulator can be run on another, i.e. the adoption of common simulation languages such as SBML (Hucka et al., 2004) or NeuroML (P Gleeson et al., 2010), and Type\,2: Run-time interoperability where different simulators operating on different domains interoperate at run-time either by direct coupling via simulator script languages (e.g. pyNEST--Eppler et al., 2008), indirect coupling via interpreted languages (e.g. PyNN--Davison et al., 2008), or coupling via object oriented frameworks (e.g. pyMOOSE--Ray \& Bhalla, 2008; Catacomb2--http://www.compneuro.org/catacomb/).\marginpar{HUGO--Check the accuracy of these statements}
 
+% NeuroML: A Language for Describing Data Driven Models of Neurons and Networks with a High Degree of Biological Detail, P Gleeson, S Crook, RC Cannon, ML Hines, GO Billings, M Farinella, TM Morse, AP Davison, S Ray, US Bhalla, SR Barnes, YD Dimitrova, RA Silver.  PLoS Comput Biol 6(6): e1000815. doi:10.1371/journal.pcbi.1000815
 % Goddard N, Hucka M, Howell F, Cornelis H, Shankar K \& Beeman D (2001) Towards NeuroML: Model description methods for collaborative modeling in neuroscience. Phil Trans R Soc B 356: 1209--1228.
 % Eppler JM, Helias M, Muller E, Diesmann M \& Gewaltig M (2009) PyNEST: a convenient interface to the NEST simulator. Front. Neuroinform. (2008) 2: 12.
 % Davison AP, Brüderle D, Eppler JM, Kremkow J, Muller E, Pecevski DA, Perrinet L \& Yger P (2008) PyNN: a common interface for neuronal network simulators. Front Neuroinform doi:10.3389/neuro.11.011.2008.
 % Ray S \& Bhalla US (2008)  PyMOOSE: Interoperable Scripting in Python for MOOSE. Front Neuroinf 2: 6.
 
-As a complement to the Type\,1 interoperability provided by a `universal' language such as NeuroML or SBML, we here introduce the Computational Biology Initiative federated simulator architecture (CBI architecture). It provides a formal description of the class of simulators that support Type 2, or runtime interoperability.
+%As a complement to the Type\,1 interoperability provided by a `universal' language such as NeuroML or SBML, we here introduce the Computational Biology Initiative federated simulator architecture (CBI architecture). It provides a formal description of the class of simulators that support Type 2, or runtime interoperability.
+
+Here we introduce a new class of simulators that supports both
+interoperability and extensibility.
+
 
 % Results and Discussion can be combined.
 \section*{Results}
