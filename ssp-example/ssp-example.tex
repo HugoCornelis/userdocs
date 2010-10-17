@@ -1,0 +1,401 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+%e.g.  \textcolor{red,green,blue}{text}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+\usepackage{scrtime}
+ 
+\begin{document}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-ssp
+% end: userdocs-tag-replace-items related-ssp
+
+\section*{GENESIS: Documentation}
+
+\section{EMail: Description of an SSP Example Configuration FIle}
+
+In the example below I try to give an impression of what it looks like
+to work with the *new* features of the current Neurospaces based
+implementation of the GENESIS 3 simulator.  Note that this does not
+preclude backwards compatibility, something we are working on right
+now.
+
+The example is taken from the purkinje cell comparison project, which
+was presented at the society for neuroscience meeting in San Diego.
+There are a couple of things I would like to add before starting: (1)
+this is a technical and dense explanation, that goes from input and
+model over simulation to output and output processing, giving examples
+of the file formats along the way.  (2) The explanation is mainly
+about an \href{../ssp/ssp.tex}{SSP} configuration file that was
+generated automatically from a template (see also attachment).  The
+SSP config generator is currently part of the Neurospaces project
+browser.  The NS project browser is still under active development, I
+will probably make a first pre-alpha release available for the CNS
+meeting.  (3) Everything below is about new functions of the
+simulator.  Everything explained below, is part of the automatic
+regression tests (see the neurospaces website for the output of these
+tests).  (4) It took me some time to write this all down, I hope to
+receive technical and conceptual feedback.
+
+In this example, I want to stimulate a passive model of a morphology
+of a purkinje neuron at a known dendritic location.  The name of the
+stimulated dendritic compartment is b1s20[14], it will be stimulated
+with a unitary synaptic event.
+
+\begin{enumerate}
+\item The model of the neuron will be loaded by the neurospaces model
+  container, and is defined using a Genesis 2 morphology file
+  (Purk2M9s.p).  The model is an active model, ie it includes
+  dendritic ion channels (see below for how the active channels are
+  removed from the simulation).  The SSP configuration to load the
+  model is:\label{sec:email:-ssp-example}
+
+\begin{verbatim}
+services:
+ model_container:
+   initializers:
+     - arguments:
+         - filename: /var/neurospaces/simulation_projects//purkinje-comparison2/morphologies/lab/gp/Purk2M9s.p
+       method: load
+   module_name: Neurospaces
+\end{verbatim}
+
+  This section of the SSP file instructs SSP to load the perl module
+  {\bf 'Neurospaces'}, and to call the method {\bf 'load'} with the
+  argument to read a GENESIS morphology file from the file system.
+  For SSP, the internal reference to the resulting object is {\bf
+    'model\_container'}.  This {\bf 'model\_container'} is a service
+  that can present the model to other internal SSP objects, e.g. a
+  solver.  It is possible to use other model containers, in which case
+  Neurospaces.pm and its shared libraries will not be loaded (but
+  others will).
+
+\item The input event list is accessible in a JSON / YAML formatted
+  file called {\bf 'event\_data/events.yml'}.  The content of this
+  file looks like this:
+
+\begin{verbatim}
+# an event file
+events:
+   - 0.0001
+\end{verbatim}
+
+  So this JSON / YAML file encodes a single event at time 0.1ms in SI
+  units.  The notion of time is implicit, and can be overridden.  I
+  use this file as an encoding of a synaptic event.  If I would like
+  to have more events in this file, it could look like this:
+
+\begin{verbatim}
+# an event file
+events:
+   - 0.0001
+   - 0.0002
+   - 0.0003
+\end{verbatim}
+
+\item I would like to simulate the model using a compartmental solver.
+  The compartmental solver is available in the perl module {\bf
+    'Heccer.pm'}.  The SSP encoding to load the solver is:
+
+\begin{verbatim}
+solverclasses:
+ compartmental_solver:
+   constructor_settings:
+     options:
+       iOptions: 4
+   module_name: Heccer
+   service_name: model_container
+\end{verbatim}
+
+  This section of the SSP file instructs SSP to load the perl module
+  {\bf 'Heccer'}.  This perl module will automatically load the C code
+  of the compartmental solver, and the perl module gets attached to
+  the internal object with name {\bf 'compartmental\_solver'}.  When
+  the solver gets instantiated, it will be linked to the internal SSP
+  service object with name {\bf 'model\_container'}, this is the
+  service object that was defined in
+  point~\ref{sec:email:-ssp-example}.  The option setting, {\bf
+    'iOptions'}, is currently a cryptic way to put heccer in passive
+  mode, such that it does not simulate membrane potential dependent
+  ionic conductances (it does simulate synaptic channels however).
+  This is also the place to specify a time step, which is here by
+  default 2e-5s (this default value is coming from Heccer, not from
+  SSP).  The exact names of the options are specific to the solver,
+  and are opaque to SSP.
+
+  However, SSP does not automatically initialize the compartmental
+  solver with a model.  It is possible to modify the structure of the
+  model, or put it in a particular mode (eg. in-vivo mode), before
+  feeding it to the rest of the system.  For initialization of the
+  compartmental solver we need the point below.
+
+\item Before the model can be compiled into the solver's internal
+  representation, it needs a reference to what model must be
+  simulated.  This is defined in a separate section of the SSP file:
+
+\begin{verbatim}
+models:
+   granular_parameters:
+     - component_name: '/Purk2M9s/segments/b1s20[14]/synchan/synapse'
+       description: 'single synaptic event, variable dendritic location'
+       field: EVENT_FILENAME
+       value: event_data/events.yml
+   modelname: /Purk2M9s
+   solverclass: compartmental_solver
+\end{verbatim}
+
+  Two separate things happen here:
+
+  \begin{itemize}
+  \item the event file described above, is linked to a synaptic
+    channel, just before the solver gets to see the model.  The
+    creation of this synaptic channel is part of the initialization
+    sequence of the model container (not shown, see the attached SSP
+    file for the details).
+
+  \item the model with name {\bf '/Purk2M9s'} will be feed to the SSP
+    object {\bf 'compartmental\_solver'}.  This object was by its
+    definition linked to {\bf 'model\_container'} in the point above,
+    such that the name {\bf '/Purk2M9s'} effectively identifies the
+    model in the neurospaces model container.
+  \end{itemize}
+
+\item For this simulation, I am interested in the somatic response
+  after the unitary synaptic stimulation.  I first define an
+  outputclass that converts floating point numbers to ascii.  The
+  low-level code of this function is shipped as a commodity with the
+  Heccer package, and from perl it is available in the module Heccer
+  (as the perl package Heccer::Output).  Here is the required SSP
+  snippet that makes this function available as an internal object of
+  SSP under the name {\bf 'double\_2\_ascii'}:
+
+\begin{verbatim}
+outputclasses:
+ double_2_ascii:
+   module_name: Experiment
+   options:
+     filename: 'output_generate_single_stimulation_fixed_conductance/Purk2M9s/b1s20[14].output'
+   package: Experiment::Output
+\end{verbatim}
+
+  Then, I link this output class to the membrane potential of the
+  soma:
+
+\begin{verbatim}
+outputs:
+ - component_name: /Purk2M9s/segments/soma
+   field: Vm
+   outputclass: double_2_ascii
+\end{verbatim}
+
+\item Now, everything has been defined to run the simulation.  The
+  result of the previous steps is a single SSP object that connects
+  all the parts for a deterministic run of a simulation (except for
+  arithmetic rounding, it is a bug if the simulation is not
+  deterministic -- numerical rounding is included by means of
+  specifying the compartmental solver and its options).  Running the
+  simulation is done as follows:
+
+\begin{verbatim}
+apply:
+ simulation:
+   - arguments:
+       - 10000
+     method: steps
+\end{verbatim}
+
+  This calls the internal {\bf 'steps'} method on the global SSP
+  object that results after steps 1 - 5.  An more intuitive way to run
+  the simulation is to call the {\bf 'advance'} method with a
+  simulation time.
+
+  Note again that SSP is independent of the model container, the
+  compartmental solver, the input files and the output classes.  For
+  instance, plugging in a reference to the neurospaces studio for a
+  'solver' will allow you to explore the model that you want to
+  simulate, using the GUI and SDL.  This exploration would run on a
+  model, after the necessary modifications for this particular
+  simulation run (eg. putting the model in a in-vivo mode, or after
+  adding a synaptic channel for stimulating a known compartment).
+  Another option is to plug in a JSON serializer for communication
+  with a web browser.
+
+  Running the simulation will produce a voltage trace with the somatic
+  response after synaptic stimulation of compartment b1s20[14].  The
+  exact format of the output file depends on the options given to the
+  {\bf double\_2\_ascii} output class.  In this case the format would
+  be backward compatible with
+  \href{http://www.genesis-sim.org/GENESIS/Hyperdoc/Manual-26.html#ss26.7}{the
+    GENESIS 2 {\bf ascii\_file} object} (no JSON / YAML), and looks
+  something like this:
+
+\begin{verbatim}
+0 -0.08
+1 -0.08
+2 -0.08
+
+...
+
+19 -0.08
+20 -0.08
+21 -0.08
+22 -0.0799999
+23 -0.0799999
+
+...
+
+
+9999 -0.0799987
+\end{verbatim}
+
+\item Remember that these values are obtained after stimulation of
+  compartment b1s20[14].  If we run a simulation like this, for every
+  compartment in the model, we get 1600 raw output files, as there are
+  1600 compartments in this model.  Now we would like to process these
+  files, to extract the somatic time-to-peak and peak amplitudes.  The
+  processing of these files is done using a research-project specific
+  script written in perl: this script reads all the raw output files,
+  extracts ttp and peak amplitude, and puts them in an aggregate
+  output file that has the following format (only amplitude shown):
+
+\begin{verbatim}
+---
+'/Purk2M9s/segments/b0s01[0]/synchan': -0.0798088
+'/Purk2M9s/segments/b0s01[10]/synchan': -0.0798239
+'/Purk2M9s/segments/b0s01[11]/synchan': -0.0798216
+'/Purk2M9s/segments/b0s01[12]/synchan': -0.0798222
+'/Purk2M9s/segments/b0s01[13]/synchan': -0.0798228
+...
+'/Purk2M9s/segments/b1s20[14]/synchan': -0.0799105
+...
+\end{verbatim}
+
+  In this file, each line maps a model component -- the stimulated
+  compartment -- to a value, in this case the amplitude of the somatic
+  synaptic response.  Sometimes the model component will be encoded
+  using an integer, for sake of brevity and to enhance compression
+  ratios when compressing the file (this will reduce client-server
+  communication time when using the project browser).
+
+  Then, this file can be used by the neurospaces studio to colorcode
+  the morphology for the Purkinje cell dendritic tree, and -- as an
+  example only -- this same file can be used to modify the channel
+  densities in the dendritic compartments, because it is essentially a
+  simple mapping from compartments to numbers.
+
+  I can give more examples for the interested.  A slightly different
+  and interesting example is a voltage clamp, because the voltage
+  clamp circuitry runs as a separate solver.
+
+  What I really hope to make clear with this to short explanation, is
+  how Genesis 3 works internally, I hope to make clear how it can be
+  told exactly what to do, and how input and output are connected to
+  the model.  I also hope that it is clear that the explanation is
+  relatively independent from the numerical solution method, and from
+  the structure of the model, input and output.  It is in the end that
+  by abstracting these, that we are able to add new and powerful
+  software layers to the simulator, including the already mentioned
+  project browser.
+\end{enumerate}
+
+His explanation sheds some light on how the internals of the GENESIS 3
+simulator work.
+
+The attached SSP configuration, as any other JSON file, can be
+converted to XML using the following command:
+
+\begin{verbatim}
+$ perl -e 'use YAML; use XML::Simple; local $/; print
+XMLout(YAML::Load(<>), NoAttr => 1, RootName => SSP)' 'b1s20[14].yml'
+\end{verbatim}
+
+\begin{verbatim}
+--- !perl/SSP
+apply:
+  modifiers:
+    - arguments:
+        - /usr/local/neurospaces/models/library/channels/nmda.ndf
+        - nmda_namespace
+      method: import_qualified_filename
+      object: neurospaces
+    - arguments:
+        - nmda_namespace::/NMDA_fixed_conductance
+        - '/Purk2M9s/segments/b1s20[14]/synchan'
+      method: add_component
+      object: neurospaces
+  simulation:
+    - arguments:
+        - 10000
+      method: steps
+models:
+  - conceptual_parameters:
+      - component_name: a::/Purk_spine
+        description: set resting membrane potential to steady state
+        field: Vm_init
+        value: -0.0800
+      - component_name: b::/maind
+        description: set resting membrane potential to steady state
+        field: Vm_init
+        value: -0.0800
+      - component_name: c::/soma
+        description: set resting membrane potential to steady state
+        field: Vm_init
+        value: -0.0800
+      - component_name: d::/spinyd
+        description: set resting membrane potential to steady state
+        field: Vm_init
+        value: -0.0800
+      - component_name: e::/thickd
+        description: set resting membrane potential to steady state
+        field: Vm_init
+        value: -0.0800
+    granular_parameters:
+      - component_name: '/Purk2M9s/segments/b1s20[14]/synchan/synapse'
+        description: 'single synaptic event, variable dendritic location'
+        field: EVENT_FILENAME
+        value: event_data/events.yml
+    modelname: /Purk2M9s
+    solverclass: compartmental_solver
+name: 'all models, all dendrites, single synaptic stimulation, fixed synaptic conductance'
+outputclasses:
+  double_2_ascii:
+    module_name: Experiment
+    options:
+      filename: 'output_generate_single_stimulation_fixed_conductance/Purk2M9s/b1s20[14].output'
+    package: Experiment::Output
+outputs:
+  - component_name: /Purk2M9s/segments/soma
+    field: Vm
+    outputclass: double_2_ascii
+services:
+  model_container:
+    initializers:
+      - arguments:
+          - filename: /var/neurospaces/simulation_projects//purkinje-comparison2/morphologies/lab/gp/Purk2M9s.p
+          -
+            - ./generate_single_stimulation_fixed_conductance
+            - -R
+            - -A
+        method: load
+    module_name: Neurospaces
+solverclasses:
+  compartmental_solver:
+    constructor_settings:
+      configuration:
+        reporting:
+          granularity: 1
+          tested_things: 6225920
+      options:
+        iOptions: 4
+    module_name: Heccer
+    service_name: model_container
+\end{verbatim}
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
