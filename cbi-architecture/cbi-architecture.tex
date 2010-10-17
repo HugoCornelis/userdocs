@@ -983,8 +983,13 @@ formats employed by a computer-based model of the
 system\marginpar{good reference possible}. Specifically, it is the
 dynamical properties of a biological system that do not map easily to
 the logical principles and mathematical constructs used by software
-implementations. The result is that many neural simulators impose mathematical
-constraints on the organization of a model that interrupt the
+implementations.  This has two important consequences: (1) the user
+workflows used by experimentalists differ from the workflows used by
+modelers, and (2) current model representation technology used by
+simulators expose mathematical details and periphery control code that
+is unrelated to the biology it tries to represent.  The result is that
+many neural simulators impose mathematical constraints on the
+organization of a model that interrupt the
 biological intuition of a user.\\
 
 % Figure 3
@@ -1521,10 +1526,14 @@ Conducting experiments and running simulations are two iterative processes indic
 \begin{center}
 \includegraphics[width=4in]{figures/matrix.eps}
 \end{center}
-\caption{
-{\bf Separation of concerns.}
-The four fundamental building blocks of a simulator are distinguished by separating (i) Data from control, and (ii) High level biological concepts from their mathematical implementation. In a federated architecture the only allowed interactions between modules are those indicated by the vertical and horizontal arrows. Diagonal interactions are forbidden as they ultimately lead to interactions that result in the creation of a monolithic software architecture.
-}
+\caption{ {\bf Principles concerns.}  The four fundamental building
+  blocks of a simulator are distinguished by separating (i) Data from
+  control, and (ii) High level biological concepts from their
+  mathematical implementation. In a federated architecture the only
+  allowed interactions between modules are those indicated by the
+  vertical and horizontal arrows. Diagonal interactions are forbidden
+  as they ultimately lead to interactions that result in the creation
+  of a monolithic software architecture.  }
 \label{fig:data-control}
 \end{figure}
 
