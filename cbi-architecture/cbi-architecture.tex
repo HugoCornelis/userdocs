@@ -252,7 +252,7 @@ Problems of incremental model extension, incomplete model specification, and rep
 
 %As a complement to the Type\,1 interoperability provided by a `universal' language such as NeuroML or SBML, we here introduce the Computational Biology Initiative federated simulator architecture (CBI architecture). It provides a formal description of the class of simulators that support Type 2, or runtime interoperability.
 
-Here we introduce a new class of simulators that supports both
+Here we introduce a new class of simulator that supports both
 interoperability and extensibility.
 
 
@@ -590,7 +590,7 @@ The relationship between experiment and simulation in computational biology is i
 % Figure 2
 \noindent{\bf Place Figure\,\ref{fig:data-flows} about here.}\\
 
-From this perspective, simulation provides a framework to organize our understanding of biological systems. The CBI architecture is designed to support the lower loop within the illustrated scheme and was developed in an effort to resolve the complexities associated with continual addition of functionality to simulators. Ultimately, simulators were monolithic and it became increasingly difficult for users and developers to maintain and extend them, while user workflows were often similarly degraded.
+From this perspective, simulation provides a framework to organize our understanding of biological systems. The CBI architecture is designed to support the lower loop within the illustrated scheme and was developed in an effort to resolve the complexities associated with continual addition of functionality to simulators. Ultimately, simulators become monolithic and it is increasingly difficult for users and developers to maintain and extend them, with the logical consequence that user workflows were often similarly degraded.
 
 Considerable experience with both user and technical concerns related to simulator functionality and efficiency has been gained from over twenty years of following user requirements during the development of bottom up models of neurons and neural circuits within the framework of the GENESIS software platform (http://www.genesis-sim.org/). This experience has allowed us to identify an ideal user workflow that we use here to constrain the ``separation of concerns'' analysis that lies at the heart of the new simulator architecture. Initially, we present the workflow, then the results of the separation of concerns. The analysis identifies the independent functional blocks and their relationships that define a software architecture necessary to support a third generation neural simulator. This leads to the identification of the overall design objectives for a federated simulation platform. We then describe the underlying software architecture by following a representative simulation example through the ideal workflow.
 
@@ -913,23 +913,6 @@ A modeling project is established by the introduction of iterators into the user
 
 %\subsection*{The federated approach:}
 
-\subsection*{Separation of Concerns}
-
-In software engineering, the process of partitioning a program into
-logical functions that minimize overlap is referred to as the
-``separation of concerns''.  User concerns have a clear and direct
-influence on the partitioning of a program into its primary functional
-blocks. Technical concerns have only indirect influence on the user's
-experience of an application, but are crucial for problem diagnosis
-and guaranteed correct behaviour of the software.
-
-We consider that a principled separation of concerns is a prerequisite
-for the development of advanced computational modeling techniques in
-the neurosciences. Here, we propose that 
-there are two principal concerns underlying the development of
-modeling software: separation between data and control and
-data-layering.
-
 %%\subsection*{Modeling:}
 
 %%The process of designing and constructing a computational model,
@@ -962,6 +945,22 @@ data-layering.
 %%should be guided by the following two considerations.
 
 \subsection*{Principal Concerns}
+
+We consider that a principled separation of concerns is a prerequisite
+for the development of advanced computational modeling techniques in
+the neurosciences.
+
+In software engineering, the process of partitioning a program into
+logical functions that minimize overlap is referred to as the
+``separation of concerns''.  User concerns have a clear and direct
+influence on the partitioning of a program into its primary functional
+blocks. Technical concerns have only indirect influence on the user's
+experience of an application, but are crucial for problem diagnosis
+and guaranteed correct behaviour of the software.  Here, we propose
+that there are two principal concerns underlying the development of
+modeling software: separation between data and control and
+data-layering.
+
 
 \subsubsection*{Control versus data}
 \label{sec:data-vs-control}
@@ -1014,7 +1013,7 @@ implementation and provide operators that convert between these two
 representations.  This insulates the process of model construction
 from the computations performed during a simulation. 
 
-The relationships between simulator control and data modules in a federated architecture are symbolized by the horizontal arrows in Figure~\ref{fig:data-control}, whereas the relationship between high level biological concepts and and their mathematical implementation are symbolized by the vertical arrows. Diagonal interactions are forbidden as they foster the mixing of functionality across different levels that ultimately lead to the creation of monolithic software applications.
+The relationships between simulator control and data modules in a federated architecture are symbolized by the horizontal arrows in Figure~\ref{fig:data-control}, whereas the relationship between high level biological concepts and and their mathematical implementation are symbolized by the vertical arrows. Diagonal interactions\marginpar{can we give an example from a G-2 script?} are forbidden as they foster the mixing of functionality across different levels that ultimately lead to the creation of monolithic software applications.
 
 Importantly, we note that a simulator can be efficiently modularized when only horizontal or vertical interactions are allowed between the modules illustrated in Figure~\ref{fig:data-control}. Separation of functionality along the horizontal and vertical axes enables the construction of a modularized simulator where independent stand-alone components can be highly optimized. It is these interactions that form the philosophical basis of the meta-framework developed for the CBI architecture. Alternatively, the larger the number of interactions allowed between diagonally located components, the more difficult it becomes to functionally separate simulator components and the harder it becomes to optimize the resulting application.
 
