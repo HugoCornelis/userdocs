@@ -419,7 +419,7 @@ GENESIS 2 {\tt tabchan} object).  Its general form is:
 
 \begin{equation}
   \label{eq:hh-general-1}
-  A(V), B(V) = \mathrm{HH\_AB\_Scale} * \frac{ ( \mathrm{HH\_AB\_Mult} * V - \mathrm{HH\_AB\_Offset\_M} ) }{ \mathrm{HH\_AB\_Add} + e ^ {\frac{ V - \mathrm{HH\_AB\_Offset\_E} }{ \mathrm{HH\_AB\_Tau} } } }
+  A(V), B(V) = \mathrm{HH_{-}AB_{-}Scale} * \frac{ ( \mathrm{HH_{-}AB_{-}Mult} * V - \mathrm{HH_{-}AB_{-}Offset_{-}M} ) }{ \mathrm{HH_{-}AB_{-}Add} + e ^ {\frac{ V - \mathrm{HH_{-}AB_{-}Offset_{-}E} }{ \mathrm{HH_{-}AB_{-}Tau} } } }
 \end{equation}
 
 In the NMC all these parameter names are prefixed with {\tt HH\_},
@@ -448,17 +448,17 @@ a multiplier:
 \item {\tt HH\_AB\_Factor\_Flag} has value -1:
 \begin{equation}
   \label{eq:hh-general-ff-1}
-  \mathrm{HH\_AB\_Scale} * \frac{ ( \mathrm{HH\_AB\_Mult} * V - \mathrm{HH\_AB\_Offset\_M} ) }{ \mathrm{HH\_AB\_Add} + e ^ {\frac{ V - \mathrm{HH\_AB\_Offset\_E} }{ \mathrm{HH\_AB\_Tau} } } }
+  \mathrm{HH_{-}AB_{-}Scale} * \frac{ ( \mathrm{HH_{-}AB_{-}Mult} * V - \mathrm{HH_{-}AB_{-}Offset_{-}M} ) }{ \mathrm{HH_{-}AB_{-}Add} + e ^ {\frac{ V - \mathrm{HH_{-}AB_{-}Offset_{-}E} }{ \mathrm{HH_{-}AB_{-}Tau} } } }
 \end{equation}
 %\item {\tt HH\_AB\_Factor\_Flag} has value 0:
 %\begin{equation}
 %  \label{eq:hh-general-ff0}
-%  \mathrm{HH\_AB\_Scale} * \frac{ ( \mathrm{HH\_AB\_Mult} * V - \mathrm{HH\_AB\_Offset\_M} ) }{ \mathrm{HH\_AB\_Add} + e ^ {\frac{ V - \mathrm{HH\_AB\_Offset\_E} }{ \mathrm{HH\_AB\_Tau} } } }
+%  \mathrm{HH_{-}AB_{-}Scale} * \frac{ ( \mathrm{HH_{-}AB_{-}Mult} * V - \mathrm{HH_{-}AB_{-}Offset_{-}M} ) }{ \mathrm{HH_{-}AB_{-}Add} + e ^ {\frac{ V - \mathrm{HH_{-}AB_{-}Offset_{-}E} }{ \mathrm{HH_{-}AB_{-}Tau} } } }
 %\end{equation}
 \item {\tt HH\_AB\_Factor\_Flag} has value 1:
 \begin{equation}
   \label{eq:hh-general-ff1}
-  \mathrm{HH\_AB\_Scale} * \mathrm{HH\_AB\_Add} + e ^ {\frac{ V - \mathrm{HH\_AB\_Offset\_E} }{ \mathrm{HH\_AB\_Tau} } }
+  \mathrm{HH_{-}AB_{-}Scale} * \mathrm{HH_{-}AB_{-}Add} + e ^ {\frac{ V - \mathrm{HH_{-}AB_{-}Offset_{-}E} }{ \mathrm{HH_{-}AB_{-}Tau} } }
 \end{equation}
 \end{itemize}
 
