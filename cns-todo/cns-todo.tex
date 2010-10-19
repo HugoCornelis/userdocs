@@ -714,6 +714,23 @@ modularized part of a model.
   library function.
 \end{itemize}
 
+Algorithmically:
+\begin{itemize}
+\item The export library traverses the model tree in post-order,
+  thereby exporting untagged components, and tagging exported ones.
+
+\item The prototypes in the tree are always exported as references to
+  other components using the 'CHILD' token.
+
+\item The names of the model components are generated on the fly,
+  except for those components visible to the user (in the
+  public\_models section).  The public names remain the same (they are
+  the 'interface' to the model).
+
+\item The library is essentially a flat representation of the model,
+  the model hierarchy is only generated using the insertion of
+  'CHILD'ren.
+\end{itemize}
 
 \subsection{SSP Optimizer}
 
