@@ -105,6 +105,7 @@ Due to the unique requirements for some neuroscience projects, some aspects of t
 		
 	
 \item[] {\bf Widgets}: One of the main strengths of GENESIS 2 was XODUS, a scriptable user interface where users can build specific guis via scripting and specialized widgets using the X11 library. However adding a new widget to XODUS isn't a job for someone new to programming, and running the newly created widget involved creating a GENESIS 2 script to properly draw it to the screen. To make it easy to add your own widgets, the gtube will employ a plugin system that can dynamically load widgets to a registry, and allow them to be called via the top level gui. 
+	Widgets are primarily for displaying data from result files (usually raw text atoms), which are managed by the Atom Manager. Since the Atom Manager allows the user to "tag" any atom from the interface; it is possible for the Atom Manager to match tags to the appropriate widget in the registry and properly display the data. 
 
 \end{itemize}
 

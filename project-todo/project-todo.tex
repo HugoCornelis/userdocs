@@ -36,6 +36,65 @@ This TODO list was built on \today, \thistime.
 
 \section{TODO List}
 
+\subsection{website images}
+
+The documentation system uses ht4tex which is the successor of
+latex2html.
+
+It looks like a set of configuration files of dvipng determine the
+quality of the generated images.  Each linux distro puts these files
+in different locations.
+
+So far it is not clear how exactly to modifiy the configuration to
+improve the quality of the images, neither to the choice of
+distribution we would like to support.
+
+Proposal to support at least one user-oriented operating system for
+generating higher quality images, and I still think we should do this.
+Then we can understand how well this works.
+
+The genesis website runs on CentOS, not user-oriented.  The best
+candidate is maybe ubuntu.
+
+
+\subsection{gshell output\_resolution and output\_interval}
+
+The problem comes when I want to set an output interval (i.e. a time
+step for a G2 clock) that is not related to the integration time step.
+Presently one can give a gshell command, such as:
+
+\begin{verbatim}
+genesis > output\_resolution 5
+\end{verbatim}
+
+to output every fifth integration step, but the resolution has to be
+an integer multiplier of simulation time step. I had a case where I
+wanted to compare to a G2 result where the simulation clock was 20
+microsec and the output clock was 50 microsec, and it was not
+posssible.  Furthermore, it is only possible to set the output
+resolution if the output generator is running in 'steps' output\_mode,
+which means that the file output will list step number instead of
+simulation time.  Perhaps that should be an option, but one usually
+cares about the simulation time, not the step number, nor the relation
+between the output interval and the simulation time step. In fact, if
+we at some point incorporate variable time step solver methods, it
+wouldn't be possible to relate the "output resolution" to the time
+step.
+
+So, my suggestion is to replace 'output\_resolution' with
+'output\_interval', and that this should be an option within g-tube
+also.
+
+Another slightly related issue that came up in the benchmarking is
+that the rallpack axon model produces two output files, one for each
+end of the axon.  Alternatively, it could have used asc\_file to
+produce a single file with three columns for time, axon0, axonx
+values.  But neither option is presently possible with G3.  (I have
+not yet implemented the G3plot capability to plot multiple columns
+yet, but it is on the list.)  These options should be part of the
+gshell/g-tube output model.
+
+
 \subsection{tester cron job mail reporting}
 
 The email reporting facility of the tester needs to be refactored and
