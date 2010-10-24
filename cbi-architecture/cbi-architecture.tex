@@ -619,7 +619,7 @@ In practice, this principle actually corresponds with finding the right decompos
 
 \subsubsection*{Module versus Component}
 
-We refer to the independent parts of the CBI architecture as modules, whereas, the implemented parts of a simulator are referred to as components and sub-components. For example, the GUI component contains independent subcomponents dealing with simulation control, the model, and results (see Fig.\,\ref{fig:cbi-architecture-expanded}).
+We refer to the independent parts of the CBI architecture as modules that may contain independent sub-modules, whereas, the implemented parts of a simulator are referred to as components and sub-components. For example, the GUI component contains independent subcomponents dealing with simulation control, the model, and results (see Fig.\,\ref{fig:cbi-architecture-expanded}).
 
 \subsubsection*{Interoperability}
 
@@ -1042,10 +1042,7 @@ implementations.
 The result is that
 many neural simulators impose mathematical constraints on the
 organization of a model that interrupt the
-biological intuition of a user.\\
-
-% Figure 3
-\noindent {\bf Place Figure\,3 about here.}\\
+biological intuition of a user.
 
 %For example, at the biological level,
 %a dendritic spine is considered to be a single morphological entity
@@ -1072,10 +1069,13 @@ from the computations performed during a simulation.
 
 The relationships between simulator control and data modules in a federated architecture are symbolized by the horizontal arrows in Figure~\ref{fig:data-control}, whereas the relationship between high level biological concepts and their mathematical implementation are symbolized by the vertical arrows. Diagonal interactions\marginpar{can we give an example from a G-2 script?} are forbidden as they foster the mixing of functionality across different levels that ultimately leads to the creation of monolithic software applications.
 
-Importantly, we note that a simulator can be efficiently modularized when only horizontal or vertical interactions are allowed between the modules illustrated in Figure~\ref{fig:data-control}. Separation of functionality along the horizontal and vertical axes enables the construction of a modularized simulator where independent stand-alone components can be highly optimized. It is these interactions that form the philosophical basis of the meta-framework developed for the CBI architecture. Alternatively, the larger the number of interactions allowed between diagonally located components, the more difficult it becomes to functionally separate simulator components and the harder it becomes to optimize the resulting application.
+Importantly, we note that a simulator can be efficiently modularized when only horizontal or vertical interactions are allowed between the modules illustrated in Figure~\ref{fig:data-control}. Separation of functionality along the horizontal and vertical axes enables the construction of a modularized simulator where independent stand-alone components can be highly optimized. It is these interactions that form the philosophical basis of the meta-framework developed for the CBI architecture. Alternatively, the larger the number of interactions allowed between diagonally located components, the more difficult it becomes to functionally separate simulator components and the harder it becomes to optimize the resulting application.\\
 
 %The first implementation of the CBI architecture has been that of  G-3. We use this software platform to present an overview of the CBI federated software architecture through the example of the the new G-3 simulator. In doing this we follow the ideal simulator workflow presented in Methods.
- 
+
+% Figure 3
+\noindent {\bf Place Figure\,\ref{fig:data-control} about here.}
+
 \subsection*{Separation of Concerns}
 
 Consideration of the principal concerns of data, control, and data layering were used to expand Figure~\ref{fig:data-control} by the separation of concerns principle. This key principle in software engineering states that a given problem involves different kinds of concerns, which should be identified and separated to cope with complexity (Dijkstra, 1982). The aim is to achieve engineering quality factors such as robustness, adaptability, maintainability, and reusability.
@@ -1106,9 +1106,7 @@ Step three of the ideal user workflow deals with the checking, resetting, runnin
 
 At a technical level the implementation of user workflows involves
 scheduling mathematical operations on the numerical representations of
-a biological model. This step is indicated by the horizontal arrow between Scheduling and Numerics in Figure~\ref{fig:data-control} and is encompassed by the Controllers\,\&\,Communication and Solvers modules illustrated in Figure~\ref{fig:cbi-architecture-simple}.\\
-
-\noindent{\bf Place Figure\,\ref{fig:cbi-architecture-simple} about here.}\\
+a biological model. This step is indicated by the horizontal arrow between Scheduling and Numerics in Figure~\ref{fig:data-control} and is encompassed by the Controllers\,\&\,Communication and Solvers modules illustrated in Figure~\ref{fig:cbi-architecture-simple}.
 
 %\section*{Results: The CBI Simulator Architecture}
 %\label{sec:constr-cbi-simul}
@@ -1137,7 +1135,7 @@ implementations of the underlying applications and data sources
 Ideally, it makes the underlying applications look like a
 single system to the user. This enhanced application interoperability is achieved
 through the use of high level scripting languages
-(ref??)\marginpar{ref CBI scripting paper}.
+(see companion paper this issue, Cornelis et al., 2010)\marginpar{ref CBI scripting paper}.
 
 % For completeness, we note that northbound and southbound interfaces
 % are indicated in this figure. Northbound interfaces conceptualize
@@ -1149,29 +1147,31 @@ through the use of high level scripting languages
 % interfaces are drawn at the top and bottom of an architectural
 % overview, respectively.
 
-In summary, the CBI federated architecture provides a template for
+In summary, the CBI architecture provides a template for
 software development that, at its core, contains a simulator.
-Additionally, the modularity of the architecture simplifies connection
+Additionally, the modularity and layering of the architecture simplifies connection
 to independent applications indirectly related to model construction
-and instantiation. Figure\,\ref{fig:cbi-architecture-expanded} illustrates the various modules of the CBI
-federated architecture. We now briefly describe their functionality and
-relationships with reference to this figure.\\
+and instantiation. Figure\,\ref{fig:cbi-architecture-simple} illustrates the various modules of the CBI
+architecture. We now introduce their functionality and describe their relationships within the context of the the user workflow.\\
 
-\noindent{\bf Place Figure\,\ref{fig:cbi-architecture-expanded} about here.}\\
+% Figure 4
+\noindent{\bf Place Figure\,\ref{fig:cbi-architecture-simple} about here.}\\
 
+\subsection*{The High Level User Interface Layer}
 
-\subsection*{High Level Interface Layer}
+Modules in the top level of the CBI architecture (Fig.\,\ref{cbi-architecture-simple}A) provide user accessible interfaces to simulator functionality through the GUI. Model data are controlled by the Database\,Interfaces, whereas,
+%modules Model\,Tools and the Biology and Experiment\,Model\,Container. Note that for convenience, reference to the Model\,Container are to the Experiment\,Model\,Container. 
+simulations are controlled by Scripting\,Libraries\,\&Applications. The various modules and sub-modules located in this layer are instantiated by a simulator on an as-needed basis. This layer supports the first three steps in the user workflow, including: (1) Model Construction, (2) Experiment Design, and (3) Run Simulation.  
+% include Implementation\,Libraries and the Scheduler.
 
-Modules at the top level of the CBI architecture (northbound interfaces) provide user accessible interfaces to simulator functionality through the GUI. Model data is controlled by the modules Model\,Tools and the Biology and Experiment\,Model\,Container. Note that for convenience, reference to the Model\,Container are to the Experiment\,Model\,Container. For simulation control, modules include Implementation\,Libraries and the Scheduler.
-
-\subsection*{The Graphical User Interface}
+\subsubsection*{The Graphical User Interface}
 
 Based on the distinction between data and control, the GUI comprises
-two components. One is related to model data and incorporates model
+two sub-modules. One is related to model data and incorporates model
 construction and visualization of simulation results, the other is
 related to simulation control.
 
-\subsubsection*{Model Construction and Result Visualization}
+\paragraph{\bf Model Construction and Result Visualization:}
 
 The model construction functionality of the GUI allows a user to define a model in terms of
 the biological properties of a neuron and neuronal networks, such as
@@ -1182,66 +1182,39 @@ The model construction GUI also connects to other modeling components to provide
 The result visualization functionality of the GUI provides different views of a model and supports the possible work flows between them. It can be divided into generic and application specific parts.  The generic parts are those commonly provided by external tools such as GNUplot, Matlab, or xmgrace for display of the temporal evolution of variables. Examples of the application specific parts include, user specified neuron morphology visualization via morphologically related color coding of variables solved during a
 simulation, axons showing propagating action potentials, and higher level visualizations of network behavior.
 
-\subsubsection*{Simulation Control}
+\paragraph{\bf Simulation Control:}
 
 Simulation control comprises actions such as starting and stopping a
 simulation.  Moreover, depending on the experimental protocol being
 simulated, simulation control can be enriched with actions specific
-for a given stimulation protocol (e.g. stimulate the model at a particular location).
+for a given stimulation protocol (e.g. stimulate the model at a particular location in a particular way).
 Various buttons and dialog boxes allow interaction with the controller to configure protocol
 specific inputs. A browser provides access to sets of related simulations and results.
 
-\subsection*{Model Tools}
+\subsubsection*{Database Interfaces}
 
-Some model tools may already incorporate a
+There are three primary sub-modules within the Database\,Interfaces module. They include: (1) Model\,Tools that provide functionality for connecting to databases, parameter searches, and model analysis, (2) The Biology\,Model\,Container, which allows a user to define a model in terms of biological properties such as spine, morphology, circuits and their connectivity, and (3) The Experiment\,Model\,Container, which enables the definition of an experiment in terms of actions taken on a biological model. 
+
+\paragraph{\bf Model Tools:} Some model tools may already incorporate a
 good GUI for model construction.  The difference with those tools is
-that in the CBI architecture this part of the GUI does not export the model in a simulator
+that in the CBI architecture this part of the GUI does not export a model in a simulator
 specific language, but rather interacts directly with the Biological and Experimental\,Model\,Containers.  This direct interaction creates a much tighter loop with lower level
 back-end functions (described below).
 
-\subsection*{Biology Model Container}
+\paragraph{\bf The Biology Model Container:}
 
-The Biology\,Model\,Container allows a user to define a model in terms of biological properties such as spine, morphology, circuits and their connectivity. It stores a biological model which is then available for inspection by other software components. Two important functions of this container are its translation of the hierarchical biological model into an expanded numerical model for use by the solvers and translation of model connectivity to connectivity between solvers.
-
-This container stores a conceptual representation as well as an
-expanded representation of a model.  The conceptual representation
-can contain algorithm names and parameters that specify how to build
-the model. It can be regarded as an enumeration of biological
-concepts and their relationships.  Since it supports
-the conceptual representation of a model, the container can also export the
-representation (e.g. store it on a file system).
-
-By running the algorithms referenced in the conceptual representation,
-an expanded representation of the model is generated.  It can be mathematical complete and can be
-simulated.  If a parameter is missing, e.g. the axial resistance of a
-neuronal morphology, the model cannot be simulated, but is still
-useful for inspection.  Note that this way of treating a model is
+This container stores three different versions of a model. (1) A biological representation, available for inspection by other software modules, e.g. ??. (2) A conceptual representation that can be regarded as an enumeration of biological concepts and their relationships. It can contain algorithm names and parameters that specify how to build the model and can be exported and stored on a file system. (3) An expanded mathematical representation, generated by algorithms referenced from the conceptual representation, which, if mathematically complete can be simulated. However, if a parameter is missing, e.g. the axial resistance of a
+neuronal morphology, the model is still useful for inspection. Note that this way of treating a model is
 different from most current simulators.
 
-By querying the modeling system in an appropriate way, summaries of
-the existing model can be built (overview, table with channel
-conductance parameters, etc.).
+Because of the translation functionality of the Biology\,Model\,Container, it must also act as an identification system. Given the identifier of a
+biological component in the expanded representation, the Biology\,Model\,Container must be able to translate it into an identifier for a mathematical variable.
 
-The Biology\,Model\,Container prepares the biological model for simulations by
-translating and expanding the user defined model into a mathematical
-structure.  This involves the following two separate tasks.
+In more detail, the Biology\,Model\,Container prepares the biological model for simulations by
+translating and expanding a user defined model into a mathematical
+structure.  This involves two separate tasks, (1) Translation of model connectivity to connectivity between solvers, and (2) Translation of the hierarchical biological model into an expanded numerical model for use by the solvers.
 
-\subsubsection*{Hierarchical Translation}
-
-If biological components in a model are assumed to function as a single biophysical unit they can be grouped, e.g. a spine and a dendrite or an axon
-hillock and the soma, or a population of calcium or potassium channels.
-For a mathematical solver however, these groups must be
-converted to a set of equations at the same level as other
-equations of the same type (and independent of the biological
-component). This requires translation of the user defined model to the necessary flat stream of elements.  
-
-Because of the translation functionality of the Biology\,Model\,Container, it
-must also act as an identification system. Given the identifier of a
-biological component in the expanded mathematical representation, the model
-container must be able to translate it into an identifier for a
-mathematical variable.
-
-\subsubsection*{Connectivity Translation}
+\paragraph{Connectivity Translation:}
 
 This provides translation of the
 connectivity between the components of a biological model into
@@ -1251,62 +1224,64 @@ projections, each associated with its own sub-projections and connections.  Howe
 simulation the different numerical engines are only connected by a set of communication ports. Note that because a modeler connects biological components,
 hierarchical translation is a substep of connectivity translation.
 
+\paragraph{\bf Hierarchical Translation}
+
+If biological components in a model are assumed to function as a single biophysical unit they can be grouped, e.g. a spine and a dendrite, an axon
+hillock and the soma, or a population of calcium or potassium channels.
+For a mathematical solver however, these groups must be
+converted to a set of equations at the same level as other
+equations of the same type (and independent of the biological
+component). This requires translation of the user defined model to the necessary flat stream of elements.  
+
 By implementing hierarchical and connectivity translation, the Model\,Container decouples the
 physical implementation of the mathematical solvers from the biological representation of a model and the way the user sees the model.  This greatly reduces the implementation load on the back-end solvers
-(i.e. the solvers only have to deal with the numerics).
+as the solvers only have to deal with the numerics.
 
-\subsection*{Experiment Model Container}
+\paragraph{\bf The Experiment Model Container:}
 
-The Experiment\,Model\,Container enables the definition of an experiment in terms of actions taken on the biological model. For example, it stores a model of a stimulus paradigm and the desired output parameters and defines and stores a hierarchical sequence of stimulus-related actions (e.g. start and stop time of a current injection) and their dependencies.
+This stores a model of a stimulus paradigm and desired output parameters and defines and stores a hierarchical sequence of stimulus-related actions (e.g. start and stop time of a current injection) and their dependencies.
 
-\subsection*{Scripts \& Applications}
+\subsubsection*{Scripting Libraries \& Applications}
 
-This module enables user-friendly work flows by providing access to applications written in high-level scripting languages that focus on specific research questions or educational tutorials. These applications are available for the definition of simulations and preparation of results for subsequent analysis.  
+This module contains two sub-modules, (1) Implementation\,Libraries containing functions specific to a given application, and a (2) Scheduler for the control of a simulation.
 
-\subsection*{Implementation Libraries}
+%Enables user-friendly work flows by providing access to applications written in high-level scripting languages that focus on specific research questions or educational tutorials.
+
+%These applications are available for the definition of simulations and preparation of results for subsequent analysis.  
+
+\paragraph{\bf Implementation Libraries:}
 
 Examples of implementation libraries include, the GNU Scientific Library (GSL), the Perl Data Language (PDL), and the Scientific Library for Python (SciPy). These libraries may be implemented directly, are typically specific for a set of simulations, and have a very defined focus, e.g. investigation of a synaptic learning rule. Also present are neuroscience specific library functions, for example, to connect a model and a stimulus paradigm using a procedural paradigm such as ??. There are also `glue' functions to connect to external libraries for activities such as result analysis.
 
-\subsection*{External Model Construction}
-
-This module contains tools that enable the construction and generation of a
-model visually, or otherwise.  Functionally, neuroConstruct (a software platform for developing biologically realistic 3D neural networks) and CVapp (supports editing and conversion of morphology files)
+This sub-module also contains tools that enable external model construction, visually or otherwise.  Functionally, neuroConstruct (software platform for the development of biologically realistic 3D neural networks) and CVapp (supports editing and conversion of morphology files)
 fall into this category as they are stand-alone applications that
 are currently not easily connected with other software components. 
 These types of tools provide one-way
 interaction with the Model\,Container, i.e.
 additional actions taken by this container are invisible to
 this class of tools. In principle,
-any tool that generates a formatted model can be connected to the biological Model\,Container.  
+any tool that generates a formatted model can be connected to the Model\,Container. 
 
-\subsection*{Numerical Solvers \& Sequencers}
+\paragraph{\bf Scheduler:} ??
 
-These are low-level back-ends at the software and/or hardware level that solve numerical equations using specific algorithms. They discretize and tabulate fixed mathematical functions according to a user setable accuracy specific to the given solvers.
+\subsection*{The Low Level Back-End Layer}
 
-\subsection*{Low Level Back-Ends}
-\subsubsection*{Compartmental Solvers}
+Modules in the lowest level of the CBI architecture (Fig.\,\ref{cbi-architecture-simple}B) provide, (1) Solvers that employ specific algorithms for the solution of numerical equations. They include difference equation solvers and sequence executors that can discretize and tabulate fixed mathematical functions according to a user setable accuracy, and (2) Controllers (such as the simulation clock) and a Communication\,Infrastructure optimized for numerics.
 
-The first class of back-ends (southbound interfaces) are compartmental solvers, kinetic pathway
+subsubsection*{Solvers}
+
+These include compartmental solvers, kinetic pathway
 solvers, monte carlo solvers, and in general any low-level back-end at
-the numerical or hardware level.  They either implement
+the numerical or hardware level.  Solvers either implement
 functionality to solve (numerical) equations or they implement
 specific algorithms, or both.  Because of their numerical nature, some
-numerical solvers can easily be extended to do the necessary
+solvers can easily be extended to do the necessary
 discretization of a continous mathematical equation according to a
 settable accuracy.  The generation of channel conductance tables is a
 common example.  Other examples are mesh generation for monte carlo
 solvers and compartimentalization of a neuronal morphology.
 
-\subsubsection*{Command Sequence Executors}
-
-The second class of back-ends are command sequence executors.  They provide a 
-physical implementation of an
-experimental protocol {\it in computo}.  A command passes a particular
-value to the input port of a solver at a given time step. Note that connectivity between command executors and numerical
-solvers is provided by the connectivity translation function of the
-model containers.
-
-\subsection*{Discrete Representations}
+\paragraph{\bf Discrete Representations}
 
 The discretization generated by the solvers that forms the numerical 
 representation of a model is internally published for reuse by other 
@@ -1317,7 +1292,31 @@ representation is necessary, e.g. annotation with the time step used
 to generate the representation.  The reuse of such representations 
 considerably reduces the memory requirements of large simulations.
 
-\subsection*{Communication Infrastructure}
+\subsubsection*{Controllers \& Communication}
+
+This module contains several sub-modules related to the low-level control of a simulation.
+
+\paragraph{\bf Command Sequence Executors:} These provide a 
+physical implementation of an
+experimental protocol {\it in computo}.  A command passes a particular
+value to the input port of a solver at a given time step. Note that connectivity between command executors and numerical
+solvers is provided by the connectivity translation function of the Model\,Container.
+
+\paragraph{\bf Controller:}
+
+The Controller maintains the operation of all simulator functions and 
+contains core functions such as the global simulation time clock and 
+the functions that start and stop a simulation. Its main function is to 
+schedule and synchronize the solvers by requesting the numerical level 
+to update its internal states. This is achieved by activating Solvers and the 
+Communication\,Infrastructure as required. To leverage the operation 
+of sophisticated solvers and enhance their maintainability, the 
+Controller also implements functions for arithmetic control, and for 
+dealing with floating point exceptions. For other use-cases, such as 
+a simple model analysis with Matlab as a back-end, the Controller 
+can provide the function to start the operation.
+
+\paragraph{\bf Communication Infrastructure}
 
 The communication infrastructure establishes run-time communication 
 between different solvers and output elements working on the same 
@@ -1334,28 +1333,13 @@ and (2) Efficiency of the infrastructure for communicating neighboring
 lists of values, e.g. all the membrane potentials of a compartmentalized 
 neuronal morphology.
 
-\subsection*{Controller}
-\label{sec:controller}
+\subsection*{\bf The Intermediate Layer}
 
-The Controller maintains the operation of all simulator functions and 
-contains core functions such as the global simulation time clock and 
-the functions that start and stop a simulation. Its main function is to 
-schedule and synchronize the solvers by requesting the back-ends 
-to update their internal states. This is achieved by activating Solvers and the 
-Communication\,Infrastructure as required. To leverage the operation 
-of sophisticated solvers and enhance their maintainability, the 
-Controller also implements functions for arithmetic control, and for 
-dealing with floating point exceptions. For other use-cases, such as 
-a simple model analysis with Matlab as a back-end, the Controller 
-can provide the function to start the operation.
-
-\subsection*{Intermediate Layer}
-
-The intermediate layer is part of the scripting API. It
+The intermediate layer comprises solver and sequencer bridges, and assists with the vertical flow of numerical translation. This layer is part of the scripting API. It
 allows instantiation of solver data structures implemented in C via Perl data
 structures (Perl arrays and hashes).  A typical example of a
 scripting application is the set of Perl modules that
-implement a model tutorial (Ref??). The intermediate layer comprises solver and sequencer bridges, numerical translation
+implement a model tutorial (Ref??). 
 
 \subsection*{Core Bridges}
 
@@ -1363,12 +1347,12 @@ A software bridge is a software design pattern that decouples two
 fundamentally different representations of the same system.  The 
 required bridges are specific for a given scripting language and make 
 low-level SWIG interfaces available in a 
-convenient way. The function of the CBI core bridges are to
+convenient way. The function of the core bridges is to
 connect the procedural descriptions of a simulation (including the
 model), i.e. facilitate decomposition into modeling versus simulation control versus simulation
 runs.  More specifically, core bridges delegate procedural
 scripting statements to the correct software components
-in the simulator.  As we describe on Results, a specific implementation of a core bridge could be a
+in the simulator.  As we describe in Results, a specific implementation of a core bridge could be a
 GENESIS to G-3 software compatibility component. It is also possible to provide a NEURON scripter that would bind to SWIG interfaces to allow NEURON scripts to be run with a specific implementation of the CBI architecture.
 
 \subsection*{Solver Bridge}
