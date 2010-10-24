@@ -1243,7 +1243,7 @@ architecture. We now introduce their functionality and describe their relationsh
 
 \subsection*{The High Level User Interface Layer}
 
-Modules in the top level of the CBI architecture (Fig.\,\ref{cbi-architecture-simple}A) provide user accessible interfaces to simulator functionality through the GUI. Model data are controlled by the Database\,Interfaces, whereas,
+Modules in the top level of the CBI architecture (Fig.\,\ref{fig:cbi-architecture-simple}A) provide user accessible interfaces to simulator functionality through the GUI. Model data are controlled by the Database\,Interfaces, whereas,
 %modules Model\,Tools and the Biology and Experiment\,Model\,Container. Note that for convenience, reference to the Model\,Container are to the Experiment\,Model\,Container. 
 simulations are controlled by Scripting\,Libraries\,\&Applications. The various modules and sub-modules located in this layer are instantiated by a simulator on an as-needed basis. This layer supports the first three steps in the user workflow, including: (1) Model Construction, (2) Experiment Design, and (3) Run Simulation.  
 % include Implementation\,Libraries and the Scheduler.
@@ -1350,7 +1350,7 @@ any tool that generates a formatted model can be connected to the Model\,Contain
 
 \subsection*{The Low Level Back-End Layer}
 
-Modules in the lowest level of the CBI architecture (Fig.\,\ref{cbi-architecture-simple}B) provide, (1) Solvers that employ specific algorithms for the solution of numerical equations. They include difference equation solvers and sequence executors that can discretize and tabulate fixed mathematical functions according to a user setable accuracy, and (2) Controllers (such as the simulation clock) and a Communication\,Infrastructure optimized for numerics.
+Modules in the lowest level of the CBI architecture (Fig.\,\ref{fig:cbi-architecture-simple}B) provide, (1) Solvers that employ specific algorithms for the solution of numerical equations. They include difference equation solvers and sequence executors that can discretize and tabulate fixed mathematical functions according to a user setable accuracy, and (2) Controllers (such as the simulation clock) and a Communication\,Infrastructure optimized for numerics.
 
 subsubsection*{Solvers}
 
