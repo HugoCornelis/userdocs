@@ -242,8 +242,26 @@ The rapidly growing diversity of modeling environments and tools raises signific
 
 % Stodden V (2009) Enabling reproducible research: Open licensing for scientific innovation. Int J Commun Law Policy.
 
-Problems of incremental model extension, incomplete model specification, and reproducibility of results,  have resulted in the idea of the interoperability of neuroscience modeling software. Interoperability has been defined as ``all mechanisms that allow two or more simulators to use the same model description or to collaborate by evaluating different parts of a large neural model'' (Cannon et al., 2007), thus various forms of interoperability are possible. Two broad types have recently been identified (Cannon et al., 2007), Type\,1: Development of portable model description standards such that models built for one simulator can be run on another, i.e. the adoption of common simulation languages such as SBML (Hucka et al., 2004) or NeuroML (P Gleeson et al., 2010), and Type\,2: Run-time interoperability where different simulators operating on different domains interoperate at run-time either by direct coupling via simulator script languages (e.g. pyNEST--Eppler et al., 2008), indirect coupling via interpreted languages (e.g. PyNN--Davison et al., 2008), or coupling via object oriented frameworks (e.g. pyMOOSE--Ray \& Bhalla, 2008; Catacomb2--http://www.compneuro.org/catacomb/).\marginpar{HUGO--Check the accuracy of these statements}
+Problems of incremental model extension, incomplete model
+specification, and reproducibility of results, have resulted in the
+idea of the interoperability of neuroscience modeling software.
+Interoperability has been defined as ``all mechanisms that allow two
+or more simulators to use the same model description or to collaborate
+by evaluating different parts of a large neural model'' (Cannon et
+al., 2007), thus various forms of interoperability are possible. Two
+broad types have recently been identified (Cannon et al., 2007),
+Type\,1: Development of portable model description standards such that
+models built for one simulator can be run on another, i.e. the
+adoption of common simulation languages such as SBML (Hucka et al.,
+2004) or NeuroML (P Gleeson et al., 2010), and Type\,2: Run-time
+interoperability where different simulators operating on different
+domains interoperate at run-time either by direct coupling via
+simulator script languages (e.g. pyMOOSE--Ray \& Bhalla, 2008),
+indirect coupling via interpreted languages (e.g. PyNN--Davison et
+al., 2008), or coupling via object oriented frameworks (e.g.
+Catacomb2--http://www.compneuro.org/catacomb/~\cite{cannon03:_from}).
 
+%pyNEST--Eppler et al., 2008
 % NeuroML: A Language for Describing Data Driven Models of Neurons and Networks with a High Degree of Biological Detail, P Gleeson, S Crook, RC Cannon, ML Hines, GO Billings, M Farinella, TM Morse, AP Davison, S Ray, US Bhalla, SR Barnes, YD Dimitrova, RA Silver.  PLoS Comput Biol 6(6): e1000815. doi:10.1371/journal.pcbi.1000815
 % Goddard N, Hucka M, Howell F, Cornelis H, Shankar K \& Beeman D (2001) Towards NeuroML: Model description methods for collaborative modeling in neuroscience. Phil Trans R Soc B 356: 1209--1228.
 % Eppler JM, Helias M, Muller E, Diesmann M \& Gewaltig M (2009) PyNEST: a convenient interface to the NEST simulator. Front. Neuroinform. (2008) 2: 12.
@@ -271,51 +289,55 @@ realistic neural simulation ranging from subcellular components
 simulation based research tool and through its tutorials as an instructional tool in
 neuroscience courses.
 
-The multi-dimensional complexity of neural simulation software
-naturally arises from the requirements of running highly structured
-and complicated models (that frequently are large), the need for realistic
-{\it in-vivo} and experimental stimuli, various types of analysis and
-visualization, support for different types of hardware platforms,
-and software technics such as debugging and code clarity and
-transparancy.
+The\marginpar{move to intro / problem statement?} multi-dimensional
+complexity of neural simulation software naturally arises from the
+requirements of running highly structured and complicated models (that
+frequently are large), the need for realistic {\it in-vivo} and
+experimental stimuli, various types of analysis and visualization,
+support for different types of hardware platforms, and software
+technics such as debugging and code clarity and transparancy.
 
 The flexibility required to run such multi-dimensional research
 simulations led directly to the implementation of the GENESIS
-  scripting language and a customizable
-GUI\,\cite{bower98:_book_genes}.  Performance enhancements were
-introduced in the context of the modeling of complicated Purkinje
-cells\,\cite{deschutter94:_purkin_i, deschutter94:_purkin_ii} and
-later extended to include biochemical pathway
-modeling\,\cite{bhalla02:_use_kinet_genes, bhalla99:_emerg} and large
-network parallel simulations\,\cite{howell00:_pgenes}. More recently, 
-parameter space searching has been implemented to aid model
-development\,\cite{vanier99:_compar_survey_autom_param_searc}. 
-Other recent additions to  GENESIS include software releases for different
-  hardware platforms and the extension of application libraries with
-new functions. It has become clear, however, that the substantial
-  contributions of the developer community in the past are in strong
-  contrast to more recent additions by the user community that do not involve changes to the
-  core of the GENESIS system.
+scripting language and a customizable GUI\,\cite{bower98:_book_genes}.
+Performance enhancements were introduced in the context of the
+modeling of complicated Purkinje cells\,\cite{deschutter94:_purkin_i,
+  deschutter94:_purkin_ii} and later extended to include biochemical
+pathway modeling\,\cite{bhalla02:_use_kinet_genes, bhalla99:_emerg}
+and large network parallel simulations\,\cite{howell00:_pgenes}. More
+recently, parameter space searching has been implemented to aid model
+development\,\cite{vanier99:_compar_survey_autom_param_searc}.  Other
+recent additions to GENESIS include software releases for different
+hardware platforms and the extension of application libraries with new
+functions. It has become clear, however, that the substantial
+contributions of the developer community in the past are in strong
+contrast to more recent additions by the user community that do not
+involve changes to the core of the GENESIS system.
 
-The recent history of GENESIS shows that it has become increasingly
-difficult for developers from different scientific disciplines
-to contribute to simulator design and development. A significant 
-reason for this was that GENESIS did not make a
-separation between biological data, numerical data, and control
-operations.  For example, GENESIS did not allow explicit reuse of discretized representations and
-a user was required to employ a certain sequence of commands to force their
-implicit reuse.  Besides both making the
-simulator difficult to use and being cumbersome from an implementation
-point of view, this method did not work for all circumstances, e.g.
-modifying a copied discretized channel also modified the original.
-Put in other words, reusing discretized representation in GENESIS
-was difficult because of the 'intelligence' builtin in the simulator.
+The\marginpar{repetition of intro} recent history of GENESIS shows
+that it has become increasingly difficult for developers from
+different scientific disciplines to contribute to simulator design and
+development. A significant reason for this was that GENESIS did not
+make a separation between biological data, numerical data, and control
+operations.  For example, GENESIS did not allow explicit reuse of
+discretized representations and a user was required to employ a
+certain sequence of commands to force their implicit reuse.  Besides
+both making the simulator difficult to use and being cumbersome from
+an implementation point of view, this method did not work for all
+circumstances, e.g.  modifying a copied discretized channel also
+modified the original.
 
-In practice, the complexity and monolithic nature of the
-software results in a non-scalable software architecture.  The result
-is that experimentalists are often denied the opportunity to ground
-empirical observation within the formalism of computational
-neuroscience.
+% the following is inaccurate:
+
+%  Put in other words, reusing discretized
+%representation in GENESIS was difficult because of the 'intelligence'
+%builtin in the simulator.
+
+In practice, the complexity and monolithic nature of the software
+results in a non-scalable software architecture.  The result is that
+experimentalists are often denied the opportunity to ground empirical
+observation within the formalism of computational
+neuroscience\cite{deschutter02:_comput_neuros}.
 
 \subsection*{G-3 Implementation of the CBI Architecture}
 \subsection*{Choice of Software Implementation Technologies}
@@ -341,29 +363,30 @@ the ease with which they can be bound to software defined in other technologies.
 \subsection*{Build and Release System}
 
 Maintenance and continued extension of a modularized software
-architecture requires a build and release system that allows work on
-one software component at a time, and at the same time automates the
-integration of new code into new releases of the system. This approach supports the building of a developer community where developers are
-exposed to one software component at a time and the integration of
-single clearly defined software components~\cite{08:_wiki_neuros}.
+architecture requires a build and release system that allows to work
+on one software component at a time, and at the same time automates
+the integration of new code into new releases of the system. This
+approach supports the building of a developer community where
+developers are exposed to one software component at a time and the
+integration of single clearly defined software
+components~\cite{08:_wiki_neuros}.
 
 \subsection*{Documentation Methods}
 
 Because a software library or application has developers and users,
 appropriate documentation must be written for both.  An additional
 complicating factor is that the G-3 implementation defines many
-software components.  Therefore we have developed a adequate framework
-for documentation.  This framework allows users as well as developers
-to step in to help to grow the CBI federated framework in a
-independent fashion.
+software components.  Therefore we have developed an adequate
+framework for documentation.  This framework allows users as well as
+developers to step in to help to grow the CBI federated framework in
+an independent fashion.
 
 \subsubsection*{Code Inline Documentation}
 From the outset, the developed code had embedded inline documentation
 to document the algorithms used.  Additionally, all the C code
 functions have been documented with source code comments to define the
 behavior, inputs and outputs.  This documentation was originally in a
-custom format, and we are now converting it to the widely used Doxygen
-tool.
+custom format, and has been converted to the widely used Doxygen tool.
 
 \subsubsection*{Autogenerated Test Documentation}
 A single test case defines the application to be started, its
@@ -401,12 +424,12 @@ internet~\cite{cornelis08:_neuros_projec_brows_genes_softw_feder}.\\
 
 \subsubsection*{Front-ends}
 
-Neurospaces supports conceptual and expanded representations of a
-model, and by annotating the biological model structure with
-mathematical parameters, is able to implement the translation
-functionality.  At this moment, the specific Neurospaces
-implementation does not allow yet to save a modified conceptual
-representation back to disk.
+The Neurospaces model-container supports conceptual and expanded
+representations of a model, and by annotating the biological model
+structure with mathematical parameters, is able to implement the
+translation functionality between these two representations.  The
+model-container allows to save a modified conceptual representation
+back to disk.
 
 \subsubsection*{Modeling System}
 Neurospaces is a modeling system that translates biological models
