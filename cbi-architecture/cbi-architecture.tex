@@ -373,13 +373,14 @@ components~\cite{08:_wiki_neuros}.
 
 \subsection*{Documentation Methods}
 
-Because a software library or application has developers and users,
-appropriate documentation must be written for both.  An additional
-complicating factor is that the G-3 implementation defines many
-software components.  Therefore we have developed an adequate
-framework for documentation.  This framework allows users as well as
-developers to step in to help to grow the CBI federated framework in
-an independent fashion.
+Because\marginpar{add table: doc levels vs their properties} a
+software library or application has developers and users, appropriate
+documentation must be written for both.  An additional complicating
+factor is that the G-3 implementation defines many software
+components.  Therefore we have developed an adequate framework for
+documentation.  This framework allows users as well as developers to
+step in to help to grow the CBI federated framework in an independent
+fashion.
 
 \subsubsection*{Code Inline Documentation}
 From the outset, the developed code had embedded inline documentation
@@ -608,7 +609,16 @@ high-level design using a low-level module manager.
 
 \section*{Materials and Methods}
 
-Initially, we provide a glossary of the specialized terms used in our presentation of the CBI architecture and description of G-3. We then present the two major iterative workflows (experiment and simulation), typically employed in the conduct of scientific research, that provide the basis of our development of the CBI architecture. An ideal ``user workflow'' for a neural simulator is then presented. It is based on more than 20 years of experience in the development of simulators and their use. Finally, we describe the CBI architecture at its current stage of development, which describes the minimal required functionality for a neural simulator.
+Initially, we provide a glossary of the specialized terms used in our
+presentation of the CBI architecture and description of G-3. We then
+present the two major iterative workflows (experiment and simulation),
+typically employed in the conduct of scientific research, that provide
+the basis of our development of the CBI architecture. An ideal ``user
+workflow'' for a neural simulator is then presented. It is based on
+more than 20 years of experience in the development of simulators and
+their use. Finally, we describe the CBI architecture at its current
+stage of development, which defines the minimal required functionality
+for a neural simulator.
 
 \subsection*{Glossary of Terms}
 
@@ -619,6 +629,21 @@ Many of the terms used to describe and discuss the CBI architecture and implemen
 We use the term {\it user workflow} to describe the sequence of necessary steps typically employed by a person in developing a computational model and employing simulation to generate data for subsequent analysis. In this sense it is a depiction of a sequence of operations, declared as the work of a person or a group of persons (Belhajjame et al., 2002).
 
 % Belhajjame K, Collet C, Vargas-Solar G. (2002) A Flexible Workflow Model for Process-Oriented Applications. 2nd International Conference on Web Information Systems Engineering (WISE 2001), IEEE CS PROCEEDINGS 1: 72-80.
+
+\subsubsection*{Federated Software}
+
+In the past neural simulators were developed or strictly supervised by
+a single programmer (Moore, 2010) leading to monolythic software code.
+By contrast a federated software design allows different individuals
+to work in parallel on the same software application (ref. large scale
+programming).
+
+Monolythic\marginpar{for discussion} software is comprised of a
+collection of functions, federated software is comprised of a
+collection components.
+
+% Moore JW (2010) A personal view of the early development of computational neuroscience in the USA. Frontiers in Computational Neuroscience 4: 20.
+
 
 \subsubsection*{Concerns}
 
@@ -639,6 +664,13 @@ In practice, this principle actually corresponds with finding the right decompos
 
 % Dijkstra EW (1976) A Discipline of programming, Prentica Hall, Englewood Cli?s, NJ.
 % D.L. Parnas DL (1972) On the criteria to be used in decomposing systems into modules, Communications of the ACM 15: 1053-1058
+
+\subsubsection*{Software Architecture}
+
+The CBI architecture is a framework that allows to define software
+components.
+
+http://existentialprogramming.blogspot.com/search/label/components
 
 \subsubsection*{Module versus Component}
 
