@@ -1153,7 +1153,20 @@ from the computations performed during a simulation.
 
 The relationships between simulator control and data modules in a federated architecture are symbolized by the horizontal arrows in Figure~\ref{fig:data-control}, whereas the relationship between high level biological concepts and their mathematical implementation are symbolized by the vertical arrows. Diagonal interactions\marginpar{can we give an example from a G-2 script?} are forbidden as they foster the mixing of functionality across different levels that ultimately leads to the creation of monolithic software applications.
 
-Importantly, we note that a simulator can be efficiently modularized when only horizontal or vertical interactions are allowed between the modules illustrated in Figure~\ref{fig:data-control}. Separation of functionality along the horizontal and vertical axes enables the construction of a modularized simulator where independent stand-alone components can be highly optimized. It is these interactions that form the philosophical basis of the meta-framework developed for the CBI architecture. Alternatively, the larger the number of interactions allowed between diagonally located components, the more difficult it becomes to functionally separate simulator components and the harder it becomes to optimize the resulting application.\\
+Importantly, we note that a simulator can be efficiently modularized
+when only horizontal or vertical interactions are allowed between the
+modules illustrated in Figure~\ref{fig:data-control}. The larger the
+number of interactions allowed between diagonally located components,
+the more difficult it becomes to functionally separate simulator
+components and the harder it becomes to maintain and extend the
+resulting software application.
+
+Alternatively, separation of the principle concerns along the
+horizontal and vertical axes defines the modules that enable the
+construction of a simulator that consists of independent stand-alone
+components. These modules form the basis of the meta-framework that we
+refer to as the CBI architecture.
+
 
 %The first implementation of the CBI architecture has been that of  G-3. We use this software platform to present an overview of the CBI federated software architecture through the example of the the new G-3 simulator. In doing this we follow the ideal simulator workflow presented in Methods.
 
