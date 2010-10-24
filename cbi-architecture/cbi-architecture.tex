@@ -622,25 +622,36 @@ for a neural simulator.
 
 \subsection*{Glossary of Terms}
 
-Many of the terms used to describe and discuss the CBI architecture and implementation of the G-3 simulator are specialized for computer science. The most commonly used are next described.
+Many of the terms used to describe and discuss the CBI architecture
+and implementation of the G-3 simulator are specialized for computer
+science. The most commonly used are next described in two categories.
+The first category defines terms related to the philosophical workflow
+used to develop the CBI architecture.  The second category defines
+incidental terms related to this process.
 
-Two types of glossary terms: first type defines terms related to the
-philosophical workflow.  The second type defines additional terms.
 
+\subsubsection*{Monolythic Software}
 
-\subsubsection*{User Workflow}
+A monolythic software application is comprised a set of tightly
+coupled functions in the sense that modification or extension of one
+function requires corresponding alterations throughout the rest of the
+software code to avoid breaking existing functionality (such as
+consistency and integrity).
 
-We use the term {\it user workflow} to describe the sequence of necessary steps typically employed by a person in developing a computational model and employing simulation to generate data for subsequent analysis. In this sense it is a depiction of a sequence of operations, declared as the work of a person or a group of persons (Belhajjame et al., 2002).
-
-% Belhajjame K, Collet C, Vargas-Solar G. (2002) A Flexible Workflow Model for Process-Oriented Applications. 2nd International Conference on Web Information Systems Engineering (WISE 2001), IEEE CS PROCEEDINGS 1: 72-80.
 
 \subsubsection*{Federated Software}
 
-In the past neural simulators were developed or strictly supervised by
-a single programmer (Moore, 2010) leading to monolythic software code.
-By contrast a federated software design allows different individuals
-to work in parallel on the same software application (ref. large scale
-programming).
+In\marginpar{move to introduction} the past neural simulators were
+developed or strictly supervised by a single programmer (Moore, 2010)
+leading to monolythic software code.  As a consequence the
+functionality offered by computational neuroscience software and the
+scientific problems it allowed to address was inherently limited in
+scope by the capacity of a single person managing the required
+software products.  By contrast a federated software design allows
+different individuals to work in parallel on the same software
+application (ref. large scale programming).  In particular, federated
+software supports the scientific enterprise by allowing individual
+scientists to work on their own research projects.
 
 Monolythic\marginpar{for discussion} software is comprised of a
 collection of functions, federated software is comprised of a
@@ -671,8 +682,12 @@ In practice, this principle actually corresponds with finding the right decompos
 
 \subsubsection*{Software Architecture}
 
+A software architecture is a collection of software modules where each
+modules implements one or more concerns, but no concern is implemented
+by different modules.
+
 The CBI architecture is a framework that allows to define software
-components.
+components that can be developed and tested independently.
 
 http://existentialprogramming.blogspot.com/search/label/components
 
@@ -685,6 +700,13 @@ We refer to the independent parts of the CBI architecture as modules that may co
 We use {\it interoperability} as ``The capability to communicate, execute programs, or transfer data among various functional units in a manner that requires ... little or no knowledge of the unique characteristics of those units.'' (IEEE, 1990).
 
 % Institute of Electrical and Electronics Engineers (1990) IEEE Standard Computer Dictionary: A Compilation of IEEE Standard Computer Glossaries. New York, NY.
+
+\subsubsection*{User Workflow}
+
+We use the term {\it user workflow} to describe the sequence of necessary steps typically employed by a person in developing a computational model and employing simulation to generate data for subsequent analysis. In this sense it is a depiction of a sequence of operations, declared as the work of a person or a group of persons (Belhajjame et al., 2002).
+
+% Belhajjame K, Collet C, Vargas-Solar G. (2002) A Flexible Workflow Model for Process-Oriented Applications. 2nd International Conference on Web Information Systems Engineering (WISE 2001), IEEE CS PROCEEDINGS 1: 72-80.
+
 
 \subsubsection*{Extensibility}
 
