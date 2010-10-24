@@ -632,7 +632,7 @@ incidental terms related to this process.
 
 \subsubsection*{Monolythic Software}
 
-A monolythic software application is comprised a set of tightly
+A {\it monolythic software application} is comprised a set of tightly
 coupled functions in the sense that modification or extension of one
 function requires corresponding alterations throughout the rest of the
 software code to avoid breaking existing functionality (such as
@@ -647,8 +647,8 @@ leading to monolythic software code.  As a consequence the
 functionality offered by computational neuroscience software and the
 scientific problems it allowed to address was inherently limited in
 scope by the capacity of a single person managing the required
-software products.  By contrast a federated software design allows
-different individuals to work in parallel on the same software
+software products.  By contrast a {\it federated software design}
+allows different individuals to work in parallel on the same software
 application (ref. large scale programming).  In particular, federated
 software supports the scientific enterprise by allowing individual
 scientists to work on their own research projects.
@@ -680,26 +680,22 @@ In practice, this principle actually corresponds with finding the right decompos
 % Dijkstra EW (1976) A Discipline of programming, Prentica Hall, Englewood Cli?s, NJ.
 % D.L. Parnas DL (1972) On the criteria to be used in decomposing systems into modules, Communications of the ACM 15: 1053-1058
 
-\subsubsection*{Software Architecture}
-
-A software architecture is a collection of software modules where each
-modules implements one or more concerns, but no concern is implemented
-by different modules.
-
-The CBI architecture is a framework that allows to define software
-components that can be developed and tested independently.
-
-http://existentialprogramming.blogspot.com/search/label/components
-
 \subsubsection*{Module versus Component}
 
 We refer to the independent parts of the CBI architecture as modules that may contain independent sub-modules, whereas, the implemented parts of a simulator are referred to as components and sub-components. For example, the GUI component contains independent subcomponents dealing with simulation control, the model, and results (see Fig.\,\ref{fig:cbi-architecture-expanded}).
 
-\subsubsection*{Interoperability}
+\subsubsection*{Software Architecture}
 
-We use {\it interoperability} as ``The capability to communicate, execute programs, or transfer data among various functional units in a manner that requires ... little or no knowledge of the unique characteristics of those units.'' (IEEE, 1990).
+As the last step of the philosophical workflow a {\it software
+  architecture} is a collection of software modules where each modules
+implements one or more concerns, but no concern is implemented by
+different modules.
 
-% Institute of Electrical and Electronics Engineers (1990) IEEE Standard Computer Dictionary: A Compilation of IEEE Standard Computer Glossaries. New York, NY.
+The {\it CBI architecture} is a framework that allows to define
+software components that can be developed and tested independently.
+
+http://existentialprogramming.blogspot.com/search/label/components
+
 
 \subsubsection*{User Workflow}
 
@@ -707,14 +703,21 @@ We use the term {\it user workflow} to describe the sequence of necessary steps 
 
 % Belhajjame K, Collet C, Vargas-Solar G. (2002) A Flexible Workflow Model for Process-Oriented Applications. 2nd International Conference on Web Information Systems Engineering (WISE 2001), IEEE CS PROCEEDINGS 1: 72-80.
 
+\subsubsection*{Iterator}
+
+An {\it iterator} is an object that allows a person to traverse through all the elements of a collection, here the user workflow, regardless of its specific implementation.
+
+
+\subsubsection*{Interoperability}
+
+We use {\it interoperability} as ``The capability to communicate, execute programs, or transfer data among various functional units in a manner that requires ... little or no knowledge of the unique characteristics of those units.'' (IEEE, 1990).
+
+% Institute of Electrical and Electronics Engineers (1990) IEEE Standard Computer Dictionary: A Compilation of IEEE Standard Computer Glossaries. New York, NY.
+
 
 \subsubsection*{Extensibility}
 
 {\it Extensibility} is a system design principle where an implementation takes into consideration future developments. An extendible system is one that includes mechanisms for expanding or enhancing the system with new capabilities without having to make major changes to the system infrastructure.
-
-\subsubsection*{Iterator}
-
-An {\it iterator} is an object that allows a person to traverse through all the elements of a collection, here the user workflow, regardless of its specific implementation.
 
 \subsection*{The Scientific Workflow}
 
