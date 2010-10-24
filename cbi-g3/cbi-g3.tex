@@ -1156,6 +1156,15 @@ implementation and provide operators that convert between these two
 representations.  This insulates the process of model construction
 from the computations performed during a simulation. 
 
+% examples of monolythic interactions in G-2
+%
+% C-level hsolve implements a global namespace
+%
+% C-level direct connections between synchans and hsolve.
+%
+% SLI-level simulation clock (low-level control block) modifies model parameters such as CM
+
+
 The relationships between simulator control and data modules in a federated architecture are symbolized by the horizontal arrows in Figure~\ref{fig:data-control}, whereas the relationship between high level biological concepts and their mathematical implementation are symbolized by the vertical arrows. Diagonal interactions\marginpar{can we give an example from a G-2 script?} are forbidden as they foster the mixing of functionality across different levels that ultimately leads to the creation of monolithic software applications.
 
 Importantly, we note that a simulator can be efficiently modularized
@@ -1650,63 +1659,63 @@ The first implementation of the Computational Biology Initiative federated softw
 
 \clearpage
 
-% Figure 2
-\begin{figure}[ht]
-\begin{center}
-\includegraphics[width=4in]{figures/exp-sim.eps}
-\end{center}
-\caption{
-{\bf Data flows in science.}
-Conducting experiments and running simulations are two iterative processes indicated by the upper and lower dashed outlines. They are connected by an interposed feedback loop that uses the iterative interpretation of results to design new experimental setups and model constructions.
-}
-\label{fig:data-flows}
-\end{figure}
+%% Figure 2
+%\begin{figure}[ht]
+%\begin{center}
+%\includegraphics[width=4in]{figures/exp-sim.eps}
+%\end{center}
+%\caption{
+%{\bf Data flows in science.}
+%Conducting experiments and running simulations are two iterative processes indicated by the upper and lower dashed outlines. They are connected by an interposed feedback loop that uses the iterative interpretation of results to design new experimental setups and model constructions.
+%}
+%\label{fig:data-flows}
+%\end{figure}
 
-\clearpage
+%\clearpage
 
-% Figure 3
-\begin{figure}[ht]
-\begin{center}
-\includegraphics[width=4in]{figures/matrix.eps}
-\end{center}
-\caption{ {\bf Principle concerns.}  The four fundamental building
-  blocks of a simulator are distinguished by separating (i) Data from
-  control, and (ii) High level biological concepts from their
-  mathematical implementation. In a federated architecture the only
-  allowed interactions between modules are those indicated by the
-  vertical and horizontal arrows. Diagonal interactions are forbidden
-  as they ultimately lead to interactions that result in the creation
-  of a monolithic software architecture.  }
-\label{fig:data-control}
-\end{figure}
+%% Figure 3
+%\begin{figure}[ht]
+%\begin{center}
+%\includegraphics[width=4in]{figures/matrix.eps}
+%\end{center}
+%\caption{ {\bf Principle concerns.}  The four fundamental building
+%  blocks of a simulator are distinguished by separating (i) Data from
+%  control, and (ii) High level biological concepts from their
+%  mathematical implementation. In a federated architecture the only
+%  allowed interactions between modules are those indicated by the
+%  vertical and horizontal arrows. Diagonal interactions are forbidden
+%  as they ultimately lead to interactions that result in the creation
+%  of a monolithic software architecture.  }
+%\label{fig:data-control}
+%\end{figure}
 
-\clearpage
+%\clearpage
 
-% Figure 4
-\begin{figure}[ht]
-\begin{center}
-\includegraphics[width=4in]{figures/cbi-architecture-simple.eps}
-\end{center}
-\caption{
-{\bf A federated software architecture.}
-}
-\label{fig:cbi-architecture-simple}
-\end{figure}
+%% Figure 4
+%\begin{figure}[ht]
+%\begin{center}
+%\includegraphics[width=4in]{figures/cbi-architecture-simple.eps}
+%\end{center}
+%\caption{
+%{\bf A federated software architecture.}
+%}
+%\label{fig:cbi-architecture-simple}
+%\end{figure}
 
-\clearpage
+%\clearpage
 
-% Figure 5
-\begin{figure}[ht]
-\begin{center}
-\includegraphics[width=4in]{figures/cbi-architecture-expanded.eps}
-\end{center}
-\caption{
-{\bf The Computational Biology Initiative federated software architecture.}
-}
-\label{fig:cbi-architecture-expanded}
-\end{figure}
+%% Figure 5
+%\begin{figure}[ht]
+%\begin{center}
+%\includegraphics[width=4in]{figures/cbi-architecture-expanded.eps}
+%\end{center}
+%\caption{
+%{\bf The Computational Biology Initiative federated software architecture.}
+%}
+%\label{fig:cbi-architecture-expanded}
+%\end{figure}
 
-\clearpage
+%\clearpage
 
 %\section*{Tables}
 %\begin{table}[!ht]
