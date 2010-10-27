@@ -120,7 +120,7 @@ Below is an example of the levels of abstraction needed to create a usable plugi
 
 \subsubsection*{Simulator Object}
 
-	The simulation object is designed with base classes that have functionality directly tied into the user workflow. This allows for a neater separation of code that is specific to their own tasks. The top level of the object contains the operations necessary to start, stop, and detect if the simulator is running. 
+	The Simulator object is an abstraction of the User Workflow. This allows for a neater separation of code that is specific to their own tasks within the workflow. The top level of the object contains the operations necessary to start, stop, and detect if the simulator is running while internal logic saves simulator state, results, and command history. 
 
 \begin{figure}[ht]
    \centering
@@ -129,6 +129,39 @@ Below is an example of the levels of abstraction needed to create a usable plugi
    \label{fig:Simulator Object}
 \end{figure}
 
+
+\subsection*{Simulation Manager}
+
+	The {\bf Simulation Manager} is an object that allows users to create and track simulator objects. One of its core features is the {\bf Simulator Registry}, an object that allows dynamic loading of simulator code as well as dynamic instantiation of a simulator object. With the {\bf Simulator Registry} a core user requirement is fulfilled; it makes it possible to use other simulators (as well as specialized versions of genesis3) with the user workflow and thus the {\bf gtube}. 
+	
+\subsubsection*{Simulator Plugin}
+
+	A simulator plugin consists of directory which contains the Python implementation for a wrapper to simulator and a file named "simulator.yml," which acts as a mount point for the plugin. Every plugin must adhere to a particular set of naming conventions in order for it to work. The top level class must be named "SimulatorPlugin," such that creating an object of it's type gives a user complete access to all of the required top level methods needed for progressing through the user workflow (Figure 4). Since the plugins are dynamically loaded, any implementation can be loaded without any modifications to the core source, so long as it follows these code guidelines and contains the appropriate simulator.yml file.
+	
+An example simulator.yml file is shown here:
+
+\begin{verbatim}
+---
+  name: simple_purkinje
+  label: Simple Purkinje Cell
+  version: 0.1
+  description: This is a module that holds data from the simple purkinje cell test case.
+  file: simple_purkinje.py
+  source: simple_purkinje.py
+  module: simple_purkinje
+\end{verbatim}
+
+The keys in the file are:
+
+\begin{itemize}
+\item[] {\bf name:} A unique identifier for the simulator plugin. Always one token.
+\item[] {\bf label:} A human readable name for the plugin.
+\item[] {\bf version:} Current version of the implementation.
+\item[] {\bf description:} A detailed description for the plugin. 
+\item[] {\bf file:} The file containing the required "SimulatorPlugin" class.
+\item[] {\bf source:} An alias for "file", the file containing the "SimulatorPlugin" class.
+\item[] {\bf module:} Similar to file and source, this is the module that contains the "SimulatorPlugin" class. Essentially the source file without the ".py" suffix.
+\end{itemize}
 
 \section*{Interface Design}
 
