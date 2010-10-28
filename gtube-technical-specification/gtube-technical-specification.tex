@@ -132,11 +132,11 @@ Below is an example of the levels of abstraction needed to create a usable plugi
 
 \subsection*{Simulation Manager}
 
-	The {\bf Simulation Manager} is an object that allows users to create and track simulator objects. One of its core features is the {\bf Simulator Registry}, an object that allows dynamic loading of simulator code as well as dynamic instantiation of a simulator object. With the {\bf Simulator Registry} a core user requirement is fulfilled; it makes it possible to use other simulators (as well as specialized versions of genesis3) with the user workflow and thus the {\bf gtube}. 
+	The {\bf Simulation Manager} is an object that allows users to create and track simulator objects. One of its core features is the {\bf Simulator Registry}, an object that allows dynamic loading of simulator modules as well as dynamic instantiation of simulator objects. With the {\bf Simulator Registry} a core user requirement is fulfilled; it makes it possible to use other simulators (as well as specialized versions of genesis3) with the user workflow and thus the {\bf gtube}. 
 	
 \subsubsection*{Simulator Plugin}
 
-	A simulator plugin consists of directory which contains the Python implementation for a wrapper to simulator and a file named "simulator.yml," which acts as a mount point for the plugin. Every plugin must adhere to a particular set of naming conventions in order for it to work. The top level class must be named "SimulatorPlugin," such that creating an object of it's type gives a user complete access to all of the required top level methods needed for progressing through the user workflow (Figure 4). Since the plugins are dynamically loaded, any implementation can be loaded without any modifications to the core source, so long as it follows these code guidelines and contains the appropriate simulator.yml file.
+	A simulator plugin consists of directory which contains the Python implementation for a wrapper to a simulator, and a file named "simulator.yml," which acts as a mount point for the plugin. Every plugin must adhere to a particular set of naming conventions in order for it to work. The top level class must be named "SimulatorPlugin," such that creating an object of its type gives a user complete access to all of the required top level methods needed for progressing through the user workflow (Figure 4). Since the plugins are dynamically loaded, any implementation can be loaded without any modifications to the core source, so long as it follows these code guidelines and contains the appropriate simulator.yml file.
 	
 An example simulator.yml file is shown here:
 
@@ -162,6 +162,8 @@ The keys in the file are:
 \item[] {\bf source:} An alias for "file", the file containing the "SimulatorPlugin" class.
 \item[] {\bf module:} Similar to file and source, this is the module that contains the "SimulatorPlugin" class. Essentially the source file without the ".py" suffix.
 \end{itemize}
+
+A simulator specification needs at least one of the following options defined for it to be properly loaded: file, source, or module.
 
 \section*{Interface Design}
 
