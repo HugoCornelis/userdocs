@@ -21,6 +21,32 @@ a daily basis, public release are built on a monthly to yearly basis.
 A public release has the guarantee that it passes all the regression
 tests.  Internal releases are tested to, but can show minor problems.
 
+The following pre-release procedure would be desirable:
+
+\begin{itemize}
+\item When we feel a release is ready, create a release branch.
+
+\item Only bug fixes should be committed to the release branch; any
+  other work goes to the main branch.
+
+\item Some developers volunteer to be a designated tester for
+  particular platforms. Ideally, we would have two testers per
+  platform (because build setups differ), but one would be sufficient.
+
+  A working buildbot can be a designated tester. Note that it needs to
+  be configured to work on the release branch.
+\item Testing must also include creating and testing the release
+  package for each platform.
+
+  I think the current buildbots don't do this step.
+
+\item After all designated testers have reported success, the release
+  is declared finally ready, and published as usual.
+
+\item Propagate the release branch to the main branch, for the bug
+  fixes.
+\end{itemize}
+
 Every release is identified with a tag.  The tag (see below for a
 definition) allows to reconstruct the release source code from the
 repositories using the developer package.  This helps in solving
