@@ -1,0 +1,160 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Pre-validation of the Purkinje cell before model submission}
+
+\subsection*{Introduction}
+
+Model validation can be automated to a large extent.  This document
+show specific capabilities of the GENESIS 3 publication system related
+to automated model validation of single neuron models.  The neuron
+model developed in~\cite{De-Schutter-E:1994vn},~\cite{E:1994hc} and
+studied in~\cite{schutter94:_simul_purkin} is used as an example.
+
+\subsection*{What is included?}
+
+Automated validation of single neuron models includes simulations for
+the following sections.
+
+
+\subsubsection*{From~\cite{De-Schutter-E:1994vn}}
+
+\begin{itemize}
+\item Static model checks:
+  \begin{itemize}
+  \item Morphology validation: are all the branches connected via an
+    electric pathway?
+  \item Cable discretization validation:
+    \begin{itemize}
+    \item Are the constraints to electrotonic length met?
+    \item Are all electrotonic compartments of similar lengths?
+    \end{itemize}
+  \item Equations for different membrane and synaptic channel types
+    and their kinetics?  Are these common equations or new ones?
+  \item Model parameter values: are all parameter values in the
+    physiological range?
+    \begin{itemize}
+    \item Passive parameters: capacitance, axial and membrane
+      resistance, resulting membrane time constant?
+    \item Channel maximal conductances and channel densities?
+    \item Channel time constants?
+    \item Concentration value time constants?
+    \end{itemize}
+  \end{itemize}
+\item Dynamic response to specific protocols:
+  \begin{itemize}
+  \item Current injection: 0.2nA, 0.4nA, 0.6nA, 0.8nA, 1nA, 2nA, 3nA,
+    4nA,
+  \item Current injection with sodium blocker (TTX): 1nA, 0.1nA
+  \item Current injection with Ca$^{2+}$ blocker (Co$^{2+}$,
+    Cd$^{2+}$): 4nA, 3.5nA, 3nA, 2.5nA, 2nA, 1nA
+  \item Fig10: False color representation of membrane potential and Ca$^{2+}$
+    concentration in the complete model during a 2.0nA current
+    injection.
+  \item Fig 11: model variable plots during somatic and dendritic
+    spikes, 2nA current injection.
+  \item Fig 12: complicated
+  \item Fig 13: Simulation of voltage clamp steps: -100mV, +40mV
+  \end{itemize}
+\item Dynamic response to additional common protocols:
+  \begin{itemize}
+  \item Voltage clamp with various blockers.
+  \end{itemize}
+
+\end{itemize}
+
+\subsubsection*{From~\cite{E:1994hc}}
+
+\begin{itemize}
+\item Comparison of model parameters to model
+  of\cite{De-Schutter-E:1994vn}.  Report of changes and differences.
+\item Application of validation procedures
+  of\cite{De-Schutter-E:1994vn}.
+\item Validation of new model parameters.
+  \begin{itemize}
+  \item Passive structure of spines.
+  \item For each of the following synapses:
+    \begin{itemize}
+    \item Locations (visualization).
+    \item Maximal synaptic conductance.
+    \item Reversal Potentials.
+    \item Other (nernst equations, Mg blocking?).
+    \end{itemize}
+  \item Parallel fiber synapses.
+  \item Climbing fiber synapse locations.
+  \item Stellate cell synapses.
+  \item Basket cell synapses.
+  \end{itemize}
+\item Selected figures:
+  \begin{itemize}
+  \item Figure 6: asynchronous excitation alone, 5Hz, 3Hz, 1Hz, 0.5Hz,
+    0.1Hz.
+  \item Figure 7: 8 simulations with asynchronous excitation 100Hz,
+    60Hz, 40Hz, 30Hz, 26Hz, 24Hz, 22Hz, 20Hz and with inhibition 1Hz.
+  \item Figure 8, left panel (right is experimental data): unclear
+    what the simulations were, to be reconstructed.
+  \item Figure 9
+    \begin{itemize}
+    \item Panel A: inhibition 0Hz, 7 simulations.  Inhibition 0.5Hz, 6
+      slow + 22 fast firing.  Inhibition 1.0Hz, 7 slow + 22 fast
+      firing.  Inhibition 1.5Hz, 6 slow + 14 fast firing.  Inhibition
+      2.0Hz, 10 slow + 12 fast firing.
+    \item Panel B is model PM10
+    \item Panel C: excitation 10.4Hz and inhibition 0.5Hz, excitation
+      23.5Hz and inhibition 1Hz, excitation 37Hz and inhibition 1.5Hz,
+      excitation 50Hz and inhibition 2Hz.
+    \end{itemize}
+  \item Figure 10.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection*{From~\cite{schutter94:_simul_purkin}}
+
+\begin{itemize}
+\item Comparison of base model parameters to model of\cite{E:1994hc}.
+\item Application of validation procedures of\cite{De-Schutter-E:1994vn}.
+\item Checks on changed parameters
+  \begin{itemize}
+  \item Passive soma.
+  \end{itemize}
+\item Selected figures:
+  \begin{itemize}
+  \item Figure 1
+    \begin{itemize}
+    \item Twice the same set of simulations.
+    \item 9 different stimulation protocols: unitary synaptic
+      stimulation applied to 8 different branchlets individually and
+      to the 8 same branches simultaneously.
+    \item Passive model.
+    \item Active model.
+    \end{itemize}
+  \item Figure 2: 10 data points, averaged over 40 simulation runs
+    (events), 4 different model variations.
+  \item Figure 4: Detail of two selected simulations.
+  \item Figure 5: 200 simulations, distributed, proximal and distal
+    stimulation.
+  \end{itemize}
+\end{itemize}
+
+\subsection*{Results}
+
+
+
+\bibliographystyle{plain}
+\bibliography{../tex/bib/g3-refs.bib}
+
+\end{document}
+
+
