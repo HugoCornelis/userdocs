@@ -25,8 +25,8 @@ studied in~\cite{schutter94:_simul_purkin} is used as an example.
 
 \subsection*{What is included?}
 
-Automated validation of single neuron models includes simulations for
-the following sections.
+Automated validation of single neuron models includes the simulations
+explained in the following sections.
 
 
 \subsubsection*{From~\cite{De-Schutter-E:1994vn}}
@@ -66,7 +66,8 @@ the following sections.
   \item Fig 11: model variable plots during somatic and dendritic
     spikes, 2nA current injection.
   \item Fig 12: complicated
-  \item Fig 13: Simulation of voltage clamp steps: -100mV, +40mV
+  \item Fig 13: Simulation of voltage clamp steps: -100mV, +40mV,
+    -40mV.
   \end{itemize}
 \item Dynamic response to additional common protocols:
   \begin{itemize}
@@ -82,7 +83,7 @@ the following sections.
   of\cite{De-Schutter-E:1994vn}.  Report of changes and differences.
 \item Application of validation procedures
   of\cite{De-Schutter-E:1994vn}.
-\item Validation of new model parameters.
+\item Static validation of new model parameters.
   \begin{itemize}
   \item Passive structure of spines.
   \item For each of the following synapses:
@@ -99,6 +100,9 @@ the following sections.
   \end{itemize}
 \item Selected figures:
   \begin{itemize}
+  \item Figure 1: climbing fiber response characterization in vitro.
+  \item Figure 3: climbing fiber response characterization in vitro,
+    active vs passive model.
   \item Figure 6: asynchronous excitation alone, 5Hz, 3Hz, 1Hz, 0.5Hz,
     0.1Hz.
   \item Figure 7: 8 simulations with asynchronous excitation 100Hz,
@@ -144,7 +148,9 @@ the following sections.
     \end{itemize}
   \item Figure 2: 10 data points, averaged over 40 simulation runs
     (events), 4 different model variations.
-  \item Figure 4: Detail of two selected simulations.
+  \item Figure 3: Detail of two selected simulations.
+  \item Figure 4: one selected simulation, false color images of the
+    dendrite.
   \item Figure 5: 200 simulations, distributed, proximal and distal
     stimulation.
   \end{itemize}
@@ -156,12 +162,16 @@ the following sections.
 
 \begin{itemize}
 \item Queries to the system for static model checks must be
-  configured.  These run instantly.
+  configured.  These checks complete 'instantly'.
 \item For simple simulations benchmarking on a passive and an active
-  version of the Purkinje cell have been done.  Details related to the
+  version of the Purkinje cell has been done.  Details related to the
   stimulation protocol or simulation such as an active model with a
   passive soma or addition of a single synapse for unitary synaptic
   stimulation are ignored.
+\item Simulation construction time for an active model is about 4
+  seconds and for a passive model 0.5 seconds.  All simulations were
+  run on a 2 CPU 8 core intel 64bit at 1.60GHz with 6MB level 2 cache.
+  The simulations were neither run in parallel nor multi-threaded.
 \item Estimates for more complicated analysis with results from many
   simulations such as figure~10 in~\cite{E:1994hc} are acquired by
   extrapolation of the estimates of the previous item.
@@ -174,7 +184,7 @@ the following sections.
 \item From~\cite{De-Schutter-E:1994vn}
 
   \begin{itemize}
-  \item Static model checks: instantly.
+  \item Static model checks: complete instantly.
   \item Dynamic response to specific protocols:
     \begin{itemize}
     \item Current injection (fig 5, 4 simulations of 0.5s, 36s
@@ -184,17 +194,18 @@ the following sections.
       simulations of 1s, 72s run-time each.
     \item Current injection with Ca$^{2+}$ blocker (Co$^{2+}$,
       Cd$^{2+}$), fig 9B, 6 simulations of 1.2s, 86s run-time each.
-    \item Fig10: False color representation of membrane potential and Ca$^{2+}$
-      concentration in the complete model during a 2.0nA current
-      injection.
-    \item Fig 11: model variable plots during somatic and dendritic
-      spikes, 2nA current injection.
-    \item Fig 13: Simulation of voltage clamp steps: -100mV, +40mV
+%    \item Fig 10: False color representation of membrane potential and
+%      Ca$^{2+}$ concentration in the complete model during a 2.0nA
+%      current injection.
+    \item Fig 11: model variable plots, 2nA current injection, one
+      simulation of 1s, 72s run-time.
+    \item Fig 13: Simulation of voltage clamp steps: -100mV, +40mV,
+      -40mV, 3 simulations of 0.2s, 15s run-time each.
     \end{itemize}
-  \item Dynamic response to additional common protocols:
-    \begin{itemize}
-    \item Voltage clamp with various blockers.
-    \end{itemize}
+%  \item Dynamic response to additional common protocols:
+%    \begin{itemize}
+%    \item Voltage clamp with various blockers.
+%    \end{itemize}
 
   \end{itemize}
 
@@ -206,43 +217,42 @@ the following sections.
     of\cite{De-Schutter-E:1994vn}.  Report of changes and differences.
   \item Application of validation procedures
     of\cite{De-Schutter-E:1994vn}.
-  \item Validation of new model parameters.
-    \begin{itemize}
-    \item Passive structure of spines.
-    \item For each of the following synapses:
-      \begin{itemize}
-      \item Locations (visualization).
-      \item Maximal synaptic conductance.
-      \item Reversal Potentials.
-      \item Other (nernst equations, Mg blocking?).
-      \end{itemize}
-    \item Parallel fiber synapses.
-    \item Climbing fiber synapse locations.
-    \item Stellate cell synapses.
-    \item Basket cell synapses.
-    \end{itemize}
+  \item Static validation of new model parameters completes instantly.
   \item Selected figures:
     \begin{itemize}
+    \item Figure 1: climbing fiber response characterization in vitro,
+      3 simulations of 0.15s, 13s run-time each.
+    \item Figure 3: climbing fiber response characterization in vitro,
+      active vs passive model, 2 simulations of 0.15s, active model
+      with 13s run-time, passive model 2.5s run-time.
     \item Figure 6: asynchronous excitation alone, 5Hz, 3Hz, 1Hz, 0.5Hz,
-      0.1Hz.
+      0.1Hz, 5 simulations of 50ms, each 7s run-time.
     \item Figure 7: 8 simulations with asynchronous excitation 100Hz,
-      60Hz, 40Hz, 30Hz, 26Hz, 24Hz, 22Hz, 20Hz and with inhibition 1Hz.
+      60Hz, 40Hz, 30Hz, 26Hz, 24Hz, 22Hz, 20Hz and with inhibition
+      1Hz, simulations of 50ms, each 7s run-time.
     \item Figure 8, left panel (right is experimental data): unclear
-      what the simulations were, to be reconstructed.
+      what the simulations were, to be reconstructed.  We assume 24Hz
+      excitation, 1Hz inhibition, about 100s simulation, about 7100s
+      run-time.
     \item Figure 9
       \begin{itemize}
-      \item Panel A: inhibition 0Hz, 7 simulations.  Inhibition 0.5Hz, 6
-        slow + 22 fast firing.  Inhibition 1.0Hz, 7 slow + 22 fast
-        firing.  Inhibition 1.5Hz, 6 slow + 14 fast firing.  Inhibition
-        2.0Hz, 10 slow + 12 fast firing.
+      \item Panel A: inhibition 0Hz, 7 simulations.  Inhibition 0.5Hz,
+        6 slow + 22 fast firing.  Inhibition 1.0Hz, 7 slow + 22 fast
+        firing.  Inhibition 1.5Hz, 6 slow + 14 fast firing.
+        Inhibition 2.0Hz, 10 slow + 12 fast firing.  Total is 7 + 6 +
+        22 + 7 + 22 + 6 + 14 + 10 + 12 = 106 simulations.  Assuming a
+        minimum of 100 events per simulation and a total average
+        firing frequency of 100Hz gives about 7200s run-time.
       \item Panel B is model PM10
-      \item Panel C: excitation 10.4Hz and inhibition 0.5Hz, excitation
-        23.5Hz and inhibition 1Hz, excitation 37Hz and inhibition 1.5Hz,
-        excitation 50Hz and inhibition 2Hz.
+      \item Panel C: excitation 10.4Hz and inhibition 0.5Hz,
+        excitation 23.5Hz and inhibition 1Hz, excitation 37Hz and
+        inhibition 1.5Hz, excitation 50Hz and inhibition 2Hz.  Each
+        simulation of 800s has a run-time of 800 * 68s run-time =
+        54400s (15hours).  Total of 4 simulations.
       \end{itemize}
-    \item Figure 10: inhibition always 1Hz, excitation (1) 21Hz at 1nS,
-      (2) 30Hz at 0.7nS, (3) 60Hz at 0.35nS, (4) 210Hz at 0.1nS.
-      Simulation runs until 1600 events have been collected.
+%    \item Figure 10: inhibition always 1Hz, excitation (1) 21Hz at 1nS,
+%      (2) 30Hz at 0.7nS, (3) 60Hz at 0.35nS, (4) 210Hz at 0.1nS.
+%      Simulation runs until 1600 events have been collected.
     \end{itemize}
   \end{itemize}
 
@@ -262,15 +272,21 @@ the following sections.
       \item Twice the same set of simulations.
       \item 9 different stimulation protocols: unitary synaptic
         stimulation applied to 8 different branchlets individually and
-        to the 8 same branches simultaneously.
-      \item Passive model.
-      \item Active model.
+        to the 8 same branches simultaneously.  Simultaneously
+        asynchronous excitation of 28Hz and inhibition of 1Hz.
+      \item Passive model, 9 simultaneously of 50ms, each 1.5s
+        run-time.
+      \item Active model, 9 simulations of 50ms, each 7s run-time.
       \end{itemize}
     \item Figure 2: 10 data points, averaged over 40 simulation runs
-      (events), 4 different model variations.
-    \item Figure 4: Detail of two selected simulations.
+      (events), 4 different model variations.  10 x 40 x 4
+      simulations, each 7s run-time.  11200s total run-time (3 hours).
+%    \item Figure 3: Detail of two selected simulations.
+%    \item Figure 4: one selected simulation, false color images of the
+%      dendrite.
     \item Figure 5: 200 simulations, distributed, proximal and distal
-      stimulation.
+      stimulation.  600 simulations total, each 7s run-time.  Total of
+      4200s run-time.
     \end{itemize}
   \end{itemize}
 \end{itemize}
