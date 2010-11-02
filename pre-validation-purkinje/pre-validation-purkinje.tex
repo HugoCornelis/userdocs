@@ -366,7 +366,10 @@ included.
     \item Total of 12028.5s + 8264s + 4560s + 4143s + 31080s + 11655s
       + 14690.5s + 15324s + 49577s + 8959.5s = 160281.5s (44.5 hours).
     \end{itemize}
-  \item static somatic voltage clamp
+  \item static somatic voltage clamp: due to the high volume output of
+    these simulations, they are strictly I/O bound.  For simplicity
+    and because they have a marginal contribution to the total run
+    time for this study we assume that the I/O can be ignored.
     \begin{itemize}
     \item fish1: simulation construction time takes about 2s, a
       simulation of 0.5s takes about 5.5s run-time.
@@ -392,12 +395,12 @@ included.
       4.5s = 55.5s.
     \end{itemize}
   \item dynamic somatic voltage clamp: CPU load is the same as for
-    static somatic voltage clamp (160281.5s, 44.5 hours).
+    static somatic voltage clamp (55.5s).
   \item unitary synaptic stimulation: CPU load is the same as for
-    static dendritic voltage clamp (55.5s).
+    static dendritic voltage clamp (160281.5s, 44.5 hours).
   \item Total run-time
     of~\cite{bower09:_compar_evolut_comput_analy_cereb} is 160281.5s +
-    55.5s + 160281.5s + 55.5s~= 320674s (89 hours).
+    55.5s + 55.5s + 160281.5s~= 320674s (89 hours).
   \end{itemize}
 \item From~\cite{coop09:_using_purkin}
 
