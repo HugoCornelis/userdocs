@@ -169,6 +169,12 @@ included.
 
 \subsubsection*{From~\cite{bower09:_compar_evolut_comput_analy_cereb}}
 
+\begin{itemize}
+\item 9 species, stimulation protocols (static dendritic voltage
+  clamp, static somatic voltage clamp, dynamic somatic voltage
+  clamp, unitary synaptic stimulation)
+\end{itemize}
+
 \subsubsection*{From~\cite{coop09:_using_purkin}}
 
 
@@ -184,10 +190,13 @@ included.
   stimulation protocol or simulation such as an active model with a
   passive soma or addition of a single synapse for unitary synaptic
   stimulation are currently ignored.
-\item Simulation construction time for an active model is about 4
-  seconds and for a passive model 0.5 seconds.  All simulations were
-  run on a 2 CPU 8 core intel 64bit at 1.60GHz with 6MB level 2 cache.
-  The simulations were neither run in parallel nor multi-threaded.
+\item Simulation construction time for an active version of the
+  purkinje cell model is about 4 seconds and for a passive version 0.5
+  seconds.  All simulations were run on a 2 CPU 8 core intel 64bit at
+  1.60GHz with 6MB level 2 cache.  The simulations were neither run in
+  parallel nor multi-threaded.  All simulations of the Purkinje cell
+  model were run with each of the 1474 spines explicitly modeled with
+  two compartments.
 \item Estimates for more complicated analysis with results from many
   simulations such as figure~10 in~\cite{E:1994hc} are acquired by
   extrapolation of the estimates of the previous item.
@@ -321,6 +330,68 @@ included.
   \end{itemize}
 
 \item From~\cite{bower09:_compar_evolut_comput_analy_cereb}
+  \begin{itemize}
+  \item static dendritic voltage clamp
+    \begin{itemize}
+    \item fish1: simulation construction time takes about 2s, a
+      simulation of 0.5s takes about 5.5s run-time for each of the
+      2187 simulations.
+    \item gp\_pc1: simulation construction time takes about 1s, a
+      simulation of 0.5s takes about 4s run-time for each of the 2066
+      simulations.
+    \item gp\_pc2: simulation construction time takes about 1s, a
+      simulation of 0.5s takes about 3s run-time for each of the 1520
+      simulations.
+    \item gp\_pc3: simulation construction time takes about 1s, a
+      simulation of 0.5s takes about 3s run-time for each of the 1381
+      simulations.
+    \item rat\_pc1: simulation construction time takes about 2.5s, a
+      simulation of 0.5s takes about 8s run-time for each of the 3885
+      simulations.
+    \item rat\_pc2: simulation construction time takes about 1.5s, a
+      simulation of 0.5s takes about 5s run-time for each of the 2331
+      simulations.
+    \item rat\_pc3: simulation construction time takes about 1.5s, a
+      simulation of 0.5s takes about 5.5s run-time for each of the
+      2671 simulations.
+    \item turtle1: simulation construction time takes about 1.5s, a
+      simulation of 0.5s takes about 6s run-time for each of the 2554
+      simulations.
+    \item turtle2: simulation construction time takes about 3.5s, a
+      simulation 0.5s takes about 11s run-time for each of the 4507
+      simulations.
+    \item turtle3: simulation construction time takes about 1.5s, a
+      simulation of 0.5s takes about 4.5s run-time for each of the
+      1991 simulations.
+    \end{itemize}
+  \item static somatic voltage clamp
+    \begin{itemize}
+    \item fish1: simulation construction time takes about 2s, a
+      simulation of 0.5s takes about 5.5s run-time.
+    \item gp\_pc1: simulation construction time takes about 1s, a
+      simulation of 0.5s takes about 4s run-time.
+    \item gp\_pc2: simulation construction time takes about 1s, a
+      simulation of 0.5s takes about 3s run-time.
+    \item gp\_pc3: simulation construction time takes about 1s, a
+      simulation of 0.5s takes about 3s run-time.
+    \item rat\_pc1: simulation construction time takes about 2.5s, a
+      simulation of 0.5s takes about 8s run-time.
+    \item rat\_pc2: simulation construction time takes about 1.5s, a
+      simulation of 0.5s takes about 5s run-time.
+    \item rat\_pc3: simulation construction time takes about 1.5s, a
+      simulation of 0.5s takes about 5.5s run-time.
+    \item turtle1: simulation construction time takes about 1.5s, a
+      simulation of 0.5s takes about 6s run-time.
+    \item turtle2: simulation construction time takes about 3.5s, a
+      simulation 0.5s takes about 11s run-time.
+    \item turtle3: simulation construction time takes about 1.5s, a
+      simulation of 0.5s takes about 4.5s run-time.
+    \end{itemize}
+  \item dynamic somatic voltage clamp: CPU load is the same as for
+    static somatic voltage clamp.
+  \item unitary synaptic stimulation: CPU load is the same as for
+    static dendritic voltage clamp.
+  \end{itemize}
 \item From~\cite{coop09:_using_purkin}
 
 \end{itemize}
