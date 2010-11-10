@@ -10,8 +10,8 @@
 \section*{GENESIS: Documentation}
 
 {\bf Related Documentation:}
-% start: userdocs-tag-replace-items related-do-nothing
-% end: userdocs-tag-replace-items related-do-nothing
+% start: userdocs-tag-replace-items related-build-debian
+% end: userdocs-tag-replace-items related-build-debian
 
 \section*{Software Packaging for GENESIS 3}
 
@@ -73,7 +73,7 @@ To build a package for all GENESIS 3 components, simply invoke one of the neuros
 For an example, I wish to create an RPM package for only the model container, with a special release tag "Newest". I want my package in a special drop directory that a user can access. I invoke {\bf neurospaces\_pkgrpm} with the following arguments:
 
 \begin{verbatim}
-neurospaces_rpm --regex model-container --dir /my/drop/directory --release-tag Newest 
+neurospaces_pkgrpm --regex model-container --dir /my/drop/directory --release-tag Newest 
 \end{verbatim}
 
 On my 64-bit intel based machine, the resulting file is named {\bf model-container-0.0.0-Newest.x86\_64.rpm}, and it is stored in my given drop directory. The architecture section of the file "x86\_64" was added automatically my the RPM build.
