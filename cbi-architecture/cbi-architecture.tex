@@ -187,7 +187,7 @@ Here, we introduce and describe the Computational Biology Initiative federated s
 
 \section*{Introduction}
 
-The application of mathematical methods to modeling and quantification in neurophysiology can be traced to the Lapicque model of a neuron introduced over a century ago (Lapicque, 1907) the empirical description of action potential generation and propagation (Hodgkin \& Huxley, 1952), and the application of cable theory to the modeling of dendrites (Rall, 1957). Although, computer modeling was employed to verify the original integration of the action potential by a hand cranked calculator, it was not until the use of mathematical approaches based on cable theory were developed in the late 1950s to model dendritic properties and function (Rall, 1959), that digital computers became a necessary tool for modeling studies. It took a further quarter century for the interdisciplinary field that links neuroscience, cognitive science, electrical engineering, computer science, physics, and mathematics to be named and thus give birth to computational neuroscience (Schwartz, 1990).
+The application of mathematical methods to modeling and quantification in neurophysiology can be traced to the Lapicque model of a neuron introduced over a century ago \cite{L:1907fk}, the empirical description of action potential generation and propagation \cite{hodgkin52:_quantitative_description}, and the application of cable theory to the modeling of dendrites \cite{Rall:1957uq}. Although, computer modeling was employed to verify the original integration of the action potential by a hand cranked calculator, it was not until the use of mathematical approaches based on cable theory were developed in the late 1950s to model dendritic properties and function \cite{rall59:_branc}, that digital computers became a necessary tool for modeling studies. It took a further quarter century for the interdisciplinary field that links neuroscience, cognitive science, electrical engineering, computer science, physics, and mathematics to be named and thus give birth to computational neuroscience \cite{Schwartz:1990kx}.
 %Since that time, a continued and rapid development of computer hardware and software has led to a plethora of systems for the description, simulation, and analysis of computational models from the sub-cellular (e.g. MCell--Stiles \& Bartoll, 2001; Roth et al., 2000) to large networks of biophysically realistic model neurons (e.g. Brunel \& Wang, 2001, Traub et al., 2005).
 
 % Lapicque L (1907) Recherches quantitative sur l'excitabilitie electrique des nerfs traitee comme une polarisation. J Physiol Pathol Gen 9: 620--635.
@@ -201,7 +201,7 @@ The application of mathematical methods to modeling and quantification in neurop
 % Traub RD, Contreras D, Cunningham MO, Murray H, LeBeau FEN, Roopun A, Bibbig A, Wilent WB, Higley MJ \& Whittington MA (2005). Single-column thalamocortical network model exhibiting gamma oscillations, sleep spindles and  epileptogenic bursts. Journal of Neurophysiology 93: 2194--2232.
 % Brunel N \& Wang X-J (2001) Effects of neuromodulation in a cortical network model of object working memory dominated by recurrent inhibition. J Comput Neurosci 11: 63--85.
 
-Historically, the development of neuronal simulation software for the construction of morphologically detailed neuron models and small networks was instigated by research projects that specifically addressed complementary technical and scientific questions (Moore, 2010). For example, one widely used application is NEURON (Hines, 1993) which grew from the identification of numerical techniques that greatly improved both the efficient computation and accuracy of the solution to the cable equations used to model electrical activity in branched dendrites (Hines, 1984, 1988). Alternatively, another widely used simulation platform, GENESIS (Wilson et al., 1989,) was from its conception a more generalized simulator initially employed to model at the single cell level neural oscillations in piriform (Wilson \& Bower, 1988) and cerebral cortex (Wilson \& Bower, 1989).
+Historically, the development of neuronal simulation software for the construction of morphologically detailed neuron models and small networks was instigated by research projects that specifically addressed complementary technical and scientific questions \cite{Moore:2010vn}. For example, one widely used application is NEURON \cite{m93:_neural_system} which grew from the identification of numerical techniques that greatly improved both the efficient computation and accuracy of the solution to the cable equations used to model electrical activity in branched dendrites \cite{hines84:_effic,hines89:_progr_simul_nerve_equat_branc_geomet}. Alternatively, another widely used simulation platform is GENESIS \cite{wilson89:_advan_neural_infor_proces_system} which from its conception was a more generalized simulator initially employed to model at the single cell level neural oscillations in piriform \cite{Wilson:1988zr} and cerebral cortex \cite{Wilson:1989ys}.
 
 % Moore JW (2010) A personal view of the early development of computational neuroscience in the USA. Frontiers in Computational Neuroscience 4: 20.
 % Hines M (1993) NEURON--a program for simulation of nerve equations. In: F. Eeckman (ed.) Neural Systems: Analysis and Modeling. Norwell, MA: Kluwer.
@@ -211,23 +211,23 @@ Historically, the development of neuronal simulation software for the constructi
 % Wilson MA & Bower JM (1989) Computer simulation of oscillatory behavior in cerebral cortical networks. In D Anderson (ed.) Neural Information Processing Systems. American Institute of Physics: New York. pp. 84--91.
 % Wilson MA, Bhalla US, Uhley JD & Bower JM (1989) GENESIS: A system for simulating neural networks. In D Anderson (ed.) Neural Information Processing Systems. American Institute of Physics: New York. pp. 485--492.
 
-These software systems have been both highly successful and continued to grow in complexity through cycles of research project extension (see for example parallel NEURON--Migliore et al., 2006 and pGENESIS--Hereld et al., 2004). However, more than twenty years of extending their functionality, usually by the direct incorporation of source code into the core of the simulator, has led to code structures so complicated that it has become increasingly difficult, if not impossible, to easily continue this process. The resulting stand-alone applications have become `monolithic' with their life cycles inevitably moving  from extension to maintenance. A significant consequence of this process is that the development of an optimized simulation can be a considerable challenge for the neuroscientist unfamiliar with mathematical and computational theory.
+These software systems have been both highly successful and continued to grow in complexity through cycles of research project extension (see for example parallel NEURON \cite{migliore06:_paral_networ_simul_neuron} and pGENESIS \cite{Hereld:2004ly}). However, more than twenty years of extending their functionality, usually by the direct incorporation of source code into the core of the simulator, has led to code structures so complicated that it has become increasingly difficult, if not impossible, to easily continue this process. The resulting stand-alone applications have become `monolithic' with their life cycles inevitably moving  from extension to maintenance. A significant consequence of this process is that the development of an optimized simulation can be a considerable challenge for the neuroscientist unfamiliar with mathematical and computational theory.
 
 % Migliore, M, Cannia, C., Lytton, W.W., Markram, H. and Hines, M.L. (2006) Parallel network simulations with NEURON. J Comput Neurosci 21: 119--129.
 % Hereld M, Stevens RL, van Drongelen W \& Lee HC (2004) Developing a petascale neural simulation.  Proc 26th Ann Int Conf IEEE EMBS 2: 3999--4002.
 
-One response of the computational neuroscience community to the
+One response to the
 cumbersome nature of monolithic software applications has been the
 development of specialized simulators capable of modeling different
 levels of biological detail. For example, (1) Nest simulates large
-structured network systems (Diesmann \& Gewaltig, 2001), (2) HHsim
+structured network systems \cite{diesmann01}, (2) HHsim
 provides a graphical environment for the detailed exploration of a
 section of excitable membrane via the Hodgkin-Huxley equation
-formalism (Touretzky et al., 2004), (3) COPASSI (Hoopes et al., 2006),
-a SBML (Hucka et al., 2004) enabled application for simulation and
-analysis of sub-cellular biochemical networks, and (4) MCell which
+formalism \cite{Touretzky:2003ve}, (3) COPASSI \cite{Hoops:2006qf},
+a SBML \cite{Hucka-M:2004bh} enabled application for simulation and
+analysis of sub-cellular biochemical networks, and (4) MCell, which
 uses Monte Carlo algorithms to track the stochastic diffusion of
-discrete molecules (Stiles \& Bartol, 2001).
+individual molecules \cite{Stiles:2001dq}.
 
 % Brette R, Rudolph M, Carnevale T, Hines M, Beeman D, Bower JM, Diesmann M, Morrison A, Goodman PH, Harris FC Jr., Zirpe M, Natschl\"ager T, Pecevski D, Ermentrout B, Djurfeldt M, Lansner A, Rochel O, Vieville T, Muller E, Davison AP, Boustani S \& Destexhe (2007) Simulation of networks of spiking neurons: A review of tools and strategies. J Comput Neurosci 23: 349--398.
 % Gleeson P, Steuber V, Silver RA (2007) neuroConstruct: A Tool for Modeling Networks of Neurons in 3D Space. Neuron 54:  219-235.
@@ -237,28 +237,26 @@ discrete molecules (Stiles \& Bartol, 2001).
 % Stiles JR \& Bartol TM (2001) Monte Carlo methods for simulating realistic synaptic microphysiology using MCell. In: E De Schutter (ed.) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press: Boca Raton, pp. 87--127.
 % Hoops S, Sahle S, Gauges R, Lee C, Pahle J, Simus N, Singhal M, Xu L, Mendes P, \& Kummer U (2006) COPASI -- a COmplex PAthway SImulator. Bioinformatics 22: 3067--3074.
 
-The rapidly growing diversity of modeling environments and tools raises significant issues surrounding the reproducibility of results from different simulators. This is not a trivial problem as when combined with the current laxity in reporting model and simulation details and the general lack of independent validation of computationally generated results, the credibility of research in computational neuroscience may be jeopardized on the grounds that any finding should be independently reproduced prior to being accepted as a genuine contribution to scientific knowledge (see Cannon et al., 2007; Stodden, 2009).
+The rapidly growing diversity of modeling environments and tools raises significant issues surrounding the reproducibility of results from different simulators. This is not a trivial problem, as when combined with the current laxity in reporting model and simulation details and the general lack of independent validation of computationally generated results, the credibility of research in computational neuroscience may be jeopardized on the grounds that any finding should be independently reproduced prior to being accepted as a genuine contribution to scientific knowledge (see \cite{cannon07:_inter,Stodden:2009cq}).
 
-% Stodden V (2009) Enabling reproducible research: Open licensing for scientific innovation. Int J Commun Law Policy.
+% Robert C. Cannon, Marc-Oliver Gewaltig, Padraig Gleeson, Upinder S. Bhalla, Hugo Cornelis, Michael L. Hines, Fredrick W. Howell, Eilif Muller, Joel R. Stiles, Stefan Wils, and Erik De Schutter (2007) Interoperability of neuroscience modeling software: Current status and future directions. Neuroinformatics. 5: 127Ð138.
+% Stodden V (2009) Enabling reproducible research: Open licensing for scientific innovation. Int J Commun Law Policy. 1--25.
 
 Problems of incremental model extension, incomplete model
 specification, and reproducibility of results, have resulted in the
 idea of the interoperability of neuroscience modeling software.
 Interoperability has been defined as ``all mechanisms that allow two
 or more simulators to use the same model description or to collaborate
-by evaluating different parts of a large neural model'' (Cannon et
-al., 2007), thus various forms of interoperability are possible. Two
-broad types have recently been identified (Cannon et al., 2007),
+by evaluating different parts of a large neural model'' \cite{cannon07:_inter}, thus various forms of interoperability are possible. Two
+broad types of interoperability have recently been defined \cite{cannon07:_inter},
 Type\,1: Development of portable model description standards such that
 models built for one simulator can be run on another, i.e. the
-adoption of common simulation languages such as SBML (Hucka et al.,
-2004) or NeuroML (P Gleeson et al., 2010), and Type\,2: Run-time
+adoption of common simulation languages such as SBML \cite{Hucka-M:2004bh} or NeuroML \cite{Gleeson:2010cr}, and Type\,2: Run-time
 interoperability where different simulators operating on different
 domains interoperate at run-time either by direct coupling via
-simulator script languages (e.g. pyMOOSE--Ray \& Bhalla, 2008),
-indirect coupling via interpreted languages (e.g. PyNN--Davison et
-al., 2008), or coupling via object oriented frameworks (e.g.
-Catacomb2--http://www.compneuro.org/catacomb/~\cite{cannon03:_from}).
+simulator script languages (e.g. pyMOOSE \cite{ray08:_pymoos}),
+indirect coupling via interpreted languages (e.g. PyNN \cite{davison08:_pynn}), or coupling via object oriented frameworks (e.g.
+Catacomb2 \cite{cannon03:_from}).
 
 %pyNEST--Eppler et al., 2008
 % NeuroML: A Language for Describing Data Driven Models of Neurons and Networks with a High Degree of Biological Detail, P Gleeson, S Crook, RC Cannon, ML Hines, GO Billings, M Farinella, TM Morse, AP Davison, S Ray, US Bhalla, SR Barnes, YD Dimitrova, RA Silver.  PLoS Comput Biol 6(6): e1000815. doi:10.1371/journal.pcbi.1000815
@@ -269,20 +267,20 @@ Catacomb2--http://www.compneuro.org/catacomb/~\cite{cannon03:_from}).
 
 %As a complement to the Type\,1 interoperability provided by a `universal' language such as NeuroML or SBML, we here introduce the Computational Biology Initiative federated simulator architecture (CBI architecture). It provides a formal description of the class of simulators that support Type 2, or runtime interoperability.
 
-Here we introduce a new class of simulator architecture, referred to as the CBI federated software architecture (CBI architecture). It is a software architecture that supports both
-interoperability and extensibility.
+Here we introduce a new class of simulator architecture, the CBI federated software architecture. For convenience, we referred to it here as the CBI architecture. As we now show, it is a software architecture that transparently supports both
+interoperability and extensibility for model building and simulation.
 
 
 % Results and Discussion can be combined.
 \section*{Results}
 
-In this section we introduce the CBI architecture, a software architecture that defines a fully functioning simulator developed on the basis of the separation of concerns (described in Materials and Methods). We then report the results of a separation of concerns and introduce and describe the resulting software modules
+In this section we introduce the CBI architecture. It defines a fully functioning simulator and has been developed on the basis of a separation of concerns (described in Materials and Methods). We then report the results of our separation of concerns and introduce and describe the resulting software modules.
 
 \subsection*{Overview of the Federated Software Architecture}
 
 The CBI architecture is defined as
 a modular paradigm that places stand-alone software components into a
-set of logical relationships. In this sense the CBI architecture defines a modular framework that defines the necessary components of a neural simulator.\
+set of logical relationships. In this sense it defines a modular framework that provides the necessary components of a neural simulator.
 
 The schema proposed in
 Figure~\ref{fig:data-control} is expanded in
@@ -319,8 +317,7 @@ through the use of high level scripting languages
 In summary, the CBI architecture provides a template for
 software development that, at its core, contains a simulator.
 Additionally, the modularity and layering of the architecture simplifies connection
-to independent applications indirectly related to model construction
-and instantiation. Figure\,\ref{fig:cbi-architecture-simple} illustrates the various modules of the CBI
+to independent applications indirectly related to model construction and instantiation, and the display and analysis of simulation output. Figure\,\ref{fig:cbi-architecture-simple} illustrates the various modules of the CBI
 architecture. We now introduce their functionality and describe their relationships within the context of the the user workflow.\\
 
 % Figure 1
@@ -328,9 +325,9 @@ architecture. We now introduce their functionality and describe their relationsh
 
 \subsection*{The High Level User Interface Layer}
 
-Modules in the top level of the CBI architecture (Fig.\,\ref{fig:cbi-architecture-simple}A) provide user accessible interfaces to simulator functionality through the GUI. Model data are controlled by the Database\,Interfaces, whereas,
+Modules in the top level of the CBI architecture (Fig.\,\ref{fig:cbi-architecture-simple}A) provide user accessible interfaces to simulator functionality through a Graphical User Interface (GUI). Model data are controlled by the Database\,Interfaces, whereas,
 %modules Model\,Tools and the Biology and Experiment\,Model\,Container. Note that for convenience, reference to the Model\,Container are to the Experiment\,Model\,Container. 
-simulations are controlled by Scripting\,Libraries\,\&Applications. The various modules and submodules located in this layer can be instantiated by a simulator on an as-needed basis. This layer supports the first three steps in the user workflow, including: (1) Model Construction, (2) Experiment Design, and (3) Run Simulation.  
+simulations are controlled by Scripting\,Libraries\,\&Applications. The various modules and submodules located in this layer can be instantiated by a simulator on an as-needed basis. This layer supports the first three steps in the user workflow, including: (1) Construct Model, (2) Design Experiment, and (3) Run Simulation.  
 % include Implementation\,Libraries and the Scheduler.
 
 \subsubsection*{The Graphical User Interface}
@@ -508,7 +505,7 @@ The intermediate layer comprises the core bridges for (1) Function bindings and 
 allows instantiation of solver data structures implemented in C via Perl data
 structures (Perl arrays and hashes).  A typical example of a
 scripting application is the set of Perl modules that
-implement a model tutorial (BOG Ref??). 
+implement a model tutorial (e.g. \cite{bower98:_book_genes}). 
 
 \subsubsection*{Core Bridges}
 
@@ -527,7 +524,7 @@ GENESIS to G-3 software compatibility component. It is also possible to provide 
 \paragraph{\bf Function Bindings:}
 
 The function library contains glue functions for a variety of
-purposes, for example for result analysis (e.g. fourier transform).
+purposes, for example for result analysis (e.g. Fourier transform).
 Neuroscience specific functions may be implemented directly, while
 general purpose functionality already available in external libraries
 is made accessible via small glue code (e.g. glue code to the GSL).
@@ -802,23 +799,23 @@ software code to avoid breaking existing software functionality.
 
 In the past neural simulators were
 developed or strictly supervised by a single programmer
-leading to monolithic applications (Moore, 2010).  As a consequence, the
+leading to monolithic applications \cite{Moore:2010vn}.  As a consequence, the
 functionality offered by simulation software and the
 scientific problems that could be addressed were inherently limited in
 scope by the capacity of a single person to manage the required
-software project (Brooks, 1982).  By contrast a {\it federated software design}
+software project \cite{Brooks:1995nx}.  By contrast a {\it federated software design}
 allows different individuals to work in parallel on the same software
-application (DeRemer \& Kron, 1975).  In particular, federated
+application \cite{DeRemer:1975oq}.  In particular, federated
 software supports the scientific enterprise by allowing individual
 scientists to work on their own research projects.
 
 % Moore JW (2010) A personal view of the early development of computational neuroscience in the USA. Frontiers in Computational Neuroscience 4: 20.
-% Brooks, Frederick P., Jr. (1995). The Tar Pit, published in The Mythical Man-Month - Anniversary Edition. ISBN 0-201-83595-9.  Reading, MA: Addison-Wesley Pub. Co.
+% Brooks, Frederick P., Jr. (1995). The Tar Pit, published in The Mythical Man-Month - Anniversary Edition. ISBN 0-201-83595-9.  Reading, MA: Addison-Wesley Pub. Co. pp. 3--6.
 % DeRemer F \& Kron H (1975) Programming-in-the large versus programming-in-the-small. In: ML Shooman \& RT Yeh (eds.) Proceedings of the international conference on Reliable software. Los Angeles CA: IEEE. 
 
 \paragraph{\bf Concerns:}
 
-One dictionary definition of {\it concern} is ``a matter for consideration'' (Merriam-Webster). More specifically for software, the concerns for a system are defined as ``... those interests which pertain to the system's development, its operation or any other aspects that are critical or otherwise important ...'' (IEEE). A more general definition is ``any matter of interest in a software system'' (Sutton \& Rouvellou, 2001). On this basis, concerns are considered to be fundamentally conceptual and include, but are not limited to, generality, independence, appropriateness, completeness, and ease of use (Sutton \& Rouvellou, 2004). Further, considerations in the typing of concerns may include: Logical versus physical concerns and simple concerns versus concern groups, also kinds of access, consistency and integrity, and extensibility and stability (Sutton \& Rouvellou, 2001). To this list we can add interoperability.
+One dictionary definition of {\it concern} is ``a matter for consideration'' \cite{Merriam-Webster:2010kl}. More specifically for software, the concerns for a system are defined as ``... those interests which pertain to the system's development, its operation or any other aspects that are critical or otherwise important ...'' \cite{Group:2000tg}. A more general definition is ``any matter of interest in a software system'' \cite{sutton2001}. On this basis, concerns are considered to be fundamentally conceptual and include, but are not limited to, generality, independence, appropriateness, completeness, and ease of use \cite{Sutton:2004hc}. Further, considerations in the typing of concerns may include: Logical versus physical concerns and simple concerns versus concern groups, also kinds of access, consistency and integrity, and extensibility and stability \cite{sutton2001}. To this list we can add interoperability.
 
 % Merriam-Webster. Merriam-Webster collegiate dictionary on line. http://www.merriam-webster.com/.
 % IEEE. 2000. IEEE recommended practice for architectural description of software-intensive systems. IEEE Std. 1471-2000.
@@ -827,13 +824,13 @@ One dictionary definition of {\it concern} is ``a matter for consideration'' (Me
 
 \paragraph{\bf Separation of Concerns:}
 
-The {\it separation of concerns} is an important general design principle in software engineering (Dijkstra, 1976; Parnas, 1972). It aims to control the complexity of programs that are continually elaborated. In summary, it promotes the separation of different interests 
+The {\it separation of concerns} is an important general design principle in software engineering \cite{EW:1976ij, DL:1972bs}). It aims to control the complexity of programs that are continually elaborated. In summary, it promotes the separation of different interests 
 in a problem, solving them separately without requiring detailed knowledge of 
 the other parts, and finally combining them into one result. 
 In practice, this principle actually corresponds with finding the right decomposition or modularization of a problem. The aim is to design systems that allow different functionalities to be optimized independently. Ultimately, a competent separation of concerns should make it easier to understand, design, and manage complex interdependent software systems.
 
-% Dijkstra EW (1976) A Discipline of programming, Prentica Hall, Englewood Cli?s, NJ.
-% D.L. Parnas DL (1972) On the criteria to be used in decomposing systems into modules, Communications of the ACM 15: 1053-1058
+% Dijkstra EW (1976) A Discipline of programming, Prentice Hall, Englewood Cliffs, NJ.
+% Parnas DL (1972) On the criteria to be used in decomposing systems into modules, Communications of the Association of Computing Machinery 15: 1053-1058
 
 \paragraph{\bf Module versus Component:}
 
@@ -861,7 +858,7 @@ more than one module. When modules are implemented as software components and bo
 
 \paragraph{\bf User Workflow:}
 
-We use the term {\it user workflow} to describe the sequence of necessary steps typically employed by a person in developing a computational model and employing simulation to generate data for subsequent analysis. In this sense it is a depiction of a sequence of operations, declared as the work of a person or a group of persons (Belhajjame et al., 2002).
+We use the term {\it user workflow} to describe the sequence of necessary steps typically employed by a person in developing a computational model and employing simulation to generate data for subsequent analysis. In this sense it is a depiction of a sequence of operations, declared as the work of a person or a group of persons \cite{Belhajjame:2001fv}.
 
 % Belhajjame K, Collet C, Vargas-Solar G. (2002) A Flexible Workflow Model for Process-Oriented Applications. 2nd International Conference on Web Information Systems Engineering (WISE 2001), IEEE CS PROCEEDINGS 1: 72-80.
 
@@ -871,7 +868,7 @@ An {\it iterator} is an object that allows a person to traverse through all the 
 
 \paragraph{\bf Interoperability}
 
-We use {\it interoperability} as ``The capability to communicate, execute programs, or transfer data among various functional units in a manner that requires ... little or no knowledge of the unique characteristics of those units.'' (IEEE, 1990).
+We use {\it interoperability} as ``The capability to communicate, execute programs, or transfer data among various functional units in a manner that requires ... little or no knowledge of the unique characteristics of those units.'' \cite{Geraci:1990dz}.
 
 % Institute of Electrical and Electronics Engineers (1990) IEEE Standard Computer Dictionary: A Compilation of IEEE Standard Computer Glossaries. New York, NY.
 
@@ -1042,7 +1039,7 @@ refer to as the CBI architecture.\\
 
 \subsection*{Separation of Concerns}
 
-Consideration of the principal concerns of data, control, and data layering were used to expand Figure~\ref{fig:data-control} by the separation of concerns principle. This key principle in software engineering states that a given problem involves different kinds of concerns, which should be identified and separated to cope with complexity (Dijkstra, 1982). The aim is to achieve engineering quality factors such as robustness, adaptability, maintainability, and reusability.
+Consideration of the principal concerns of data, control, and data layering were used to expand Figure~\ref{fig:data-control} by the separation of concerns principle. This key principle in software engineering states that a given problem involves different kinds of concerns, which should be identified and separated to cope with complexity \cite{Dijkstra:1982fu}. The aim is to achieve engineering quality factors such as robustness, adaptability, maintainability, and reusability.
 
 % Dijkstra EW (1982) On the role of scientific thought. in Dijkstra, Edsger W.. Selected writings on Computing: A Personal Perspective. New York, NY, USA: Springer-Verlag New York, Inc. pp. 60Ð66.
 
