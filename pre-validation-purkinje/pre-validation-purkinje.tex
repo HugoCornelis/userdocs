@@ -1,0 +1,462 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Pre-validation of the Purkinje cell before model submission}
+
+\subsection*{Introduction}
+
+This document shows specific capabilities of the GENESIS 3 publication
+system for automated model validation and electronic model publication
+of single neurons.  The examples used in this document include the
+neuron model developed in~\cite{De-Schutter-E:1994vn},~\cite{E:1994hc}
+and studied in~\cite{schutter94:_simul_purkin}, the comparative
+extension of these studies
+in~\cite{bower09:_compar_evolut_comput_analy_cereb} and finally the
+theoretical study of the model in~\cite{coop09:_using_purkin}.
+
+\subsection*{What is included?}
+
+Single neuron models can be validated by analysis of their
+morphological and mathematical structure.  Static checks include
+soundness checks on the morphology such as range checks on dendritic
+lengths and number of branch points, passive cable parameters, maximal
+channel conductances and channel kinetics.  Behaviour checks are
+implemented with simulations that apply common experimental paradigms
+to the neuron model.  Simulations for parameter searches are not
+included.
+
+
+\subsubsection*{From~\cite{De-Schutter-E:1994vn}}
+
+\begin{itemize}
+\item Static model checks:
+  \begin{itemize}
+  \item Morphology validation: are all the branches connected via an
+    electric pathway?
+  \item Cable discretization validation:
+    \begin{itemize}
+    \item Are the constraints to electrotonic length met?
+    \item Are all electrotonic compartments of similar lengths?
+    \end{itemize}
+  \item Equations for different membrane and synaptic channel types
+    and their kinetics?  Are these common equations or new ones?
+  \item Model parameter values: are all parameter values in the
+    physiological range?
+    \begin{itemize}
+    \item Passive parameters: capacitance, axial and membrane
+      resistance, resulting membrane time constant?
+    \item Channel maximal conductances and channel densities?
+    \item Channel time constants?
+    \item Concentration value time constants?
+    \end{itemize}
+  \end{itemize}
+\item Dynamic response to specific protocols:
+  \begin{itemize}
+  \item Current injection (fig 5, 0.2nA, 0.4nA, 0.6nA, 0.8nA) and
+    current clamp (fig 3, 0.5nA, 1nA, 2nA, 3nA).
+  \item Current injection with sodium blocker (TTX): 1nA, 0.1nA
+  \item Current injection with Ca$^{2+}$ blocker (Co$^{2+}$,
+    Cd$^{2+}$): 4nA, 3.5nA, 3nA, 2.5nA, 2nA, 1nA
+  \item Fig10: False color representation of membrane potential and Ca$^{2+}$
+    concentration in the complete model during a 2.0nA current
+    injection.
+  \item Fig 11: model variable plots during somatic and dendritic
+    spikes, 2nA current injection.
+  \item Fig 12: complicated
+  \item Fig 13: Simulation of voltage clamp steps: -100mV, +40mV,
+    -40mV.
+  \end{itemize}
+\item Dynamic response to additional common protocols:
+  \begin{itemize}
+  \item Voltage clamp with various blockers.
+  \end{itemize}
+
+\end{itemize}
+
+\subsubsection*{From~\cite{E:1994hc}}
+
+\begin{itemize}
+\item Comparison of model parameters to model
+  of~\cite{De-Schutter-E:1994vn}.  Report of changes and differences.
+\item Application of validation procedures
+  of~\cite{De-Schutter-E:1994vn}.
+\item Static validation of new model parameters.
+  \begin{itemize}
+  \item Passive structure of spines.
+  \item For each of the following synapses:
+    \begin{itemize}
+    \item Locations (visualization).
+    \item Maximal synaptic conductance.
+    \item Reversal Potentials.
+    \item Other (nernst equations, Mg blocking?).
+    \end{itemize}
+  \item Parallel fiber synapses.
+  \item Climbing fiber synapse locations.
+  \item Stellate cell synapses.
+  \item Basket cell synapses.
+  \end{itemize}
+\item Selected figures:
+  \begin{itemize}
+  \item Figure 1: climbing fiber response characterization in vitro.
+  \item Figure 3: climbing fiber response characterization in vitro,
+    active vs passive model.
+  \item Figure 6: asynchronous excitation alone, 5Hz, 3Hz, 1Hz, 0.5Hz,
+    0.1Hz.
+  \item Figure 7: 8 simulations with asynchronous excitation 100Hz,
+    60Hz, 40Hz, 30Hz, 26Hz, 24Hz, 22Hz, 20Hz and with inhibition 1Hz.
+  \item Figure 8, left panel (right is experimental data): unclear
+    what the simulations were, to be reconstructed.
+  \item Figure 9
+    \begin{itemize}
+    \item Panel A: inhibition 0Hz, 7 simulations.  Inhibition 0.5Hz, 6
+      slow + 22 fast firing.  Inhibition 1.0Hz, 7 slow + 22 fast
+      firing.  Inhibition 1.5Hz, 6 slow + 14 fast firing.  Inhibition
+      2.0Hz, 10 slow + 12 fast firing.
+    \item Panel B is model PM10
+    \item Panel C: excitation 10.4Hz and inhibition 0.5Hz, excitation
+      23.5Hz and inhibition 1Hz, excitation 37Hz and inhibition 1.5Hz,
+      excitation 50Hz and inhibition 2Hz.
+    \end{itemize}
+  \item Figure 10: inhibition always 1Hz, excitation (1) 21Hz at 1nS,
+    (2) 30Hz at 0.7nS, (3) 60Hz at 0.35nS, (4) 210Hz at 0.1nS.
+    Simulation runs until 1600 events have been collected.
+  \end{itemize}
+\end{itemize}
+
+\subsubsection*{From~\cite{schutter94:_simul_purkin}}
+
+\begin{itemize}
+\item Comparison of base model parameters to model of~\cite{E:1994hc}.
+\item Application of validation procedures
+  of~\cite{De-Schutter-E:1994vn}.
+\item Checks on changed parameters
+  \begin{itemize}
+  \item Passive soma.
+  \end{itemize}
+\item Selected figures:
+  \begin{itemize}
+  \item Figure 1
+    \begin{itemize}
+    \item Twice the same set of simulations.
+    \item 9 different stimulation protocols: unitary synaptic
+      stimulation applied to 8 different branchlets individually and
+      to the 8 same branches simultaneously.
+    \item Passive model.
+    \item Active model.
+    \end{itemize}
+  \item Figure 2: 10 data points, averaged over 40 simulation runs
+    (events), 4 different model variations.
+  \item Figure 3: Detail of two selected simulations.
+  \item Figure 4: one selected simulation, false color images of the
+    dendrite.
+  \item Figure 5: 200 simulations, distributed, proximal and distal
+    stimulation.
+  \end{itemize}
+\end{itemize}
+
+
+\subsubsection*{From~\cite{bower09:_compar_evolut_comput_analy_cereb}}
+
+\begin{itemize}
+\item Comparison of base model parameters to model of~\cite{E:1994hc}.
+\item Application of validation procedures
+  of~\cite{De-Schutter-E:1994vn}.
+\item This study applies 4 different stimulation protocols to 9
+  different reconstructed PC cell morphologies.  Stimulation protocols
+  are static dendritic voltage clamp, static somatic voltage clamp,
+  dynamic somatic voltage clamp, unitary synaptic stimulation.
+\end{itemize}
+
+\subsubsection*{From~\cite{coop09:_using_purkin}}
+
+\begin{itemize}
+\item Comparison of base model parameters to model of~\cite{E:1994hc}.
+\item Application of validation procedures
+  of~\cite{De-Schutter-E:1994vn}.
+\item The simulations explore the response of the Purkinje cell to
+  normal in-vivo conditions (poissonian synaptic background activity)
+  over a wide ranges of different parameters.
+\end{itemize}
+
+\subsection*{Benchmarking}
+
+\subsubsection*{Introduction}
+
+\begin{itemize}
+\item Queries to the system for static model checks must be
+  configured.  These checks complete 'instantly' ($<$ 1s).
+\item For simple simulations benchmarking on a passive and an active
+  version of the Purkinje cell has been done.  Details related to the
+  stimulation protocol or simulation such as an active model with a
+  passive soma or addition of a single synapse for unitary synaptic
+  stimulation are currently ignored.
+\item Simulation construction time for an active version of the
+  purkinje cell model is about 4 seconds and for a passive version 0.5
+  seconds.  All simulations were run on a 2 CPU 8 core intel 64bit at
+  1.60GHz with 6MB level 2 cache.  The simulations were neither run in
+  parallel nor multi-threaded.  All simulations of the Purkinje cell
+  model were run with each of the 1474 spines explicitly modeled with
+  two compartments.
+\item Estimates for more complicated analysis with results from many
+  simulations such as figure~10 in~\cite{E:1994hc} are acquired by
+  extrapolation of the estimates of the previous item.
+\end{itemize}
+
+
+\subsubsection*{Results}
+
+\begin{itemize}
+\item From~\cite{De-Schutter-E:1994vn}
+
+  \begin{itemize}
+  \item Static model checks: complete instantly.
+  \item Parameter search is not included.
+  \item Dynamic response to specific protocols:
+    \begin{itemize}
+    \item Current injection (fig 5, 4 simulations of 0.5s, 36s
+      run-time each) and current clamp (fig 3, 4 simulations of 1s,
+      72s run-time each).
+    \item Current injection with sodium blocker (TTX), fig 9A, 2
+      simulations of 1s, 72s run-time each.
+    \item Current injection with Ca$^{2+}$ blocker (Co$^{2+}$,
+      Cd$^{2+}$), fig 9B, 6 simulations of 1.2s, 86s run-time each.
+%    \item Fig 10: False color representation of membrane potential and
+%      Ca$^{2+}$ concentration in the complete model during a 2.0nA
+%      current injection.
+    \item Fig 11: model variable plots, 2nA current injection, one
+      simulation of 1s, 72s run-time.
+    \item Fig 13: Simulation of voltage clamp steps: -100mV, +40mV,
+      -40mV, 3 simulations of 0.2s, 15s run-time each.
+    \end{itemize}
+%  \item Dynamic response to additional common protocols:
+%    \begin{itemize}
+%    \item Voltage clamp with various blockers.
+%    \end{itemize}
+
+  \item Total run-time of~\cite{De-Schutter-E:1994vn} is 144s + 288s +
+    144s + 516s + 72s + 45s = 1209s.
+  \end{itemize}
+
+
+\item From~\cite{E:1994hc}
+
+  \begin{itemize}
+  \item Comparison of model parameters to model
+    of~\cite{De-Schutter-E:1994vn}.  Report of changes and
+    differences.
+
+  \item Application of validation procedures
+    of~\cite{De-Schutter-E:1994vn}.
+  \item Static validation of new model parameters completes instantly.
+  \item Selected figures:
+    \begin{itemize}
+    \item Figure 1: climbing fiber response characterization in vitro,
+      3 simulations of 0.15s, 13s run-time each.
+    \item Figure 3: climbing fiber response characterization in vitro,
+      active vs passive model, 2 simulations of 0.15s with 13s
+      run-time each, active model, passive model 2.5s run-time.
+    \item Figure 6: asynchronous excitation alone, 5Hz, 3Hz, 1Hz, 0.5Hz,
+      0.1Hz, 5 simulations of 50ms, each 7s run-time.
+    \item Figure 7: 8 simulations with asynchronous excitation 100Hz,
+      60Hz, 40Hz, 30Hz, 26Hz, 24Hz, 22Hz, 20Hz and with inhibition
+      1Hz, simulations of 50ms, each 7s run-time.
+    \item Figure 8, left panel (right is experimental data): unclear
+      what the simulations were, to be reconstructed.  We assume 24Hz
+      excitation, 1Hz inhibition, about 100s simulation, about 7100s
+      run-time\marginpar{why again 100s?}.
+    \item Figure 9
+      \begin{itemize}
+      \item Panel A: inhibition 0Hz, 7 simulations.  Inhibition 0.5Hz,
+        6 slow + 22 fast firing.  Inhibition 1.0Hz, 7 slow + 22 fast
+        firing.  Inhibition 1.5Hz, 6 slow + 14 fast firing.
+        Inhibition 2.0Hz, 10 slow + 12 fast firing.  Total is 7 + 6 +
+        22 + 7 + 22 + 6 + 14 + 10 + 12 = 106 simulations.  Assuming a
+        minimum of 100 events per simulation and a total average
+        firing frequency of 100Hz gives about 7200s run-time per
+        simulation.
+      \item Panel B is model PM10, this model is not included in this
+        report.
+      \item Panel C: excitation 10.4Hz and inhibition 0.5Hz,
+        excitation 23.5Hz and inhibition 1Hz, excitation 37Hz and
+        inhibition 1.5Hz, excitation 50Hz and inhibition 2Hz.  Each
+        simulation of 800s has a run-time of 800 * 68s run-time =
+        54400s (15hours).  Total of 4 simulations.
+      \end{itemize}
+%    \item Figure 10: inhibition always 1Hz, excitation (1) 21Hz at 1nS,
+%      (2) 30Hz at 0.7nS, (3) 60Hz at 0.35nS, (4) 210Hz at 0.1nS.
+%      Simulation runs until 1600 events have been collected.
+    \end{itemize}
+  \item Total run-time of~\cite{E:1994hc} is 39s + 31s + 35s + 56s +
+    7100s + 763200s + 217600s = 988061s (274.46 hours).
+
+
+  \end{itemize}
+
+\item From~\cite{schutter94:_simul_purkin}
+
+  \begin{itemize}
+  \item Comparison of base model parameters to model
+    of~\cite{E:1994hc}.
+  \item Application of validation procedures
+    of~\cite{De-Schutter-E:1994vn}.
+  \item Checks on changed parameters
+    \begin{itemize}
+    \item Passive soma.
+    \end{itemize}
+  \item Selected figures:
+    \begin{itemize}
+    \item Figure 1
+      \begin{itemize}
+      \item Twice the same set of simulations.
+      \item 9 different stimulation protocols: unitary synaptic
+        stimulation applied to 8 different branchlets individually and
+        to the 8 same branches simultaneously.  Simultaneously
+        asynchronous excitation of 28Hz and inhibition of 1Hz.
+      \item Passive model, 9 simultaneously of 50ms, each 1.5s
+        run-time.
+      \item Active model, 9 simulations of 50ms, each 7s run-time.
+      \end{itemize}
+    \item Figure 2: 10 data points, averaged over 40 simulation runs
+      (events), 4 different model variations.  10 x 40 x 4
+      simulations, each 7s run-time.  11200s total run-time (3 hours).
+%    \item Figure 3: Detail of two selected simulations.
+%    \item Figure 4: one selected simulation, false color images of the
+%      dendrite.
+    \item Figure 5: 200 simulations, distributed, proximal and distal
+      stimulation.  600 simulations total, each 7s run-time.  Total of
+      4200s run-time.
+    \end{itemize}
+  \item Total run-time of~\cite{schutter94:_simul_purkin} is 76.5s +
+    11200s + 4200s = 15476.5s (4.3 hours).
+  \end{itemize}
+
+\item From~\cite{bower09:_compar_evolut_comput_analy_cereb}
+  \begin{itemize}
+  \item static dendritic voltage clamp
+    \begin{itemize}
+    \item fish1: simulation construction time takes about 2s, a
+      simulation of 0.5s takes about 5.5s run-time for each of the
+      2187 simulations.
+    \item gp\_pc1: simulation construction time takes about 1s, a
+      simulation of 0.5s takes about 4s run-time for each of the 2066
+      simulations.
+    \item gp\_pc2: simulation construction time takes about 1s, a
+      simulation of 0.5s takes about 3s run-time for each of the 1520
+      simulations.
+    \item gp\_pc3: simulation construction time takes about 1s, a
+      simulation of 0.5s takes about 3s run-time for each of the 1381
+      simulations.
+    \item rat\_pc1: simulation construction time takes about 2.5s, a
+      simulation of 0.5s takes about 8s run-time for each of the 3885
+      simulations.
+    \item rat\_pc2: simulation construction time takes about 1.5s, a
+      simulation of 0.5s takes about 5s run-time for each of the 2331
+      simulations.
+    \item rat\_pc3: simulation construction time takes about 1.5s, a
+      simulation of 0.5s takes about 5.5s run-time for each of the
+      2671 simulations.
+    \item turtle1: simulation construction time takes about 1.5s, a
+      simulation of 0.5s takes about 6s run-time for each of the 2554
+      simulations.
+    \item turtle2: simulation construction time takes about 3.5s, a
+      simulation 0.5s takes about 11s run-time for each of the 4507
+      simulations.
+    \item turtle3: simulation construction time takes about 1.5s, a
+      simulation of 0.5s takes about 4.5s run-time for each of the
+      1991 simulations.
+    \item Total of 12028.5s + 8264s + 4560s + 4143s + 31080s + 11655s
+      + 14690.5s + 15324s + 49577s + 8959.5s = 160281.5s (44.5 hours).
+    \end{itemize}
+  \item static somatic voltage clamp: due to the high volume output of
+    these simulations, they are strictly I/O bound.  For simplicity
+    and because they have a marginal contribution to the total run
+    time for this study we assume that the I/O can be ignored.
+    \begin{itemize}
+    \item fish1: simulation construction time takes about 2s, a
+      simulation of 0.5s takes about 5.5s run-time.
+    \item gp\_pc1: simulation construction time takes about 1s, a
+      simulation of 0.5s takes about 4s run-time.
+    \item gp\_pc2: simulation construction time takes about 1s, a
+      simulation of 0.5s takes about 3s run-time.
+    \item gp\_pc3: simulation construction time takes about 1s, a
+      simulation of 0.5s takes about 3s run-time.
+    \item rat\_pc1: simulation construction time takes about 2.5s, a
+      simulation of 0.5s takes about 8s run-time.
+    \item rat\_pc2: simulation construction time takes about 1.5s, a
+      simulation of 0.5s takes about 5s run-time.
+    \item rat\_pc3: simulation construction time takes about 1.5s, a
+      simulation of 0.5s takes about 5.5s run-time.
+    \item turtle1: simulation construction time takes about 1.5s, a
+      simulation of 0.5s takes about 6s run-time.
+    \item turtle2: simulation construction time takes about 3.5s, a
+      simulation 0.5s takes about 11s run-time.
+    \item turtle3: simulation construction time takes about 1.5s, a
+      simulation of 0.5s takes about 4.5s run-time.
+    \item Total of 5.5s + 4s + 3s + 3s + 8s + 5s + 5.5s + 6s + 11s +
+      4.5s = 55.5s.
+    \end{itemize}
+  \item dynamic somatic voltage clamp: CPU load is the same as for
+    static somatic voltage clamp (55.5s).
+  \item unitary synaptic stimulation: CPU load is the same as for
+    static dendritic voltage clamp (160281.5s, 44.5 hours).
+  \item Total run-time
+    of~\cite{bower09:_compar_evolut_comput_analy_cereb} is 160281.5s +
+    55.5s + 55.5s + 160281.5s~= 320674s (89 hours).
+  \end{itemize}
+
+\item From~\cite{coop09:_using_purkin}
+  \begin{itemize}
+  \item A simulation of 400s had a run-time of about 25h.
+  \item A total of 1355 simulations were run.
+  \item This makes for a total CPU-time of 33875 hours (1411 days).
+  \end{itemize}
+\end{itemize}
+
+\subsection*{Conclusion}
+
+\begin{itemize}
+\item Table with the total run-times for each of the publications
+  (chronological order).
+
+  \begin{tabular}{|c|c|c|c|c|}
+    \hline
+    ~\cite{De-Schutter-E:1994vn}
+    & ~\cite{E:1994hc}
+    & ~\cite{schutter94:_simul_purkin}
+    & ~\cite{bower09:_compar_evolut_comput_analy_cereb}
+    & ~\cite{coop09:_using_purkin}
+    \\
+    \hline
+    1209 seconds
+    & 274.46 hours
+    & 4.3 hours
+    & 89 hours
+    & 33875 hours
+    \\
+    \hline
+  \end{tabular}
+
+\item Different publications can use very different stimulation
+  protocols.  Consequently there is a great variation between the
+  run-times of different publications.
+\end{itemize}
+
+
+\bibliographystyle{plain}
+\bibliography{../tex/bib/g3-refs.bib}
+
+\end{document}
+
+
