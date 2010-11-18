@@ -487,9 +487,8 @@ dealing with floating point exceptions.
 
 The communication infrastructure establishes run-time communication 
 between different solvers and output elements working on the same 
-model during a simulation. It is optimized for communication of array 
-based (numerical) data, enables solvers to communicate these data 
-during a simulation, and has a differential implementation for serial as 
+model during a simulation. It can be optimized for either discrete event communication or communication of array 
+based (numerical) data and has a differential implementation for serial as 
 opposed to parallel hardware. As it is part of the run-time system during 
 a simulation, the Communication\,Infrastructure can have an important 
 impact on run-time performance.  Depending upon the simulation and 
@@ -502,26 +501,26 @@ neuronal morphology.
 
 \subsection*{\bf The Intermediate Layer}
 
-The intermediate layer comprises the core bridges for (1) Function bindings and (2) Data bindings that assist with the vertical flow of numerical translation. This layer is part of the scripting API. It
+The intermediate layer comprises the core bridges for (1) Function bindings and (2) Data bindings that assist with the vertical flow of numerical translation. It
 allows instantiation of solver data structures implemented in C via Perl data
 structures (Perl arrays and hashes).  A typical example of a
 scripting application is the set of Perl modules that
 implement a model tutorial (e.g. \cite{bower98:_book_genes}). 
 
-\subsubsection*{Core Bridges}
-
-A software bridge is a software design pattern that decouples two
-fundamentally different representations of the same system.  The 
-required bridges are specific for a given scripting language and make 
-low-level simplified wrapper and interface
-generators (SWIG) available in a 
-convenient way. The function of the core bridges is to
-connect the procedural descriptions of a simulation (including the
-model), i.e. facilitate decomposition into modeling versus simulation control versus simulation
-runs.  More specifically, core bridges delegate procedural
-scripting statements to the correct software components
-in the simulator.  A specific implementation of a core bridge could be a
-backward compatibility component. Core bridges also support simulator extensibility. For example, is possible to provide a NEURON scripter that would bind to SWIG interfaces to allow NEURON scripts to be run with a specific implementation of the CBI architecture.
+%\subsubsection*{Core Bridges}
+%
+%A software bridge is a software design pattern that decouples two
+%fundamentally different representations of the same system.  The 
+%required bridges are specific for a given scripting language and make 
+%low-level simplified wrapper and interface
+%generators available in a 
+%convenient way. The function of the core bridges is to
+%connect the procedural descriptions of a simulation (including the
+%model), i.e. facilitate decomposition into modeling versus simulation control versus simulation
+%runs.  More specifically, core bridges delegate procedural
+%scripting statements to the correct software components
+%in the simulator.  A specific implementation of a core bridge could be a
+%backward compatibility component. Core bridges also support simulator extensibility. For example, is possible to provide a NEURON scripter that would bind to a simplified wrapper and interface generator to allow NEURON scripts to be run with a specific implementation of the CBI architecture.
 
 \paragraph{\bf Function Bindings:}
 
@@ -531,11 +530,11 @@ Neuroscience specific functions may be implemented directly, while
 general purpose functionality already available in external libraries
 is made accessible via small pieces of glue code (e.g. glue code to the GSL).
 
-\paragraph*{\bf Solver Bridge:}
+\paragraph*{\bf Data Bindings:}
 
-The Solver\,Bridge is a data binding that translates the
+Data binding translate the
 expanded representation of a model into data structures that are
-specific to one type of solver.  This bridge decouples the numerical
+specific to one type of solver.  This decouples the numerical
 back-ends from the modeling system, and allows the solvers to be
 implemented in a natural and efficient way.  Note that the implementor
 of a Solver\,Bridge can choose to bind a solver to only one of
@@ -576,7 +575,7 @@ The Sequence\,Bridge also generates a simple one-to-one mapping/translation of m
 \paragraph*{\bf Scripting API:}
 
 The Scripting\,API provides a series of specifications that glue the functionality of other software components to existing scripting languages. It is convenient to use an interface
-generator for this, e.g. SWIG.  The resulting code often consists solely of function or
+generator for this.  The resulting code often consists solely of function or
 method definitions that have a one-to-one mapping with code at the lower layers of a
 software architecture. As the generated code is still low-level, an additional higher
 level is required.  The introspection facilities of
@@ -589,7 +588,8 @@ intermediary-level API.
 
 The intermediary-level API is more useful for developers, and maintains one-to-one mapping with the structures and functions of the back-ends.
 
-The fact that the SWIG specifications included with the numerical solvers map the members of solver data structures one-to-one to Perl level subroutines allows the solver to be driven from Perl. \\ 
+The fact that the simplified wrapper and interface
+generator specifications included with the numerical solvers map the members of solver data structures one-to-one to Perl level subroutines allows the solver to be driven from Perl.
 
 \section*{Discussion}
 
@@ -884,7 +884,10 @@ Considerable experience with both user and technical concerns related to simulat
 
 %Finally, a complete simulation session is then described within the context of the new GENESIS 3.0 (G-3) simulation platform, which provides the first fully compliant implementation of the CBI architecture.   
 
-We now introduce the user workflow and define overall design objectives for a modularized neural simulator. When combined with recently developed software tools such as SWIG, the connection or interfacing of programs written in compiled computer languages such as C with a variety of interpreted scripting languages such as Python (www.python.org) and Perl (www.perl.org) is greatly simplified. The addition of powerful data serialization languages such as YAML (www.yaml.org--a computationally powerful, human readable language for streaming structured data), further facilitates the development of stand-alone software components.
+We now introduce the user workflow and define overall design objectives for a modularized neural simulator. When combined with recently developed software tools such as simplified wrapper and interface
+generators, the connection or interfacing of programs written in compiled computer languages such as C with a variety of interpreted scripting languages such as Python (www.python.org) and Perl (www.perl.org) is greatly simplified. 
+
+% The addition of powerful data serialization languages such as YAML (www.yaml.org--a computationally powerful, human readable language for streaming structured data), further facilitates the development of stand-alone software components.
 
 %\subsubsection*{Transparency}
 %
