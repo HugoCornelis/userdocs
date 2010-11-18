@@ -427,7 +427,7 @@ Examples of implementation libraries include, the GNU Scientific Library (GSL), 
 %this class of tools. In principle,
 %any tool that generates a formatted model can be connected to the Model\,Container. 
 
-\paragraph{\bf Scheduler:} Both the Model Container and the mathematical solver Heccer are stand-alone modules. To be useful, they must be ‘glued’ together and activated correctly, such that they can work together in co-ordination on a single simulation. This is exactly what the scheduler does. It exploits the sophistication of the Perl scripting language to load software components on demand, and activate them from a configuration file. It achieves this by loading dynamically those software components referenced in its configuration. Because the scheduler does not have any computational load, its implementation is very simple and highly configurable.
+\paragraph{\bf Scheduler:} Both the Model Container and the mathematical solver are stand-alone modules. To be useful, they must be `glued' together and activated correctly, such that they can work together in co-ordination on a single simulation. This is exactly what the scheduler does. It exploits the sophistication of the Perl scripting language to load software components on demand, and activate them from a configuration file. It achieves this by loading dynamically those software components referenced in its configuration. Because the scheduler does not have any computational load, its implementation is very simple and highly configurable.
 % Other configurations will connect the scheduler to other modeling services or solvers. 
 
 \subsection*{The Low Level Back-End Layer}
@@ -472,15 +472,16 @@ solvers is provided by the connectivity translation function of the Model\,Conta
 
 The Controller maintains the operation of all simulator functions and 
 contains core functions such as the global simulation time clock and 
-the functions that start and stop a simulation. Its main function is to 
+the functions that start and stop the advance of simulation time. Its main function is to 
 schedule and synchronize the solvers by requesting the numerical level 
 to update its internal states. This is achieved by activating Solvers and the 
 Communication\,Infrastructure as required. To leverage the operation 
 of sophisticated solvers and enhance their maintainability, the 
-Controller also implements functions for arithmetic control and for 
-dealing with floating point exceptions. For other use-cases, such as 
-a simple model analysis with Matlab as a back-end, the Controller 
-can provide the function to start the operation.
+Controller can also implement facilitatory functions for arithmetic control and for 
+dealing with floating point exceptions.
+%For other use-cases, such as 
+% a simple model analysis with Matlab as a back-end, the Controller 
+% can provide the function to start the operation.
 
 \paragraph{\bf Communication Infrastructure}
 
