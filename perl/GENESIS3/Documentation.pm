@@ -140,7 +140,11 @@ sub publish_production_results
 	= {
 	   map
 	   {
-	       $all_publication_results->{$_}->{document}->{name} => $all_publication_results->{$_}->{build_result},
+	       (
+		scalar keys %{ $all_publication_results->{$_}->{build_result} }
+		? ($all_publication_results->{$_}->{document}->{name} => $all_publication_results->{$_}->{build_result}, )
+		: (),
+	       );
 	   }
 	   keys %$all_publication_results,
 	  };
