@@ -185,6 +185,51 @@ command by itself.  This will take some time to run.  The result is a
 directory hierarchy with html documents in your home directory
 (~/neurospaces\_project/userdocs/source/snapshots/0/html/htdocs/neurospaces\_project/userdocs/).
 
+It is convenient to combine some of these options.  For instance to
+learn which tags are associated with the {\bf user-intro} document:
+
+\begin{verbatim}
+$ userdocs-build --report-tags user-intro
+---
+all_processed_tags:
+  - contents-level1
+  - genesis3
+  - level1
+  - published
+\end{verbatim}
+
+To know which tags are associated with the documents in level 1
+documentation:
+
+\begin{verbatim}
+$ userdocs-build --report-tags --tags level1
+---
+all_processed_tags:
+  - contents-level1
+  - developer
+  - genesis3
+  - gshell-interactive
+  - introduction
+  - level1
+  - published
+  - related-workflow
+  - wiki
+\end{verbatim}
+
+To know which documents are still in {\bf draft} status and thus
+unpublished:
+
+\begin{verbatim}
+$ userdocs-build --dry-run --tags draft
+---
+all_documents:
+  /home/cornelis/neurospaces_project/userdocs/source/snapshots/0/genesis-integration-with-gshell: draft
+  /home/cornelis/neurospaces_project/userdocs/source/snapshots/0/installation-studio: draft
+  /home/cornelis/neurospaces_project/userdocs/source/snapshots/0/mercurial-testing: draft
+  ...
+\end{verbatim}
+
+
 
 \end{document}
 
