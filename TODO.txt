@@ -13,10 +13,14 @@ Has a hyperlink to self.  Figure out what is going on.
 
 * Add tags to the test specification of all packages
 And use them to link pages of different documentation levels together
-in index pages.
+in index pages.  The prefix for such tags should be 'test-'.
 
 * tags that are related to build stages
 ** draft, published ao.
-** should reflect at what stage to drop out from the build process
+** should reflect at what stage to bail out from the build process
 *** loosely based on the documentation build code in Documentation.pm.
-**** a bit like: build_copy, build_expand, build_build, build_publish
+**** build_copy: bail out after copying to and preparing the output/ directory.
+**** build_expand: bail out after contents and snippet expansion.
+**** build_compile: bail out after compiling the document.
+**** build_publish: bail out after copying it to the published directory.
+

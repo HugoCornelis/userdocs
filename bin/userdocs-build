@@ -11,6 +11,7 @@ BEGIN
     #! make check
 
     push @INC, '../perl';
+
     #! make distcheck
 
     push @INC, '../../perl';
@@ -57,6 +58,7 @@ my $option_check;
 my $option_dry_run;
 my $option_parse_only = 0;
 my $option_regex = ".*";
+my $option_report_tags;
 my $option_tags = [];
 my $option_verbose;
 
@@ -127,50 +129,76 @@ sub main
 		     },
 		    );
 
-	    # loop over all documentation operations
+# 	    # if we are doing a regular build
 
-	    my $operation_result = {};
-
-	    my $operations
-		= [
-		   $option_check
-		   ? 'check'
-		   : qw(copy
-			expand
-			build
-			publish
-		      )
-		  ];
-
-	    foreach my $operation (@$operations)
+# 	    if (not scalar @$option_report_tags)
 	    {
-		# execute the operation
+		# loop over all documentation operations
 
-		my $error = $document->$operation( { verbose => $option_verbose, }, );
+		my $operation_result = {};
 
-		if ($error)
+		my $operations
+		    = [
+		       $option_report_tags
+		       ? 'read_descriptor'
+		       : (
+			  $option_check
+			  ? 'check'
+			  : qw(copy
+			       expand
+			       compile
+			       publish
+			     )
+			 )
+		      ];
+
+		foreach my $operation (@$operations)
 		{
-		    $operation_result->{"${operation}_error"} = $error;
+		    # execute the operation
 
-		    print "$0: *** Error: for document $document_name: $operation operation failed ($error)\n";
+		    my $error = $document->$operation( { verbose => $option_verbose, }, );
 
-		    last;
+		    if ($error)
+		    {
+			$operation_result->{"${operation}_error"} = $error;
+
+			print "$0: *** Error: for document $document_name: $operation operation failed ($error)\n";
+
+			last;
+		    }
 		}
-	    }
 
-	    if (scalar %$operation_result)
-	    {
-		GENESIS3::Documentation::Publications::insert_publication_production_result
-			(
-			 $document_name,
-			 $operation_result,
-			);
+# 		if (scalar %$operation_result)
+		{
+		    GENESIS3::Documentation::Publications::insert_publication_production_result
+			    (
+			     $document,
+			     $operation_result,
+			    );
+		}
 	    }
 	}
 
-	# now also publish the publication production results
+	# if we are reporting tags
 
-	GENESIS3::Documentation::Publications::publish_production_results();
+	if ($option_report_tags)
+	{
+	    # extract and report the tags from the operation_result
+
+	    my $all_processed_tags = GENESIS3::Documentation::Publications::extract_processed_tags();
+
+	    use YAML;
+
+	    print Dump( { all_processed_tags => $all_processed_tags, }, );
+
+	}
+
+	if (!$option_report_tags)
+	{
+	    # now also publish the publication production results
+
+	    GENESIS3::Documentation::Publications::publish_production_results();
+	}
     }
 }
 
@@ -187,6 +215,7 @@ sub read_cmd_line
 		     "help!" => \$option_help,
 		     "parse-only!" => \$option_parse_only,
 		     "regex=s" => \$option_regex,
+		     "report-tags!" => \$option_report_tags,
 		     "tags=s" => $option_tags,
 		     "verbose+" => \$option_verbose,
 		     "version" => \$option_version,
@@ -226,6 +255,7 @@ options:
     --help            print usage information.
     --parse-only      only execute parse commands, without actually building documentation.
     --regex           selects documents by name (default is all).
+    --report-tags     report the tags associated with the selected documents instead of building the documents.
     --tags            process the documents with these tags, multiple tags options may be given.
     --version         give version information.
     --v|verbose       tell what is being done, specify multiple times to get more feedback.

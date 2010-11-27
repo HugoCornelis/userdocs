@@ -71,31 +71,89 @@ package GENESIS3::Documentation::Publications;
 our $all_publication_results;
 
 
+sub unique
+{
+    my @list = @_;
+
+    my %seen = ();
+
+    my @unique
+	= (grep
+	   { ! $seen{$_} ++ }
+	   @list
+	  );
+
+    return @unique;
+}
+
+
+sub extract_processed_tags
+{
+    #! note the syntax to force perl to build an intermediate array result
+
+    my $result
+	= [
+	   sort
+	   @{
+	       [
+		unique
+		map
+		{
+		    my $result = $all_publication_results->{$_}->{document}->{descriptor}->{tags};
+
+		    @$result;
+		}
+		keys %$all_publication_results,
+	       ],
+	   },
+	  ];
+
+    return $result;
+}
+
+
 sub insert_publication_production_result
 {
-    my $document_name = shift;
+    my $document = shift;
 
-    my $result = shift;
+    my $build_result = shift;
 
-    $all_publication_results->{$document_name} = $result;
+    my $document_name = $document->{name};
+
+    $all_publication_results->{$document_name}
+	= {
+	   document => $document,
+	   build_result => $build_result,
+	  };
 }
 
 
 sub publish_production_results
 {
+    my $selectors = shift;
+
     use YAML;
 
     my $result;
 
-    print Dump( { all_publication_results => $all_publication_results, }, );
+    my $all_results
+	= {
+	   map
+	   {
+	       $all_publication_results->{$_}->{document}->{name} => $all_publication_results->{$_}->{build_result},
+	   }
+	   keys %$all_publication_results,
+	  };
+
+    print Dump( { all_publication_results => $all_results, }, );
 
     use IO::File;
 
-    my $results = IO::File->new(">/tmp/all_publication_results");
+    my $results_file = IO::File->new(">/tmp/all_publication_results");
 
-    if ($results)
+    if ($results_file)
     {
-	print $results Dump( { all_publication_results => $all_publication_results, }, );
+	print $results_file Dump( { all_publication_results => $all_results, }, );
     }
     else
     {
@@ -140,7 +198,7 @@ sub has_tag
 package GENESIS3::Documentation::Document;
 
 
-sub build
+sub compile
 {
     my $self = shift;
 
@@ -187,11 +245,11 @@ sub build
     {
 	# that is what we use
 
-	system "make build_document";
+	system "make compile_document";
 
 	if ($?)
 	{
-	    $result = 'make build_document failed';
+	    $result = 'make compile_document failed';
 	}
     }
 
@@ -200,43 +258,43 @@ sub build
 
     elsif ($self->is_redirect())
     {
-	$result = $self->build_redirect();
+	$result = $self->compile_redirect();
     }
     elsif ($self->is_restructured_text())
     {
-	$result = $self->build_restructured_text();
+	$result = $self->compile_restructured_text();
     }
     elsif ($self->is_rich_text_format())
     {
-	$result = $self->build_rich_text_format();
+	$result = $self->compile_rich_text_format();
     }
     elsif ($self->is_pdf())
     {
-	$result = $self->build_pdf();
+	$result = $self->compile_pdf();
     }
     elsif ($self->is_mp3())
     {
-	$result = $self->build_mp3();
+	$result = $self->compile_mp3();
     }
     elsif ($self->is_wav())
     {
-	$result = $self->build_wav();
+	$result = $self->compile_wav();
     }
     elsif ($self->is_html())
     {
-	$result = $self->build_html();
+	$result = $self->compile_html();
     }
     elsif ($self->is_png())
     {
-	$result = $self->build_png();
+	$result = $self->compile_png();
     }
     elsif ($self->is_ps())
     {
-	$result = $self->build_ps();
+	$result = $self->compile_ps();
     }
     else
     {
-	$result = $self->build_latex();
+	$result = $self->compile_latex();
     }
 
     if ($options->{verbose})
@@ -250,7 +308,7 @@ sub build
 }
 
 
-sub build_2_dvi
+sub compile_2_dvi
 {
     my $self = shift;
 
@@ -307,13 +365,13 @@ sub build_2_dvi
 	return "latex '$filename'";
     }
 
-    $self->{build_2_dvi}->{$filename} = 1;
+    $self->{compile_2_dvi}->{$filename} = 1;
 
     return undef;
 }
 
 
-sub build_2_html
+sub compile_2_html
 {
     my $self = shift;
 
@@ -325,13 +383,13 @@ sub build_2_html
 
     my $result;
 
-    if (!$self->{build_2_dvi}->{$filename})
+    if (!$self->{compile_2_dvi}->{$filename})
     {
-	my $build_error = $self->build_2_dvi($filename, $filename_base, $options);
+	my $compile_error = $self->compile_2_dvi($filename, $filename_base, $options);
 
-	if ($build_error)
+	if ($compile_error)
 	{
-	    return $build_error;
+	    return $compile_error;
 	}
     }
 
@@ -385,13 +443,13 @@ sub build_2_html
 
     if (!$options->{parse_only})
     {
-	#t some of these were already done by ->build_2_dvi()
+	#t some of these were already done by ->compile_2_dvi()
 
 	system "latex '$filename'";
 
 	if ($?)
 	{
-	    $result = "building $filename (latex '$filename': $?)";
+	    $result = "compiling $filename (latex '$filename': $?)";
 	}
 
 	#! note: both makeindex and bibtex produce error returns when
@@ -416,7 +474,7 @@ sub build_2_html
 
 	if ($?)
 	{
-	    $result = "building $filename (htlatex '$filename', $?)";
+	    $result = "compiling $filename (htlatex '$filename', $?)";
 	}
 
    }
@@ -432,7 +490,7 @@ sub build_2_html
 }
 
 
-sub build_2_pdf
+sub compile_2_pdf
 {
     my $self = shift;
 
@@ -444,13 +502,13 @@ sub build_2_pdf
 
     my $result;
 
-    if (!$self->{build_2_dvi}->{$filename})
+    if (!$self->{compile_2_dvi}->{$filename})
     {
-	my $build_error = $self->build_2_dvi($filename, $filename_base, $options);
+	my $compile_error = $self->compile_2_dvi($filename, $filename_base, $options);
 
-	if ($build_error)
+	if ($compile_error)
 	{
-	    return $build_error;
+	    return $compile_error;
 	}
     }
 
@@ -485,7 +543,7 @@ sub build_2_pdf
 }
 
 
-sub build_2_ps
+sub compile_2_ps
 {
     my $self = shift;
 
@@ -497,13 +555,13 @@ sub build_2_ps
 
     my $result;
 
-    if (!$self->{build_2_dvi}->{$filename})
+    if (!$self->{compile_2_dvi}->{$filename})
     {
-	my $build_error = $self->build_2_dvi($filename, $filename_base, $options);
+	my $compile_error = $self->compile_2_dvi($filename, $filename_base, $options);
 
-	if ($build_error)
+	if ($compile_error)
 	{
-	    return $build_error;
+	    return $compile_error;
 	}
     }
 
@@ -543,7 +601,7 @@ sub build_2_ps
 # Takes a particular file type to use an as extension for copying
 # data to an output folder.
 
-sub build_file_copy
+sub compile_file_copy
 {
     my $self = shift;
 
@@ -597,17 +655,17 @@ sub build_file_copy
 }
 
 
-sub build_html
+sub compile_html
 {
     my $self = shift;
 
     my $directory = $self->{name};
 
-    return $self->build_file_copy('html');
+    return $self->compile_file_copy('html');
 }
 
 
-sub build_latex
+sub compile_latex
 {
     my $self = shift;
 
@@ -673,15 +731,15 @@ sub build_latex
 	    {
 		# generate ps output
 
-		$result = $self->build_2_ps($filename, $filename_base);
+		$result = $self->compile_2_ps($filename, $filename_base);
 
 		# generate pdf output
 
-		$result = $result or $self->build_2_pdf($filename, $filename_base);
+		$result = $result or $self->compile_2_pdf($filename, $filename_base);
 
 		# generate html output
 
-		$result = $result or $self->build_2_html($filename, $filename_base);
+		$result = $result or $self->compile_2_html($filename, $filename_base);
 	    }
 
 	    chdir "..";
@@ -699,47 +757,47 @@ sub build_latex
 }
 
 
-sub build_pdf
+sub compile_pdf
 {
     my $self = shift;
 
     my $directory = $self->{name};
 
-    return $self->build_file_copy('pdf');
+    return $self->compile_file_copy('pdf');
 }
 
 
-sub build_png
+sub compile_png
 {
     my $self = shift;
 
     my $directory = $self->{name};
 
-    return $self->build_file_copy('png');
+    return $self->compile_file_copy('png');
 }
 
 
-sub build_ps
+sub compile_ps
 {
     my $self = shift;
 
     my $directory = $self->{name};
 
-    return $self->build_file_copy('ps');
+    return $self->compile_file_copy('ps');
 }
 
 
-sub build_mp3
+sub compile_mp3
 {
     my $self = shift;
 
     my $directory = $self->{name};
 
-    return $self->build_file_copy('mp3');
+    return $self->compile_file_copy('mp3');
 }
 
 
-sub build_redirect
+sub compile_redirect
 {
     my $self = shift;
 
@@ -749,7 +807,7 @@ sub build_redirect
 }
 
 
-sub build_restructured_text
+sub compile_restructured_text
 {
     my $self = shift;
 
@@ -890,7 +948,7 @@ sub build_restructured_text
 }
 
 
-sub build_rich_text_format
+sub compile_rich_text_format
 {
     my $self = shift;
 
@@ -1007,13 +1065,13 @@ sub build_rich_text_format
 }
 
 
-sub build_wav
+sub compile_wav
 {
     my $self = shift;
 
     my $directory = $self->{name};
 
-    return $self->build_file_copy('wav');
+    return $self->compile_file_copy('wav');
 }
 
 
@@ -1525,6 +1583,18 @@ sub new
     bless $self, $package;
 
     return $self;
+}
+
+
+sub nop
+{
+    my $self = shift;
+
+    my $options = shift;
+
+    my $result;
+
+    return $result;
 }
 
 
