@@ -36,6 +36,36 @@ This TODO list was built on \today, \thistime.
 
 \section{TODO List}
 
+\subsection{ns-sli warning registry}
+
+The ns-sli does more soundness checks on a model and the simulation
+run-time and gives many more warnings than G-2.  A typical example is:
+
+\begin{verbatim}
+*** Warning: zero initial value for the concentration of the following:
+/cell/bas1_9/Ca_conc
+*** Warning: zero initial value for the concentration of the following:
+/cell/bas1_10/Ca_conc
+
+Warning: Tabchannel parameter xmin has already been set to 0.000000 for K_AHPs
+Warning: Tabchannel parameter xmax has already been set to 1000.000000 for K_AHPs
+
+warning: cell found during solver_mathcomponent_typer()
+warning:     /cell/solve
+
+Warning: Heccer object /cell exists, resetting it instead.
+
+warning: cell found during solver_mathcomponent_processor()
+warning:     /cell/solve
+warning: cell found during solver_mathcomponent_finalizer()
+warning:     /cell/solve
+\end{verbatime}
+
+The implementation of a warning registry that registers warnings
+without displaying them avoids annoying a user.  A new SLI command
+'show_warnings' shows all the registered warnings.
+
+
 \subsection{website images}
 
 The documentation system uses ht4tex which is the successor of
