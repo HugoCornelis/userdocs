@@ -455,7 +455,13 @@ This module contains two submodules, (1) Implementation\,Libraries containing fu
 
 \paragraph{\bf Implementation Libraries:}
 
-Examples of implementation libraries include, the GNU Scientific Library (GSL), the Perl Data Language, and the Scientific Library for Python. These libraries may be implemented directly, are typically specific for a set of simulations, and have a very defined focus, e.g. investigation of a synaptic learning rule. Also present are neuroscience specific library functions, for example, to connect a model and a stimulus paradigm using a procedural paradigm such as ??. There are also `glue' functions to connect to external libraries for activities such as result analysis.
+These libraries have a defined focus, e.g. investigation of a synaptic
+learning rule.  They are typically implemented directly specific for a
+set of research or tutorial simulations and connect a model to a
+series of stimulus paradigms using a procedural paradigm.  There are
+also `glue' functions to connect to external libraries for other
+activities such as result analysis.  the GNU Scientific Library (GSL),
+the Perl Data Language, and the Scientific Library for Python.
 
 %This sub-module also contains tools that enable external model construction, visually or otherwise.  Functionally, neuroConstruct (software platform for the development of biologically realistic 3D neural networks) and CVapp (supports editing and conversion of morphology files)
 %fall into this category as they are stand-alone applications that
@@ -466,7 +472,7 @@ Examples of implementation libraries include, the GNU Scientific Library (GSL), 
 %this class of tools. In principle,
 %any tool that generates a formatted model can be connected to the Model\,Container. 
 
-\paragraph{\bf Scheduler:} Both the Model Container and the mathematical solver are stand-alone modules. To be useful, they must be `glued' together and activated correctly, such that they can work together in co-ordination on a single simulation. This is exactly what the scheduler does. It exploits the sophistication of the Perl scripting language to load software components on demand, and activate them from a configuration file. It achieves this by loading dynamically those software components referenced in its configuration. Because the scheduler does not have any computational load, its implementation is very simple and highly configurable.
+\paragraph{\bf Scheduler:} Both the Model Container and the mathematical solver are stand-alone modules. To be useful, they must be `glued' together and activated correctly, such that they can work together in co-ordination on a single simulation. This is exactly what the scheduler does. It typically exploits the sophistication of modern  scripting languages to load software components on demand, and activate them from a configuration file. The scheduler does not have any computational load, its implementation is simple and highly configurable.
 % Other configurations will connect the scheduler to other modeling services or solvers. 
 
 \subsection*{The Low Level Back-End Layer}
