@@ -418,17 +418,17 @@ component). This requires translation of the user defined model to the necessary
 
 This provides translation of the
 connectivity between the components of a biological model into
-connectivity between the mathematical solvers [ref. ??].  For example, in a
+connectivity between the low-level back-ends (described below) [ref. ??].  For example, in a
 biological representation of a network model there are hierarchical
 projections, each associated with its own sub-projections and connections.  
-However, during a simulation the different numerical engines are only connected by a set of communication ports.
+However, during a simulation the different back-ends are only connected by a set of communication ports.
 % Note that because a modeler connects biological components,
 %hierarchical translation is a substep of connectivity translation.
 
 % This is a demonstration implementation in Python of the Connection-Set Algebra (Djurfeldt, 2009, submitted)
 
 By implementing hierarchical and connectivity translation, the Model\,Container decouples the
-physical implementation of the mathematical solvers from the biological representation of a model and the way the user sees the model.  Firstly, this greatly reduces the implementation load on the back-end solvers
+physical implementation of the low level back-ends from the biological representation of a model and the way the user sees the model.  Firstly, this greatly reduces the implementation complexity on the back-end solvers
 as the solvers only have to deal with the numerics.  Secondly it also allows for more intuitive model representation at the user end.
 
 \paragraph{\bf The Experiment Model Container:}
@@ -436,18 +436,20 @@ as the solvers only have to deal with the numerics.  Secondly it also allows for
 This stores a model of a stimulus paradigm and desired output
 parameters and defines and stores a hierarchical sequence of
 stimulus-related actions (e.g. start and stop time of a current
-injection) and their dependencies.
+injection) and their dependencies\marginpar{discuss separation of
+  model containers and consequences of building model libraries, and
+  consequences of ease of model combinations}.
 
-Depending on the experimental protocol being simulated, the
-Experiment\,Model\,Container can be enrich the simulation schedule
-with actions specific for a given stimulus protocol (e.g. stimulate
-the model at a particular location with a given delay in a particular
-way).
+%Depending on the experimental protocol being simulated, the
+%Experiment\,Model\,Container can enrich the simulation schedule with
+%actions specific for a given stimulus protocol (e.g. stimulate the
+%model at a particular location with a given delay in a particular
+%way).
 
 
 \subsubsection*{Scripting Libraries \& Applications}
 
-This module contains two submodules, (1) Implementation\,Libraries containing functions specific to a given application, and a (2) Scheduler for the control of a simulation.
+This module contains three submodules, (1) Implementation\,Libraries containing functions specific to a given application, and (2) Scripts that control specific series of research and tutorial simulations.  (3) The generic aspect of these scripts to instantiate the simulation is called the scheduler\marginpar{Allan, ok?}.
 
 %Enables user-friendly work flows by providing access to applications written in high-level scripting languages that focus on specific research questions or educational tutorials.
 
@@ -472,25 +474,34 @@ the Perl Data Language, and the Scientific Library for Python.
 %this class of tools. In principle,
 %any tool that generates a formatted model can be connected to the Model\,Container. 
 
-\paragraph{\bf Scheduler:} Both the Model Container and the mathematical solver are stand-alone modules. To be useful, they must be `glued' together and activated correctly, such that they can work together in co-ordination on a single simulation. This is exactly what the scheduler does. It typically exploits the sophistication of modern  scripting languages to load software components on demand, and activate them from a configuration file. The scheduler does not have any computational load, its implementation is simple and highly configurable.
+\paragraph{\bf Applications}
+
+A typical example of an application is a set of simulator scripts that
+implement a model tutorial (e.g. \cite{bower98:_book_genes}).
+
+\paragraph{\bf Scheduler:} For stand-alone software components such as the Model\,Container and the mathematical solvers to be useful, they must be `glued' together and activated correctly, such that they can work together in co-ordination on a single simulation. This is exactly what the scheduler does. It can typically exploit the sophistication of modern scripting languages to load software components on demand, initialize and activate them from a configuration file. The scheduler does not have any computational load, its implementation is simple and highly configurable.
+
+
 % Other configurations will connect the scheduler to other modeling services or solvers. 
 
 \subsection*{The Low Level Back-End Layer}
 
-Modules in the lowest level of the CBI architecture (Fig.\,\ref{fig:cbi-architecture-simple}B) provide, (1) Solvers that employ specific algorithms for the solution of numerical equations. They include difference equation solvers and sequence executors that can discretize and tabulate fixed mathematical functions according to a user setable accuracy, and (2) Controllers (such as the simulation clock) and a Communication\,Infrastructure optimized for numerics.
+Modules in the lowest level of the CBI architecture (Fig.\,\ref{fig:cbi-architecture-simple}B) provide, (1) Solvers that employ specific algorithms for the solution of numerical equations. They include difference equation solvers and sequence executors that can discretize and tabulate fixed mathematical functions according to a user setable accuracy, and (2) Controllers (such as the simulation clock) and a Communication\,Infrastructures optimized for discrete events and numerics.
 
-\subsubsection*{Solvers}
+\subsubsection*{Mathematical Solvers}
 
 These include compartmental solvers, kinetic pathway
 solvers, Monte Carlo solvers, and in general any low-level back-end at
-the numerical or hardware level.  Solvers either implement
-functionality to solve numerical equations or they implement
-specific algorithms, or both.  Because of their numerical nature, some
-solvers can easily be extended to do the necessary
-discretization of a continous mathematical equation according to a
-settable accuracy.  The generation of channel conductance tables is a
-common example.  Other examples are mesh generation for Monte Carlo
-solvers and compartimentalization of a neuronal morphology.
+the numerical or hardware level.
+%  Solvers either implement
+%functionality to solve numerical equations or they implement
+%specific algorithms, or both.
+Because of their numerical nature, some solvers can easily be extended
+to do the necessary discretization of a continous mathematical
+equation according to a settable accuracy.  The generation of channel
+conductance tables is a common example.  Other examples are mesh
+generation for Monte Carlo solvers and compartimentalization of a
+neuronal morphology.
 
 \paragraph{\bf Discrete Representations}
 
@@ -513,25 +524,10 @@ experimental protocol {\it in computo}.  A command passes a particular
 value to the input port of a solver at a given time step. Note that connectivity between command executors and numerical
 solvers is provided by the connectivity translation function of the Model\,Container.
 
-\paragraph{\bf Controller:}
-
-The Controller maintains the operation of all simulator functions and 
-contains core functions such as the global simulation time clock and 
-the functions that start and stop the advance of simulation time. Its main function is to 
-schedule and synchronize the solvers by requesting the numerical level 
-to update its internal states. This is achieved by activating Solvers and the 
-Communication\,Infrastructure as required. To leverage the operation 
-of sophisticated solvers and enhance their maintainability, the 
-Controller can also implement facilitatory functions for arithmetic control and for 
-dealing with floating point exceptions.
-%For other use-cases, such as 
-% a simple model analysis with Matlab as a back-end, the Controller 
-% can provide the function to start the operation.
-
 \paragraph{\bf Communication Infrastructure}
 
 The communication infrastructure establishes run-time communication 
-between different solvers and output elements working on the same 
+between different solvers, input and output elements working on the same 
 model during a simulation. It can be optimized for either discrete event communication or communication of array 
 based (numerical) data and has a differential implementation for serial as 
 opposed to parallel hardware. As it is part of the run-time system during 
@@ -540,17 +536,26 @@ impact on run-time performance.  Depending upon the simulation and
 hardware involved, Communication\,Infrastructure deals with issues of 
 (1) Parallelization, such as whether solvers are collocated on the same 
 CPU and whether this is made transparant to the solver implementation, 
-and (2) Efficiency of the infrastructure for communicating neighboring 
+(2) Efficiency of the infrastructure for communicating neighboring 
 lists of values, e.g. all the membrane potentials of a compartmentalized 
-neuronal morphology.
+neuronal morphology and (3) Efficient storage and distribution of discrete events used for action potential generation and axonal propagation.
+
+\paragraph{\bf Controller:}
+
+The Controller maintains the operation of all simulator functions and 
+contains core functions such as the global simulation time clock and 
+the functions that start and stop the advance of simulation time. Its main function is to 
+schedule and synchronize the back-ends that participate in the simulation by requesting the numerical level 
+to update its internal states. To leverage the operation 
+of sophisticated solvers and enhance their maintainability, the 
+Controller can also implement facilitatory functions for arithmetic control such as floating point exceptions.
+%For other use-cases, such as 
+% a simple model analysis with Matlab as a back-end, the Controller 
+% can provide the function to start the operation.
 
 \subsection*{\bf The Intermediate Layer}
 
-The intermediate layer comprises the core bridges for (1) Function bindings and (2) Data bindings that assist with the vertical flow of numerical translation. It
-allows instantiation of solver data structures implemented in C via Perl data
-structures (Perl arrays and hashes).  A typical example of a
-scripting application is the set of Perl modules that
-implement a model tutorial (e.g. \cite{bower98:_book_genes}). 
+The intermediate layer comprises the bridges for (1) Function bindings and (2) Data bindings that assist with the vertical flow of information during translation from biology to mathematics. 
 
 %\subsubsection*{Core Bridges}
 %
@@ -617,24 +622,24 @@ back-ends, e.g. for analysing models.
 
 The Sequence\,Bridge also generates a simple one-to-one mapping/translation of model data with sequencer requirements. Data binding translates a sequence of stimulus actions and output definitions to data structures specific to a given sequencer implementation. This bridge decouples the sequencer back-end from the model containers and allows them to be independently optimized.
 
-\paragraph*{\bf Scripting API:}
+%\paragraph*{\bf Scripting API:}
 
-The Scripting\,API provides a series of specifications that glue the functionality of other software components to existing scripting languages. It is convenient to use an interface
-generator for this.  The resulting code often consists solely of function or
-method definitions that have a one-to-one mapping with code at the lower layers of a
-software architecture. As the generated code is still low-level, an additional higher
-level is required.  The introspection facilities of
-contemporary scripting languages allow the generated API to be inspected and automatically 
-translated into an intermediary-level API.  This
-infrastructure automates the maintenance process of the scripting API
-software by adding new structures at the lowest level. The interface
-generator and the introspection facilities automatically update the
-intermediary-level API.
+%The Scripting\,API provides a series of specifications that glue the functionality of other software components to existing scripting languages. It is convenient to use an interface
+%generator for this.  The resulting code often consists solely of function or
+%method definitions that have a one-to-one mapping with code at the lower layers of a
+%software architecture. As the generated code is still low-level, an additional higher
+%level is required.  The introspection facilities of
+%contemporary scripting languages allow the generated API to be inspected and automatically 
+%translated into an intermediary-level API.  This
+%infrastructure automates the maintenance process of the scripting API
+%software by adding new structures at the lowest level. The interface
+%generator and the introspection facilities automatically update the
+%intermediary-level API.
 
-The intermediary-level API is more useful for developers, and maintains one-to-one mapping with the structures and functions of the back-ends.
+%The intermediary-level API is more useful for developers, and maintains one-to-one mapping with the structures and functions of the back-ends.
 
-The fact that the simplified wrapper and interface
-generator specifications included with the numerical solvers map the members of solver data structures one-to-one to Perl level subroutines allows the solver to be driven from Perl.
+%The fact that the simplified wrapper and interface
+%generator specifications included with the numerical solvers map the members of solver data structures one-to-one to Perl level subroutines allows the solver to be driven from Perl.
 
 \section*{Discussion}
 
