@@ -39,31 +39,46 @@ This TODO list was built on \today, \thistime.
 \subsection{ns-sli warning registry}
 
 The ns-sli does more soundness checks on a model and the simulation
-run-time and gives many more warnings than G-2.  A typical example is:
+run-time and gives many more warnings than G-2.  Typical examples
+include:
 
+\begin{itemize}
+\item One of the Traub models:
 \begin{verbatim}
 *** Warning: zero initial value for the concentration of the following:
-/cell/bas1_9/Ca_conc
-*** Warning: zero initial value for the concentration of the following:
-/cell/bas1_10/Ca_conc
-
-Warning: Tabchannel parameter xmin has already been set to 0.000000 for K_AHPs
-Warning: Tabchannel parameter xmax has already been set to 1000.000000 for K_AHPs
-
+/cell/apical_18/Ca_conc
+\end{verbatim}
+\item When running
+  tests/scripts/test-traub91-v0/traub91\_asym\_simple3.g:
+  \begin{verbatim}
+Warning: Tabchannel parameter xmin has already been set to 0.000000 for K_C
+Warning: Tabchannel parameter xmax has already been set to 1000.000000 for K_C
+  \end{verbatim}
+\item During execution of tests/scripts/rallpack3-simple.g (1):
+\begin{verbatim}
 warning: cell found during solver_mathcomponent_typer()
-warning:     /cell/solve
-
-Warning: Heccer object /cell exists, resetting it instead.
-
+warning:     /axon/solve
 warning: cell found during solver_mathcomponent_processor()
-warning:     /cell/solve
+warning:     /axon/solve
 warning: cell found during solver_mathcomponent_finalizer()
-warning:     /cell/solve
-\end{verbatime}
+warning:     /axon/solve
+\end{verbatim}
+\item During execution of tests/scripts/rallpack3-simple.g (2):
+\begin{verbatim}
+Warning: Heccer object /axon exists, resetting it instead.
+\end{verbatim}
+\item During readcell tests/scripts/test-RSnet2/RScell.p in
+  tests/scripts/test-RSnet2/RScell-G3-nohole.g:
+\begin{verbatim}
+*** Warning: during readcell: channel /library/Na_pyr_dp has no Gbar / gmax defined
+*** Warning: during readcell: channel /library/Kdr_pyr_dp has no Gbar / gmax defined
+*** Warning: during readcell: channel /library/KM_pyr_dp has no Gbar / gmax defined
+\end{verbatim}
+\end{itemize}
 
 The implementation of a warning registry that registers warnings
 without displaying them avoids annoying a user.  A new SLI command
-'show_warnings' shows all the registered warnings.
+'show\_warnings' shows all the registered warnings.
 
 
 \subsection{website images}
