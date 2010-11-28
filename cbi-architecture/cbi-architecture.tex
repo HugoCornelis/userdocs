@@ -250,7 +250,7 @@ by evaluating different parts of a large neural model'' \cite{cannon07:_inter}, 
 broad types of interoperability have recently been defined \cite{cannon07:_inter},
 Type\,1: Development of portable model description standards such that
 models built for one simulator can be run on another, i.e. through the
-adoption of common simulation languages such as SBML \cite{Hucka-M:2004bh} or NeuroML \cite{Gleeson:2010cr}, and Type\,2: Run-time
+adoption of common simulation languages such as SBML \cite{Hucka-M:2004bh} or NeuroML \cite{Gleeson:2010cr}\marginpar{also nineml}, and Type\,2: Run-time
 interoperability, where different simulators operating on different
 domains interoperate at run-time either by direct coupling via
 simulator script languages (e.g. pyMOOSE \cite{ray08:_pymoos}),
@@ -273,7 +273,15 @@ interoperability and extensibility for model building, simulation, and result an
 % Results and Discussion can be combined.
 \section*{Results}
 
-In this section we introduce the CBI architecture. This software architecture defines a fully functioning simulator developed on the basis of a separation of concerns (described in Materials and Methods). We then describe the software modules resulting from this analysis.
+In this section we introduce the CBI architecture. This software
+architecture defines a fully functioning simulator developed on the
+basis of a separation of concerns (described in Materials and
+Methods\marginpar{add?  Also for the definition of terms such as
+  'component' and 'module' see Materials and Methods}). We then
+describe the software modules resulting from this analysis.
+The\marginpar{Allan, is this ok?} CBI architecture is a principle
+result of a bottom-up restructuring of the source code of the GENESIS
+2 neural simulation system, described in a accompanying paper.
 
 \subsection*{Overview of the Federated Software Architecture}
 
@@ -294,7 +302,7 @@ draws its inspiration from this partitioning. We refer to the CBI
 architecture as being `federated' as it extends the modular approach
 associated with the development of single applications to the
 functional integration of otherwise independent applications. In doing
-so, federation provides transparency, heterogeneity, a high degree of function, autonomy for the underlying federated sources, extensibility, openness, and optimized performance. Federation aims to provide a unified interface to diverse applications
+so, federation provides transparency, heterogeneity, a high degree of function, autonomy for the underlying federated sources, extensibility, openness, and the possibility for highly optimized performance. Federation aims to provide a unified interface to diverse applications
 and mask from the user the differences, idiosyncracies, and
 implementations of the underlying applications and data sources
 (see www-128.ibm.com/developerworks/db2/library/techarticle/0203haas/0203haas.html).
@@ -317,7 +325,7 @@ In summary, the CBI architecture provides a template for
 software development that, at its core, contains a simulator.
 Additionally, the modularity and layering of the architecture simplifies connection
 to independent applications indirectly related to model construction and instantiation, and the display and analysis of simulation output. Figure\,\ref{fig:cbi-architecture-simple} illustrates the various modules of the CBI
-architecture. We now introduce their functionality and describe their relationships within the context of the user workflow.\\
+architecture. We now introduce their functionality and describe their relationships within the context of the user workflow\marginpar{user workflow not defined here}.\\
 
 % Figure 1
 \noindent{\bf Place Figure\,\ref{fig:cbi-architecture-simple} about here.}\\
@@ -326,7 +334,7 @@ architecture. We now introduce their functionality and describe their relationsh
 
 Modules in the top level of the CBI architecture (Fig.\,\ref{fig:cbi-architecture-simple}A) provide user accessible interfaces to simulator functionality through a Graphical User Interface (GUI). Model data are controlled by the Database\,Interfaces, whereas,
 %modules Model\,Tools and the Biology and Experiment\,Model\,Container. Note that for convenience, reference to the Model\,Container are to the Experiment\,Model\,Container. 
-simulations are controlled by Scripting\,Libraries\,\&Applications. The various modules and submodules located in this layer can be instantiated by a simulator on an as-needed basis. This layer supports the first three steps in the user workflow, including: (1) Construct Model, (2) Design Experiment, and (3) Run Simulation.  
+simulations are controlled by Scripting\,Libraries\,\&Applications. The various modules and submodules located in this layer can be instantiated by a simulator on an as-needed basis. This layer supports the user interfaces for the first three steps in the user workflow, including: (1) Construct Model, (2) Design Experiment, and (3) Run Simulation.  
 % include Implementation\,Libraries and the Scheduler.
 
 \subsubsection*{The Graphical User Interface}
@@ -338,56 +346,64 @@ related to simulation control.
 
 \paragraph{\bf Model Construction and Result Visualization:}
 
-The model construction functionality of the GUI allows a user to define a model in terms of
-the biological properties of a neuron and neuronal networks, such as
-spine, morphology, and circuits and their connectivity. It also connects to other modeling components to provide a GUI for data base connectors in the module Model\,Tools and the Biological and Experimental\,Model\,Containers. This GUI can also be used to inspect or alter a model and instruct the modeling component to save the model back
-to disk as a conceptual representation available for later use.
+The model construction functionality of the GUI allows a user to
+define a model in terms of the biological properties supported by the
+modeling component (the Biology\,Model\,Container, described below).
+It also connects to other modeling components to provide a GUI for
+database connectors in the module Model\,Tools and the Biological and
+Experimental\,Model\,Containers. This GUI can also be used to inspect
+or alter a model and instruct the modeling component to save the model
+back to disk as a conceptual representation available for later use.
 
 The result visualization functionality of the GUI provides different views of a model and supports the possible work flows between them. It can be divided into generic and application specific parts.  The generic parts are those commonly provided by external tools such as GNUplot, Matlab, or xmgrace for display of the temporal evolution of variables. Examples of the application specific parts include, user specified neuron morphology visualization via morphologically related color coding of variables solved during a
-simulation, axons showing propagating action potentials, and higher level visualizations of network behavior.
+simulation, axons showing propagating action potentials, and higher level visualizations of network behavior\cite{schutter94:_simul_purkin, robbins04:_visual}.
 
 \paragraph{\bf Simulation Control:}
 
-Simulation control comprises actions such as the starting and stopping of a
-simulation.  Moreover, depending on the experimental protocol being
-simulated, simulation control can be enriched with actions specific
-for a given stimulus protocol (e.g. stimulate the model at a particular location in a particular way). Various buttons and dialog boxes allow interaction with the controller to configure protocol
-specific inputs. A browser provides access to sets of related simulations and results.
+Simulation control comprises actions such as the starting and stopping
+of a single simulation while a browser provides access to sets of
+related simulations and results that can be explored with the
+Result\,Visualizer.  Various buttons and dialog boxes allow
+interaction with the Experiment\,Model\,Container to configure
+protocol specific inputs and parameters (see below).
 
 \subsubsection*{Database Interfaces}
 
-There are three primary submodules within the Database\,Interfaces module. They are: (1) Model\,Tools, which provides functionality for connecting to databases, parameter searches, and model analysis, (2) The Biology\,Model\,Container, which allows a user to define a model in terms of biological properties such as spine, morphology, circuits and their connectivity, and (3) The Experiment\,Model\,Container, which enables the definition of an experiment in terms of actions taken on a biological model. 
+There are three primary submodules within the Database\,Interfaces
+module. They are: (1) Model\,Tools, which provides functionality for
+connecting to databases, parameter searches, and model analysis, (2)
+The Biology\,Model\,Container, which allows a user to define a model
+in terms of biological properties such as spine, morphology, circuits
+and their connectivity, and (3) The Experiment\,Model\,Container,
+which enables the definition of an experiment in terms of actions
+taken on a biological model.
 
-\paragraph{\bf Model Tools:} Some model tools may already incorporate a
-good GUI for model construction.  The difference with those tools is
-that in the CBI architecture this part of the GUI does not export a model in a simulator
-specific language, but rather interacts directly with the Biological and Experimental\,Model\,Containers.  This direct interaction creates a much tighter loop with lower level
-back-end functions (described below).
+\paragraph{\bf Model Tools:} Some model tools may already incorporate
+a good GUI for model construction (see \cite{gleeson07} for a typical
+example).  The difference with those tools is that in the CBI
+architecture this part of the GUI does not export a model in a
+simulator specific language, but rather interacts directly with the
+Biological and Experimental\,Model\,Containers via a low-level ABI.
+The ABI provides a direct coupling between the implementation
+technologies of the different software components, creates a much
+tighter loop between GUI, Simulation\,Control and lower level back-end
+functions (described below) and provides a richer interactive
+user-experience.
 
 \paragraph{\bf The Biology Model Container:}
 
-This container stores three different versions of a model. (1) A biological representation, available for inspection by other software modules, e.g. solvers (see below) or a model visualizer. (2) A conceptual representation that can be regarded as an enumeration of biological concepts and their relationships. It can contain algorithm names and parameters that specify how to build the model and can be exported and stored on a file system. (3) An expanded mathematical representation, generated by algorithms referenced from the conceptual representation, which, if mathematically complete can be simulated. However, if a parameter is missing, e.g. the axial resistance of a
-neuronal morphology, the model is still useful for inspection. Note that this way of treating a model is
-different from most current simulators.
+This container stores three different versions of a model. (1) A biological representation, available for inspection by other software modules, e.g. a model visualizer. (2) A conceptual representation that can be regarded as an enumeration of biological concepts and their relationships. It can contain algorithm names and parameters that specify how to build the model and can be exported and stored on a file system. (3) A fully expanded mathematical representation, generated by algorithms referenced from the conceptual representation, which, if mathematically complete, can be simulated. However, if a parameter is missing, e.g. the axial resistance in a
+neuronal morphology, the model is still useful for inspection and visual validation by the Model\,Construction GUI. Note that most current simulators do not allow incomplete representations of a model.
 
-Because of the translation functionality of the Biology\,Model\,Container, it must also act as an identification system. Given the identifier of a
-biological component in the expanded representation, the Biology\,Model\,Container must be able to translate it into an identifier for a mathematical variable.
+The translation between conceptual and mathematical representations
+involves at least two separate tasks, (1) A
+linearization\marginpar{Allan, is this ok?} of the hierarchical
+structure of the biological model for use by the solvers, and (2)
+Translation of model connectivity to connectivity between these
+solvers.
 
-In more detail, the Biology\,Model\,Container prepares the biological model for simulations by
-translating and expanding a user defined model into a mathematical
-structure.  This involves two separate tasks, (1) Translation of model connectivity to connectivity between solvers, and (2) Translation of the hierarchical biological model into an expanded numerical model for use by the solvers.
-
-\paragraph{Connectivity Translation:}
-
-This provides translation of the
-connectivity between the components of a biological model into
-connectivity between the mathematical solvers [ref. ??].  For example, in a
-biological representation of a network model there are hierarchical
-projections, each associated with its own sub-projections and connections.  
-However, during a simulation the different numerical engines are only connected by a set of communication ports. Note that because a modeler connects biological components,
-hierarchical translation is a substep of connectivity translation.
-
-% This is a demonstration implementation in Python of the Connection-Set Algebra (Djurfeldt, 2009, submitted)
+This requires the Biology\,Model\,Container to also act as a model component identification system: given the identifier of a
+biological component in the mathematical representation, the Biology\,Model\,Container must be able to translate it into an identifier for a mathematical variable that can be used by solver.
 
 \paragraph{\bf Hierarchical Translation}
 
@@ -398,13 +414,36 @@ converted to a set of equations at the same level as other
 equations of the same type (and independent of the biological
 component). This requires translation of the user defined model to the necessary flat stream of elements.  
 
+\paragraph{Connectivity Translation:}
+
+This provides translation of the
+connectivity between the components of a biological model into
+connectivity between the mathematical solvers [ref. ??].  For example, in a
+biological representation of a network model there are hierarchical
+projections, each associated with its own sub-projections and connections.  
+However, during a simulation the different numerical engines are only connected by a set of communication ports.
+% Note that because a modeler connects biological components,
+%hierarchical translation is a substep of connectivity translation.
+
+% This is a demonstration implementation in Python of the Connection-Set Algebra (Djurfeldt, 2009, submitted)
+
 By implementing hierarchical and connectivity translation, the Model\,Container decouples the
-physical implementation of the mathematical solvers from the biological representation of a model and the way the user sees the model.  This greatly reduces the implementation load on the back-end solvers
-as the solvers only have to deal with the numerics.
+physical implementation of the mathematical solvers from the biological representation of a model and the way the user sees the model.  Firstly, this greatly reduces the implementation load on the back-end solvers
+as the solvers only have to deal with the numerics.  Secondly it also allows for more intuitive model representation at the user end.
 
 \paragraph{\bf The Experiment Model Container:}
 
-This stores a model of a stimulus paradigm and desired output parameters and defines and stores a hierarchical sequence of stimulus-related actions (e.g. start and stop time of a current injection) and their dependencies.
+This stores a model of a stimulus paradigm and desired output
+parameters and defines and stores a hierarchical sequence of
+stimulus-related actions (e.g. start and stop time of a current
+injection) and their dependencies.
+
+Depending on the experimental protocol being simulated, the
+Experiment\,Model\,Container can be enrich the simulation schedule
+with actions specific for a given stimulus protocol (e.g. stimulate
+the model at a particular location with a given delay in a particular
+way).
+
 
 \subsubsection*{Scripting Libraries \& Applications}
 
@@ -753,7 +792,7 @@ annotate the model with benchmark scores.
 
 \subsubsection*{External Applications}
 
-Examples of existing or proposed model tools include: (1) A model version history manager for the tracking and recording of the history of model development, (2) A data base connector which enables the acquisition  of a model from a data base such as neuromorph.org and converts it to a format  understood by the Model\,Container, (3) A model and result analyzer for inspection of a model stored in the Model\,Container to extract, for example, morphological or connectivity characteristics for quantification of model components, (4) A model and result annotator which enables the automatic or manual attachment of text to whole or part of model, and (5) An automatic model constructor that contains software components that embed algorithms for automatic model construction, for example, it enables parameter searching and development of dendritic morphology.
+Examples of existing or proposed model tools include: (1) A model version history manager for the tracking and recording of the history of model development, (2) A database connector which enables the acquisition  of a model from a database such as neuromorph.org and converts it to a format  understood by the Model\,Container, (3) A model and result analyzer for inspection of a model stored in the Model\,Container to extract, for example, morphological or connectivity characteristics for quantification of model components, (4) A model and result annotator which enables the automatic or manual attachment of text to whole or part of model, and (5) An automatic model constructor that contains software components that embed algorithms for automatic model construction, for example, it enables parameter searching and development of dendritic morphology.
 
 \subsubsection*{Database Connectivity}
 
@@ -1070,7 +1109,7 @@ a biological model. This step is indicated by the horizontal arrow between Sched
 %\section*{Results: The CBI Simulator Architecture}
 %\label{sec:constr-cbi-simul}
 
-%In this section we review recent trends in neural simulation software development and use, and identify emerging problems associated with so-called `monolithic' applications. A ``separation of concerns'' is then presented. It is informed by principles of commercial software architectures that support complex systems such as the realtime relational data bases of banking systems and mobile phone technologies. We identify four principal design requirements for a comprehensive neural simulator. These requirements are then generalized in Results to provide a software architecture framework that greatly simplifies the development of a new generation of biological simulators.
+%In this section we review recent trends in neural simulation software development and use, and identify emerging problems associated with so-called `monolithic' applications. A ``separation of concerns'' is then presented. It is informed by principles of commercial software architectures that support complex systems such as the realtime relational databases of banking systems and mobile phone technologies. We identify four principal design requirements for a comprehensive neural simulator. These requirements are then generalized in Results to provide a software architecture framework that greatly simplifies the development of a new generation of biological simulators.
 
 %\subsection*{Background}
 
@@ -1177,7 +1216,7 @@ a biological model. This step is indicated by the horizontal arrow between Sched
 %%storage are developed and maintained as separate modules. More
 %%generally, a three-tier architecture decouples the relational
 %%databases (`back-end') from the graphic user interface (GUI,
-%%`front-end') of an application.  One advantage is that the data bases
+%%`front-end') of an application.  One advantage is that the databases
 %%can be shared by users, and both they and the GUI are easily upgraded.
 
 %%Service-oriented architecture (SOA) is a widespread commercial
@@ -1196,7 +1235,7 @@ a biological model. This step is indicated by the horizontal arrow between Sched
 %%self-governance\,\cite{08:_servic}.
 
 %While a SOA solves many problems specific to the development,
-%implementation, and maintenance of data base applications, the
+%implementation, and maintenance of database applications, the
 %development of telecommunication applications must account for
 %additional complexity involving multiple independent data domains such
 %as business data, configuration data, and application data.
