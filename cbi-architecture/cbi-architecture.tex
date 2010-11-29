@@ -405,7 +405,7 @@ solvers.
 This requires the Biology\,Model\,Container to also act as a model component identification system: given the identifier of a
 biological component in the mathematical representation, the Biology\,Model\,Container must be able to translate it into an identifier for a mathematical variable that can be used by solver.
 
-\paragraph{\bf Hierarchical Translation}
+\paragraph{\bf Biology Concept Translation}
 
 If biological components in a model are assumed to function as a single biophysical unit they can be grouped, e.g. a spine and a dendrite, an axon
 hillock and the soma, or a population of calcium or potassium channels.
@@ -427,9 +427,17 @@ However, during a simulation the different back-ends are only connected by a set
 
 % This is a demonstration implementation in Python of the Connection-Set Algebra (Djurfeldt, 2009, submitted)
 
-By implementing hierarchical and connectivity translation, the Model\,Container decouples the
+By implementing biological and connectivity translation, the Model\,Container decouples the
 physical implementation of the low level back-ends from the biological representation of a model and the way the user sees the model.  Firstly, this greatly reduces the implementation complexity on the back-end solvers
 as the solvers only have to deal with the numerics.  Secondly it also allows for more intuitive model representation at the user end.
+
+Depending\marginpar{for the discussion} on the simulator application
+area, the implementation may focus on one of the translation functions
+or both.  For instance the GENESIS and NEURON simulators provide only
+one-to-one mappings for connectivity translation, such that their
+representations of the connectivity of a model of the biology is
+essentially contaminated by the structure of the mathematical
+equations.
 
 \paragraph{\bf The Experiment Model Container:}
 
@@ -555,7 +563,7 @@ Controller can also implement facilitatory functions for arithmetic control such
 
 \subsection*{\bf The Intermediate Layer}
 
-The intermediate layer comprises the bridges for (1) Function bindings and (2) Data bindings that assist with the vertical flow of information during translation from biology to mathematics. 
+The intermediate layer comprises the bridges for (1) Function bindings and (2) Data bindings that assist with the vertical flow of information during the translation of biological concepts to numerical equations. 
 
 %\subsubsection*{Core Bridges}
 %
@@ -572,55 +580,59 @@ The intermediate layer comprises the bridges for (1) Function bindings and (2) D
 %in the simulator.  A specific implementation of a core bridge could be a
 %backward compatibility component. Core bridges also support simulator extensibility. For example, is possible to provide a NEURON scripter that would bind to a simplified wrapper and interface generator to allow NEURON scripts to be run with a specific implementation of the CBI architecture.
 
-\paragraph{\bf Function Bindings:}
+\subsubsection*{\bf Data Bindings:}
 
-The function library contains glue functions for a variety of
-purposes, for example for result analysis (e.g. Fourier transform).
-Neuroscience specific functions may be implemented directly, while
-general purpose functionality already available in external libraries
-is made accessible via small pieces of glue code (e.g. glue code to the GSL).
+Data binding translate the expanded representation of a model into
+data structures that are specific to one type of solver.  They
+interface the Biology\,Model\,Container with the numerical back-end,
+and allow a natural and efficient code for the solution of the
+numerical equations.  Note that a data binding implementation can
+choose to bind a solver to only one of the two translation functions
+of the Biology\,Model\,Container.  In this case, the solver can still
+be useful for single neuron simulations.
 
-\paragraph*{\bf Data Bindings:}
+The most important characteristic of a data binding is that it
+contains no specific algorithms, but provides a one-to-one mapping of
+selected data extracted from the Biology\,Model\,Container to data
+formatted in a way that is specific to the back-end.  The data
+selection can omit certain properties of the biological model, i.e.
+geometrical coordinates are not commonly used for the numerical
+solution of an equation.
 
-Data binding translate the
-expanded representation of a model into data structures that are
-specific to one type of solver.  This decouples the numerical
-back-ends from the modeling system, and allows the solvers to be
-implemented in a natural and efficient way.  Note that the implementor
-of a Solver\,Bridge can choose to bind a solver to only one of
-the two translation functions of the Model\,Container.  In this
-case, the solver can still be useful for single neuron simulations.
-
-The most important characteristic of the Solver\,Bridge is
-that it is a data binding framework only and contains no specific
-algorithms. It provides a one-to-one mapping of selected
-data extracted from the Model\,Container to data formatted in a way
-that is specific to the back-end.  The data selection can omit
-coordinates, i.e. the numerical solver acts independently of the geometric
-location of an equation.  The Solver\,Bridge mapping allows variables to be recalculated
-in a solver specific way (e.g. a specific capacitance is mapped to the
-time step divided by the scaled capacitance).
-
-\paragraph*{\bf Numerical Translator:}
-
-The Numerical\,Translator is a library of functions that each translate
-a single variable from a continuous mathematical domain to a discrete
-mathematical domain.  Examples include, the scaling of a conductance
-density to a maximal conductance or the scaling of the membrane capacitance density
-to the actual membrane capacitance with respect to the surface area of a
-given compartment.  Superficially, this seems easy, although it is not 
-always the case, e.g. when spines are present in a model the
+A library of functions in the Biology\,Model\,Container assists in the
+translation from a continuous mathematical domain to a numerical
+domain.  Examples include, the scaling of a conductance density to a
+maximal conductance or the scaling of the membrane capacitance density
+to the actual membrane capacitance with respect to the surface area of
+a given compartment.  Superficially, this seems easy, although it is
+not always the case, e.g. when spines are present in a model the
 capitance must be scaled to respect the additional spine surface area,
 while for a conductance density the spine surface area is commonly not
-taken into account.
+taken into account\cite{E:1994hc}.
 
-When using a bridge that translates components for a specific system
-such as Matlab or the GSL, it is possible to also use these systems as
-back-ends, e.g. for analysing models.
+%The Solver\,Bridge mapping allows variables to be recalculated
+%in a solver specific way (e.g. a specific capacitance is mapped to the
+%time step divided by the scaled capacitance).
 
-\paragraph*{\bf Sequencer Bridge:}
+%When using a bridge that translates components for a specific system
+%such as Matlab or the GSL, it is possible to also use these systems as
+%back-ends, e.g. for analysing models.
 
-The Sequence\,Bridge also generates a simple one-to-one mapping/translation of model data with sequencer requirements. Data binding translates a sequence of stimulus actions and output definitions to data structures specific to a given sequencer implementation. This bridge decouples the sequencer back-end from the model containers and allows them to be independently optimized.
+\subsubsection*{\bf Function Bindings:}
+
+The function bindings connect user actions to start and stop a simulation with functions of the Controller.
+%The function library contains glue functions for a variety of
+%purposes, for example for result analysis (e.g. Fourier transform).
+%Neuroscience specific functions may be implemented directly, while
+%general purpose functionality already available in external libraries
+%is made accessible via small pieces of glue code (e.g. glue code to the GSL).
+%\paragraph*{\bf Sequencer Bridge:}
+%The Sequencer\,Bridge also generates a simple one-to-one mapping/translation of model data with sequencer requirements. 
+Other function bindings translate a sequence of stimulus actions and
+output definitions to data structures specific to a given sequencer
+implementation. This interface decouples the sequencer back-end from
+the Experiment\,Model\,Container and allows them to be independently
+optimized.
 
 %\paragraph*{\bf Scripting API:}
 
