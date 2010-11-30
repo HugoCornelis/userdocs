@@ -107,7 +107,7 @@ The modular nature of the architecture and its independence from a given technol
 concepts and functions for both users and developers.  It provides
 several advantages for multiple independent contributions to
 software development.  Importantly, these include: (1) Complexity of
-individual simulator components is reduced compared to the complexity
+individual simulator components is reduced\marginpar{duplicate text} compared to the complexity
 of a complete simulator, (2) Components can be documented in
 isolation, in terms of their inputs and outputs, (3) Unnecessary or
 obsoleted components can easily be replaced or removed, (4) Components
@@ -593,22 +593,23 @@ be useful for single neuron simulations.
 
 The most important characteristic of a data binding is that it
 contains no specific algorithms, but provides a one-to-one mapping of
-selected data extracted from the Biology\,Model\,Container to data
-formatted in a way that is specific to the back-end.  The data
-selection can omit certain properties of the biological model, i.e.
-geometrical coordinates are not commonly used for the numerical
-solution of an equation.
+selected data extracted from the Biology\,Model\,Container
+% to data
+%formatted in a way that is specific to the back-end.
+The data selection can omit certain properties of the biological
+model, i.e.  geometrical coordinates are commonly not used for the
+numerical solution of an equation.
 
 A library of functions in the Biology\,Model\,Container assists in the
-translation from a continuous mathematical domain to a numerical
-domain.  Examples include, the scaling of a conductance density to a
-maximal conductance or the scaling of the membrane capacitance density
-to the actual membrane capacitance with respect to the surface area of
-a given compartment.  Superficially, this seems easy, although it is
-not always the case, e.g. when spines are present in a model the
-capitance must be scaled to respect the additional spine surface area,
-while for a conductance density the spine surface area is commonly not
-taken into account\cite{E:1994hc}.
+translation of values from a continuous mathematical domain to a
+numerical domain.  Examples include, the scaling of a conductance
+density to a maximal conductance or the scaling of the membrane
+capacitance density to the actual membrane capacitance with respect to
+the surface area of a given compartment.  Superficially, this seems
+easy, although it is not always the case, e.g. when spines are present
+in a model the capacitance density must be scaled to respect the
+additional spine surface area, while for a conductance density the
+spine surface area is commonly not taken into account\cite{E:1994hc}.
 
 %The Solver\,Bridge mapping allows variables to be recalculated
 %in a solver specific way (e.g. a specific capacitance is mapped to the
@@ -629,10 +630,11 @@ The function bindings connect user actions to start and stop a simulation with f
 %\paragraph*{\bf Sequencer Bridge:}
 %The Sequencer\,Bridge also generates a simple one-to-one mapping/translation of model data with sequencer requirements. 
 Other function bindings translate a sequence of stimulus actions and
-output definitions to data structures specific to a given sequencer
-implementation. This interface decouples the sequencer back-end from
-the Experiment\,Model\,Container and allows them to be independently
-optimized.
+output definitions to commands of a Command\,Sequence\,Executor. This
+interface decouples the sequencer back-end implementation from the
+Experiment\,Model\,Container such that the commands from complex and
+composed stimulus paradigms can be correctly sorted on both
+non-parallel and parallel architectures.
 
 %\paragraph*{\bf Scripting API:}
 
@@ -682,18 +684,23 @@ developers and users to choose to contribute to a single component
 with limited complexity, instead of being forced to contribute to the
 whole simulator and be exposed to tremendous complexity. 
 
-Our approach has the advantage that the mathematical and optimization internals of a
-solver need not be exposed to a user.  The resulting biological and
-numeric layers can further be individually optimized to allow
-significant enhancements in overall system performance.  For low-level
-data and control, such optimizations consist of running simulations
-more rapidly, e.g. by achieving high cache hit ratios and parallel
-implementation.  For high-level data and control, optimization
-involves increased support for biological concepts and usability by
-employing domain specific languages and scripting languages, as
-opposed to low-level languages\,\cite{1118892}. Much more importantly however, 
-the communication between modules is defined, something that can only be
-done using agreed upon APIs.
+Our approach has the advantage that the mathematical and optimization
+internals of a solver need not be exposed to a user.  The resulting
+biological and numeric layers can further be individually optimized to
+allow significant enhancements in overall system performance.  For
+low-level data and control, such optimizations consist of running
+simulations more rapidly, e.g. by achieving high cache hit
+ratios\cite{borg-graham00:_addit_effic_comput_branc_nerve_equat} and
+parallel implementation.  For high-level data and control,
+optimization involves increased support for biological concepts and
+usability by employing domain specific languages and scripting
+languages, as opposed to low-level languages\,\cite{1118892}. Much
+more importantly however, the communication between modules is
+defined, something that can only be done using agreed upon
+APIs\marginpar{we do not define an API anywhere in the paper.  The
+  methods use the term 'logical boundaries between modules'.  Maybe we
+  can define 'logical APIs' which sounds much better than 'semantic
+  APIs'.}
 
 We employed the results of a separation of concerns analysis to develop the software architecture for a next generation neural simulator. 
 The resulting CBI architecture provides three significant advantages for
@@ -863,8 +870,14 @@ scope by the capacity of a single person to manage the required
 software project \cite{Brooks:1995nx}.  By contrast a {\it federated software design}
 allows different individuals to work in parallel on the same software
 application \cite{DeRemer:1975oq}.  In particular, federated
-software supports the scientific enterprise by allowing individual
-scientists to work on their own research projects.
+software supports the scientific enterprise in general and scientific research in particular, by allowing individual
+scientists to work on software dedicated to their own research projects.
+
+Monolithic\marginpar{move to introduction?} Software and Federated
+Software are the two extremes of a continuum.  The philosophical goal
+of the CBI architecture is to move simulator design away from the
+extreme of Monolithic Software towards the extreme of Federated
+Software.
 
 % Moore JW (2010) A personal view of the early development of computational neuroscience in the USA. Frontiers in Computational Neuroscience 4: 20.
 % Brooks, Frederick P., Jr. (1995). The Tar Pit, published in The Mythical Man-Month - Anniversary Edition. ISBN 0-201-83595-9.  Reading, MA: Addison-Wesley Pub. Co. pp. 3--6.
@@ -873,6 +886,12 @@ scientists to work on their own research projects.
 \paragraph{\bf Concerns:}
 
 One dictionary definition of {\it concern} is ``a matter for consideration'' \cite{Merriam-Webster:2010kl}. More specifically for software, the concerns for a system are defined as ``... those interests which pertain to the system's development, its operation or any other aspects that are critical or otherwise important ...'' \cite{Group:2000tg}. A more general definition is ``any matter of interest in a software system'' \cite{sutton2001}. On this basis, concerns are considered to be fundamentally conceptual and include, but are not limited to, generality, independence, appropriateness, completeness, and ease of use \cite{Sutton:2004hc}. Further, considerations in the typing of concerns may include: Logical versus physical concerns and simple concerns versus concern groups, also kinds of access, consistency and integrity, and extensibility and stability \cite{sutton2001}. To this list we can add interoperability.
+
+In software concerns often penetrate into the different layers of an
+architecture.  Such concerns are called 'cross-cutting' concerns, and,
+because of this property, are hard to implement and maintain.  Often
+special technology is required to implement 'cross-cutting' concerns
+properly.
 
 % Merriam-Webster. Merriam-Webster collegiate dictionary on line. http://www.merriam-webster.com/.
 % IEEE. 2000. IEEE recommended practice for architectural description of software-intensive systems. IEEE Std. 1471-2000.
@@ -891,12 +910,12 @@ In practice, this principle actually corresponds with finding the right decompos
 
 \paragraph{\bf Module versus Component:}
 
-Modular programming aims to create software composed of separate interchangeable parts identified by a separation of concerns. This improves software maintainability by enforcing logical boundaries between software modules. We refer to the independent parts of the CBI architecture as {\it modules} that may contain independent submodules, whereas, following implementation a module is referred to as a {\it component}, that may also contain subcomponents. These components communicate with each other by interfaces typically created with scripting languages. An important attribute of a component is that one component can replace another without disabling the system within which it operates. This greatly simplifies and encourages software reusability. It is important to note that a component can only exist within a well defined framework such as that provided by a software architecture. As an example of the way we refer to modules and components, the GUI module in the CBI architecture contains independent submodules, whereas, the GUI component of a simulator implemented in compliance with the CBI architecture contains independent subcomponents dealing with simulation control, the model, and results (see Fig.\,\ref{fig:cbi-architecture-simple}).
+Modular programming aims to create software composed of separate interchangeable parts identified by a separation of concerns. This improves software maintainability by enforcing logical boundaries between software modules. We refer to the independent parts of the CBI architecture as {\it modules} that may contain independent submodules, whereas, following implementation a module is referred to as a {\it component}, that may also contain subcomponents. These components communicate with each other by interfaces typically created with scripting languages. An important attribute of a component is that one component can replace another without disabling the system within which it operates. This greatly simplifies and encourages software reusability. It is important to note that a component can only exist within a well defined framework such as that provided by a software architecture. As an example of the way we refer to modules and components, the GUI module in the CBI architecture contains independent submodules, whereas, the GUI component of a simulator implemented in compliance with the CBI architecture contains independent subcomponents dealing with simulation control, the model, and results (see Fig.\,\ref{fig:cbi-architecture-simple})\marginpar{this is an only marginally clear explanation}.
 
 \paragraph{\bf Scripting Languages:}
 
 With an increasing requirement for software integration, the use of {\it scripting languages} is
-providing an important programming paradigm. System programming languages are well suited for building functional software components where there is a requirement for computing speed, whereas, scripting languages are well suited for binding software components to build
+providing an important programming paradigm. System programming languages\marginpar{define system programming languages?} are well suited for building functional software components where there is a requirement for computing speed, whereas, scripting languages are well suited for binding software components to build
 applications where the complexity is in the connections. This division of labor provides a natural framework for reusability.
 When well-defined interfaces exist between components and scripts, software reuse becomes easy.
 In this sense scripting and system programming are symbiotic. Used
@@ -904,7 +923,7 @@ together, they produce programming environments of exceptional power where appli
 
 \paragraph{\bf Software Architecture:}
 
-As the last step of our philosophical workflow, a {\it software
+As\marginpar{it seems better to define software architecture before scripting languages?  Implementation technology should come after the philosophical workflow}. the last step of our philosophical workflow, a {\it software
   architecture} defines a framework that logically organizes a collection of modules where each module
 implements one or more concerns, but no concern is identified with
 more than one module. When modules are implemented as software components and bound together with scripting languages, the components form an application. 
@@ -921,7 +940,7 @@ We use the term {\it user workflow} to describe the sequence of necessary steps 
 
 \paragraph{\bf Iterator:}
 
-An {\it iterator} is an object that allows a person to traverse through all the elements of a collection, here the user workflow, regardless of its specific implementation.
+An {\it iterator} is an object that allows a person or system to traverse through all the elements of a collection, here the user workflow, regardless of its specific implementation.
 
 \paragraph{\bf Interoperability}
 
@@ -935,18 +954,29 @@ We use {\it interoperability} as ``The capability to communicate, execute progra
 
 \subsection*{The Scientific Workflow}
 
-The relationship between the activities involved in conducting an experiment and running a simulation in computational biology is illustrated in Figure\,\ref{fig:data-flows}. These two iterative processes are connected by a feedback loop that employs interpretation of results as an iterator to design new experimental setups and model constructions.\\
+The relationship between the activities involved in conducting an experiment and running a simulation in computational biology is illustrated in Figure\,\ref{fig:data-flows}. These two iterative processes are connected by a feedback loop that employs interpretation of results as an iterator\marginpar{is this iterator used in a different meaning?} to design new experimental setups and model constructions.\\
 
 % Figure 2
 \noindent{\bf Place Figure\,\ref{fig:data-flows} about here.}\\
 
-From this perspective, simulation provides a framework to organize our understanding of biological systems. The CBI architecture is designed to support the lower loop within the illustrated scheme and was developed in an effort to resolve the complexities associated with continual addition of functionality to simulators. Ultimately, simulators become monolithic and it is increasingly difficult for users and developers to maintain and extend them, with the logical consequence that user workflows were often similarly degraded.
+From this perspective, simulation provides a framework to organize our
+understanding of biological systems. The CBI architecture is designed
+to support the lower loop within the illustrated scheme and was
+developed in an effort to resolve the complexities associated with
+continual addition of functionality to simulators. Ultimately,
+simulators become monolithic and it is increasingly difficult for
+users and developers to maintain and extend them, with the logical
+consequence that user workflows were often similarly degraded.
+This\marginpar{for discussion or introduction?}  has become manifest
+in nowadays simulator scripts that are unstructured in the sense that
+the biological model is mixed with periphery code for input, output
+and simulation configuration\cite{cannon07:_inter}.
 
 Considerable experience with both user and technical concerns related to simulator functionality and efficiency has been gained from over twenty years of following user requirements during the development of bottom up models of neurons and neural circuits within the framework of the GENESIS software platform (http://www.genesis-sim.org/). This experience has allowed us to identify a user workflow that we employ here to constrain the ``separation of concerns'' analysis that lies at the heart of the new simulator architecture. Initially, we present the workflow, then the results of the separation of concerns. The analysis identifies the independent functional blocks and their relationships that define a software architecture necessary to support a third generation neural simulator. This leads to the identification of the overall design objectives for a federated simulation platform. We then describe the underlying software architecture by following a representative simulation example through the ideal workflow.
 
 %Finally, a complete simulation session is then described within the context of the new GENESIS 3.0 (G-3) simulation platform, which provides the first fully compliant implementation of the CBI architecture.   
 
-We now introduce the user workflow and define overall design objectives for a modularized neural simulator. When combined with recently developed software tools such as simplified wrapper and interface
+Below we introduce the user workflow and define overall design objectives for a modularized neural simulator. When combined with recently developed software tools such as simplified wrapper and interface
 generators, the connection or interfacing of programs written in compiled computer languages such as C with a variety of interpreted scripting languages such as Python (www.python.org) and Perl (www.perl.org) is greatly simplified. 
 
 % The addition of powerful data serialization languages such as YAML (www.yaml.org--a computationally powerful, human readable language for streaming structured data), further facilitates the development of stand-alone software components.
@@ -969,7 +999,7 @@ There are several important objectives that guide the development
 of our federated approach to the design and development of a neuronal
 simulation engine.
 % where software components are self contained in the sense that they can be run independently.
-They include: (1) Reduced complexity of software modules when compared to
+They include: (1) Reduced\marginpar{duplicate text} complexity of software modules when compared to
 a monolithic system, (2) Simplified documentation of modules
 in terms of inputs and outputs, (3) Easy incorporation or removal of
 individual modules as required, (4) Simplified development and testing
@@ -978,20 +1008,27 @@ scope for new module development.
 
 \subsection*{The User Workflow}
 
-A five step outline of a workflow for the development, implementation,
-and simulation of a computational model has been identified from the
-workflow of users of the GENESIS neural simulation platform.
-Importantly, the workflow explicitly distinguishes between the static
-structure of a model (step 1) and the dynamic state of its simulation
-(step 3).
+A\marginpar{I still have the feeling that the user workflow is so
+  fundamental to the explanation of other relevant core concepts that
+  it should occur early in the paper} five step outline of a workflow
+for the development, implementation, and simulation of a computational
+model has been identified from the workflow of users of the GENESIS
+neural simulation platform.  Importantly, the workflow explicitly
+distinguishes between the static structure of a model of the biology
+(step 1) and the dynamic state of its simulation (step 3).
 
 \subsubsection*{1. Construct Model}
 
-The simulator shell and/or the graphical user interface provides a command line interface that interprets user input such that the simulator `understands' different commands and performs the appropriate actions. Simple models can be created directly within the simulator shell by entering a sequence of commands. More complex models can be imported directly into the shell from libraries external to the simulator. Shell tools can then be used to explore and check the integrity of a model. Following any necessary or desired changes, a new version of the model can be saved.
+The\marginpar{funny wording} simulator shell and/or the graphical user interface provide a command line interface that interprets user input such that the simulator `understands' different commands and performs the appropriate actions. Simple models can be created directly within the simulator shell by entering a sequence of commands. More complex models are available to the shell from libraries or databases external to the simulator. Shell tools can then be used to explore and check the integrity of a model. Following any necessary or desired changes, a new version of the model can be saved.
 
 \subsubsection*{2. Design Experiment}
 
-Configuration tools can be used to set model parameter values specific to a given simulation, the stimulus or activation parameters for a given simulation run or experiment, and/or the output variables to be stored for subsequent analysis by independent software.
+Specific change management tools can be used to make small
+modification to a model, i.e. to set model parameter values specific
+to a given simulation.  Configuration tools support the definition of
+the stimulus or activation parameters for a given simulation run or
+experiment, and/or the output variables to be stored for subsequent
+analysis by independent software.
 
 \subsubsection*{3. Run Simulation}
 
@@ -999,11 +1036,11 @@ Shell tools can be used to check the state of a given simulation or reset the si
 
 \subsubsection*{4. Process Output}
 
-The validity and location of simulator output is checked prior to data analysis. Output can be analyzed either within the simulator or piped to external applications for subsequent data analysis.
+The validity and location of simulator output is checked prior to data analysis. Output can be analyzed either within the simulator or piped to external applications such as Matlab\marginpar{citation} for subsequent data analysis.
 
 \subsubsection*{5. Iterate}
 
-A modeling project is established by the introduction of iterators into the user workflow. Iterators achieve this by closing the loop between the output of results and model construction. Iterators include: Automated construction of simulations and batch files, static parameter searching, and active parameter searching using, for example, dynamic clamp technology. 
+A modeling project is established by the introduction of iterators\marginpar{iterator used once more in a meaning different from its definition} into the user workflow. Iterators achieve this by closing the loop between the output of results and model construction. Iterators include: Automated construction of simulations and batch files, static parameter searching, and active parameter searching using, for example, dynamic clamp technology. 
 
 \subsection*{Principal Concerns}
 
@@ -1017,7 +1054,7 @@ influence on the partitioning of a program into its primary functional
 blocks. Technical concerns have only indirect influence on the user's
 experience of an application, but are crucial for problem diagnosis
 and guaranteed correct behaviour of the software.  Here, we propose
-there are three principal concerns that underly the development of
+there are three\marginpar{three or two?} principal concerns that underly the development of
 modeling software: Separation between data and control by the use of
 data-layering.
 
