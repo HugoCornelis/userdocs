@@ -275,13 +275,48 @@ interoperability and extensibility for model building, simulation, and result an
 
 In this section we introduce the CBI architecture. This software
 architecture defines a fully functioning simulator developed on the
-basis of a separation of concerns (described in Materials and
+basis of a comprehensive user workflow and an analysis method referred
+to as a separation of concerns (described in Materials and
 Methods\marginpar{add?  Also for the definition of terms such as
   'component' and 'module' see Materials and Methods}). We then
 describe the software modules resulting from this analysis.
 The\marginpar{Allan, is this ok?} CBI architecture is a principle
 result of a bottom-up restructuring of the source code of the GENESIS
-2 neural simulation system, described in a accompanying paper.
+2 neural simulation system, described in a accompanying
+paper\marginpar{cite}.
+
+
+\subsection*{The User Workflow}
+
+The complex multi-dimensional nature of a biological system
+distinguishes it from the mathematical representations and data
+formats employed by a computer-based model of the system.
+Specifically, it is the dynamical properties of a biological system
+that do not map easily to the logical principles and mathematical
+constructs used by software
+implementations\cite{apostel61:_concep_role_model_mathem_natur_social_scien}.
+%This has two important consequences: (1) the user
+%workflows used by experimentalists differ from the workflows used by
+%modelers, and (2) current model representation technology used by
+%simulators expose mathematical details and periphery control code that
+%is unrelated to the biology it tries to represent.  
+This has the important consequence that current model representation
+technology used by simulators expose mathematical details and
+periphery control code that is unrelated to the biology it tries to
+represent.
+%The result is that
+%many neural simulators impose mathematical constraints on the
+%organization of a model that interrupt the
+%biological intuition of a user.
+
+Therefore we first introduce a comprehensive user workflow that can be
+used by simulator users as a guide to separate and distinguish the
+important parts of their scripts.
+
+The user workflow distinguishes the object under investigation from
+the tools used to perform the investigation, from the operations
+performed during this investigation.
+
 
 \subsection*{Overview of the Federated Software Architecture}
 
@@ -325,7 +360,7 @@ In summary, the CBI architecture provides a template for
 software development that, at its core, contains a simulator.
 Additionally, the modularity and layering of the architecture simplifies connection
 to independent applications indirectly related to model construction and instantiation, and the display and analysis of simulation output. Figure\,\ref{fig:cbi-architecture-simple} illustrates the various modules of the CBI
-architecture. We now introduce their functionality and describe their relationships within the context of the user workflow\marginpar{user workflow not defined here}.\\
+architecture. We now introduce their functionality and describe their relationships within the context of the user workflow.\\
 
 % Figure 1
 \noindent{\bf Place Figure\,\ref{fig:cbi-architecture-simple} about here.}\\
@@ -1072,23 +1107,6 @@ control (control of data flows).
 
 \subsubsection*{The requirement for data-layering}
 \label{sec:data-layering}
-
-The complex multi-dimensional nature of a biological system
-distinguishes it from the mathematical representations and data
-formats employed by a computer-based model of the
-system\marginpar{good reference possible}. Specifically, it is the
-dynamical properties of a biological system that do not map easily to
-the logical principles and mathematical constructs used by software
-implementations.  
-%This has two important consequences: (1) the user
-%workflows used by experimentalists differ from the workflows used by
-%modelers, and (2) current model representation technology used by
-%simulators expose mathematical details and periphery control code that
-%is unrelated to the biology it tries to represent.  
-The result is that
-many neural simulators impose mathematical constraints on the
-organization of a model that interrupt the
-biological intuition of a user.
 
 %For example, at the biological level,
 %a dendritic spine is considered to be a single morphological entity
