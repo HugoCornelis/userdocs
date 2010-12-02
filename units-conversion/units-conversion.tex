@@ -1,0 +1,427 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Conversion From Physiological to SI Units in GENESIS 3}
+
+
+This documentation describes procedures for converting between
+the physiological units often used in papers describing the results of
+electrophysiological experiments, and the SI units used in GENESIS 3.
+
+\section{Introduction}
+
+Section 3 of the GENESIS 3 Technical Guide 1
+\href{../technical-guide-1/technical-guide-1.html}{technical-guide-1}
+explains the representation of a simple cell model containing
+Hodgkin-Huxley channels in the Neurospaces Model Container (NMC).
+Equations (15) and (16), restated below, give the forward and backward rate
+function for the kinetics of the squid axon potassium channel $n$ gate
+activation, as fit to their experimental data by Hodgkin and Huxley.
+
+\begin{equation}
+\alpha_n(V) = \frac{0.01 (10-V)}{exp(\frac{10-V}{10}) - 1}
+\label{eq1}
+\end{equation}
+
+\begin{equation}
+\beta_n(V) = 0.125\; exp(-V/80).
+\label{eq2}
+\end{equation}
+ 
+These are in {\em physiological units}, commonly used in experimental
+neuroscience, where voltage is measured in millivolts ($mV$) and time in
+milliseconds ($msec$).  
+
+In GENESIS 3, the Model Container uses SI (meter, kilogram, second) units
+for stored parameters.  Voltages are expressed in Volts, and currents in
+Amperes.  Unfortunately, quantities typical of neurons tend to
+have either very large or very small values when expressed in SI units.
+For this reason, many people prefer to use physiological units.
+
+Technical Guide 1 shows the {\tt PARAMETERS} block representing the forward
+rate of Eq. (\ref{eq1}) as:
+
+\begin{verbatim}
+      PARAMETERS
+        PARAMETER ( HH_AB_Scale = -600.0 ),
+        PARAMETER ( HH_AB_Mult = 10000 ),
+        PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
+        PARAMETER ( HH_AB_Add = -1.0 ),
+        PARAMETER ( HH_AB_Offset_E = 60e-3 ),
+        PARAMETER ( HH_AB_Tau = -10.0e-3 ),
+      END PARAMETERS
+\end{verbatim}
+
+This documentation gives further details of the procedures for converting
+between physiological and SI units, and the relationship between rate equations
+such as Eq. (\ref{eq1}) and the parameters in the NDF {\tt PARAMETERS}
+block above.
+
+\subsection{Some Remarks on Units}
+
+Any inconsistency in the units that are used can result in confusion as
+well as incorrect results.  One way to keep confusion to a minimum is to
+stick to SI units.  This is the approach taken in GENESIS 3, and with the GENESIS 2
+{\em Neurokit\/} program and its associated prototype libraries of channels
+and other cell components.  Although we are moving away from GENESIS 2
+SLI scripting for new simulations, the GENESIS 2 prototype libraries will
+remain an important source of components to be used in GENESIS 3
+simulations.
+
+Table~\ref{tab1} presents a summary of
+the units used for common quantities ocurring in neural models and
+the conversion between physiological and SI units.
+
+\begin{table}[thb]
+\label{tab1}
+\centering
+\begin{tabular}{lll} \hline
+{\em Quantity}   & {\em SI units}       & {\em physiological units} \\
+\hline
+  resistance   & ohm ($\Omega$)  & kilohm ($K\Omega = 10^3 \Omega$) \\
+  capacitance  & farad ($F$)     & microfarad ($\mu F = 10^{-6} F$) \\
+  voltage      & volt ($V$)      & millivolt ($mV = 10^{-3} V$) \\
+  current      & ampere ($A$)    & microampere ($\mu A = 10^{-6} A$) \\
+  time         & second ($sec$)  & millisecond ($msec = 10^{-3} sec$) \\
+  conductance & siemen ($S = 1/\Omega$) & millisiemen ($mS = 10^{-3} S$) \\
+  length       & meter ($m$)     & centimeter ($cm = 10^{-2} m$) \\
+\hline
+\end{tabular}
+\caption{Correspondence between SI and physiological units for common
+quantities used in neural modeling.}
+\end{table}
+
+
+\subsubsection{Passive Cell Parameters}
+
+For a compartment of length $l$ and diameter $d$ the passive parameters
+in farads and ohms are related to the size-independent {\em specific} membrane
+capacitance $C_M$, membrane resistance $R_M$, and axial resistance $R_A$ by
+
+\begin{equation}
+C_{m} =  \pi l d C_M
+\end{equation}
+
+\begin{equation}
+R_{m} = \frac{R_M}{\pi l d}
+\end{equation}
+
+\begin{equation}
+R_{a}= \frac{4 l R_A}{\pi d^{2}}
+\end{equation}
+ 
+From the units given in Table \ref{tab1} one can obtain the units and
+conversion factors given in Table \ref{tab2}.
+
+\begin{table}[thb]
+\label{tab2}
+\centering
+\begin{tabular}{llll} \hline
+{\em Quantity} & {\em SI units} & {\em physiological units} & {\em SI/physiol} \\
+\hline
+  $C_M$  & $F/m^2$ &$\mu F/cm^2$  & $0.01$  \\
+  $R_M$  & $\Omega \cdot m^2$ & $K \Omega \cdot cm^2$ & $10$ \\
+  $R_A$  & $\Omega \cdot m$   & $K \Omega \cdot cm$ & $0.1$   \\
+\hline
+\end{tabular}
+\caption{Correspondence between SI and physiological units for passive
+cell parameters.}
+\end{table}
+
+\subsection{Converting the Rate Functions}
+
+Equations (\ref{eq1}) and (\ref{eq2}) have another difference from modern
+notation, in that the voltages were measured with respect to the resting
+potential of the squid axon ($-70~mV$), rather than relative to the
+extracellular potential.  GENESIS defines the default extracellular
+potential as $0~V$.  GENESIS 2 has traditionally used the global variable
+{\em EREST\_ACT} as an offset to give more flexibility when implementing
+functions to create a channel.  {\em EREST\_ACT} is the nominal resting
+potential of the cell, which is $-0.07~V$ in this case.  By replacing $V$
+by $V - EREST_{-}ACT$ in the rate equations, we may use the channel with
+any assumed resting potential.  This can be useful, for example, when using
+a Hodgkin-Huxley squid axon channel in a mammalian neuron model with a
+resting potential of $-60~mV$.  When converting Eqs. (\ref{eq1}) and
+(\ref{eq2}) to SI units, the voltages would be converted with
+
+\begin{equation}
+V(SI) = 0.001 (V(pysiol) + E_{rest}) - EREST_{-}ACT
+\label{eq6}
+\end{equation}
+
+where $E_{rest}$ is the resting potential in $mV$, which in this case
+was defined to be zero.  In other cases, $E_{rest}$ is likely to be
+the the same as {\em EREST\_ACT} when expressed in $mV$,  and would give a
+simple scaling of voltage rather than a scaling plus offset.
+
+In addition to converting the voltages from {\em mV\/} to volts, the rate
+functions need to be converted from phyiological units ($1/msec$) to the SI
+units of $1/sec$.  This means that the rate functions should be scaled by a
+factor of 1000.  As a result, Eqs. (\ref{eq1}) and (\ref{eq2}) become
+
+\begin{equation}
+\alpha_n(V) = \frac{10.0 (0.08 - V)}{exp(\frac{0.08 - V}{0.01}) - 1}
+\label{eq7}
+\end{equation}
+
+\begin{equation}
+\beta_n(V) = 125.0\; exp(-(V - 0.07)/0.080).
+\label{eq8}
+\end{equation}
+ 
+From these, one can determine the values to be used in Eq. (12) of
+Technical Guide 1.
+
+\subsection{Parameterizing the Rate Constants}
+\label{sec4}
+
+This conversion becomes much easier if the rate function can be expressed
+in one of the standard parameterized forms that are used in GENESIS.  This
+is the case with Eqs. (\ref{eq1}) and (\ref{eq2}), and many other channels
+for which someone has already analyzed the experimental data and fitted the
+rate functions $\alpha (V)$ and $\beta (V)$ to some equations.  The squid
+channels and many of the other channels in the GENESIS channel library and
+the {\em neurokit/prototypes\/} directory have been put in such a form.
+For other cases, it is necessary to have the function that creates the
+channel use a {\em for\/} loop to evaluate the equation and to fill each
+gate table.
+
+GENESIS 2 and the backeards compatibiliry module {\em ns-sli} have a
+command, {\em setupalpha} that can be used to create and fill the $A$ and
+$B$ tables when a gate has rate equations of the general form
+
+\begin{equation}
+y = \frac{A + B x}{C + \exp((V + D) / F))}
+\label{eq9}
+\end{equation}
+
+Note that this is a generalization of the three basic Hodgkin-Huxley forms
+$EXPONENTIAL$, $SIGMOID$, and $LINOID$.  Eqs.~(\ref{eq7}) and (\ref{eq8})
+are of this form, so one can set up the tables for the $n$ gate with a
+GENESIS 2 or ns-sli command of the form
+
+\begin{verbatim}
+        setupalpha chan gate AA AB AC AD AF BA BB BC BD BF
+\end{verbatim}
+
+where the parameters {\em AA\/}--{\em AF\/} correspond to those in
+Eq.~(\ref{eq9}) when it represents $\alpha(V)$ and the parameters {\em
+BA\/}--{\em BF\/} correspond to those for $\beta(V)$.  
+
+The Hodgkin-Huxley squid axon $n$ gate described by Eqs.~(\ref{eq1}) and
+(\ref{eq2}), and used as an example in Technical Guide 1, is defined along
+with the sodium $m$ and $h$ gates in the GENESIS 2 channel prototype file
+{\em neurokit/prototypes/hh\_tchan.g}.  It contains the command
+
+\begin{verbatim}
+          setupalpha {chanpath} X {10e3*(0.01 + EREST_ACT)} -10.0e3  \
+              -1.0 {-1.0*(0.01 + EREST_ACT)} -0.01 125.0 0.0 0.0  \
+              {-1.0*EREST_ACT} 80.0e-3
+\end{verbatim}
+
+to set up the $A$ and $B$ tables for the potassium $n$ gate, which is
+represented here as $X$ in GENESIS 2 notation.
+
+The parameterized gate description used in the NMC is given by Eq. (12) in
+Technical Guide 1
+
+% \begin{equation}
+%  A(V), B(V) = \frac{\mathrm{HH\_AB\_Scale} + \mathrm{HH\_AB\_Offset\_M} -
+%  \mathrm{HH\_AB\_Mult} * V}
+%  { \mathrm{HH\_AB\_Add} + e ^ {\frac{ V +
+%  \mathrm{HH\_AB\_Offset\_E} }{ \mathrm{HH\_AB\_Tau} } } }
+% \end{equation}
+
+\begin{equation}
+  \label{eq10}
+  A(V), B(V) =  \frac{ 
+ \mathrm{HH_{-}AB_{-}Scale} + \mathrm{HH_{-}AB_{-}Offset_{-}M} -
+ \mathrm{HH_{-}AB_{-}Mult} *  V }{ \mathrm{HH_{-}AB_{-}Add} +
+  e ^ {\frac { V + 
+  \mathrm{HH_{-}AB_{-}Offset_{-}E} }{ \mathrm{HH_{-}AB_{-}Tau}}}}
+\end{equation}
+
+which applies when the constant {\tt HH\_AB\_Factor\_Flag} has its default
+value of -1.  Note that the constant {\tt HH\_AB\_Offset\_M} can be
+absorbed into {\tt HH\_AB\_Scale}, and may usually be set to zero.
+The constants appearing in Eq. \ref{eq10} are used in the
+NDF {\tt PARAMETERS} block, and are related to those in Eq. (\ref{eq9})
+by the table
+
+\begin{table}[thb]
+\label{tab3}
+\centering
+\begin{tabular}{ll} \hline
+{\em NMC parameter}	 & {\em setupalpha parameter} \\
+\hline
+ HH\_AB\_Scale + HH\_AB\_Offset\_M & $A$ \\
+ HH\_AB\_Mult & $-B$ \\
+ HH\_AB\_Add   & $C$ \\
+ HH\_AB\_Offset\_E & $D$ \\
+ HH\_AB\_Tau & $F$ \\
+\hline
+\end{tabular}
+\caption{Correspondence between NMC and {\em setupalpha} parameters.}
+\end{table}
+
+\subsubsection{Conversion of Parameterized Constants to SI Units}
+\label{sec4-1}
+
+If the rate equations are in physiological units, and can be expressed
+in the form of Eq. (\ref{eq9}), possibly with a different resting potential,
+then Eq. (\ref{eq6}) can be used to translate the voltages.  If the lower case
+letters $a$, $b$, $c$, $d$, and $f$ are used to represent the parameters
+in physiological units, then the SI parameters are:
+
+$A = 1000 a - 10^6 b (EREST_{-}ACT - 0.001 E_{rest})$ \\
+$B = 10^6 b$ \\
+$C = c$ \\
+$D = 0.001 d - (EREST_{-}ACT - 0.001 E_{rest})$ \\
+$F = 0.001 f$
+
+As an example, these relations may be applied to the forward rate function
+in Eq. (\ref{eq1}), using $E_{rest} = 0 ~mV$ and $EREST_{-}ACT = -0.07 ~V$
+to give the results for the parameters:
+
+\begin{table}[thb]
+\label{tab4}
+\centering
+\begin{tabular}{clcl} \hline
+{\em physiol parameter } & {\em value}  & {\em SI parameter} & {\em value} \\
+\hline
+
+$a$  & 0.1 & $A$ & -600 \\
+$b$  & -0.01 & $B$ & -10000 \\
+$c$  & -1 & $C$ & -1 \\
+$d$  & -10 & $D$ & 0.06 \\
+$f$  & -10 & $F$ & -0.01 \\
+\hline
+\end{tabular}
+\caption{Correspondence between SI and physiological {\em setupalpha}
+parameters that represent Eq. (\ref{eq1}).}
+\end{table}
+
+Note the correspondence between the values for the SI parameters in Table
+\ref{tab4} and the NDF {\tt PARAMETERS} block given in the Introduction.
+
+\subsubsection{The {\em setuptau} Parameterized Form}
+\label{sec4-2}
+
+Sometimes, gates are described in terms of the voltage dependent steady state
+activation $n_\infty$ and time constant $\tau_n$.  These functions are more
+directly related to the results of voltage clamp experiments, and can be
+expressed in terms of the rate functions as
+
+\begin{equation}
+n_\infty(V) = \frac{ \alpha_n(V) }{ \alpha_n(V) + \beta_n(V) }
+\label{eq11}
+\end{equation}
+\begin{equation}
+\tau_n(V) = \frac{1}{\alpha_n(V) + \beta_n(V)}
+\label{eq12}
+\end{equation}
+
+
+Some GENESIS 2 scripts for creating channels use the {\em setuptau} command
+to fill the gate $A$ and $B$ tables by specifying the time constant and
+activation with an equation in the form of Eq. (\ref{eq9}) where the
+parameters $AA$ -- $AF$ correspond to the time constant and $BA$ -- $BF$
+correspond to the steady state activation.
+
+GENESIS 3 does not currently provide a parameterized representation in
+this form, but the {\em sli\_load} command should  translate {\em setuptau}
+commands into a NDF representation with a {\tt PARAMETERS} block containing
+the table values.
+
+The conversion from these parameters in pysiological units to SI units
+is a slighty different from the {\em setupalpha} form, because the
+conversion equations for the time constant and steady state activation
+have different units.   For the time constant parameters $A$ -- $F$,
+where $\tau$ is in seconds,
+
+$A = 0.001 a - b (EREST_{-}ACT - 0.001 E_{rest})$ \\
+$B = b$ \\
+$C = c$ \\
+$D = 0.001 d - (EREST_{-}ACT - 0.001 E_{rest})$ \\
+$F = 0.001 f$
+
+The steady state activation is a dimensionless quantity, and the
+parameters $A$ -- $F$ are
+
+$A = a - 1000 b (EREST_{-}ACT - 0.001 E_{rest})$ \\
+$B = 1000 b$ \\
+$C = c$ \\
+$D = 0.001 d - (EREST_{-}ACT - 0.001 E_{rest})$ \\
+$F = 0.001 f$
+
+\subsubsection{Simplified Form of Gate Equations}
+
+Often, detailed voltage clamp data is not available for a channel to be
+modeled.  In this case, it is common to roughly fit the steady state
+activation of gate to a sigmoid function, with a fixed
+voltage-independent value of the time constant $\tau$.  In this case,
+
+\begin{equation}
+n_\infty(V) = \frac{ 1 }{ 1 + \exp((V - V_{0}) / K) }
+\label{eq13}
+\end{equation}
+
+and $\tau$ is a constant.  Here, $V_{0}$ is the voltage for 50\% activation,
+and $K$ is related to the slope of $n_\infty(V)$ at its midpoint 
+$(\frac{d n_\infty(V)}{d V})_{V=V_0}$ by
+
+\begin{equation}
+K =  \frac{ -1 }{ 4 (\frac{d n_\infty(V)}{d V})_{V=V_0} }
+\label{eq14}
+\end{equation}
+
+Equation (\ref{eq13}) can be put in the {\em setuptau} form of Eq.
+(\ref{eq9}), using $A = 1$, $B = 0$, $C = 1$, $D = -V_0$, and $F = K$.
+However, the voltage-dependent exponential term in the denominator
+presents a problem if $\tau$ is to be a constant.  One way to deal with
+this is to use an approximation with $A = \tau$ , $B = \tau / F$, $C = 0$,
+$D = 0$, and $F = 10^6$.
+
+However, it is possible to put these in the {\em setupalpha} form.
+Equations (\ref{eq11}) and (\ref{eq12}) can be used to calculate the
+expressions for the forward rate $\alpha(V)$ and the backward
+rate $\beta(V)$ in terms of $\tau$ and $n_\infty(V)$.  Normally, one would
+not expect the resulting equations to be in the form of Eq.  (\ref{eq9}),
+but in this simple case, a little algebra yields the surprisingly simple
+result
+
+\begin{equation}
+\alpha_n(V) = \frac{ 1 }{\tau (1 + \exp((V - V_0) /K)))}
+\label{eq15}
+\end{equation}
+
+
+\begin{equation}
+\beta_n(V) = \frac{ 1 }{\tau (1 + \exp((-V + V_0) /K)))}
+\label{eq16}
+\end{equation}
+
+Thus, $\alpha_n(V)$ and $\beta_n(V)$ are in the form of Eq. (\ref{eq9}),
+with the parameters for $\alpha_n(V)$: $A = 1/\tau$, $B = 0$, $C = 1$,
+$D = -V_0$, and $F = K$.  For $\beta_n(V)$, they are the same, except that
+$F = -K$.
+
+If $\tau$, $V_0$, and $K$ are given in physiological units, possibly with a
+different reference point for $E_{rest}$, the equations in Sec.~\ref{sec4-1}
+may be used to convert them to SI units, and Table \ref{tab3}
+may be used to convert them to the parameters used in the NMC parameterized
+notation.
+
+\end{document}
+
