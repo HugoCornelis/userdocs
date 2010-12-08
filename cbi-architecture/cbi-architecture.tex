@@ -475,7 +475,7 @@ However, during a simulation the different back-ends are only connected by a set
 % This is a demonstration implementation in Python of the Connection-Set Algebra (Djurfeldt, 2009, submitted)
 
 By implementing biological and connectivity translation, the Model\,Container decouples the
-physical implementation of the low level back-ends from the biological representation of a model and the way the user sees the model.  Firstly, this greatly reduces the implementation complexity on the back-end solvers
+physical implementation of the low-level back-ends from the biological representation of a model and the way the user sees the model.  Firstly, this greatly reduces the implementation complexity on the mathematical solvers
 as the solvers only have to deal with the numerics.  Secondly it also allows for more intuitive model representation at the user end.
 
 Depending\marginpar{for the discussion} on the simulator application
@@ -534,14 +534,25 @@ the Perl Data Language, and the Scientific Library for Python.
 A typical example of an application is a set of simulator scripts that
 implement a model tutorial (e.g. \cite{bower98:_book_genes}).
 
-\paragraph{\bf Scheduler:} For stand-alone software components such as the Model\,Container and the mathematical solvers to be useful, they must be `glued' together and activated correctly, such that they can work together in co-ordination on a single simulation. This is exactly what the scheduler does. It can typically exploit the sophistication of modern scripting languages to load software components on demand, initialize and activate them from a configuration file. The scheduler does not have any computational load, its implementation is simple and highly configurable.
+\paragraph{\bf Scheduler:} For stand-alone software components such as the Model\,Container and the low-level back-ends to be useful, they must be `glued' together and activated correctly, such that they can work together in co-ordination on a single simulation. This is exactly what the scheduler does. It can typically exploit the sophistication of modern scripting languages to load software components on demand, initialize and activate them from a configuration file. The scheduler does not have any computational load, its implementation is simple and highly configurable.
+
+A scheduler can provide a interface for interactive user control or
+the implementation of more sophisticated user-workflows via a script.
 
 
 % Other configurations will connect the scheduler to other modeling services or solvers. 
 
 \subsection*{The Low Level Back-End Layer}
 
-Modules in the lowest level of the CBI architecture (Fig.\,\ref{fig:cbi-architecture-simple}B) provide, (1) Solvers that employ specific algorithms for the solution of numerical equations. They include difference equation solvers and sequence executors that can discretize and tabulate fixed mathematical functions according to a user setable accuracy, and (2) Controllers (such as the simulation clock) and a Communication\,Infrastructures optimized for discrete events and numerics.
+Modules in the lowest level of the CBI architecture
+(Fig.\,\ref{fig:cbi-architecture-simple}B) provide, (1) Solvers that
+employ specific algorithms for the solution of numerical equations.
+They include difference equation solvers and sequence executors that
+can discretize and tabulate fixed mathematical functions according to
+a user setable accuracy, and (2) Controllers (such as the simulation
+clock) and a Communication\,Infrastructures optimized for discrete
+events and numerics.  Collectively these modules implement the
+run-time environment of a simulator.
 
 \subsubsection*{Mathematical Solvers}
 
@@ -1237,17 +1248,31 @@ Consideration of the principal concerns of data, control, and data layering were
 
 In this section we present the outcome of a separation of concerns based on the principal concerns of data- and control-related simulator components introduced above. Initially, the biological and numeric representations and user workflows and scheduling modules are expanded to give the principal functions of the CBI architecture.
 
-Our analysis generated the primary functions of the CBI architecture illustrated in Figure~\ref{fig:cbi-architecture-simple}. The primary mechanism identified for separation of user friendly model construction from the low level computations performed during a simulation was the addition of a middle layer to provide function and data bindings between scripting and database interfaces, respectively, and the solvers\marginpar{substitute the word solver with simulation objects where required?}. Note that this figure maintains the relationships between the four principal concerns identified in Figure~\ref{fig:data-control} by separating high level biological representations (Fig.~\ref{fig:cbi-architecture-simple}A) and low level mathematical implementation (Fig.~\ref{fig:cbi-architecture-simple}B), as well as separating the control and data components. Note also the addition of a graphical user interface (GUI) to connect high level scripting applications with database interfaces.
+Our analysis generated the primary functions of the CBI architecture illustrated in Figure~\ref{fig:cbi-architecture-simple}. The primary mechanism identified for separation of user friendly model construction from the low level computations performed during a simulation was the addition of a middle layer to provide function and data bindings between scripting applications and database interfaces, respectively, and the low-level back-ends. Note that this figure maintains the relationships between the four principal concerns identified in Figure~\ref{fig:data-control} by separating high level biological representations (Fig.~\ref{fig:cbi-architecture-simple}A) and low level mathematical implementation (Fig.~\ref{fig:cbi-architecture-simple}B), as well as separating the control and data components. Note also the addition of a graphical user interface (GUI) to connect high level scripting applications with database interfaces.
 
 \subsubsection*{User Workflows and Biological Data}
 
-The\marginpar{again a user workflow description??} first step in our ideal user workflow involves creating or importing a model. It maps directly to high-level biological representations via a simulator shell or GUI. This interface straddles the Control/Data divide and replaces the upper horizontal arrow connecting the User\,Workflow  and Biology modules in Figure~\ref{fig:data-control}. It enables the workflow by assisting either the development of simple cell models from the command line of a simulator shell via the Scripting\,Libraries\,\&\,Applications module or the importation of model descriptions via the Database\,Interfaces module (see Fig.~\ref{fig:cbi-architecture-simple}).
+The first step in our ideal user workflow involves creating or
+importing a model. It maps directly to high-level biological
+representations via a simulator shell or GUI. Similarly the second
+step in the ideal user workflow allows for the construction and
+management of high-level representations of experimental protocols and
+the physical objects used to implement them.  These interfaces
+straddle the Control/Data divide and replaces the upper horizontal
+arrow connecting the User\,Workflow and Biology modules in
+Figure~\ref{fig:data-control}. It enables the workflow by assisting
+either the development of simple cell models from the command line of
+a simulator shell via the Scripting\,Libraries\,\&\,Applications
+module or the importation of model descriptions via the
+Database\,Interfaces module (see
+Fig.~\ref{fig:cbi-architecture-simple}).
 % File formats currently recognized include SWC, the GENESIS P format, the declarative NDF file format, and once finalized, the NeuroML model specification format.
 
 Step two of the ideal user workflow typically requires biological
 expertise to design an experiment.  This includes the definition of
-simulation constants, and simulation inputs and outputs.  Other
-aspects of these two steps are covered in Results.
+constants such as a command voltage of a voltage clamp protocol, and
+model and simulation inputs and outputs.  Other aspects of these two
+steps are covered in Results\marginpar{where?}.
 
 %For example given a
 %morphology, what are the total surface and volume of the cell, convert
@@ -1256,11 +1281,22 @@ aspects of these two steps are covered in Results.
 
 \subsubsection*{Numerics and Scheduling}
 
-Step\marginpar{again a user workflow description??} three of the ideal user workflow deals with the checking, resetting, running of a simulation, and saving of the model state. This is accomplished via the Function\,and\,Data\,Bindings modules of the CBI architecture (see Fig.~\ref{fig:cbi-architecture-simple}). These modules provide a mid-level software layer that separates the high level biological implementation from the low level numerical implementation of a model by providing translators that are capable of making intelligent decisions about mapping the given biology to the required numerics. 
+Step three of the ideal user workflow deals with the checking,
+resetting and running of a simulation.  This is accomplished via the
+Function\,Bindings module of the CBI architecture (see
+Fig.~\ref{fig:cbi-architecture-simple}).
+%This module provides a
+%mid-level software layer that separates the high level biological
+%implementation from the low level numerical implementation of a model
+%by providing translators that are capable of making intelligent
+%decisions about mapping the given biology to the required numerics.
 
 At a technical level the implementation of user workflows involves
 scheduling mathematical operations on the numerical representations of
-a biological model. This step is indicated by the horizontal arrow between Scheduling and Numerics in Figure~\ref{fig:data-control} and is encompassed by the Controllers\,\&\,Communication and Solvers modules illustrated in Figure~\ref{fig:cbi-architecture-simple}.
+a biological model. This step is indicated by the horizontal arrow
+between Scheduling and Numerics in Figure~\ref{fig:data-control} and
+is encompassed by the Controllers\,\&\,Communication and Solvers
+modules illustrated in Figure~\ref{fig:cbi-architecture-simple}.
 
 %\section*{Results: The CBI Simulator Architecture}
 %\label{sec:constr-cbi-simul}
