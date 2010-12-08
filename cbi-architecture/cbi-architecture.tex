@@ -536,8 +536,8 @@ implement a model tutorial (e.g. \cite{bower98:_book_genes}).
 
 \paragraph{\bf Scheduler:} For stand-alone software components such as the Model\,Container and the low-level back-ends to be useful, they must be `glued' together and activated correctly, such that they can work together in co-ordination on a single simulation. This is exactly what the scheduler does. It can typically exploit the sophistication of modern scripting languages to load software components on demand, initialize and activate them from a configuration file. The scheduler does not have any computational load, its implementation is simple and highly configurable.
 
-A scheduler can provide a interface for interactive user control or
-the implementation of more sophisticated user-workflows via a script.
+A scheduler can provide a script-based interface for interactive user
+control or the implementation of more sophisticated user-workflows.
 
 
 % Other configurations will connect the scheduler to other modeling services or solvers. 
@@ -1058,6 +1058,12 @@ form an application.
 
 We use the term {\it user workflow} to describe the sequence of necessary steps typically employed by a person in developing a computational model and employing simulation to generate data for subsequent analysis. In this sense it is a depiction of a sequence of operations, declared as the work of a person or a group of persons \cite{Belhajjame:2001fv}.
 
+\paragraph{\bf Ideal User Workflow:}
+
+We define an {\it ideal user workflow} that provides a canonical form
+of a user workflow specific to neural simulators.
+
+
 % Belhajjame K, Collet C, Vargas-Solar G. (2002) A Flexible Workflow Model for Process-Oriented Applications. 2nd International Conference on Web Information Systems Engineering (WISE 2001), IEEE CS PROCEEDINGS 1: 72-80.
 
 \paragraph{\bf Iterator:}
@@ -1128,7 +1134,7 @@ individual modules as required, (4) Simplified development and testing
 of modules as stand alone components, and (5) Clear delineation of
 scope for new module development.
 
-\subsection*{The User Workflow}
+\subsection*{The Ideal User Workflow}
 
 A\marginpar{I still have the feeling that the user workflow is so
   fundamental to the explanation of other relevant core concepts that
@@ -1254,11 +1260,13 @@ Our analysis generated the primary functions of the CBI architecture illustrated
 
 The first step in our ideal user workflow involves creating or
 importing a model. It maps directly to high-level biological
-representations via a simulator shell or GUI. Similarly the second
-step in the ideal user workflow allows for the construction and
-management of high-level representations of experimental protocols and
-the physical objects used to implement them.  These interfaces
-straddle the Control/Data divide and replaces the upper horizontal
+representations via a simulator shell or GUI.
+%Similarly the second
+%step in the ideal user workflow allows for the construction and
+%management of high-level representations of experimental protocols and
+%the physical objects used to implement them.
+This interface
+straddles the Control/Data divide and replaces the upper horizontal
 arrow connecting the User\,Workflow and Biology modules in
 Figure~\ref{fig:data-control}. It enables the workflow by assisting
 either the development of simple cell models from the command line of
@@ -1270,9 +1278,10 @@ Fig.~\ref{fig:cbi-architecture-simple}).
 
 Step two of the ideal user workflow typically requires biological
 expertise to design an experiment.  This includes the definition of
-constants such as a command voltage of a voltage clamp protocol, and
-model and simulation inputs and outputs.  Other aspects of these two
-steps are covered in Results\marginpar{where?}.
+constants such as the command voltage of a voltage clamp protocol,
+delays and duration of a current injection protocol and model and
+simulation inputs and outputs.  Other aspects of these two steps are
+covered in Results\marginpar{where?}.
 
 %For example given a
 %morphology, what are the total surface and volume of the cell, convert
@@ -1291,12 +1300,16 @@ Fig.~\ref{fig:cbi-architecture-simple}).
 %by providing translators that are capable of making intelligent
 %decisions about mapping the given biology to the required numerics.
 
-At a technical level the implementation of user workflows involves
-scheduling mathematical operations on the numerical representations of
-a biological model. This step is indicated by the horizontal arrow
+At a technical level the simulation involves scheduling mathematical
+operations on and communication of the numerical representations of a
+biological model.  This step is indicated by the horizontal arrow
 between Scheduling and Numerics in Figure~\ref{fig:data-control} and
 is encompassed by the Controllers\,\&\,Communication and Solvers
 modules illustrated in Figure~\ref{fig:cbi-architecture-simple}.
+
+Elaborate user workflows can stop and restart running simulations,
+provide new inputs to a model thereby imposing high-level control on
+the low-level back-ends via the controller.
 
 %\section*{Results: The CBI Simulator Architecture}
 %\label{sec:constr-cbi-simul}
