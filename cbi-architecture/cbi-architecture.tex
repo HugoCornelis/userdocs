@@ -963,18 +963,31 @@ In practice, this principle actually corresponds with finding the right decompos
 
 \paragraph{\bf Module versus Component:}
 
-Modular programming aims to create software composed of separate interchangeable parts identified by a separation of concerns. This improves software maintainability by enforcing logical boundaries between software modules. We refer to the independent parts of the CBI architecture as {\it modules} that may contain independent submodules, whereas, following implementation a module is referred to as a {\it component}, that may also contain subcomponents. These components communicate with each other by interfaces typically created with scripting languages. An important attribute of a component is that one component can replace another without disabling the system within which it operates. This greatly simplifies and encourages software reusability. It is important to note that a component can only exist within a well defined framework such as that provided by a software architecture. As an example of the way we refer to modules and components, the GUI module in the CBI architecture contains independent submodules, whereas, the GUI component of a simulator implemented in compliance with the CBI architecture contains independent subcomponents dealing with simulation control, the model, and results (see Fig.\,\ref{fig:cbi-architecture-simple})\marginpar{this is an only marginally clear explanation}.
+Modular programming aims to create software composed of separate
+interchangeable parts identified by a separation of concerns. This
+improves software maintainability by enforcing logical boundaries
+between software modules. We refer to the independent parts of the CBI
+architecture as {\it modules} that may contain independent submodules,
+whereas, following implementation a module is referred to as a {\it
+  component}, that may also contain subcomponents. These components
+communicate with each other by interfaces.
+% typically created with
+%scripting languages.
+An important attribute of a component is that one component can
+replace another without disabling the system within which it operates.
+This greatly simplifies and encourages software reusability. It is
+important to note that a component can only exist within a well
+defined framework such as that provided by a software architecture
+(see below).
 
-\paragraph{\bf Scripting Languages:}
+As an example of the way we refer to modules and components, the GUI
+module in the CBI architecture contains independent submodules,
+whereas, the GUI component of a simulator implemented in compliance
+with the CBI architecture contains independent subcomponents dealing
+with simulation control, the model, and results (see
+Fig.\,\ref{fig:cbi-architecture-simple}).
 
-With an increasing requirement for software integration, the use of {\it scripting languages} is
-providing an important programming paradigm. System programming languages\marginpar{define system programming languages?} are well suited for building functional software components where there is a requirement for computing speed, whereas, scripting languages are well suited for binding software components to build
-applications where the complexity is in the connections. This division of labor provides a natural framework for reusability.
-When well-defined interfaces exist between components and scripts, software reuse becomes easy.
-In this sense scripting and system programming are symbiotic. Used
-together, they produce programming environments of exceptional power where applications can be developed up to an order of magnitude more rapidly than when a system programming language alone is used.
-
-\paragraph{API and ABI}
+\paragraph{API and ABI:}
 
 An application programming interface (API) is an interface implemented
 by a software program that enables it to interact with other software.
@@ -1001,8 +1014,18 @@ structures to manipulate, and/or object classes to use in the
 construction of an application using that particular (often language
 specific) API.
 
-Both\marginpar{for discussion?} APIs and ABIs play a crucial role in
-the definition of a federated software platform.
+Both APIs and ABIs play a crucial role in the implementation of a
+federated software platform.
+
+
+\paragraph{\bf Scripting Languages:}
+
+With an increasing requirement for software integration, the use of {\it scripting languages} is
+providing an important programming paradigm. System programming languages\marginpar{define system programming languages?} are well suited for building functional software components where there is a requirement for computing speed, whereas, scripting languages are well suited for binding software components to build
+applications where the complexity is in the connections. This division of labor provides a natural framework for reusability.
+When well-defined interfaces exist between components and scripts, software reuse becomes easy.
+In this sense scripting and system programming are symbiotic. Used
+together, they produce programming environments of exceptional power where applications can be developed up to an order of magnitude more rapidly than when a system programming language alone is used.
 
 \paragraph{\bf Software Architecture:}
 
