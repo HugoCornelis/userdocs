@@ -430,12 +430,12 @@ a good GUI for model construction (see \cite{gleeson07} for a typical
 example).  The difference with those tools is that in the CBI
 architecture this part of the GUI does not export a model in a
 simulator specific language, but rather interacts directly with the
-Biological and Experimental\,Model\,Containers via a low-level ABI.
-The ABI provides a direct coupling between the implementation
-technologies of the different software components, creates a much
-tighter loop between GUI, Simulation\,Control and lower level back-end
-functions (described below) and provides a richer interactive
-user-experience.
+Biological and Experimental\,Model\,Containers via a low-level
+ABI\marginpar{add to glossary of terms}.  The ABI provides a direct
+coupling between the implementation technologies of the different
+software components, creates a much tighter loop between GUI,
+Simulation\,Control and lower level back-end functions (described
+below) and provides a richer interactive user-experience.
 
 \paragraph{\bf The Biology Model Container:}
 
@@ -968,12 +968,45 @@ When well-defined interfaces exist between components and scripts, software reus
 In this sense scripting and system programming are symbiotic. Used
 together, they produce programming environments of exceptional power where applications can be developed up to an order of magnitude more rapidly than when a system programming language alone is used.
 
+\paragraph{API and ABI}
+
+An application programming interface (API) is an interface implemented
+by a software program that enables it to interact with other software.
+It facilitates interaction between different software programs.  An
+API provides a library to be used directly via simple function calls.
+
+An application binary interface (ABI) describes the low-level details
+of an interface between an application (or any type of) program and
+another application.  ABIs cover details such as data type, size, and
+alignment, calling conventions which controls how functions' arguments
+are passed and return values retrieved and sometimes the binary format
+of object files and program libraries
+
+A complete ABI allows a program from one operating environment
+supporting that ABI to run without modifications on any other such
+system, provided that the necessary run-time prerequisites such as
+shared libraries are fulfilled.  For an example, see the Intel Binary
+Compatibility Standard (iBCS)
+(http://www.everything2.com/index.pl?node=iBCS).
+
+An ABI should not be confused with an application programming
+interface (API) which defines a library of routines to call, data
+structures to manipulate, and/or object classes to use in the
+construction of an application using that particular (often language
+specific) API.
+
+
 \paragraph{\bf Software Architecture:}
 
-As\marginpar{it seems better to define software architecture before scripting languages?  Implementation technology should come after the philosophical workflow}. the last step of our philosophical workflow, a {\it software
-  architecture} defines a framework that logically organizes a collection of modules where each module
-implements one or more concerns, but no concern is identified with
-more than one module. When modules are implemented as software components and bound together with scripting languages, the components form an application. 
+As\marginpar{this order seems best: (1) software architecture, (2) API
+  and ABI, (3) scripting languages?  Implementation technology should
+  come after the philosophical workflow}. the last step of our
+philosophical workflow, a {\it software architecture} defines a
+framework that logically organizes a collection of modules where each
+module implements one or more concerns, but no concern is identified
+with more than one module. When modules are implemented as software
+components and bound together with scripting languages, the components
+form an application.
 
 %http://existentialprogramming.blogspot.com/search/label/components
 
