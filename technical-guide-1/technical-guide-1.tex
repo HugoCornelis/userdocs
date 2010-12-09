@@ -513,7 +513,7 @@ which must occur within the scope of a {\tt PARAMETERS} token. For example, to s
 to -600.0 in the NDF file:
 
 \begin{verbatim}
-        PARAMETER ( HH_AB_Scale = -600.0 ),
+        PARAMETER ( HH_AB_Add_Num = -600.0 ),
 \end{verbatim}
 
 The model parameters of the forward rate of the {\it n} gate must be
@@ -521,12 +521,12 @@ grouped together by using the {\tt PARAMETERS} token.  For example:
 
 \begin{verbatim}
       PARAMETERS
-        PARAMETER ( HH_AB_Scale = -600.0 ),
+        PARAMETER ( HH_AB_Add_Num = -600.0 ),
         PARAMETER ( HH_AB_Mult = -10000 ),
         PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
-        PARAMETER ( HH_AB_Add = -1.0 ),
+        PARAMETER ( HH_AB_Add_Den = -1.0 ),
         PARAMETER ( HH_AB_Offset_E = 60e-3 ),
-        PARAMETER ( HH_AB_Tau = -10.0e-3 ),
+        PARAMETER ( HH_AB_Div_E = -10.0e-3 ),
       END PARAMETERS
 \end{verbatim}
 
@@ -576,12 +576,12 @@ token, the full definition of the forward rate becomes:
         INPUT ..->Vm
       END BINDINGS
       PARAMETERS
-        PARAMETER ( HH_AB_Scale = -600.0 ),
+        PARAMETER ( HH_AB_Add_Num = -600.0 ),
         PARAMETER ( HH_AB_Mult = -10000 ),
         PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
-        PARAMETER ( HH_AB_Add = -1.0 ),
+        PARAMETER ( HH_AB_Add_Den = -1.0 ),
         PARAMETER ( HH_AB_Offset_E = 60e-3 ),
-        PARAMETER ( HH_AB_Tau = -10.0e-3 ),
+        PARAMETER ( HH_AB_Div_E = -10.0e-3 ),
       END PARAMETERS
     END GATE_KINETIC_A
     ...
@@ -599,12 +599,12 @@ Similarly, for the backward rate we have:
         INPUT ..->Vm
       END BINDINGS
       PARAMETERS
-        PARAMETER ( HH_AB_Scale = 125.0 ),
+        PARAMETER ( HH_AB_Add_Num = 125.0 ),
         PARAMETER ( HH_AB_Mult = 0.0 ),
         PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
-        PARAMETER ( HH_AB_Add = 0.0 ),
+        PARAMETER ( HH_AB_Add_Den = 0.0 ),
         PARAMETER ( HH_AB_Offset_E = 70e-3 ),
-        PARAMETER ( HH_AB_Tau = 80e-3 ),
+        PARAMETER ( HH_AB_Div_E = 80e-3 ),
       END PARAMETERS
     END GATE_KINETIC_B
     ...
@@ -663,12 +663,12 @@ PUBLIC_MODELS
         INPUT ..->Vm
       END BINDINGS
       PARAMETERS
-        PARAMETER ( HH_AB_Scale = -600.0 ),
+        PARAMETER ( HH_AB_Add_Num = -600.0 ),
         PARAMETER ( HH_AB_Mult = -10000 ),
         PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
-        PARAMETER ( HH_AB_Add = -1.0 ),
+        PARAMETER ( HH_AB_Add_Den = -1.0 ),
         PARAMETER ( HH_AB_Offset_E = 60e-3 ),
-        PARAMETER ( HH_AB_Tau = -10.0e-3 ),
+        PARAMETER ( HH_AB_Div_E = -10.0e-3 ),
       END PARAMETERS
     END GATE_KINETIC_A
     GATE_KINETIC_B k_b
@@ -679,12 +679,12 @@ PUBLIC_MODELS
         INPUT ..->Vm
       END BINDINGS
       PARAMETERS
-        PARAMETER ( HH_AB_Scale = 125.0 ),
+        PARAMETER ( HH_AB_Add_Num = 125.0 ),
         PARAMETER ( HH_AB_Mult = 0.0 ),
         PARAMETER ( HH_AB_Factor_Flag = -1.0 ),
-        PARAMETER ( HH_AB_Add = 0.0 ),
+        PARAMETER ( HH_AB_Add_Den = 0.0 ),
         PARAMETER ( HH_AB_Offset_E = 70e-3 ),
-        PARAMETER ( HH_AB_Tau = 80e-3 ),
+        PARAMETER ( HH_AB_Div_E = 80e-3 ),
       END PARAMETERS
     END GATE_KINETIC_B
     PARAMETERS
