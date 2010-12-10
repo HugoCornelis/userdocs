@@ -758,19 +758,31 @@ high-level data and control, optimization involves increased support
 for biological concepts and usability by employing domain specific
 languages and scripting languages, as opposed to low-level
 languages\,\cite{1118892}.  This allows to improve the support for
-user-workflow and provides a richer user-experience.
+user-workflow and provides a richer user-experience\marginpar{cite
+  something related to user workflow and user-experience}.
 
 \subsection*{Development process}
 
 Software implementations are formal structures that map user
 requirements to technological solutions.  Software can only meet those
 requirements for which this technological mapping exists.  In other
-words, it is the technology that defines the scope and boundaries of
-software solutions.  As a consequence the development of entirely new
-software architectures can only be started from the lowest layer and
-built up to meet user requirements.  In traditional enterprise
-software applications the lowest layer consists of database back-ends.
-However the CBI architecture has numerical solvers as back-ends.
+words, it is the available technology that defines the scope and
+boundaries of the user-workflows that can be implemented in software
+solutions.  As a consequence the development of entirely new software
+architectures can only be started from the lowest layer and
+constructed upwards to implement user-workflows and to meet user
+requirements.
+
+In traditional enterprise software applications the lowest layer
+consists of database back-ends.  However the CBI architecture has
+solvers and communication infrastructures as back-ends.  The mapping
+implemented by the intermediate layer determines how easy it is to
+implement a given user-workflow that may be specific to a research
+project or educational tutorial.  The first simple steps to understand
+this mapping have been taken with as a consequence that its structure
+is largely unknown.  The best examples we are aware of are
+neuroConstruct\cite{gleeson07} and the Neurospaces
+model-container\cite{cornelis03:_neuros}.
 
 The software implementation of a CBI compliant simulator can best be
 started with the implementation of a numerical solver.
