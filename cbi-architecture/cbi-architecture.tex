@@ -556,9 +556,13 @@ run-time environment of a simulator.
 
 \subsubsection*{Mathematical Solvers}
 
-These include compartmental solvers, kinetic pathway
-solvers, Monte Carlo solvers, and in general any low-level back-end at
-the numerical or hardware level.
+Mathematical solvers apply numerical techniques such as
+Runge-Kutta\marginpar{citation} or Crank-Nicolson\marginpar{citation}
+to solve systems of equations.  Dedicated data structures can be
+employed that specialize them in computational neuroscience.
+Mathematical solvers include compartmental, kinetic pathway and Monte
+Carlo solvers, and in general any low-level back-end at the numerical
+or hardware level.
 %  Solvers either implement
 %functionality to solve numerical equations or they implement
 %specific algorithms, or both.
@@ -715,21 +719,43 @@ non-parallel and parallel architectures.
 
 \section*{Discussion}
 
-One of the crucial steps in the development of a simulator for modeling 
-in the neurosciences is to recognize
-that many intermediate steps exist between a conceptual model of a
-biological system, its mathematical representation, and its low-level
-software implementation.  This leads to a natural stepwise algorithmic
-process to translate a high-level model into a computer
-implementation.
+Development process:
 
-The data layering in the CBI architecture mirrors this fact and
-that the data in a simulator can have different functions.  These
-functions, occuring as a gradient transition from biology to numerics,
-are shared with other simulation domains.  So, in the broader scope of
-simulators for the natural sciences, this architecture could
-directly contribute to the technology for simulators used in other
-fields, e.g. fluid dynamics.
+Software implementations are formal structures that map user
+requirements to technological solutions.  Software can only meet those
+requirements for which this technological mapping exists.  In other
+words, it is the technology that defines the scope and boundaries of
+software solutions.  As a consequence the development of entirely new
+software architectures can only be started from the lowest layer and
+built up to meet user requirements.  In traditional enterprise
+software applications the lowest layer consists of database back-ends.
+However the CBI architecture has numerical solvers as back-ends.
+
+The software implementation of a CBI compliant simulator can best be
+started with the implementation of a numerical solver.
+
+Starting a new module.
+
+Extend an existing module.
+
+Add new modules.
+
+Integrate functionality between modules.
+
+
+One\marginpar{should be at end of discussion} of the crucial steps in
+the development of a simulator for modeling in the neurosciences is to
+recognize that many intermediate steps exist between a conceptual
+model of a biological system, its mathematical representation, and its
+low-level software implementation.  This leads to a natural stepwise
+algorithmic process to translate a high-level model into a computer
+implementation.  The data layering in the CBI architecture mirrors
+this fact and that the data in a simulator can have different
+functions.  These functions, occuring as a gradient transition from
+biology to numerics, are shared with other simulation domains.  So, in
+the broader scope of simulators for the natural sciences, this
+architecture could directly contribute to the technology for
+simulators used in other fields, e.g. fluid dynamics.
 % , with applications in airplane and spacecraft design.
 
 By analyzing and decomposing a software system into separate
@@ -737,10 +763,11 @@ functions, it is straightforward to define the individual software modules
 of the architecture. A clear delineation of individual
 components in a modular software architecture allows application programing interfaces (APIs) and their accompanying behaviors to be defined and the
 communication between the software layers of a simulator to be 
-specified. Ultimately, this allows both
-developers and users to choose to contribute to a single component
-with limited complexity, instead of being forced to contribute to the
-whole simulator and be exposed to tremendous complexity. 
+specified.
+%Ultimately, this allows both
+%developers and users to choose to contribute to a single component
+%with limited complexity, instead of being forced to contribute to the
+%whole simulator and be exposed to tremendous complexity. 
 
 Our approach has the advantage that the mathematical and optimization
 internals of a solver need not be exposed to a user.  The resulting
@@ -752,13 +779,17 @@ ratios\cite{borg-graham00:_addit_effic_comput_branc_nerve_equat} and
 parallel implementation.  For high-level data and control,
 optimization involves increased support for biological concepts and
 usability by employing domain specific languages and scripting
-languages, as opposed to low-level languages\,\cite{1118892}. Much
-more importantly however, the communication between modules is
-defined, something that can only be done using agreed upon
-APIs\marginpar{we do not define an API anywhere in the paper.  The
-  methods use the term 'logical boundaries between modules'.  Maybe we
-  can define 'logical APIs' which sounds much better than 'semantic
-  APIs'.}
+languages, as opposed to low-level languages\,\cite{1118892}.  This
+allows to improve the support for user-workflow and provides a richer
+user-experience.
+
+%Much
+%more importantly however, the communication between modules is
+%defined, something that can only be done using agreed upon
+%APIs\marginpar{we do not define an API anywhere in the paper.  The
+%  methods use the term 'logical boundaries between modules'.  Maybe we
+%  can define 'logical APIs' which sounds much better than 'semantic
+%  APIs'.}
 
 We employed the results of a separation of concerns analysis to develop the software architecture for a next generation neural simulator. 
 The resulting CBI architecture provides three significant advantages for
@@ -847,33 +878,42 @@ parameters of the physical model, or subtleties in model behavior when simulated
 correlate the benchmark values with differences in (the parameters of)
 the physical model.
 
-\subsubsection*{Model Databases}
+%\subsubsection*{Model Databases}
 
-This part of the GUI uses the functionality of the Model\,Tools module to connect
-to databases.  The GUI gives an integrated view of the databases,
-either with integration protocols or if necessary by hardcoded integrated views.  
-Examples of the user accessible function of this component of the
-GUI are: show a list of databases, show a list of models (given a query,
-what models satisfy the query, select), etc.
+%This part of the GUI uses the functionality of the Model\,Tools module to connect
+%to databases.  The GUI gives an integrated view of the databases,
+%either with integration protocols or if necessary by hardcoded integrated views.  
+%Examples of the user accessible function of this component of the
+%GUI are: show a list of databases, show a list of models (given a query,
+%what models satisfy the query, select), etc.
 
-After a user has selected a (version of a) model, it can be imported
-(fed to the Model\,Container) and run with the simulator.
+%After a user has selected a (version of a) model, it can be imported
+%(fed to the Model\,Container) and run with the simulator.
 
 \subsubsection*{Model Collaboration}
 
-Model collaboration is the process of many investigators working simultaneously
-on the same model and communicating about their
-modifications and (expected) consequences.  Collaboration is one of the most important features of science, particularly during scientific meetings. This sort of functionality has not yet been implemented for the internet.  Next generation neural
-simulators are one way to achieve this.
+A model is a rigid tool useful to structure a scientific discussion
+about the biology it represents.  Model collaboration is the process
+of many investigators working simultaneously on the same model and
+communicating about their modifications and (expected) consequences.
+Collaboration is one of the most important features of science,
+particularly during scientific meetings.
+%This sort of functionality has not yet been implemented for
+%the internet.
+Next generation neural simulators have the responsibility to target
+model collaborations if they want to useful for structuring the
+scientific discourse about biological function.
 
-Simultaneous collaboration technology has always been based on
-sessions and session management.  For this reason the GUI for model collaboration must
-be able to: show a list of collaboration servers, login and logout
-with respect to a session, support the importing of models from databases
-into the session, and after collaborative modifications inside the
-session, export the model back to a database for storage or publication. Possibly, after
-publication in a database, the database will automatically organize to
-annotate the model with benchmark scores.
+Collaboration server, compare with eg. skype servers.
+
+%Simultaneous collaboration technology has always been based on
+%sessions and session management.  For this reason the GUI for model collaboration must
+%be able to: show a list of collaboration servers, login and logout
+%with respect to a session, support the importing of models from databases
+%into the session, and after collaborative modifications inside the
+%session, export the model back to a database for storage or publication. Possibly, after
+%publication in a database, the database will automatically organize to
+%annotate the model with benchmark scores.
 
 %The GUI allows the display of equations and biological components used
 %in the model and annotates them with clear text or otherwise.
