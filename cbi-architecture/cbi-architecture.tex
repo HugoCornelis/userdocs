@@ -835,7 +835,14 @@ and to transparently distribute simulations over a cluster computer.
 The business logic in enterprise applications is comparable to the
 Scripting Libraries and Applications module in the CBI architecture.
 The Database Interfaces are comparable to traditional ETL applications
-and emerging semantic technology applications.
+and emerging semantic technology applications.  These highly developed
+layers in the industry are in sharp contrast with the preliminary
+developments in computational neuroscience for the standards of
+educational tutorials, research project frameworks\marginpar{cite
+  sumatra and pynn} and declarative modeling standards such NeuroML,
+NineML and SED-ML\marginpar{citations}.
+
+\subsection*{more paragraphs}
 
 The mapping implemented by the intermediate layer determines how easy
 it is to implement a given user-workflow that may be specific to a
@@ -844,23 +851,6 @@ understand this mapping have been taken with as a consequence that its
 structure is largely unknown.  The best examples we are aware of are
 neuroConstruct\cite{gleeson07} and the Neurospaces
 model-container\cite{cornelis03:_neuros}.
-
-
-One\marginpar{should be at end of discussion} of the crucial steps in
-the development of a simulator for modeling in the neurosciences is to
-recognize that many intermediate steps exist between a conceptual
-model of a biological system, its mathematical representation, and its
-low-level software implementation.  This leads to a natural stepwise
-algorithmic process to translate a high-level model into a computer
-implementation.  The data layering in the CBI architecture mirrors
-this fact and that the data in a simulator can have different
-functions.  These functions, occuring as a gradient transition from
-biology to numerics, are shared with other simulation domains.  So, in
-the broader scope of simulators for the natural sciences, this
-architecture could directly contribute to the technology for
-simulators used in other fields, e.g. fluid dynamics.
-% , with applications in airplane and spacecraft design.
-
 
 %Much
 %more importantly however, the communication between modules is
@@ -894,6 +884,21 @@ work with the CBI architecture, gives the simulator a score of
 interoperability.  Thus interopability between simulators becomes a
 measurable and tangible concept instead of a simple binary relation.
 
+One\marginpar{should be at end of discussion} of the crucial steps in
+the development of a simulator for modeling in the neurosciences is to
+recognize that many intermediate steps exist between a conceptual
+model of a biological system, its mathematical representation, and its
+low-level software implementation.  This leads to a natural stepwise
+algorithmic process to translate a high-level model into a computer
+implementation.  The data layering in the CBI architecture mirrors
+this fact and that the data in a simulator can have different
+functions.  These functions, occuring as a gradient transition from
+biology to numerics, are shared with other simulation domains.  So, in
+the broader scope of simulators for the natural sciences, this
+architecture could directly contribute to the technology for
+simulators used in other fields, e.g. fluid dynamics.
+% , with applications in airplane and spacecraft design.
+
 %A body of opinion holds the microkernel design to be an abstraction
 %inversion (see the links). It is interesting that microkernels are
 %also alleged to commit the design error of oversimplifying the
@@ -910,7 +915,25 @@ measurable and tangible concept instead of a simple binary relation.
 
 \subsection*{CBI Architecture Extensions}
 
-Natural extensions of the CBI architecture support scientific communication through electronic publication. We now briefly overview this functionality.
+\subsubsection*{External Applications}
+
+Examples of existing or proposed model tools include: (1) A model
+version history manager for the tracking and recording of the history
+of model development, (2) A database connector which enables the
+acquisition of a model from a database such as neuromorph.org and
+converts it to a format understood by the Model\,Container, (3) A
+model and result analyzer for inspection of a model stored in the
+Model\,Container to extract, for example, morphological or
+connectivity characteristics for quantification of model components,
+(4) A model and result annotator which enables the automatic or manual
+attachment of text to whole or part of model, and (5) An automatic
+model constructor that contains software components that embed
+algorithms for automatic model construction, for example, it enables
+parameter searching and development of dendritic morphology.
+
+Other natural extensions of the CBI architecture support scientific
+communication through electronic publication. We briefly overview this
+functionality in the next sections.
 
 \subsubsection*{Model History and Versioning}
 
@@ -984,10 +1007,6 @@ Collaboration server, compare with eg. skype servers.
 
 %The GUI allows the display of equations and biological components used
 %in the model and annotates them with clear text or otherwise.
-
-\subsubsection*{External Applications}
-
-Examples of existing or proposed model tools include: (1) A model version history manager for the tracking and recording of the history of model development, (2) A database connector which enables the acquisition  of a model from a database such as neuromorph.org and converts it to a format  understood by the Model\,Container, (3) A model and result analyzer for inspection of a model stored in the Model\,Container to extract, for example, morphological or connectivity characteristics for quantification of model components, (4) A model and result annotator which enables the automatic or manual attachment of text to whole or part of model, and (5) An automatic model constructor that contains software components that embed algorithms for automatic model construction, for example, it enables parameter searching and development of dendritic morphology.
 
 %\subsubsection*{Database Connectivity}
 
