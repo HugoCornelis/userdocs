@@ -719,7 +719,48 @@ non-parallel and parallel architectures.
 
 \section*{Discussion}
 
-Development process:
+\subsection*{Summary}
+
+We employed the results of a separation of concerns analysis to
+develop the software architecture for a next generation neural
+simulator.  The resulting CBI architecture provides three significant
+advantages for software development: (1) Modules can be run separately
+on different machines.  For example, the GUI and modeling environment
+might run locally, while the simulator is run elsewhere either
+serially or in parallel on more powerful machines. (2) Decomposition
+of an application into multiple software components allows reuse and
+extension of individual modules, whether stand-alone or otherwise,
+clearly facilitating model development and research progress. (3)
+Individual components can be independently updated, enhanced, or
+replaced when needed, thus the life cycle of a modular architecture is
+smoother than that of a non-scalable application.
+
+By analyzing and decomposing a software system into separate
+functions, it is straightforward to define the individual software
+modules of the architecture. A clear delineation of individual
+components in a modular software architecture allows interfaces and
+their accompanying behaviors to be defined and the communication
+between the software layers of a simulator to be specified.
+%Ultimately, this allows both
+%developers and users to choose to contribute to a single component
+%with limited complexity, instead of being forced to contribute to the
+%whole simulator and be exposed to tremendous complexity. 
+
+Our approach has the advantage that the mathematical and optimization
+internals of a solver need not be exposed to a user.  The resulting
+biological and numeric layers can further be individually optimized to
+allow significant enhancements in overall system performance.  For
+low-level data and control, such optimizations consist of running
+simulations more rapidly, e.g. by achieving high cache hit
+ratios\cite{borg-graham00:_addit_effic_comput_branc_nerve_equat} and
+parallel implementation\marginpar{cite multisplit neuron solver}.  For
+high-level data and control, optimization involves increased support
+for biological concepts and usability by employing domain specific
+languages and scripting languages, as opposed to low-level
+languages\,\cite{1118892}.  This allows to improve the support for
+user-workflow and provides a richer user-experience.
+
+\subsection*{Development process}
 
 Software implementations are formal structures that map user
 requirements to technological solutions.  Software can only meet those
@@ -758,30 +799,6 @@ architecture could directly contribute to the technology for
 simulators used in other fields, e.g. fluid dynamics.
 % , with applications in airplane and spacecraft design.
 
-By analyzing and decomposing a software system into separate
-functions, it is straightforward to define the individual software modules
-of the architecture. A clear delineation of individual
-components in a modular software architecture allows application programing interfaces (APIs) and their accompanying behaviors to be defined and the
-communication between the software layers of a simulator to be 
-specified.
-%Ultimately, this allows both
-%developers and users to choose to contribute to a single component
-%with limited complexity, instead of being forced to contribute to the
-%whole simulator and be exposed to tremendous complexity. 
-
-Our approach has the advantage that the mathematical and optimization
-internals of a solver need not be exposed to a user.  The resulting
-biological and numeric layers can further be individually optimized to
-allow significant enhancements in overall system performance.  For
-low-level data and control, such optimizations consist of running
-simulations more rapidly, e.g. by achieving high cache hit
-ratios\cite{borg-graham00:_addit_effic_comput_branc_nerve_equat} and
-parallel implementation.  For high-level data and control,
-optimization involves increased support for biological concepts and
-usability by employing domain specific languages and scripting
-languages, as opposed to low-level languages\,\cite{1118892}.  This
-allows to improve the support for user-workflow and provides a richer
-user-experience.
 
 %Much
 %more importantly however, the communication between modules is
@@ -790,18 +807,6 @@ user-experience.
 %  methods use the term 'logical boundaries between modules'.  Maybe we
 %  can define 'logical APIs' which sounds much better than 'semantic
 %  APIs'.}
-
-We employed the results of a separation of concerns analysis to develop the software architecture for a next generation neural simulator. 
-The resulting CBI architecture provides three significant advantages for
-software development: (1) Modules can be run separately on different machines.  For
-  example, the GUI and modeling environment might run locally, while
-  the simulator is run elsewhere either serially or in parallel on
-  more powerful machines. (2) Decomposition of an application into multiple software
-  components allows reuse and extension of individual modules, whether
-  stand-alone or otherwise, clearly facilitating model development and
-  research progress. (3) Individual components can be independently updated, enhanced, or
-  replaced when needed, thus the life cycle of a modular architecture
-  is smoother than that of a non-scalable application.
 
 %Despite 8 years of development, NeuroML is still in its infancy.
 %Because software developers first have to learn about the biology
