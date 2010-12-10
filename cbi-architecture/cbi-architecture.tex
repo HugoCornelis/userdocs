@@ -480,11 +480,15 @@ as the solvers only have to deal with the numerics.  Secondly it also allows for
 
 Depending\marginpar{for the discussion} on the simulator application
 area, the implementation may focus on one of the translation functions
-or both.  For instance the GENESIS and NEURON simulators provide only
-one-to-one mappings for connectivity translation, such that their
-representations of the connectivity of a model of the biology is
-essentially contaminated by the structure of the mathematical
-equations.
+or both.  For instance a network simulator such as NEST provides
+better support for connectivity translation\cite{nordlie09:_visual},
+while a single neuron simulator typically provides better support for
+biological concept translation.  The GENESIS and NEURON simulators
+support both connectivity translation and biological concept
+translation.  However their translation functionality is essentially
+one-to-one such that their representations of the connectivity of a
+model of the biology is essentially contaminated by the structure of
+the mathematical equations.
 
 \paragraph{\bf The Experiment Model Container:}
 
@@ -758,10 +762,10 @@ high-level data and control, optimization involves increased support
 for biological concepts and usability by employing domain specific
 languages and scripting languages, as opposed to low-level
 languages\,\cite{1118892}.  This allows to improve the support for
-user-workflow and provides a richer user-experience\marginpar{cite
+user-workflow and provide a richer user-experience\marginpar{cite
   something related to user workflow and user-experience}.
 
-\subsection*{Development process}
+\subsection*{Implementation Guide}
 
 Software implementations are formal structures that map user
 requirements to technological solutions.  Software can only meet those
@@ -773,19 +777,9 @@ architectures can only be started from the lowest layer and
 constructed upwards to implement user-workflows and to meet user
 requirements.
 
-In traditional enterprise software applications the lowest layer
-consists of database back-ends.  However the CBI architecture has
-solvers and communication infrastructures as back-ends.  The mapping
-implemented by the intermediate layer determines how easy it is to
-implement a given user-workflow that may be specific to a research
-project or educational tutorial.  The first simple steps to understand
-this mapping have been taken with as a consequence that its structure
-is largely unknown.  The best examples we are aware of are
-neuroConstruct\cite{gleeson07} and the Neurospaces
-model-container\cite{cornelis03:_neuros}.
-
-The software implementation of a CBI compliant simulator can best be
-started with the implementation of a numerical solver.
+The lowest layer of the CBI architecture comprises numerical solvers,
+so the software implementation of a CBI compliant simulator can be
+started from an existing numerical solver.
 
 Starting a new module.
 
@@ -794,6 +788,62 @@ Extend an existing module.
 Add new modules.
 
 Integrate functionality between modules.
+
+\subsection*{Comparison to Software Industry Standards}
+
+The three-tier software
+architecture\,\cite{eckerson95:_three_tier_clien_server_archit} is a
+widely used client-server paradigm with the advantage that the servers
+can be shared by users and software on both the client and server is
+easily upgraded.  Service-oriented architecture (SOA) is a widespread
+commercial implementation of a three-tier architecture where the
+service based information exchange, reusability, and composability
+defines a software federation for an application by uniting resources
+while maintaining their individual autonomy and
+self-governance\,\cite{08:_servic}.
+
+In these traditional enterprise software applications the lowest layer
+consists of database back-ends.  Database engines are highly optimized
+for optimal run-time performance of complex queries on large datasets.
+Both specialized and general algorithms and data structures have been
+designed and investigated for the implementation of
+query-acceleration.  This highly active research area, also intimately
+related with research into sorting algorithms, has resulted in the
+expectation of any query to be answered within a second, even for very
+large databases.
+
+In the CBI architecture solvers and communication infrastructures are
+the back-ends.  Both can be optimized for run-time performance.
+However currently no one expects a large simulation to be completed
+within a second.
+
+In three-tier architectures it is not uncommon for the second tier,
+comprising so called middle-ware, to be distributed over multiple
+hardware servers.  However the parallel structure is fixed during
+design as it is specific to a business application and its business
+logic in the highest layer.
+
+A second difference between these industry standards and the CBI
+architecture is that the parallel run-time structure of a neural
+simulation is dynamic, depending on the model and the number of
+simulations\cite{howell00:_pgenes}\cite{migliore06:_paral_networ_simul_neuron}.
+Therefore an optimal implementation of a CBI compliant simulator
+includes functionality to automatically partition a
+model\cite{cornelis07:_neuros_auto_para}\marginpar{neuron multisplit}
+and to transparently distribute simulations over a cluster computer.
+
+The business logic in enterprise applications is comparable to the
+Scripting Libraries and Applications module in the CBI architecture.
+The Database Interfaces are comparable to traditional ETL applications
+and emerging semantic technology applications.
+
+The mapping implemented by the intermediate layer determines how easy
+it is to implement a given user-workflow that may be specific to a
+research project or educational tutorial.  The first simple steps to
+understand this mapping have been taken with as a consequence that its
+structure is largely unknown.  The best examples we are aware of are
+neuroConstruct\cite{gleeson07} and the Neurospaces
+model-container\cite{cornelis03:_neuros}.
 
 
 One\marginpar{should be at end of discussion} of the crucial steps in
