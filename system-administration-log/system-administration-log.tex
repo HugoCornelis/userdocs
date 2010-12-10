@@ -35,6 +35,46 @@ The repository machine serves the source code for the GENESIS project as well as
 
 \begin{itemize}
 
+
+
+\item
+\begin{itemize}
+\item[] {\bf Admin:} Mando
+\item[] {\bf Date:} 12/10/2010 
+\item[] {\bf Actions:} Deleted some directories in the developer package generated from unzipping cpan tarballs.
+\item[] {\bf Reason:} The unzipped directories were getting corrupted user and group permissions as noted:
+
+\begin{verbatim}
+    -rw-r--r-- 1 g3tester g3tester   3780 2010-10-22 12:01 01-Text-Glob-0.08.tar.gz
+	-rw-r--r-- 1 g3tester g3tester   2123 2010-10-22 12:01 03-Number-Compare-0.01.tar.gz
+	-rw-r--r-- 1 g3tester g3tester  94716 2010-10-22 12:01 05-Inline-0.46.tar.gz
+	-rw-r--r-- 1 g3tester g3tester  44744 2010-10-22 12:01 07-Inline-Python-0.37.tar.gz
+	-rw-r--r-- 1 g3tester g3tester  40002 2010-10-22 12:01 09-Digest-SHA-5.48.tar.gz
+	-rw-r--r-- 1 g3tester g3tester 105888 2010-10-22 12:01 10-Test-Simple-0.96.tar.gz
+	-rw-r--r-- 1 g3tester g3tester  15534 2010-10-22 12:01 11-File-Find-Rule-0.32.tar.gz
+	-rw-r--r-- 1 g3tester g3tester  27832 2010-10-22 12:01 13-Data-Utilities-0.04.tar.gz
+	-rw-r--r-- 1 g3tester g3tester  11753 2010-10-22 12:01 15-Clone-0.31.tar.gz
+	-rw-r--r-- 1 g3tester g3tester  23934 2010-12-09 18:10 20-HTML-Table-2.08a.tar.gz
+	-rw-r--r-- 1 g3tester g3tester  82558 2010-12-09 18:10 25-HTML-Template-2.9.tar.gz
+	drwxr-xr-x 4      502 root       4096 2010-12-10 12:34 Clone-0.31
+	-rwxr-xr-x 1 g3tester g3tester    866 2010-10-24 08:01 cpan_install
+	drwxr-xr-x 5      502      502   4096 2010-12-10 12:34 Data-Utilities-0.04
+	drwxr-xr-x 7 cbiadmin cbiadmin   4096 2010-12-10 12:34 Digest-SHA-5.48
+	drwxr-xr-x 6      501 staff      4096 2010-12-10 12:34 File-Find-Rule-0.32
+	drwx------ 4    11003 root       4096 2010-12-10 12:34 HTML-Table-2.08a
+	drwxr-xr-x 6      500      500   4096 2010-12-10 12:34 HTML-Template-2.9
+	drwxr-xr-x 9      500      544   4096 2010-12-10 12:34 Inline-0.46
+	drwxr-xr-x 4 cbiadmin cbiadmin   4096 2010-12-10 12:34 Number-Compare-0.01
+	drwxr-xr-x 6      501      501   4096 2010-12-10 12:34 Test-Simple-0.96
+	drwxrwxr-x 5 cbiadmin cbiadmin   4096 2010-12-10 12:34 Text-Glob-0.08
+\end{verbatim}
+
+Permissions seem to be set randomly, not sure of the exact cause.
+\item[] {\bf Impact:} Tester should proceed as normal.
+\end{itemize}
+
+
+
 \item
 \begin{itemize}
 \item[] {\bf Admin:} Mando
