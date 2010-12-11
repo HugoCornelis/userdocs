@@ -275,10 +275,10 @@ apply:
 
   In this file, each line maps a model component -- the stimulated
   compartment -- to a value, in this case the amplitude of the somatic
-  synaptic response.  Sometimes the model component will be encoded
-  using an integer, for sake of brevity and to enhance compression
-  ratios when compressing the file (this will reduce client-server
-  communication time when using the project browser).
+  post-synaptic response.  Sometimes the model component will be
+  encoded using an integer, for sake of brevity and to enhance
+  compression ratios when compressing the file (this will reduce
+  client-server communication time when using the project browser).
 
   Then, this file can be used by the neurospaces studio to colorcode
   the morphology for the Purkinje cell dendritic tree, and -- as an
@@ -288,10 +288,10 @@ apply:
 
   I can give more examples for the interested.  A slightly different
   and interesting example is a voltage clamp, because the voltage
-  clamp circuitry runs as a separate solver.
+  clamp circuitry runs as a separate simulation object.
 
   What I really hope to make clear with this to short explanation, is
-  how Genesis 3 works internally, I hope to make clear how it can be
+  how GENESIS 3 works internally, I hope to make clear how it can be
   told exactly what to do, and how input and output are connected to
   the model.  I also hope that it is clear that the explanation is
   relatively independent from the numerical solution method, and from
@@ -301,8 +301,8 @@ apply:
   project browser.
 \end{enumerate}
 
-His explanation sheds some light on how the internals of the GENESIS 3
-simulator work.
+This explanation sheds some light on how the internals of the GENESIS
+3 simulator work.
 
 The attached SSP configuration, as any other JSON file, can be
 converted to XML using the following command:
