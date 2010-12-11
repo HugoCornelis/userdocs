@@ -13,14 +13,14 @@
 % start: userdocs-tag-replace-items related-do-nothing
 % end: userdocs-tag-replace-items related-do-nothing
 
-\section*{Create and Add Solver Object to GENESIS Component}
+\section*{Create and Add Solver Object to GENESIS 3}
 
 This developer guide gives an example of how to add a new simulation
-object and integrate it the
+object and integrate this new
 \href{../reserved-words/reserved-words.tex}{\bf Component} with
-GENESIS.  For simplicity we embed the new component in the {\bf
-  Experiment} package.  As an example we implement the pulsegen object
-of GENESIS 2.
+GENESIS.  As an example we implement the pulsegen object of GENESIS 2
+that, for simplicity, we will embed as a new component in the {\bf
+  Experiment} package.
 
 \section*{Creating Source Files}
 
@@ -29,6 +29,9 @@ First we create the following source files for the new object in the correct pla
    pulsegen.c
    experiment/pulsegen.h
 \end{verbatim}
+
+These source files will be filled in with the functionality of the
+GENESIS~2 pulsegen object.
 
 \section*{Implementation}
 
@@ -59,10 +62,8 @@ To keep track of all the data for the new object we define a struct(ure) which c
       int iPreviousInput;
 
       /// An input value referenced via pointer. 
-      /// Since we don't have "messages" we'll use 
-      /// a pointer for now.
   
-     double *pdPulseIn;
+      double *pdPulseIn;
 
       /// solved variables
 
@@ -72,27 +73,22 @@ To keep track of all the data for the new object we define a struct(ure) which c
 
 \subsubsection*{Functions}
 
-Keeping in mind that the new object is going to be used by a simulation, we need appropriate functions for setting up the object, performing an action during a simulation step, and freeing the object. A set of functions must be created for each of these cases:
+Keeping in mind that the new object is going to be used by a
+simulation, we need appropriate functions for interaction with the
+scheduler.  The most important functions are: creation and set up of
+the object's run-time instance, performing the actions during a single
+simulation step, and freeing the memory allocated by the object during
+its lifetime.
 
 \begin{itemize}
-\item {\bf Allocate a new Pulse Generator:}
+\item {\bf Creation and Set up of a new Pulse Generator:}
 \begin{verbatim}
-   struct PulseGen * PulseGenNew(char *pcName);
-\end{verbatim}
-
-\item {\bf Delete a Pulse Generator after the Simulation has Finished:}
-\begin{verbatim}
-   int PulseGenFinish(struct simobj_PulseGen *ppg);
+   struct simobj_PulseGen * PulseGenNew(char *pcName);
 \end{verbatim}
 
 \item {\bf Add a solved variable to the Pulse Generator:}
 \begin{verbatim}
    int PulseGenAddVariable(struct simobj_PulseGen *ppg, void *pvOutput);
-\end{verbatim}
-
-\item {\bf Reset the Pulse Generator:}
-\begin{verbatim}
-   int PulseGenReset(struct simobj_PulseGen *ppg);
 \end{verbatim}
 
 \item{\bf Set data fields for the Pulse Generator:}
@@ -110,10 +106,22 @@ Keeping in mind that the new object is going to be used by a simulation, we need
       int iTriggerMode
    );
 \end{verbatim}
-Finally, perform a step of a simulation:
+
+\item {\bf Reset the Pulse Generator:}
+\begin{verbatim}
+   int PulseGenReset(struct simobj_PulseGen *ppg);
+\end{verbatim}
+
+\item {\bf Perform a Step of a Simulation:}
 \begin{verbatim}
    int PulseGenSingleStep(struct simobj_PulseGen *ppg, double dTime);
 \end{verbatim}
+
+\item {\bf Freeing Memory after the Simulation has Finished:}
+\begin{verbatim}
+   int PulseGenFinish(struct simobj_PulseGen *ppg);
+\end{verbatim}
+
 \end{itemize}
 
 \subsection*{Add New Object to Make Targets}
