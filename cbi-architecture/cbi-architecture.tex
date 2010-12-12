@@ -779,15 +779,18 @@ requirements.
 
 As the lowest layer of the CBI architecture comprises numerical
 solvers, the implementation of a CBI compliant simulator can start
-from an existing numerical solver.
+with the implementation of a numerical solver.
 
-Starting a new module.
+Firstly the source code files can be populated with the mathematical
+functions that implement the solutions of the targeted equations.
+Secondly functions are required for interaction with the controller
+module.  Now the new solver is useful for the simulation of simple
+models.  Thirdly functions are required for communication with other
+solver software components.  Last, the interface with a
+Biology\,Model\,Container can be implemented, making the solver
+available for simulation of complicated and more realistic models.
 
 Extend an existing module.
-
-Add new modules.
-
-Integrate functionality between modules.
 
 \subsection*{Comparison to Software Industry Standards}
 
@@ -841,6 +844,21 @@ developments in computational neuroscience for the standards of
 educational tutorials, research project frameworks\marginpar{cite
   sumatra and pynn} and declarative modeling standards such NeuroML,
 NineML and SED-ML\marginpar{citations}.
+
+Importantly, the lowest layers of database back-ends has as a logical
+consequence that SOAs implementations are highly focused on database
+queries and result integration and presentation.  Control as defined
+for the CBI architecture is not a major aspect of SOA implementations,
+but merely something that happens in the margin.  As a result SOAs are
+architectured using application centric concerns such as database
+transactions, data routing, business logic and logging and debugging
+instead of the principle concerns of data and control we have employed
+here.
+
+Now say something about TMN: splits a software application along
+aspects, called planes in TMN, that are very different from a control
+and data aspect\marginpar{complete}.
+
 
 \subsection*{Simulator Interoperability and Simulator Extension}
 
