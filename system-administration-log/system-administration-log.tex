@@ -38,6 +38,26 @@ The repository machine serves the source code for the GENESIS project as well as
 
 \item
 \begin{itemize}
+\item[] {\bf Admin:} Hugo
+\item[] {\bf Date:} 12/12/2010 
+\item[] {\bf Actions:} Removed untarred contents of cpan module installation directories.
+\begin{verbatim}
+sudo rm -fr Clone-0.31/ Data-Utilities-0.04/ Digest-SHA-5.48/ File-Find-Rule-0.32/ HTML-Table-2.08a/ HTML-Template-2.9/ Inline-0.46/ Number-Compare-0.01/ Test-Simple-0.96/ Text-Glob-0.08/
+\end{verbatim}
+\item[] {\bf Reason:} The tester was still complaining about the permissions of:
+\begin{verbatim}
+	drwx------ 4 root     root       4096 2010-12-11 12:34 HTML-Table-2.08a
+\end{verbatim}
+
+\item[] {\bf Impact:} Directories removed, hopefully the additional
+  code added to the developer package to remove cpan source code
+  directories after their installation keeps the tester in a sane
+  state from now on.
+\end{itemize}
+
+
+\item
+\begin{itemize}
 \item[] {\bf Admin:} Mando
 \item[] {\bf Date:} 12/11/2010 
 \item[] {\bf Actions:} Checked status on cpan directory and its unzipped contents.
