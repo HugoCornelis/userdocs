@@ -109,17 +109,15 @@ The architecture defines independent functional
 modules\marginpar{allows for components} that run stand-alone. They
 are arranged in logical layers that naturally correspond to the
 occurrence of high-level data (biological concepts) versus low-level
-data (numerical values) and distinguishes data from control functions.
+data (numerical values) that distinguish data from control functions.
 
 The modular nature of the architecture and its independence from a given technology facilitates communication\marginpar{there is no section about this in the discussion} about similar
 concepts and functions for both users and developers.  It provides
 several advantages for multiple independent contributions to
-software development.  Importantly, these include: (1) Complexity of
-individual simulator components is reduced\marginpar{duplicate text} compared to the complexity
-of a complete simulator, (2) Components can be documented in
-isolation, in terms of their inputs and outputs, (3) Unnecessary or
-obsoleted components can easily be replaced or removed, (4) Components
-can be tested stand-alone, and (5) The architecture clearly delineates
+software development.  Importantly, these include: (1) Reduction in complexity of
+individual simulator components\marginpar{duplicate text} when compared to the complexity
+of a complete simulator, (2) Documentation of individual components in terms of their inputs and outputs, (3) Easy removal or replacement of unnecessary or
+obsoleted components, (4) Stand-alone testing of components, and (5) Clear delineation of
 the development scope of new components.
 
 % Here, we introduce and describe the Computational Biology Initiative federated software architecture.
@@ -208,7 +206,7 @@ The application of mathematical methods to modeling and quantification in neurop
 % Traub RD, Contreras D, Cunningham MO, Murray H, LeBeau FEN, Roopun A, Bibbig A, Wilent WB, Higley MJ \& Whittington MA (2005). Single-column thalamocortical network model exhibiting gamma oscillations, sleep spindles and  epileptogenic bursts. Journal of Neurophysiology 93: 2194--2232.
 % Brunel N \& Wang X-J (2001) Effects of neuromodulation in a cortical network model of object working memory dominated by recurrent inhibition. J Comput Neurosci 11: 63--85.
 
-Historically, the development of neuronal simulation software for the construction of morphologically detailed neuron models and small networks was instigated by research projects that specifically addressed complementary technical and scientific questions \cite{Moore:2010vn}. For example, one widely used application is NEURON \cite{m93:_neural_system} which grew from the identification of numerical techniques that greatly improved both the efficient computation and accuracy of the solution to the cable equations used to model electrical activity in branched dendrites \cite{hines84:_effic,hines89:_progr_simul_nerve_equat_branc_geomet}. Alternatively, another widely used simulation platform is GENESIS \cite{wilson89:_advan_neural_infor_proces_system}. From conception, it was a more generalized simulator and was initially employed to model at the single cell level neural oscillations in piriform \cite{Wilson:1988zr} and cerebral cortex \cite{Wilson:1989ys}.
+Historically, the development of neuronal simulation software for the construction of morphologically detailed neuron models and small networks was instigated by research projects that specifically addressed complementary technical and scientific questions \cite{Moore:2010vn}. For example, one widely used application is NEURON \cite{m93:_neural_system}. It grew from the identification of numerical techniques that greatly improved the efficient computation and accuracy of the solution to the cable equations employed to model electrical activity in branched dendrites \cite{hines84:_effic,hines89:_progr_simul_nerve_equat_branc_geomet}. Another widely used simulation platform is GENESIS \cite{wilson89:_advan_neural_infor_proces_system}. From conception, it was a more generalized simulator and was initially employed to model at the single cell level neural oscillations in piriform \cite{Wilson:1988zr} and cerebral cortex \cite{Wilson:1989ys}.
 
 % Moore JW (2010) A personal view of the early development of computational neuroscience in the USA. Frontiers in Computational Neuroscience 4: 20.
 % Hines M (1993) NEURON--a program for simulation of nerve equations. In: F. Eeckman (ed.) Neural Systems: Analysis and Modeling. Norwell, MA: Kluwer.
@@ -218,7 +216,7 @@ Historically, the development of neuronal simulation software for the constructi
 % Wilson MA & Bower JM (1989) Computer simulation of oscillatory behavior in cerebral cortical networks. In D Anderson (ed.) Neural Information Processing Systems. American Institute of Physics: New York. pp. 84--91.
 % Wilson MA, Bhalla US, Uhley JD & Bower JM (1989) GENESIS: A system for simulating neural networks. In D Anderson (ed.) Neural Information Processing Systems. American Institute of Physics: New York. pp. 485--492.
 
-These software systems have been both highly successful and continued to grow in complexity through cycles of research project extension (see for example parallel NEURON \cite{migliore06:_paral_networ_simul_neuron} and pGENESIS \cite{Hereld:2004ly}). However, after more than twenty years of extending their functionality, usually by the direct incorporation of source code into the core of the simulator, their code structures have become so complicated that it is now increasingly difficult, if not impossible, to easily continue this process. The resulting stand-alone applications have become `monolithic' with their life cycles inevitably moving  from extension to maintenance. A significant consequence of this process is that the development of an optimized simulation can be a considerable challenge for the neuroscientist unfamiliar with the underlying mathematical and computational theory.
+These software systems have been both highly successful and have continued to grow in complexity through cycles of research project extension (see for example parallel NEURON \cite{migliore06:_paral_networ_simul_neuron} and pGENESIS \cite{Hereld:2004ly}). However, after more than twenty years of extending their functionality, usually by the direct incorporation of source code into the core of the simulator, their code structures have become so complicated that it is now increasingly difficult, if not impossible, to easily continue this process. The resulting stand-alone applications have become {\it monolithic} with their life cycles inevitably moving  from extension to maintenance. (Note, italicized text indicates the first appearance of a technical term defined in Materials and Methods.) A significant consequence of this process is that the development of an optimized simulation can be a considerable challenge for the neuroscientist unfamiliar with the underlying mathematical and computational theory.
 
 % Migliore, M, Cannia, C., Lytton, W.W., Markram, H. and Hines, M.L. (2006) Parallel network simulations with NEURON. J Comput Neurosci 21: 119--129.
 % Hereld M, Stevens RL, van Drongelen W \& Lee HC (2004) Developing a petascale neural simulation.  Proc 26th Ann Int Conf IEEE EMBS 2: 3999--4002.
@@ -244,21 +242,21 @@ individual molecules \cite{Stiles:2001dq}.
 % Stiles JR \& Bartol TM (2001) Monte Carlo methods for simulating realistic synaptic microphysiology using MCell. In: E De Schutter (ed.) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press: Boca Raton, pp. 87--127.
 % Hoops S, Sahle S, Gauges R, Lee C, Pahle J, Simus N, Singhal M, Xu L, Mendes P, \& Kummer U (2006) COPASI -- a COmplex PAthway SImulator. Bioinformatics 22: 3067--3074.
 
-The rapidly growing diversity of modeling environments and tools raises significant issues surrounding the reproducibility of results from different simulators. This is not a trivial problem, as when combined with the current laxity in reporting model and simulation details and the general lack of independent validation of computationally generated results, the credibility of research in computational neuroscience may be compromised. In principle any finding should be independently reproduced prior to being accepted as a genuine contribution to scientific knowledge (see \cite{cannon07:_inter, Stodden:2009cq}).
+The rapidly growing diversity of modeling environments and tools raises significant issues surrounding the reproducibility of results from different simulators. This is not a trivial problem. When combined with the current laxity in reporting model and simulation details and the general lack of independent validation of computationally generated results, the credibility of research in computational neuroscience is frequently compromised. In principle any finding should be independently reproduced prior to being accepted as a genuine contribution to scientific knowledge (see \cite{cannon07:_inter, Stodden:2009cq}).
 
 % Robert C. Cannon, Marc-Oliver Gewaltig, Padraig Gleeson, Upinder S. Bhalla, Hugo Cornelis, Michael L. Hines, Fredrick W. Howell, Eilif Muller, Joel R. Stiles, Stefan Wils, and Erik De Schutter (2007) Interoperability of neuroscience modeling software: Current status and future directions. Neuroinformatics. 5: 127Ð138.
 % Stodden V (2009) Enabling reproducible research: Open licensing for scientific innovation. Int J Commun Law Policy. 1--25.
 
 Problems of incremental model extension, incomplete model
 specification, and reproducibility of results, have resulted in the
-idea of the interoperability of neuroscience modeling software.
+idea of the {\it interoperability} of neuroscience modeling software.
 Interoperability has been defined as ``all mechanisms that allow two
 or more simulators to use the same model description or to collaborate
 by evaluating different parts of a large neural model'' \cite{cannon07:_inter}, thus various forms of interoperability are possible. Two
 broad types of interoperability have recently been defined \cite{cannon07:_inter},
 Type\,1: Development of portable model description standards such that
 models built for one simulator can be run on another, i.e. through the
-adoption of common simulation languages such as SBML \cite{Hucka-M:2004bh} or NeuroML \cite{Gleeson:2010cr}\marginpar{also nineml}, and Type\,2: Run-time
+adoption of common simulation languages such as SBML \cite{Hucka-M:2004bh}, NeuroML \cite{Gleeson:2010cr}, or NineML (http://www.nineml.org/index.shtml), and Type\,2: Run-time
 interoperability, where different simulators operating on different
 domains interoperate at run-time either by direct coupling via
 simulator script languages (e.g. pyMOOSE \cite{ray08:_pymoos}),
@@ -274,9 +272,8 @@ Catacomb2 \cite{cannon03:_from}).
 
 %As a complement to the Type\,1 interoperability provided by a `universal' language such as NeuroML or SBML, we here introduce the Computational Biology Initiative federated simulator architecture (CBI architecture). It provides a formal description of the class of simulators that support Type 2, or runtime interoperability.
 
-Here we introduce a new class of simulator architecture, the CBI federated software architecture, for convenience referred to here as the CBI architecture. As we now show, it is a software architecture that transparently supports both
-interoperability and extensibility for model building, simulation, and result analysis.
-
+Here we introduce a new class of simulator architecture, the CBI {\it federated software architecture}, for convenience referred to here as the CBI architecture. As we now show, it is a software architecture that transparently supports both
+interoperability and {\it extensibility} for model building, simulation, and result analysis.
 
 % Results and Discussion can be combined.
 \section*{Results}
@@ -294,49 +291,30 @@ implementations\cite{apostel61:_concep_role_model_mathem_natur_social_scien}.
 %simulators expose mathematical details and periphery control code that
 %is unrelated to the biology it tries to represent.  
 This has the important consequence that current model representation
-technology used by simulators exposes mathematical details and
-peripheral control code that is unrelated to the biology it tries to
+technology employed by simulators exposes mathematical details and
+peripheral control code to a user that is unrelated to the biology that it aims to
 represent.
 %The result is that
 %many neural simulators impose mathematical constraints on the
 %organization of a model that interrupt the
 %biological intuition of a user.
 
-As a guide to help separate between these different aspects a
-comprehensive user workflow can be employed by simulator users.  It
-systematically organizes the user actions during model development
-into different categories.
-%We therefore first describe a comprehensive user workflow that can be
-%employed by simulator users as a guide to separate and distinguish the
-%different aspects of the control code of the simulator software.
-The
-workflow allows a user to make distinctions between an object under
-investigation, the tools used to perform the investigation, and the
-operations performed during the investigation.  It further allows the
-user to distinguish between the results obtained from a single
-investigation and the method used to define multiple investigations in
-a series.  In this way the user workflow identifies five steps in
-total which are explained in more depth in Materials and Methods.
-
-Below we introduce a meta-framework for software development that we
-refer to as the CBI architecture. This framework defines a fully
-functioning simulator.  It was developed on the basis of the user
-workflow and an analysis method referred to as a separation of
-concerns (described in Materials and Methods where definition of terms
-is also given).  We then describe the software modules resulting from
-this analysis.  The CBI architecture is a principle result of a
+The CBI architecture provides a meta-framework for software development that defines a fully
+functioning simulator. It was developed on the basis of an {\it ideal user
+workflow} and an analysis method referred to as a {\it separation of
+concerns}. The software {\it modules} resulting from
+this analysis are then described.  The CBI architecture is the principled result of a
 bottom-up restructuring of the source code of the GENESIS 2 neural
-simulation system, described in a accompanying paper~[reference to
-accompanying paper to be inserted].
-
+simulation system (described in an accompanying paper~[reference to
+accompanying paper to be inserted]).
 
 \subsection*{Overview of the Federated Software Architecture}
 
 The CBI architecture is defined as
-a modular paradigm that places stand-alone software components into a
+a modular paradigm that places stand-alone software {\it components} into a
 set of logical relationships. In this sense it defines a modular framework that provides the necessary components of a neural simulator.
 
-The schema identified by the separation of concerns (see Fig.~\ref{fig:data-control}) is expanded in
+The schema identified by the {\it separation of concerns} (see Fig.~\ref{fig:data-control}) is expanded in
 Figure~\ref{fig:cbi-architecture-simple} to give the components that
 form the building blocks of the CBI architecture. This figure retains
 the four simulator functions revealed by the separation of concerns. They 
@@ -355,7 +333,7 @@ implementations of the underlying applications and data sources
 (see www-128.ibm.com/developerworks/db2/library/techarticle/0203haas/0203haas.html).
 Ideally, it makes the underlying applications look like a
 single system to the user. Enhanced application interoperability is achieved
-through the use of high level scripting languages.
+through the use of high level {\it scripting languages}.
 % (see companion paper this issue, Cornelis et al., 2010)\marginpar{ref CBI scripting paper}.
 
 % For completeness, we note that northbound and southbound interfaces
@@ -372,7 +350,7 @@ In summary, the CBI architecture provides a template for
 software development that, at its core, contains a simulator.
 Additionally, the modularity and layering of the architecture simplifies connection
 to independent applications indirectly related to model construction and instantiation, and the display and analysis of simulation output. Figure\,\ref{fig:cbi-architecture-simple} illustrates the various modules of the CBI
-architecture. We now introduce their functionality and describe their relationships within the context of the user workflow.\\
+architecture. We now introduce their functionality and describe their relationships within the context of an ideal user workflow.\\
 
 % Figure 1
 \noindent{\bf Place Figure\,\ref{fig:cbi-architecture-simple} about here.}\\
@@ -381,7 +359,7 @@ architecture. We now introduce their functionality and describe their relationsh
 
 Modules in the top level of the CBI architecture (Fig.\,\ref{fig:cbi-architecture-simple}A) provide user accessible interfaces to simulator functionality through a Graphical User Interface (GUI). Model data are controlled by the Database\,Interfaces, whereas,
 %modules Model\,Tools and the Biology and Experiment\,Model\,Container. Note that for convenience, reference to the Model\,Container are to the Experiment\,Model\,Container. 
-simulations are controlled by Scripting\,Libraries\,\&Applications. The various modules and submodules located in this layer can be instantiated by a simulator on an as-needed basis. This layer supports the user interfaces for the first three steps in the user workflow, including: (1) Construct Model, (2) Design Experiment, and (3) Run Simulation.  
+simulations are controlled by Scripting\,Libraries\,\&Applications. The various modules and submodules located in this layer can be instantiated by a simulator on an as-needed basis. This layer supports the user interfaces for the first three steps in the ideal user workflow, including: (1) Construct Model, (2) Design Experiment, and (3) Run Simulation.  
 % include Implementation\,Libraries and the Scheduler.
 
 \subsubsection*{The Graphical User Interface}
@@ -430,8 +408,8 @@ a good GUI for model construction (see \cite{gleeson07} for a typical
 example).  The difference with those tools is that in the CBI
 architecture this part of the GUI does not export a model in a
 simulator specific language, but rather interacts directly with the
-Biological and Experimental\,Model\,Containers via a low-level
-ABI.  The ABI provides a direct
+Biological and Experimental\,Model\,Containers via a low-level {\it application binary interface}
+(ABI).  The ABI provides a direct
 coupling between the implementation technologies of the different
 software components, creates a much tighter loop between GUI,
 Simulation\,Control and lower level back-end functions (described
@@ -504,7 +482,6 @@ injection) and their dependencies\marginpar{discuss separation of
 %actions specific for a given stimulus protocol (e.g. stimulate the
 %model at a particular location with a given delay in a particular
 %way).
-
 
 \subsubsection*{Scripting Libraries \& Applications}
 
@@ -863,7 +840,7 @@ and data aspect\marginpar{complete}.
 \subsection*{Simulator Interoperability and Simulator Extension}
 
 In the context of the CBI architecture, simulator interoperability
-becomes a much more physical reality.  As the APIs of this
+becomes a much more physical reality.  As the {\it API}s of this
 architecture are defined, it is possible to specify the
 compliance level of other simulators by mapping their APIs.  It is
 unlikely that full interoperability can be achieved for all
@@ -1068,7 +1045,6 @@ two extremes of a continuum.  The philosophical goal of the CBI
 architecture is to move simulator design away from the extreme of
 Monolithic Software towards the extreme of Federated Software.
 
-
 \paragraph{\bf Monolithic Software:} A {\it monolithic software}
 application is one in which the user interface, data access code, and
 computational algorithms are combined into a single application where
@@ -1179,7 +1155,6 @@ specific) API.
 Both APIs and ABIs play a crucial role in the implementation of a
 federated software platform.
 
-
 \paragraph{\bf Scripting Languages:}
 
 With an increasing requirement for software integration, the use of {\it scripting languages} is
@@ -1209,11 +1184,23 @@ form an application.
 
 We use the term {\it user workflow} to describe the sequence of necessary steps typically employed by a person in developing a computational model and employing simulation to generate data for subsequent analysis. In this sense it is a depiction of a sequence of operations, declared as the work of a person or a group of persons \cite{Belhajjame:2001fv}.
 
+A comprehensive user workflow can be employed to guide the separation of the different aspects of a model by organizing user actions 
+into different categories during model development.
+%We therefore first describe a comprehensive user workflow that can be
+%employed by simulator users as a guide to separate and distinguish the
+%different aspects of the control code of the simulator software.
+The workflow allows distinctions to be made between an object under
+investigation, the tools used to perform the investigation, and the
+operations performed during the investigation. It also 
+distinguishes between the results obtained from a single
+investigation and the method used to define multiple investigations in
+a series. The user workflow identifies five steps in
+total (explained in more detail in Materials and Methods).
+
 \paragraph{\bf Ideal User Workflow:}
 
 We define an {\it ideal user workflow} that provides a canonical form
-of a user workflow specific to neural simulators.
-
+of a user workflow specific for neural simulators.
 
 % Belhajjame K, Collet C, Vargas-Solar G. (2002) A Flexible Workflow Model for Process-Oriented Applications. 2nd International Conference on Web Information Systems Engineering (WISE 2001), IEEE CS PROCEEDINGS 1: 72-80.
 
@@ -1233,7 +1220,7 @@ We use {\it interoperability} as ``The capability to communicate, execute progra
 
 \subsection*{The Scientific Workflow}
 
-The relationship between the activities involved in conducting an experiment and running a simulation in computational biology is illustrated in Figure\,\ref{fig:data-flows}. These two iterative processes are connected by a feedback loop that employs interpretation of results as an iterator\marginpar{is this iterator used in a different meaning?} to design new experimental setups and model constructions.\\
+The relationship between the activities involved in conducting an experiment and running a simulation in computational biology is illustrated in Figure\,\ref{fig:data-flows}. These two iterative processes are connected by a feedback loop that employs interpretation of results as an {\it iterator}\marginpar{is this iterator used in a different meaning?} to design new experimental setups and model constructions.\\
 
 % Figure 2
 \noindent{\bf Place Figure\,\ref{fig:data-flows} about here.}\\
@@ -1251,7 +1238,7 @@ in nowadays simulator scripts that are unstructured in the sense that
 the biological model is mixed with periphery code for input, output
 and simulation configuration\cite{cannon07:_inter}.
 
-Considerable experience with both user and technical concerns related to simulator functionality and efficiency has been gained from over twenty years of following user requirements during the development of bottom up models of neurons and neural circuits within the framework of the GENESIS software platform (http://www.genesis-sim.org/). This experience has allowed us to identify a user workflow that we employ here to constrain the ``separation of concerns'' analysis that lies at the heart of the new simulator architecture. Initially, we present the workflow, then the results of the separation of concerns. The analysis identifies the independent functional blocks and their relationships that define a software architecture necessary to support a third generation neural simulator. This leads to the identification of the overall design objectives for a federated simulation platform. We then describe the underlying software architecture by following a representative simulation example through the ideal workflow.
+Considerable experience with both user and technical concerns related to simulator functionality and efficiency has been gained from over twenty years of following user requirements during the development of bottom up models of neurons and neural circuits within the framework of the GENESIS software platform (http://www.genesis-sim.org/). This experience has allowed us to identify an ideal user workflow that we employ here to constrain the ``separation of concerns'' analysis that lies at the heart of the new simulator architecture. Initially, we present the workflow, then the results of the separation of concerns. The analysis identifies the independent functional blocks and their relationships that define a software architecture necessary to support a third generation neural simulator. This leads to the identification of the overall design objectives for a federated simulation platform. We then describe the underlying software architecture by following a representative simulation example through the ideal workflow.
 
 %Finally, a complete simulation session is then described within the context of the new GENESIS 3.0 (G-3) simulation platform, which provides the first fully compliant implementation of the CBI architecture.   
 
