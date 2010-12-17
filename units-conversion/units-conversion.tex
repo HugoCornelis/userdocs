@@ -246,16 +246,13 @@ Technical Guide 1
 \begin{equation}
   \label{eq10}
   A(V), B(V) =  \frac{ 
- \mathrm{HH_{-}AB_{-}Scale} + \mathrm{HH_{-}AB_{-}Offset_{-}M} -
- \mathrm{HH_{-}AB_{-}Mult} *  V }{ \mathrm{HH_{-}AB_{-}Add} +
-  e ^ {\frac { V + 
-  \mathrm{HH_{-}AB_{-}Offset_{-}E} }{ \mathrm{HH_{-}AB_{-}Tau}}}}
+ \mathrm{HH_{-}AB_{-}Add_{-}Num} +  \mathrm{HH_{-}AB_{-}Mult} *  V }
+   { \mathrm{HH_{-}AB_{-}Add_{-}Den} +   e ^ {\frac { V + 
+  \mathrm{HH_{-}AB_{-}Offset_{-}E} }{ \mathrm{HH_{-}AB_{-}Div_{-}E}}}}
 \end{equation}
 
 which applies when the constant {\tt HH\_AB\_Factor\_Flag} has its default
-value of -1.  Note that the constant {\tt HH\_AB\_Offset\_M} can be
-absorbed into {\tt HH\_AB\_Scale}, and may usually be set to zero.
-The constants appearing in Eq. \ref{eq10} are used in the
+value of -1. The constants appearing in Eq. \ref{eq10} are used in the
 NDF {\tt PARAMETERS} block, and are related to those in Eq. (\ref{eq9})
 by the table
 
@@ -265,11 +262,11 @@ by the table
 \begin{tabular}{ll} \hline
 {\em NMC parameter}	 & {\em setupalpha parameter} \\
 \hline
- HH\_AB\_Scale + HH\_AB\_Offset\_M & $A$ \\
- HH\_AB\_Mult & $-B$ \\
- HH\_AB\_Add   & $C$ \\
+ HH\_AB\_Add\_Num  & $A$ \\
+ HH\_AB\_Mult & $B$ \\
+ HH\_AB\_Add\_Den   & $C$ \\
  HH\_AB\_Offset\_E & $D$ \\
- HH\_AB\_Tau & $F$ \\
+ HH\_AB\_Div\_E & $F$ \\
 \hline
 \end{tabular}
 \caption{Correspondence between NMC and {\em setupalpha} parameters.}
@@ -340,9 +337,9 @@ parameters $AA$ -- $AF$ correspond to the time constant and $BA$ -- $BF$
 correspond to the steady state activation.
 
 GENESIS 3 does not currently provide a parameterized representation in
-this form, but the {\em sli\_load} command should  translate {\em setuptau}
-commands into a NDF representation with a {\tt PARAMETERS} block containing
-the table values.
+this form.  In the future the {\em sli\_load} command should  translate
+{\em setuptau} commands into a NDF representation with a {\tt PARAMETERS
+block containing the table values, or other equivalent representation.
 
 The conversion from these parameters in pysiological units to SI units
 is a slighty different from the {\em setupalpha} form, because the
