@@ -975,13 +975,13 @@ user-experience\cite{law09:_under_scopin_defin_user_exper}.
 
 \subsection*{CBI Architecture Implementation Guide}
 
-Software implementations are formal structures that map user
+Software\marginpar{Allan: mush up} implementations are formal structures that map user
 requirements to technological solutions.  They can only meet those
 requirements for which this technological mapping exists.  In other
 words, it is the available technology that defines the scope and
 boundaries of the user-workflows that can be implemented in software
 solutions.  As a consequence the development of entirely new software
-architectures can only be started from the lowest layer and
+architectures can be started from the lowest layer and
 constructed upwards to implement user-workflows and to meet user
 requirements.
 
@@ -990,19 +990,20 @@ solvers, thus implementation of a CBI compliant simulator can start
 with the implementation of a numerical solver. To achieve this, firstly, the source code files can be populated with the mathematical
 functions that implement the solutions of the targeted equations.
 Secondly, functions are required for interaction with the controller
-module.  Following these two steps, the new solver is useful for the simulation of simple
+module.  After these two steps, the new solver is useful for the simulation of simple
 models.  Thirdly, functions are required for communication with other
-solver software components.  Finally, the interface with a
-Biology\,Model\,Container can be implemented, making the solver
-available for simulation of complicated and more realistic models.
+solver software components.  Implementation of an interface with a
+Biology\,Model\,Container makes the solver
+available for simulation of more realistic models.
+Finally connecting with an Experiment\,Model\,Container and Scripting\,Libraries allows to build applications such as tutorials and research projects.
 
 % Extend an existing module.
 
-\subsection*{Comparison to Software Industry Standards}
+\subsection*{Comparison of the CBI Architecture to Software Industry Standards}
 
 The three-tier software
 architecture \cite{eckerson95:_three_tier_clien_server_archit} is a
-widely used client-server paradigm with the advantage that the servers
+widely used client-server paradigm with the advantages that the servers
 can be shared by users and software on both the client and server is
 easily upgraded.  Service-oriented architecture (SOA) is a widespread
 commercial implementation of a three-tier architecture where the
@@ -1013,13 +1014,15 @@ self-governance\,\cite{08:_servic}.
 
 In these traditional enterprise software applications the lowest layer
 consists of database back-ends.  Database engines are highly optimized
-for run-time performance of complex queries on large datasets.
-Both specialized and general algorithms and data structures have been
+for run-time performance of complex queries on large datasets.  Both
+specialized and general algorithms and data structures have been
 designed and investigated for the implementation of
 query-acceleration.  This highly active research area, also intimately
 related with research into sorting algorithms, has resulted in the
-expectation of any query to be answered within a second, even for very
-large databases [refs?? in this para].
+general expectation of any query to be answered with subsecond
+response time, even for very large databases\marginpar{refs?? in this
+  para}.  In these architectures {\it control tables} are sometimes
+used to implement user workflows\cite{humby07:_progr}.
 
 In the CBI architecture solvers and communication infrastructures are
 the back-ends.  Both can be optimized for run-time performance.
