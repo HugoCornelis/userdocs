@@ -965,7 +965,7 @@ provide significant enhancements in overall system performance.  For
 low-level data and control, such optimizations consist of running
 simulations more rapidly, e.g. by achieving high cache hit
 ratios\cite{borg-graham00:_addit_effic_comput_branc_nerve_equat} and
-parallel implementation\marginpar{cite multisplit neuron solver}.  For
+parallel implementation\cite{hines08:_fully}.  For
 high-level data and control, optimization involves increased support
 for biological concepts and usability by employing domain specific
 languages and scripting languages, as opposed to low-level
@@ -976,7 +976,7 @@ user-workflows and gives a richer user-experience\marginpar{cite
 \subsection*{CBI Architecture Implementation Guide}
 
 Software implementations are formal structures that map user
-requirements to technological solutions.  Software can only meet those
+requirements to technological solutions.  They can only meet those
 requirements for which this technological mapping exists.  In other
 words, it is the available technology that defines the scope and
 boundaries of the user-workflows that can be implemented in software
@@ -1037,9 +1037,10 @@ architecture is that the parallel run-time structure of a neural
 simulation is dynamic, depending on the model and the number of
 simulations\cite{howell00:_pgenes}\cite{migliore06:_paral_networ_simul_neuron}.
 Therefore, an optimal implementation of a CBI compliant simulator
-includes functionality to automatically partition a
-model\cite{cornelis07:_neuros_auto_para}\marginpar{neuron multisplit}
-and to transparently distribute simulations over a cluster computer.
+includes functionality to automatically partition a model and to
+transparently distribute simulations over a cluster
+computer\cite{hines08:_fully, hines08:_neuron,
+  cornelis07:_neuros_auto_para}.
 
 The business logic in enterprise applications is comparable to the
 Scripting Libraries and Applications module in the CBI architecture.
