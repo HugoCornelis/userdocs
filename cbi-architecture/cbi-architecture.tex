@@ -101,7 +101,7 @@ modification of existing functionality.  The software architecture we
 describe here allows for both these approaches. However, it is
 designed to support alternative paradigms of interoperability and
 extensibility through the provision of semantically\marginpar{semantic
-  interface is never defined in the text} defined application
+  interface is never defined in the text, replace with logical relationships?} defined application
 programming interfaces.  They allow any appropriately configured
 component or software application to be incorporated into a simulator.
 
@@ -293,7 +293,7 @@ implementations\cite{apostel61:_concep_role_model_mathem_natur_social_scien}.
 This has the important consequence that current model representation
 technology employed by simulators exposes mathematical details and
 peripheral control code to a user that is unrelated to the biology that it aims to
-represent.
+represent\marginpar{can we give an example from a G-2 script?}.
 %The result is that
 %many neural simulators impose mathematical constraints on the
 %organization of a model that interrupt the
@@ -310,7 +310,7 @@ this analysis are then described.
 
 \subsection*{The Scientific Workflow}
 
-The relationship between the activities involved in conducting an experiment and running a simulation in computational biology is illustrated in Figure\,\ref{fig:data-flows}. These two iterative processes are connected by a feedback loop that employs interpretation of results as an {\it iterator}\marginpar{is this iterator used in a different meaning?} to design new experimental setups and model constructions.\\
+The relationship between the activities involved in conducting an experiment and running a simulation in computational biology is illustrated in Figure\,\ref{fig:data-flows}. These two iterative processes are connected by a feedback loop that employs interpretation of results as an {\it iterator} to design new experimental setups and model constructions.\\
 
 % Figure 1
 \noindent{\bf Place Figure\,\ref{fig:data-flows} about here.}\\
@@ -382,7 +382,7 @@ The validity and location of simulator output is checked prior to data analysis.
 
 \subsubsection*{5. Iterate}
 
-A modeling project is established by the introduction of iterators\marginpar{iterator used once more in a meaning different from its definition} into the user workflow. Iterators achieve this by closing the loop between the output of results and model construction. Iterators include: Automated construction of simulations and batch files, static parameter searching, and active parameter searching using, for example, dynamic clamp technology. 
+A modeling project is established by the introduction of iterators into the user workflow. Iterators achieve this by closing the loop between the output of results and model construction. Iterators include: Automated construction of simulations and batch files, static parameter searching, and active parameter searching using, for example, dynamic clamp technology. 
 
 \subsection*{Principal Concerns}
 
@@ -392,14 +392,14 @@ the neurosciences.
 
 In software engineering, the process of partitioning a program into
 logical functions that minimize overlap is referred to as the
-separation of concerns.  User concerns have a clear and direct
-influence on the partitioning of a program into its primary functional
-blocks. Technical concerns have only indirect influence on the user's
-experience of an application, but are crucial for problem diagnosis
-and guaranteed correct behaviour of the software.  Here, we propose
-there are two principal concerns that underly the development of
-modeling software: Separation between data and control through the use
-of data-layering.
+separation of concerns.  User concerns have a direct influence on the
+user's experience of an application.  Technical concerns have a clear
+and direct influence on the partitioning of a program into its primary
+functional blocks, and are also crucial for problem diagnosis and
+guaranteed correct behaviour of the software.  Here, we propose there
+are two principal concerns that underly the development of modeling
+software: Separation between data and control through the use of
+data-layering.
 
 \subsubsection*{Control versus data}
 \label{sec:data-vs-control}
@@ -439,7 +439,7 @@ implementation and provide operators that convert between these two
 representations.  This insulates the process of model construction
 from the computations performed during a simulation. 
 
-The relationships between simulator control and data modules in a federated architecture are symbolized by the horizontal arrows in Figure~\ref{fig:data-control}, whereas the relationship between high level biological concepts and their mathematical implementation are symbolized by the vertical arrows. Diagonal interactions\marginpar{can we give an example from a G-2 script?} are forbidden as they foster the mixing of functionality across different levels that ultimately leads to the creation of monolithic software applications.
+The relationships between simulator control and data modules in a federated architecture are symbolized by the horizontal arrows in Figure~\ref{fig:data-control}, whereas the relationship between high level biological concepts and their mathematical implementation are symbolized by the vertical arrows. Diagonal interactions are forbidden as they foster the mixing of functionality across different levels that ultimately leads to the creation of monolithic software applications.
 
 Importantly, we note that a simulator can be efficiently modularized
 when only horizontal or vertical interactions are allowed between the
@@ -462,7 +462,7 @@ refer to as the CBI architecture.\\
 
 \subsection*{Separation of Concerns}
 
-Consideration of the principal concerns of data, control, and data layering were used to expand Figure~\ref{fig:data-control} by the separation of concerns principle. This key principle in software engineering states that a given problem involves different kinds of concerns. To cope with complexity, these concerns should be identified and separated\,\cite{Dijkstra:1982fu}. The aim is to achieve engineering quality factors such as robustness, adaptability, maintainability, and reusability.
+Consideration of the principal concerns of data, control, and data layering were used to expand Figure~\ref{fig:data-control} by the separation of concerns principle. This key principle in software engineering states that a given problem involves different kinds of concerns. To cope with complexity, these concerns should be identified and separated\,\cite{Dijkstra:1982fu}. The aim is to achieve engineering quality factors such as robustness, adaptability, maintainability, and reusability.  Ultimately this would result in clear model scripts with biology aspects separated from peripheral code\marginpar{for discussion}.
 
 % Dijkstra EW (1982) On the role of scientific thought. in Dijkstra, Edsger W.. Selected writings on Computing: A Personal Perspective. New York, NY, USA: Springer-Verlag New York, Inc. pp. 60Ð66.
 
@@ -530,12 +530,14 @@ There are several important objectives that guide the development
 of our federated approach to the design and development of a neuronal
 simulation engine. 
 % where software components are self contained in the sense that they can be run independently.
-They include: (1) Reduced\marginpar{duplicate text} complexity of software modules when compared to
-a monolithic system, (2) Simplified documentation of modules
-in terms of inputs and outputs, (3) Easy incorporation or removal of
-individual modules as required, (4) Simplified development and testing
-of modules as stand alone components, and (5) Clear delineation of
-scope for new module development.
+They include: (1) Reduced\marginpar{duplicate text, it seems better to
+  say that separation of concerns achieves these goals} complexity of
+software modules when compared to a monolithic system, (2) Simplified
+documentation of modules in terms of inputs and outputs, (3) Easy
+incorporation or removal of individual modules as required, (4)
+Simplified development and testing of modules as stand alone
+components, and (5) Clear delineation of scope for new module
+development.
 
 \subsection*{Overview of the Federated Software Architecture}
 
@@ -562,7 +564,7 @@ implementations of the underlying applications and data sources
 (see www-128.ibm.com/developerworks/db2/library/techarticle/0203haas/0203haas.html).
 Ideally, it makes the underlying applications look like a
 single system to the user. Enhanced application interoperability is achieved
-through the use of high level {\it scripting languages}.
+through the use of flexible high-level {\it scripting languages} to support diverse workflows and low-level {\it application programmer interfaces} and rigid {\it application binary interfaces} for performance.
 % (see companion paper this issue, Cornelis et al., 2010)\marginpar{ref CBI scripting paper}.
 
 % For completeness, we note that northbound and southbound interfaces
@@ -1162,13 +1164,16 @@ simulators used in other fields, e.g. fluid dynamics.
 
 \subsubsection*{Model History and Versioning}
 
+By extension the CBI architecture supports the scientific workflow\marginpar{complete or remove}.
+
 Every model undergoes a series of changes before it is made available
 to other people, published, or deposited in a database.  For this
 reason it is important for a simulator to be able to cope with the
-history of a model. To do this a simulator must minimally support: Model versions in a linear 
-version history, divergence of model history where in each parallel 
-model version a different feature is explored, and convergence of model 
-history where the features of different model versions are integrated.
+history of a model. To do this a simulator must minimally support:
+Model versions in a linear version history, divergence of model
+history where in each parallel model version a different feature is
+explored, and convergence of model history where the features of
+different model versions are integrated.
 
 %Note that linear, divergent, and convergent workflows are easily mapped
 %to functions present in current version control systems (checkin,
