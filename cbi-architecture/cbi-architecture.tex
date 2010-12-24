@@ -1012,21 +1012,28 @@ defines a software federation for an application by uniting resources
 while maintaining their individual autonomy and
 self-governance\,\cite{08:_servic}.
 
+\subsubsection*{\bf Differences in Backend Focus}
+
 In these traditional enterprise software applications the lowest layer
-consists of database engine back-ends.  Database engines use both
-specialized and general algorithms and data structures for information
-query optimization and optimal run-time performance.  This highly
-active research area, intimately related with research into sorting
-algorithms, has resulted in the general expectation of a query to be
-typically answered with subsecond response time, even for very large
-databases\marginpar{refs?? in this para}.  In these architectures {\it
-  control tables} are sometimes used to implement user
-workflows\cite{humby07:_progr}.
+consists of database engine back-ends.  Database engines embed
+specialized algorithms and data structures for information query
+optimization and optimal run-time performance.
+%  This highly active
+%research area, intimately related with research into sorting
+%algorithms, has resulted in the general expectation of a query to be
+%typically answered with subsecond response time, even for very large
+%databases\marginpar{refs?? in this para}.
+{\it Control tables} are sometimes to store meta-data and used to
+implement user workflows\cite{humby07:_progr}.  Because of these
+reasons traditional enterprise applications are highly data centric.
 
 In the CBI architecture solvers and communication infrastructures are
 the back-ends.  Both can be optimized for run-time performance.
 However, currently no one expects a large simulation to be completed
-within a second.
+within a couple of seconds, a typical expected response time for
+traditional enterprise applications.
+
+\subsubsection*{\bf Parallelization and Software Structure}
 
 In three-tier architectures it is not uncommon for the second tier,
 comprising so called middle-ware, to be distributed over multiple
@@ -1044,14 +1051,20 @@ transparently distribute simulations over a cluster
 computer\cite{hines08:_fully, hines08:_neuron,
   cornelis07:_neuros_auto_para}.
 
-The business logic in enterprise applications is comparable to the
-Scripting Libraries and Applications module in the CBI architecture.
-The Database Interfaces are comparable to traditional ETL applications
-and emerging semantic technology applications.  These highly developed
-layers in the industry are in sharp contrast with the preliminary
-developments in computational neuroscience for the standards of
-educational tutorials, research project frameworks, and declarative modeling standards such NeuroML \cite{Gleeson:2010cr},
-NineML (http://www.nineml.org/index.shtml), SED-ML \cite{Kohn:2008kx}, Sumatra (http://neuralensemble.org/trac/sumatra), and PyNN \cite{davison08:_pynn}.
+\subsubsection*{User Experience}
+
+The function of business logic in enterprise applications is
+comparable to that of the Scripting\,Libraries\,and\,Applications
+module in the CBI architecture.  The Database Interfaces are
+comparable to traditional ETL applications and emerging semantic
+technology applications.  These highly developed layers in the
+industry are in sharp contrast with the preliminary developments in
+computational neuroscience for the standards of educational tutorials,
+research project frameworks, and declarative modeling standards such
+NeuroML \cite{Gleeson:2010cr}, NineML
+(http://www.nineml.org/index.shtml), SED-ML \cite{Kohn:2008kx},
+Sumatra (http://neuralensemble.org/trac/sumatra), and PyNN
+\cite{davison08:_pynn}.
 
 Importantly, the lowest layers of database back-ends has as a logical
 consequence that SOAs implementations are highly focused on database
