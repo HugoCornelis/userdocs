@@ -293,7 +293,7 @@ implementations\cite{apostel61:_concep_role_model_mathem_natur_social_scien}.
 This has the important consequence that current model representation
 technology employed by simulators exposes mathematical details and
 peripheral control code to a user that is unrelated to the biology that it aims to
-represent\marginpar{can we give an example from a G-2 script?}.
+represent\marginpar{discussion: can we give an example from a G-2 script?}.
 %The result is that
 %many neural simulators impose mathematical constraints on the
 %organization of a model that interrupt the
@@ -675,7 +675,7 @@ component). This requires translation of the user defined model to the necessary
 
 This provides translation of the
 connectivity between the components of a biological model into
-connectivity between the low-level back-ends (described below) [ref. ??].  For example, in a
+connectivity between the low-level back-ends (described below)\marginpar{[ref. ??]}.  For example, in a
 biological representation of a network model there are hierarchical
 projections, each associated with its own sub-projections and connections.  
 However, during a simulation the different back-ends are only connected by a set of communication ports.
@@ -688,7 +688,7 @@ By implementing biological and connectivity translation, the Model\,Container de
 physical implementation of the low-level back-ends from the biological representation of a model and the way the user sees the model.  Firstly, this greatly reduces the implementation complexity of the mathematical solvers
 as they have only to deal with the numerics.  Secondly, it allows for more intuitive model representation at the level of the user.
 
-Depending\marginpar{for the discussion} on the simulator application
+Depending\marginpar{discussion: for the discussion} on the simulator application
 area, the implementation may focus on one of the translation functions
 or both.  For instance a network simulator such as NEST provides
 better support for connectivity translation\cite{nordlie09:_visual},
@@ -705,7 +705,7 @@ equations.
 This stores a model of a stimulus paradigm and desired output
 parameters and defines and stores a hierarchical sequence of
 stimulus-related actions (e.g. start and stop time of a current
-injection) and their dependencies\marginpar{discuss separation of
+injection) and their dependencies\marginpar{discussion: discuss separation of
   model containers and consequences of building model libraries, and
   consequences of ease of model combinations}.
 
@@ -931,51 +931,9 @@ non-parallel and parallel architectures.
 %The fact that the simplified wrapper and interface
 %generator specifications included with the numerical solvers map the members of solver data structures one-to-one to Perl level subroutines allows the solver to be driven from Perl.
 
-\section*{Discussion}
-
-We employed the results of a separation of concerns analysis to
-develop the software architecture for a next generation neural
-simulator.  The resulting CBI architecture provides three significant
-advantages for software development: (1) Modules can be run separately
-on different machines.  For example, the GUI and modeling environment
-might run locally, while the simulator is run elsewhere either
-serially or in parallel on more powerful machines. (2) Decomposition
-of an application into multiple software components allows reuse and
-extension of individual modules, whether stand-alone or otherwise,
-clearly facilitating model development and research progress. (3)
-Individual components can be independently updated, enhanced, or
-replaced when needed, thus the life cycle of a modular architecture is
-smoother than that of a non-scalable application.
-
-By analyzing and decomposing a software system into separate
-functions, it is straightforward to define the individual software
-modules of the architecture. A clear delineation of individual
-components in a modular software architecture allows interfaces and
-their accompanying behaviors to be defined and the communication
-between the software layers of a simulator to be specified.
-%Ultimately, this allows both
-%developers and users to choose to contribute to a single component
-%with limited complexity, instead of being forced to contribute to the
-%whole simulator and be exposed to tremendous complexity. 
-
-Our approach has the advantage that the mathematical and optimization
-internals of a solver need not be exposed to a user.  The resulting
-biological and numeric layers can further be individually optimized to
-provide significant enhancements in overall system performance.  For
-low-level data and control, such optimizations consist of running
-simulations more rapidly, e.g. by achieving high cache hit
-ratios\cite{borg-graham00:_addit_effic_comput_branc_nerve_equat} and
-parallel implementation\cite{hines08:_fully}.  For high-level data and
-control, optimization involves increased support for biological
-concepts and usability by employing domain specific languages and
-scripting languages, as opposed to low-level
-languages\,\cite{1118892}.  This provides improved support for
-user-workflows and gives a richer
-user-experience\cite{law09:_under_scopin_defin_user_exper}.
-
 \subsection*{A Short CBI Architecture Implementation Guide}
 
-Software\marginpar{Allan: mush up} implementations are formal structures that map user
+Software\marginpar{Allan: mush up.  This should go to results (1)?} implementations are formal structures that map user
 requirements to technological solutions.  They can only meet those
 requirements for which this technological mapping exists.  In other
 words, it is the available technology that defines the scope and
@@ -997,42 +955,9 @@ Biology\,Model\,Container makes the solver
 available for simulation of more realistic models.
 Finally connecting with an Experiment\,Model\,Container and Scripting\,Libraries allows to build applications such as tutorials and research projects.
 
-% Extend an existing module.
-
-\subsection*{Simulator Interoperability and Simulator Extension}
-
-In the context of the CBI architecture, simulator interoperability
-becomes a much more tangible reality.  After the {\it API}s of the CBI
-architecture are defined, it is possible to specify the
-compliance level of other simulators and software components by matching APIs.  It is
-unlikely that full interoperability can be achieved for all
-simulators. Nevertheless, the degree than an API of a simulator can be mapped to
-work with the CBI architecture results in a measurable score of
-interoperability for that simulator.
-
-%\subsubsection*{External Applications}
-
-Examples of existing or proposed model tools include: (1) A model
-version history manager for the tracking and recording of the history
-of model development, (2) A database connector that enables the
-acquisition of a model from a database such as neuromorph.org and
-converts it to a format understood by the Model\,Container, (3) A
-model and result analyzer for inspection of a model stored in the
-Model\,Container to extract, for example, morphological or
-connectivity characteristics for quantification of model components,
-(4) A model and result annotator that enables the automatic or manual
-attachment of text to whole or part of model, and (5) An automatic
-model constructor that contains software components which embed
-algorithms for automatic model construction, for example, it enables
-parameter searching and development of dendritic morphology.
-
-Other natural extensions of the CBI architecture support scientific
-communication through electronic publication. We briefly overview this
-functionality in the next sections.
-
 \subsection*{Comparison of the CBI Architecture to Software Industry Standards}
 
-The\marginpar{Allan: mush up here and following} three-tier software
+The\marginpar{Allan: mush up here and following, should go to results (2)?} three-tier software
 architecture \cite{eckerson95:_three_tier_clien_server_archit} is a
 widely used client-server paradigm with the advantages that the servers
 can be shared by users and software on both the client and server is
@@ -1148,6 +1073,81 @@ here.
 %tunes.org gives many of the arguments against microkernels and
 %suggests that it is an abstraction inversion to implement a modular
 %high-level design using a low-level module manager.
+
+\section*{Discussion}
+
+We employed the results of a separation of concerns analysis to
+develop the software architecture for a next generation neural
+simulator.  The resulting CBI architecture provides three significant
+advantages for software development: (1) Modules can be run separately
+on different machines.  For example, the GUI and modeling environment
+might run locally, while the simulator is run elsewhere either
+serially or in parallel on more powerful machines. (2) Decomposition
+of an application into multiple software components allows reuse and
+extension of individual modules, whether stand-alone or otherwise,
+clearly facilitating model development and research progress. (3)
+Individual components can be independently updated, enhanced, or
+replaced when needed, thus the life cycle of a modular architecture is
+smoother than that of a non-scalable application.
+
+By analyzing and decomposing a software system into separate
+functions, it is straightforward to define the individual software
+modules of the architecture. A clear delineation of individual
+components in a modular software architecture allows interfaces and
+their accompanying behaviors to be defined and the communication
+between the software layers of a simulator to be specified.
+%Ultimately, this allows both
+%developers and users to choose to contribute to a single component
+%with limited complexity, instead of being forced to contribute to the
+%whole simulator and be exposed to tremendous complexity. 
+
+Our approach has the advantage that the mathematical and optimization
+internals of a solver need not be exposed to a user.  The resulting
+biological and numeric layers can further be individually optimized to
+provide significant enhancements in overall system performance.  For
+low-level data and control, such optimizations consist of running
+simulations more rapidly, e.g. by achieving high cache hit
+ratios\cite{borg-graham00:_addit_effic_comput_branc_nerve_equat} and
+parallel implementation\cite{hines08:_fully}.  For high-level data and
+control, optimization involves increased support for biological
+concepts and usability by employing domain specific languages and
+scripting languages, as opposed to low-level
+languages\,\cite{1118892}.  This provides improved support for
+user-workflows and gives a richer
+user-experience\cite{law09:_under_scopin_defin_user_exper}.
+
+% Extend an existing module.
+
+\subsection*{Simulator Interoperability and Simulator Extension}
+
+In the context of the CBI architecture, simulator interoperability
+becomes a much more tangible reality.  After the {\it API}s of the CBI
+architecture are defined, it is possible to specify the
+compliance level of other simulators and software components by matching APIs.  It is
+unlikely that full interoperability can be achieved for all
+simulators. Nevertheless, the degree than an API of a simulator can be mapped to
+work with the CBI architecture results in a measurable score of
+interoperability for that simulator.
+
+%\subsubsection*{External Applications}
+
+Examples of existing or proposed model tools include: (1) A model
+version history manager for the tracking and recording of the history
+of model development, (2) A database connector that enables the
+acquisition of a model from a database such as neuromorph.org and
+converts it to a format understood by the Model\,Container, (3) A
+model and result analyzer for inspection of a model stored in the
+Model\,Container to extract, for example, morphological or
+connectivity characteristics for quantification of model components,
+(4) A model and result annotator that enables the automatic or manual
+attachment of text to whole or part of model, and (5) An automatic
+model constructor that contains software components which embed
+algorithms for automatic model construction, for example, it enables
+parameter searching and development of dendritic morphology.
+
+Other natural extensions of the CBI architecture support scientific
+communication through electronic publication. We briefly overview this
+functionality in the next sections.
 
 \subsection*{Supporting and Structuring Scientific Communication}
 
