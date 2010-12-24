@@ -95,7 +95,7 @@ communicate, execute programs, or transfer data among different
 independent applications, and supports extensibility by enabling simulator expansion or enhancement without the need for major changes to system infrastructure.
 
 Historically, simulator interoperability has relied on development of
-extensible markup languages such as the neuron modeling language
+declarative markup languages such as the neuron modeling language
 NeuroML, while simulator extension typically occurred through
 modification of existing functionality.  The software architecture we
 describe here allows for both these approaches. However, it is
@@ -814,7 +814,7 @@ The communication infrastructure establishes run-time communication
 between different solvers, input and output elements working on the same 
 model during a simulation. It can be optimized for either discrete event communication or communication of array 
 based (numerical) data and has a differential implementation for serial as 
-opposed to parallel hardware. As it is part of the run-time system during 
+opposed to parallel hardware. As it can be part of the run-time system during 
 a simulation, the Communication\,Infrastructure can have a significant 
 impact on run-time performance.  Depending upon the simulation and 
 hardware involved, Communication\,Infrastructure deals with issues of 
@@ -1118,16 +1118,64 @@ user-experience\cite{law09:_under_scopin_defin_user_exper}.
 
 % Extend an existing module.
 
-\subsection*{Simulator Interoperability and Simulator Extension}
+\subsection*{Simulator Interoperability}
 
-In the context of the CBI architecture, simulator interoperability
-becomes a much more tangible reality.  After the {\it API}s of the CBI
-architecture are defined, it is possible to specify the
-compliance level of other simulators and software components by matching APIs.  It is
-unlikely that full interoperability can be achieved for all
-simulators. Nevertheless, the degree than an API of a simulator can be mapped to
-work with the CBI architecture results in a measurable score of
-interoperability for that simulator.
+Historically the emergence of monolithic neuronal software has led to
+simulator interoperability in computational neuroscience being
+addressed as interoperability between stand-alone
+applications\,\cite{cannon07:_inter} and its resolution relied on the
+development of declarative markup languages such as NeuroML and
+NineML.
+%A typical example of this
+%interoperability problem occurs when the scripts of a computational
+%model developed for one simulator must be run with a different
+%simulator.
+
+A CBI compliant simulator can easily support these declarative
+languages by implementing a database interface software component that
+maps the concepts of such a language to concepts supported by the
+Biology\,Model\,Container.
+
+As an alternative to declarative model specification, more recently
+the capability to communicate simulation data at run-time between
+different simulators was also implemented using procedural paradigms
+but substantial knowledge of the simulator internals is
+required\cite{ray08:_pymoos, davison08:_pynn}\marginpar{I think there
+  is also a connection between neuron and nest, citation?}.
+
+The CBI architecture moves these problems from a context of
+communication between large monolithic applications to one of simpler
+software components.  The communication infrastructure module in the
+CBI architecture addresses run-time communication of simulation data
+and its availability is required for the simulation of a realistic
+model.  Its prerequisite is that it knows to find the communication
+ports of the variables computed by the mathematical solvers.
+
+In the context of the CBI architecture the solutions to both problems
+of simulator interoperability become a tangible reality.
+
+
+%After the {\it API}s of a CBI compliant are defined, it is possible to
+%specify the compliance level of other simulators and software
+%components by connecting APIs.
+
+%It is unlikely that full interoperability can be achieved for all
+%simulators.
+
+%Nevertheless, the degree than an API of a simulator can be connected
+%to work with the CBI architecture results in a measurable score of
+%interoperability for that simulator.
+
+%In\marginpar{this sentence is a conclusion, not an intro} the context
+%of the CBI architecture, simulator interoperability becomes a more
+%tangible reality.
+
+
+\subsection*{Simulator Extension}
+
+, while simulator extension typically occurred through
+modification of existing functionality.  The CBI architecture allows
+for both these approaches.
 
 %\subsubsection*{External Applications}
 
