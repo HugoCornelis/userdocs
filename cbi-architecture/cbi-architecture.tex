@@ -1130,26 +1130,29 @@ NineML.
 %interoperability problem occurs when the scripts of a computational
 %model developed for one simulator must be run with a different
 %simulator.
+By implementing a new database interface software component a CBI
+compliant simulator can easily support these declarative languages.
+This database interface maps the concepts of the declarative languages
+to concepts supported by the Biology\,Model\,Container.
 
-A CBI compliant simulator can easily support these declarative
-languages by implementing a database interface software component that
-maps the concepts of such a language to concepts supported by the
-Biology\,Model\,Container.
-
-As an alternative to declarative model specification, more recently
-the capability to communicate simulation data at run-time between
-different simulators was also implemented using procedural paradigms
-but substantial knowledge of the simulator internals is
-required\cite{ray08:_pymoos, davison08:_pynn}\marginpar{I think there
-  is also a connection between neuron and nest, citation?}.
+More recently, as an alternative to declarative model specification
+for simulator interoperability, the capability to communicate
+simulation data at run-time between different simulators was
+implemented using procedural paradigms\cite{ray08:_pymoos,
+  davison08:_pynn}\marginpar{I think there is also a connection
+  between neuron and nest, citation?}.  This approach requires the
+modeler to understand some of the internal of the model, the simulator
+and the procedural paradigm.
 
 The CBI architecture moves these problems from a context of
 communication between large monolithic applications to one of simpler
 software components.  The communication infrastructure module in the
 CBI architecture addresses run-time communication of simulation data
 and its availability is required for the simulation of a realistic
-model.  Its prerequisite is that it knows to find the communication
-ports of the variables computed by the mathematical solvers.
+model.
+%  Its prerequisite is that it knows to find the communication
+%ports of the variables computed by the mathematical solvers.  This
+%aspect is described in more detail below.
 
 In the context of the CBI architecture the solutions to both problems
 of simulator interoperability become a tangible reality.
