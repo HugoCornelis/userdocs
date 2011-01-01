@@ -386,13 +386,11 @@ A modeling project is established by the introduction of iterators into the user
 
 \subsection*{Principal Concerns}
 
-We consider that a principled separation of concerns is a prerequisite
-for the development of advanced computational modeling techniques in
-the neurosciences.
-
 In software engineering, the process of partitioning a program into
 logical functions that minimize overlap is referred to as the
-separation of concerns.  User concerns have a direct influence on the
+separation of concerns.  We consider that a principled separation of concerns is a prerequisite
+for the development of advanced computational modeling techniques in
+the neurosciences. User concerns have a direct influence on the
 user's experience of an application.  Technical concerns have a clear
 and direct influence on the partitioning of a program into its primary
 functional blocks, and are also crucial for problem diagnosis and
@@ -439,7 +437,10 @@ implementation and provide operators that convert between these two
 representations.  This insulates the process of model construction
 from the computations performed during a simulation. 
 
-The relationships between simulator control and data modules in a federated architecture are symbolized by the horizontal arrows in Figure~\ref{fig:data-control}, whereas the relationship between high level biological concepts and their mathematical implementation are symbolized by the vertical arrows. Diagonal interactions are forbidden as they foster the mixing of functionality across different levels that ultimately leads to the creation of monolithic software applications.
+The relationships between simulator control and data modules in a federated architecture are symbolized by the horizontal arrows in Figure~\ref{fig:data-control}, whereas the relationship between high level biological concepts and their mathematical implementation are symbolized by the vertical arrows. Separation of the principle concerns along the horizontal and vertical axes defines the modules that enable the
+construction of a simulator that consists of independent stand-alone
+components. These modules form the basis of the meta-framework that we
+refer to as the CBI architecture.
 
 Importantly, we note that a simulator can be efficiently modularized
 when only horizontal or vertical interactions are allowed between the
@@ -447,13 +448,7 @@ modules illustrated in Figure~\ref{fig:data-control}. The larger the
 number of interactions allowed between diagonally located components,
 the more difficult it becomes to functionally separate simulator
 components and the harder it becomes to maintain and extend the
-resulting software application.
-
-Alternatively, separation of the principle concerns along the
-horizontal and vertical axes defines the modules that enable the
-construction of a simulator that consists of independent stand-alone
-components. These modules form the basis of the meta-framework that we
-refer to as the CBI architecture.\\
+resulting software application. Diagonal interactions are forbidden as they foster the mixing of functionality across different levels that ultimately leads to the creation of monolithic software applications.\\
 
 %The first implementation of the CBI architecture has been that of  G-3. We use this software platform to present an overview of the CBI federated software architecture through the example of the the new G-3 simulator. In doing this we follow the ideal simulator workflow presented in Methods.
 
@@ -462,7 +457,7 @@ refer to as the CBI architecture.\\
 
 \subsection*{Separation of Concerns}
 
-Consideration of the principal concerns of data, control, and data layering were used to expand Figure~\ref{fig:data-control} by the separation of concerns principle. This key principle in software engineering states that a given problem involves different kinds of concerns. To cope with complexity, these concerns should be identified and separated\,\cite{Dijkstra:1982fu}. The aim is to achieve engineering quality factors such as robustness, adaptability, maintainability, and reusability.  Ultimately this will result in clear model scripts with biology aspects separated from peripheral code\marginpar{for discussion}.
+Consideration of the principal concerns of data, control, and data layering were used to expand Figure~\ref{fig:data-control} by the separation of concerns principle. This key principle in software engineering states that a given problem involves different kinds of concerns. To cope with complexity, these concerns should be identified and separated\,\cite{Dijkstra:1982fu}. The aim is to achieve engineering quality factors such as robustness, adaptability, maintainability, and reusability.  Ultimately, this results in clear model scripts where biological aspects are separated from peripheral code\marginpar{for discussion}.
 
 % Dijkstra EW (1982) On the role of scientific thought. in Dijkstra, Edsger W.. Selected writings on Computing: A Personal Perspective. New York, NY, USA: Springer-Verlag New York, Inc. pp. 60Ð66.
 
@@ -526,12 +521,11 @@ the low-level back-ends via the controller.
 
 \subsection*{Overall Design Objectives}
 
-There are several important objectives that guide the development
+There are several important objectives that emerged from the separation of concerns that we used to guide the development
 of our federated approach to the design and development of a neuronal
 simulation engine. 
 % where software components are self contained in the sense that they can be run independently.
-They include: (1) Reduced\marginpar{duplicate text, it seems better to
-  say that separation of concerns achieves these goals} complexity of
+They include: (1) Reduced complexity of
 software modules when compared to a monolithic system, (2) Simplified
 documentation of modules in terms of inputs and outputs, (3) Easy
 incorporation or removal of individual modules as required, (4)
@@ -933,19 +927,19 @@ non-parallel and parallel architectures.
 
 \subsection*{A Short CBI Architecture Implementation Guide}
 
-Software\marginpar{Allan: mush up.  This should go to results (1)?} implementations are formal structures that map user
-requirements to technological solutions.  They can only meet those
-requirements for which this technological mapping exists.  In other
+Software implementations are formal structures that map user
+requirements to technological solutions.  However, an application can only meet those
+requirements when this technological mapping exists.  In other
 words, it is the available technology that defines the scope and
 boundaries of the user-workflows that can be implemented in software
 solutions.  As a consequence the development of entirely new software
-architectures can be started from the lowest layer and
-constructed upwards to implement user-workflows and to meet user
+architectures is best started from the lowest layer and
+constructed upwards to implement user-workflows and satisfy user
 requirements.
 
 The lowest layer of the CBI architecture comprises numerical
 solvers, thus implementation of a CBI compliant simulator can start
-with the implementation of a numerical solver. To achieve this, firstly, the source code files can be populated with the mathematical
+with the implementation of a numerical solver. Firstly, source code files can be populated with the mathematical
 functions that implement the solutions of the targeted equations.
 Secondly, functions are required for interaction with the controller
 module.  After these two steps, the new solver is useful for the simulation of simple
@@ -953,16 +947,16 @@ models.  Thirdly, functions are required for communication with other
 solver software components.  Implementation of an interface with a
 Biology\,Model\,Container makes the solver
 available for simulation of more realistic models.
-Finally connecting with an Experiment\,Model\,Container and Scripting\,Libraries allows to build applications such as tutorials and research projects.
+Finally connecting with an Experiment\,Model\,Container and Scripting\,Libraries allows applications such as tutorials and research projects to be built .
 
 \subsection*{Comparison of the CBI Architecture to Software Industry Standards}
 
-The\marginpar{Allan: mush up here and following, should go to results (2)?} three-tier software
+The three-tier software
 architecture \cite{eckerson95:_three_tier_clien_server_archit} is a
-widely used client-server paradigm with the advantages that the servers
+widely used client-server paradigm. It has the dual advantages that servers
 can be shared by users and software on both the client and server is
 easily upgraded.  Service-oriented architecture (SOA) is a widespread
-commercial implementation of a three-tier architecture where the
+commercial implementation of a three-tier architecture where
 service based information exchange, reusability, and composability
 defines a software federation for an application by uniting resources
 while maintaining their individual autonomy and
