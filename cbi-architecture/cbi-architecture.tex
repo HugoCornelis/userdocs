@@ -1002,9 +1002,8 @@ user-experience\cite{law09:_under_scopin_defin_user_exper}.
 
 \subsection*{Comparison of the CBI Architecture to Software Industry Standards}
 
-The three-tier software
-architecture \cite{eckerson95:_three_tier_clien_server_archit} is a
-widely used client-server paradigm. It has the dual advantages that servers
+The CBI Architecture is based on the three-tier software architecture.
+a widely used commercial client-server paradigm\,\cite{eckerson95:_three_tier_clien_server_archit}. It has the dual advantages that servers
 can be shared by users and software on both the client and server is
 easily upgraded.  Service-oriented architecture (SOA) is a widespread
 commercial implementation of a three-tier architecture where
@@ -1058,7 +1057,7 @@ The function of business logic in enterprise applications is
 comparable to that of the Scripting\,Libraries\,and\,Applications
 module in the CBI architecture.  The Database Interfaces are
 comparable to traditional ETL applications and emerging semantic
-technology applications.  These highly developed layers in the
+technology applications\marginpar{needs further explanation and / or citations}.  These highly developed layers\marginpar{what layers?} in the
 industry are in sharp contrast with the preliminary developments in
 computational neuroscience for the standards of educational tutorials,
 research project frameworks, and declarative modeling standards such
@@ -1119,7 +1118,36 @@ here.
 %suggests that it is an abstraction inversion to implement a modular
 %high-level design using a low-level module manager.
 
-\subsection*{Simulator Interoperability}
+\subsection*{CBI Simulator Extension}
+
+When compared to the current generation of simulators simulator
+extension has a greatly enhanced meaning for a CBI compliant
+simulator.  Firstly simulator extensions can be implemented as
+modifications of and additions to existing software components.  As an
+example it can be relatively easy to enhance a simulation controller
+such that it prints the simulation time to the screen.  It can be
+similarly easy to enhance an existing compartmental solver to compute
+the total transmembrane current through the soma of a neuron.
+
+A second class of simulator extension is the addition of new software
+components.  For instance to connect the simulator to a morphology
+database and a channel model database two database connectors can be
+written.  They convert the database formats to API calls of the
+Biology\,Model\,Container.  Simple extension of the
+Biology\,Model\,Container allows it be used for analysis of
+morphological characteristics and for quantification of model
+components.
+
+More elaborate software components include a model version history
+manager for the tracking and recording of the history of model
+development and a model and result annotator that enables the
+automatic or manual attachment of text to whole or part of a model.
+
+Other natural extensions of the CBI architecture support scientific
+communication through electronic publication. We briefly overview this
+functionality in the next sections.
+
+\subsection*{CBI Simulator Interoperability}
 
 Historically\marginpar{refer again to Type 1 and Type 2 interoperability}, the emergence of monolithic neuronal software has led to
 simulator interoperability in computational neuroscience being
@@ -1172,35 +1200,6 @@ of simulator interoperability become a tangible reality.
 %of the CBI architecture, simulator interoperability becomes a more
 %tangible reality.
 
-
-\subsection*{Simulator Extension}
-
-When compared to the current generation of simulators simulator
-extension has a greatly enhanced meaning for a CBI compliant
-simulator.  Firstly simulator extensions can be implemented as
-modifications of and additions to existing software components.  As an
-example it can be relatively easy to enhance a simulation controller
-such that it prints the simulation time to the screen.  It can be
-similarly easy to enhance an existing compartmental solver to compute
-the total transmembrane current through the soma of a neuron.
-
-A second class of simulator extension is the addition of new software
-components.  For instance to connect the simulator to a morphology
-database and a channel model database two database connectors can be
-written.  They convert the database formats to API calls of the
-Biology\,Model\,Container.  Simple extension of the
-Biology\,Model\,Container allows it be used for analysis of
-morphological characteristics and for quantification of model
-components.
-
-More elaborate software components include a model version history
-manager for the tracking and recording of the history of model
-development and a model and result annotator that enables the
-automatic or manual attachment of text to whole or part of a model.
-
-Other natural extensions of the CBI architecture support scientific
-communication through electronic publication. We briefly overview this
-functionality in the next sections.
 
 \subsection*{Supporting and Structuring Scientific Communication}
 
