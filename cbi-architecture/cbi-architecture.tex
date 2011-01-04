@@ -1201,27 +1201,39 @@ of simulator interoperability become a tangible reality.
 %tangible reality.
 
 
-\subsection*{Supporting and Structuring Scientific Communication}
+\subsection*{Structuring Scientific Communication}
 
 \subsubsection*{From Systems of Equations to Workflows for Biological
   Research}
 
-One\marginpar{should be at end of discussion} of the crucial steps in
-the development of a simulator for modeling in the neurosciences is to
-recognize that many intermediate steps exist between a conceptual
-model of a biological system, its mathematical representation, and its
-low-level software implementation.  This leads to a natural stepwise
-algorithmic process to translate a high-level model into a computer
-implementation.
+A conceptual model of a biological system translates to a mathematical
+representation and a low-level software implementation by taking many
+intermediate representations.  Each of these representations is the
+result of a number of choices by the scientist.  Examples of these
+choices are the use of algorithms such the numerical method, or the
+value of parameters, such as maximal electrotonic length.  But because
+of all the unknowns in neuroscience many of these choice have a
+phenomenological underpinning.  Examples here are the choice of
+Hodgkin and Huxley to hypothesize the existence of transmembrane ion
+channels that can be blocked by biophysical gates and mathematically
+represent the activity of these gates with fitted exponentials raised
+to a power.  This hypothesis structured a rich scientific discourse
+about the biophysical nature of action potential propagation in an
+axon and decades later the ion channels were experimentally isolated.
 
-The richness of the mapping implemented by the intermediate layer of the CBI architecture
-determines how easy it is to implement a given user-workflow that may
-be specific to a research project or educational tutorial.  The first
-simple steps to understand this mapping have only recently been taken.
-Consequently, its nature, structure, and complexities
-are unknown.  The examples studying this mapping we are aware of are
+This leads
+to a stepwise process to translate a high-level model into a
+computer implementation.
+
+The richness of the mapping implemented by the intermediate layer of
+the CBI architecture determines how easy it is to implement a given
+user-workflow that may be specific to a research project or
+educational tutorial.  Consequently, its nature, structure, and
+complexities are unknown.  The first simple steps to understand this
+mapping have only recently been taken.  The more elaborate
+implementations of this mapping we are aware of are
 neuroConstruct\cite{gleeson07} and the Neurospaces
-model-container\cite{cornelis03:_neuros}.
+model-container\cite{cornelis03:_neuros}\marginpar{why?}.
 
 The data layering in the CBI architecture mirrors
 this fact and that the data in a simulator can have different
