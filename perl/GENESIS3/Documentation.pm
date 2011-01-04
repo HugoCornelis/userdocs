@@ -424,7 +424,7 @@ sub compile_2_html
 
     # update html links to their proper file types.
 
-    my $source_html = update_html($self->{descriptor}, $source_text);
+    my $source_html = update_hyperlinks($self->{descriptor}, $source_text);
 
     # write converted source
 
@@ -719,8 +719,7 @@ sub compile_latex
 
 		$source_text =~ s(\\item \\href\{\.\.\/$name[0]\/$name[0]\.\w+\}\{\\bf \\underline\{.*\}\})( )g;
 
-		# If we have nothing but whitespace in between the itemize tags, remove
-		# the whole line.
+		# remove empty itemize environments (otherwise latex complains)
 
 		$source_text =~ s(\\begin\{itemize\}\s+\\end\{itemize\})( )g;
 
@@ -1788,23 +1787,23 @@ sub source_filenames
 
 
 #
-# Function to update any links in the html that it outputs
-# to the userdocs system. Handles special cases.
+# Function to update hyperlinks in the source text
+# to the userdocs system.
 #
 
-sub update_html
+sub update_hyperlinks
 {
     my $descriptor = shift;
+
     my $source_text = shift;
 
-    print "--- Updating html links ---\n";
+    print "--- Updating hyperlinks ---\n";
 
     $source_text =~ s(\\href\{\.\./([^}]*)\.pdf)(\\href\{../$1.html)g;
 
     $source_text =~ s(\\href\{\.\./([^}]*)\.tex)(\\href\{../$1.html)g;
 
-    # If we have nothign but whitespace in between the itemize tags, remove
-    # the whole line.
+    # remove empty itemize environments (otherwise latex complains)
 
     #! this is a duplicated statement / operation, see above
 
@@ -1814,10 +1813,10 @@ sub update_html
 
     $source_text =~ s(\\includegraphics\{figures/([^}]*)\.eps)(\\href\{figures/$1.png)g;
 
-    # here we handle special cases for pdf files. Since several files in the 
+    # here we handle special cases for pdf files. Since several files in the
     # documentation can be pdf we need to check all of the published docs
     # for the pdf tag. Operation is a bit expensive.
-    # NOTE: Duplicates some code from userdocs-tag-replace-items
+    # NOTE: Duplicates code from userdocs-tag-replace-items
 
     my $published_pdfs_yaml = `userdocs-tag-filter 2>&1 pdf published`;
 
@@ -1827,9 +1826,9 @@ sub update_html
     {
 	$published_pdf =~ /.*\/(.*)/;
 
-	my $pdf = $1;
+	my $document_name = $1;
 
-	$source_text =~ s(\\href\{\.\./$pdf/$pdf\.html)(\\href\{../$pdf/$pdf.pdf)g;
+	$source_text =~ s(\\href\{\.\./$document_name/$document_name\.html)(\\href\{../$document_name/$document_name.pdf)g;
     }
 
     return $source_text;
