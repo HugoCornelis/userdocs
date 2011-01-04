@@ -240,7 +240,7 @@ sub compile
 
     if ($self->is_obsolete())
     {
-	print "This document is obsolete, skipping.\n";
+	print "$0: this document is obsolete, skipping.\n";
     }
 
     # if we find a makefile
@@ -262,43 +262,43 @@ sub compile
 
     elsif ($self->is_redirect())
     {
-	$result = $self->compile_redirect();
+	$result = $self->compile_redirect($options);
     }
     elsif ($self->is_restructured_text())
     {
-	$result = $self->compile_restructured_text();
+	$result = $self->compile_restructured_text($options);
     }
     elsif ($self->is_rich_text_format())
     {
-	$result = $self->compile_rich_text_format();
+	$result = $self->compile_rich_text_format($options);
     }
     elsif ($self->is_pdf())
     {
-	$result = $self->compile_pdf();
+	$result = $self->compile_pdf($options);
     }
     elsif ($self->is_mp3())
     {
-	$result = $self->compile_mp3();
+	$result = $self->compile_mp3($options);
     }
     elsif ($self->is_wav())
     {
-	$result = $self->compile_wav();
+	$result = $self->compile_wav($options);
     }
     elsif ($self->is_html())
     {
-	$result = $self->compile_html();
+	$result = $self->compile_html($options);
     }
     elsif ($self->is_png())
     {
-	$result = $self->compile_png();
+	$result = $self->compile_png($options);
     }
     elsif ($self->is_ps())
     {
-	$result = $self->compile_ps();
+	$result = $self->compile_ps($options);
     }
     else
     {
-	$result = $self->compile_latex();
+	$result = $self->compile_latex($options);
     }
 
     if ($options->{verbose})
@@ -320,11 +320,57 @@ sub compile_2_dvi
 
     my $filename_base = shift;
 
+    my $options = shift;
+
+    # read latex source
+
+    use IO::File;
+
+    my $source_file = IO::File->new("<../$filename");
+
+    my $source_text = join "", <$source_file>;
+
+    $source_file->close();
+
+    # update the bibliographic reference
+
+    $source_text =~ s(\\bibliography\{\.\./tex/bib/)(\\bibliography\{\.\./\.\./tex/bib/)g;
+
+    # update html links to their proper file types.
+
+    my $source_html = update_hyperlinks($self->{descriptor}, $source_text);
+
+    # write converted source
+
+    $source_file = IO::File->new(">$filename");
+
+    print $source_file $source_html;
+
+    $source_file->close();
+
+    # copy external files
+
+    system "cp -rp ../plos2009.bst .";
+
+    # copy figures
+
+    system "cp -rp ../figures/* figures/";
+
+#     if ($?)
+#     {
+# 	return "cp -rp ../figures/* figures/";
+#     }
+
+    if ($options->{verbose})
+    {
+	print "$0: " . "latex -halt-on-error '$filename'" . "\n";
+    }
+
     system "latex -halt-on-error '$filename'";
 
     if ($?)
     {
-	print "------------------ Error: latex -halt-on-error '$filename' failed\n";
+	print "$0: *** Error: latex -halt-on-error '$filename' failed\n";
 
 	return "latex -halt-on-error '$filename' failed";
     }
@@ -332,6 +378,11 @@ sub compile_2_dvi
     #! note: both makeindex and bibtex produce error returns when
     #! there is no correct configuration for them in the latex file, we
     #! ignore these error returns
+
+    if ($options->{verbose})
+    {
+	print "$0: " . "makeindex -c '$filename_base'" . "\n";
+    }
 
     system "makeindex -c '$filename_base'";
 
@@ -342,6 +393,11 @@ sub compile_2_dvi
 # 	return "makeindex -c '$filename_base'";
 #     }
 
+    if ($options->{verbose})
+    {
+	print "$0: " . "bibtex '$filename_base'" . "\n";
+    }
+
     system "bibtex '$filename_base'";
 
 #     if ($?)
@@ -351,20 +407,30 @@ sub compile_2_dvi
 # 	return "bibtex '$filename_base'";
 #     }
 
-    system "latex '$filename'";
+    if ($options->{verbose})
+    {
+	print "$0: " . "latex -halt-on-error '$filename'" . "\n";
+    }
+
+    system "latex -halt-on-error '$filename'";
 
     if ($?)
     {
-	print "------------------ Error: latex '$filename'\n";
+	print "$0: *** Error: latex '$filename'\n";
 
 	return "latex '$filename'";
     }
 
-   system "latex '$filename'";
+    if ($options->{verbose})
+    {
+	print "$0: " . "latex -halt-on-error '$filename'" . "\n";
+    }
+
+    system "latex -halt-on-error '$filename'";
 
     if ($?)
     {
-	print "------------------ Error: latex '$filename'\n";
+	print "$0: *** Error: latex '$filename'\n";
 
 	return "latex '$filename'";
     }
@@ -408,48 +474,59 @@ sub compile_2_html
 
     chdir "html";
 
-    # read latex source
-
-    use IO::File;
-
-    my $source_file = IO::File->new("<../$filename");
-
-    my $source_text = join "", <$source_file>;
-
-    $source_file->close();
-
-    # update the bibliographic reference
-
-    $source_text =~ s(\\bibliography{\.\./tex/bib/)(\\bibliography{\.\./\.\./\.\./tex/bib/)g;
-
-    # update html links to their proper file types.
-
-    my $source_html = update_hyperlinks($self->{descriptor}, $source_text);
-
-    # write converted source
-
-    $source_file = IO::File->new(">$filename");
-
-    print $source_file $source_html;
-
-    $source_file->close();
-
-    # copy figures
-
-    system "cp -rp ../figures/* figures/";
-
-#     if ($?)
-#     {
-# 	return "cp -rp ../figures/* figures/";
-#     }
-
     # generate html output
 
     if (!$options->{parse_only})
     {
+# 	system "cp ../$filename_base.aux .";
+# 	system "cp ../$filename_base.bbl .";
+# 	system "cp ../$filename_base.blg .";
+# 	system "cp ../$filename_base.dvi .";
+# 	system "cp ../$filename_base.log .";
+# 	system "cp ../$filename_base.out .";
+# 	system "cp ../$filename_base.tex .";
+
+# 	system "cp ../$filename_base.{aux,bbl,blg,dvi,log,out,tex} .";
+
+	# read latex source
+
+	use IO::File;
+
+	my $source_file = IO::File->new("<../$filename");
+
+	my $source_text = join "", <$source_file>;
+
+	$source_file->close();
+
+	# update the bibliographic reference
+
+	$source_text =~ s(\\bibliography\{\.\./\.\./tex/bib/)(\\bibliography\{\.\./\.\./\.\./tex/bib/)g;
+
+	# update html links to their proper file types.
+
+	my $source_html = update_hyperlinks($self->{descriptor}, $source_text);
+
+	# write converted source
+
+	$source_file = IO::File->new(">$filename");
+
+	print $source_file $source_html;
+
+	$source_file->close();
+
+	# copy external files
+
+	system "cp -rp ../plos2009.bst .";
+
+	# copy figures
+
+	system "cp -rp ../figures/* figures/";
+
 	#t some of these were already done by ->compile_2_dvi()
 
-	system "latex '$filename'";
+	system "latex -halt-on-error '$filename'";
+	system "latex -halt-on-error '$filename'";
+	system "latex -halt-on-error '$filename'";
 
 	if ($?)
 	{
@@ -571,30 +648,31 @@ sub compile_2_ps
 
     mkdir "ps";
 
-    if ($options->{verbose})
-    {
-	print "$0: entering ps\n";
-    }
+#     if ($options->{verbose})
+#     {
+# 	print "$0: creating ps\n";
+#     }
 
-    chdir "ps";
+#     chdir "ps";
 
     if (!$options->{parse_only})
     {
-	system "dvips '../$filename_base.dvi' -o '$filename_base.ps'";
+	system "dvips '$filename_base.dvi' -o '$filename_base.ps'";
 
 	if ($?)
 	{
-	    $result = "creating dvi from $filename (dvips '../$filename_base.dvi' -o '$filename_base.ps', $?)";
+	    $result = "creating dvi from $filename (dvips '$filename_base.dvi' -o '$filename_base.ps', $?)";
 	}
 
+	system "mv '$filename_base.ps' ps";
     }
 
-    if ($options->{verbose})
-    {
-	print "$0: leaving ps\n";
-    }
+#     if ($options->{verbose})
+#     {
+# 	print "$0: leaving ps\n";
+#     }
 
-    chdir "..";
+#     chdir "..";
 
     return $result;
 }
@@ -734,15 +812,15 @@ sub compile_latex
 	    {
 		# generate ps output
 
-		$result = $self->compile_2_ps($filename, $filename_base);
+		$result = $self->compile_2_ps($filename, $filename_base, $options);
 
 		# generate pdf output
 
-		$result = $result or $self->compile_2_pdf($filename, $filename_base);
+		$result = $result or $self->compile_2_pdf($filename, $filename_base, $options);
 
 		# generate html output
 
-		$result = $result or $self->compile_2_html($filename, $filename_base);
+		$result = $result or $self->compile_2_html($filename, $filename_base, $options);
 	    }
 
 	    chdir "..";
@@ -752,7 +830,7 @@ sub compile_latex
 
 	else
 	{
-	    print "$0: unknown file type for $filename";
+	    print "$0: unknown file type for $filename (ignored)\n";
 	}
     }
 
@@ -1086,7 +1164,7 @@ sub check
 
     my $result;
 
-    print "Checking $self->{name}\n";
+    print "$0: Checking $self->{name}\n";
 
     my $descriptor_error = $self->read_descriptor();
 
@@ -1225,17 +1303,17 @@ sub create_http_redirect
 
     my $result;
 
-    print "\n\nThe document ";
+    print "$0: \n\nThe document ";
     print $document;
     print " is an http redirect to a website.\n\n";
 
-    print "Entering the $document directory ";
+    print "$0: Entering the $document directory ";
     chdir $document;
     print `pwd`;
     print "\n\n";
 
 
-    print  "-- creating directories --\n";
+    print  "$0: creating directories\n";
 
     system "mkdir -p output/ps";
 
@@ -1258,7 +1336,7 @@ sub create_http_redirect
 	$result = "mkdir -p output/html";
     }
 
-    print "-- creating html file --\n";
+    print "$0: creating html file\n";
 
     my @tmp = split(/\//,$document);
 
@@ -1275,7 +1353,7 @@ sub create_http_redirect
     print OUTPUT "\">\n  </body>\n</html>\n\n";
     close(OUTPUT);
 
-    print "-- copying redirect file to output directories\n";
+    print "$0: copying redirect file to output directories\n";
 
     system "cp -f $html_document output/ps";
 
@@ -1298,7 +1376,7 @@ sub create_http_redirect
 	$result = "cp -f $html_document output/html";
     }
 
-    print "-- Done --\n\n";
+    print "$0: Done\n\n";
 
     return $result;
 }
@@ -1637,7 +1715,7 @@ sub publish
 
     if ($self->is_obsolete())
     {
-	print "This document is obsolete, skipping.\n";
+	print "$0: this document is obsolete, skipping.\n";
     }
 
     # if we find a makefile
@@ -1797,7 +1875,7 @@ sub update_hyperlinks
 
     my $source_text = shift;
 
-    print "--- Updating hyperlinks ---\n";
+    print "$0: updating hyperlinks\n";
 
     $source_text =~ s(\\href\{\.\./([^}]*)\.pdf)(\\href\{../$1.html)g;
 
@@ -1924,7 +2002,7 @@ sub replacement_string
 
 	if ($self->{verbose})
 	{
-	    print "For $self->{filename}: found $command at $position, replacing ... \n";
+	    print "$0: for $self->{filename}: found $command at $position, replacing ... \n";
 	}
 
 	$content =~ s(`$command`)($replacement)g;
