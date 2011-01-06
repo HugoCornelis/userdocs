@@ -100,7 +100,7 @@ NeuroML, while simulator extension typically occurred through
 modification of existing functionality.  The software architecture we
 describe here allows for both these approaches. However, it is
 designed to support alternative paradigms of interoperability and
-extensibility through the provision of semantically\marginpar{semantic
+extensibility through the provision of logical relationships\marginpar{semantic
   interface is never defined in the text, replace with logical relationships?} defined application
 programming interfaces.  They allow any appropriately configured
 component or software application to be incorporated into a simulator.
@@ -272,7 +272,7 @@ Catacomb2 \cite{cannon03:_from}).
 
 %As a complement to the Type\,1 interoperability provided by a `universal' language such as NeuroML or SBML, we here introduce the Computational Biology Initiative federated simulator architecture (CBI architecture). It provides a formal description of the class of simulators that support Type 2, or runtime interoperability.
 
-Here we introduce a new class of simulator architecture, the CBI {\it federated software architecture}, for convenience referred to here as the CBI architecture. As we now show, it is a software architecture that transparently supports both
+Here we introduce a new class of simulator architecture, the CBI {\it federated software} architecture, for convenience referred to here as the CBI architecture. As we now show, it is a {\it software architecture} that transparently supports both
 interoperability and {\it extensibility} for model building, simulation, and result analysis.
 
 % Results and Discussion can be combined.
@@ -328,7 +328,7 @@ developed in an effort to resolve the complexities associated with
 continual addition of functionality to simulators.
 Ultimately\marginpar{discussion}, simulators become monolithic and it
 is increasingly difficult for users and developers to maintain and
-extend them, with the logical consequence that user workflows were
+extend them, with the logical consequence that {\it user workflow}s were
 often similarly degraded.  Contemporary simulator scripts are also
 typically unstructured in the sense that a biological model is mixed
 with other code that defines and controls inputs, outputs and
@@ -357,7 +357,7 @@ simulation configuration\cite{cannon07:_inter}.
 
 \subsection*{The Ideal User Workflow}
 
-A five step outline of a workflow
+A five step outline of an {\it ideal user workflow}
 for the development, implementation, and simulation of a computational
 model has been identified from the workflow of users of the GENESIS
 neural simulation platform.  Importantly, the workflow explicitly
@@ -393,9 +393,9 @@ A modeling project is established by the introduction of iterators into the user
 
 In software engineering, the process of partitioning a program into
 logical functions that minimize overlap is referred to as the
-separation of concerns.  We consider that a principled separation of concerns is a prerequisite
+{\it separation of concerns}.  We consider that a principled separation of concerns is a prerequisite
 for the development of advanced computational modeling techniques in
-the neurosciences. User concerns have a direct influence on the
+the neurosciences. User {\it concerns} have a direct influence on the
 user's experience of an application.  Technical concerns have a clear
 and direct influence on the partitioning of a program into its primary
 functional blocks, and are also crucial for problem diagnosis and
@@ -444,7 +444,7 @@ from the computations performed during a simulation.
 
 The relationships between simulator control and data modules in a federated architecture are symbolized by the horizontal arrows in Figure~\ref{fig:data-control}, whereas the relationship between high level biological concepts and their mathematical implementation are symbolized by the vertical arrows. Separation of the principle concerns along the horizontal and vertical axes defines the modules that enable the
 construction of a simulator composed of independent stand-alone
-components. These modules form the basis of the meta-framework that we
+{\it component}s. These modules form the basis of the meta-framework that we
 refer to as the CBI architecture.
 
 Importantly, we note that a simulator can be efficiently modularized
@@ -541,10 +541,10 @@ development.
 \subsection*{Overview of the Federated Software Architecture}
 
 The CBI architecture is defined as
-a modular paradigm that places stand-alone software {\it components} into a
+a modular paradigm that places stand-alone software components into a
 set of logical relationships. In this sense it defines a modular framework that provides the necessary parts of a neural simulator.
 
-The schema identified by the {\it separation of concerns} (see Fig.~\ref{fig:data-control}) is expanded in
+The schema identified by the separation of concerns (see Fig.~\ref{fig:data-control}) is expanded in
 Figure~\ref{fig:cbi-architecture-simple} to give the components that
 form the building blocks of the CBI architecture. This figure retains
 the four simulator functions revealed by the separation of concerns. They 
@@ -1132,7 +1132,7 @@ the total transmembrane current through the soma of a neuron.
 A second class of simulator extension is the addition of new software
 components.  For instance to connect the simulator to a morphology
 database and a channel model database two database connectors can be
-written.  They convert the database formats to API calls of the
+written.  They convert the database formats to {\it application programing interfaces} (API) calls of the
 Biology\,Model\,Container.  Simple extension of the
 Biology\,Model\,Container allows it be used for analysis of
 morphological characteristics and for quantification of model
@@ -1335,12 +1335,14 @@ In this section we define the elements of our ``philosophical workflow''. This w
 
 \subsection*{The Philosophical Workflow}
 
-Monolithic Software and Federated Software, described below, are the
+Monolithic software and federated software, described below, are the
 two extremes of a continuum.  The philosophical goal of the CBI
 architecture is to move simulator design away from the extreme of
-Monolithic Software towards the extreme of Federated Software.
+monolithic software towards the extreme of federated software.
 
-\paragraph{\bf Monolithic Software:} A {\it monolithic software}
+\paragraph{\bf Monolithic Software:}
+
+A {\it monolithic software}
 application is one in which the user interface, data access code, and
 computational algorithms are combined into a single application where
 the smallest software component is the whole application. It is typically comprised of a set of tightly coupled functions where the modification or extension of one function requires
@@ -1422,12 +1424,12 @@ Fig.\,\ref{fig:cbi-architecture-simple}).
 
 \paragraph{API and ABI:}
 
-An application programming interface (API) is an interface implemented
+An {\it application programming interface} (API) is an interface implemented
 by a software program that enables it to interact with other software.
 It facilitates interaction between different software programs.  An
 API provides a library to be used directly via simple function calls.
 
-An application binary interface (ABI) describes the low-level details
+An {\it application binary interface} (ABI) describes the low-level details
 of an interface between an application (or any type of) program and
 another application.  ABIs cover details such as data type, size, and
 alignment, calling conventions which controls how functions' arguments
