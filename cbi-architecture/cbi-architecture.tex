@@ -25,8 +25,8 @@
 \usepackage{color} 
 
 % Use doublespacing - comment out for single spacing
-%\usepackage{setspace} 
-%\doublespacing
+\usepackage{setspace} 
+\doublespacing
 
 
 % Text layout
@@ -100,8 +100,7 @@ NeuroML, while simulator extension typically occurred through
 modification of existing functionality.  The software architecture we
 describe here allows for both these approaches. However, it is
 designed to support alternative paradigms of interoperability and
-extensibility through the provision of logical relationships\marginpar{semantic
-  interface is never defined in the text, replace with logical relationships?} defined application
+extensibility through the provision of logical relationships and defined application
 programming interfaces.  They allow any appropriately configured
 component or software application to be incorporated into a simulator.
 
@@ -192,7 +191,7 @@ the development scope of new components.
 
 \section*{Introduction}
 
-The application of mathematical methods to modeling and quantification in neurophysiology can be traced to the Lapicque model of a neuron introduced over a century ago \cite{L:1907fk}, the empirical description of action potential generation and propagation \cite{hodgkin52:_quantitative_description}, and the application of cable theory to the modeling of dendritic electrophysiology \cite{Rall:1957uq}. Although, a hand cranked calculator was employed to verify the original integration of the action potential, it was not until the use of mathematical approaches based on cable theory were developed to model dendritic properties and function in the late 1950s, that digital computers became a necessary tool for modeling studies  \cite{rall59:_branc}. It took a further quarter century for the interdisciplinary field that links neuroscience, cognitive science, electrical engineering, computer science, physics, and mathematics to be named and thus give birth to computational neuroscience \cite{Schwartz:1990kx}.
+The application of mathematical methods to modeling and quantification in neurophysiology can be traced to the Lapicque model of a neuron introduced over a century ago \cite{L:1907fk}, the empirical description of action potential generation and propagation \cite{hodgkin52:_quantitative_description}, the application of cable theory to the modeling of dendritic electrophysiology \cite{Rall:1957uq}, and the recognition that different levels of analysis could be employed to understand brain function \cite{Marr:1982fk}. Although, a hand cranked calculator was employed to verify the original integration of the action potential, it was not until the use of mathematical approaches based on cable theory were developed to model dendritic properties and function in the late 1950s, that digital computers became a necessary tool for modeling studies  \cite{rall59:_branc}. It took a further quarter century for the interdisciplinary field that links neuroscience, cognitive science, electrical engineering, computer science, physics, and mathematics to be named and thus give birth to computational neuroscience \cite{Schwartz:1990kx}.
 %Since that time, a continued and rapid development of computer hardware and software has led to a plethora of systems for the description, simulation, and analysis of computational models from the sub-cellular (e.g. MCell--Stiles \& Bartoll, 2001; Roth et al., 2000) to large networks of biophysically realistic model neurons (e.g. Brunel \& Wang, 2001, Traub et al., 2005).
 
 % Lapicque L (1907) Recherches quantitative sur l'excitabilitie electrique des nerfs traitee comme une polarisation. J Physiol Pathol Gen 9: 620--635.
@@ -206,7 +205,7 @@ The application of mathematical methods to modeling and quantification in neurop
 % Traub RD, Contreras D, Cunningham MO, Murray H, LeBeau FEN, Roopun A, Bibbig A, Wilent WB, Higley MJ \& Whittington MA (2005). Single-column thalamocortical network model exhibiting gamma oscillations, sleep spindles and  epileptogenic bursts. Journal of Neurophysiology 93: 2194--2232.
 % Brunel N \& Wang X-J (2001) Effects of neuromodulation in a cortical network model of object working memory dominated by recurrent inhibition. J Comput Neurosci 11: 63--85.
 
-Historically, the development of neuronal simulation software for the construction of morphologically detailed neuron models and small networks was instigated by research projects that specifically addressed complementary technical and scientific questions \cite{Moore:2010vn}. For example, one widely used application is NEURON \cite{m93:_neural_system}. It grew from the identification of numerical techniques that greatly improved the efficient computation and accuracy of the solution to the cable equations employed to model electrical activity in branched dendrites \cite{hines84:_effic,hines89:_progr_simul_nerve_equat_branc_geomet}. Another wide  `	0ly used54789*=/98 simulation platform is GENESIS \cite{wilson89:_advan_neural_infor_proces_system}. From conception, it was a more generalized simulator and was initially employed to model at the single cell level neural oscillations in piriform \cite{Wilson:1988zr} and cerebral cortex \cite{Wilson:1989ys}.
+Historically, the development of neuronal simulation software for the construction of morphologically detailed neuron models and small networks was instigated by research projects that specifically addressed complementary technical and scientific questions \cite{Moore:2010vn}. For example, one widely used application is NEURON \cite{m93:_neural_system}. It grew from the identification of numerical techniques that greatly improved the efficient computation and accuracy of the solution to the cable equations employed to model electrical activity in branched dendrites \cite{hines84:_effic,hines89:_progr_simul_nerve_equat_branc_geomet}. Another widely used simulation platform is GENESIS \cite{wilson89:_advan_neural_infor_proces_system}. From conception, it has been a more generalized simulator and was initially employed to model at the single cell level neural oscillations in piriform \cite{Wilson:1988zr} and cerebral cortex \cite{Wilson:1989ys}.
 
 % Moore JW (2010) A personal view of the early development of computational neuroscience in the USA. Frontiers in Computational Neuroscience 4: 20.
 % Hines M (1993) NEURON--a program for simulation of nerve equations. In: F. Eeckman (ed.) Neural Systems: Analysis and Modeling. Norwell, MA: Kluwer.
@@ -216,7 +215,7 @@ Historically, the development of neuronal simulation software for the constructi
 % Wilson MA & Bower JM (1989) Computer simulation of oscillatory behavior in cerebral cortical networks. In D Anderson (ed.) Neural Information Processing Systems. American Institute of Physics: New York. pp. 84--91.
 % Wilson MA, Bhalla US, Uhley JD & Bower JM (1989) GENESIS: A system for simulating neural networks. In D Anderson (ed.) Neural Information Processing Systems. American Institute of Physics: New York. pp. 485--492.
 
-These software systems have been both highly successful and have continued to grow in complexity through cycles of research project extension (see for example parallel NEURON \cite{migliore06:_paral_networ_simul_neuron} and pGENESIS \cite{Hereld:2004ly}). However, after more than twenty years of extending their functionality, usually by the direct incorporation of source code into the core of the simulator, their code structures have become so complicated that it is now increasingly difficult, if not impossible, to easily continue this process. The resulting stand-alone applications have become {\it monolithic} with their life cycles inevitably moving  from extension to maintenance. (Note, italicized text indicates the first appearance of a technical term defined in Materials and Methods.) A significant consequence of this process is that the development of an optimized simulation can be a considerable challenge for the neuroscientist unfamiliar with the underlying mathematical and computational theory.
+These software systems have both been highly successful and have continued to grow in complexity through cycles of research project extension (see for example parallel NEURON \cite{migliore06:_paral_networ_simul_neuron} and PGENESIS \cite{Hereld:2004ly}). However, after more than twenty years of extending their functionality, usually by the direct incorporation of source code into the core of the simulator, their code structures have become so complicated that it is now increasingly difficult, if not impossible, to easily continue this process. The resulting stand-alone applications have become {\it monolithic} with their life cycles inevitably moving  from extension to maintenance. (Note, {\it italicized} text indicates the first appearance of a technical term defined in Materials and Methods. {\tt Typewriter} text indicates the name of a software {\it module} defined in Results.) A significant consequence of this process is that the development of an optimized simulation can be a considerable challenge for the neuroscientist unfamiliar with the underlying mathematical and computational theory.
 
 % Migliore, M, Cannia, C., Lytton, W.W., Markram, H. and Hines, M.L. (2006) Parallel network simulations with NEURON. J Comput Neurosci 21: 119--129.
 % Hereld M, Stevens RL, van Drongelen W \& Lee HC (2004) Developing a petascale neural simulation.  Proc 26th Ann Int Conf IEEE EMBS 2: 3999--4002.
@@ -224,13 +223,14 @@ These software systems have been both highly successful and have continued to gr
 One response to the
 cumbersome nature of monolithic software applications has been the
 development of specialized simulators capable of modeling different
-levels of biological detail. For example, (1) Nest simulates large
-structured network systems \cite{diesmann01}, (2) HHsim
+(levels of biological detail. For example, NEST
+(http://www.nest\-initiative.org/index.php/About\_Us) simulates large
+structured network systems \cite{diesmann01}, HHsim (http://www.cs.cmu.edu/\~dst\/HHsim/)
 provides a graphical environment for the detailed exploration of a
 section of excitable membrane via the Hodgkin-Huxley equation
-formalism \cite{Touretzky:2003ve}, (3) COPASSI \cite{Hoops:2006qf} is
+formalism \cite{Touretzky:2003ve}, COPASSI (http://www.copasi.org/tiki-view\_articles.php) \cite{Hoops:2006qf} is
 a SBML \cite{Hucka-M:2004bh} enabled application for simulation and
-analysis of sub-cellular biochemical networks, and (4) MCell
+analysis of sub-cellular biochemical networks, and MCell (http://www.mcell.cnl.salk.edu/)
 uses Monte Carlo algorithms to track the stochastic diffusion of
 individual molecules \cite{Stiles:2001dq}.
 
@@ -242,7 +242,7 @@ individual molecules \cite{Stiles:2001dq}.
 % Stiles JR \& Bartol TM (2001) Monte Carlo methods for simulating realistic synaptic microphysiology using MCell. In: E De Schutter (ed.) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press: Boca Raton, pp. 87--127.
 % Hoops S, Sahle S, Gauges R, Lee C, Pahle J, Simus N, Singhal M, Xu L, Mendes P, \& Kummer U (2006) COPASI -- a COmplex PAthway SImulator. Bioinformatics 22: 3067--3074.
 
-The rapidly growing diversity of modeling environments and tools raises significant issues surrounding the reproducibility of results from different simulators. This is not a trivial problem. When combined with the current laxity in reporting model and simulation details and the general lack of independent validation of computationally generated results, the credibility of research in computational neuroscience is frequently compromised. In principle any finding should be independently reproduced prior to being accepted as a genuine contribution to scientific knowledge (see \cite{cannon07:_inter, Stodden:2009cq}).
+The rapidly growing diversity of modeling environments and tools raises significant issues surrounding the reproducibility of results from different simulators. This is not a trivial problem. When combined with the current laxity in reporting model and simulation details and the general lack of independent validation of computationally generated results, the credibility of research in computational neuroscience is frequently compromised. In principle, any finding should be independently reproduced prior to being accepted as a genuine contribution to scientific knowledge (see \cite{cannon07:_inter, Stodden:2009cq}).
 
 % Robert C. Cannon, Marc-Oliver Gewaltig, Padraig Gleeson, Upinder S. Bhalla, Hugo Cornelis, Michael L. Hines, Fredrick W. Howell, Eilif Muller, Joel R. Stiles, Stefan Wils, and Erik De Schutter (2007) Interoperability of neuroscience modeling software: Current status and future directions. Neuroinformatics. 5: 127Ð138.
 % Stodden V (2009) Enabling reproducible research: Open licensing for scientific innovation. Int J Commun Law Policy. 1--25.
@@ -250,13 +250,10 @@ The rapidly growing diversity of modeling environments and tools raises signific
 Problems of incremental model extension, incomplete model
 specification, and reproducibility of results, have resulted in the
 idea of the {\it interoperability} of neuroscience modeling software.
-Interoperability has been defined as ``all mechanisms that allow two
-or more simulators to use the same model description or to collaborate
-by evaluating different parts of a large neural model'' \cite{cannon07:_inter}, thus various forms of interoperability are possible. Two
-broad types of interoperability have recently been defined \cite{cannon07:_inter},
+Various forms of interoperability are possible and two broad types of interoperability have recently been defined \cite{cannon07:_inter}.
 Type\,1: Development of portable model description standards such that
 models built for one simulator can be run on another, i.e. through the
-adoption of common simulation languages such as SBML \cite{Hucka-M:2004bh}, NeuroML \cite{Gleeson:2010cr}, or NineML (http://www.nineml.org/index.shtml), and Type\,2: Run-time
+adoption of common simulation languages such as SBML \cite{Hucka-M:2004bh}, NeuroML \cite{Gleeson:2010cr}, or NineML ({\verb http:\/\/www.nineml.org\/index.shtml}), and Type\,2: Run-time
 interoperability, where different simulators operating on different
 domains interoperate at run-time either by direct coupling via
 simulator script languages (e.g. pyMOOSE \cite{ray08:_pymoos}),
@@ -311,7 +308,7 @@ bottom-up restructuring of the source code of the GENESIS\,2 neural
 simulation system (described in an accompanying paper~[reference to
 accompanying paper to be inserted]) that was developed on the basis of our understanding of a general scientific workflow, an {\it ideal user
 workflow}, and an analytic method referred to as a {\it separation of
-concerns}. The software {\it modules} resulting from
+concerns}. The software modules resulting from
 this analysis are then described and a brief overview of implementation of the CBI architecture is given. 
 
 \subsection*{The Scientific Workflow}
@@ -1508,7 +1505,9 @@ The act of repeating a process, here typically a workflow, to reach a desired go
 
 \paragraph{\bf Interoperability}
 
-We use {\it interoperability} as ``The capability to communicate, execute programs, or transfer data among various functional units in a manner that requires ... little or no knowledge of the unique characteristics of those units.'' \cite{Geraci:1990dz}.
+Interoperability has been defined as ``all mechanisms that allow two
+or more simulators to use the same model description or to collaborate
+by evaluating different parts of a large neural model'' \cite{cannon07:_inter}.
 
 % Institute of Electrical and Electronics Engineers (1990) IEEE Standard Computer Dictionary: A Compilation of IEEE Standard Computer Glossaries. New York, NY.
 
