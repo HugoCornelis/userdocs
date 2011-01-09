@@ -108,7 +108,7 @@ The architecture defines independent functional
 modules\marginpar{allows for components} that run stand-alone. They
 are arranged in logical layers that naturally correspond to the
 occurrence of high-level data (biological concepts) versus low-level
-data (numerical values) that distinguish data from control functions.
+data (numerical values) and distinguish data from control functions.
 
 The modular nature of the architecture and its independence from a given technology facilitates communication\marginpar{there is no section about this in the discussion} about similar
 concepts and functions for both users and developers.  It provides
@@ -242,7 +242,7 @@ individual molecules \cite{Stiles:2001dq}.
 % Stiles JR \& Bartol TM (2001) Monte Carlo methods for simulating realistic synaptic microphysiology using MCell. In: E De Schutter (ed.) Computational Neuroscience: Realistic Modeling for Experimentalists. CRC Press: Boca Raton, pp. 87--127.
 % Hoops S, Sahle S, Gauges R, Lee C, Pahle J, Simus N, Singhal M, Xu L, Mendes P, \& Kummer U (2006) COPASI -- a COmplex PAthway SImulator. Bioinformatics 22: 3067--3074.
 
-The rapidly growing diversity of modeling environments and tools raises significant issues surrounding the reproducibility of results from different simulators. This is not a trivial problem. When combined with the current laxity in reporting model and simulation details and the general lack of independent validation of computationally generated results, the credibility of research in computational neuroscience is frequently compromised. In principle, any finding should be independently reproduced prior to being accepted as a genuine contribution to scientific knowledge (see \cite{cannon07:_inter, Stodden:2009cq}).
+The rapidly growing diversity of modeling environments and tools raises significant issues surrounding the reproducibility of results from different simulators. This is not a trivial problem. When combined with the current laxity in reporting model and simulation details and the general lack of independent validation of computationally generated results, the credibility of research in computational neuroscience is frequently compromised. In principle, any finding should be independently reproduced prior to being accepted as a genuine contribution to the body of scientific knowledge (see \cite{cannon07:_inter, Stodden:2009cq}).
 
 % Robert C. Cannon, Marc-Oliver Gewaltig, Padraig Gleeson, Upinder S. Bhalla, Hugo Cornelis, Michael L. Hines, Fredrick W. Howell, Eilif Muller, Joel R. Stiles, Stefan Wils, and Erik De Schutter (2007) Interoperability of neuroscience modeling software: Current status and future directions. Neuroinformatics. 5: 127Ð138.
 % Stodden V (2009) Enabling reproducible research: Open licensing for scientific innovation. Int J Commun Law Policy. 1--25.
@@ -999,7 +999,7 @@ user-experience\cite{law09:_under_scopin_defin_user_exper}.
 
 \subsection*{Comparison of the CBI Architecture to Software Industry Standards}
 
-The CBI Architecture is based on the three-tier software architecture.
+The CBI Architecture is based on the three-tier software architecture,
 a widely used commercial client-server paradigm\,\cite{eckerson95:_three_tier_clien_server_archit}. It has the dual advantages that servers
 can be shared by users and software on both the client and server is
 easily upgraded.  Service-oriented architecture (SOA) is a widespread
@@ -1020,17 +1020,22 @@ optimization and optimal run-time performance.
 %algorithms, has resulted in the general expectation of a query to be
 %typically answered with subsecond response time, even for very large
 %databases\marginpar{refs?? in this para}.
-Control tables are sometimes to store meta-data and used to
-implement user workflows\cite{humby07:_progr}.  For these
-reasons, traditional enterprise applications are highly data-centric.
+Often control tables are implemented to store meta-data describing
+user workflows\cite{humby07:_progr}.  In this way control software is
+replaced with software for data management and traditional enterprise
+applications become highly data-centric.
 
-In the CBI architecture solvers and communication infrastructures are
-the back-ends.  Both can be optimized for run-time performance.
-However, currently no one expects a large simulation to be completed
-within a couple of seconds, a typical expected response time for
-traditional SOA-based applications.
-
-\subsubsection*{\bf Parallelization and Software Structure}
+This is in sharp contrast with the CBI architecture.  Through its
+column with Scripting\,Libraries and Communication components it
+provides more explicit support for control functions.
+ 
+% are
+%the back-ends.  Both can be optimized for run-time performance.
+%However, currently no one expects a large simulation to be completed
+%within a couple of seconds, a typical expected response time for
+%traditional SOA-based applications.
+ 
+\subsubsection*{\bf Static Parallelization and Software Structure}
 
 In three-tier architectures it is not uncommon for the second tier,
 comprising so called middle-ware, to be distributed over multiple
