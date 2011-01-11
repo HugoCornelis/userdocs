@@ -1040,8 +1040,11 @@ provides more explicit support for control functions.
 In three-tier architectures it is not uncommon for the second tier,
 comprising so called middle-ware, to be distributed over multiple
 hardware servers.  However, any parallel structure is fixed during
-design as it is specific to a given business application and the business
-logic in the highest layer.
+design as it is specific to a given business application and the
+business logic in the highest layer.  This is not necessarily the case
+in neuroscience simulators because the CPU load of the mathematical
+model is often used to calculate an ideal partitioning for each
+simulation \cite{hines08:_neuron}.
 
 A second difference between these industry standards and the CBI
 architecture is that the parallel run-time structure of a neural
@@ -1057,18 +1060,23 @@ computer\cite{hines08:_fully, hines08:_neuron,
 
 The function of business logic in enterprise applications is
 comparable to that of the Scripting\,Libraries\,and\,Applications
-module in the CBI architecture.  The Database Interfaces are
-comparable to traditional ETL applications and emerging semantic
-technology applications\marginpar{needs further explanation and / or citations}.  These highly developed layers\marginpar{what layers?} in the
-industry are in sharp contrast with the preliminary developments in
-computational neuroscience for the standards of educational tutorials,
-research project frameworks, and declarative modeling standards such
-NeuroML \cite{Gleeson:2010cr}, NineML
-(http://www.nineml.org/index.shtml), SED-ML \cite{Kohn:2008kx},
+module in the CBI architecture.
+%  The Database Interfaces are
+%comparable to traditional ETL applications and emerging semantic
+%technology applications\marginpar{needs further explanation and / or citations}.
+Dedicated industry standards have been developed that allow routine
+implementation of business logic.  These highly developed modules in
+the industry are in sharp contrast with the preliminary developments
+in computational neuroscience for the standards of educational
+tutorials, research project frameworks, and declarative modeling
+standards such SED-ML \cite{Kohn:2008kx}, NeuroML
+\cite{Gleeson:2010cr}, NineML (http://www.nineml.org/index.shtml),
 Sumatra (http://neuralensemble.org/trac/sumatra), and PyNN
 \cite{davison08:_pynn}.
 
-Importantly, the lowest layers of database back-ends has as a logical
+Importantly\marginpar{this paragraph must be merged with the one
+  above, it is the most important point for differences with SOA}, in
+SOAs the lowest layers of database back-ends has as a logical
 consequence that SOAs implementations are highly focused on database
 queries and result integration and presentation.  Control as defined
 for the CBI architecture is not a major aspect of SOA implementations,
@@ -1140,14 +1148,14 @@ Biology\,Model\,Container allows it be used for analysis of
 morphological characteristics and for quantification of model
 components.
 
-More elaborate software components include a model version history
-manager for the tracking and recording of the history of model
-development and a model and result annotator that enables the
-automatic or manual attachment of text to whole or part of a model.
+%More elaborate software components include a model version history
+%manager for the tracking and recording of the history of model
+%development and a model and result annotator that enables the
+%automatic or manual attachment of text to whole or part of a model.
 
-Other natural extensions of the CBI architecture support scientific
-communication through electronic publication. We briefly overview this
-functionality in the next sections.
+%Other natural extensions of the CBI architecture support scientific
+%communication through electronic publication. We briefly overview this
+%functionality in the next sections.
 
 \subsection*{CBI Simulator Interoperability}
 
@@ -1161,17 +1169,20 @@ NineML may lead to a resolution of the simulator interoperability problem\,\cite
 %model developed for one simulator must be run with a different
 %simulator.
 A CBI compliant simulator can also easily support these declarative
-languages by implementation of a new database interface software component.
-This database interface maps the concepts of the declarative languages
-to concepts supported by the Biology\,Model\,Container.
+languages by implementation of a new database interface software
+component.  This database interface then maps the concepts of the
+declarative languages to concepts supported by the
+Biology\,Model\,Container.  At the same time it can also be used to
+connect the simulator to external databases that provide support these
+declarative languages.
 
 More recently, as an alternative to declarative model specification
 for simulator interoperability, the capability to communicate
 simulation data at run-time between different simulators was
 implemented using procedural paradigms\cite{ray08:_pymoos,
-  davison08:_pynn}.  This approach requires the
-modeler to understand some of the internal of the model, the simulator,
-and the procedural paradigm.
+  davison08:_pynn}.  This approach requires the modeler to understand
+some of the internals of the model, the simulator, and the
+implementation of the procedural paradigm.
 
 The CBI architecture moves these problems from a context of
 communication between large monolithic applications to communication between simpler
@@ -1183,8 +1194,8 @@ model.
 %ports of the variables computed by the mathematical solvers.  This
 %aspect is described in more detail below.
 
-In the context of the CBI architecture the solutions to both problems
-of simulator interoperability become a tangible reality.
+In the context of the CBI architecture the solutions to both types
+problems of simulator interoperability become a tangible reality.
 
 
 %After the {\it API}s of a CBI compliant are defined, it is possible to
@@ -1201,6 +1212,15 @@ of simulator interoperability become a tangible reality.
 %In\marginpar{this sentence is a conclusion, not an intro} the context
 %of the CBI architecture, simulator interoperability becomes a more
 %tangible reality.
+
+
+\subsection*{The Ideal User Workflow Revisited}
+
+The steps of the {\it Ideal User Workflow} can be categorized as
+user-workflow oriented and data-oriented.  We briefly show the
+relationships between the {\it Ideal User Workflow} and {\it CBI
+  Architecture} from this viewpoint.
+
 
 
 \subsection*{Structuring Scientific Communication}
