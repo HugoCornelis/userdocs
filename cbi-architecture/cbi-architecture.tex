@@ -1221,6 +1221,23 @@ user-workflow oriented and data-oriented.  We briefly show the
 relationships between the {\it Ideal User Workflow} and {\it CBI
   Architecture} from this viewpoint.
 
+The steps for model construction and experiment design naturally
+correspond to the configuration definitions of the {\tt
+  Biology\,Model\,Container} and the {\tt
+  Experiment\,Model\,Container}, respectively.  The integration of
+these two steps, results in a single simulation that is run by the
+mathematical solvers, the communication framework and the scheduler.
+Each of these components needs appropriate peripheral configuration.
+The methods used to analyze the results are specific to the scientific
+question at hand, and can be configured in the component {\tt
+  Scripting\,Libraries\,\&\,Applications}.  These configuration
+definitions combined determine one deterministic run of a simulation.
+
+The Iterate step then defines the differences in configuration between
+the simulations belonging to the same simulation project, research
+project, educational tutorial or scientific publication.  This step
+integrates the {\it Ideal User Workflow} into the {\it Scientific
+  Workflow}.
 
 
 \subsection*{Structuring Scientific Communication}
