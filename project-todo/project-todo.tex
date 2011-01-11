@@ -36,11 +36,51 @@ This TODO list was built on \today, \thistime.
 
 \section{TODO List}
 
+
 \subsection{testing reconfiguration}
 
-neurospaces_clean has a --distclean option, but I don't think it has
-ever been tested.  We should incorporate it into neurospaces_cron and
-neurospaces_upgrade.
+Mando, I have no idea what is going on, but it seems autoconf related
+and related to uninstallation of STARTUP\_FILES.  You?
+
+I don't know how this would influence the consistency of the tester
+output, for instance if it leaves foreign files that contaminate the
+filesystem.  I also don't know how long this has been happening on my
+machine because this type of error is not reported by
+neurospaces\_cron when not run from a crontab.
+
+
+\$ grep -v 't/died' /tmp/neurospaces\_cron.stdout | grep -v 't/dont\_overwrite\_die\_handler' | grep -v 't/subtest/die' | grep -v 't/Tester/tbt\_03die' | grep -B 15 die
+make[2]: Entering directory
+`/home/cornelis/neurospaces\_project/ns-sli/source/snapshots/0/src'
+ ( cd '/usr/local/bin' \&\& rm -f ns-sli )
+rm -rf /usr/local/ns-sli/
+ ( cd '/usr/local/ns-sli/' \&\& rm -f startup/grey startup/xmacros.g startup/xtools.g startup/vclamp.g startup/redhot startup/rainbow2 startup/escapelist.g startup/schedule.g startup/rainbow startup/defaults.g~ startup/nxsimrc-ns-sli startup/minsimrc-ns-sli~ startup/Xdefaults.example startup/simrc-ns-sli.example startup/hot startup/defaults.g startup/Usermake startup/minsimrc-ns-sli startup/schedule.g~ startup/simrc~ startup/simrc-ns-sli~ startup/xstartup.g startup/simrc-ns-sli startup/nxsimrc~ startup/configrc startup/Libmake startup/Makefile startup/minschedule.g startup/minsimrc~ )
+/bin/bash: line 4: cd: /usr/local/ns-sli/: No such file or directory
+make[2]: *** [uninstall-nobase\_dist\_ns\_slistartupDATA] Error 1
+make[2]: Leaving directory
+`/home/cornelis/neurospaces\_project/ns-sli/source/snapshots/0/src'
+make[1]: *** [uninstall-recursive] Error 1
+make[1]: Leaving directory
+`/home/cornelis/neurospaces\_project/ns-sli/source/snapshots/0/src'
+make: *** [uninstall-recursive] Error 1
+/usr/local/bin/neurospaces\_build: *** Error: package ns-sli: 512 at
+/usr/local/bin/neurospaces\_build line 4269.
+ at /usr/local/bin/neurospaces\_build line 4269
+       main::operation\_execute('ARRAY(0x99b9668)', 'HASH(0x9a3f360)',
+'ARRAY(0x9a94e90)') called at /usr/local/bin/neurospaces\_build line
+781
+       main::all\_operations\_execute() called at
+/usr/local/bin/neurospaces\_build line 546
+       main::main() called at /usr/local/bin/neurospaces\_build line 4344
+*** die: /usr/local/bin/neurospaces\_build: *** Error: package ns-sli:
+512 at /usr/local/bin/neurospaces\_build line 4269.
+
+
+\subsection{testing reconfiguration}
+
+neurospaces\_clean has a --distclean option, but I don't think it has
+ever been tested.  We should incorporate it into neurospaces\_cron and
+neurospaces\_upgrade.
 
 
 \subsection{userdocs-sync error messages}
