@@ -1016,82 +1016,40 @@ defines a software federation for an application by uniting resources
 while maintaining their individual autonomy and
 self-governance\,\cite{08:_servic}.
 
-\subsubsection*{\bf Differences in Backend Focus}
-
-In these traditional enterprise software applications the lowest layer
-consists of database engine back-ends.  Database engines embed
-specialized algorithms and data structures for information query
-optimization and optimal run-time performance.
-%  This highly active
-%research area, intimately related with research into sorting
-%algorithms, has resulted in the general expectation of a query to be
-%typically answered with subsecond response time, even for very large
-%databases\marginpar{refs?? in this para}.
-Often control tables are implemented to store meta-data describing
-user workflows\cite{humby07:_progr}.  In this way control software is
-replaced with software for data management and traditional enterprise
-applications become highly data-centric.
-
-This is in sharp contrast with the CBI architecture.  Through its
-{\tt Scripting\,Libraries} and Communication components it\marginpar{Need to replace Communication components with the appropriate modules in Fig. 3}
-provides more explicit support for control functions.
- 
-% are
-%the back-ends.  Both can be optimized for run-time performance.
-%However, currently no one expects a large simulation to be completed
-%within a couple of seconds, a typical expected response time for
-%traditional SOA-based applications.
- 
-\subsubsection*{\bf Static Parallelization and Software Structure}
-
-In three-tier architectures it is not uncommon for the second tier,
-comprising so called middle-ware, to be distributed over multiple
-hardware servers.  However, any parallel structure is fixed during
-design as it is specific to a given business application and the
-business logic in the highest layer.  This is not necessarily the case
-in neuroscience simulators because the CPU load of the mathematical
-model is often used to calculate an ideal partitioning for each
-simulation \cite{hines08:_neuron}.
-
-A second difference between these industry standards and the CBI
-architecture is that the parallel run-time structure of a neural
-simulation is dynamic, depending on the model and the number of
-simulations\cite{howell00:_pgenes}\cite{migliore06:_paral_networ_simul_neuron}.
-Therefore, an optimal implementation of a CBI compliant simulator
-includes functionality to automatically partition a model and to
-transparently distribute simulations over a cluster
-computer\cite{hines08:_fully, hines08:_neuron,
-  cornelis07:_neuros_auto_para}.
-
 \subsubsection*{User Experience}
 
-The function of business logic in enterprise applications is
-comparable to that of the {\tt Scripting\,Libraries\,and\,Applications}
-module in the CBI architecture.
+In this section we compare the application logic in a three-tier
+architecture with that of the {\tt
+  Scripting\,Libraries\,and\,Applications} module in the CBI
+architecture.
 %  The Database Interfaces are
 %comparable to traditional ETL applications and emerging semantic
 %technology applications\marginpar{needs further explanation and / or citations}.
 Dedicated industry standards have been developed that allow routine
-implementation of business logic.  These highly developed modules in
-the industry are in sharp contrast with the preliminary developments
-in computational neuroscience for the standards of educational
-tutorials, research project frameworks, and declarative modeling
-standards such SED-ML \cite{Kohn:2008kx}, NeuroML
+implementation of business logic for an optimal user-experience.
+Often control tables are implemented to store meta-data describing
+user workflows \cite{humby07:_progr}.  In this way control software is
+replaced with software for data management and the technical
+implementation becomes focused on data management.
+
+Importantly, in SOAs the lowest layers of database back-ends has as a
+logical consequence that SOAs implementations are highly focused on
+database queries and result integration and presentation.
+
+These highly developed modules in the industry are in contrast with
+the preliminary developments in computational neuroscience for the
+standards of educational tutorials, research project frameworks, and
+declarative modeling standards such SED-ML \cite{Kohn:2008kx}, NeuroML
 \cite{Gleeson:2010cr}, NineML (http://www.nineml.org/index.shtml),
 Sumatra (http://neuralensemble.org/trac/sumatra), and PyNN
 \cite{davison08:_pynn}.
 
-Importantly\marginpar{this paragraph must be merged with the one
-  above, it is the most important point for differences with SOA}, in
-SOAs the lowest layers of database back-ends has as a logical
-consequence that SOAs implementations are highly focused on database
-queries and result integration and presentation.  Control as defined
-for the CBI architecture is not a major aspect of SOA implementations,
-but merely something that happens in the margin.  As a result SOAs are
-architectured using application centric concerns such as database
-transactions, data routing, business logic and logging and debugging
-instead of the principle concerns of data and control we have employed
-here.
+Control as defined for the CBI architecture is not a major aspect of
+SOA implementations, but merely something that happens in the margin.
+As a result SOAs are architectured using application centric concerns
+such as database transactions, data routing, business logic and
+logging and debugging instead of the principle concerns of data and
+control we have employed here.
 
 %Now say something about TMN: splits a software application along
 %aspects, called planes in TMN, that are very different from a control
@@ -1135,6 +1093,57 @@ here.
 %suggests that it is an abstraction inversion to implement a modular
 %high-level design using a low-level module manager.
 
+\subsubsection*{\bf Software Structure and Run-time Parallellization}
+
+In three-tier architectures it is not uncommon for the second tier,
+comprising so called middle-ware, to be distributed over multiple
+hardware servers.  However, its parallel structure is specific to a
+given business application and the business logic, and it is fixed
+during application design.
+
+This is not necessarily the case in neuroscience simulators because
+the CPU load of the mathematical model is often used to calculate an
+ideal partitioning for each simulation making the parallel structure
+potentially different for each simulation run \cite{hines08:_neuron}.
+In other words the static parallel structure of a three-tier
+application is in contrast to the dynamical parallel structure of a
+CBI compliant simulator.  In a CBI compliant simulator the parallel
+structure of the application can depend on the model structure and the
+number of simulations
+\cite{howell00:_pgenes}\cite{migliore06:_paral_networ_simul_neuron}.
+
+%A second difference between these industry standards and the CBI
+%architecture is that the parallel run-time structure of a neural
+%simulation is dynamic, depending on the model and the number of
+%simulations \cite{howell00:_pgenes}\cite{migliore06:_paral_networ_simul_neuron}.
+Therefore, an optimal implementation of a CBI compliant simulator
+includes functionality to automatically partition a model and to
+transparently distribute simulations over a cluster
+computer\cite{hines08:_fully, hines08:_neuron,
+  cornelis07:_neuros_auto_para}.
+
+\subsubsection*{\bf Differences in Backend Focus}
+
+In these traditional enterprise software applications the lowest layer
+consists of database engine back-ends.  Database engines embed
+specialized algorithms and data structures for information query
+optimization and optimal run-time performance.
+%  This highly active
+%research area, intimately related with research into sorting
+%algorithms, has resulted in the general expectation of a query to be
+%typically answered with subsecond response time, even for very large
+%databases\marginpar{refs?? in this para}.
+
+This is in sharp contrast with the CBI architecture.  Through its
+{\tt Scripting\,Libraries} and Communication components it\marginpar{Need to replace Communication components with the appropriate modules in Fig. 3}
+provides explicit support for control functions.
+ 
+% are
+%the back-ends.  Both can be optimized for run-time performance.
+%However, currently no one expects a large simulation to be completed
+%within a couple of seconds, a typical expected response time for
+%traditional SOA-based applications.
+ 
 \subsection*{CBI Simulator Extension}
 
 When compared to the current generation of simulators simulator
