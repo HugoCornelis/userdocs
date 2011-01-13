@@ -1154,7 +1154,7 @@ modifications of and additions to existing software components.  As an
 example it can be relatively easy to enhance a simulation controller
 such that it prints the simulation time to the screen.  It can be
 similarly easy to enhance an existing compartmental solver to compute
-the total transmembrane current through the soma of a neuron.
+the average membrane potential of a section of a neuron.
 
 A second class of simulator extension is the addition of new software
 components.  For instance to connect the simulator to a morphology
@@ -1164,6 +1164,12 @@ Biology\,Model\,Container.  Simple extension of the
 Biology\,Model\,Container allows it be used for analysis of
 morphological characteristics and for quantification of model
 components.
+
+These different types of extensions stem from the modularity of the
+CBI architecture.  Current simulators typically only support a
+restricted set of extensions: extending the GENESIS 2 simulator with
+new solvers was not documented because its basic architecture did not
+allow it.
 
 %More elaborate software components include a model version history
 %manager for the tracking and recording of the history of model
