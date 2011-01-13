@@ -14,7 +14,7 @@ def run_simulation(simulationtime):
     c = Neurospaces.SingleCellContainer.Cell("/cell");
 
     # create a cylindrical segment inside the cell, and set its properties
-    s = Neurospaces.SingleCellContainer.Segment("/cell/soma");
+    s = Neurospaces.SingleCellContainer.Segment("/cell/soma")
 
     s.parameter("Vm_init", -0.0680)
     s.parameter("RM", 1.000)
