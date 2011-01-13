@@ -34,6 +34,25 @@ The repository machine serves the source code for the GENESIS project as well as
 
 
 \begin{itemize}
+	
+
+\item
+\begin{itemize}
+\item[] {\bf Admin:} Hugo
+\item[] {\bf Date:} 1/12/2011 
+\item[] {\bf Actions:} Made two trace files available for download to monotone developer, strace.out and ltrace.out.
+\item[] {\bf Reason:} Reporting monotone bugs to monotone developers.
+\item[] {\bf Impact:} More files available in the public download area.
+\end{itemize}
+
+\item
+\begin{itemize}
+\item[] {\bf Admin:} Mando
+\item[] {\bf Date:} 1/12/2011 
+\item[] {\bf Actions:} Turned on the DISTCLEAN option in neurospaces\_cron.
+\item[] {\bf Reason:} Some machines do not rebuild config.status and attempt to use the old version of the file to create Makefiles. If it attempts to rebuild a Makefile that has since been removed from the workspace it will kill the cronjob. The distclean option deletes config.status and forces it to be rebuilt on every cron run. 
+\item[] {\bf Impact:} Should prevent the cronjob from breaking should a Makefile be deleted from, or moved within a package workspace.
+\end{itemize}
 
 \item
 \begin{itemize}

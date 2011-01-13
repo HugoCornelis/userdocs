@@ -1274,14 +1274,21 @@ decades later the ion channels were experimentally isolated.
 The choices made by the modeler lead to a stepwise translation of a
 high-level mental model into a computer implementation.
 
-The richness of the translation implemented by the intermediate layer
-of the CBI architecture determines how easy it is to implement a given
-user-workflow.  Consequently, its nature, structure, and complexities
-are unknown.  The first simple steps to track the choices of this
-translation have only recently been taken.  The more elaborate
-implementations of this mapping we are aware of are
-neuroConstruct\cite{gleeson07} and the Neurospaces
-model-container\cite{cornelis03:_neuros}\marginpar{why?}.
+In this sense a model is intimately connected with the software that
+is used to run it \cite{Hines:2004cr}.  It is important to make this
+connection more explicit than is currently the case.  Making this
+connection explicit is what we call vertical tagging in a publication
+system: the system allows to tag the models with references to the
+software used to run them and produce the results.
+
+%The richness of the translation implemented by the intermediate layer
+%of the CBI architecture determines how easy it is to implement a given
+%user-workflow.  Consequently, its nature, structure, and complexities
+%are unknown.  The first simple steps to track the choices of this
+%translation have only recently been taken.  The more elaborate
+%implementations of this mapping we are aware of are
+%neuroConstruct\cite{gleeson07} and the Neurospaces
+%model-container\cite{cornelis03:_neuros}\marginpar{why?} and Catacomb 3\marginpar{citation}.
 
 The data layering in the CBI architecture mirrors
 this fact and that the data in a simulator can have different
@@ -1293,9 +1300,24 @@ simulators used in other fields.
 %, e.g. fluid dynamics.
 % , with applications in airplane and spacecraft design.
 
-\subsubsection*{Model History and Versioning}
+\subsubsection*{Model Collaboration}
 
-By extension the CBI architecture supports the scientific workflow\marginpar{complete or remove}.
+A model is a rigid tool useful to structure a scientific discussion
+about the biology it represents.  Model collaboration is the process
+of many investigators working simultaneously on the same model and
+communicating about their modifications and (expected) consequences
+and interpretation.
+%Collaboration is one of the most important
+%features of science, particularly during scientific meetings.
+%This sort of functionality has not yet been implemented for
+%the internet.
+Developers of next generation neural simulators have the responsibility of targeting
+model collaborations if they want the simulator to be useful for structuring the
+scientific discourse about biological function.
+
+Collaboration server, compare with eg. skype servers.
+
+\subsubsection*{Model Versioning and History}
 
 Every model undergoes a series of changes before it is made available
 to other people, published, or deposited in a database.  For this
@@ -1340,22 +1362,6 @@ the physical model.
 
 %After a user has selected a (version of a) model, it can be imported
 %(fed to the Model\,Container) and run with the simulator.
-
-\subsubsection*{Model Collaboration}
-
-A model is a rigid tool useful to structure a scientific discussion
-about the biology it represents.  Model collaboration is the process
-of many investigators working simultaneously on the same model and
-communicating about their modifications and (expected) consequences.
-Collaboration is one of the most important features of science,
-particularly during scientific meetings.
-%This sort of functionality has not yet been implemented for
-%the internet.
-Developers of next generation neural simulators have the responsibility of targeting
-model collaborations if they want the simulator to be useful for structuring the
-scientific discourse about biological function.
-
-Collaboration server, compare with eg. skype servers.
 
 %Simultaneous collaboration technology has always been based on
 %sessions and session management.  For this reason the GUI for model collaboration must
@@ -1543,7 +1549,7 @@ operations performed during the investigation. It also
 distinguishes between the results obtained from a single
 investigation and the method used to define multiple investigations in
 a series. The user workflow identifies five steps in
-total (explained in more detail in Materials and Methods).
+total (explained in more detail in Results).
 
 \paragraph{\bf Ideal User Workflow:}
 
