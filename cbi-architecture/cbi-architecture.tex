@@ -205,7 +205,7 @@ The application of mathematical methods to modeling and quantification in neurop
 % Traub RD, Contreras D, Cunningham MO, Murray H, LeBeau FEN, Roopun A, Bibbig A, Wilent WB, Higley MJ \& Whittington MA (2005). Single-column thalamocortical network model exhibiting gamma oscillations, sleep spindles and  epileptogenic bursts. Journal of Neurophysiology 93: 2194--2232.
 % Brunel N \& Wang X-J (2001) Effects of neuromodulation in a cortical network model of object working memory dominated by recurrent inhibition. J Comput Neurosci 11: 63--85.
 
-Historically, the development of neuronal simulation software for the construction of morphologically detailed neuron models and small networks was instigated by research projects that specifically addressed complementary technical and scientific questions \cite{Moore:2010vn}. For example, one widely used application is NEURON \cite{m93:_neural_system}. It grew from the identification of numerical techniques that greatly improved the efficient computation and accuracy of the solution to the cable equations employed to model electrical activity in branched dendrites \cite{hines84:_effic,hines89:_progr_simul_nerve_equat_branc_geomet}. Another widely used simulation platform is GENESIS \cite{wilson89:_advan_neural_infor_proces_system}. From conception, it has been a more generalized simulator and was initially employed to model at the single cell level neural oscillations in piriform \cite{Wilson:1988zr} and cerebral cortex \cite{Wilson:1989ys}.
+Historically, the development of neuronal simulation software for the construction of morphologically detailed neuron models and small networks was instigated by research projects that specifically addressed complementary technical and scientific questions \cite{Moore:2010vn}. For example, one widely used application is NEURON (http://www.neuron.yale.edu/neuron/, \cite{m93:_neural_system}). It grew from the identification of numerical techniques that greatly improved the efficient computation and accuracy of the solution to the cable equations employed to model electrical activity in branched dendrites \cite{hines84:_effic,hines89:_progr_simul_nerve_equat_branc_geomet}. Another widely used simulation platform is GENESIS (http://genesis-sim.org, \cite{wilson89:_advan_neural_infor_proces_system}). From conception, it has been a more generalized simulator and was initially employed to model at the single cell level neural oscillations in piriform \cite{Wilson:1988zr} and cerebral cortex \cite{Wilson:1989ys}.
 
 % Moore JW (2010) A personal view of the early development of computational neuroscience in the USA. Frontiers in Computational Neuroscience 4: 20.
 % Hines M (1993) NEURON--a program for simulation of nerve equations. In: F. Eeckman (ed.) Neural Systems: Analysis and Modeling. Norwell, MA: Kluwer.
@@ -449,7 +449,7 @@ when only horizontal or vertical interactions are allowed between the
 modules illustrated in Figure~\ref{fig:data-control}. The larger the
 number of interactions allowed between diagonally located components,
 the more difficult it becomes to functionally separate simulator
-components and the harder it becomes to maintain and extend the
+components and to maintain and extend the
 resulting software application. Diagonal interactions are forbidden in the CBI architecture as they foster the mixing of functionality across different levels that ultimately leads to the creation of monolithic software applications.\\
 
 %The first implementation of the CBI architecture has been that of  G-3. We use this software platform to present an overview of the CBI federated software architecture through the example of the the new G-3 simulator. In doing this we follow the ideal simulator workflow presented in Methods.
@@ -478,7 +478,7 @@ representations via a simulator shell or GUI.
 %the physical objects used to implement them.
 This interface
 straddles the Control/Data divide and replaces the upper horizontal
-arrow connecting the {tt User\,Workflow} and {\tt Biology} modules in
+arrow connecting the {\tt User\,Workflow} and {\tt Biology} modules in
 Figure~\ref{fig:data-control}. It enables the workflow by assisting
 either the development of simple cell models from the command line of
 a simulator shell via the {\tt Scripting\,Libraries\,\&\,Applications}
@@ -539,12 +539,12 @@ development.
 
 The CBI architecture is defined as
 a modular paradigm that places stand-alone software components into a
-set of logical relationships. In this sense it defines a modular framework that provides the necessary parts of a neural simulator.
+set of logical relationships. In this sense it defines a modular framework that provides the necessary parts of a neural simulator.\marginpar{definition}
 
 The schema identified by the separation of concerns (see Fig.~\ref{fig:data-control}) is expanded in
 Figure~\ref{fig:cbi-architecture-simple} to give the components that
 form the building blocks of the CBI architecture. This figure retains
-the four simulator functions revealed by the separation of concerns. They 
+the four quadrants of simulator functionality revealed by the separation of concerns. They 
 include the notions of
 low-level data for numerics and high-level representations for
 biology, as well as separation between data and control
@@ -607,7 +607,7 @@ database connectors in the module {\tt Model\,Tools} and the {\tt Biological} an
 or alter a model and instruct the modeling component to save the model
 back to disk as a conceptual representation available for later use.
 
-The result visualization functionality of the GUI provides different views of a model and supports the possible work flows between them. It can be divided into generic and application specific parts.  The generic parts are those commonly provided by external tools such as GNUplot, Matlab, or xmgrace for display of the temporal evolution of variables. Examples of the application specific parts include, user specified neuron morphology visualization via morphologically related color coding of variables solved during a
+The result visualization functionality of the GUI provides different views of a model and supports the possible work flows between them. It can be divided into generic and application specific parts.  The generic parts are those commonly provided by external tools such as GNUplot (http://www.gnuplot.info/), Matlab (http://www.mathworks.com/), or Grace (http://plasma-gate.weizmann.ac.il/Grace/) for display of the temporal evolution of variables. Examples of the application specific parts include, user specified neuron morphology visualization via morphologically related color coding of variables solved during a
 simulation, axons showing propagating action potentials, and higher level visualizations of network behavior\cite{schutter94:_simul_purkin, robbins04:_visual}.
 
 \paragraph{\bf Simulation Control:}
@@ -646,7 +646,7 @@ below), and provides a richer interactive user-experience.
 
 \paragraph{\bf The Biology Model Container:}
 
-This container stores three different versions of a model. (1) A biological representation, available for inspection by other software modules, e.g. a model visualizer. (2) A conceptual representation that can be regarded as an enumeration of biological concepts and their relationships. It can contain algorithm names and parameters that specify how to build the model and can be exported and stored on a file system. (3) A fully expanded mathematical representation, generated by algorithms referenced from the conceptual representation, which, if mathematically complete, can be simulated. However, if a parameter is missing, e.g. the axial resistance in a
+This module stores three different versions of a model. (1) A biological representation, available for inspection by other software modules, e.g. a model visualizer. (2) A conceptual representation that can be regarded as an enumeration of biological concepts and their relationships. It can contain algorithm names and parameters that specify how to build the model and can be exported and stored on a file system. (3) A fully expanded mathematical representation, generated by algorithms referenced from the conceptual representation, which, if mathematically complete, can be simulated. However, if a parameter is missing, e.g. the axial resistance in a
 neuronal morphology, the model is still useful for inspection and visual validation by the {\tt Model\,Construction} GUI. Note that most current simulators do not allow incomplete representations of a model.
 
 The translation between conceptual and mathematical representations
@@ -713,7 +713,7 @@ injection) and their dependencies\marginpar{discussion: discuss separation of
 
 \subsubsection*{Scripting Libraries \& Applications}
 
-This module contains three submodules, (1) {\tt Implementation\,Libraries} containing functions specific to a given application, and (2) Scripts that control specific series of research and tutorial simulations.  (3) The {\tt Scheduler} combines generic aspect of these scripts to instantiate the simulation.
+This module contains three submodules, (1) {\tt Implementation\,Libraries} containing functions specific to a given application, and (2) {\tt Scripting\,Libraries} that provide scripts to control a specific series of research and tutorial simulations.  (3) The {\tt Scheduler} combines generic aspect of these scripts to instantiate the simulation.
 
 %Enables user-friendly work flows by providing access to applications written in high-level scripting languages that focus on specific research questions or educational tutorials.
 
@@ -747,7 +747,7 @@ implement a model tutorial (e.g. \cite{bower98:_book_genes}).
 
 \paragraph{\bf Scheduler:}
 
-For stand-alone software components such as the {\tt Model\,Container} and the low-level back-ends to be useful, they must be `glued' together and activated correctly, such that they can work together in co-ordination on a single simulation. This is exactly what the scheduler does. It exploits the sophistication of modern scripting languages to load software components on demand and initialize and activate them from a configuration file. The scheduler does not have any computational load and its implementation is both simple and highly configurable. A scheduler can also provide a script-based interface for interactive user
+For stand-alone software components such as the {\tt Model\,Container} and the low-level back-ends to be useful, they must be `glued' together and activated correctly, such that they can work together in co-ordination on a single simulation. This is exactly what the {\tt Scheduler} does. It exploits the sophistication of modern scripting languages to load software components on demand and initialize and activate them from a configuration file. The {\tt Scheduler} does not have any computational load and its implementation is both simple and highly configurable. It can also provide a script-based interface for interactive user
 control or the implementation of more sophisticated user-workflows.
 
 % Other configurations will connect the scheduler to other modeling services or solvers. 
@@ -822,13 +822,13 @@ neuronal morphology and (3) Efficient storage and distribution of discrete event
 
 \paragraph{\bf Controller:}
 
-The Controller maintains the operation of all simulator functions and 
+The {\tt Controller} maintains the operation of all simulator functions and 
 contains core functions such as the global simulation time clock and 
 the functions that start and stop the advance of simulation time. Its main function is to 
 schedule and synchronize the back-ends that participate in the simulation by requesting the numerical level 
 to update its internal states. To leverage the operation 
 of sophisticated solvers and enhance their maintainability, the 
-Controller can also implement facilitatory functions for arithmetic control such as floating point exceptions.
+{\tt Controller} can also implement facilitatory functions for arithmetic control such as floating point exceptions.
 %For other use-cases, such as 
 % a simple model analysis with Matlab as a back-end, the Controller 
 % can provide the function to start the operation.
@@ -957,14 +957,21 @@ Considerable experience with both user and technical concerns related
 to simulator functionality and efficiency has been gained from over
 twenty years of following user requirements during the development of
 bottom up models of neurons and neural circuits within the framework
-of the GENESIS software platform (http://www.genesis-sim.org/). This
+of the GENESIS software platform. This
 experience allowed us to identify an ideal user workflow that we
 employed to constrain a separation of concerns analysis that lies at
-the heart of the new simulator architecture.  Importantly\marginpar{we
-  want to save this sentence to end the discussion rather than start
-  it} this user workflow also integrates a simulator with the {\it
-  scientific workflow} such that any CBI compliant simulator provides
-direct support for scientific publication and communication.
+the heart of the new simulator architecture. 
+
+By analyzing and decomposing a software system into separate
+functions, it is straightforward to define the individual software
+modules of the architecture. A clear delineation of individual
+components in a modular software architecture allows interfaces and
+their accompanying behaviors to be defined and the communication
+between the software layers of a simulator to be specified.
+%Ultimately, this allows both
+%developers and users to choose to contribute to a single component
+%with limited complexity, instead of being forced to contribute to the
+%whole simulator and be exposed to tremendous complexity. 
 
 We employed the results of a separation of concerns analysis to
 develop the software architecture for a next generation neural
@@ -979,17 +986,6 @@ clearly facilitating model development and research progress. (3)
 Individual components can be independently updated, enhanced, or
 replaced when needed, thus the life cycle of a modular architecture is
 smoother than that of a non-scalable application.
-
-By analyzing and decomposing a software system into separate
-functions, it is straightforward to define the individual software
-modules of the architecture. A clear delineation of individual
-components in a modular software architecture allows interfaces and
-their accompanying behaviors to be defined and the communication
-between the software layers of a simulator to be specified.
-%Ultimately, this allows both
-%developers and users to choose to contribute to a single component
-%with limited complexity, instead of being forced to contribute to the
-%whole simulator and be exposed to tremendous complexity. 
 
 Our approach has the advantage that the mathematical and optimization
 internals of a solver need not be exposed to a user.  The resulting
@@ -1037,7 +1033,7 @@ replaced with software for data management and traditional enterprise
 applications become highly data-centric.
 
 This is in sharp contrast with the CBI architecture.  Through its
-column with Scripting\,Libraries and Communication components it
+{\tt Scripting\,Libraries} and Communication components it\marginpar{Need to replace Communication components with the appropriate modules in Fig. 3}
 provides more explicit support for control functions.
  
 % are
@@ -1070,7 +1066,7 @@ computer\cite{hines08:_fully, hines08:_neuron,
 \subsubsection*{User Experience}
 
 The function of business logic in enterprise applications is
-comparable to that of the Scripting\,Libraries\,and\,Applications
+comparable to that of the {\tt Scripting\,Libraries\,and\,Applications}
 module in the CBI architecture.
 %  The Database Interfaces are
 %comparable to traditional ETL applications and emerging semantic
@@ -1224,7 +1220,6 @@ problems of simulator interoperability become a tangible reality.
 %of the CBI architecture, simulator interoperability becomes a more
 %tangible reality.
 
-
 \subsection*{The Ideal User Workflow Revisited}
 
 The steps of the {\it Ideal User Workflow} can be categorized as
@@ -1249,7 +1244,6 @@ the simulations belonging to the same simulation project, research
 project, educational tutorial or scientific publication.  This step
 integrates the {\it Ideal User Workflow} into the {\it Scientific
   Workflow}.
-
 
 \subsection*{Structuring Scientific Communication}
 
@@ -1350,6 +1344,10 @@ benchmark values, annotations, the
 parameters of the physical model, or subtleties in model behavior when simulated.  In general, it must be possible to
 correlate the benchmark values with differences in (the parameters of)
 the physical model.
+
+Ultimately, the user workflow integrates a simulator with the {\it
+  scientific workflow} such that any CBI compliant simulator provides
+direct support for scientific publication and communication.
 
 %\subsubsection*{Model Databases}
 
