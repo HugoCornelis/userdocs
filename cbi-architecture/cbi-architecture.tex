@@ -1266,30 +1266,37 @@ integrates the {\it Ideal User Workflow} into the {\it Scientific
 \subsubsection*{From Systems of Equations to Workflows for Biological
   Research}
 
-A mental model of a biological system translates to a mathematical
-representation and a low-level software implementation by taking many
-intermediate representations.  Each of these representations is
-determined by the choices of the modeler.  Examples of these choices
-are the choice of algorithms such as the numerical method, or the
-value of parameters, such as maximal electrotonic length.  Many of
-these choices have an underpinning given by the phenomenological
-experiments in neuroscience.  Examples here are the choice of Hodgkin
-and Huxley to hypothesize the existence of transmembrane ion channels
-that can be blocked by biophysical gates and mathematically represent
-the activity of these gates with fitted exponentials raised to a
-power.  This hypothesis structured a rich scientific discourse about
-the biophysical nature of action potential propagation in an axon and
-decades later the ion channels were experimentally isolated.
+In the scientific workflow a mental model of a biological system
+translates to a mathematical representation and a low-level software
+implementation by taking many intermediate representations.  Each of
+these representations is determined by the choices of the modeler.
+Examples are the value of a parameter, such as the maximal
+electrotonic length of a compartment, or the chosen algorithm such as
+the numerical method.  Sometimes these choices have an underpinning
+given by the phenomenological experiments in neuroscience.  A good
+example of this is the hypothesis of Hodgkin and Huxley of the
+existence of transmembrane ion channels that can be blocked by
+biophysical gates
+% and mathematically represent the activity of these
+%gates with fitted exponentials raised to a power.
+This hypothesis lead to a rich scientific discourse about the
+biophysical nature of action potential propagation in an axon and
+decades later the ion channels were experimentally isolated.  All
+these choices taken together implement a stepwise translation of a
+high-level mental model into a computer implementation.  This
+translation connects mental models with their implementation, and
+gives a model a richer structure and meaning than a purely
+mathematical one.
 
-The choices made by the modeler lead to a stepwise translation of a
-high-level mental model into a computer implementation.
-
-In this sense a model is intimately connected with the software that
-is used to run it \cite{Hines:2004cr}.  It is important to make this
-connection more explicit than is currently the case.  Making this
-connection explicit is what we call vertical tagging in a publication
-system: the system allows to tag the models with references to the
-software used to run them and produce the results.
+A simulator must be designed to support this rich model structure and
+the specific choices made during model development.  From this
+viewpoint every model is intimately connected with the simulator used
+to run it.  It is important to make this connection more explicit than
+is currently the case \cite{Hines:2004cr}.
+%Making this connection explicit is what
+%we call vertical tagging in a publication system: the system allows to
+%tag the models with references to the software used to run them and
+%produce the results.
 
 %The richness of the translation implemented by the intermediate layer
 %of the CBI architecture determines how easy it is to implement a given
@@ -1300,23 +1307,25 @@ software used to run them and produce the results.
 %neuroConstruct\cite{gleeson07} and the Neurospaces
 %model-container\cite{cornelis03:_neuros}\marginpar{why?} and Catacomb 3\marginpar{citation}.
 
-The data layering in the CBI architecture mirrors
-this fact and that the data in a simulator can have different
-functions.  These functions, occuring as a gradient transition from
-biology to numerics, are shared with other simulation domains.  So, in
-the broader scope of simulators for the natural sciences, this
-architecture could directly contribute to the technology for
-simulators used in other fields.
+The data layering in the CBI architecture mirrors this by its gradient
+from biology data to numerics.  This gradient is not unique to
+computational neuroscience, so, in a broader scope, the CBI
+architecture has the potential to contribute to simulator technology
+used in other fields.
 %, e.g. fluid dynamics.
 % , with applications in airplane and spacecraft design.
 
-\subsubsection*{Model Collaboration}
+%\subsubsection*{Model Collaboration}
 
-A model is a rigid tool useful to structure a scientific discussion
-about the biology it represents.  Model collaboration is the process
-of many investigators working simultaneously on the same model and
-communicating about their modifications and (expected) consequences
-and interpretation.
+When a modeling software differentiates the structural aspects that
+are introduced during mental translation by modeler's choices, from
+the quantitative aspects of model parameters.
+
+A model is a tool useful to give a rigid structure scientific
+discussions about the biology it represents.  Model collaboration is
+the process of many investigators working simultaneously on the same
+model and communicating about their modifications and (expected)
+consequences and interpretation.
 %Collaboration is one of the most important
 %features of science, particularly during scientific meetings.
 %This sort of functionality has not yet been implemented for
@@ -1325,18 +1334,20 @@ Developers of next generation neural simulators have the responsibility of targe
 model collaborations if they want the simulator to be useful for structuring the
 scientific discourse about biological function.
 
-Collaboration server, compare with eg. skype servers.
+%Collaboration server, compare with eg. skype servers.
 
-\subsubsection*{Model Versioning and History}
+%\subsubsection*{Model Versioning and History}
 
 Every model undergoes a series of changes before it is made available
 to other people, published, or deposited in a database.  For this
 reason it is important for a simulator to be able to cope with the
-history of a model. To do this a simulator must minimally support:
-Model versions in a linear version history, divergence of model
-history where in each parallel model version a different feature is
-explored, and convergence of model history where the features of
-different model versions are integrated.
+history of a model.
+
+% To do this a simulator must minimally support:
+%Model versions in a linear version history, divergence of model
+%history where in each parallel model version a different feature is
+%explored, and convergence of model history where the features of
+%different model versions are integrated.
 
 %Note that linear, divergent, and convergent workflows are easily mapped
 %to functions present in current version control systems (checkin,
@@ -1349,9 +1360,11 @@ model contains deficits (e.g. a channel conductance out of the
 physiological range).  Because it would be convenient to automate this
 process of benchmarking, it is important to be able to track who (what
 person or machine) has attributed the tag to the model, and possibly
-to give a trust value to the benchmark score.  Since the tags are
-present on versions of the model, the tagging operations must be
-supported by the version control system.
+to give a trust value to the benchmark score.
+
+%Since the tags are
+%present on versions of the model, the tagging operations must be
+%supported by the version control system.
 
 From a user perspective, it must be possible to check what the 
 differences are between versions of the same model that may
