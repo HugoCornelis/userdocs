@@ -1310,76 +1310,93 @@ this connection more explicit than is currently the case
 %neuroConstruct\cite{gleeson07} and the Neurospaces
 %model-container\cite{cornelis03:_neuros}\marginpar{why?} and Catacomb 3\marginpar{citation}.
 
-The data layering in the CBI architecture mirrors this by its gradient
-from biology data to numerics.  This gradient is not unique to
-computational neuroscience, so, in a broader scope, the CBI
-architecture has the potential to contribute to simulator technology
-used in other fields.
+The\marginpar{move to end of discussion} data layering in the CBI
+architecture mirrors this by its gradient from biology data to
+numerics.  This gradient is not unique to computational neuroscience,
+so, in a broader scope, the CBI architecture has the potential to
+contribute to simulator technology used in other fields.
 %, e.g. fluid dynamics.
 % , with applications in airplane and spacecraft design.
 
-%\subsubsection*{Model Collaboration}
+When we refer to the choices made during translation of a mental model
+to its computer implementation as model structure, and to the values
+of the parameters as model quantities, then a model's history can be
+defined on both model structure and model quantities.
+%  Since
+%scientific conversation occurs along the lines of both model structure
+%and model quantities, collaborations
+%When a modeling software differentiates the structural aspects that
+%are introduced during mental translation by modeler's choices, from
+%the quantitative aspects of model parameters.
+This way a modeling environment becomes a tool useful to formally
+track the advances in scientific understanding of a biological system,
+expressed as changes made to a model.  When such a rich model
+structure is supported by a computer implementation, it gives a
+structure to scientific discussions about the biology it represents.
 
-When a modeling software differentiates the structural aspects that
-are introduced during mental translation by modeler's choices, from
-the quantitative aspects of model parameters.
+\subsubsection*{Computational Model Publications}
 
-A model is a tool useful to give a rigid structure scientific
-discussions about the biology it represents.  Model collaboration is
-the process of many investigators working simultaneously on the same
-model and communicating about their modifications and (expected)
-consequences and interpretation.
+Model collaboration is the process of investigators working
+simultaneously on the same model or integrating different models.
+During this process they continuously communicate about modifications
+to the model structure and model quantities, and their (expected)
+consequences and interpretation.  Often it is unclear why certain
+choices were made during model development because there is no way to
+annotate them with the reason.  Currently this process can be tracked
+formally only through scientific paper publications and with databases
+of computational models, but both these communication media lack the
+support to link annotations with the details of the model.
 %Collaboration is one of the most important
 %features of science, particularly during scientific meetings.
 %This sort of functionality has not yet been implemented for
 %the internet.
-Developers of next generation neural simulators have the responsibility of targeting
-model collaborations if they want the simulator to be useful for structuring the
-scientific discourse about biological function.
-
+%Developers of next generation neural simulators have the
+%responsibility of targeting model collaborations if they want the
+%simulator to be useful for structuring the scientific discourse about
+%biological function.
 %Collaboration server, compare with eg. skype servers.
-
 %\subsubsection*{Model Versioning and History}
-
-Every model undergoes a series of changes before it is made available
-to other people, published, or deposited in a database.  For this
-reason it is important for a simulator to be able to cope with the
-history of a model.
-
+%Every model undergoes a series of changes before it is made available
+%to other people, published, or deposited in a database.  For this
+%reason it is important for a simulator to be able to cope with the
+%history of a model.
 % To do this a simulator must minimally support:
 %Model versions in a linear version history, divergence of model
 %history where in each parallel model version a different feature is
 %explored, and convergence of model history where the features of
 %different model versions are integrated.
-
 %Note that linear, divergent, and convergent workflows are easily mapped
 %to functions present in current version control systems (checkin,
 %branch, and merge, respectively).
+In general it would be useful if the details of consecutive model
+versions could be annotated with user defined content.
 
-Additionally, model versions can be annotated with a tag that may
-be user defined.  A special class of tags annotates a model with the
-score for a benchmark.  The benchmarking score tells a user if the
-model contains deficits (e.g. a channel conductance out of the
-physiological range).  Because it would be convenient to automate this
-process of benchmarking, it is important to be able to track who (what
-person or machine) has attributed the tag to the model, and possibly
-to give a trust value to the benchmark score.
-
+A second class of annotations scores a version of a model for a
+benchmark.  The benchmark score tells a user about strenghts,
+weaknesses or deficits of a specific model version (e.g. a channel
+conductance out of the physiological range -- note that both the
+conductance as its valid range can be subject to experimental
+evidence).
 %Since the tags are
 %present on versions of the model, the tagging operations must be
 %supported by the version control system.
 
-From a user perspective, it must be possible to check what the 
-differences are between versions of the same model that may
-behave (slightly) differently.  Differences can be differences in
-benchmark values, annotations, the
-parameters of the physical model, or subtleties in model behavior when simulated.  In general, it must be possible to
-correlate the benchmark values with differences in (the parameters of)
-the physical model.
+When comparable models behave (slightly) differently a user should be
+able to trivially check what the differences are between the two
+models.  In general, it must be possible to correlate the benchmark
+values with differences in (the parameters or structure of) the
+physical model.  Besides differences in benchmark values and
+user-contributed annotations, the parameters of the physical model,
+also subtleties in model behavior when simulated can be tagged.  This
+is a step closer to scientific interpretation of the model and the
+biological system it represents.
 
-Ultimately, the user workflow integrates a simulator with the {\it
-  scientific workflow} such that any CBI compliant simulator provides
-direct support for scientific publication and communication.
+This way annotations to structure and quantities of a model document
+our advances in the formal scientific understanding of a given
+biological system.  Ultimately, the user workflow integrates a
+simulator with the {\it scientific workflow} such that any CBI
+compliant simulator provides direct support for scientific publication
+and communication.
 
 %\subsubsection*{Model Databases}
 
