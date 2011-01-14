@@ -695,6 +695,71 @@ System specs:
 \item 
 \begin{itemize}
 \item[] {\bf Admin:} Mando
+\item[] {\bf Date:} 1/14/2011
+\item[] {\bf Actions:} 
+
+\begin{itemize}
+\item[] {\bf 1.} Created a copy of the workspace to examine the contents for potential bugs. 
+\item[] {\bf 2.} Updated version of monotone from 0.47 to 0.99.1 to see if this alleviates some of the issues before posting to the monotone mailing list.
+\end{itemize}
+
+\item[] {\bf Reason:}  The mac tester is refusing to pull or update to any revisions past those checked in on 1/04/2011. This leaves it in a state where it cannot properly update the workspace and leaves some bugs that were since fixed:
+
+\begin{verbatim}
+Mac-Tester:0 g3tester$ mtn log --last 2
+o   ----------------------------------------------------------------------
+|   Revision: da53dc5ab63f91184f25068613e4d39eadc66c2e
+|   Parent:   1cd5e99c7d82b732a41431424d45b81db7d75f00
+|   Author:   mandorodriguez+Ubuntu.VM.Home.i686@gmail.com
+|   Date:     01/04/2011 23:45:14
+|   Branch:   0
+|   
+|   Changelog: 
+|   
+|   1. Fixed a permission error on the python import test.
+|   
+|   2. Fixed the module import in the passive compartment test.
+|   
+|   Changes against parent 1cd5e99c7d82b732a41431424d45b81db7d75f00
+|   
+|     patched  tests/python/c1c2p1.py
+|     patched  tests/python/import_test.py
+o   ----------------------------------------------------------------------
+|   Revision: 1cd5e99c7d82b732a41431424d45b81db7d75f00
+|   Parent:   e592223f033e50e8da3c55d4d8182ea3f776161b
+|   Author:   mandorodriguez@gmail.com
+|   Date:     01/04/2011 16:29:28
+|   Branch:   0
+|   
+\end{verbatim}
+
+Most recent log entry at the time of the last cron job should be on 01/13/2011:
+
+\begin{verbatim}
+o   -----------------------------------------------------------------
+|   Revision: 278c4ff3486df30271454f28f13740bb7ed21063
+|   Ancestor: 298e74b52e74262741c96da833e4640cb266d9bb
+|   Author: mandorodriguez@gmail.com
+|   Date: 01/13/2011 17:42:49
+|   Branch: 0
+|   
+|   Modified files:
+|           glue/swig/python/heccer/__init__.py
+|           glue/swig/python/heccer/errors.py
+|   
+|   ChangeLog: 
+|   
+|   1. Added an exception for not resolving an address in the python Swig bindings.
+\end{verbatim}
+
+No other machine seems to have this issue. Attempted many fixes but the end result was always the heccer repository failing to pull down any revision past da53dc5ab63f91184f25068613e4d39eadc66c2e on 1/4/2011.  The only way to prevent the error from occurring again was to perform a repull the heccer repository and creating a new workspace. After doing a new pull, all revisions were present. The bug is reproducible with saved copies of the repository so old repositories in monotone version 0.47, migrated versions of the faulty repos in monotone 99.1 have been preserved.
+
+\item[] {\bf Impact:}  Tester should proceed as normal.
+\end{itemize}
+
+\item 
+\begin{itemize}
+\item[] {\bf Admin:} Mando
 \item[] {\bf Date:} 1/13/2011
 \item[] {\bf Actions:} Got the mac tester back online.
 \item[] {\bf Reason:}  It was previously switched off to be moved to a different desk.
