@@ -1032,24 +1032,20 @@ user workflows \cite{humby07:_progr}.  In this way control software is
 replaced with software for data management and the technical
 implementation becomes focused on data management.
 
-Importantly, in SOAs the lowest layers of database back-ends has as a
-logical consequence that SOAs implementations are highly focused on
-database queries and result integration and presentation.
-
-These highly developed modules in the industry are in contrast with
-the preliminary developments in computational neuroscience for the
-standards of educational tutorials, research project frameworks, and
-declarative modeling standards such SED-ML \cite{Kohn:2008kx}, NeuroML
+Highly developed technologies for the expression of user experience
+such as BPEL in the industry are in contrast with the preliminary
+developments in computational neuroscience for the standards of
+educational tutorials, research project frameworks, and declarative
+modeling standards such SED-ML \cite{Kohn:2008kx}, NeuroML
 \cite{Gleeson:2010cr}, NineML (http://www.nineml.org/index.shtml),
 Sumatra (http://neuralensemble.org/trac/sumatra), and PyNN
 \cite{davison08:_pynn}.
 
 Control as defined for the CBI architecture is not a major aspect of
-SOA implementations, but merely something that happens in the margin.
-As a result SOAs are architectured using application centric concerns
-such as database transactions, data routing, business logic and
-logging and debugging instead of the principle concerns of data and
-control we have employed here.
+SOA implementations.  As a result SOAs are architectured using
+data-centric and technical concerns such as database transactions and
+data routing, logging and debugging rather than the principle concerns
+of data and control we have employed here.
 
 %Now say something about TMN: splits a software application along
 %aspects, called planes in TMN, that are very different from a control
@@ -1124,10 +1120,14 @@ computer\cite{hines08:_fully, hines08:_neuron,
 
 \subsubsection*{\bf Differences in Backend Focus}
 
-In these traditional enterprise software applications the lowest layer
-consists of database engine back-ends.  Database engines embed
-specialized algorithms and data structures for information query
-optimization and performance.
+%Importantly, in SOAs the lowest layers of database back-ends has as a
+%logical consequence that SOAs implementations are highly focused on
+%database queries and result integration and presentation.
+
+Importantly the implementation of business logic as control tables has
+a logical consequence that the back-ends of SOAs consist of database
+engines.  Database engines embed specialized algorithms and data
+structures for information query optimization and performance.
 %  This highly active
 %research area, intimately related with research into sorting
 %algorithms, has resulted in the general expectation of a query to be
@@ -1281,21 +1281,21 @@ Huxley of the existence of transmembrane ion channels that can be
 blocked by biophysical gates
 % and mathematically represent the activity of these
 %gates with fitted exponentials raised to a power.
-Based on the Huxley-Huxley model this hypothesis lead to a rich
-scientific discourse about the biophysical nature of action potential
-propagation in an axon and decades later the ion channels were
-experimentally isolated.  All these choices taken together implement a
-stepwise translation of a high-level mental model into a computer
-implementation.  This translation connects mental models with their
-implementation directly, and it gives a model a richer structure and
-meaning than a purely mathematical one.
-
-Consequently simulator design must support rich model structures and
-the specific choices made during model development.  From this
-viewpoint through its implementation, every model is intimately
-connected with the simulator used to run it.  It is important to make
-this connection more explicit than is currently the case
-\cite{Hines:2004cr}.
+The sequence of these choices implement a stepwise translation of a
+high-level mental model into a computer implementation.  This
+translation connects mental models with their implementation directly,
+and it gives a model a richer structure and meaning than a purely
+mathematical one.
+%Based on the Hodgkin-Huxley model this hypothesis lead to a rich
+%scientific discourse about the biophysical nature of action potential
+%propagation in an axon and decades later the ion channels were
+%experimentally isolated.
+%Consequently simulator design must support rich model structures and
+%the specific choices made during model development.
+From this viewpoint through its implementation, every model is
+intimately connected with the simulator used to run it.  It is
+important to make this connection more explicit than is currently the
+case \cite{Hines:2004cr}.
 %Making this connection explicit is what
 %we call vertical tagging in a publication system: the system allows to
 %tag the models with references to the software used to run them and
@@ -1310,11 +1310,6 @@ this connection more explicit than is currently the case
 %neuroConstruct\cite{gleeson07} and the Neurospaces
 %model-container\cite{cornelis03:_neuros}\marginpar{why?} and Catacomb 3\marginpar{citation}.
 
-The\marginpar{move to end of discussion} data layering in the CBI
-architecture mirrors this by its gradient from biology data to
-numerics.  This gradient is not unique to computational neuroscience,
-so, in a broader scope, the CBI architecture has the potential to
-contribute to simulator technology used in other fields.
 %, e.g. fluid dynamics.
 % , with applications in airplane and spacecraft design.
 
@@ -1328,11 +1323,12 @@ defined on both model structure and model quantities.
 %When a modeling software differentiates the structural aspects that
 %are introduced during mental translation by modeler's choices, from
 %the quantitative aspects of model parameters.
-This way a modeling environment becomes a tool useful to formally
-track the advances in scientific understanding of a biological system,
-expressed as changes made to a model.  When such a rich model
-structure is supported by a computer implementation, it gives a
-structure to scientific discussions about the biology it represents.
+This way a modeling environment becomes a tool useful to start
+formally tracking the advances in scientific understanding of a
+biological system, expressed as changes made to a model.  When such a
+rich model structure is supported by a computer implementation, it
+gives a structure to the scientific discussions about the biology it
+represents.
 
 \subsubsection*{Computational Model Publications}
 
@@ -1397,6 +1393,12 @@ biological system.  Ultimately, the user workflow integrates a
 simulator with the {\it scientific workflow} such that any CBI
 compliant simulator provides direct support for scientific publication
 and communication.
+
+The\marginpar{move to end of discussion} data layering in the CBI
+architecture mirrors this by its gradient from biology data to
+numerics.  This gradient is not unique to computational neuroscience,
+so, in a broader scope, the CBI architecture has the potential to
+contribute to simulator technology used in other fields.
 
 %\subsubsection*{Model Databases}
 
