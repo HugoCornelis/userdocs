@@ -1,0 +1,110 @@
+% Template for PLoS
+% Version 1.0 January 2009
+%
+% To compile to pdf, run:
+% latex plos.template
+% bibtex plos.template
+% latex plos.template
+% latex plos.template
+% dvipdf plos.template
+
+\documentclass[10pt]{article}
+
+% amsmath package, useful for mathematical formulas
+\usepackage{amsmath}
+% amssymb package, useful for mathematical symbols
+\usepackage{amssymb}
+
+% graphicx package, useful for including eps and pdf graphics
+% include graphics with the command \includegraphics
+\usepackage{graphicx}
+
+% cite package, to clean up citations in the main text. Do not remove.
+\usepackage{cite}
+
+\usepackage{color} 
+
+% Use doublespacing - comment out for single spacing
+\usepackage{setspace} 
+\doublespacing
+
+\usepackage{lineno}
+
+% Text layout
+\topmargin 0.0cm
+\oddsidemargin 0.5cm
+\evensidemargin 0.5cm
+\textwidth 16cm 
+\textheight 21cm
+
+\begin{document}
+
+\section*{A Federated Design for a Neurobiological Simulation Engine: 
+The CBI federated software architecture.}
+\subsection*{Cornelis H, Coop AD, and Bower JM}
+\subsection*{Supplementary Materials 3:} 
+
+The following snippet was obtained from A NEURON Programming Tutorial: Part B\\ 
+(http://www.anc.ed.ac.uk/school/neuron/tutorial/tutB.html) where it is noted that: 
+
+\begin{quote}
+``Th[e] method of specifying a point on the section is conceptually independent of the number of segments in the section. Thus, when you insert a point process \ldots 20\% down the section, it is physically inserted into the segment that contains the point 20\% down the section. However, due to the way NEURON works, if you later change the spatial resolution of the section, the point process may no longer be in the segment containing the point 20\% down the section. \ldots it's best to specify {\tt nseg} {\it before} attaching point processes.''
+\end{quote}
+
+\begin{linenumbers}
+\begin{verbatim}
+load_file("nrngui.hoc")
+
+ndend = 2
+
+create soma, dend[ndend]
+access soma
+
+soma {
+  nseg = 1
+  diam = 18.8
+  L = 18.8
+  Ra = 123.0
+  insert hh
+}
+
+dend[0] {
+    nseg = 5
+    diam = 3.18
+    L = 701.9
+    Ra = 123
+    insert pas
+}
+
+dend[1] {
+    nseg = 5
+    diam = 2.0
+    L = 549.1
+    Ra = 123
+    insert pas
+}
+
+// Connect things together
+connect dend[0](0), soma(0)
+connect dend[1](0), soma(1)
+
+// create an electrode in the soma
+
+objectvar stim
+stim = new IClamp(0.5)
+
+stim.del = 100
+stim.dur = 100
+stim.amp = 0.1
+
+tstop = 300
+
+\end{verbatim}
+\end{linenumbers}
+
+In NEURON the outcome of a simulation may depend on the order of code statements. For example, suppose {\tt nseg is 1} and you try to put an {\tt IClamp} at 0.1. It will actually end up at 0.5. This is because the segment is one electrical compartment, so it doesn't make any difference to the mathematical solvers where the electrode is placed. NEURON allocates the position to be the centre of the segment rather than keeping track of its defined location. If {\tt nseg} is later increased to 3, {\tt IClamp} remains in the middle of the second segment at 0.5 even although it is the first segment that contains the desired location 0.1.
+
+Such tight coupling between the model and an experiment can introduce many subtle and unintended consequences for investigators.
+
+\end{document}
+
