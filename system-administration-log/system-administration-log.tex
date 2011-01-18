@@ -35,6 +35,28 @@ The repository machine serves the source code for the GENESIS project as well as
 
 \begin{itemize}
 	
+\item
+\begin{itemize}
+\item[] {\bf Admin:} Mando
+\item[] {\bf Date:} 1/18/2011 
+\item[] {\bf Actions:} Checked repository access to the gtube mercurial repository.
+\item[] {\bf Reason:} The mercurial repository is refusing to allow a check in after dropping a file. Getting this exception:
+
+\begin{verbatim}
+bort: empty or missing revlog for genesis3/.DS_Store
+remote: ** unknown exception encountered, details follow
+remote: ** report bug details to http://mercurial.selenic.com/bts/
+remote: ** or mercurial@selenic.com
+remote: ** Python 2.5.2 (r252:60911, Jan 24 2010, 17:44:40) [GCC 4.3.2]
+remote: ** Mercurial Distributed SCM (version 1.6.2)
+remote: ** Extensions loaded: 
+
+\end{verbatim} 
+
+The .DS\_Store file is a file automatically created by Mac OS X used to index directories.  
+
+\item[] {\bf Impact:} Currently won't allow any of my recent check ins to be pushed to the server. 
+\end{itemize}
 
 \item
 \begin{itemize}
