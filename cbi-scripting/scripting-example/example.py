@@ -50,6 +50,6 @@ def run_simulation(simulationtime):
 # with 0.5 seconds.
 #
 if __name__ == '__main__':
-    run_sumulation(0.5)
+    run_simulation(0.5)
 
 
