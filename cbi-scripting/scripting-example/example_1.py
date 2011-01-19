@@ -105,3 +105,11 @@ def run_simulation(simulation_time):
   my_output_gen.Finish()
   
   print "Done!"
+
+
+#------------------------------------------------------------------------------
+# Main program, executes a simulation with
+# with 0.5 seconds.
+#------------------------------------------------------------------------------
+if __name__ == '__main__':
+    run_simulation(0.5)
