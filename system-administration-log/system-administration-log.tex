@@ -732,6 +732,42 @@ System specs:
 
 \begin{itemize}
 
+
+
+\item 
+\begin{itemize}
+\item[] {\bf Admin:} Mando
+\item[] {\bf Date:} 1/20/2011
+\item[] {\bf Actions:} Created a copy of the existing workspaces and removed the 'glue/swig/python\_old/heccer' directory that was present and performed a revert to update to what is currently in the repository.
+\item[] {\bf Reason:}  Apparently there is a bug in monotone that does not resolve path changes involving only the changing of a letters case.
+
+\begin{verbatim}
+Mac-Tester:0 g3tester$ mtn update
+mtn: updating along branch '0'
+mtn: selected update target 2898afd0a666f80d05f479d2f9d9d65d50e7c326
+mtn: [left]  1f09160cf4ba710e1afbc64b56d8cd2702dc6bc3
+mtn: [right] 2898afd0a666f80d05f479d2f9d9d65d50e7c326
+mtn: misuse: workspace is locked
+mtn: misuse: you must clean up and remove the \_MTN/detached directory
+\end{verbatim}
+
+The error stems from a problem in monotone on Mac OS X that ignores case.  The updating of the workspace initially produces this error, and then generated the \_MTN/detached directory that locks the workspace, changing the error message.
+
+\begin{verbatim}
+mtn: updating along branch '0'
+mtn: selected update target 2898afd0a666f80d05f479d2f9d9d65d50e7c326
+mtn: [left]  1f09160cf4ba710e1afbc64b56d8cd2702dc6bc3
+mtn: [right] 2898afd0a666f80d05f479d2f9d9d65d50e7c326
+mtn: adding glue/swig/python_old/Heccer
+mtn: misuse: rename target 'glue/swig/python\_old/Heccer' already exists
+\end{verbatim}
+
+Sent an email to the monotone mailing list regarding this error. Note I have emailed the monotone mailing list about something similar in the past; when monotone has had conflicts updating workspaces when there is a file and a directory sharing the same name. 
+
+\item[] {\bf Impact:}  Should proceed as normal.
+\end{itemize}
+
+
 \item 
 \begin{itemize}
 \item[] {\bf Admin:} Mando
