@@ -1106,7 +1106,7 @@ In other words, the static parallel structure of a three-tier
 application can be contrasted with the dynamic parallel structure of a CBI
 compliant simulator where the parallel
 structure of the run-time environment may depend on model structure and simulation number \cite{howell00:_pgenes,
-  migliore06:_paral_networ_simul_neuron}.\marginpar{application?}
+  migliore06:_paral_networ_simul_neuron}.
 
 %A second difference between these industry standards and the CBI
 %architecture is that the parallel run-time structure of a neural
@@ -1168,9 +1168,9 @@ components.
 
 These different types of extensions stem from the modularity of the
 CBI architecture.  Current simulators typically only support a
-restricted set of extensions. For example, extending the GENESIS 2 simulator with
-new solvers was not possible because its basic architecture was not properly\marginpar{from sufficiently} modularized to
-allow it.
+restricted set of extensions. For example, extending the GENESIS 2
+simulator with new solvers was not possible because its basic
+architecture was not appropriately modularized.
 
 %More elaborate software components include a model version history
 %manager for the tracking and recording of the history of model
@@ -1200,11 +1200,14 @@ declarative languages to concepts supported by the
 connect the simulator to external databases that provide support for these
 declarative languages.
 
-Type\,1 interoperability has recently been implemented as the capability to communicate
-simulation data at run-time between different simulators using procedural paradigms\cite{ray08:_pymoos,
-  davison08:_pynn}.  However, this approach requires the modeler to understand
-some of the internals of the model, the simulator, and the
-implementation of the procedural paradigm.  After the decade of the monoliths it makes the modeler's work even more complicated.\marginpar{Allan}
+Type\,1 interoperability has recently been implemented as the
+capability to communicate simulation data at run-time between
+different simulators using procedural paradigms\cite{ray08:_pymoos,
+  davison08:_pynn}.  However, this approach requires the modeler to
+understand some of the internals of the model, the simulator, and the
+implementation of the procedural paradigm.  While monolithic software
+applications were to complicated to extend, this additional layer of
+complexity makes the modeler's task next to impossible.
 
 Ultimately, the CBI architecture moves interoperability problems from a context of
 communication between large monolithic applications to communication between well defined and simpler
@@ -1252,14 +1255,13 @@ the component {\tt Scripting\,Libraries\,\&\,Applications}.  When
 combined, these configuration definitions determine one run of a
 simulation.
 
-The\marginpar{Allan} separation of the steps for biological model
-construction and experiment design allows the modeler to build
-libraries of biological models and libraries of experimental
-protocols.  In principle this allows to combine any model with any
-appropriate experimental protocol without the requirement that the
-experimental protocol was specifically designed for the chosen model.
-We discuss the consequences of this type of application further
-below\marginpar{where?}.
+The separation of the steps for biological model construction and
+experiment design allows the modeler to build separate libraries of
+biological models and experimental protocols.  In principle this
+allows any model to be combined with any appropriate experimental
+protocol without the requirement that the protocol was specifically
+designed for the given model.  We discuss the consequences of this
+type of application further below\marginpar{where?}.
 
 Finally the {\tt Iterate} step defines the differences in
 configuration between the simulations belonging to the same simulation
@@ -1318,8 +1320,9 @@ case \cite{Hines:2004cr}.
 % , with applications in airplane and spacecraft design.
 
 If we refer to the choices made during translation of a mental model
-to its computer implementation as model structure, and to the parameters as model quantities, then a model's history can be
-defined by both model structure and model quantities\marginpar{is defined by the history of its structure and of its quantities}.
+to its computer implementation as model structure, and to the
+parameters as model quantities, then a model's history is defined by
+the history of its structure and its quantities.
 %  Since
 %scientific conversation occurs along the lines of both model structure
 %and model quantities, collaborations
