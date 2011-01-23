@@ -701,9 +701,7 @@ equations.
 This stores a model of a stimulus paradigm and desired output
 parameters and defines and stores a hierarchical sequence of
 stimulus-related actions (e.g. start and stop time of a current
-injection) and their dependencies\marginpar{discussion: discuss separation of
-  model containers and consequences of building model libraries, and
-  consequences of ease of model combinations}.
+injection) and their dependencies.
 
 %Depending on the experimental protocol being simulated, the
 %Experiment\,Model\,Container can enrich the simulation schedule with
@@ -1254,11 +1252,20 @@ the component {\tt Scripting\,Libraries\,\&\,Applications}.  When
 combined, these configuration definitions determine one run of a
 simulation.
 
-The {\tt Iterate} step then defines the differences in configuration
-between the simulations belonging to the same simulation project,
-research project, educational tutorial or scientific publication.
-It is with this step that the ideal user workflow is integrated with the scientific
-workflow.
+The\marginpar{Allan} separation of the steps for biological model
+construction and experiment design allows the modeler to build
+libraries of biological models and libraries of experimental
+protocols.  In principle this allows to combine any model with any
+appropriate experimental protocol without the requirement that the
+experimental protocol was specifically designed for the chosen model.
+We discuss the consequences of this type of application further
+below\marginpar{where?}.
+
+Finally the {\tt Iterate} step defines the differences in
+configuration between the simulations belonging to the same simulation
+project, research project, educational tutorial or scientific
+publication.  It is with this step that the ideal user workflow is
+integrated with the scientific workflow.
  
 \subsection*{Structuring Scientific Communication}
 
@@ -1275,7 +1282,7 @@ made by an investigator.  Examples include, the value of a parameter, such as th
 maximal electrotonic length of a compartment, or the algorithm chosen
 for the numerical methods.  Sometimes these choices are predicated on the empirical phenomenology of neuroscience.  A good example is the hypothesis formulated by Hodgkin and
 Huxley that the activity of transmembrane ion channels is
-controlled by biophysical gates.
+controlled by biophysical gates \cite{hha52}.
 % and mathematically represent the activity of these
 %gates with fitted exponentials raised to a power.
 
@@ -1312,7 +1319,7 @@ case \cite{Hines:2004cr}.
 
 If we refer to the choices made during translation of a mental model
 to its computer implementation as model structure, and to the parameters as model quantities, then a model's history can be
-defined by both model structure and model quantities.
+defined by both model structure and model quantities\marginpar{is defined by the history of its structure and of its quantities}.
 %  Since
 %scientific conversation occurs along the lines of both model structure
 %and model quantities, collaborations
@@ -1321,22 +1328,48 @@ defined by both model structure and model quantities.
 %the quantitative aspects of model parameters.
 From this perspective, a modeling environment becomes a tool useful for
 formally tracking advances in the scientific understanding of a
-biological system, expressed as changes made to a model.  When such a
-rich model structure is supported by a computer implementation, it also
-gives structure to scientific discussion about the biology the model
-represents.
+biological system, expressed as changes made to a model.
+%When such a
+%rich model structure is supported by a computer implementation, 
+%These changes
+%give structure to scientific discussion about the biology the model
+%represents.
 
-\subsubsection*{Computational Model Publications}
+\subsubsection*{Computational Modeling and Scientific Communication}
 
-Model collaboration is the process of investigators working
-simultaneously on the same model or integrating different models.
-During this process they continuously communicate about their modifications, the (predicted)
-consequences, and their interpretation.  Often it is unclear why certain
-choices were made during model development because there is no way to
-annotate the model with the reasons.  Currently, this process can be tracked
-formally only through scientific paper publications and via databases
-of computational models. However, both these knowledge bases lack the
-support to link detailed annotations with a model.
+The translation of a mental model and the implementation choices made
+by a modeler can potentially lead to models that have physiologically
+realistic parameters, but don't behave realistically for certain
+experiments or conditions for which it was not tuned.  On the other
+hand, models tuned with a series of experiments and showing
+interesting behavior or properties for others can have parameter
+values out of the physiological range.  Each of these cases has a
+clear area for potential improvement of the model and hence scientific
+knowledge.  A clear separation of model structure and model quantities
+allows to evaluate the quantities against their valid physiological
+range.
+
+The development of separate libraries of biological models and
+experimental protocols allows in principle to determine whether the
+behavior of a model after application of an appropriate experimental
+protocol is realistic.  The automation of this process would be useful
+to identify the strengths, weaknesses, or deficits of a specific model
+version.
+
+%Model collaboration is the process of investigators working
+%simultaneously on the same model or integrating different models.
+During model collaborations investigators continuously communicate
+about their model modifications, the (predicted) consequences, and
+their scientific interpretation.  Currently, this process of model
+modification can be tracked formally only through scientific paper
+publications and via databases of computational models. However, both
+these knowledge bases lack the support to link detailed annotations
+with a model necessary to understand why certain modifications have
+been made.  As a consequence the reason for these modifications often
+remains unclear.
+%Often it is unclear why certain
+%choices were made during model development because there is no way to
+%annotate the model with the reasons.
 %Collaboration is one of the most important
 %features of science, particularly during scientific meetings.
 %This sort of functionality has not yet been implemented for
@@ -1359,15 +1392,17 @@ support to link detailed annotations with a model.
 %Note that linear, divergent, and convergent workflows are easily mapped
 %to functions present in current version control systems (checkin,
 %branch, and merge, respectively).
-In principle, it would be extremely useful if consecutive model
-versions could be annotated with user defined content.
 
-Another class of annotation provides a version of a model with
-benchmark scores.  These give information to a user about the strengths,
-weaknesses, or deficits of a specific model version (e.g. a channel
-conductance out of the physiological range--note that both the choice of a
-conductance value and its valid range can be subject to experimental
-evidence).
+In principle, it would be extremely useful if consecutive model
+versions could be annotated with both user defined content and machine
+generated content.  For instance to preserve the original reasons and
+interpretation of a series of modifications to a model during its
+development.  Another class of annotation provides a version of a
+model with benchmark scores.  These give information to a user about
+the strengths, weaknesses, or deficits of a specific model version
+(e.g. a channel conductance out of the physiological range--note that
+both the choice of a conductance value and its valid range can be
+subject to experimental evidence).
 %Since the tags are
 %present on versions of the model, the tagging operations must be
 %supported by the version control system.
@@ -1385,11 +1420,11 @@ simulator into the scientific workflow such that any CBI
 compliant simulator provides direct support for scientific publication
 and communication.
 
-The\marginpar{move to end of discussion} data layering in the CBI
-architecture mirrors this by its gradient from biology data to
-numerics.  This gradient is not unique to computational neuroscience,
-so, in a broader scope, the CBI architecture has the potential to
-contribute to simulator technology used in other fields.
+%The\marginpar{move to end of discussion} data layering in the CBI
+%architecture mirrors this by its gradient from biology data to
+%numerics.  This gradient is not unique to computational neuroscience,
+%so, in a broader scope, the CBI architecture has the potential to
+%contribute to simulator technology used in other fields.
 
 %\subsubsection*{Model Databases}
 
