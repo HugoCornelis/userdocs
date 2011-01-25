@@ -33,6 +33,12 @@ Install the following packages:
    \item[]\href{http://monotone.ca/}{\bf monotone-0.44:} (or higher).
    \item[]{\bf Xcode Tools:} The Apple Development Toolset. Xcode is available on Disk 2 of the Mac OSX installer set of DVDs under optional install. The package is called {\it  XcodeTools.mpkg}. It is also available from the \href{http://developer.apple.com/technology/xcode.html}{\bf Apple Developer Website}. In the latter case  you will need a valid Apple ID to log in and access the developer page.
    
+  \item[]\href{http://python.org/}{Python:} OS X comes with python, however it does not come with the headers and libraries so that you can build SWIG libraries. To get the development libs and headers, you must go to the official python site and download the installer. It is recommended that you stick with Python versions 2.5 and 2.6. The mac installer should update your execution path to allow you to execute your newly installed python. If it does not then you can add a line like this to your {\it .bash\_profile} file:
+  
+ \begin{verbatim}
+    PATH="/Library/Frameworks/Python.framework/Versions/Current/bin:${PATH}"
+ \end{verbatim}
+   
    {\bf WARNING:} The compilers available from MacPorts should NOT be used for installation (see below). Prior to installing the {\it DeveloperPackage} you should check which Perl libraries OSX uses with ``{\tt  which perl}''. This should return {\tt  /usr/bin/perl}. If the response is {\tt /opt/local/bin/perl}, there is a MacPorts installation of Perl. This is most easily corrected by removing the MacPorts path {\it /opt/local/bin} from your path in the {\it .profile} file in your home directory. To do this open the  {\it .profile} file in an editor and convert the line (or similar):
 \begin{verbatim}
    PATH=/opt/local/bin:/usr/local/bin:$PATH

@@ -40,6 +40,30 @@ The easiest way to get the latest version of the GENESIS source code is via the 
 
 Prior to installing GENESIS modules on your local computer you will need to install the necessary software dependencies. A general list of software dependencies can be found in \href{../genesis-dependencies/genesis-dependencies.tex}{\bf GENESIS\,Dependencies}. More specific dependencies are given in the installation documentation of the supported operating systems. For an overview see \href{../genesis-installation/genesis-installation.tex}{\bf GENESIS\,Installation}.
 
+\subsection*{Prerequisite Operations}
+
+Once you have software dependencies like {\bf monotone} installed you must set up some things on your machine in order to use the {\it Developer Package}. 
+
+\subsubsection*{Setting up your monotone key}
+
+In order to use monotone the user needs to create their monotone key using the command:
+
+\begin{verbatim}
+  mtn genkey email@myaddress.com
+\end{verbatim}
+
+ The email you use does not need to be a valid email address, it is simply an identifier that other developers using the repository will use to associate with your checkins. Even if you are not going to be checking in any code you still need a key to create and update your workspace. After entering the command it will prompt you for a passphrase, that will be used as a password whenever you perform any operations on the repository.
+ After creating your key with your desired email identifier you will have a new directory in your home directory called {\it .monotone}. To keep from having to enter your passphrase every time you perform any monotone operation, you may automate it by creating a file in {\it .monotone} called {\it monotonerc}. In your {\it monotonerc} file place this code:
+ 
+\begin{verbatim}
+function get_passphrase(keypair_id)	
+   return "mypassword"
+end
+\end{verbatim}
+
+where the text {\it mypassword} is your passphrase, that you created earlier. 
+
+
 \subsection*{Installing the {\it DeveloperPackage}}
 
 Download the latest version of the {\it DeveloperPackage}, available from the \href{http://repo-genesis3.cbi.utsa.edu/src/}{\bf GENESIS package archive}.  It is called {\it developer-release-label.tar.gz}, where {\it release-label} is the current release identifier. ({\bf Note:} If downloading via your browser, do not unpack the package during the download as it will be placed into its own subdirectory).
