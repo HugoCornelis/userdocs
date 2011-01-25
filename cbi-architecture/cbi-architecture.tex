@@ -1025,8 +1025,7 @@ self-governance\,\cite{08:_servic}.
 %technology applications\marginpar{needs further explanation and / or citations}.
 Dedicated industry standards have been developed for SOAs. They allow
 routine implementation of business logic with an optimal
-user-experience.  (For example, the Business Process Execution Language--BPEL, see http://en.wikipedia.org/wiki/Business\_Process\_Execution\_Language is a common
-industry standard that was approved by the industry in 2007.)  SOAs often store control tables for
+user-experience.  (For example, the Business Process Execution Language--BPEL, see http://en.wikipedia.org/wiki/Business\_Process\_Execution\_Language, was approved by the industry in 2007.)  SOAs often store control tables for
 meta-data describing user workflows \cite{humby07:_progr}.  In this
 way, control software is replaced with software for data management and
 the technical implementation becomes focused on data management. The
@@ -1193,21 +1192,21 @@ NineML \cite{cannon07:_inter}.
 %model developed for one simulator must be run with a different
 %simulator.
 
-A CBI compliant simulator easily supports Type\,2 interoperability through implementation of the appropriate database interface software
-component.  Such an interface maps the concepts of
-declarative languages to concepts supported by the
-{\tt Biology\,Model\,Container}, which can also be used to
-connect the simulator to external databases that provide support for these
-declarative languages.
-
 Type\,1 interoperability has recently been implemented as the
 capability to communicate simulation data at run-time between
 different simulators using procedural paradigms\cite{ray08:_pymoos,
   davison08:_pynn}.  However, this approach requires the modeler to
 understand some of the internals of the model, the simulator, and the
 implementation of the procedural paradigm.  While monolithic software
-applications were to complicated to extend, this additional layer of
+applications are typically too complicated to extend, this additional layer of
 complexity makes the modeler's task next to impossible.
+
+A CBI compliant simulator easily supports Type\,2 interoperability through implementation of the appropriate database interface software
+component.  Such an interface maps the concepts of
+declarative languages to concepts supported by the
+{\tt Biology\,Model\,Container}, which can also be used to
+connect the simulator to external databases that provide support for these
+declarative languages.
 
 Ultimately, the CBI architecture moves interoperability problems from a context of
 communication between large monolithic applications to communication between well defined and simpler
@@ -1218,7 +1217,6 @@ CBI architecture that addresses the run-time communication of simulation data.
 %ports of the variables computed by the mathematical solvers.  This
 %aspect is described in more detail below.
 It is within the context of the CBI architecture, that the support of both Type\,1 and 2 interoperability becomes a practical possibility.
-
 
 %After the {\it API}s of a CBI compliant are defined, it is possible to
 %specify the compliance level of other simulators and software
@@ -1330,7 +1328,7 @@ case \cite{Hines:2004cr}.
 If we refer to the choices made during translation of a mental model
 to its computer implementation as model structure, and to the
 parameters as model quantities, then a model's history is defined by
-the history of its structure and its quantities.
+the history of its structure and quantities.
 %  Since
 %scientific conversation occurs along the lines of both model structure
 %and model quantities, collaborations
@@ -1345,6 +1343,7 @@ biological system, expressed as changes made to a model.
 %These changes
 %give structure to scientific discussion about the biology the model
 %represents.
+<<<<<<< variant A
 It is in this way the structure and quantities of a model document
 advances in the formal scientific understanding of a given biological
 system.  Ultimately, the user workflow integrates a simulator into the
@@ -1436,6 +1435,178 @@ direct support for scientific publication and communication.
 %simulator into the scientific workflow such that any CBI
 %compliant simulator provides direct support for scientific publication
 %and communication.
+>>>>>>> variant B
+
+\subsubsection*{Computational Modeling and Scientific Communication}
+
+The translation of a mental model and the implementation choices made
+by an investigator can potentially lead to models that have physiologically
+realistic parameters, but don't behave realistically for certain
+experiments or conditions for which it was not tuned.  On the other
+hand, models tuned with a series of experiments and showing
+interesting behavior or properties for others can have parameter
+values out of the physiological range.  Each of these cases has a
+clear area for potential improvement of the model and hence scientific
+knowledge.  A clear separation of model structure and model quantities
+allows the evaluation of quantities against their valid physiological
+range.
+
+The development of separate libraries of biological models and
+experimental protocols allows in principle the determination of whether the
+behavior of a model is realistic after application of a given experimental
+protocol.  The automation of this process would be useful
+for the identification of the strengths, weaknesses, or deficits of a specific model
+version.
+
+%Model collaboration is the process of investigators working
+%simultaneously on the same model or integrating different models.
+During model collaborations investigators continuously communicate
+about their model modifications, the (predicted) consequences, and
+their scientific interpretation.  Currently, this process of model
+modification can be tracked formally only through scientific paper
+publications and via databases of computational models. However, both
+these knowledge bases lack the support to link detailed annotations
+with a model that are necessary to understand why certain modifications have
+been made.  As a consequence, the reasons for modifications are often unclear.
+%Often it is unclear why certain
+%choices were made during model development because there is no way to
+%annotate the model with the reasons.
+%Collaboration is one of the most important
+%features of science, particularly during scientific meetings.
+%This sort of functionality has not yet been implemented for
+%the internet.
+%Developers of next generation neural simulators have the
+%responsibility of targeting model collaborations if they want the
+%simulator to be useful for structuring the scientific discourse about
+%biological function.
+%Collaboration server, compare with eg. skype servers.
+%\subsubsection*{Model Versioning and History}
+%Every model undergoes a series of changes before it is made available
+%to other people, published, or deposited in a database.  For this
+%reason it is important for a simulator to be able to cope with the
+%history of a model.
+% To do this a simulator must minimally support:
+%Model versions in a linear version history, divergence of model
+%history where in each parallel model version a different feature is
+%explored, and convergence of model history where the features of
+%different model versions are integrated.
+%Note that linear, divergent, and convergent workflows are easily mapped
+%to functions present in current version control systems (checkin,
+%branch, and merge, respectively).
+
+In principle, it would be extremely useful if consecutive model
+versions could be annotated with both user defined content and machine
+generated content.  For instance, to preserve the original reasons and
+interpretation of a series of modifications to a model during its
+development.  Another class of annotation, machine generated content, can provide a version of a
+model with benchmark scores.  These give information to a user about
+the strengths, weaknesses, or deficits of a specific model version
+(e.g. a channel conductance out of the physiological range--note that
+both the choice of a conductance value and its valid range can be
+subject to experimental evidence).
+%Since the tags are
+%present on versions of the model, the tagging operations must be
+%supported by the version control system.
+When comparable models behave (slightly) differently a user should be
+able to check the differences between them.  In principle, it must be possible for a user to correlate benchmark
+values with differences in (the parameters or structure of) the
+physical model.  Besides differences in benchmark values,
+user-contributed annotations, and the parameters of a physical model,
+subtleties in model behavior when simulated can also be tagged. This simulator functionality provides\marginpar{??}
+a much needed step for the scientific interpretation of a model and the
+biological system it represents. It is in this way that annotations to the structure and quantities of a model document
+advances in the formal scientific understanding of a given
+biological system.  Ultimately, it is the user workflow that integrates a
+simulator into the scientific workflow such that any CBI
+compliant simulator provides direct support for scientific publication
+and communication.
+####### Ancestor
+
+\subsubsection*{Computational Modeling and Scientific Communication}
+
+The translation of a mental model and the implementation choices made
+by a modeler can potentially lead to models that have physiologically
+realistic parameters, but don't behave realistically for certain
+experiments or conditions for which it was not tuned.  On the other
+hand, models tuned with a series of experiments and showing
+interesting behavior or properties for others can have parameter
+values out of the physiological range.  Each of these cases has a
+clear area for potential improvement of the model and hence scientific
+knowledge.  A clear separation of model structure and model quantities
+allows to evaluate the quantities against their valid physiological
+range.
+
+The development of separate libraries of biological models and
+experimental protocols allows in principle to determine whether the
+behavior of a model after application of an appropriate experimental
+protocol is realistic.  The automation of this process would be useful
+to identify the strengths, weaknesses, or deficits of a specific model
+version.
+
+%Model collaboration is the process of investigators working
+%simultaneously on the same model or integrating different models.
+During model collaborations investigators continuously communicate
+about their model modifications, the (predicted) consequences, and
+their scientific interpretation.  Currently, this process of model
+modification can be tracked formally only through scientific paper
+publications and via databases of computational models. However, both
+these knowledge bases lack the support to link detailed annotations
+with a model necessary to understand why certain modifications have
+been made.  As a consequence the reason for these modifications often
+remains unclear.
+%Often it is unclear why certain
+%choices were made during model development because there is no way to
+%annotate the model with the reasons.
+%Collaboration is one of the most important
+%features of science, particularly during scientific meetings.
+%This sort of functionality has not yet been implemented for
+%the internet.
+%Developers of next generation neural simulators have the
+%responsibility of targeting model collaborations if they want the
+%simulator to be useful for structuring the scientific discourse about
+%biological function.
+%Collaboration server, compare with eg. skype servers.
+%\subsubsection*{Model Versioning and History}
+%Every model undergoes a series of changes before it is made available
+%to other people, published, or deposited in a database.  For this
+%reason it is important for a simulator to be able to cope with the
+%history of a model.
+% To do this a simulator must minimally support:
+%Model versions in a linear version history, divergence of model
+%history where in each parallel model version a different feature is
+%explored, and convergence of model history where the features of
+%different model versions are integrated.
+%Note that linear, divergent, and convergent workflows are easily mapped
+%to functions present in current version control systems (checkin,
+%branch, and merge, respectively).
+
+In principle, it would be extremely useful if consecutive model
+versions could be annotated with both user defined content and machine
+generated content.  For instance to preserve the original reasons and
+interpretation of a series of modifications to a model during its
+development.  Another class of annotation provides a version of a
+model with benchmark scores.  These give information to a user about
+the strengths, weaknesses, or deficits of a specific model version
+(e.g. a channel conductance out of the physiological range--note that
+both the choice of a conductance value and its valid range can be
+subject to experimental evidence).
+%Since the tags are
+%present on versions of the model, the tagging operations must be
+%supported by the version control system.
+When comparable models behave (slightly) differently a user should be
+able to check the differences between them.  In principle, it must be possible for a user to correlate benchmark
+values with differences in (the parameters or structure of) the
+physical model.  Besides differences in benchmark values,
+user-contributed annotations, and the parameters of a physical model,
+subtleties in model behavior when simulated can also be tagged. This provides\marginpar{??}
+a step closer to the scientific interpretation of a model and the
+biological system it represents. It is in this way that annotations to the structure and quantities of a model document
+advances in the formal scientific understanding of a given
+biological system.  Ultimately, the user workflow integrates a
+simulator into the scientific workflow such that any CBI
+compliant simulator provides direct support for scientific publication
+and communication.
+======= end
 
 %The\marginpar{move to end of discussion} data layering in the CBI
 %architecture mirrors this by its gradient from biology data to
