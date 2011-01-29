@@ -1343,7 +1343,6 @@ biological system, expressed as changes made to a model.
 %These changes
 %give structure to scientific discussion about the biology the model
 %represents.
-<<<<<<< variant A
 It is in this way the structure and quantities of a model document
 advances in the formal scientific understanding of a given biological
 system.  Ultimately, the user workflow integrates a simulator into the
@@ -1354,22 +1353,22 @@ direct support for scientific publication and communication.
 %\subsubsection*{Computational Modeling and Scientific Communication}
 
 %The translation of a mental model and the implementation choices made
-%by a modeler can potentially lead to models that have physiologically
+%by an investigator can potentially lead to models that have physiologically
 %realistic parameters, but don't behave realistically for certain
 %experiments or conditions for which it was not tuned.  On the other
 %hand, models tuned with a series of experiments and showing
 %interesting behavior or properties for others can have parameter
 %values out of the physiological range.  Each of these cases has a
-%clear area for potential model improvement and hence advancement of
-%scientific knowledge.  A clear separation of model structure and model
-%quantities allows to evaluate the quantities against their valid
-%physiological range.
+%clear area for potential improvement of the model and hence scientific
+%knowledge.  A clear separation of model structure and model quantities
+%allows the evaluation of quantities against their valid physiological
+%range.
 
 %The development of separate libraries of biological models and
-%experimental protocols allows in principle to determine whether the
-%behavior of a model after application of an appropriate experimental
-%protocol is realistic.  The automation of this process would be useful
-%to identify the strengths, weaknesses, or deficits of a specific model
+%experimental protocols allows in principle the determination of whether the
+%behavior of a model is realistic after application of a given experimental
+%protocol.  The automation of this process would be useful
+%for the identification of the strengths, weaknesses, or deficits of a specific model
 %version.
 
 %%Model collaboration is the process of investigators working
@@ -1380,9 +1379,8 @@ direct support for scientific publication and communication.
 %modification can be tracked formally only through scientific paper
 %publications and via databases of computational models. However, both
 %these knowledge bases lack the support to link detailed annotations
-%with a model necessary to understand why certain modifications have
-%been made.  As a consequence the reason for these modifications often
-%remains unclear.
+%with a model that are necessary to understand why certain modifications have
+%been made.  As a consequence, the reasons for modifications are often unclear.
 %%Often it is unclear why certain
 %%choices were made during model development because there is no way to
 %%annotate the model with the reasons.
@@ -1411,9 +1409,9 @@ direct support for scientific publication and communication.
 
 %In principle, it would be extremely useful if consecutive model
 %versions could be annotated with both user defined content and machine
-%generated content.  For instance to preserve the original reasons and
+%generated content.  For instance, to preserve the original reasons and
 %interpretation of a series of modifications to a model during its
-%development.  Another class of annotation provides a version of a
+%development.  Another class of annotation, machine generated content, can provide a version of a
 %model with benchmark scores.  These give information to a user about
 %the strengths, weaknesses, or deficits of a specific model version
 %(e.g. a channel conductance out of the physiological range--note that
@@ -1427,186 +1425,14 @@ direct support for scientific publication and communication.
 %values with differences in (the parameters or structure of) the
 %physical model.  Besides differences in benchmark values,
 %user-contributed annotations, and the parameters of a physical model,
-%subtleties in model behavior when simulated can also be tagged. This provides\marginpar{??}
-%a step closer to the scientific interpretation of a model and the
+%subtleties in model behavior when simulated can also be tagged. This simulator functionality provides\marginpar{??}
+%a much needed step for the scientific interpretation of a model and the
 %biological system it represents. It is in this way that annotations to the structure and quantities of a model document
 %advances in the formal scientific understanding of a given
-%biological system.  Ultimately, the user workflow integrates a
+%biological system.  Ultimately, it is the user workflow that integrates a
 %simulator into the scientific workflow such that any CBI
 %compliant simulator provides direct support for scientific publication
 %and communication.
->>>>>>> variant B
-
-\subsubsection*{Computational Modeling and Scientific Communication}
-
-The translation of a mental model and the implementation choices made
-by an investigator can potentially lead to models that have physiologically
-realistic parameters, but don't behave realistically for certain
-experiments or conditions for which it was not tuned.  On the other
-hand, models tuned with a series of experiments and showing
-interesting behavior or properties for others can have parameter
-values out of the physiological range.  Each of these cases has a
-clear area for potential improvement of the model and hence scientific
-knowledge.  A clear separation of model structure and model quantities
-allows the evaluation of quantities against their valid physiological
-range.
-
-The development of separate libraries of biological models and
-experimental protocols allows in principle the determination of whether the
-behavior of a model is realistic after application of a given experimental
-protocol.  The automation of this process would be useful
-for the identification of the strengths, weaknesses, or deficits of a specific model
-version.
-
-%Model collaboration is the process of investigators working
-%simultaneously on the same model or integrating different models.
-During model collaborations investigators continuously communicate
-about their model modifications, the (predicted) consequences, and
-their scientific interpretation.  Currently, this process of model
-modification can be tracked formally only through scientific paper
-publications and via databases of computational models. However, both
-these knowledge bases lack the support to link detailed annotations
-with a model that are necessary to understand why certain modifications have
-been made.  As a consequence, the reasons for modifications are often unclear.
-%Often it is unclear why certain
-%choices were made during model development because there is no way to
-%annotate the model with the reasons.
-%Collaboration is one of the most important
-%features of science, particularly during scientific meetings.
-%This sort of functionality has not yet been implemented for
-%the internet.
-%Developers of next generation neural simulators have the
-%responsibility of targeting model collaborations if they want the
-%simulator to be useful for structuring the scientific discourse about
-%biological function.
-%Collaboration server, compare with eg. skype servers.
-%\subsubsection*{Model Versioning and History}
-%Every model undergoes a series of changes before it is made available
-%to other people, published, or deposited in a database.  For this
-%reason it is important for a simulator to be able to cope with the
-%history of a model.
-% To do this a simulator must minimally support:
-%Model versions in a linear version history, divergence of model
-%history where in each parallel model version a different feature is
-%explored, and convergence of model history where the features of
-%different model versions are integrated.
-%Note that linear, divergent, and convergent workflows are easily mapped
-%to functions present in current version control systems (checkin,
-%branch, and merge, respectively).
-
-In principle, it would be extremely useful if consecutive model
-versions could be annotated with both user defined content and machine
-generated content.  For instance, to preserve the original reasons and
-interpretation of a series of modifications to a model during its
-development.  Another class of annotation, machine generated content, can provide a version of a
-model with benchmark scores.  These give information to a user about
-the strengths, weaknesses, or deficits of a specific model version
-(e.g. a channel conductance out of the physiological range--note that
-both the choice of a conductance value and its valid range can be
-subject to experimental evidence).
-%Since the tags are
-%present on versions of the model, the tagging operations must be
-%supported by the version control system.
-When comparable models behave (slightly) differently a user should be
-able to check the differences between them.  In principle, it must be possible for a user to correlate benchmark
-values with differences in (the parameters or structure of) the
-physical model.  Besides differences in benchmark values,
-user-contributed annotations, and the parameters of a physical model,
-subtleties in model behavior when simulated can also be tagged. This simulator functionality provides\marginpar{??}
-a much needed step for the scientific interpretation of a model and the
-biological system it represents. It is in this way that annotations to the structure and quantities of a model document
-advances in the formal scientific understanding of a given
-biological system.  Ultimately, it is the user workflow that integrates a
-simulator into the scientific workflow such that any CBI
-compliant simulator provides direct support for scientific publication
-and communication.
-####### Ancestor
-
-\subsubsection*{Computational Modeling and Scientific Communication}
-
-The translation of a mental model and the implementation choices made
-by a modeler can potentially lead to models that have physiologically
-realistic parameters, but don't behave realistically for certain
-experiments or conditions for which it was not tuned.  On the other
-hand, models tuned with a series of experiments and showing
-interesting behavior or properties for others can have parameter
-values out of the physiological range.  Each of these cases has a
-clear area for potential improvement of the model and hence scientific
-knowledge.  A clear separation of model structure and model quantities
-allows to evaluate the quantities against their valid physiological
-range.
-
-The development of separate libraries of biological models and
-experimental protocols allows in principle to determine whether the
-behavior of a model after application of an appropriate experimental
-protocol is realistic.  The automation of this process would be useful
-to identify the strengths, weaknesses, or deficits of a specific model
-version.
-
-%Model collaboration is the process of investigators working
-%simultaneously on the same model or integrating different models.
-During model collaborations investigators continuously communicate
-about their model modifications, the (predicted) consequences, and
-their scientific interpretation.  Currently, this process of model
-modification can be tracked formally only through scientific paper
-publications and via databases of computational models. However, both
-these knowledge bases lack the support to link detailed annotations
-with a model necessary to understand why certain modifications have
-been made.  As a consequence the reason for these modifications often
-remains unclear.
-%Often it is unclear why certain
-%choices were made during model development because there is no way to
-%annotate the model with the reasons.
-%Collaboration is one of the most important
-%features of science, particularly during scientific meetings.
-%This sort of functionality has not yet been implemented for
-%the internet.
-%Developers of next generation neural simulators have the
-%responsibility of targeting model collaborations if they want the
-%simulator to be useful for structuring the scientific discourse about
-%biological function.
-%Collaboration server, compare with eg. skype servers.
-%\subsubsection*{Model Versioning and History}
-%Every model undergoes a series of changes before it is made available
-%to other people, published, or deposited in a database.  For this
-%reason it is important for a simulator to be able to cope with the
-%history of a model.
-% To do this a simulator must minimally support:
-%Model versions in a linear version history, divergence of model
-%history where in each parallel model version a different feature is
-%explored, and convergence of model history where the features of
-%different model versions are integrated.
-%Note that linear, divergent, and convergent workflows are easily mapped
-%to functions present in current version control systems (checkin,
-%branch, and merge, respectively).
-
-In principle, it would be extremely useful if consecutive model
-versions could be annotated with both user defined content and machine
-generated content.  For instance to preserve the original reasons and
-interpretation of a series of modifications to a model during its
-development.  Another class of annotation provides a version of a
-model with benchmark scores.  These give information to a user about
-the strengths, weaknesses, or deficits of a specific model version
-(e.g. a channel conductance out of the physiological range--note that
-both the choice of a conductance value and its valid range can be
-subject to experimental evidence).
-%Since the tags are
-%present on versions of the model, the tagging operations must be
-%supported by the version control system.
-When comparable models behave (slightly) differently a user should be
-able to check the differences between them.  In principle, it must be possible for a user to correlate benchmark
-values with differences in (the parameters or structure of) the
-physical model.  Besides differences in benchmark values,
-user-contributed annotations, and the parameters of a physical model,
-subtleties in model behavior when simulated can also be tagged. This provides\marginpar{??}
-a step closer to the scientific interpretation of a model and the
-biological system it represents. It is in this way that annotations to the structure and quantities of a model document
-advances in the formal scientific understanding of a given
-biological system.  Ultimately, the user workflow integrates a
-simulator into the scientific workflow such that any CBI
-compliant simulator provides direct support for scientific publication
-and communication.
-======= end
 
 %The\marginpar{move to end of discussion} data layering in the CBI
 %architecture mirrors this by its gradient from biology data to
