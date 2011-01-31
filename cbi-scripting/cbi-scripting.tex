@@ -249,8 +249,98 @@ to the function.  For convenience, we call this Python module\,{\it
   example}.\marginpar{{\bf Hugo:} you may want to check that the text matches the following example. {\bf NOTE:} Units {\tt RM}, {\tt RA}, and {\tt CM} do not appear to be SI.}
 
 \begin{verbatim}
-"""Working script example for running a model with G3 via python.Version 1."""__author__ = 'Mando Rodriguez'__credits__ = []__license__ = "GPL"__version__ = "1"__status__ = "Development"from nmc import ModelContainerdef run_simulation(simulation_time):    my_dt = 1e-5    #------------------------------------------------------------------------------# # Create a model container and some compartments#------------------------------------------------------------------------------  my_nmc = ModelContainer()  c = my_nmc.CreateCell("/cell")  s = my_nmc.CreateSegment("/cell/soma")  s.SetParameter("Vm_init", -0.0680)  s.SetParameter("RM", 1.000)  s.SetParameter("RA", 2.50)  s.SetParameter("CM", 0.0164)  s.SetParameter("ELEAK", -0.0800)  s.SetParameter("DIA", 2e-05)  s.SetParameter("LENGTH", 4.47e-05)# First Example:apply current injection to the soma  s.SetParameter("INJECT", 1e-9)# Second Example: use a wildcard to activate edogenous synapses  my_nmc.Query("setparameterconcept spine::/Purk_spine/head/par 25")  my_nmc.Query("setparameterconcept thickd::gaba::/Purk_GABA 1")#----------------------------------------------------------------------------- # Create a Heccer solver for processing the model.## We should able able to add all of the relevant data to the object# on initialization via the constructor.#------------------------------------------------------------------------------  from heccer import Heccer  my_heccer = Heccer(name="/cell", model=nmc)  my_heccer.CompileAll()#----------------------------------------------------------------------------- # Create an output generator for Heccer.## This involves creating an output generator, retrieving the address# of the variable you wish to obtain output for, and adding it to# the generator.#------------------------------------------------------------------------------  from experiment.output import Output  my_output_gen = Output("/tmp/output")  address = my_heccer.GetAddress("/cell/soma", "Vm")    my_output_gen.AddOutput("output", address)#----------------------------------------------------------------------------- # Create an array of objects to be scheduled.#------------------------------------------------------------------------------  schedulees = []  # schedule heccer  schedulees.append(my_heccer)  schedulees.append(my_output_gen)  current_time = 0.0  while current_time < simulation_time:      current_time += my_dt      for sched in schedulees:          # can also use Advance(current_time)          sched.Step(current_time)  my_heccer.Finish()  my_output_gen.Finish()    print "Done!"#------------------------------------------------------------------------------# Main program executes a simulation of 0.5 seconds.
-# The if statement allows this file to used as an executable script and as a library.#------------------------------------------------------------------------------
+"""
+Working script example for running a model with G3 via python.
+
+Version 1.
+"""
+__author__ = 'Mando Rodriguez'
+__credits__ = []
+__license__ = "GPL"
+__version__ = "1"
+__status__ = "Development"
+
+from nmc import ModelContainer
+
+def run_simulation(simulation_time):
+    my_dt = 1e-5
+    
+#------------------------------------------------------------------------------
+# 
+# Create a model container and some compartments
+#------------------------------------------------------------------------------
+
+  my_nmc = ModelContainer()
+  c = my_nmc.CreateCell("/cell")
+  s = my_nmc.CreateSegment("/cell/soma")
+
+  s.SetParameter("Vm_init", -0.0680)
+  s.SetParameter("RM", 1.000)
+  s.SetParameter("RA", 2.50)
+  s.SetParameter("CM", 0.0164)
+  s.SetParameter("ELEAK", -0.0800)
+  s.SetParameter("DIA", 2e-05)
+  s.SetParameter("LENGTH", 4.47e-05)
+
+# First Example:apply current injection to the soma
+  s.SetParameter("INJECT", 1e-9)
+
+# Second Example: use a wildcard to activate edogenous synapses
+  my_nmc.Query("setparameterconcept spine::/Purk_spine/head/par 25")
+  my_nmc.Query("setparameterconcept thickd::gaba::/Purk_GABA 1")
+
+#----------------------------------------------------------------------------- 
+# Create a Heccer solver for processing the model.
+#
+# We should able able to add all of the relevant data to the object
+# on initialization via the constructor.
+#------------------------------------------------------------------------------
+
+  from heccer import Heccer
+  my_heccer = Heccer(name="/cell", model=nmc)
+  my_heccer.CompileAll()
+
+#----------------------------------------------------------------------------- 
+# Create an output generator for Heccer.
+#
+# This involves creating an output generator, retrieving the address
+# of the variable you wish to obtain output for, and adding it to
+# the generator.
+#------------------------------------------------------------------------------
+
+  from experiment.output import Output
+  my_output_gen = Output("/tmp/output")
+  address = my_heccer.GetAddress("/cell/soma", "Vm")  
+  my_output_gen.AddOutput("output", address)
+
+#----------------------------------------------------------------------------- 
+# Create an array of objects to be scheduled.
+#------------------------------------------------------------------------------
+
+  schedulees = []
+
+  # schedule heccer
+  schedulees.append(my_heccer)
+  schedulees.append(my_output_gen)
+
+  current_time = 0.0
+
+  while current_time < simulation_time:
+      current_time += my_dt
+
+      for sched in schedulees:
+          # can also use Advance(current_time)
+          sched.Step(current_time)
+
+  my_heccer.Finish()
+  my_output_gen.Finish()
+  
+  print "Done!"
+
+#------------------------------------------------------------------------------
+# Main program executes a simulation of 0.5 seconds.
+# The if statement allows this file to used as an executable script and as a library.
+#------------------------------------------------------------------------------
 
 if __name__ == '__main__':
     run_sumulation(0.5) 
@@ -607,7 +697,80 @@ output and load it into a\,{\it wxPython} plot widget.  The import of
 the GUI functions of\,{\it wxWidgets} available to the script.
 
 \begin{verbatim}
-import DataPlotimport exampleimport wxfrom wx import xrcclass G3App(wx.App):    def OnInit(self):        # Load the XML resource file        self.res = xrc.XmlResource('G3.xrc')        # Declare objects for each part of the gui,        # we fetch the objects from the loaded XML resource        # via the name we gave each component in the builder.        self.frame = self.res.LoadFrame(None, 'mainFrame')        self.runButton = xrc.XRCCTRL(self.frame, 'runButton')        self.durationTextCtrl = xrc.XRCCTRL(self.frame,'durationTextCtrl')        # Bind the gui objects to methods.        #        # Note: frame is the main component inthe MainLoop so this        # is what we set the binding to.         self.frame.Bind(wx.EVT_BUTTON, self.OnRun, self.runButton)        # Display our simple gui.        self.frame.Show()        return True           # An action to do when the run button is pushed.    # This will run the simulation with the given time    # and plot the output.    def OnRun(self,evt):        simulation_time = float(self.durationTextCtrl.GetValue())        print "Simulation time is: " + str(simulation_time)        print "running simulation..."        example.run_simulation(simulation_time)        print "Simulation Complete!"        print "Plotting output"        self.Plot('/tmp/output')    ##    # Plots data output from a data file.    #    # wxPython sizer & layouts    # This is the alternative to using an    # XRC specification, this however is a small    # example.    def Plot(self,datafile):        plotwindow = wx.Frame(self.frame, -1, "Graph display", (480,300))        plotpanel = wx.Panel(plotwindow, -1)        self.dataplot = DataPlot.DataPlot(plotpanel, -1,                                          '/tmp/output',                                          'Example Plot',                                          'Time (Seconds)',                                          'Membrane Potential (Volts)')        vbox_sizer = wx.BoxSizer(wx.VERTICAL)        vbox_sizer.Add(self.dataplot, 1, wx.EXPAND)        plotpanel.SetAutoLayout(True)        plotpanel.SetSizer(vbox_sizer)        plotpanel.Layout()        plotwindow.Show()# Our main function where we perform the main loopif __name__ == '__main__':    app = G3App(False)    app.MainLoop()
+import DataPlot
+import example
+import wx
+from wx import xrc
+
+class G3App(wx.App):
+
+    def OnInit(self):
+
+        # Load the XML resource file
+        self.res = xrc.XmlResource('G3.xrc')
+
+        # Declare objects for each part of the gui,
+        # we fetch the objects from the loaded XML resource
+        # via the name we gave each component in the builder.
+        self.frame = self.res.LoadFrame(None, 'mainFrame')
+        self.runButton = xrc.XRCCTRL(self.frame, 'runButton')
+        self.durationTextCtrl = xrc.XRCCTRL(self.frame,'durationTextCtrl')
+
+        # Bind the gui objects to methods.
+        #
+        # Note: frame is the main component inthe MainLoop so this
+        # is what we set the binding to. 
+        self.frame.Bind(wx.EVT_BUTTON, self.OnRun, self.runButton)
+
+        # Display our simple gui.
+        self.frame.Show()
+        return True       
+
+    # An action to do when the run button is pushed.
+    # This will run the simulation with the given time
+    # and plot the output.
+    def OnRun(self,evt):
+
+        simulation_time = float(self.durationTextCtrl.GetValue())
+        print "Simulation time is: " + str(simulation_time)
+        print "running simulation..."
+
+        example.run_simulation(simulation_time)
+
+        print "Simulation Complete!"
+
+        print "Plotting output"
+        self.Plot('/tmp/output')
+
+    ##
+    # Plots data output from a data file.
+    #
+    # wxPython sizer & layouts
+    # This is the alternative to using an
+    # XRC specification, this however is a small
+    # example.
+    def Plot(self,datafile):
+
+        plotwindow = wx.Frame(self.frame, -1, "Graph display", (480,300))
+        plotpanel = wx.Panel(plotwindow, -1)
+
+        self.dataplot = DataPlot.DataPlot(plotpanel, -1,
+                                          '/tmp/output',
+                                          'Example Plot',
+                                          'Time (Seconds)',
+                                          'Membrane Potential (Volts)')
+
+        vbox_sizer = wx.BoxSizer(wx.VERTICAL)
+        vbox_sizer.Add(self.dataplot, 1, wx.EXPAND)
+        plotpanel.SetAutoLayout(True)
+        plotpanel.SetSizer(vbox_sizer)
+        plotpanel.Layout()
+        plotwindow.Show()
+
+# Our main function where we perform the main loop
+if __name__ == '__main__':
+    app = G3App(False)
+    app.MainLoop()
 \end{verbatim}
 
 %import DataPlot
@@ -1473,7 +1636,7 @@ Hugo Cornelis is partially supported by the CREA Financing program (CREA/07/027)
 
 \begin{figure}[ht]
 \begin{center}
-\includegraphics[width=4in]{figures/g3-interfacing.eps}
+\includegraphics[width=4in]{figures/g3-interfacing-1.eps}
 \end{center}
 \caption{
 {\bf Levels of programing in GENESIS 3.0.} The concept hierarchy used for communication by GENESIS developers. C Coding: System programing languages are used to program individual simulator components and extend simulator functionality. SLI: Indicates the level of the GENESIS Script Language Interface in the concept hierarchy. Script Languages: Python and Perl are used to interface individual simulator components. NDF: The native declarative file format used to build models and model components. NDF Libraries: Model components such as membrane channels and synapses provide a library of functional components available for accelerated model development. G-Tube: The GENESIS graphical user interface allows users to access models and model components for the rapid development of single cell and network models.
@@ -1575,15 +1738,15 @@ Hugo Cornelis is partially supported by the CREA Financing program (CREA/07/027)
 
 \clearpage
 
-\begin{figure}[ht]
-\begin{center}
-\includegraphics[width=4in]{figures/conceptual-hierarchy.eps}
-\end{center}
-\caption{
-{\bf Relationship Hierarchy between GENESIS Configurability and Extenxibility Options.}
-}
-\label{fig:conceptual-hierachy}
-\end{figure}
+%\begin{figure}[ht]
+%\begin{center}
+%\includegraphics[width=4in]{figures/conceptual-hierarchy.eps}
+%\end{center}
+%\caption{
+%{\bf Relationship Hierarchy between GENESIS Configurability and Extenxibility Options.}
+%}
+%\label{fig:conceptual-hierachy}
+%\end{figure}
 
 
 \end{document}
