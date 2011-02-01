@@ -66,8 +66,10 @@ def run_simulation(simulation_time):
 
     from g3.heccer import Heccer
     
-    my_heccer = Heccer(name="/cell", model=nmc)
-  
+    my_heccer = Heccer(name="/cell")
+
+    my_heccer.SetModel(my_nmc)
+    
     my_heccer.CompileAll()
 
 
