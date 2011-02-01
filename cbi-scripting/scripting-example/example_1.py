@@ -15,6 +15,7 @@ __version__ = "1"
 __status__ = "Development"
 
 import os
+import pdb
 import sys
 
 # This append may go away. 
@@ -69,7 +70,7 @@ def run_simulation(simulation_time):
     my_heccer = Heccer(name="/cell")
 
     my_heccer.SetModel(my_nmc)
-    
+    pdb.set_trace()
     my_heccer.CompileAll()
 
 
