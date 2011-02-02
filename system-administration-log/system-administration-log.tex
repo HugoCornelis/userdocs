@@ -39,6 +39,27 @@ The repository machine serves the source code for the GENESIS project as well as
 \item
 \begin{itemize}
 \item[] {\bf Admin:} Mando
+\item[] {\bf Date:} 2/2/2011 
+\item[] {\bf Actions:}  
+
+\begin{itemize}
+\item[] Checked the mercruial repository for errors using the "hg verify" command. 
+\item[] Added a hugo user so that Hugo can perform a simple "hg push" using the existing ssh key.
+\end{itemize}
+
+\item[] {\bf Reason:} 
+
+\begin{itemize}
+\item[] Some older revisions were still on my laptop and never got pushed due to a corrupted repository, and poor error reporting from the older version of mercurial used before the laptop reinstall. The error messages looked like it was a problem with the server but it was the server rejecting the corrupted differences from the client machine. 
+\item[] Hugo saved a change in the gtube. Mercurial is set up to use ssh keys so an account makes it easier to push revisions using the same group, named hg.
+\end{itemize}
+
+\item[] {\bf Impact:}  N/A
+\end{itemize}
+
+\item
+\begin{itemize}
+\item[] {\bf Admin:} Mando
 \item[] {\bf Date:} 2/1/2011 
 \item[] {\bf Actions:}  Added new ssh keys for passwordless access.
 \item[] {\bf Reason:} Recent reinstall of Mac OS X on my laptop was causing constant dialogs to pop up asking for a passphrase. Only way to get rid of them was to create new keys since the machine hostname was now different.
