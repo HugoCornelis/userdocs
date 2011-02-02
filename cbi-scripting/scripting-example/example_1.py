@@ -36,21 +36,21 @@ def run_simulation(simulation_time):
 
     my_nmc = ModelContainer()
 
-    c = my_nmc.CreateCell("/cell")
+    my_cell = my_nmc.CreateCell("/cell")
 
-    s = my_nmc.CreateSegment("/cell/soma")
+    my_segment = my_nmc.CreateSegment("/cell/soma")
 
-    s.SetParameter("Vm_init", -0.0680)
-    s.SetParameter("RM", 1.000)
-    s.SetParameter("RA", 2.50)
-    s.SetParameter("CM", 0.0164)
-    s.SetParameter("ELEAK", -0.0800)
+    my_segment.SetParameter("Vm_init", -0.0680)
+    my_segment.SetParameter("RM", 1.000)
+    my_segment.SetParameter("RA", 2.50)
+    my_segment.SetParameter("CM", 0.0164)
+    my_segment.SetParameter("ELEAK", -0.0800)
 
-    s.SetParameter("DIA", 2e-05)
-    s.SetParameter("LENGTH", 4.47e-05)
+    my_segment.SetParameter("DIA", 2e-05)
+    my_segment.SetParameter("LENGTH", 4.47e-05)
 
 # First Example:apply current injection to the soma
-    s.SetParameter("INJECT", 1e-9)
+    my_segment.SetParameter("INJECT", 1e-9)
 
 # Second Example: use a wildcard to activate edogenous synapses
 
