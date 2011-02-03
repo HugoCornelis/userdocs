@@ -105,11 +105,9 @@ def run_simulation(simulation_time):
 
     while current_time < simulation_time:
 
-        current_time += my_dt
-
         for sched in schedulees:
 
-            # can also use Advance(current_time)
+            current_time += my_dt
           
             sched.Step(current_time)
 
