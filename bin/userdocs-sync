@@ -1,11 +1,22 @@
-#!/usr/bin/perl -w
 #!/usr/bin/perl -w -d:ptkdb
+#!/usr/bin/perl -w
 #!
 
 
 use strict;
 
-system "userdocs-check";
+
+use YAML;
+
+my $build_database_yaml = `neurospaces_build --help-all`;
+
+my $build_database = Load($build_database_yaml);
+
+my $all_packages = $build_database->{all_packages};
+
+my $userdocs_directory = $all_packages->{userdocs}->{directory};
+
+system "cd \"$userdocs_directory\" && userdocs-check";
 
 if ($?)
 {
