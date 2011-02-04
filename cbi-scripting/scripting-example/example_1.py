@@ -14,39 +14,48 @@ __license__ = "GPL"
 __version__ = "1"
 __status__ = "Development"
 
-from nmc import ModelContainer
+import os
+import pdb
+import sys
 
+# This append may go away. 
+sys.path.append("/usr/local/glue/swig/python")
+
+
+from g3.nmc import ModelContainer
 
 def run_simulation(simulation_time):
 
     my_dt = 1e-5
-    
+
+
 #------------------------------------------------------------------------------
 # 
 # Create a model container and some compartments
 #------------------------------------------------------------------------------
 
-  my_nmc = ModelContainer()
+    my_nmc = ModelContainer()
 
-  c = my_nmc.CreateCell("/cell")
+    my_cell = my_nmc.CreateCell("/cell")
 
-  s = my_nmc.CreateSegment("/cell/soma")
+    my_segment = my_nmc.CreateSegment("/cell/soma")
 
-  s.SetParameter("Vm_init", -0.0680)
-  s.SetParameter("RM", 1.000)
-  s.SetParameter("RA", 2.50)
-  s.SetParameter("CM", 0.0164)
-  s.SetParameter("ELEAK", -0.0800)
+    my_segment.SetParameter("Vm_init", -0.0680)
+    my_segment.SetParameter("RM", 1.000)
+    my_segment.SetParameter("RA", 2.50)
+    my_segment.SetParameter("CM", 0.0164)
+    my_segment.SetParameter("ELEAK", -0.0800)
 
-  s.SetParameter("DIA", 2e-05)
-  s.SetParameter("LENGTH", 4.47e-05)
+    my_segment.SetParameter("DIA", 2e-05)
+    my_segment.SetParameter("LENGTH", 4.47e-05)
 
 # First Example:apply current injection to the soma
-  s.SetParameter("INJECT", 1e-9)
+    my_segment.SetParameter("INJECT", 1e-9)
 
 # Second Example: use a wildcard to activate edogenous synapses
-  my_nmc.Query("setparameterconcept spine::/Purk_spine/head/par 25")
-  my_nmc.Query("setparameterconcept thickd::gaba::/Purk_GABA 1")
+
+    my_nmc.Query("setparameterconcept spine::/Purk_spine/head/par 25")
+    my_nmc.Query("setparameterconcept thickd::gaba::/Purk_GABA 1")
 
 
 #----------------------------------------------------------------------------- 
@@ -56,11 +65,14 @@ def run_simulation(simulation_time):
 # on initialization via the constructor.
 #------------------------------------------------------------------------------
 
-  from heccer import Heccer
+    from g3.heccer import Heccer
+    
+    my_heccer = Heccer(name="/cell")
 
-  my_heccer = Heccer(name="/cell", model=nmc)
-  
-  my_heccer.CompileAll()
+    my_heccer.SetModel(my_nmc)
+
+    my_heccer.CompileAll()
+
 
 #----------------------------------------------------------------------------- 
 # Create an output generator for Heccer.
@@ -69,42 +81,42 @@ def run_simulation(simulation_time):
 # of the variable you wish to obtain output for, and adding it to
 # the generator.
 #------------------------------------------------------------------------------
+    from g3.experiment.output import Output
 
-  from experiment.output import Output
+    my_output_gen = Output("/tmp/output")
+  
+    address = my_heccer.GetAddress("/cell/soma", "Vm")
+  
+    my_output_gen.AddOutput("output", address)
 
-  my_output_gen = Output("/tmp/output")
-  
-  address = my_heccer.GetAddress("/cell/soma", "Vm")
-  
-  my_output_gen.AddOutput("output", address)
 
 #----------------------------------------------------------------------------- 
 # Create an array of objects to be scheduled.
 #------------------------------------------------------------------------------
 
-  schedulees = []
+    schedulees = []
 
-  # schedule heccer
-  schedulees.append(my_heccer)
-  schedulees.append(my_output_gen)
 
-  current_time = 0.0
+    # schedule heccer
+    schedulees.append(my_heccer)
+    schedulees.append(my_output_gen)
 
-  while current_time < simulation_time:
+    current_time = 0.0
 
-      current_time += my_dt
+    while current_time < simulation_time:
 
-      for sched in schedulees:
+        for sched in schedulees:
 
-          # can also use Advance(current_time)
-          sched.Step(current_time)
+            current_time += my_dt
+          
+            sched.Step(current_time)
 
 
     
-  my_heccer.Finish()
-  my_output_gen.Finish()
+    my_heccer.Finish()
+    my_output_gen.Finish()
   
-  print "Done!"
+    print "Done!"
 
 
 #------------------------------------------------------------------------------
