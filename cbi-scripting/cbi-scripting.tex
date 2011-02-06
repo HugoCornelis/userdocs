@@ -217,16 +217,14 @@ simple models with many default settings (e.g. to start a new research
 project) from more complicated interfaces that expose the full
 functionality of the simulator.
 
-As an example, the Python-based module\,{\it
-  Neurospaces.SingleCellContainer} contains functions to simplify the
-storage of single neuron models in computer memory.  This module is a
-simple front-end to the {\bf Model\,Container}, a G-3 component which
-for efficiency is coded in the system programming language C.
-Likewise,\,{\it Heccer.SimpleHeccer} is a wrapper module for the {\bf
-  Heccer} component which in turn is an interface to a low-level
-single neuron solver written in C.  Other components are under
-construction to facilitate network modeling\marginpar{incorporate DES
-  into this description}.
+As an example, the G-3 Python module\,{\it nmc} contains functions to
+simplify the storage of neuron models in computer memory.  This module
+is a simple front-end to the {\bf Model\,Container}, a G-3 component
+which for efficiency is coded in the system programming language C.
+Likewise,\,{\it Heccer} is a wrapper module for the {\bf Heccer}
+component which in turn is an interface to a low-level single neuron
+solver written in C.  Python bindings for the {\bf Discrete Event
+  System (DES)} to facilitate network modeling are under construction.
 
 Here we show a simple high-level Python script\,\footnote{This script
   is written for clarity of presentation rather than compactness or
@@ -240,104 +238,79 @@ These parameters are given by their specific values (in SI units) as
 commonly reported in the literature, instead of their actual values
 scaled to the compartment surface area as used by a mathematical
 solver\,\cite{cornelis04:_neuros_param_handl}. The script defines a
-Python function\,{\it run\_simulation} that will run when invoked from
-a command line on an appropriately configured computer.  The script
+Python function\,{\it run\_simulation} that will load and run a model when invoked from
+a system command line on an appropriately configured computer.  The script
 can also be imported into G-3 as a Python module, thus allowing access
-to the function.  For convenience, we call this Python module\,{\it
-  example}.\marginpar{{\bf Hugo:} you may want to check that the text matches the following example. {\bf NOTE:} Units {\tt RM}, {\tt RA}, and {\tt CM} do not appear to be SI.}
+to this function.  For convenience, we call this Python module\,{\it
+  example}.
 
 \begin{verbatim}
 """
-Working script example for running a model with G3 via python.
-
-Version 1.
+Comment: Python script running a simple model with G-3.
 """
-__author__ = 'Mando Rodriguez'
-__credits__ = []
-__license__ = "GPL"
-__version__ = "1"
-__status__ = "Development"
-
 from nmc import ModelContainer
 
 def run_simulation(simulation_time):
     my_dt = 1e-5
     
 #------------------------------------------------------------------------------
-# 
 # Create a model container and some compartments
 #------------------------------------------------------------------------------
+    my_nmc = ModelContainer()
+    c = my_nmc.CreateCell("/cell")
+    s = my_nmc.CreateSegment("/cell/soma")
 
-  my_nmc = ModelContainer()
-  c = my_nmc.CreateCell("/cell")
-  s = my_nmc.CreateSegment("/cell/soma")
-
-  s.SetParameter("Vm_init", -0.0680)
-  s.SetParameter("RM", 1.000)
-  s.SetParameter("RA", 2.50)
-  s.SetParameter("CM", 0.0164)
-  s.SetParameter("ELEAK", -0.0800)
-  s.SetParameter("DIA", 2e-05)
-  s.SetParameter("LENGTH", 4.47e-05)
+    s.SetParameter("Vm_init", -0.0680)
+    s.SetParameter("RM", 1.000)
+    s.SetParameter("RA", 2.50)
+    s.SetParameter("CM", 0.0164)
+    s.SetParameter("ELEAK", -0.0800)
+    s.SetParameter("DIA", 2e-05)
+    s.SetParameter("LENGTH", 4.47e-05)
 
 # First Example:apply current injection to the soma
-  s.SetParameter("INJECT", 1e-9)
+    s.SetParameter("INJECT", 1e-9)
 
 # Second Example: use a wildcard to activate edogenous synapses
-  my_nmc.Query("setparameterconcept spine::/Purk_spine/head/par 25")
-  my_nmc.Query("setparameterconcept thickd::gaba::/Purk_GABA 1")
+#    my_nmc.Query("setparameter spine::/Purk_spine/head/par 25")
+#    my_nmc.Query("setparameter thickd::gaba::/Purk_GABA 1")
 
 #----------------------------------------------------------------------------- 
-# Create a Heccer solver for processing the model.
-#
-# We should able able to add all of the relevant data to the object
-# on initialization via the constructor.
+# Create a Heccer for processing the model stored by the model container.
 #------------------------------------------------------------------------------
-
-  from heccer import Heccer
-  my_heccer = Heccer(name="/cell", model=nmc)
-  my_heccer.CompileAll()
+    from heccer import Heccer
+    my_heccer = Heccer(name="/cell", model=nmc)
+    my_heccer.CompileAll()
 
 #----------------------------------------------------------------------------- 
-# Create an output generator for Heccer.
-#
-# This involves creating an output generator, retrieving the address
-# of the variable you wish to obtain output for, and adding it to
-# the generator.
+# Create an output generator and link it to the variable of interest.
 #------------------------------------------------------------------------------
-
-  from experiment.output import Output
-  my_output_gen = Output("/tmp/output")
-  address = my_heccer.GetAddress("/cell/soma", "Vm")  
-  my_output_gen.AddOutput("output", address)
+    from experiment.output import Output
+    my_output = Output("/tmp/output")
+    my_output.AddOutput("output", my_heccer.GetAddress("/cell/soma", "Vm"))
 
 #----------------------------------------------------------------------------- 
 # Create an array of objects to be scheduled.
 #------------------------------------------------------------------------------
+    schedulees = []
 
-  schedulees = []
+    # schedule heccer
+    schedulees.append(my_heccer)
+    schedulees.append(my_output)
 
-  # schedule heccer
-  schedulees.append(my_heccer)
-  schedulees.append(my_output_gen)
+    current_time = 0.0
+    while current_time < simulation_time:
+        current_time += my_dt
 
-  current_time = 0.0
+        for schedulee in schedulees:
+            schedulee.Advance(current_time)
 
-  while current_time < simulation_time:
-      current_time += my_dt
-
-      for sched in schedulees:
-          # can also use Advance(current_time)
-          sched.Step(current_time)
-
-  my_heccer.Finish()
-  my_output_gen.Finish()
+    my_heccer.Finish()
+    my_output.Finish()
   
-  print "Done!"
-
 #------------------------------------------------------------------------------
 # Main program executes a simulation of 0.5 seconds.
-# The if statement allows this file to used as an executable script and as a library.
+# The if statement allows use of this file as an executable or as a library.
 #------------------------------------------------------------------------------
 
 if __name__ == '__main__':
