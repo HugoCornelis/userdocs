@@ -1,0 +1,47 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{G3 in Python}
+
+	To allow more flexible use of GENESIS, bindings in {\it Python} are available for each component of G3's \href{../cbi-architecture/cbi-architecture.tex}{CBI Architecture.} 
+
+\subsection*{Module hierarchy}
+
+	The {\it Python} module hierarchy is structured very similar to the C-base components that they bind. Each module is also meant to be installed at a particular step in the installation process:
+	
+\begin{itemize}
+
+\item[] {\bf g3 :}  The top level module is installed from the developer package. It contains functionality for determining which modules are installed and retrieving their current version numbers, revision tags, and dependencies. It also contains methods for upgrading and deleting existing modules. 
+
+\item[] {\bf g3.nmc :} A {\it Python} module for the \href{../model-container/model-container.tex}{Neurospaces Model Container}. It implements more object oriented abstractions to the underlying C code to make it easier to use in {\it Python} scripts.
+
+\item[]{\bf g3.experiment :}  {\it Python} module for the \href{../experiment/experiment.tex}{Experiment} package. The Experiment package is a collection of simulation objects used to incorporate simulation protocols in an experiment and set up data recording. The corresponding {\it Python} bound simulation objects that are a part of the Experiment package are sub modules to this top level module.
+
+\item[]{\bf g3.experiment.output :} Allows for outputting simulation data to a file.
+
+\item[]{\bf g3.experiment.perfectclamp :} Injects a constant value into a simulation.
+
+\item[]{\bf g3.experiment.pulsegen :} Applies pulsed currents into a simulation.
+
+\item[]{\bf g3.heccer :} {\it Python} module for the \href{../heccer/heccer.tex}{Heccer solver}. 
+
+\item []{\bf g3.sspy :} Simple Scheduler in Python. This module allows for setting up complex schedules without the need to know all of the internals of the model container, experiment, or heccer modules. The sspy module replicates the functionality of \href{../ssp/ssp.tex}{SSP} to allow scripting in {\it Python}.
+
+\item[]{\bf g3.gtube :} The G tube is a module which houses a GUI for creating basic simulations with project tracking, as well as a collection of miscellaneous GUIs for performing experiments and analysis. The goal is for the {\it gtube} to become a suite of visual tools that can be used to make interacting with G3 easier.
+
+\end{itemize}
+    
+
+\end{document}
