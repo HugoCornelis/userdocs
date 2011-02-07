@@ -18,7 +18,7 @@ import os
 import pdb
 import sys
 
-# This append may go away. 
+# This append may go away later. 
 sys.path.append("/usr/local/glue/swig/python")
 
 
@@ -29,10 +29,10 @@ def run_simulation(simulation_time):
     my_dt = 1e-5
 
 
-#------------------------------------------------------------------------------
-# 
-# Create a model container and some compartments
-#------------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
+    # 
+    # Create a model container and some compartments
+    #---------------------------------------------------------------------------
 
     my_nmc = ModelContainer()
 
@@ -49,21 +49,21 @@ def run_simulation(simulation_time):
     my_segment.SetParameter("DIA", 2e-05)
     my_segment.SetParameter("LENGTH", 4.47e-05)
 
-# First Example:apply current injection to the soma
+    # First Example:apply current injection to the soma
     my_segment.SetParameter("INJECT", 1e-9)
 
-# Second Example: use a wildcard to activate edogenous synapses
+    # Second Example: use a wildcard to activate edogenous synapses
 
     my_nmc.Query("setparameterconcept spine::/Purk_spine/head/par 25")
     my_nmc.Query("setparameterconcept thickd::gaba::/Purk_GABA 1")
 
 
-#----------------------------------------------------------------------------- 
-# Create a Heccer solver for processing the model.
-#
-# We should able able to add all of the relevant data to the object
-# on initialization via the constructor.
-#------------------------------------------------------------------------------
+    #---------------------------------------------------------------------------- 
+    # Create a Heccer solver for processing the model.
+    #
+    # We should able able to add all of the relevant data to the object
+    # on initialization via the constructor.
+    #---------------------------------------------------------------------------
 
     from g3.heccer import Heccer
     
@@ -71,16 +71,18 @@ def run_simulation(simulation_time):
 
     my_heccer.SetModel(my_nmc)
 
+    my_heccer.SetTimeStep(my_dt)
+
     my_heccer.CompileAll()
 
 
-#----------------------------------------------------------------------------- 
-# Create an output generator for Heccer.
-#
-# This involves creating an output generator, retrieving the address
-# of the variable you wish to obtain output for, and adding it to
-# the generator.
-#------------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
+    # Create an output generator for Heccer.
+    #
+    # This involves creating an output generator, retrieving the address
+    # of the variable you wish to obtain output for, and adding it to
+    # the generator.
+    #---------------------------------------------------------------------------
     from g3.experiment.output import Output
 
     my_output_gen = Output("/tmp/output")
@@ -90,9 +92,9 @@ def run_simulation(simulation_time):
     my_output_gen.AddOutput("output", address)
 
 
-#----------------------------------------------------------------------------- 
-# Create an array of objects to be scheduled.
-#------------------------------------------------------------------------------
+    #---------------------------------------------------------------------------
+    # Create an array of objects to be scheduled.
+    #---------------------------------------------------------------------------
 
     schedulees = []
 
@@ -119,9 +121,9 @@ def run_simulation(simulation_time):
     print "Done!"
 
 
-#------------------------------------------------------------------------------
+#---------------------------------------------------------------------------
 # Main program, executes a simulation with
 # with 0.5 seconds.
-#------------------------------------------------------------------------------
+#---------------------------------------------------------------------------
 if __name__ == '__main__':
     run_simulation(0.5)
