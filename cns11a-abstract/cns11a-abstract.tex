@@ -16,9 +16,9 @@ An important feature of GENESIS 3 simulator (G-3) is that its use is
 structured following an ideal user-workflow.  This user-workflow is
 based on experimental paradigms rather than computational simulations.
 As a consequence the architecture of the G-3 simulator connects it
-directly to databases storing experiment data.  This presentation
-explains the G-3 database interfaces and shows examples of data-driven
-modeling methods.
+directly to databases storing experiment data.  This presentation will
+explain the G-3 database interfaces and will show examples of
+data-driven modeling methods.
 
 
 \subsection*{Methods}
@@ -36,11 +36,11 @@ given simulation, the stimulus parameters for a given simulation run
 or `experiment', and/or the variables to be stored for subsequent
 analysis.
 
-{\bf Run simulation:} Configure runtime options, check, run, reset
-simulation, and save model state. The model state can be saved at any
-simulation time step to allow it to be imported into a subsequent
-GENESIS session. Output is flushed to raw result storage for
-subsequent data analysis.
+{\bf Configure simulation:} Configure runtime options, check, run,
+reset simulation, and save model state. The model state can be saved
+at any simulation time step to allow it to be imported into a
+subsequent GENESIS session. Output is flushed to raw result storage
+for subsequent data analysis.
 
 {\bf Output:} Check simulation output and the validity of results to
 determine whether simulation output exists in the correct locations.
@@ -56,6 +56,9 @@ clamp.
 
 \subsection*{Results}
 
+In principle each of the steps in the ideal user-workflow provides the
+foundation for a single database.  Here we provide three examples.
+
 The G-3 software component that implements the first step in the ideal
 user-workflow is called the model-container.  The model-container
 natively supports a dedicated data format for neuroscience models
@@ -64,7 +67,30 @@ show how to add to this database.  The model-container interfaces with
 NeuroML and NineML model databases.
 
 The second step in the ideal user-workflow connects the G-3 simulator
-to databases of experimental protocols.
+to databases of experimental protocols.  The database produced by this
+step has the configuration of a current clamp protocol independent of
+the specification of the computational model.
+
+The separation of the steps for biological model construction and
+experiment design allows the modeler to build separate libraries of
+biological models and experimental protocols.  In principle this
+allows any model to be combined with any appropriate experimental
+protocol without the requirement that the protocol was specifically
+designed for the given model.  The automation of this process would be
+useful to identify the strengths, weaknesses, or deficits of a
+specific model.
+
+Finally the {\tt Iterate} step defines the differences in
+configuration between the simulations belonging to the same simulation
+project, research project, educational tutorial or scientific
+publication.
+
+\subsection*{Conclusion}
+
+In this presentation we will show the use of computational model
+databases and experimental protocol databases to drive simulations.
+When combined with appropriate simulation configurations, simulations
+can be run from a single command line.
 
 
 \end{document}
