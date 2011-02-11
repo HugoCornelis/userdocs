@@ -63,13 +63,15 @@ The G-3 software component that implements the first step in the ideal
 user-workflow is called the model-container.  The model-container
 natively supports a dedicated data format for neuroscience models
 (NDF).  The model-container has a builtin database of NDF models.  We
-show how to add to this database.  The model-container interfaces with
-NeuroML and NineML model databases.
+show how to add computational models to this database.  The
+model-container interfaces with NeuroML and NineML model databases.
 
 The second step in the ideal user-workflow connects the G-3 simulator
 to databases of experimental protocols.  The database produced by this
-step has the configuration of a current clamp protocol independent of
-the specification of the computational model.
+step stores generic protocols that can be adjusted by the user for
+specific experimental protocols such as current clamp and voltage
+clamp.  These protocols are stored independently of the specification
+of the computational model.
 
 The separation of the steps for biological model construction and
 experiment design allows the modeler to build separate libraries of
