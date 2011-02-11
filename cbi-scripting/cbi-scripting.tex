@@ -79,7 +79,7 @@ Bower J. M.$^{4}$.
 \\
 \bf{2} Rodriguez A. L. Research Imaging Institute, University of Texas Health Science Center at San Antonio, San Antonio, TX, United States
 \\
-\bf{3} Coop A. D. Deptartment of Epidemiology and Biostatistics, University of Texas Health Science Center at San Antonio, San Antonio, TX, United States
+\bf{3} Coop A. D. Department of Epidemiology and Biostatistics, University of Texas Health Science Center at San Antonio, San Antonio, TX, United States
 \\
 \bf{4} Bower J. M. Research Imaging Institute, University of Texas Health Science Center at San Antonio, San Antonio, TX, United States
 \\
@@ -317,6 +317,9 @@ if __name__ == '__main__':
     run_sumulation(0.5) 
 \end{verbatim}
 
+
+\subsection*{Contrasting Levels of Expressibility}
+
 The CBI architecture allows G-3 to accommodate many user
 interfaces.  As an example, the compartmental solver {\bf Heccer} can be driven
 stand-alone from C code, Python, or Perl to run the simplest
@@ -328,12 +331,12 @@ script with alternative implementations in C and the GENESIS SLI.
 In the C code there is an abundance of low level detail that
 interfaces directly to the solver.  For example, compartments are
 identified by their position in an array and parameters such as {\tt
-  RM} and {\tt CM} must be provided as an ordered sequence of their
-actual values (scaled to the compartment surface area).
+  RM} and {\tt CM} must be provided as an unlabeled ordered sequence
+of their actual values (scaled to the compartment surface area).
 
 The complexity of the GENESIS SLI interface falls between that of the
 Python interface and the C code interface\footnote{Note,
- the G2 SLI is supported by G-3 through its backward compatibility
+ the G-2 SLI is supported by G-3 through its backward compatibility
   component {\bf NS-SLI}.}.  While
 compartments and parameters have names, numerical values are given in
 a format used by solvers.
@@ -484,7 +487,7 @@ The {\bf G-Shell} integrates other
 G-3 components and makes their functions available through an
 interactive environment available from a command line.  Coded in Perl, the {\bf G-Shell} is a
 communication abstraction layer for 
-the {\bf Model\,Container}, {\bf Heccer}, {\bf SSP} and the {\bf
+the {\bf Model\,Container}, {\bf Heccer}, {\bf SSP}, {\bf DES} and the {\bf
   Studio}.  After the {\bf G-Shell} has been started from a system
 shell with
 \begin{verbatim}
@@ -499,7 +502,7 @@ the list of loaded software components can be printed to the screen with the com
 Each loaded software component will be shown with associated status
 information that helps diagnose possible problems.  For
 example, after correct initialization of the {\bf Model\,Container} its
-status information should appear as:
+status information appears as:
 
 \begin{verbatim}
   model-container:
@@ -532,12 +535,12 @@ replaced by\,{\it sli\_load}:
 
 This command imports the model that is specified in the SLI script
 without running the simulation.  A similar command ({\it pynn\_load})
-is in development to interface with the PyNN network modeling
+is currently in active development to interface with the PyNN network modeling
 environment\,\cite{davison08:_pynn}.
 
 Given the name of one of its dendritic segments, the number of branch
-points between that segment and the soma can be determined. After
-indicating which paths of the dendritic tree to examine, the
+points between the segment and the soma can be determined. After
+indicating with the command {\tt morphology\_summarize} which paths of the dendritic tree to examine, the
 parameter {\tt SOMATOPETAL\_BRANCHPOINTS} contains the result, which
 can be obtained with:
 
@@ -546,21 +549,21 @@ can be obtained with:
    show_parameter /Purkinje/segments/b1s06[182] SOMATOPETAL_BRANCHPOINTS
 \end{verbatim}
 
-If a dendritic segment contains a synaptic channel, the {\bf Discrete\,Event\,System} (DES) can be used
-to stimulate one or more specified synapses with a precomputed spike train stored in a file
-named, for example,\,{\it event\_data/events.yml}:
+If a dendritic segment contains a synaptic channel, it can be
+stimulated with a precomputed spike train stored in a file named, for
+example,\,{\it event\_data/events.yml}:
 
 \begin{verbatim}
    set_runtime_parameter /Purkinje/segments/b1s06[182]/Purkinje_spine_0/head/par/synapse
       EVENT_FILENAME ``event_data/events.yml''
 \end{verbatim}
 
-Finally, following the addition of an output giving the somatic membrane potential, a simulation can conveniently be started using:
+Finally, following the addition of an output for the somatic membrane potential, a simulation can conveniently be started using:
 \begin{verbatim}
    add_output /Purkinje/segments/soma Vm
    run /Purkinje 0.1
 \end{verbatim}
-This outputs the somatic response to the given dendritic stimulus in a file named by default\,{\it /tmp/output}.
+This simulation produces the somatic response to the given dendritic stimulus in a file named, by default,\,{\it /tmp/output}.
 
 To query the parameters of the stimulated compartment the model can
 then be analyzed using the graphical front-end of the {\bf Studio}
@@ -1087,8 +1090,7 @@ provides, we have shown how to run a simple model using {\bf Heccer} and the abi
 {\bf Model\,Container} to query the structure of EM level neuronal morphology. 
 The CBI architecture also defines clear
 boundaries for integration using existing scripting technology.
-In one example, during interactive simulation of a Purkinje cell model, the DES system was used 
-to deliver highly specific synaptic stimulation.  
+In one interactive example, highly specific synaptic stimulation was delivered to a Purkinje cell model.
 % In this way software improvements can be obtained
 %in parallel using distributed software development processes
 %rather than the more linear ones typical of centrally developed
