@@ -1,0 +1,75 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+\section*{CNS*11 Abstract 1}
+
+\subsection*{Introduction}
+
+An important feature of GENESIS 3 simulator (G-3) is that its use is
+structured following an ideal user-workflow.  This user-workflow is
+based on experimental paradigms rather than computational simulations.
+As a consequence the architecture of the G-3 simulator connects it
+directly to databases storing experiment data.  This presentation
+explains the G-3 database interfaces and shows examples of data-driven
+modeling methods.
+
+
+\subsection*{Methods}
+
+The ideal user-workflow consists of 5 steps:
+
+{\bf Construct model:} Simple models can be created directly within
+the {\bf G-Shell} by entering commands. More complex models can be
+imported into the {\bf G-Shell} from either the GENESIS model
+libraries or from external model libraries. The model can also be
+explored, checked, and saved.
+
+{\bf Design experiment:} Set model parameter values specific to a
+given simulation, the stimulus parameters for a given simulation run
+or `experiment', and/or the variables to be stored for subsequent
+analysis.
+
+{\bf Run simulation:} Configure runtime options, check, run, reset
+simulation, and save model state. The model state can be saved at any
+simulation time step to allow it to be imported into a subsequent
+GENESIS session. Output is flushed to raw result storage for
+subsequent data analysis.
+
+{\bf Output:} Check simulation output and the validity of results to
+determine whether simulation output exists in the correct locations.
+Output can be analyzed either within GENESIS or piped to external
+applications.
+
+{\bf Iterators:} Close the loop between output of results and model
+construction in the GENESIS users workflow. Iterators connect
+experimental results and model output and include for example,
+automated construction of simulations and batch files, static
+parameter searching, and active parameter searching using the dynamic
+clamp.
+
+\subsection*{Results}
+
+The G-3 software component that implements the first step in the ideal
+user-workflow is called the model-container.  The model-container
+natively supports a dedicated data format for neuroscience models
+(NDF).  The model-container has a builtin database of NDF models.  We
+show how to add to this database.  The model-container interfaces with
+NeuroML and NineML model databases.
+
+The second step in the ideal user-workflow connects the G-3 simulator
+to databases of experimental protocols.
+
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
