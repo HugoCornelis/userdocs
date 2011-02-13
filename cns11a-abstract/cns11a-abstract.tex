@@ -8,71 +8,65 @@
 
 \section*{GENESIS: Documentation}
 
-\section*{CNS*11 Abstract 1}
+\section*{GENESIS 3.0 functionality enhanced by interface to multiple types of database}
+
+\subsubsection*{Hugo Cornelis, Allan D. Coop, Mando Rodriguez, and James M. Bower}
 
 \subsection*{Introduction}
 
 An important feature of GENESIS 3 simulator (G-3) is that its use is
 structured following an ideal user-workflow.  This workflow is based
 on experimental paradigms rather than computational simulation.  As a
-consequence, the architecture of the G-3 simulator allows it to be
-connected directly to databases that store models and experimental
-data, libraries of numerical solvers, repositories of results and
-aggregated results, and ultimately tutorials and publications.  We
-present and explain the G-3 database interfaces and show examples of
+consequence, the software architecture of the G-3 simulator allows it to be
+connected directly to independent databases that store models, experimental protocols, libraries of numerical solvers, repositories of results and
+aggregated analysis, and ultimately, tutorials and publications.  We
+present and explain the database interfaces that support this functionality and show examples of
 data-driven modeling methods.
 
-As an example, consider a family of morphologies stored in a database.
-Passive model parameters are used to convert each of these
-morphologies to a computational model and apply a series of
-experiments to each model.  Both passive model parameters and
-experiments applies to the models are coming from databases.
+%As an example, consider a family of morphologies stored in a database.
+%Passive model parameters are used to convert each of these
+%morphologies to a computational model and apply a series of
+%experiments to each model.  Both passive model parameters and
+%experiments applies to the models are coming from databases.
 
 
 \subsection*{Methods}
 
-The ideal user-workflow consists of 5 steps: (1) Construct model, (2) Design experiment, (3) Configure simulation, (4) Check output, and (5) Iterate.
-In principle each of these steps provides the foundation for a single database. 
+The ideal user-workflow consists of 5 steps: (1) Construct model, (2) Design experiment, (3) Run simulation, (4) Check and analyze output, and (5) Iterate. In principle, each of these steps provides the foundation for databases that collectively define the scope and content of a modeling project. 
 
 \subsection*{Results}
 
-Here we provide three examples of the relationship between steps in the ideal user workflow and the databases that support them.
+We provide three examples of the relationship between steps in the ideal user workflow and the databases that support them.
 
-The G-3 software component that implements the first step in the ideal
-user-workflow is called the Model-Container.  This component
-natively supports a dedicated data format for neuroscience models
-(NDF).  The model-container has a builtin database of NDF models.  We
-show how to add computational models to this database.  The
-model-container interfaces with NeuroML and NineML model databases.
+{\bf 1. Construct Model:} The G-3 software component that implements this first step in the ideal
+user workflow is called the {\tt Model-Container}.  It
+natively supports a dedicated data format (NDF) for computational models in neuroscience.  The {\tt Model-Container} has a built-in database of NDF models and also interfaces with  external model databases such as NeuroML and NineML.  We
+show how to add new computational models to this database.
 
-The second step in the ideal user-workflow connects the G-3 simulator
-to databases of experimental protocols.  The database produced by this
-step stores generic protocols that can be adjusted by the user for
-specific experimental protocols such as current clamp and voltage
-clamp.  These protocols are stored independently of the specification
+{\bf 2. Design Experiment:} The second step in the ideal user workflow connects the G-3 simulator
+to a database of generic experimental protocols such as current injection and current or voltage
+clamp.  These protocols can be adjusted by a user to define specific experimental procedures. 
+Note that these procedures are stored independently of the specification
 of the computational model.
 
-The separation of the steps for biological model construction and
-experiment design allows the modeler to build separate libraries of
-biological models and experimental protocols.  In principle this
-allows any model to be combined with any appropriate experimental
-protocol without the requirement that the protocol was specifically
-designed for the given model.  The automation of this process would be
-useful to identify the strengths, weaknesses, or deficits of a
-specific model.
+It is the separation of the steps for construction of a biological model and
+experiment design that allows an investigator to build separate libraries of
+biological models and experimental procedures.  This has the advantage of
+allowing any model to be combined with any experimental
+procedure without requiring the procedure to be specifically designed for a given model.  
+%The 
 
-Finally the {\tt Iterate} step can be used to define the differences
-in configuration between simulations belonging to the same simulation
-project, research project, educational tutorial or scientific
-publication.
+{\bf 3. Iterate:} This final step in the ideal user workflow closes the loop between output of results and model construction.
+It can be used to define the differences in configuration between simulations belonging to the same simulation
+project, research project, educational tutorial or scientific publication. Automation of this process would be
+useful for identifying the strengths, weaknesses, or deficits of a specific model.
 
 \subsection*{Conclusion}
 
-In this presentation we will show the use of computational model
-databases and experimental protocol databases to drive simulations.
-When combined with appropriate simulation configurations, simulations
-can be run from a single command line.
-
+We show how the use of a variety of appropriately configured
+databases can be used to drive model development and simulation.
+When employed collectively, they have the advantage of allowing simulations
+to be run from a single command line.
 
 \end{document}
 
