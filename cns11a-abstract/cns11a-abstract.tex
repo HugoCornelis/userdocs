@@ -15,77 +15,85 @@
 \subsection*{Introduction}
 
 An important feature of GENESIS 3 simulator (G-3) is that its use is
-structured following an ideal user-workflow.  This workflow is based
-on experimental paradigms rather than computational simulation.  As a
-consequence, the software architecture of the G-3 simulator allows it
-to be connected directly to independent databases that store models,
-experimental protocols, libraries of numerical solvers, repositories
-of results and aggregated analysis, and ultimately, tutorials and
-publications.  We present and explain the database interfaces that
-support this functionality and show examples of data-driven modeling
-methods.
-
-%As an example, consider a family of morphologies stored in a database.
-%Passive model parameters are used to convert each of these
-%morphologies to a computational model and apply a series of
-%experiments to each model.  Both passive model parameters and
-%experiments applies to the models are coming from databases.
+structured following an ideal user-workflow with a focus on actual
+experimental paradigms rather than the process of computational
+simulation by itself.  This organization reflects the likely growing
+importance of linking models to real experiments and experimental
+data.  As a consequence, the software architecture of the G-3
+simulator allows it to be connected directly to independent databases
+that store models, experimental protocols, libraries of numerical
+solvers, repositories of results and aggregated analysis, and
+ultimately, tutorials and publications, as well as real time
+experimental protocols such as dynamic clamping procedures.  In this
+paper, we present and explain the details of the database interfaces
+that support this functionality and show examples of data-driven
+modeling methods.
 
 
 \subsection*{Methods}
 
 The ideal user-workflow consists of 5 steps: (1) Construct model, (2)
-Design experiment, (3) Run simulation, (4) Check and analyze output,
-and (5) Iterate. In principle, each of these steps provides the
-foundation for databases that collectively define the scope and
-content of a modeling project.
+Design experiment, (3) Run simulation, (4) Check and analyze results
+including experimentally, and (5) Iterate. In principle, each of these
+steps provides the foundation for databases that collectively define
+the scope and content of a modeling project.
 
 \subsection*{Results}
 
-We provide three examples of the relationship between steps in the
-ideal user workflow and the databases that support them.
+We provide three concrete and already implemented examples of the
+relationship between steps in the ideal user workflow and the
+databases that support them.
 
 {\bf 1. Construct Model:} The G-3 software component that implements
 this first step in the ideal user workflow is called the {\tt
   Model-Container}.  It natively supports a dedicated data format
 (NDF) for computational models in neuroscience.  The {\tt
   Model-Container} has a built-in database of NDF models and also
-interfaces with external NeuroML and NineML model databases.  We show
-how to add new computational models to this database and how to
-interface to new model databases.
+interfaces with arbitrary external model representations, including
+currently both NeuroML and NineML model databases.  We show how to add
+new computational models to this database as well as how to interface
+to new model databases.
 
 {\bf 2. Design Experiment:} The second step in the ideal user workflow
 connects the G-3 simulator to a database of generic experimental
 protocols such as current injection and current or voltage clamp.
 These protocols can be adjusted by a user to define specific
 experimental procedures.  Note that these procedures are stored
-independently of the specification of the computational model.
+independently of the specification of the computational model, and can
+also, in principle, be obtained from any experimental source of data.
 
-It is the separation of the steps for construction of a biological
-model and experiment design that allows an investigator to build
-separate libraries of biological models and experimental procedures.
-This has the advantage of allowing any model to be combined with any
-experimental procedure without requiring the procedure to be
-specifically designed for a given model.
+We will demonstrate how the separation of the steps for model
+construction and experimental design allow, in principle, any model to
+be combined with any experimental procedure without requiring the
+procedure to be specifically designed for a given model.
+
 
 {\bf 3. Iterate:} This final step in the ideal user workflow closes
 the loop between output of results and model construction.  It can be
 used to define the differences in configuration between simulations
 belonging to the same simulation project, research project,
-educational tutorial or scientific publication. Automation of this
-process would be useful for identifying the strengths, weaknesses, or
+educational tutorial or scientific publication.  Further, this step
+can be automated in order to identify strengths, weaknesses, or
 deficits of a specific model.  As such it becomes a powerful tool for
 pre-review of a model before its publication.
 
 \subsection*{Conclusion}
 
-We show how simulator interfaces to a variety of appropriately
-configured databases can be used to drive model development and
-simulation in computational neuroscience.  When employed collectively,
-the computational modeling paradigm can shift from procedural to
-data-driven.  This has important consequences for computational
-modelling methodology, model publications and scientific
+In this presentation we will demonstrate how G-3 interfaces to a
+variety of existing databases which are accordingly then linked to
+model development and simulation.  In principle this capability should
+accelerate a shift from purely procedural to data-driven modeling with
+important consequences for computational modelling methodology, and
+especially new forms of model publication and scientific
 communication.
+
+\subsection*{Acknowledgements}
+This research was supported by a NSF grant (HRD-0932339) to the
+University of Texas at San Antonio.  Hugo Cornelis is partially
+supported by the CREA Financing program (CREA/07/027) of the
+K.U.Leuven, Belgium, EU.  Hugo Cornelis, Armando L. Rodriguez and
+Allan D. Coop are partially supported by NIH grant 3 R01 NS049288-06S1
+to James M. Bower.
 
 
 \subsection*{References}
