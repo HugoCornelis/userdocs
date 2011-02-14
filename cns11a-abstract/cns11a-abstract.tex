@@ -17,11 +17,13 @@
 An important feature of GENESIS 3 simulator (G-3) is that its use is
 structured following an ideal user-workflow.  This workflow is based
 on experimental paradigms rather than computational simulation.  As a
-consequence, the software architecture of the G-3 simulator allows it to be
-connected directly to independent databases that store models, experimental protocols, libraries of numerical solvers, repositories of results and
-aggregated analysis, and ultimately, tutorials and publications.  We
-present and explain the database interfaces that support this functionality and show examples of
-data-driven modeling methods.
+consequence, the software architecture of the G-3 simulator allows it
+to be connected directly to independent databases that store models,
+experimental protocols, libraries of numerical solvers, repositories
+of results and aggregated analysis, and ultimately, tutorials and
+publications.  We present and explain the database interfaces that
+support this functionality and show examples of data-driven modeling
+methods.
 
 %As an example, consider a family of morphologies stored in a database.
 %Passive model parameters are used to convert each of these
@@ -32,33 +34,48 @@ data-driven modeling methods.
 
 \subsection*{Methods}
 
-The ideal user-workflow consists of 5 steps: (1) Construct model, (2) Design experiment, (3) Run simulation, (4) Check and analyze output, and (5) Iterate. In principle, each of these steps provides the foundation for databases that collectively define the scope and content of a modeling project. 
+The ideal user-workflow consists of 5 steps: (1) Construct model, (2)
+Design experiment, (3) Run simulation, (4) Check and analyze output,
+and (5) Iterate. In principle, each of these steps provides the
+foundation for databases that collectively define the scope and
+content of a modeling project.
 
 \subsection*{Results}
 
-We provide three examples of the relationship between steps in the ideal user workflow and the databases that support them.
+We provide three examples of the relationship between steps in the
+ideal user workflow and the databases that support them.
 
-{\bf 1. Construct Model:} The G-3 software component that implements this first step in the ideal
-user workflow is called the {\tt Model-Container}.  It
-natively supports a dedicated data format (NDF) for computational models in neuroscience.  The {\tt Model-Container} has a built-in database of NDF models and also interfaces with external NeuroML and NineML model databases.  We
-show how to add new computational models to this database and how to interface to new model databases.
+{\bf 1. Construct Model:} The G-3 software component that implements
+this first step in the ideal user workflow is called the {\tt
+  Model-Container}.  It natively supports a dedicated data format
+(NDF) for computational models in neuroscience.  The {\tt
+  Model-Container} has a built-in database of NDF models and also
+interfaces with external NeuroML and NineML model databases.  We show
+how to add new computational models to this database and how to
+interface to new model databases.
 
-{\bf 2. Design Experiment:} The second step in the ideal user workflow connects the G-3 simulator
-to a database of generic experimental protocols such as current injection and current or voltage
-clamp.  These protocols can be adjusted by a user to define specific experimental procedures. 
-Note that these procedures are stored independently of the specification
-of the computational model.
+{\bf 2. Design Experiment:} The second step in the ideal user workflow
+connects the G-3 simulator to a database of generic experimental
+protocols such as current injection and current or voltage clamp.
+These protocols can be adjusted by a user to define specific
+experimental procedures.  Note that these procedures are stored
+independently of the specification of the computational model.
 
-It is the separation of the steps for construction of a biological model and
-experiment design that allows an investigator to build separate libraries of
-biological models and experimental procedures.  This has the advantage of
-allowing any model to be combined with any experimental
-procedure without requiring the procedure to be specifically designed for a given model.  
+It is the separation of the steps for construction of a biological
+model and experiment design that allows an investigator to build
+separate libraries of biological models and experimental procedures.
+This has the advantage of allowing any model to be combined with any
+experimental procedure without requiring the procedure to be
+specifically designed for a given model.
 
-{\bf 3. Iterate:} This final step in the ideal user workflow closes the loop between output of results and model construction.
-It can be used to define the differences in configuration between simulations belonging to the same simulation
-project, research project, educational tutorial or scientific publication. Automation of this process would be
-useful for identifying the strengths, weaknesses, or deficits of a specific model.  As such it becomes a powerful tool for pre-review of a model before its publication.
+{\bf 3. Iterate:} This final step in the ideal user workflow closes
+the loop between output of results and model construction.  It can be
+used to define the differences in configuration between simulations
+belonging to the same simulation project, research project,
+educational tutorial or scientific publication. Automation of this
+process would be useful for identifying the strengths, weaknesses, or
+deficits of a specific model.  As such it becomes a powerful tool for
+pre-review of a model before its publication.
 
 \subsection*{Conclusion}
 
