@@ -43,5 +43,15 @@
 
 \end{itemize}
     
+\section*{Package Identification}
+
+	Each Python module that is a part of the \href{../cbi-architecture/cbi-architecture.tex}{CBI Architecture} contains a {\bf \_\_cbi\_\_} module that contains information about the package such as: name, version, revision, dependencies, and setup tools identifiers. For example, to print the current version for {\bf Heccer} you would write a script like this:
+	
+\begin{verbatim}
+from g3.heccer.__cbi__ import GetVersion
+
+print "The current Heccer version is %s" % GetVersion()
+
+\end{verbatim}
 
 \end{document}
