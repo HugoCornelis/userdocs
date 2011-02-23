@@ -25,7 +25,7 @@ Since SSPy is directly compatible with \href{../ssp/ssp.tex}{SSP} all informatio
 
 \section*{Plugin Structure}
 
-The plugin structure is designed to play on the strengths of the {\bf imp} module and Python's powerful duck typing. A plugin is a directory with a Python module that contains specific class declarations, and an accompanying configuration file. 
+The plugin structure is designed to play on the strengths of the {\bf imp} module and Python's duck typing feature. A plugin is defined as directory with a Python module that contains specific class declarations, and an accompanying configuration file. 
 
 \subsection*{Configuration File}
 
@@ -74,7 +74,7 @@ Each plugin module that is given in the configuration file options for file, sou
 	\item[] {\bf Input} for input objects.
 \end{itemize}
 
-so long as the correct methods are filled in with the appropriate functionality and given the required inputs and outputs,  the classes can be loaded interchangeably and used to drive any combination of simulations (provided a solver is compatible with the service and protocols). 
+so long as the correct methods are filled in with the appropriate functionality and given the required arguments and return types,  the classes can be loaded interchangeably and used to drive any combination of simulations (provided a solver is compatible with the declared service and protocols). 
 
 \subsubsection*{Services}
 
