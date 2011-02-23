@@ -76,6 +76,20 @@ Each plugin module that is given in the configuration file options for file, sou
 
 so long as the correct methods are filled in with the appropriate functionality and given the required inputs and outputs,  the classes can be loaded interchangeably and used to drive any combination of simulations. 
 
+\subsubsection*{Services}
+
+A modeling service class must have the following structure:
+
+\begin{verbatim}
+class Service:
+	def __init__(self, name="Untitled Service", plugin_name=None, arguments=None, verbose=False):
+	def GetCore(self)
+	def GetName(self)
+	def GetModule(self)
+	def GetType(self)
+	def GetArguments(self)
+\end{verbatim}
+
 \subsubsection*{Solver}
 
 A solver plugin class must have the following structure:
@@ -102,6 +116,49 @@ class Solver:
 	def Steps(self, steps)
 \end{verbatim}
 
+
+\subsubsection*{Input}
+
+An input plugin class must have the following structure:
+
+\begin{verbatim}
+
+class Input:
+    def __init__(self, name="Untitled Input", plugin_name=None, options=None, verbose=False):
+    def Add(self):
+    def Advance(self):
+    def Connect(self):
+    def Finish(self):
+    def GetCore(self):
+    def Initiate(self):
+    def New(self):
+    def Step(self):
+\end{verbatim}
+
+
+\subsubsection*{Output}
+
+An input plugin class must have the following structure:
+
+\begin{verbatim}
+
+class Output:
+    def __init__(self, name="Untitled Output", plugin_name=None, options=None, verbose=False):
+    def Add(self):
+    def Advance(self):
+    def Connect(self):
+    def Finish(self):
+    def GetCore(self):
+    def Initiate(self):
+    def New(self):
+    def Step(self):
+\end{verbatim}
+
+
+
+
 \subsection*{}
+
+
 
 \end{document}
