@@ -47,6 +47,7 @@ The configuration file is in YAML format with the following keys present:
 	\item[] {\bf version}: The version number or version identifier of the plugin. This should make possible the ability to set up a simulation configuration using two different solvers of the same type, with the same parameters, but different versions, thus allowing you to compare output.
 	\item[] {\bf file} or {\bf source}: This is the file containing the required declaration class within the plugins directory. 
 	\item[] {\bf module} : Contains the declaration class for the plugin. It is identical to the file and source tag only it is the module name, which is the python file without the ".py" suffix.
+	\item[]{\bf services}: Found in solver plugin configurations. A list of compatible services. If a user tries to pass a service to the solver that is not in this compatibility list an exception is thrown. 
 \end{itemize}
 
 Here is an example solver.yml file for Heccer:
@@ -60,6 +61,12 @@ description: This is the SSPy object for driving the Heccer solver
 file: heccer.py
 source: heccer.py
 module: heccer
+services:
+  - name: heccer_intermediary
+    version: 0.1
+  - name: model_container
+    version: 0.1
+
 \end{verbatim}
 
 
