@@ -1,0 +1,171 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Simple Scheduler in Python}
+
+\section*{Introduction}
+
+	GENESIS is composed of several independent software components, each of which has a presence in Python. It is possible via the API of components such as the \href{../model-container/model-container.tex}{Model Container}, \href{../heccer/heccer.tex}{Heccer}, and \href{../experiment/experiment.tex}{Experiment}, to script your simulations via Python. However this is not desirable since all simulations would be composed of code which contain their own control flow, that would often times require the user to understand all of the internals in order to expand on existing simulations. {\bf SSPy} is designed in the same vein as the \href{../ssp/ssp.tex}{SSP (Simple Scheduler in Perl)} in that it encapsulates the operations for loading and running a complete simulation while allowing for complete control of simulation parameters and simulator options via a declarative configuration file. It also provides an easy plugin framework so that new modeling services, experimental protocols and solvers can be dynamically loaded from a plugin directory, making them immediately available without the need to change any of the core code.  
+
+\section*{Configuration Files}
+
+Since SSPy is directly compatible with \href{../ssp/ssp.tex}{SSP} all information present in the section titled "The SSP Configuration File" apply here. 
+
+\section*{Plugin Structure}
+
+The plugin structure is designed to play on the strengths of the {\bf imp} module and Python's duck typing feature. A plugin is defined as directory with a Python module that contains specific class declarations, and an accompanying configuration file. 
+
+\subsection*{Configuration File}
+
+There are four different types of plugins, each is defined by a differently named configuration file:
+
+\begin{itemize}
+	\item[] {\bf solvers.yml} for Solver plugins.
+	\item[] {\bf service.yml} for Modeling services.
+	\item[] {\bf output.yml} for Output objects.
+	\item[] {\bf input.yml} for Input objects.
+\end{itemize}
+
+The configuration file is in YAML format with the following keys present:
+
+\begin{itemize}
+	\item[] {\bf name}: A unique identifier for the plugin. This will be what will is inserted into the SSPy configuration file to indicate which plugin to use for your simulation.
+	\item[] {\bf label}: A human readable name for the plugin. Purpose of such is so that when building GUI's and deriving publications, the human readable name is inserted where appropriate. 
+	\item[] {\bf description}: Like the label tag, this provides a human readable description for use in derived output.
+	\item[] {\bf version}: The version number or version identifier of the plugin. This should make possible the ability to set up a simulation configuration using two different solvers of the same type, with the same parameters, but different versions, thus allowing you to compare output.
+	\item[] {\bf file} or {\bf source}: This is the file containing the required declaration class within the plugins directory. 
+	\item[] {\bf module} : Contains the declaration class for the plugin. It is identical to the file and source tag only it is the module name, which is the python file without the ".py" suffix.
+	\item[]{\bf services}: Found in solver plugin configurations. A list of compatible services. If a user tries to pass a service to the solver that is not in this compatibility list an exception is thrown. 
+\end{itemize}
+
+Here is an example solver.yml file for Heccer:
+
+\begin{verbatim}
+---
+name: heccer
+label: Heccer Solver
+version: 0.1
+description: This is the SSPy object for driving the Heccer solver
+file: heccer.py
+source: heccer.py
+module: heccer
+services:
+  - name: heccer_intermediary
+    version: 0.1
+  - name: model_container
+    version: 0.1
+
+\end{verbatim}
+
+
+\subsection*{Declaration}
+
+Each plugin module that is given in the configuration file options for file, source, or module must have the corresponding classes:
+
+\begin{itemize}
+	\item[] {\bf Solver} for solvers.
+	\item[] {\bf Service} for modeling services.
+	\item[] {\bf Output} for output objects.
+	\item[] {\bf Input} for input objects.
+\end{itemize}
+
+so long as the correct methods are filled in with the appropriate functionality and given the required arguments and return types,  the classes can be loaded interchangeably and used to drive any combination of simulations (provided a solver is compatible with the declared service and protocols). 
+
+\subsubsection*{Services}
+
+A modeling service class must have the following structure:
+
+\begin{verbatim}
+class Service:
+	def __init__(self, name="Untitled Service", plugin_name=None, arguments=None, verbose=False):
+	def GetCore(self)
+	def GetName(self)
+	def GetModule(self)
+	def GetType(self)
+	def GetArguments(self)
+\end{verbatim}
+
+\subsubsection*{Solver}
+
+A solver plugin class must have the following structure:
+
+\begin{verbatim}
+class Solver:
+	def __init(self,  name="Untitled solver", plugin_name=None, constructor_settings=None, verbose=False)
+	def GetName(self)
+	def SetConfiguration(self, config)
+	def New(self, modelname, filename)
+	def Advance(self)
+	def Compile(self)
+	def Connect(self, service=None)
+	def Deserialize(self, filename)
+	def DeserializeState(self, filename)
+	def Finish(self)
+	def SetSolverField(self, field, value)
+	def GetSolverField(self, field)
+	def Serialize(self, filename)
+	def SerializeState(self, filename)
+	def Output(self, serial, field)
+	def Run(self, time)
+	def Step(self)
+	def Steps(self, steps)
+\end{verbatim}
+
+
+\subsubsection*{Input}
+
+An input plugin class must have the following structure:
+
+\begin{verbatim}
+
+class Input:
+    def __init__(self, name="Untitled Input", plugin_name=None, options=None, verbose=False):
+    def Add(self):
+    def Advance(self):
+    def Connect(self):
+    def Finish(self):
+    def GetCore(self):
+    def Initiate(self):
+    def New(self):
+    def Step(self):
+\end{verbatim}
+
+
+\subsubsection*{Output}
+
+An input plugin class must have the following structure:
+
+\begin{verbatim}
+
+class Output:
+    def __init__(self, name="Untitled Output", plugin_name=None, options=None, verbose=False):
+    def Add(self):
+    def Advance(self):
+    def Connect(self):
+    def Finish(self):
+    def GetCore(self):
+    def Initiate(self):
+    def New(self):
+    def Step(self):
+\end{verbatim}
+
+
+
+
+\subsection*{}
+
+
+
+\end{document}
