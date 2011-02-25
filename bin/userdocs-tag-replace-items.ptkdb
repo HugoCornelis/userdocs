@@ -3,23 +3,28 @@ $files = {
                                                    {
                                                      'expr' => undef,
                                                      'value' => '1',
-                                                     'text' => '    foreach my $file (@$files)
+                                                     'text' => '	if ($content)
 ',
                                                      'fname' => 'bin/userdocs-tag-replace-items',
                                                      'type' => 'user',
-                                                     'line' => '123'
+                                                     'line' => '364'
                                                    },
                                                    {
                                                      'expr' => undef,
                                                      'value' => '1',
-                                                     'text' => '    if ($option_remove)
+                                                     'text' => '	    $tagged_documents = YAML::Load(`userdocs-tag-filter \'$tag\'`);
 ',
                                                      'fname' => 'bin/userdocs-tag-replace-items',
                                                      'type' => 'user',
-                                                     'line' => 94
+                                                     'line' => 270
                                                    }
                                                  ]
          };
-$expr_list = [];
+$expr_list = [
+               {
+                 'expr' => '$_',
+                 'depth' => -1
+               }
+             ];
 $eval_saved_text = undef;
-$main_win_geometry = '1592x1114+0+0';
+$main_win_geometry = '1592x820+0+0';

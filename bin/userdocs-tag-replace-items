@@ -11,6 +11,7 @@ BEGIN
     #! make check
 
     push @INC, '../perl';
+
     #! make distcheck
 
     push @INC, '../../perl';
@@ -283,11 +284,21 @@ sub main
 
 	       sort
 
-	       # exclude excluded documents
+	       # exclude documents excluded by the options
 
 	       grep
 	       {
-		   not $option_exclude->{$_};
+		   my $result = 1;
+
+		   foreach my $excluded (keys %$option_exclude)
+		   {
+		       if (/$excluded/)
+		       {
+			   $result = 0;
+		       }
+		   }
+
+		   $result;
 	       }
 
 	       # convert to relative paths
@@ -300,6 +311,10 @@ sub main
 	       }
 	       @$tagged_documents,
 	      ];
+
+# 	use Data::Dumper;
+
+# 	print Dumper('tagged_documents_expanded from tagged_documents', $tagged_documents, $tagged_documents_expanded);
 
 	if (scalar @$tagged_documents_expanded)
 	{
