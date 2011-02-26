@@ -326,7 +326,7 @@ sub compile_2_dvi
 
     use IO::File;
 
-    my $source_file = IO::File->new("<../$filename");
+    my $source_file = IO::File->new("<$filename");
 
     my $source_text = join "", <$source_file>;
 
