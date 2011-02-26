@@ -56,6 +56,7 @@ $SIG{INT}
 
 my $option_check;
 my $option_dry_run;
+my $option_email = [];
 my $option_parse_only = 0;
 my $option_regex = ".*";
 my $option_report_tags;
@@ -209,17 +210,19 @@ sub read_cmd_line
     my $option_version;
 
     my $result
-	= GetOptions(
-		     "check!" => \$option_check,
-		     "dry-run!" => \$option_dry_run,
-		     "help!" => \$option_help,
-		     "parse-only!" => \$option_parse_only,
-		     "regex=s" => \$option_regex,
-		     "report-tags!" => \$option_report_tags,
-		     "tags=s" => $option_tags,
-		     "verbose+" => \$option_verbose,
-		     "version" => \$option_version,
-		    );
+	= GetOptions
+	    (
+	     "check!" => \$option_check,
+	     "dry-run!" => \$option_dry_run,
+	     "email=s" => $option_email,
+	     "help!" => \$option_help,
+	     "parse-only!" => \$option_parse_only,
+	     "regex=s" => \$option_regex,
+	     "report-tags!" => \$option_report_tags,
+	     "tags=s" => $option_tags,
+	     "verbose+" => \$option_verbose,
+	     "version" => \$option_version,
+	    );
 
     if (!$result)
     {
@@ -252,6 +255,7 @@ synopsis:
 options:
     --check           check documentation filesystem correctness.
     --dry-run         print what documents would be build without actually building them.
+    --email           send the built document to this email address, repeat for each receiver.
     --help            print usage information.
     --parse-only      only execute parse commands, without actually building documentation.
     --regex           selects documents by name (default is all).
