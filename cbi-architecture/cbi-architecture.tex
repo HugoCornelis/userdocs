@@ -322,17 +322,17 @@ The relationship between the activities involved in conducting an experiment and
 \noindent{\bf Place Figure\,\ref{fig:data-flows} about here.}\\
 
 From this perspective, simulation provides a framework to organize our
-understanding of biological systems. The\marginpar{reason} CBI architecture is designed
+understanding of biological systems. The CBI architecture is designed
 to support the lower loop within the illustrated scheme and was
 developed in an effort to resolve the complexities associated with
-continual addition of functionality to simulators.
-Ultimately\marginpar{discussion}, simulators become monolithic and it
-is increasingly difficult for users and developers to maintain and
-extend them, with the logical consequence that {\it user workflow}s were
-often similarly degraded.  Contemporary simulator scripts are also
-typically unstructured in the sense that a biological model is mixed
-with other code that defines and controls inputs, outputs and
-simulation configuration\cite{cannon07:_inter}.
+continual addition of functionality to simulators.  Ultimately,
+simulators become monolithic and it is increasingly difficult for
+users and developers to maintain and extend them, with the logical
+consequence that {\it user workflow}s were often similarly degraded.
+Contemporary simulator scripts are also typically unstructured in the
+sense that a biological model is mixed with other code that defines
+and controls inputs, outputs and simulation
+configuration\cite{cannon07:_inter}.
 
 %Finally, a complete simulation session is then described within the context of the new GENESIS 3.0 (G-3) simulation platform, which provides the first fully compliant implementation of the CBI architecture.   
 
@@ -462,7 +462,7 @@ resulting software application. Diagonal interactions are forbidden in the CBI a
 
 \subsection*{Separation of Concerns}
 
-Consideration of the principal concerns of data, control, and data layering were used to expand Figure~\ref{fig:data-control} by the separation of concerns principle. This key principle in software engineering states that a given problem involves different kinds of concerns. To cope with complexity, these concerns should be identified and separated \cite{Dijkstra:1982fu}. The aim is to achieve engineering quality factors such as robustness, adaptability, maintainability, and reusability.  Ultimately, this results in clear model scripts where the biological aspects of a model are separated from the peripheral code that implements it during a simulation\marginpar{for discussion}.
+Consideration of the principal concerns of data, control, and data layering were used to expand Figure~\ref{fig:data-control} by the separation of concerns principle. This key principle in software engineering states that a given problem involves different kinds of concerns. To cope with complexity, these concerns should be identified and separated \cite{Dijkstra:1982fu}. The aim is to achieve engineering quality factors such as robustness, adaptability, maintainability, and reusability.  Ultimately, this results in clear model scripts where the biological aspects of a model are separated from the peripheral code that implements it during a simulation.
 
 % Dijkstra EW (1982) On the role of scientific thought. in Dijkstra, Edsger W.. Selected writings on Computing: A Personal Perspective. New York, NY, USA: Springer-Verlag New York, Inc. pp. 60Ð66.
 
@@ -526,7 +526,7 @@ the low-level back-ends via the controller.
 
 \subsection*{Overall Design Objectives}
 
-There\marginpar{reason} are several important objectives that emerged from the separation of concerns that we used to guide the development
+There are several important objectives that emerged from the separation of concerns that we used to guide the development
 of our federated approach to the design and development of a neuronal
 simulation engine. 
 % where software components are self contained in the sense that they can be run independently.
@@ -542,7 +542,7 @@ development.
 
 The CBI architecture is defined as
 a modular paradigm that places stand-alone software components into a
-set of logical relationships. In this sense it defines a modular framework that provides the necessary parts of a neural simulator.\marginpar{definition}
+set of logical relationships. In this sense it defines a modular framework that provides the necessary parts of a neural simulator.
 
 The schema identified by the separation of concerns (see Fig.~\ref{fig:data-control}) is expanded in
 Figure~\ref{fig:cbi-architecture-simple} to give the components that
@@ -687,7 +687,7 @@ By implementing biological and connectivity translation, the {\tt Model\,Contain
 physical implementation of the low-level back-ends from the biological representation of a model and the way the user sees the model.  Firstly, this greatly reduces the implementation complexity of the mathematical solvers
 as they have only to deal with numerics.  Secondly, it allows for more intuitive model representation at the level of the user.
 
-Depending\marginpar{discussion: for the discussion} on the simulator application
+Depending on the simulator application
 area, the implementation may focus on one of the translation functions
 or both.  For instance a network simulator such as NEST provides
 better support for connectivity translation \cite{nordlie09:_visual},
