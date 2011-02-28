@@ -272,12 +272,8 @@ def run_simulation(simulation_time):
         }
         )
 
-# First Example:apply current injection to the soma
+# Apply current injection to the soma
     s.SetParameter("INJECT", 1e-9)
-
-# Second Example: use a wildcard to activate edogenous synapses
-#    my_nmc.Query("setparameter spine::/Purk_spine/head/par 25")
-#    my_nmc.Query("setparameter thickd::gaba::/Purk_GABA 1")
 
 #----------------------------------------------------------------------------- 
 # Create a Heccer for processing the model stored by the model container.
@@ -320,6 +316,10 @@ def run_simulation(simulation_time):
 if __name__ == '__main__':
     run_sumulation(0.5) 
 \end{verbatim}
+
+%# Second Example: use a wildcard to activate endogenous synapses (see text)
+%#    my_nmc.Query("setparameter spine::/Purk_spine/head/par 25")
+%#    my_nmc.Query("setparameter thickd::gaba::/Purk_GABA 1")
 
 
 \subsection*{Contrasting Levels of Expressibility}
