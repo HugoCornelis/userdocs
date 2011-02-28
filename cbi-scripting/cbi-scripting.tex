@@ -260,13 +260,17 @@ def run_simulation(simulation_time):
     c = my_nmc.CreateCell("/cell")
     s = my_nmc.CreateSegment("/cell/soma")
 
-    s.SetParameter("Vm_init", -0.0680)
-    s.SetParameter("RM", 1.000)
-    s.SetParameter("RA", 2.50)
-    s.SetParameter("CM", 0.0164)
-    s.SetParameter("ELEAK", -0.0800)
-    s.SetParameter("DIA", 2e-05)
-    s.SetParameter("LENGTH", 4.47e-05)
+    my_segment.SetParameters(
+        {
+        "Vm_init": -0.0680,
+        "RM": 1.000,
+        "RA": 2.50,
+        "CM": 0.0164,
+        "ELEAK": -0.0800,
+        "DIA": 2e-05,
+        "LENGTH": 4.47e-05,
+        }
+        )
 
 # First Example:apply current injection to the soma
     s.SetParameter("INJECT", 1e-9)
@@ -1450,6 +1454,10 @@ maintenance to be implemented concurrently.
 %consequence, the simulator back end comprises mathematical solvers
 %rather than relational databases as is the case in a traditional
 %three-tier software architecture.
+(In this section we summarize the concepts of the CBI architecture.
+For an in-depth explanation see the accompanying paper titled ``A
+Federated Design for a Neurobiological Simulation Engine: The CBI
+federated software architecture.''.)
 
 The core components of the architecture are shown in
 Figure~\ref{fig:cbi-arch} (see next section). On the bottom left are
