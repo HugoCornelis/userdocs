@@ -1,0 +1,160 @@
+% Template for PLoS
+% Version 1.0 January 2009
+%
+% To compile to pdf, run:
+% latex plos.template
+% bibtex plos.template
+% latex plos.template
+% latex plos.template
+% dvipdf plos.template
+
+\documentclass[10pt]{article}
+
+% amsmath package, useful for mathematical formulas
+\usepackage{amsmath}
+% amssymb package, useful for mathematical symbols
+\usepackage{amssymb}
+
+% graphicx package, useful for including eps and pdf graphics
+% include graphics with the command \includegraphics
+\usepackage{graphicx}
+
+% cite package, to clean up citations in the main text. Do not remove.
+\usepackage{cite}
+
+\usepackage{color} 
+
+% Use doublespacing - comment out for single spacing
+\usepackage{setspace} 
+\doublespacing
+
+\usepackage{lineno}
+
+% Text layout
+\topmargin 0.0cm
+\oddsidemargin 0.5cm
+\evensidemargin 0.5cm
+\textwidth 16cm 
+\textheight 21cm
+
+\begin{document}
+
+\section*{A Federated Design for a Neurobiological Simulation Engine: 
+The CBI federated software architecture.}
+\subsection*{Cornelis H, Coop AD, and Bower JM}
+\subsection*{Supplementary Materials 4:} 
+
+We show a toy network example, a NEURON script to create a ring of cells (actual cell definitions are given in a separate file not shown here).
+
+\linenumbers
+\begin{verbatim}
+load_file("nrngui.hoc")  // load the GUI and standard run libraries
+
+//////////////////////////////////
+// Step 1: Define the cell classes
+//////////////////////////////////
+
+load_file("cell.hoc")
+
+//////////////////////////////////////////////////////////////
+// Steps 2 and 3 are to create the cells and connect the cells
+//////////////////////////////////////////////////////////////
+
+NCELL = 20  // total number of cells in the ring network
+
+objref cells, nclist  // will be Lists that hold all network cell
+                      // and NetCon instances, respectively
+
+proc mkring() {
+  mkcells($1)  // create the cells
+  connectcells()  // connect them together
+}
+
+// creates the cells and appends them to a List called cells
+// argument is the number of cells to be created
+proc mkcells() {local i  localobj cell
+  cells = new List()
+  for i=0, $1-1 {
+    cell = new B_BallStick()
+    cells.append(cell)
+  }
+}
+
+// connects the cells
+// appends the NetCons to a List called nclist
+proc connectcells() {local i  localobj src, target, syn, nc
+  nclist = new List()
+  for i=0, cells.count-1 {  // iterating over sources
+    src = cells.object(i)
+    target = cells.object((i+1)%cells.count)
+    syn = target.synlist.object(0)  // the first object in synlist
+                                    // is an ExpSyn with e = 0, therefore an excitatory synapse
+    nc = src.connect2target(syn)
+    nclist.append(nc)
+    nc.delay = 1
+    nc.weight = 0.01
+  }
+}
+
+mkring(NCELL)  // go ahead and create the net!
+
+//////////////////////////////////////////////////
+// Instrumentation, i.e. stimulation and recording
+//////////////////////////////////////////////////
+
+// stim will be an artificial spiking cell that generates a "spike" event
+// that is delivered to the first cell in the net by ncstim
+// in order to initiate network spiking.
+// We won't bother including this "external stimulus source" or its NetCon
+// in the network's lists of cells or NetCons.
+objref stim, ncstim
+proc mkstim() {
+  stim = new NetStim()
+  stim.number = 1
+  stim.start = 0
+  ncstim = new NetCon(stim, cells.object(0).synlist.object(0))
+  ncstim.delay = 0
+  ncstim.weight = 0.01
+}
+
+mkstim()
+
+objref tvec, idvec  // will be Vectors that record all spike times (tvec)
+                    // and the corresponding id numbers of the cells that spiked (idvec)
+proc spikerecord() {local i  localobj nc, nil
+  tvec = new Vector()
+  idvec = new Vector()
+  for i=0, nclist.count-1 {
+    nc = cells.object(i).connect2target(nil)
+    nc.record(tvec, idvec, i)
+    // the Vector will continue to record spike times
+    // even after the NetCon has been destroyed
+  }
+}
+
+spikerecord()
+
+/////////////////////
+// Simulation control
+/////////////////////
+
+tstop = 100
+run()
+
+////////////////////////////
+// Report simulation results
+////////////////////////////
+
+proc spikeout() { local i
+  printf("\ntime\t cell\n")
+  for i=0, tvec.size-1 {
+    printf("%g\t %d\n", tvec.x[i], idvec.x[i])
+  }
+}
+
+spikeout()
+
+quit()
+\end{verbatim}
+
+\end{document}
