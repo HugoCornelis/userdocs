@@ -248,7 +248,7 @@ to this function.  For convenience, we call this Python module\,{\it
 """
 Comment: Python script running a simple model with G-3.
 """
-from nmc import ModelContainer
+from g3.nmc import ModelContainer
 
 def run_simulation(simulation_time):
     my_dt = 1e-5
@@ -257,8 +257,8 @@ def run_simulation(simulation_time):
 # Create a model container and some compartments
 #------------------------------------------------------------------------------
     my_nmc = ModelContainer()
-    c = my_nmc.CreateCell("/cell")
-    s = my_nmc.CreateSegment("/cell/soma")
+    my_cell = my_nmc.CreateCell("/cell")
+    my_segment = my_nmc.CreateSegment("/cell/soma")
 
     my_segment.SetParameters(
         {
@@ -273,19 +273,19 @@ def run_simulation(simulation_time):
         )
 
 # Apply current injection to the soma
-    s.SetParameter("INJECT", 1e-9)
+    my_segment.SetParameter("INJECT", 1e-9)
 
 #----------------------------------------------------------------------------- 
 # Create a Heccer for processing the model stored by the model container.
 #------------------------------------------------------------------------------
-    from heccer import Heccer
-    my_heccer = Heccer(name="/cell", model=nmc)
+    from g3.heccer import Heccer
+    my_heccer = Heccer(name="/cell", model=my_nmc)
     my_heccer.CompileAll()
 
 #----------------------------------------------------------------------------- 
 # Create an output generator and link it to the variable of interest.
 #------------------------------------------------------------------------------
-    from experiment.output import Output
+    from g3.experiment.output import Output
     my_output = Output("/tmp/output")
     my_output.AddOutput("output", my_heccer.GetAddress("/cell/soma", "Vm"))
 
@@ -314,7 +314,7 @@ def run_simulation(simulation_time):
 #------------------------------------------------------------------------------
 
 if __name__ == '__main__':
-    run_sumulation(0.5) 
+    run_simulation(0.5)
 \end{verbatim}
 
 %# Second Example: use a wildcard to activate endogenous synapses (see text)
