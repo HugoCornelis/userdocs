@@ -460,8 +460,8 @@ channels can be included in the Python\,{\it example} given above by adding
 the statements:
 
 \begin{verbatim}
-   s.import_child("channels/hodgkin-huxley.ndf::/k")
-   s.import_child("channels/hodgkin-huxley.ndf::/na")
+   my_segment.ImportChild("channels/hodgkin-huxley.ndf::/k")
+   my_segment.ImportChild("channels/hodgkin-huxley.ndf::/na")
 \end{verbatim}
 
 The {\bf Model\,Container} can export models constructed in a
@@ -473,7 +473,7 @@ cell model with over 4,000 compartments may be done with the following
 statement:
 
 \begin{verbatim}
-   Neurospaces.SingleCellContainer.read("cells/purkinje/edsjb1994.ndf")
+   my_nmc.Read("cells/purkinje/edsjb1994.ndf")
 \end{verbatim}
 
 After importation, the {\bf Model\,Container} provides a set of
@@ -482,7 +482,7 @@ example, the names of the most distal segment of each dendrite can be
 obtained with:
 
 \begin{verbatim}
-   Neurospaces.SingleCellContainer.query("segmentertips /Purkinje")
+   my_nmc.Query("segmentertips /Purkinje")
 \end{verbatim}
 
 \subsection*{Interactive Query and Simulation}
