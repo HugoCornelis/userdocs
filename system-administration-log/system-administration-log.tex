@@ -38,6 +38,40 @@ The repository machine serves the source code for the GENESIS project as well as
 
 \item
   \begin{itemize}
+  \item[] {\bf Admin:} Mando
+  \item[] {\bf Date:} 3/1/2011 
+  \item[] {\bf Actions:} Checked to see if the workspace for userdocs on the tester updated to the current revision without incident.
+  \item[] {\bf Reason:} Error occurred on Hugo's laptop in userdocs that removed a file that was accounted for from the workspace, when
+  updating to the latest revision. 
+  \item[] {\bf Impact:} None, appears that the repo updated without any issues. 
+  \item[] {\bf Related:} Ubuntu Vm on my laptop had an issue updating to the current revision and gave the error:
+  
+  \begin{verbatim}
+  mtn: 2 heads on branch '0'
+> mtn: merge 1 / 1:
+> mtn: calculating best pair of heads to merge next
+> mtn: [left]  435c678dbd0387be42a1d1c03f09d0d83d11092d
+> mtn: [right] 618d318e72ed89230e8b8d7bb407f198e677b50b
+> mtn: fatal: error: roster.cc:2086:
+> I(right_uncommon_ancestors.find(right_rid) !=
+> right_uncommon_ancestors.end())
+> mtn: this is almost certainly a bug in monotone.
+> mtn: please send this error message, the output of 'mtn version --full',
+> mtn: and a description of what you were doing to monotone-devel@nongnu.org.
+> mtn: wrote debugging log to
+> /home/mando/neurospaces_project/userdocs/source/snapshots/0/_MTN/debug
+  \end{verbatim}
+  
+  After updating monotone from 0.47 to 0.99 and migrating all databases to the new schema, monotone refused to pull any revision past revision
+  0ba094b646210d9bfb93142d82813cdb1bb80cbb, which is a large merge node. This resulted in the same error occurring since each update was
+  trying to update to revision 0ba094b646210d9bfb93142d82813cdb1bb80cbb and not the most current 435c678dbd0387be42a1d1c03f09d0d83d11092d. 
+  
+  
+  \end{itemize}
+
+
+\item
+  \begin{itemize}
   \item[] {\bf Admin:} Hugo
   \item[] {\bf Date:} 2/26/2011 
   \item[] {\bf Actions:} Testing with sendmail (because it does not work on my laptop).
