@@ -62,9 +62,16 @@ The repository machine serves the source code for the GENESIS project as well as
 > /home/mando/neurospaces_project/userdocs/source/snapshots/0/_MTN/debug
   \end{verbatim}
   
-  After updating monotone from 0.47 to 0.99 and migrating all databases to the new schema, monotone refused to pull any revision past revision
-  0ba094b646210d9bfb93142d82813cdb1bb80cbb, which is a large merge node. This resulted in the same error occurring since each update was
-  trying to update to revision 0ba094b646210d9bfb93142d82813cdb1bb80cbb and not the most current 435c678dbd0387be42a1d1c03f09d0d83d11092d. 
+   After updating monotone from 0.47 to 0.99 and migrating all databases to the new schema, monotone refuses to update to any revision past 
+   the large merge node at revision 0ba094b646210d9bfb93142d82813cdb1bb80cbb when performing a userdocs-sync. An 'mtn log --last 1' reports 0ba094b646210d9bfb93142d82813cdb1bb80cbb as its last revision. There are two heads.
+   
+  \begin{verbatim}
+  mtn: branch '0' is currently unmerged:
+3a1235db8bfe3d46c036bd6019bbacbffec3bbaf mandorodriguez@gmail.com 03/01/2011 04:57:39 PM
+618d318e72ed89230e8b8d7bb407f198e677b50b mandorodriguez+Ubuntu.Vm.laptop.i686@gmail.com hugo.cornelis@gmail.com 02/28/2011 04:43:11 PM 02/28/2011 03:41:04 PM
+  \end{verbatim}
+  
+  Performing a 'mtn update' {\bf without} using userdocs-sync or developer scripts results in a successful merge. 
   
   
   \end{itemize}
