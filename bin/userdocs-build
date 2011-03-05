@@ -59,6 +59,7 @@ my $option_dry_run;
 my $option_email = [];
 my $option_parse_only = 0;
 my $option_regex = ".*";
+my $option_report_output;
 my $option_report_tags;
 my $option_tags = [];
 my $option_verbose;
@@ -109,6 +110,16 @@ sub main
 	    print "$0: no documents to build\n";
 	}
 
+	if (scalar keys %$documents > 1)
+	{
+	    if (scalar @$option_email)
+	    {
+		print STDERR "$0: *** Warning: not sending multiple documents to multiple email addresses to prevent email overload";
+
+		$option_email = [];
+	    }
+	}
+
 	foreach my $document_name (sort keys %$documents)
 	{
 	    $document_name =~ s(/$)();
@@ -153,6 +164,13 @@ sub main
 			 )
 		      ];
 
+		if (scalar @$option_email)
+		{
+		    push @$operations, "email";
+
+		    $document->{email_adresses} = $option_email;
+		}
+
 		foreach my $operation (@$operations)
 		{
 		    # execute the operation
@@ -196,6 +214,17 @@ sub main
 
 	if (!$option_report_tags)
 	{
+	    # process other output options
+
+	    if ($option_report_output)
+	    {
+		my $all_output = GENESIS3::Documentation::Publications::report_all_output();
+
+		use YAML;
+
+		print Dump( { all_output => $all_output, }, );
+	    }
+
 	    # now also publish the publication production results
 
 	    GENESIS3::Documentation::Publications::publish_production_results();
@@ -218,6 +247,7 @@ sub read_cmd_line
 	     "help!" => \$option_help,
 	     "parse-only!" => \$option_parse_only,
 	     "regex=s" => \$option_regex,
+	     "report-output!" => \$option_report_output,
 	     "report-tags!" => \$option_report_tags,
 	     "tags=s" => $option_tags,
 	     "verbose+" => \$option_verbose,
@@ -260,6 +290,7 @@ options:
     --help            print usage information.
     --parse-only      only execute parse commands, without actually building documentation.
     --regex           selects documents by name (default is all).
+    --report-output   report what output has been generated.
     --report-tags     report the tags associated with the selected documents instead of building the documents.
     --tags            process the documents with these tags, multiple tags options may be given.
     --version         give version information.

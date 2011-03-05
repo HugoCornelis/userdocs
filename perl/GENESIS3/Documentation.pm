@@ -163,8 +163,44 @@ sub publish_production_results
     {
 	print "$0: *** Error: cannot all_publication_results write to /tmp/all_publication_results\n";
 
-	$result = "cannot all_publication_results write to /tmp/all_publication_results";
+	$result = "cannot write all_publication_results to /tmp/all_publication_results";
     }
+
+    return $result;
+}
+
+
+sub report_all_output
+{
+    my $selectors = shift;
+
+    use YAML;
+
+    my $result
+	= {
+	   map
+	   {
+	       $_ => $all_publication_results->{$_}->{document}->{output};
+	   }
+	   keys %$all_publication_results,
+	  };
+
+#     print Dump( { all_output => $all_output, }, );
+
+#     use IO::File;
+
+#     my $results_file = IO::File->new(">/tmp/all_publication_results");
+
+#     if ($results_file)
+#     {
+# 	print $results_file Dump( { all_publication_results => $all_results, }, );
+#     }
+#     else
+#     {
+# 	print "$0: *** Error: cannot all_publication_results write to /tmp/all_publication_results\n";
+
+# 	$result = "cannot write all_publication_results to /tmp/all_publication_results";
+#     }
 
     return $result;
 }
@@ -255,6 +291,8 @@ sub compile
 	{
 	    $result = 'make compile_document failed';
 	}
+
+	#t not clear how to do the email processing here
     }
 
     # Here we check for the redirect attribute and perform actions as
@@ -558,7 +596,7 @@ sub compile_2_html
 	    $result = "compiling $filename (htlatex '$filename', $?)";
 	}
 
-   }
+    }
 
     if ($options->{verbose})
     {
@@ -566,6 +604,16 @@ sub compile_2_html
     }
 
     chdir "..";
+
+    if (not $result)
+    {
+	$self->output_register
+	    (
+	     {
+	      html => "output/html/$filename_base.html",
+	     },
+	    );
+    }
 
     return $result;
 }
@@ -620,6 +668,16 @@ sub compile_2_pdf
 
     chdir "..";
 
+    if (not $result)
+    {
+	$self->output_register
+	    (
+	     {
+	      pdf => "output/pdf/$filename_base.pdf",
+	     },
+	    );
+    }
+
     return $result;
 }
 
@@ -673,6 +731,16 @@ sub compile_2_ps
 #     }
 
 #     chdir "..";
+
+    if (not $result)
+    {
+	$self->output_register
+	    (
+	     {
+	      ps => "output/ps/$filename_base.ps",
+	     },
+	    );
+    }
 
     return $result;
 }
@@ -743,7 +811,19 @@ sub compile_html
 
     my $directory = $self->{name};
 
-    return $self->compile_file_copy('html');
+    my $result = $self->compile_file_copy('html');
+
+    if (not $result)
+    {
+	$self->output_register
+	    (
+	     {
+	      html => "output/html/$directory.html",
+	     },
+	    );
+    }
+
+    return $result;
 }
 
 
@@ -844,7 +924,19 @@ sub compile_pdf
 
     my $directory = $self->{name};
 
-    return $self->compile_file_copy('pdf');
+    my $result = $self->compile_file_copy('pdf');
+
+    if (not $result)
+    {
+	$self->output_register
+	    (
+	     {
+	      pdf => "output/pdf/$directory.pdf",
+	     },
+	    );
+    }
+
+    return $result;
 }
 
 
@@ -854,7 +946,19 @@ sub compile_png
 
     my $directory = $self->{name};
 
-    return $self->compile_file_copy('png');
+    my $result = $self->compile_file_copy('png');
+
+    if (not $result)
+    {
+	$self->output_register
+	    (
+	     {
+	      png => "output/html/$directory.png",
+	     },
+	    );
+    }
+
+    return $result;
 }
 
 
@@ -864,7 +968,19 @@ sub compile_ps
 
     my $directory = $self->{name};
 
-    return $self->compile_file_copy('ps');
+    my $result = $self->compile_file_copy('ps');
+
+    if (not $result)
+    {
+	$self->output_register
+	    (
+	     {
+	      ps => "output/ps/$directory.ps",
+	     },
+	    );
+    }
+
+    return $result;
 }
 
 
@@ -874,7 +990,19 @@ sub compile_mp3
 
     my $directory = $self->{name};
 
-    return $self->compile_file_copy('mp3');
+    my $result = $self->compile_file_copy('mp3');
+
+    if (not $result)
+    {
+	$self->output_register
+	    (
+	     {
+	      html => "output/html/$directory.mp3",
+	     },
+	    );
+    }
+
+    return $result;
 }
 
 
@@ -882,9 +1010,83 @@ sub compile_redirect
 {
     my $self = shift;
 
-    my $directory = $self->{name};
+    my $document = $self->{name};
 
-    return create_http_redirect($directory, $self->{descriptor}->{redirect});
+    my $redirect_url = $self->{descriptor}->{redirect};
+
+    my $result;
+
+    chdir $document;
+
+    system "mkdir -p output/ps";
+
+    if ($?)
+    {
+	$result = "mkdir -p output/ps";
+    }
+
+    system "mkdir -p output/pdf";
+
+    if ($?)
+    {
+	$result = "mkdir -p output/pdf";
+    }
+
+    system "mkdir -p output/html";
+
+    if ($?)
+    {
+	$result = "mkdir -p output/html";
+    }
+
+    my @tmp = split(/\//,$document);
+
+    my $doctitle = $tmp[-1];
+
+    my $html_document = $doctitle  . ".html";
+
+    open(OUTPUT,">$html_document");
+    print OUTPUT "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n<html>\n  <head>\n    <title>";
+    print OUTPUT $html_document . " (http redirect)";
+    print OUTPUT "</title>\n  </head>\n  <body><meta http-equiv=\"refresh\" content=\"0;URL=";
+    print OUTPUT $redirect_url;
+    print OUTPUT "\">\n  </body>\n</html>\n\n";
+    close(OUTPUT);
+
+#     print "$0: copying redirect file to output directories\n";
+
+#     system "cp -f $html_document output/ps";
+
+#     if ($?)
+#     {
+# 	$result = "cp -f $html_document output/ps";
+#     }
+
+#     system "cp -f $html_document output/pdf";
+
+#     if ($?)
+#     {
+# 	$result = "cp -f $html_document output/pdf";
+#     }
+
+    system "cp -f $html_document output/html";
+
+    if ($?)
+    {
+	$result = "cp -f $html_document output/html";
+    }
+
+    if (not $result)
+    {
+	$self->output_register
+	    (
+	     {
+	      html => "output/html/$html_document",
+	     },
+	    );
+    }
+
+    return $result;
 }
 
 
@@ -1012,6 +1214,16 @@ sub compile_restructured_text
 
 		    chdir "..";
 		}
+
+		if (not $result)
+		{
+		    $self->output_register
+			(
+			 {
+			  html => "output/html/$filename_base.html",
+			 },
+			);
+		}
 	    }
 
 	    chdir "..";
@@ -1132,6 +1344,16 @@ sub compile_rich_text_format
 	    }
 
 	    chdir "..";
+
+	    if (not $result)
+	    {
+		$self->output_register
+		    (
+		     {
+		      html => "output/html/$filename_base.html",
+		     },
+		    );
+	    }
 	}
 
 	# else unknown source file type
@@ -1152,7 +1374,19 @@ sub compile_wav
 
     my $directory = $self->{name};
 
-    return $self->compile_file_copy('wav');
+    my $result = $self->compile_file_copy('wav');
+
+    if (not $result)
+    {
+	$self->output_register
+	    (
+	     {
+	      html => "output/html/$directory.wav",
+	     },
+	    );
+    }
+
+    return $result;
 }
 
 
@@ -1293,90 +1527,66 @@ sub copy
 }
 
 
-sub create_http_redirect
+sub email
 {
-    my $document = shift;
-
-    my $redirect_url = shift;
+    my $self = shift;
 
     my $options = shift;
 
+    my $build_directory = "$ENV{HOME}/neurospaces_project/userdocs/source/snapshots/0/";
+
+    my $document_name = $self->{name};
+
+    my $email_adresses = $self->{email_adresses};
+
+    my $user = getpwuid($>) || "Unknown User Account";
+
+    my $to = join ' ', @$email_adresses;
+
+    if ($self->{output}->{pdf})
+    {
+	print "$0: Sending to $to with $document_name pdf attachment\n";
+
+	my $attachment = $build_directory . $document_name . "/" . $self->{output}->{pdf};
+
+	my $command = "mutt -s '$0: mail from $user' -a $attachment -- $to";
+
+	open(MAIL, "| $command");
+
+	print MAIL "This email was sent to you by the GENESIS 3 documentation system on behalf of $user.  Please see the attached pdf file for more information.";
+
+	close(MAIL);
+    }
+    elsif ($self->{output}->{ps})
+    {
+	print "$0: Sending to $to with $document_name ps attachment\n";
+
+	my $attachment = $build_directory . $document_name . "/" . $self->{output}->{ps};
+
+	my $command = "mutt -s '$0: mail from $user' -a $attachment -- $to";
+
+	open(MAIL, "| $command");
+
+	print MAIL "This email was sent to you by the GENESIS 3 documentation system on behalf of $user.  Please see the attached postscript file for more information.";
+
+	close(MAIL);
+    }
+    elsif ($self->{output}->{html})
+    {
+	print "$0: Sending to $to with $document_name html link\n";
+
+	my $command = "mutt -s '$0: mail from $user' -- $to";
+
+	my $link = "http://www.genesis-sim.org/userdocs/$document_name/$document_name.html";
+
+	open(MAIL, "| $command");
+
+	print MAIL "This email was sent to you by the GENESIS 3 documentation system on behalf of $user.  Please follow the link below for more information.\n\n$link\n";
+
+	close(MAIL);
+    }
+
     my $result;
-
-    print "$0: \n\nThe document ";
-    print $document;
-    print " is an http redirect to a website.\n\n";
-
-    print "$0: Entering the $document directory ";
-    chdir $document;
-    print `pwd`;
-    print "\n\n";
-
-
-    print  "$0: creating directories\n";
-
-    system "mkdir -p output/ps";
-
-    if ($?)
-    {
-	$result = "mkdir -p output/ps";
-    }
-
-    system "mkdir -p output/pdf";
-
-    if ($?)
-    {
-	$result = "mkdir -p output/pdf";
-    }
-
-    system "mkdir -p output/html";
-
-    if ($?)
-    {
-	$result = "mkdir -p output/html";
-    }
-
-    print "$0: creating html file\n";
-
-    my @tmp = split(/\//,$document);
-
-    my $doctitle = $tmp[-1];
-
-    #my $html_document = $document . "/" . $doctitle  . ".html";
-    my $html_document = $doctitle  . ".html";
-
-    open(OUTPUT,">$html_document");
-    print OUTPUT "<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\">\n<html>\n  <head>\n    <title>";
-    print OUTPUT $html_document . " (http redirect)";
-    print OUTPUT "</title>\n  </head>\n  <body><meta http-equiv=\"refresh\" content=\"0;URL=";
-    print OUTPUT $redirect_url;
-    print OUTPUT "\">\n  </body>\n</html>\n\n";
-    close(OUTPUT);
-
-    print "$0: copying redirect file to output directories\n";
-
-    system "cp -f $html_document output/ps";
-
-    if ($?)
-    {
-	$result = "cp -f $html_document output/ps";
-    }
-
-    system "cp -f $html_document output/pdf";
-
-    if ($?)
-    {
-	$result = "cp -f $html_document output/pdf";
-    }
-
-    system "cp -f $html_document output/html";
-
-    if ($?)
-    {
-	$result = "cp -f $html_document output/html";
-    }
-
-    print "$0: Done\n\n";
 
     return $result;
 }
@@ -1622,7 +1832,7 @@ sub is_redirect
 	die "$0: document descriptor cannot be read ($descriptor_error)";
     }
 
-    return defined $self->{descriptor}->{redirect};
+    return $self->has_tag('redirect');
 }
 
 
@@ -1676,6 +1886,25 @@ sub nop
     my $result;
 
     return $result;
+}
+
+
+sub output_register
+{
+    my $self = shift;
+
+    my $output = shift;
+
+    if (not exists $self->{output})
+    {
+	$self->{output} = {};
+    }
+
+    $self->{output}
+	= {
+	   %{$self->{output}},
+	   %$output,
+	  };
 }
 
 
@@ -2023,5 +2252,6 @@ sub replacement_string
 
 
 1;
+
 
 
