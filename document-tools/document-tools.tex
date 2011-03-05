@@ -79,11 +79,13 @@ that need to be build.  If no arguments are given, all documents will
 be build.
 
 synopsis:
-    /usr/local/bin/userdocs-build <document name1> <document name2> ...
+    $0 <document name1> <document name2> ...
 
 options:
     --check           check documentation filesystem correctness.
     --dry-run         print what documents would be build without actually building them.
+    --email           send the built document to this email address, repeat for each receiver.
+                      NOTE: see http://www.amirwatad.com/blog/archives/2009/03/21/send-email-from-the-command-line-using-gmail-account/ as an example for local configuration of your MTA.
     --help            print usage information.
     --parse-only      only execute parse commands, without actually building documentation.
     --regex           selects documents by name (default is all).
