@@ -69,99 +69,33 @@ of the tools mentioned above.
 
 To learn about how to build individual documents:
 
-\begin{verbatim}
-$ userdocs-build --help
-
-
-userdocs-build: build documentation and prepare them for web
-publication.  Arguments on the command line are taken as documents
-that need to be build.  If no arguments are given, all documents will
-be build.
-
-synopsis:
-    $0 <document name1> <document name2> ...
-
-options:
-    --check           check documentation filesystem correctness.
-    --dry-run         print what documents would be build without actually building them.
-    --email           send the built document to this email address, repeat for each receiver.
-                      NOTE: see http://www.amirwatad.com/blog/archives/2009/03/21/send-email-from-the-command-line-using-gmail-account/ as an example for local configuration of your MTA.
-    --help            print usage information.
-    --parse-only      only execute parse commands, without actually building documentation.
-    --regex           selects documents by name (default is all).
-    --report-tags     report the tags associated with the selected documents instead of building the documents.
-    --tags            process the documents with these tags, multiple tags options may be given.
-    --version         give version information.
-    --v|verbose       tell what is being done, specify multiple times to get more feedback.
-
-example usage:
-    userdocs-build documentation-homepage
-    firefox html/htdocs/neurospaces_project/userdocs/documentation-homepage/documentation-homepage.html
-
-\end{verbatim}
+% start: userdocs-snippet help.tex
+% filled in automatically
+% end: userdocs-snippet help.tex
 
 To display all the tags currently in use:
 
-\begin{verbatim}
-$ userdocs-build --report-tags
----
-all_processed_tags:
-  - abstract
-  - contents-level1
-  - contents-level2
-  - contents-level3
-  - contents-level4
-  - contents-level5
-  - contents-level6
-  - contents-level7
-  - developer
-  - do-nothing
-  - genesis2
-  - genesis3
-  - gshell-interactive
-  - introduction
-  - level1
-  - level2
-  - level3
-  - level5
-  - pdf
-  - poster
-  - published
-  - related-build-debian
-  - related-developer-installation
-  - related-do-nothing
-  - related-documentation-system
-  - related-genesis-systems
-  - related-model-container
-  - related-notes-dave-g2
-  - related-pub-purkinje-deschutter1-conductance1
-  - related-pub-purkinje-deschutter1-morphology
-  - related-ssp
-  - related-todo
-  - related-tutorial
-  - related-workflow
-  - rst
-  - rtf
-  - rtxi
-  - tutorial
-  - userworkflow-do-nothing
-  - wiki
-  - workshop
-\end{verbatim}
+% start: userdocs-snippet tags.tex
+% filled in automatically
+% end: userdocs-snippet tags.tex
 
 To learn what documents are shown on the contents page of level 1
 documentation:
 
-\begin{verbatim}
-$ userdocs-build --tags contents-level1 --dry-run
----
-all_documents:
-  /home/cornelis/neurospaces_project/userdocs/source/snapshots/0/contents-level1: contents-level1
-  /home/cornelis/neurospaces_project/userdocs/source/snapshots/0/developer-intro: contents-level1
-  /home/cornelis/neurospaces_project/userdocs/source/snapshots/0/faq: contents-level1
-  /home/cornelis/neurospaces_project/userdocs/source/snapshots/0/genesis-installation: contents-level1
-  /home/cornelis/neurospaces_project/userdocs/source/snapshots/0/user-intro: contents-level1
-\end{verbatim}
+% start: userdocs-snippet contents-level1.tex
+% filled in automatically
+% end: userdocs-snippet contents-level1.tex
+
+%\begin{verbatim}
+%$ userdocs-build --tags contents-level1 --dry-run
+%---
+%all_documents:
+%  /home/cornelis/neurospaces_project/userdocs/source/snapshots/0/contents-level1: contents-level1
+%  /home/cornelis/neurospaces_project/userdocs/source/snapshots/0/developer-intro: contents-level1
+%  /home/cornelis/neurospaces_project/userdocs/source/snapshots/0/faq: contents-level1
+%  /home/cornelis/neurospaces_project/userdocs/source/snapshots/0/genesis-installation: contents-level1
+%  /home/cornelis/neurospaces_project/userdocs/source/snapshots/0/user-intro: contents-level1
+%\end{verbatim}
 
 We can then build one specific document (for instance the user-intro
 document) with:
@@ -178,8 +112,8 @@ documentation:
 
 \begin{verbatim}
 $ userdocs-build --tags contents-level1
-...
-...
+  ...
+  ...
 \end{verbatim}
 
 To build all the documentation you issue the {\bf userdocs-build}
@@ -190,33 +124,16 @@ directory hierarchy with html documents in your home directory
 It is convenient to combine some of these options.  For instance to
 learn which tags are associated with the {\bf user-intro} document:
 
-\begin{verbatim}
-$ userdocs-build --report-tags user-intro
----
-all_processed_tags:
-  - contents-level1
-  - genesis3
-  - level1
-  - published
-\end{verbatim}
+% start: userdocs-snippet tags-user-intro.tex
+% filled in automatically
+% end: userdocs-snippet tags-user-intro.tex
 
 To know which tags are associated with the documents in level 1
 documentation:
 
-\begin{verbatim}
-$ userdocs-build --report-tags --tags level1
----
-all_processed_tags:
-  - contents-level1
-  - developer
-  - genesis3
-  - gshell-interactive
-  - introduction
-  - level1
-  - published
-  - related-workflow
-  - wiki
-\end{verbatim}
+% start: userdocs-snippet tags-level1.tex
+% filled in automatically
+% end: userdocs-snippet tags-level1.tex
 
 To know which documents are still in {\bf draft} status and thus
 unpublished:
