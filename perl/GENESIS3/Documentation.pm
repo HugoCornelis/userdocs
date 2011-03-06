@@ -318,6 +318,10 @@ sub compile
     {
 	$result = $self->compile_mp3($options);
     }
+    elsif ($self->is_msword())
+    {
+	$result = $self->compile_msword($options);
+    }
     elsif ($self->is_wav())
     {
 	$result = $self->compile_wav($options);
@@ -1000,6 +1004,75 @@ sub compile_mp3
 	      html => "output/html/$directory.mp3",
 	     },
 	    );
+    }
+
+    return $result;
+}
+
+
+sub compile_msword
+{
+    my $self = shift;
+
+    my $directory = $self->{name};
+
+    my $result;
+
+    mkdir "output";
+
+    mkdir "output/pdf";
+
+    system "soffice -accept='socket,port=8100;urp;' -invisible &";
+
+    if ($?)
+    {
+	$result = "soffice -accept='socket,port=8100;urp;' -invisible &";
+    }
+    else
+    {
+	system "jodconverter $directory.doc $directory.pdf";
+
+	if ($?)
+	{
+	    $result = "jodconverter $directory.doc $directory.pdf";
+	}
+	else
+	{
+	    system "mv $directory.pdf output/pdf";
+
+	    if (not $result)
+	    {
+		$self->output_register
+		    (
+		     {
+		      pdf => "output/html/$directory.pdf",
+		     },
+		    );
+	    }
+
+	    mkdir "output/html";
+
+	    system "jodconverter $directory.doc $directory.html";
+
+	    if ($?)
+	    {
+		$result = "jodconverter $directory.doc $directory.html";
+	    }
+	    else
+	    {
+		system "mv $directory.html output/html";
+
+		if (not $result)
+		{
+		    $self->output_register
+			(
+			 {
+			  html => "output/html/$directory.html",
+			 },
+			);
+		}
+	    }
+	}
     }
 
     return $result;
@@ -1769,6 +1842,7 @@ sub is_latex
     return not (
 		$self->is_html()
 		or $self->is_mp3()
+		or $self->is_msword()
 		or $self->is_obsolete()
 		or $self->is_pdf()
 		or $self->is_png()
@@ -1789,6 +1863,22 @@ sub is_mp3
 }
 
 
+sub is_msword
+{
+    my $self = shift;
+
+    return $self->has_tag('doc');
+}
+
+
+sub is_obsolete
+{
+    my $self = shift;
+
+    return $self->has_tag('obsolete');
+}
+
+
 sub is_pdf
 {
     my $self = shift;
@@ -1802,14 +1892,6 @@ sub is_png
     my $self = shift;
 
     return $self->has_tag('png');
-}
-
-
-sub is_obsolete
-{
-    my $self = shift;
-
-    return $self->has_tag('obsolete');
 }
 
 
