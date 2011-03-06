@@ -1024,6 +1024,8 @@ sub compile_msword
 
     system "soffice -accept='socket,port=8100;urp;' -invisible &";
 
+    sleep 1;
+
     if ($?)
     {
 	$result = "soffice -accept='socket,port=8100;urp;' -invisible &";
