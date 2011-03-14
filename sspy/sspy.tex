@@ -19,6 +19,18 @@
 
 	GENESIS is composed of several independent software components, each of which has a presence in Python. It is possible via the API of components such as the \href{../model-container/model-container.tex}{Model Container}, \href{../heccer/heccer.tex}{Heccer}, and \href{../experiment/experiment.tex}{Experiment}, to script your simulations via Python. However this is not desirable since all simulations would be composed of code which contain their own control flow, that would often times require the user to understand all of the internals in order to expand on existing simulations. {\bf SSPy} is designed in the same vein as the \href{../ssp/ssp.tex}{SSP (Simple Scheduler in Perl)} in that it encapsulates the operations for loading and running a complete simulation while allowing for complete control of simulation parameters and simulator options via a declarative configuration file. It also provides an easy plugin framework so that new modeling services, experimental protocols and solvers can be dynamically loaded from a plugin directory, making them immediately available without the need to change any of the core code.  
 
+
+\section*{Installation}
+
+To activate SSPy via the developer package scripts, simply add this piece of YAML text into your {\bf /etc/neurospaces/developer/build.yml} file:
+
+\begin{verbatim}
+all_packages:
+  sspy:
+    disabled: '0'
+\end{verbatim}
+
+
 \section*{Configuration Files}
 
 Since SSPy is directly compatible with \href{../ssp/ssp.tex}{SSP} all information present in the section titled "The SSP Configuration File" apply here. 
