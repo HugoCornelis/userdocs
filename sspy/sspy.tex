@@ -22,13 +22,23 @@
 
 \section*{Installation}
 
-To activate SSPy via the developer package scripts, simply add this piece of YAML text into your {\bf /etc/neurospaces/developer/build.yml} file:
+To activate SSPy via the developer package scripts, simply add this piece of YAML text into your {\bf /etc/neurospaces/developer/build.yml} file. :
 
 \begin{verbatim}
 all_packages:
   sspy:
     disabled: '0'
 \end{verbatim}
+
+If the file is not present, create it and prepend three dashes like this:
+
+\begin{verbatim}
+---
+all_packages:
+  sspy:
+    disabled: '0'
+\end{verbatim}
+
 
 
 \section*{Configuration Files}
