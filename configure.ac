@@ -21,6 +21,30 @@ dnl AC_CONFIG_SUBDIRS(tests/code glue)
 AM_INIT_AUTOMAKE(userdocs, 0.0.0-alpha)
 
 
+AC_MSG_CHECKING(whether we build universal binaries.)
+AC_ARG_WITH(universal,
+[AS_HELP_STRING([--with-universal],
+              [Build universal binaries on Mac OS X.])],
+[ case "$val" in
+  no)
+
+    AC_MSG_RESULT(no)
+    OSX_UNIVERSAL="no"
+
+    ;;
+  *)
+
+    AC_MSG_RESULT(yes)
+    OSX_UNIVERSAL="yes"
+
+    ;;
+  esac ],
+  AC_MSG_RESULT(no)
+  OSX_UNIVERSAL="no"
+)
+AC_SUBST(OSX_UNIVERSAL)
+
+
 # Checks for programs.
 AC_CHECK_PROGS(LATEX,latex,[
    echo "Error! latex is not installed!."
