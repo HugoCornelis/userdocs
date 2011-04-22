@@ -1,0 +1,192 @@
+#
+# old_revision [efb32c6fbcef5b2251f98cc6e94ac9911090639a]
+#
+# patch "cbi-architecture/cbi-architecture.tex"
+#  from [87cc6b2533b24728ce1327de5117e01fa8eb5a0a]
+#    to [3c8ebe3837031e4dbba8abe0fb63c923f79d6eb1]
+# 
+# patch "cbi-scripting/cbi-scripting.tex"
+#  from [bf6bafb927a4669b36d3bf0e392b05f2abe0259e]
+#    to [78d1f052b002676bdd0ff0965af162bd21a34c8c]
+#
+============================================================
+--- cbi-scripting/cbi-scripting.tex	bf6bafb927a4669b36d3bf0e392b05f2abe0259e
++++ cbi-scripting/cbi-scripting.tex	78d1f052b002676bdd0ff0965af162bd21a34c8c
+@@ -1570,7 +1570,7 @@ \section*{Acknowledgements}
+ 
+ We thank the Computational Biology Initiative at UTSA (http://www.cbi.utsa.edu) for their excellent support when installing and updating G-3 on their computers.
+ 
+-Hugo Cornelis is partially supported by the CREA Financing program (CREA/07/027) of the K.U.Leuven, Belgium, EU. Both Hugo Cornelis and Allan D. Coop are partially supported by NIH grant 3 R01 NS049288-06S1 to James M Bower.
++Hugo Cornelis is partially supported by the CREA Financing program (CREA/07/027) of the K.U.Leuven, Belgium, EU to Dr. Marc Van Hulle. Hugo Cornelis, Armando L. Rodriguez and Allan D. Coop are partially supported by NIH grant 3 R01 NS049288-06S1 to James M Bower.
+ 
+ %\section*{References}
+ % The bibtex filename
+@@ -1593,7 +1593,7 @@ \section*{Figure Legends}
+ 
+ \begin{figure}[ht]
+ \begin{center}
+-\includegraphics[width=4in]{figures/studio-screenshot.eps}
++%\includegraphics[width=4in]{figures/studio-screenshot.eps}
+ \end{center}
+ \caption{
+ {\bf Querying a model in GENESIS 3.0.} The {\bf Studio} is a component of the reconfigured GENESIS software platform. It can be used to query the parameters of individual compartments in a multi-compartment model neuron. The {\bf Studio} also renders 3D morphology of dendrites and generates overviews of network models.
+@@ -1605,7 +1605,7 @@ \section*{Figure Legends}
+ 
+ \begin{figure}[ht]
+ \begin{center}
+-\includegraphics[width=4in]{figures/blender-python-bw.eps}
++%\includegraphics[width=4in]{figures/blender-python-bw.eps}
+ \end{center}
+ \caption{
+ {\bf Image of reconstructed Purkinje neuron dendritic segment.} Blender is an open source 3D content creation suite that can be interfaced with the GENESIS neural simulation platform to replace the functionality otherwise provided by the {\bf G-Shell} (a stand-alone GENESIS component). The rendering functions of Blender can then be used to analyze the morphology of small dendritic segments imported from electron microscopy data.
+@@ -1617,7 +1617,7 @@ \section*{Figure Legends}
+ 
+ \begin{figure}[ht]
+ \begin{center}
+-\includegraphics[width=4in]{figures/g3-interfacing.eps}
++%\includegraphics[width=4in]{figures/g3-interfacing.eps}
+ \end{center}
+ \caption{
+ {\bf Levels of programing in GENESIS 3.0.} The concept hierarchy used for communication by GENESIS developers. C Coding: System programing languages are used to program individual simulator components and extend simulator functionality. SLI: Indicates the level of the GENESIS-2 Script Language Interface in the concept hierarchy. Script Languages: Python and Perl are used to interface individual simulator components. NDF: The native declarative file format used to build models and model components. NDF Libraries: Model components such as membrane channels and synapses provide a library of functional components available for accelerated model development. G-Tube: The GENESIS graphical user interface allows users to access models and model components for the rapid development of single cell and network models.
+@@ -1629,7 +1629,7 @@ \section*{Figure Legends}
+ 
+ \begin{figure}[ht]
+ \begin{center}
+-\includegraphics[width=4in]{figures/G3arch.eps}
++%\includegraphics[width=4in]{figures/G3arch.eps}
+ \end{center}
+ \caption{
+ {\bf Relation of components in the Computational Biology Initiative (CBI) federated software architecture.} The CBI architecture defines the relationships between the necessary components of a computer-based neural simulation system. The architecture contains three layers that include a graphical user interface (GUI) connected to the functional components of a simulator by an interposed layer of application programming interfaces (APIs) and scripts. Components in the lowest layer are interconnected by APIs while their particular functionality is needed. GENESIS 3 is the first simulator to be implemented in compliance with the CBI architecture.
+@@ -1651,73 +1651,73 @@ %\section*{Tables}
+ %\label{tab:label}
+ % \end{table}
+ 
+-\begin{table}[ht]
+-\caption{
+-\bf{Comparison of Hand-Written and Generated Code Counts.}}
+-\begin{tabular}{l c c c c c c}
++%\begin{table}[ht]
++%\caption{
++%\bf{Comparison of Hand-Written and Generated Code Counts.}}
++%\begin{tabular}{l c c c c c c}
+ 
+-    {\bf Language:}
+-    & {\bf C (H)}
+-    & {\bf C (G)}
+-    & {\bf Perl (H)}
+-    & {\bf Perl (G)}
+-    & {\bf Python (H)}
+-    & {\bf Python (G)} \\
++%    {\bf Language:}
++%    & {\bf C (H)}
++%    & {\bf C (G)}
++%    & {\bf Perl (H)}
++%    & {\bf Perl (G)}
++%    & {\bf Python (H)}
++%    & {\bf Python (G)} \\
+ 
+-    {\bf Model\,Container}
+-    & 1,832,580
+-    & 4,416,163
+-    & 30,406
+-    & 207,638
+-    & 14,568
+-    & 250,178 \\
++%    {\bf Model\,Container}
++%    & 1,832,580
++%    & 4,416,163
++%    & 30,406
++%    & 207,638
++%    & 14,568
++%    & 250,178 \\
+ 
+-    {\bf Heccer}
+-    & 1,163,991
+-    & 1,575,615
+-    & 57,565
+-    & 107,261
+-    & 1,586
+-    & 171,219 \\
++%    {\bf Heccer}
++%    & 1,163,991
++%    & 1,575,615
++%    & 57,565
++%    & 107,261
++%    & 1,586
++%    & 171,219 \\
+ 
+-    {\bf NS-SLI}
+-    & 1,448,636
+-    & 483,641
+-    & 4,603
+-    & 2,802
+-    & ---
+-    & --- \\
++%    {\bf NS-SLI}
++%    & 1,448,636
++%    & 483,641
++%    & 4,603
++%    & 2,802
++%    & ---
++%    & --- \\
+ 
+-    {\bf SSP}
+-    & 829
+-    & 2,323
+-    & 55,063
+-    & ---
+-    & ---
+-    & --- \\
++%    {\bf SSP}
++%    & 829
++%    & 2,323
++%    & 55,063
++%    & ---
++%    & ---
++%    & --- \\
+ 
+-    {\bf Studio}
+-    & ---
+-    & ---
+-    & 174,923
+-    & ---
+-    & ---
+-    & --- \\
++%    {\bf Studio}
++%    & ---
++%    & ---
++%    & 174,923
++%    & ---
++%    & ---
++%    & --- \\
+ 
+-    {\bf G-Shell}
+-    & ---
+-    & ---
+-    & 28,142
+-    & ---
+-    & 623
+-    & 836 \\
+-\end{tabular}
+-\begin{flushleft} A comparison of hand-written (H) and automatically generated (G) code that supports the functionality of the independent components of the GENESIS simulation platform. Software hand-written in a system programming language such as C contains many more lines of code than the equivalent functionality replicated in a scripting language. The number of automatically generated lines of code is considerably greater than those written by hand.
+-\end{flushleft}
+-\label{tab:cbi-codecounts}
+-\end{table}
++%    {\bf G-Shell}
++%    & ---
++%    & ---
++%    & 28,142
++%    & ---
++%    & 623
++%    & 836 \\
++%\end{tabular}
++%\begin{flushleft} A comparison of hand-written (H) and automatically generated (G) code that supports the functionality of the independent components of the GENESIS simulation platform. Software hand-written in a system programming language such as C contains many more lines of code than the equivalent functionality replicated in a scripting language. The number of automatically generated lines of code is considerably greater than those written by hand.
++%\end{flushleft}
++%\label{tab:cbi-codecounts}
++%\end{table}
+ 
+-\clearpage
++%\clearpage
+ 
+ %\begin{figure}[ht]
+ %\begin{center}
