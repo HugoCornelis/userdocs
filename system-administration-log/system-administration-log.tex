@@ -972,6 +972,16 @@ No other machine seems to have this issue. Attempted many fixes but the end resu
 \end{itemize}
 
 \item 
+
+\begin{itemize}
+\item[] {\bf Admin:} Mando
+\item[] {\bf Date:} 4/29/2011
+\item[] {\bf Actions:} Removed the directory "/usr/local/glue/swig/python/Neurospaces" 
+\item[] {\bf Reason:}  Python module convention says that modules and module directories should all be in lowercase. Installer does not install the 'neurospaces' directory when
+'Neurospaces' is present. Automake clean rules do not delete directories unless you issue an explicit rm command, so it had to be removed manually. 
+\item[] {\bf Impact:}  Should proceed as normal.
+\end{itemize}
+
 \begin{itemize}
 \item[] {\bf Admin:} Mando
 \item[] {\bf Date:} 1/13/2011
