@@ -32,9 +32,28 @@ try to automate as much as possible over the
 
 The repository machine serves the source code for the GENESIS project as well as periodically performing automated source code checks. This machine also has a running web server that hosts the projects: doxygen documentation, regression tests, and various package distributions.
 
+System specs:
+\begin{itemize}
+\item[] {\bf Processor:} 2 Dual-Core AMD Opteron(tm) Processor 2220. 
+\item[] {\bf Memory:} 8 GB
+\item[] {\bf Operating System:} Debian Linux 
+\item[] {\bf Monotone version:} monotone 0.48 (base revision: 844268c137aaa783aa800a9c16ae61edda80ecea)
+\end{itemize}
+
 
 \begin{itemize}
 
+
+\item
+  \begin{itemize}
+  \item[] {\bf Admin:} Mando
+  \item[] {\bf Date:} 5/2/2011 
+  \item[] {\bf Actions:} Restarted cron daemon and checked the cron functionality with a wall test. 
+  \item[] {\bf Reason:} Tester appears to not have gone off at noon. The output file for neurospaces\_cron has a timestamp from 8:31 am and was completely untouched. No error email was sent either. 
+  \item[] {\bf Impact:} None, but will closely monitor the scheduled jobs after verifying cron is working correctly. 
+  \end{itemize}
+  
+  
 \item
   \begin{itemize}
   \item[] {\bf Admin:} Mando
