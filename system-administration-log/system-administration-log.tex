@@ -47,6 +47,40 @@ System specs:
 \item
   \begin{itemize}
   \item[] {\bf Admin:} Mando
+  \item[] {\bf Date:} 5/3/2011 
+  \item[] {\bf Actions:} Checked the cron log and tester workspaces. Performed an install of the developer package and executed neurospaces\_cron just once to ensure that it starts properly.
+  \item[] {\bf Reason:} Tester has failed to send confirmation emails twice. Log file shows (with some annotations to show what happened where):
+  
+  \begin{verbatim}
+ May  2 13:59:21 repo /usr/sbin/cron[4790]: (CRON) STARTUP (fork ok)        <--( This is the cron restart from 5/2/2011 in the afternoon)
+May  2 13:59:21 repo /usr/sbin/cron[4790]: (CRON) INFO (Skipping @reboot jobs -- not system startup)
+May  2 14:17:01 repo /USR/SBIN/CRON[5278]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+May  2 15:17:01 repo /USR/SBIN/CRON[5552]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+May  2 16:01:01 repo /USR/SBIN/CRON[5839]: (root) CMD (sudo -H -u g3tester perl /home/g3tester/bin/neurospaces_cron --config /home/g3tester/neurospaces_cron.yml)  <---( Tester appears to have gone off successfully )
+May  2 16:17:01 repo /USR/SBIN/CRON[5846]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+May  2 17:17:01 repo /USR/SBIN/CRON[6157]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+May  2 18:10:01 repo /USR/SBIN/CRON[6466]: (root) CMD (sudo -H -u g3tester perl /home/g3tester/neurospaces_project/userdocs/source/snapshots/0/bin/userdocs_cron --config /home/g3tester/userdocs_cron.yml)  <---( Tester appears to have gone off successfully )
+May  2 18:17:01 repo /USR/SBIN/CRON[6479]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+May  2 19:17:01 repo /USR/SBIN/CRON[6489]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+May  2 20:01:01 repo /USR/SBIN/CRON[6498]: (root) CMD (sudo -H -u g3tester perl /home/g3tester/neurospaces_project/developer/source/snapshots/0/bin/neurospaces_cron --config /home/g3tester/neurospaces_cron.yml)  <---( Tester appears to have gone off successfully )
+May  2 20:17:01 repo /USR/SBIN/CRON[6811]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+May  2 21:17:01 repo /USR/SBIN/CRON[7010]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+May  2 22:17:01 repo /USR/SBIN/CRON[7550]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+May  2 23:17:01 repo /USR/SBIN/CRON[7569]: (root) CMD (   cd / && run-parts --report /etc/cron.hourly)
+May  3 00:00:23 repo /usr/sbin/cron[7917]: (CRON) INFO (pidfile fd = 3)
+May  3 00:00:23 repo /usr/sbin/cron[7919]: (CRON) STARTUP (fork ok) <--( checked and reloaded cron daemon )
+May  3 00:00:23 repo /usr/sbin/cron[7919]: (CRON) INFO (Skipping @reboot jobs -- not system startup
+  \end{verbatim}
+ 
+ Tester would not proceed because I performed a neurospaces\_uninstall upon exiting. This left the tester in another state in which it could not proceed, as it needed neurospaces\_build installed and in the executable path.  
+ 
+  \item[] {\bf Impact:} Tester should proceed as normal.  
+  \end{itemize}
+  
+
+\item
+  \begin{itemize}
+  \item[] {\bf Admin:} Mando
   \item[] {\bf Date:} 5/2/2011 
   \item[] {\bf Actions:} Restarted cron daemon and checked the cron functionality with a wall test. 
   \item[] {\bf Reason:} Tester appears to not have gone off at noon. The output file for neurospaces\_cron has a timestamp from 8:31 am and was completely untouched. No error email was sent either. 
