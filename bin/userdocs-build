@@ -61,8 +61,10 @@ my $option_parse_only = 0;
 my $option_regex = ".*";
 my $option_report_output;
 my $option_report_tags;
+my $option_set_name = "userdocs";
 my $option_tags = [];
 my $option_verbose;
+
 
 
 sub main
@@ -71,7 +73,7 @@ sub main
 
     # switch to the build directory
 
-    my $build_directory = "$ENV{HOME}/neurospaces_project/userdocs/source/snapshots/0/";
+    my $build_directory = "$ENV{HOME}/neurospaces_project/$option_set_name/source/snapshots/0/";
 
     if (!chdir $build_directory)
     {
@@ -101,7 +103,7 @@ sub main
 
 	# prepare directory structure
 
-	`mkdir -p html/htdocs/neurospaces_project/userdocs/`;
+	`mkdir -p html/htdocs/neurospaces_project/$option_set_name/`;
 
 	# loop over all documents to be build
 
@@ -176,7 +178,14 @@ sub main
 		{
 		    # execute the operation
 
-		    my $error = $document->$operation( { verbose => $option_verbose, }, );
+		    my $error
+			= $document->$operation
+			    (
+			     {
+			      verbose => $option_verbose,
+			      set_name => $option_set_name,
+			     },
+			    );
 
 		    if ($error)
 		    {
@@ -250,6 +259,7 @@ sub read_cmd_line
 	     "regex=s" => \$option_regex,
 	     "report-output!" => \$option_report_output,
 	     "report-tags!" => \$option_report_tags,
+	     "set-name=s" => \$option_set_name,
 	     "tags=s" => $option_tags,
 	     "verbose+" => \$option_verbose,
 	     "version" => \$option_version,
@@ -293,6 +303,7 @@ options:
     --regex           selects documents by name (default is all).
     --report-output   report what output has been generated.
     --report-tags     report the tags associated with the selected documents instead of building the documents.
+    --set-name        select a document set (builtin default is userdocs).
     --tags            process the documents with these tags, multiple tags options may be given.
     --version         give version information.
     --v|verbose       tell what is being done, specify multiple times to get more feedback.

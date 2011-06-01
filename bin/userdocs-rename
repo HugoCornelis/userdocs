@@ -11,111 +11,145 @@ use Getopt::Long;
 use YAML;
 use Data::Dumper;
 
-my $option_verbose;
+
+my $option_set_name = "userdocs";
 my $option_tags = [];
+my $option_verbose;
 
 
-#! These are constants for now
-
-my $userdocs_directory = "$ENV{HOME}/neurospaces_project/userdocs/source/snapshots/0";
-my $userdocs_repo = "$ENV{HOME}/neurospaces_project/MTN/userdocs.mtn";
-
-
-#
-# (src_document dst_document)
-#
-#
-#
 sub rename_document
 {
+    my $srcdoc = shift;
+    my $dstdoc = shift;
+
+    if (not -d $srcdoc)
+    {
+	die "No document directory named $srcdoc\n";
+    }
+
+    my $descriptor_file = $srcdoc . "/descriptor.yml";
+
+    if (not -e $descriptor_file)
+    {
+	die "Document $srcdoc has no descriptor file present.\n";
+    }
+
+    my $build_directory = "$ENV{HOME}/neurospaces_project/$option_set_name/source/snapshots/0";
+
+    chdir "$build_directory";
+
+    if (-d $dstdoc)
+    {
+	die "Document with destination name already exists.\n";
+    }
+
+    # monotone seems to want the trailing slash so just being cautious
+    # and including it. 
+
+    my $srcdoc_dir = $srcdoc;
+
+    if (substr($srcdoc_dir,-1,1) ne '/')
+    {
+	$srcdoc_dir = $srcdoc . '/';
+    }
+
+    my $dstdoc_dir = $dstdoc;
+    if( substr($dstdoc_dir,-1,1) ne '/' )
+    {
+	$dstdoc_dir = $dstdoc . '/';
+    }
+
+    # update monotone repo by using monotones rename (aka mv) commmand
+    system "mtn mv $srcdoc_dir $dstdoc_dir";
+
+    # the tex file must now be moved in the workspace.
+    my $oldfile = $dstdoc_dir . $srcdoc . ".tex";
+    my $newfile = $dstdoc_dir . $dstdoc . ".tex";
+
+    system "mtn mv $oldfile $newfile";
 
 
-  my $srcdoc = shift;
-  my $dstdoc = shift;
-
-  unless(-d $srcdoc)
-  {
-    die "No document directory named $srcdoc\n";
-  }
-
-  my $descriptor_file = $srcdoc . "/descriptor.yml";
-
-  unless(-e $descriptor_file)
-  {
-    die "Document $srcdoc has no descriptor file present.\n";
-  }
-
-
-  chdir "$userdocs_directory";
-
-  if(-d $dstdoc)
-  {
-    die "Document with destination name already exists.\n";
-  }
-
-  # monotone seems to want the trailing slash so just being cautious
-  # and including it. 
-  my $srcdoc_dir = $srcdoc;
-  if( substr($srcdoc_dir,-1,1) ne '/' )
-  {
-    $srcdoc_dir = $srcdoc . '/';
-  }
-
-  my $dstdoc_dir = $dstdoc;
-  if( substr($dstdoc_dir,-1,1) ne '/' )
-  {
-    $dstdoc_dir = $dstdoc . '/';
-  }
-
-  # update monotone repo by using monotones rename (aka mv) commmand
-  system "mtn mv $srcdoc_dir $dstdoc_dir";
-
-  # the tex file must now be moved in the workspace.
-  my $oldfile = $dstdoc_dir . $srcdoc . ".tex";
-  my $newfile = $dstdoc_dir . $dstdoc . ".tex";
-
-  system "mtn mv $oldfile $newfile";
-
-
-  print "Finished renaming $srcdoc to $dstdoc\n";
-
+    print "Finished renaming $srcdoc to $dstdoc\n";
 }
 
 
-sub usage
+sub read_cmd_line
 {
-  print "$0 <source document> <destination document>\n";
-  exit;
+    my $option_help = 0;
+    my $option_version;
+
+    my $result
+	= GetOptions(
+		     "help!" => \$option_help,
+		     "set-name=s" => \$option_set_name,
+		     "verbose+" => \$option_verbose,
+		     "version" => \$option_version,
+		    );
+
+    if (!$result)
+    {
+	die "$0: *** Error: Error in option processing";
+    }
+
+    if ($option_version)
+    {
+    }
+
+    # reporting options
+
+    if ($option_help)
+    {
+	$0 =~ m(.*/(.*));
+
+	my $program_name = $1;
+
+	print
+	    "
+
+$program_name: insert external text snippets into a document.
+External text snippets can replace unix shell commands between
+backquotes with the output they generate.
+
+synopsis:
+    $0 <document name1> <document name2> ...
+
+options:
+    --help            print usage information.
+    --set-name        select a document set (builtin default is userdocs).
+    --version         give version information.
+    --v|verbose       tell what is being done, specify multiple times to get more feedback.
+
+";
+
+	exit 1;
+    }
+
 }
+
 
 sub main
 {
+    read_cmd_line();
 
+    my $src = $ARGV[0];
+    my $dst = $ARGV[1];
 
-  if( $#ARGV != 1 )
-  {
-    usage();
-  }
+    print "Rename document $src to $dst?\n>> ";
 
-  my $src = $ARGV[0];
-  my $dst = $ARGV[1];
+    chomp (my $choice = <STDIN>);
 
+    if ($choice eq 'y')
+    {
+	rename_document($src, $dst);
+    }
+    else
+    {
+	print "No rename performed\n";
 
-  print "Rename document $src to $dst?\n>> ";
-  chomp(my $choice = <STDIN>);
+	return;
+    }
 
-  if( $choice eq 'y' )
-  {
-    rename_document($src,$dst);
-  }
-  else
-  {
-    print "No rename performed\n";
-    return;
-  }
-
-  print "\nDone!";
-
+    print "\nDone!";
 }
 
 

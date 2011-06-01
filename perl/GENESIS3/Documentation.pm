@@ -1608,7 +1608,9 @@ sub email
 
     my $options = shift;
 
-    my $build_directory = "$ENV{HOME}/neurospaces_project/userdocs/source/snapshots/0/";
+    my $set_name = $options->{set_name} || "userdocs";
+
+    my $build_directory = "$ENV{HOME}/neurospaces_project/$set_name/source/snapshots/0/";
 
     my $document_name = $self->{name};
 

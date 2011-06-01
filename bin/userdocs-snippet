@@ -61,6 +61,7 @@ $program_name =~ s/.*\///;
 my $option_dry_run;
 my $option_regex = ".*";
 my $option_remove;
+my $option_set_name = "userdocs";
 my $option_tags = [];
 my $option_verbose;
 
@@ -71,7 +72,7 @@ sub main
 
     # switch to the build directory
 
-    my $build_directory = "$ENV{HOME}/neurospaces_project/userdocs/source/snapshots/0/";
+    my $build_directory = "$ENV{HOME}/neurospaces_project/$option_set_name/source/snapshots/0/";
 
     if (!chdir $build_directory)
     {
@@ -256,6 +257,7 @@ sub read_cmd_line
 		     "help!" => \$option_help,
 		     "regex=s" => \$option_regex,
 		     "remove!" => \$option_remove,
+		     "set-name=s" => \$option_set_name,
 		     "verbose+" => \$option_verbose,
 		     "version" => \$option_version,
 		    );
@@ -292,6 +294,7 @@ options:
     --help            print usage information.
     --regex           selects snippets by name.
     --remove          remove expandable snippets.
+    --set-name        select a document set (builtin default is userdocs).
     --version         give version information.
     --v|verbose       tell what is being done, specify multiple times to get more feedback.
 

@@ -9,7 +9,7 @@ use YAML;
 
 my $output_filename = "userdocs_cron.out";
 my $descriptor_check = "";
-my $document_root = "$ENV{HOME}/neurospaces_project/userdocs/source/snapshots/0";
+my $build_directory = "$ENV{HOME}/neurospaces_project/userdocs/source/snapshots/0";
 my $htaccess_file = "";
 
 #
@@ -26,84 +26,81 @@ my $configuration
 
 sub main
 {
-
-  {
-    my $result
-      = GetOptions
-	(
-	 "outputdir=s" => \$option_output_directory,
-	 "config=s" => \$option_config,
-	);
-
-  }
-
-
-  if ($option_config)
     {
-    parse_config_file($option_config);
-  }
+	my $result
+	    = GetOptions
+		(
+		 "config=s" => \$option_config,
+		 "outputdir=s" => \$option_output_directory,
+		);
+
+    }
 
 
-  my $output_path = $option_output_directory . "/" . $output_filename;
-
-  rotate_logs();
-
-  $ENV{PATH} .= ':/bin:/usr/bin:/usr/local/bin';
-
-  my $userdocs_directory = $document_root;
-
-  # first we update the developer package to pick up 
-  # any build script changes. 
-
-  try_to("neurospaces_pull --regex developer",1); 
-
-  try_to("neurospaces_update --regex developer",1); 
-
-  try_to("neurospaces_configure --regex developer",1);
-
-  try_to("neurospaces_install --regex developer",1);
+    if ($option_config)
+    {
+	parse_config_file($option_config);
+    }
 
 
-  try_to("neurospaces_pull --regex userdocs",1); 
+    my $output_path = $option_output_directory . "/" . $output_filename;
 
-  try_to("neurospaces_update --regex userdocs",1); 
+    rotate_logs();
 
-  try_to("neurospaces_configure --regex userdocs",1);
+    $ENV{PATH} .= ':/bin:/usr/bin:/usr/local/bin';
 
-  try_to("neurospaces_install --regex userdocs",1);
+    # first we update the developer package to pick up 
+    # any build script changes. 
 
-  try_to("neurospaces_clean --regex userdocs",1);
+    try_to("neurospaces_pull --regex developer",1); 
 
-#   try_to("userdocs-check > $output_path",1);
+    try_to("neurospaces_update --regex developer",1); 
 
-  # collect the descriptor check info for the email
-  $descriptor_check = `userdocs-check --directory $userdocs_directory`;
+    try_to("neurospaces_configure --regex developer",1);
 
-  try_to("make website-prepare -C ~/neurospaces_project/userdocs/source/snapshots/0/ > $output_path",1);
+    try_to("neurospaces_install --regex developer",1);
 
-  # now do a link check.
-  my $webcheck_path = `which webcheck`;
 
-  if($webcheck_path ne "")
-  {
+    try_to("neurospaces_pull --regex userdocs",1); 
 
-    try_to("make webcheck -C ~/neurospaces_project/userdocs/source/snapshots/0/ >> $output_path",1);
+    try_to("neurospaces_update --regex userdocs",1); 
 
-  }
+    try_to("neurospaces_configure --regex userdocs",1);
 
-  copy_html_data();
+    try_to("neurospaces_install --regex userdocs",1);
 
-  set_index_page();
+    try_to("neurospaces_clean --regex userdocs",1);
 
-  if($htaccess_file ne "")
-  {
-    copy_htacces_file();
-  }
+    #   try_to("userdocs-check > $output_path",1);
 
-  my $text = produce_email_text();
+    # collect the descriptor check info for the email
+    $descriptor_check = `userdocs-check --directory $build_directory`;
 
-  try_to_mail("Userdocs cron has finished.",
-	      "Userdocs has finished building.\n\n" . $text);
+    try_to("make website-prepare -C ~/neurospaces_project/userdocs/source/snapshots/0/ > $output_path",1);
+
+    # now do a link check.
+    my $webcheck_path = `which webcheck`;
+
+    if($webcheck_path ne "")
+    {
+
+	try_to("make webcheck -C ~/neurospaces_project/userdocs/source/snapshots/0/ >> $output_path",1);
+
+    }
+
+    copy_html_data();
+
+    set_index_page();
+
+    if($htaccess_file ne "")
+    {
+	copy_htacces_file();
+    }
+
+    my $text = produce_email_text();
+
+    try_to_mail("Userdocs cron has finished.",
+		"Userdocs has finished building.\n\n" . $text);
 }
 
 
@@ -307,8 +304,7 @@ sub copy_html_data
 
   my $html_symlink = $option_html_output_directory . "/" . "userdocs";
   my $html_data_directory = $option_html_output_directory . "/" . "userdocs_data";
-  my $html_build_directory = 
-    "~/neurospaces_project/userdocs/source/snapshots/0/html/htdocs/neurospaces_project/userdocs/";
+  my $html_build_directory = "~/neurospaces_project/userdocs/source/snapshots/0/html/htdocs/neurospaces_project/userdocs/";
 
   try_to("rm -rf $html_data_directory");
   try_to("cp -rf $html_build_directory $html_data_directory",1);
@@ -403,8 +399,8 @@ sub parse_config_file
   {
 
     chomp($configuration->{DOCUMENTROOT});
-    $document_root = $configuration->{DOCUMENTROOT};
-    print "\tThe root directory for all documents is $document_root\n";
+    $build_directory = $configuration->{DOCUMENTROOT};
+    print "\tThe root directory for all documents is $build_directory\n";
 
   }
 
