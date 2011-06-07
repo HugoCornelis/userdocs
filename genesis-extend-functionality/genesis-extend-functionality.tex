@@ -10,30 +10,51 @@
 \section*{GENESIS: Documentation}
 
 {\bf Related Documentation:}
+
+%\href{../model-variables/model-variables.tex}{\bf Physical Processes and Model Variables}
+
 % start: userdocs-tag-replace-items related-add-functionality
 % end: userdocs-tag-replace-items related-add-functionality
 
 \section*{Extending GENESIS Functionality}
 
-The GENESIS software platform can be extended by either extending the functionality of an existing \href{../reserved-words/reserved-words.tex}{\bf Component} or adding a new component. The following links give examples of how to perform the steps required to achieve these goals.
+The \href{../workflow-intro/workflow-intro.tex}{Workflow Paradigm}
+provides an organizing principle for development and extension of G-3.
+The GENESIS software platform can be extended by either extending the
+functionality of an existing
+\href{../reserved-words/reserved-words.tex}{\bf Software Component} or
+adding a new software component.  The following links give examples of
+how to perform the steps required to achieve these goals.
 
 \begin{itemize}
-   \item[]{\bf Extend GENESIS Component:}
-      \begin{itemize}
-         \item[]\href{../genesis-extend-model-container/genesis-extend-model-container.tex}{\bf Extend Model\,Container}
-      \end{itemize}
-      
-   \item[]{\bf Add New GENESIS Component:}
-      \begin{itemize}
-         \item[]\href{../genesis-add-object-solver/genesis-add-object-solver.tex}{\bf Add solver object}
-         \item[]\href{../genesis-create-test-heccer/genesis-create-test-heccer.tex}{\bf Create regression tests for Heccer}
-         \item[]\href{../genesis-add-swigbinding-heccer/genesis-add-swigbinding-heccer.tex}{\bf Make solver object usable from a scripting language}
-      \end{itemize}
-      
-   \item[]{\bf Add New Component to the {\it DeveloperPackage:}}
-      \begin{itemize}
-         \item[]\href{../genesis-addto-component-developerpackage/genesis-addto-component-developerpackage.tex}{\bf Add Component}
-      \end{itemize} 
+\item[]{\bf Workflow 1: Add New GENESIS Component:} To add a new
+  component to the G-3 software platform, it must be created, defined
+  in the {\it DeveloperPackage} and integrated with the
+  \href{../neurospaces-tester/neurospaces-tester.tex}{automated
+    regression tester}.
+  \begin{itemize}
+  \item[]Create the new software component.  Use the {\it
+      DeveloperPackage} script {\bf neurospaces\_new\_component} for
+    initialization of the directory layout and creation of
+    configuration and makefile scripts that are used to interface with
+    the {\it DeveloperPackage}.
+  \item[]\href{../genesis-addto-component-developerpackage/genesis-addto-component-developerpackage.tex}{\bf
+      Add Component to the {\it DeveloperPackage}}
+  \item[]\href{../genesis-create-test-heccer/genesis-create-test-heccer.tex}{\bf
+      Create regression tests} (this document describes how to create
+    a test for the {\bf PulseGen} object which was afterwards moved to
+    the {\it Experiment} package.
+  \end{itemize}
+  
+\item[]{\bf Workflow 2: Extend GENESIS Component:} As an example we
+  describe how to extend the functionality of the {\bf
+    Model\,Container} and the {\bf Experiment} component.
+  \begin{itemize}
+  \item[]\href{../genesis-extend-model-container/genesis-extend-model-container.tex}{\bf Extend Model\,Container}
+  \item[]\href{../genesis-add-object-solver/genesis-add-object-solver.tex}{\bf Add solver object}
+  \item[]\href{../genesis-add-swigbinding-heccer/genesis-add-swigbinding-heccer.tex}{\bf Make solver object usable from a scripting language}
+  \end{itemize}
+  
 \end{itemize}
 
 \end{document}
