@@ -218,7 +218,7 @@ Historically, the development of neuronal simulation software for the constructi
 % Wilson MA & Bower JM (1989) Computer simulation of oscillatory behavior in cerebral cortical networks. In D Anderson (ed.) Neural Information Processing Systems. American Institute of Physics: New York. pp. 84--91.
 % Wilson MA, Bhalla US, Uhley JD & Bower JM (1989) GENESIS: A system for simulating neural networks. In D Anderson (ed.) Neural Information Processing Systems. American Institute of Physics: New York. pp. 485--492.
 
-These software systems have both been highly successful and have continued to grow in complexity through cycles of research project extension (see for example parallel NEURON \cite{migliore06:_paral_networ_simul_neuron} and PGENESIS \cite{Hereld:2004ly}). However, after more than twenty years of extending their functionality, usually by the direct incorporation of source code into the core of the simulator, their code structures have become so complicated that it is now increasingly difficult, if not impossible, to easily continue this process. The resulting stand-alone applications have become {\it monolithic} with their life cycles inevitably moving  from extension to maintenance. (Note, {\it italicized} text indicates the first appearance of a technical term defined in Materials and Methods. {\tt Typewriter} text indicates the name of a software {\it module} defined in Results.) A significant consequence of this process is that the development of an optimized simulation can be a considerable challenge for the neuroscientist unfamiliar with the underlying mathematical and computational theory.
+These software systems have both been highly successful and have continued to grow in complexity through cycles of research project extension (see for example parallel NEURON \cite{migliore06:_paral_networ_simul_neuron} and PGENESIS \cite{Hereld:2004ly}). However, after more than twenty years of extending their functionality, usually by the direct incorporation of source code into the core of the simulator, their code structures have become so complicated that it is now increasingly difficult, if not impossible, to easily continue this process. The resulting stand-alone applications have become {\it monolithic} with their life cycles inevitably moving  from extension to maintenance. \footnote{Note, {\it italicized} text indicates the first appearance of a technical term defined in Materials and Methods. {\tt Typewriter} text indicates the name of a software {\it module} defined in Results.} A significant consequence of this process is that the development of an optimized simulation can be a considerable challenge for the neuroscientist unfamiliar with the underlying mathematical and computational theory.
 
 % Migliore, M, Cannia, C., Lytton, W.W., Markram, H. and Hines, M.L. (2006) Parallel network simulations with NEURON. J Comput Neurosci 21: 119--129.
 % Hereld M, Stevens RL, van Drongelen W \& Lee HC (2004) Developing a petascale neural simulation.  Proc 26th Ann Int Conf IEEE EMBS 2: 3999--4002.
@@ -259,7 +259,7 @@ models built for one simulator can be run on another, i.e. through the
 adoption of common simulation languages such as SBML \cite{Hucka-M:2004bh}, NeuroML \cite{Gleeson:2010cr}, or NineML (http://www.nineml.org/index.shtml). Type\,2 is defined as run-time
 interoperability, where different simulators operating on different
 domains interoperate at run-time either by direct coupling via
-simulator script languages (e.g. pyMOOSE \cite{ray08:_pymoos}),
+simulator script languages (e.g. pyMOOSE \cite{ray08:_pymoos}, MUSIC \cite{Djurfeldt:2010fk}),
 indirect coupling via interpreted languages (e.g. PyNN \cite{davison08:_pynn}), or coupling via object oriented frameworks (e.g.
 Catacomb2 \cite{cannon03:_from}).
 
@@ -312,7 +312,9 @@ simulation system (described in an accompanying paper~[reference to
 accompanying paper to be inserted]) that was developed on the basis of our understanding of a general scientific workflow, an {\it ideal user
 workflow}, and an analytic method referred to as a {\it separation of
 concerns}. The software modules resulting from
-this analysis are then described and a brief overview of implementation of the CBI architecture is given. 
+this analysis are described and a brief overview of our implementation of the CBI architecture is then given. 
+%The software modules resulting from
+%this analysis are then described and a brief overview of implementation of the CBI architecture is given. 
 
 \subsection*{The Scientific Workflow}
 
@@ -781,7 +783,7 @@ Because of their numerical nature, some solvers can easily be extended
 to do the necessary discretization of a continous mathematical
 equation according to a settable accuracy. The generation of channel
 conductance tables is a common example. Other examples are mesh
-generation for Monte Carlo solvers and compartimentalization of a
+generation for Monte Carlo solvers and compartmentalization of a
 neuronal morphology.
 
 \paragraph{\bf Discrete Representations:}
@@ -816,7 +818,7 @@ a simulation, the {\tt Communication\,Infrastructure} can have a significant
 impact on run-time performance.  Depending upon the simulation and 
 hardware involved, {\tt Communication\,Infrastructure} deals with issues of 
 (1) Parallelization, such as whether solvers are collocated on the same 
-CPU and whether this is made transparant to the solver implementation, 
+CPU and whether this is made transparent to the solver implementation, 
 (2) Efficiency of the infrastructure for communicating neighboring 
 lists of values, e.g. all the membrane potentials of a compartmentalized 
 neuronal morphology and (3) Efficient storage and distribution of discrete events used for action potential generation and axonal propagation.
@@ -1479,9 +1481,9 @@ direct support for scientific publication and communication.
 
 \section*{Materials and Methods}
 
-In this section we define the elements of our ``philosophical workflow''. This workflow guides development of the CBI architecture. It is presented as a glossary of the technical terms, typically specialized for computer science, that are commonly employed in the description and discussion of the architecture. It is followed by a brief technical glossary of terms related to software development.
+In this section we define the elements of our ``workflow philosophy''. This workflow guides development of the CBI architecture. It is presented as a glossary of the technical terms, typically specialized for computer science, that are commonly employed in the description and discussion of the architecture. It is followed by a brief technical glossary of terms related to software development.
 
-\subsection*{The Philosophical Workflow}
+\subsection*{The Workflow Philosophy}
 
 Monolithic software and federated software, described below, are the
 two extremes of a continuum.  The philosophical goal of the CBI
@@ -1614,8 +1616,8 @@ together, they produce programming environments of exceptional power where appli
 As
 %\marginpar{this order seems best: (1) software architecture, (2) API
 %  and ABI, (3) scripting languages?  Implementation technology should
-%  come after the philosophical workflow.}
-the last step of our philosophical workflow, a {\it software
+%  come after the workflow philosophy.}
+the last step of our workflow philosophy, a {\it software
   architecture} defines a framework that logically organizes a
 collection of modules where each module implements one or more
 concerns, but no concern is identified with more than one module. When
