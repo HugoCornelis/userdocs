@@ -14,7 +14,34 @@
 % start: userdocs-tag-replace-items related-do-nothing
 % end: userdocs-tag-replace-items related-do-nothing
 
-\section*{Developer Installation Fedora 12}
+\section*{Developer Installation Fedora 12 and Higher}
+
+\subsection*{Introduction}
+
+The documentation below gives specifics for installing GENESIS 3 on Fedora
+Linux versions 12 and higher. It also contains some more general
+information that will later be included in the general 
+\href {../developer-installation/developer-installation.html}{\bf
+Developer Installation} documentation.
+
+The documentation 
+\href {../installation-developer/installation-developer.html}{\bf GENESIS
+Developer Installation} gives an overview and prerequisites for the
+construction of a GENESIS 3 (G-3) development environment. Note that this
+involves a lot more steps than installing a User Installation, because of
+the software tools required for G-3 development.  If you do not plan to
+check in changes to the software, it is not necessary to create a monotone
+passphrase.
+
+The document 
+\href {../genesis-dependencies/genesis-dependencies.html}{\bf GENESIS Software
+Dependencies} describes the system software tools required for a developer
+installation of G-3 on any Unix/Linux platform.  In general, you will want
+to install a full set of software development tools such as the gcc
+compiler and Perl.  Python is required for use of the new 
+\href {../sspy/sspy.html}{\bf SSPy} (Simple Scheduler in Python) scheduler.
+
+\section*{Installation Steps}
 
 Installing GENESIS on Fedora 12 requires executing the following major steps. {\bf Note}: Installation requires administrator privileges.
 \begin{itemize}
@@ -24,39 +51,76 @@ Installing GENESIS on Fedora 12 requires executing the following major steps. {\
    \item[] Check if the installation was successful. 
 \end{itemize}
 
+
+\subsection*{Note on configuring sudo}
+
+When you install the G-3 developers release, it will create a
+``neurospaces\_project" directory for development work in the home directory
+of the user doing the installation.  This will hold subdirectories for each
+of the G-3 software components.  Normally, you will want this user to be
+yourself, rather than root.  In order to make it possible to install files
+in system directories, the install process makes use of sudo.  Thus, you
+will need to install sudo and add yourself to the {\it /etc/sudoers file}.
+Ideally, you should use a tool called {\it visudo} to edit this file,
+in order to add your username.  However, the easiest way is as root to do (for
+example for user 'joeuser'):
+
+\begin{verbatim}
+        echo 'joeuser ALL=(ALL) ALL' >> /etc/sudoers
+\end{verbatim}
+
+During the install process, you will be prompted for your password.
+However, when directing the output of an install or a
+``neurospaces\_check" to a file, this can become a problem. The automated
+tests performed by a check take a long time, and it is easy to
+miss a password request and have it time out.  If you are on a secure
+single-user system, you may wish to avoid the password check and set
+it with (for example):
+
+\begin{verbatim}
+        echo 'joeuser ALL=(ALL) NOPASSWD:ALL' >> /etc/sudoers
+\end{verbatim}
+
 \subsection*{Prepare and upgrade the system software}
 
 \begin{itemize}
-   \item[] Install the following packages using the System --$>$ Administration -$>$ Add/Remove Software menu.
+   \item[] Check for the existence of any needed system tools described in
+the documents referenced above.  Install any that are not found.  This may be
+done on the command line with "{\tt rpm -q <packagename$>$}".
+To install a package you can use the System -$>$ Administration -$>$ Add/Remove
+Software menu or the command line "{\tt yum install <package$>$}" as root user.
+
       \begin{itemize}
          \item perl-CPAN (only required to run tests, see below)
          \item perl-YAML
          \item perl-Inline
-%         \item perl-Parse-RecDescent
+         \item perl-Parse-RecDescent
          \item perl-Expect (and its dependency perl-IO)
          \item perl-ExtUtils-Embed
          \item perl-XML-Simple
-         \item LWP::Simple
-         \item Parse-RecDescent
+         \item perl-libwww-perl (for LWP::Simple)
          \item readline
          \item readline-devel
          \item perl-Term-ReadLine-Gnu
-         \item tetex-tex4ht
+         \item tetex-tex4ht (this will also install tex/latex if not present)
+         \item swig
          \item \href{http://monotone.ca/}{\bf monotone-0.44} or higher and its dependency--the crypto libraries. You only need to install the client package (not the server package) 
       \end{itemize}
-   \item[] Install the dependencies for running tests:
-      \begin{itemize}
-         \item {\tt perl -MCPAN -e 'install Test::More}'
-         \item {\tt perl -MCPAN -e 'install Clone}'
-         \item {\tt perl -MCPAN -e 'install Data::Utilities}'
-         \item {\tt perl -MCPAN -e 'install File::Find::Rule}'
-         \item {\tt perl -MCPAN -e 'install Digest::SHA}' 
-      \end{itemize}
-      {\bf Note:} The running of tests is optional, but strongly advised.
- \end{itemize}
+   \item[] For G-Tube, GUI development, and SSPy these additional packages and their
+dependencies must be installed:
 
- For {\bf G-Tube} the packages {\it wxPython} and
- {\it wxPython-devel} and their dependencies must be installed.
+    \begin{itemize}
+         \item PyYAML (required by the SSPy component)
+         \item wxPython and wxPython-devel
+         \item perl-Gtk2
+         \item perl-SDL
+         \item perl-GraphViz
+         \item python-devel
+         \item ncurses-devel
+         \item perl-devel
+    \end{itemize}
+
+\end{itemize}
  
 \subsection*{Download and install the {\it DeveloperPackage}}
 
@@ -71,6 +135,28 @@ Installing GENESIS on Fedora 12 requires executing the following major steps. {\
    \item Install by typing ``{\tt sudo make install}''  (requires administrator privileges). 
 \end{enumerate}
 
+\subsection*{Install the dependencies for running tests}
+
+Check for the packages needed for running tests.  Most of these will
+have been installed  by the developer package. For those that have not,
+issue these commands as root:
+
+      \begin{itemize}
+         \item {\tt perl -MCPAN -e 'install Test::More}'
+         \item {\tt perl -MCPAN -e 'install Clone}'
+         \item {\tt perl -MCPAN -e 'install Data::Utilities}'
+         \item {\tt perl -MCPAN -e 'install File::Find::Rule}'
+         \item {\tt perl -MCPAN -e 'install Digest::SHA}' 
+      \end{itemize}
+      {\bf Note:} The running of tests is optional, but strongly advised.
+
+To search for a Perl module that might have been previously installed
+through CPAN or other than via an rpm, you can use "locate" if it was
+installed before the (usually nightly) refresh of the database.	 For
+example, to look for the module "Digest::SHA", type "locate Digest/SHA".
+This may show it to be in /usr/lib64/perl5/Digest/SHA.pm on a 64 bit
+version of linux, or return nothing if hasn't been installed.
+
 \subsection*{Install software packages}
 
 \begin{enumerate}
@@ -81,12 +167,85 @@ Installing GENESIS on Fedora 12 requires executing the following major steps. {\
    \item Compile and install the software by typing ``{\tt neurospaces\_install}''.
 \end{enumerate}
 
+\subsection*{Checking for installation errors}
+
+A first attempt at a developer installation of G-3 may fail because
+one of the required software dependencies was not installed.  It is
+therefore a good idea to capture the output and all error messages
+resulting from the ``neurospaces\_install" command into a log file.
+For example when using the bash shell:
+
+\begin{verbatim}
+    neurospaces_install > install.log 2>&1
+\end{verbatim}
+
+or for csh or tcsh:
+
+\begin{verbatim}
+    neurospaces_install > & ! install.log
+\end{verbatim}
+
+You may observe the progress in another terminal window in your home
+directory with:
+
+\begin{verbatim}
+    tail -f install.log
+\end{verbatim}
+
+This is particularly useful if you expect to be prompted for a password
+by sudo.  Once the installation has completed, look for errors in
+the log file with ``{\tt grep Error install.log}".  A closer examination
+may show a missing dependency.
+
+\subsection*{Enabling G-Tube}
+
+The GUI interface for G-3, g-tube is still under development, so its
+installation is disabled in the developer package by default.
+To perform an install with g-tube, give the commands:
+
+\begin{verbatim}
+        neurospaces_create_directories --enable g-tube
+        neurospaces_init --regex g-tube --enable g-tube
+        neurospaces_pull --enable g-tube
+        neurospaces_update --enable g-tube
+        neurospaces_configure
+        neurospaces_install --enable g-tube
+\end{verbatim}
+
+
 \subsection*{Check if installation was successful}
 
 This step is optional.
 \begin{itemize}
-   \item[] Run tests of all the packages and save tester output to a file  by typing ``{\tt neurospaces\_check >/tmp/check.out 2>\&1}''.
-   \item[] Check the output by typing ``{\tt less /tmp/check.out}''. Importantly, search for lines containing the string {\tt error\_count}.
+   \item[] Run tests of all the packages and save tester output to a file  by typing
+   ``{\tt neurospaces\_check >/tmp/check.out 2>\&1}'' when using bash, or
+      ``{\tt neurospaces\_check >  \& !  tmp/check.out}" when using csh or tcsh as
+      your shell.
+
+   \item[] Check the output by typing ``{\tt less /tmp/check.out}''.
+   Importantly, search for lines containing the string {\tt error\_count}.
+
 \end{itemize}
+
+\subsection*{Updating the installation}
+
+While G-3 is under rapid development, it is important to frequently
+upgrade your installation with the ``neurospaces\_upgrade" command.
+As with ``neurospaces\_install", this is performed in your home directory,
+with the output and error messages directed to a log file.
+
+If Error messages are found in the upgrade log file, they may indicate a
+new dependency that needs to be installed.  When upgrading an older
+version, sometimes the installation of a particular software component
+will fail, but repeating the ``neurospaces\_upgrade" will result in
+a successful installation.  If there have been changes in the
+DeveloperPackage that prevent a successful upgrade, you may update
+this package first, by using the command:
+
+\begin{verbatim}
+    neurospaces_upgrade --regex developer
+\end{verbatim}
+
+and then perform a normal neurospaces\_upgrade.
  
 \end{document}
