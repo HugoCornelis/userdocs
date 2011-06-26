@@ -10,22 +10,22 @@
 \section*{GENESIS: Documentation}
 
 {\bf Related Documentation:}
-% start: userdocs-tag-replace-items related-chemesis
-% end: userdocs-tag-replace-items related-chemesis
+% start: userdocs-tag-replace-items related-chemesis-3
+% end: userdocs-tag-replace-items related-chemesis-3
 % start: userdocs-tag-replace-items related-add-functionality
 % end: userdocs-tag-replace-items related-add-functionality
 
-\section*{Chemesis and G-3}
+\section*{Chemesis-3 and G-3}
 
-{\bf Chemesis} is a library of biochemical reaction objects for
+{\bf Chemesis-3} is a library of biochemical reaction objects for
 modeling calcium
 concentration\cite{blackwell02:_neuros_datab_pract_guide}, contributed
 by Avrama Blackwell (avrama@gmu.edu).  The
 \href{../genesis-overview/genesis-overview.tex}{G-3} implementation of
-{\bf Chemesis} is based on its G-2 functionality, the code is mostly
+{\bf Chemesis-3} is based on its G-2 functionality, the code is mostly
 rewritten from scratch, with small snippets copied pasted over.
 
-\section*{Creation of {\bf Chemesis} for G-3}
+\section*{Creation of {\bf Chemesis-3} for G-3}
 
 The global outline of adding new functionality to G-3 is defined as:
 \begin{enumerate}
@@ -42,14 +42,14 @@ The other these steps are semi-automatic.  It is possible but not
 required to start with step 2 and 3 before finishing step 1.
 
 The steps required for the creation and the implementation of the {\bf
-  Chemesis} library are (1) implementation of the independent solver
+  Chemesis-3} library are (1) implementation of the independent solver
 objects, (2) definition in the
 \href{../developer-package/developer-package.tex}{\bf
   DeveloperPackage}, (3) initial creation of the workspace under
 version control, (4) configuration of
 \href{model-container/model-container.tex}{the {\bf model-container}}
-for the new {\bf Chemesis} tokens, (5) connecting the {\bf
-  model-container}'s {\bf Chemesis} tokens with the solver objects via
+for the new {\bf Chemesis-3} tokens, (5) connecting the {\bf
+  model-container}'s {\bf Chemesis-3} tokens with the solver objects via
 the {\bf model-container API}, (6) connecting the solvers with the
 scriptable software components of G-3 such as
 \href{../sspy/sspy.tex}{\bf SSPy}, \href{../ssp/ssp.tex}{\bf SSP} and
@@ -58,22 +58,22 @@ documentation for the new functionality.
 
 \begin{enumerate}
 \item The implementation of the independent solver objects is specific
-  to {\bf Chemesis} functionality.  The development of these solvers
+  to {\bf Chemesis-3} functionality.  The development of these solvers
   can be started independent of G-3.
 \item The following configuration snippet in the file {\bf
-    /etc/neurospaces/developer/build.yml} defines the {\bf Chemesis}
+    /etc/neurospaces/developer/build.yml} defines the {\bf Chemesis-3}
   library for the
   \href{../developer-package/developer-package.tex}{\bf
     DeveloperPackage}:
 \begin{verbatim}
 all_packages:
-  chemesis:
+  chemesis-3:
     order: 2.5
     version_control:
       port_number: 4706
 \end{verbatim}
-  The order key defines the build order of the {\bf Chemesis} library.
-  The {\bf Chemesis} library is built after
+  The order key defines the build order of the {\bf Chemesis-3} library.
+  The {\bf Chemesis-3} library is built after
   \href{../heccer/heccer.tex}{\bf Heccer} (build order 2) and before
   \href{../ssp/ssp.tex}{\bf SSP} (build order 3).  The command
 \begin{verbatim}
@@ -84,9 +84,9 @@ neurospaces_build --help-build-order
     DeveloperPackage} provides the command {\it
     neurospaces\_new\_component}.  The option {\tt --package-name}
   defines the name of the new software component, in this case {\bf
-    Chemesis}.  In full the command is:
+    Chemesis-3}.  In full the command is:
 \begin{verbatim}
-neurospaces_new_component --package-name chemesis
+neurospaces_new_component --package-name chemesis-3
 \end{verbatim}
   This command creates a new workspace under control of the {\bf
     DeveloperPackage} and populates it with configuration scripts and
@@ -95,7 +95,7 @@ neurospaces_new_component --package-name chemesis
   makefiles can be updated with compilation and installation targets
   as necessary.
 \item The {\bf model-container} already recognizes the {\tt POOL}
-  token for calcium concentration ion pools.  The {\bf Chemesis}
+  token for calcium concentration ion pools.  The {\bf Chemesis-3}
   library also needs a definition of the {\tt REACTION} token that
   recognizes two parameters {\tt FORWARD\_RATE} and {\tt
     BACKWARD\_RATE}.  The configuration snippet\footnote{The
@@ -143,9 +143,9 @@ class_hierarchy:
 \end{enumerate}
 
 
-\section*{Making {\bf Chemesis} Available for Others}
+\section*{Making {\bf Chemesis-3} Available for Others}
 
-\section*{Installation and Testing of {\bf Chemesis} on Other Computers}
+\section*{Installation and Testing of {\bf Chemesis-3} on Other Computers}
 
 
 \bibliographystyle{plain}
