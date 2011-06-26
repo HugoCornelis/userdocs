@@ -17,13 +17,17 @@
 
 \section*{Chemesis-3 and G-3}
 
-{\bf Chemesis-3} is a library of biochemical reaction objects for
+This document outlines the steps of implementation of {\bf
+  Chemesis-3}.
+
+{\bf Chemesis} is a library of biochemical reaction objects for
 modeling calcium
-concentration\cite{blackwell02:_neuros_datab_pract_guide}, contributed
-by Avrama Blackwell (avrama@gmu.edu).  The
+concentration\cite{blackwell02:_neuros_datab_pract_guide}, originally
+contributed by Avrama Blackwell (avrama@gmu.edu) to G-2.  The
 \href{../genesis-overview/genesis-overview.tex}{G-3} implementation of
-{\bf Chemesis-3} is based on its G-2 functionality, the code is mostly
-rewritten from scratch, with small snippets copied pasted over.
+{\bf Chemesis}, called {\bf Chemesis-3}, is based on the G-2
+functionality, the code is mostly rewritten from scratch, with small
+snippets copied pasted over.
 
 \section*{Creation of {\bf Chemesis-3} for G-3}
 
@@ -140,12 +144,42 @@ class_hierarchy:
        FORWARD_RATE: forward reaction rate, from substrate(s) to product.
        BACKWARD_RATE: backward reaction rate, from product to substrate(s).
 \end{verbatim}
+\item Connection with the {\bf model-container API}.
+\item Making the new functionality scriptable.
+\item Implementation of integration tests and development of user
+  documentation.
 \end{enumerate}
 
 
 \section*{Making {\bf Chemesis-3} Available for Others}
 
+Setting up a repository server is what is required to make {\bf
+  Chemesis-3} available for others.  To initialize the server
+repository, implement steps (2) and (3) explained in the previous
+section on the server PC.  Then use the {\it neurospaces\_serve}
+command to start the server.  For an explanation of permissions and
+other security aspects, see
+\href{../installation-debian-server/installation-debian-server.html}{the
+  server installation documentation}.
+
+
 \section*{Installation and Testing of {\bf Chemesis-3} on Other Computers}
+
+To incorporate the new software component in existing and new
+installations, the configuration snippet in the file {\bf
+  /etc/neurospaces/developer/build.yml} defines the {\bf Chemesis-3}
+library for the \href{../developer-package/developer-package.tex}{\bf
+  DeveloperPackage}:
+\begin{verbatim}
+all_packages:
+  chemesis-3:
+    order: 2.5
+    version_control:
+      port_number: 4706
+\end{verbatim}
+Then the {\it neurospaces\_upgrade} command can be used to automate
+the process of importation and installation of the new component.
+
 
 
 \bibliographystyle{plain}
