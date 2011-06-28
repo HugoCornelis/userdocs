@@ -45,8 +45,90 @@ This particular simulation loads a model, runs for 2500 steps and places the out
 
 \section*{Shell}
 
+	SSPy has an interactive shell that allows you to create and run a simulation.  To start SSPy in interactive mode use the '--shell' flag:
+	
+
+\begin{verbatim}
+./sspy --shell
+\end{verbatim}
+
+
+To bring up the help screen type 'help' or '?', this will present a list of all commands with documented help. A number of other features are available such as auto completion for commands and loaded model elements, basic history (up and down keys) and previous command execution. The shell may be used for debugging existing simulations interactively. If you want to inspect the purk\_test simulation, you can start SSPy like this:
+
+
+\begin{verbatim}
+./sspy --shell yaml/purk_test.yml
+\end{verbatim}
+
+
+This will load the purk\_test simulation specification and drop into the shell, allowing you to list elements, add model parameters, outputs, and inputs. A user can run the simulation the complete simulation as loaded in steps mode or time mode with this shell command:
+
+\begin{verbatim}
+sspy> run 2500
+\end{verbatim}
+
+Note that passing an integer value will run the simulation in steps mode, passing a float value (with a decimal point) will run the simulation in time mode. In the shell it is possible to create and run an entire simulation. Here is an example of the commands required to run the purk\_test example. For sake of space and readbility, only one output is applied to the voltage potential of the soma:
+
+\begin{verbatim}
+sspy> ndf_load tests/cells/purk_test.ndf
+sspy> model_parameter_add /purk_test/segments/soma INJECT 2e-09
+sspy> heccer_set_timestep 2e-05
+sspy> output_add /purk_test/segments/soma Vm
+sspy> run /purk_test 2500
+\end{verbatim}
+
 
 \section*{API}
 
+	If you wish to create more customized simulations and interfaces, you may access the top level API of SSPy. The API makes it very easy to interface with GUI toolkits, websites, and customized shells (the shell previously covered makes use of the API). This example performs the same purk\_test example shown previously in the shell example:
+	
+\begin{verbatim}
+from sspy import SSPy 
+
+
+scheduler = SSPy(verbose=True)
+
+my_model_container = None
+
+#
+# Create a model container service and load an ndf file
+#    
+my_model_container = scheduler.CreateService(name="My Model Container",
+                                             type="model_container",
+                                             verbose=True)
+
+my_model_container.Load('tests/cells/purk_test.ndf')
+
+my_model_container.SetParameter('/purk_test/segments/soma',
+                                'INJECT',
+                                2e-09)
+
+#
+# Must create solver.
+#
+my_heccer = scheduler.CreateSolver('My solver', 'heccer', verbose=True)
+
+# Sets the segment of the model to run from
+my_heccer.SetModelName('/purk_test')
+
+# set the timestep for the entire scheduler (solvers, inputs and outputs)
+my_heccer.SetTimeStep(2e-05)
+
+
+#
+# Create Outputs
+#
+my_output = scheduler.CreateOutput('My output object', 'double_2_ascii')
+
+my_output.SetFilename('/tmp/output')
+
+my_output.AddOutput('/purk_test/segments/soma', 'Vm')
+
+
+scheduler.Run(steps=2500)
+
+\end{verbatim}
+
+Should note that the {\bf model\_container} and {\bf heccer} that are called are abstractions over the \href{../model-container/model-container.tex}{Model Container} and \href{../heccer/heccer.tex}{Heccer} packages, not the objects themselves. The core objects are accessible via a method call. 
 
 \end{document}
