@@ -30,7 +30,10 @@ try to automate as much as possible over the
 
 \subsection*{repo-genesis3.cbi.utsa.edu}
 
-The repository machine serves the source code for the GENESIS project as well as periodically performing automated source code checks. This machine also has a running web server that hosts the projects: doxygen documentation, regression tests, and various package distributions.
+The repository machine serves the source code for the GENESIS project
+as well as periodically performing automated source code checks. This
+machine also has a running web server that hosts the projects: doxygen
+documentation, regression tests, and various package distributions.
 
 System specs:
 \begin{itemize}
@@ -46,8 +49,31 @@ System specs:
 
 \item
   \begin{itemize}
+  \item[] {\bf Admin:} Hugo
+  \item[] {\bf Date:} 7/9/2011 
+  \item[] {\bf Actions:} As root:
+\begin{verbatim}
+neurospaces_packages                        <------ shows chemesis3 NOT included in package list, developer package not updated yet
+neurospaces_pull --regex developer
+neurospaces_update --regex developer
+neurospaces_install --regex developer
+neurospaces_packages                        <------ shows chemesis3 included in package list
+neurospaces_init --regex chemesis3          <------ shows where chemesis3 repo is placed
+neurospaces_create_directories chemesis3    <------ shows where chemesis3 is created
+neurospaces_build --help-repo               <------ shows server monotone configuration
+\end{verbatim}
+  \item[] {\bf Reason:} Initialization of the chemesis3 package by
+    first pushing from my laptop, then installing it on repo-genesis3.
+  \item[] {\bf Impact:} Chemesis3 hopefully configured correctly,
+    regression tests should be included in the test runs.  Server
+    still in Belgium.
+  \end{itemize}
+
+
+\item
+  \begin{itemize}
   \item[] {\bf Admin:} Mando
-  \item[] {\bf Date:} 5/27/2011 
+  \item[] {\bf Date:} 6/27/2011 
   \item[] {\bf Actions:} Started the monotone server
   \item[] {\bf Reason:} Server was down following a blown fuse in the server room.  
   \item[] {\bf Impact:} Tester should proceed as normal. 
