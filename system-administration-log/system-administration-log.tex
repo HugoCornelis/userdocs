@@ -37,10 +37,11 @@ documentation, regression tests, and various package distributions.
 
 System specs:
 \begin{itemize}
-\item[] {\bf Processor:} 2 Dual-Core AMD Opteron(tm) Processor 2220. 
+\item[] {\bf Processor:} 2 Dual-Core AMD Opteron(tm) Processor 2220.
 \item[] {\bf Memory:} 8 GB
-\item[] {\bf Operating System:} Debian Linux 
-\item[] {\bf Monotone version:} monotone 0.48 (base revision: 844268c137aaa783aa800a9c16ae61edda80ecea)
+\item[] {\bf Operating System:} Debian Linux
+\item[] {\bf Monotone version:} monotone 0.48 (base revision:
+  844268c137aaa783aa800a9c16ae61edda80ecea)
 \end{itemize}
 
 
@@ -73,33 +74,40 @@ neurospaces_build --help-repo               <------ shows server monotone config
 \item
   \begin{itemize}
   \item[] {\bf Admin:} Mando
-  \item[] {\bf Date:} 6/27/2011 
+  \item[] {\bf Date:} 6/27/2011
   \item[] {\bf Actions:} Started the monotone server
-  \item[] {\bf Reason:} Server was down following a blown fuse in the server room.  
-  \item[] {\bf Impact:} Tester should proceed as normal. 
+  \item[] {\bf Reason:} Server was down following a blown fuse in the
+    server room.
+  \item[] {\bf Impact:} Tester should proceed as normal.
   \end{itemize}
   
   
 \item
   \begin{itemize}
   \item[] {\bf Admin:} Mando
-  \item[] {\bf Date:} 5/19/2011 
+  \item[] {\bf Date:} 5/19/2011
   \item[] {\bf Actions:} Restarted all monotone servers.
-  \item[] {\bf Reason:} Was receiving a connection failure for the developer package in when trying to sync or pull.  
-  \item[] {\bf Impact:} Tester should proceed as normal. 
+  \item[] {\bf Reason:} Was receiving a connection failure for the
+    developer package in when trying to sync or pull.
+  \item[] {\bf Impact:} Tester should proceed as normal.
   \end{itemize}
   
   
 \item
   \begin{itemize}
   \item[] {\bf Admin:} Mando
-  \item[] {\bf Date:} 5/19/2011 
-  \item[] {\bf Actions:} Deleted the glue/swig/python/neurospaces/heccer/\_\_cbi\_\_.py and performed a revert to restore it to the same state as it is in the repository.
-  \item[] {\bf Reason:} The rule for updating release tags was not updating correctly on linux due to a formatting error. This format error was fixed along with an update of all tags on the last checkin. 
-  The initial update created a workspace conflict with the release tags so manual intervention was needed.
+  \item[] {\bf Date:} 5/19/2011
+  \item[] {\bf Actions:} Deleted the
+    glue/swig/python/neurospaces/heccer/\_\_cbi\_\_.py and performed a
+    revert to restore it to the same state as it is in the repository.
+  \item[] {\bf Reason:} The rule for updating release tags was not
+    updating correctly on linux due to a formatting error. This format
+    error was fixed along with an update of all tags on the last
+    checkin.  The initial update created a workspace conflict with the
+    release tags so manual intervention was needed.
   
   \begin{verbatim}
-  mtn: conflict: content conflict on file 'glue/swig/python/neurospaces/heccer/__cbi__.py'
+mtn: conflict: content conflict on file 'glue/swig/python/neurospaces/heccer/__cbi__.py'
 mtn: content hash is 9b0cb661ff5c45ea33bd3226bf3001b25041b87f on the left
 mtn: content hash is 1be6eea855af25a63ce0573020cecd8bd44297f2 on the right
 mtn: help required for 3-way merge
