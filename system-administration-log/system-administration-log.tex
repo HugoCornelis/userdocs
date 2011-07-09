@@ -48,27 +48,48 @@ System specs:
 \begin{itemize}
 
 
-\item
-  \begin{itemize}
-  \item[] {\bf Admin:} Hugo
-  \item[] {\bf Date:} 7/9/2011 
-  \item[] {\bf Actions:} As root:
-\begin{verbatim}
-neurospaces_packages                        <------ shows chemesis3 NOT included in package list, developer package not updated yet
-neurospaces_pull --regex developer
-neurospaces_update --regex developer
-neurospaces_install --regex developer
-neurospaces_packages                        <------ shows chemesis3 included in package list
-neurospaces_init --regex chemesis3          <------ shows where chemesis3 repo is placed
-neurospaces_create_directories chemesis3    <------ shows where chemesis3 is created
-neurospaces_build --help-repo               <------ shows server monotone configuration
-\end{verbatim}
-  \item[] {\bf Reason:} Initialization of the chemesis3 package by
-    first pushing from my laptop, then installing it on repo-genesis3.
-  \item[] {\bf Impact:} Chemesis3 hopefully configured correctly,
-    regression tests should be included in the test runs.  Server
-    still in Belgium.
-  \end{itemize}
+ \item
+   \begin{itemize}
+   \item[] {\bf Admin:} Hugo
+   \item[] {\bf Date:} 7/9/2011 
+   \item[] {\bf Actions:} As root:
+ \begin{verbatim}
+ cd ~/neurospaces_project/MTN/
+ rm chemesis3.mtn
+ cd ../
+ rm -fr chemesis3/
+ cd
+ neurospaces_upgrade --regex chemesis3
+ \end{verbatim}
+   \item[] {\bf Reason:} Checking whether upgrades work with
+     chemesis3.
+   \item[] {\bf Impact:} Chemesis3 hopefully configured correctly,
+     regression tests should be included in the test runs.  Server
+     still in Belgium.
+   \end{itemize}
+
+
+ \item
+   \begin{itemize}
+   \item[] {\bf Admin:} Hugo
+   \item[] {\bf Date:} 7/9/2011 
+   \item[] {\bf Actions:} As root:
+ \begin{verbatim}
+ neurospaces_packages                        <------ shows chemesis3 NOT included in package list, developer package not updated yet
+ neurospaces_pull --regex developer
+ neurospaces_update --regex developer
+ neurospaces_install --regex developer
+ neurospaces_packages                        <------ shows chemesis3 included in package list
+ neurospaces_init --regex chemesis3          <------ shows where chemesis3 repo is placed
+ neurospaces_create_directories chemesis3    <------ shows where chemesis3 is created
+ neurospaces_build --help-repo               <------ shows server monotone configuration
+ \end{verbatim}
+   \item[] {\bf Reason:} Initialization of the chemesis3 package by
+     first pushing from my laptop, then installing it on repo-genesis3.
+   \item[] {\bf Impact:} Chemesis3 hopefully configured correctly,
+     regression tests should be included in the test runs.  Server
+     still in Belgium.
+   \end{itemize}
 
 
 \item
