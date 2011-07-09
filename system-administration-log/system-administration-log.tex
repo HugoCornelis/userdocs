@@ -181,16 +181,28 @@ May  3 00:00:23 repo /usr/sbin/cron[7919]: (CRON) INFO (Skipping @reboot jobs --
   Timeline went as follows:
   
   \begin{itemize}
-  \item[] {\bf 1.} Performed some file and directory renames on the model container. 
-  \item[]  {\bf 2.} Generated files that are cleaned during a 'make clean' were checked in (glue/swig/python/model\_container\_wrap.c and glue/swig/python/neurospaces/model\_container/model\_container\_base.py). 
+  \item[] {\bf 1.} Performed some file and directory renames on the
+    model container.
+  \item[] {\bf 2.} Generated files that are cleaned during a 'make
+    clean' were checked in (glue/swig/python/model\_container\_wrap.c
+    and
+    glue/swig/python/neurospaces/model\_container/model\_container\_base.py).
   \item[] {\bf 3.}  Changes were synced.
-  \item[] {\bf 4.}  Cron run was executed. This resulted in an error since the 'make clean' deleted the two files that were accounted for in the monotone workspace. In this state an update cannot be performed on the workspace.
-  \item[] {\bf 5.}  Fix with revision 32b2db358001f7fb5b8402766fa4e74bc77cba8e was checked in and synced. 
-  \item[] {\bf 6.}  Monotone refuses to perform an update without the cleaned files present. As a result the workspace was current to revision 6d1b507fcb73f8210c4f1e2abd27c34ec9d37314.
-  \item[] {\bf 7.}  Tester is now stuck in an unusable state. 
+  \item[] {\bf 4.}  Cron run was executed. This resulted in an error
+    since the 'make clean' deleted the two files that were accounted
+    for in the monotone workspace. In this state an update cannot be
+    performed on the workspace.
+  \item[] {\bf 5.}  Fix with revision
+    32b2db358001f7fb5b8402766fa4e74bc77cba8e was checked in and
+    synced.
+  \item[] {\bf 6.}  Monotone refuses to perform an update without the
+    cleaned files present. As a result the workspace was current to
+    revision 6d1b507fcb73f8210c4f1e2abd27c34ec9d37314.
+  \item[] {\bf 7.}  Tester is now stuck in an unusable state.
   \end{itemize}
   
-  The actions performed ensure that the workspace is updated to the current revision. 
+  The actions performed ensure that the workspace is updated to the
+  current revision.
   
   \item[] {\bf Impact:} Tester should proceed as normal. 
   \end{itemize}
@@ -214,11 +226,17 @@ May  3 00:00:23 repo /usr/sbin/cron[7919]: (CRON) INFO (Skipping @reboot jobs --
 \item
   \begin{itemize}
   \item[] {\bf Admin:} Mando
-  \item[] {\bf Date:} 4/29/2011 
-  \item[] {\bf Actions:} Checked monotone version as well as checked the contents of the /usr/local/glue/swig/python directory.
-  \item[] {\bf Reason:} Monotone on the tester seems to give an error when trying to update after directories containing files have been moved. This does not happen
-  on machines that have version 99.1 installed. The /usr/local/glue/swig/python directory is the current destination for the python modules. On the mac tester 
-  case is not respected so you can't have 'neurospaces' and 'Neurospaces' in the same directory. The tester respects case so no intervention is needed. 
+  \item[] {\bf Date:} 4/29/2011
+  \item[] {\bf Actions:} Checked monotone version as well as checked
+    the contents of the /usr/local/glue/swig/python directory.
+  \item[] {\bf Reason:} Monotone on the tester seems to give an error
+    when trying to update after directories containing files have been
+    moved. This does not happen on machines that have version 99.1
+    installed. The /usr/local/glue/swig/python directory is the
+    current destination for the python modules. On the mac tester case
+    is not respected so you can't have 'neurospaces' and 'Neurospaces'
+    in the same directory. The tester respects case so no intervention
+    is needed.
   \item[] {\bf Impact:} None.
   \end{itemize}
 
