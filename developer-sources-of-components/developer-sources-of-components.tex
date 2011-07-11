@@ -72,7 +72,22 @@ Configuration is normally processed as follows:
 \item {\bf Every tool reads its configuration from {\it /etc/neurospaces/$<$tool-name$>$/}:} This is merged with default configuration, possibly overriding default configuration.
 \item {\bf Every tool accepts additional configuration from the user:} This is via command line options or otherwise, again possibly overwriting configuration settings generated in the previous step. 
 \end{enumerate}
-The merging algorithm is defined in the \href{http://search.cpan.org/dist/Data-Utilities/}{\bf Data-Utilities} package, available from \href{http://www.cpan.org/}{\bf CPAN}.
+The merging algorithm is defined in the
+\href{http://search.cpan.org/dist/Data-Utilities/}{\bf Data-Utilities}
+package, available from \href{http://www.cpan.org/}{\bf CPAN}.
+
+The general idea behind this configuration is to provide G-3 with
+different interface profiles.  Examples of such interface profiles
+are, in increasing order of complexity:
+\begin{enumerate}
+\item A neural simulation system.
+\item An interface to a model database via the model-container and the
+  tools that connect to it.  The neurospaces studio is an example of
+  this capability.
+\item An interface to a model publication database via the
+  model-container and the documentation system.
+\end{enumerate}
+
 
 %\section*{A Specific Installation Example}
 
