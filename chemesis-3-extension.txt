@@ -1,0 +1,67 @@
+Some details of the implementation
+----------------------------------
+
+Different numerical solution methods are required to solve the different
+types of mathematical equations associated with different scales of
+modeling.  The cable equation and ion currents are numerically solved with
+implicit Crank-Nicolson integration.  In G-3 this method of solution is
+implemented in a dedicated compartmental solver called Heccer.  In the G-3
+shell the user has to create a mapping from the name of the neuron model to
+the solver.  In the past, this was not necessary, as Heccer was the only
+solver.  Under planned extensions to the G-shell syntax, the correct syntax
+for a loaded single neuron model with name "/traub94" would be::
+
+  genesis > solverset "/traub94 => heccer"
+
+Biochemical pathways in neuronal modeling are complex networks of
+interacting ion concentration pools.  The G-3 implementation for
+simulation of biochemical pathways is called Chemesis-3 and has a
+dedicated optimized implementation to represent networks parameterized
+with biochemical pathways.  To simulate a complex network model of
+biochemical pathways, in this example called "/cal1", a user would
+typically type from the G-3 shell::
+
+  genesis > solverset "/cal1 => chemesis3"
+
+In case the network of biochemical pathways is defined inside the
+single neuron model, a user would have to type two commands with
+wildcards that associate the correct solver with each component of the
+model, for example::
+
+  genesis > solverset "/**/cal1 => chemesis3"
+  genesis > solverset "/traub94/**[!cal1] => heccer"
+
+In later version of G-3 these rules will be built in but still allow
+the user to select a different method of solution for different
+components of his or her model.
+
+
+Extending GENESIS-3
+-------------------
+
+The G-3 documentation systems describes the procedures used for G-3
+extension.  Extending G-3 can involve the implementation of a new
+solver, or, when the required functionality is tangential to an
+existing solver, it can require source code additions to an
+pre-existing software component.  Here we describe the integration of
+a new solver, ie. the steps followed for the implementation of
+Chemesis-3.
+
+  1. The developer package integrates the different software
+  components of G-3.  The definition of a new component "chemesis3" in
+  the developer package allows for its smooth integration with other
+  G-3 software components such as the model-container.
+
+  2. The implementation of the core of a new solver is independent of
+  the development of other software components.  This allows full
+  focus on the mathematic aspects of the solver and their
+  implementation.
+
+  3. Optionally, the model-container can be extended with new tokens
+  that are specific to the new solver.  Configuration of the
+  model-container defines the new tokens and their parameters.
+
+  4. An interface must be written between the model-container and
+  the core of the solver.  The model-container defines an API that
+  makes abstraction of the biological structure the model.
+
