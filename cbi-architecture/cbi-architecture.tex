@@ -270,7 +270,7 @@ Catacomb2 \cite{cannon03:_from}).
 
 %As a complement to the Type\,1 interoperability provided by a `universal' language such as NeuroML or SBML, we here introduce the Computational Biology Initiative federated simulator architecture (CBI architecture). It provides a formal description of the class of simulators that support Type 2, or runtime interoperability.
 
-Here we introduce a new class of simulator architecture, the Computational Biology Initiative federated software architecture (for convenience referred to here as the CBI architecture). It takes its name from the Computational Biology Initiative at the University of Texas at San Antonio, where development was first initiated. As we now show, it is a {\it software architecture} that transparently supports both
+Here we introduce a new class of simulator architecture, the Computational Biology Initiative federated software architecture (for convenience referred to here as the CBI architecture). It takes its name from the Computational Biology Initiative at the University of Texas at San Antonio, where development was first initiated. It has been fully implemented as the basis of the recently reconfigured GENESIS (see following paper, Cornelis {\it et al}., 2011). As we now show, it is a {\it software architecture} that transparently supports both
 interoperability and {\it extensibility} for model building, simulation, and result analysis.
 
 % Results and Discussion can be combined.
@@ -579,10 +579,15 @@ In summary, the CBI architecture provides a template for
 software development that, at its core, contains a simulator.
 Additionally, the modularity and layering of the architecture simplifies connection
 to independent applications indirectly related to model construction and instantiation and the display and analysis of simulation output. Figure\,\ref{fig:cbi-architecture-simple} illustrates the various modules of the CBI
-architecture. We now introduce their functionality and describe their relationships within the context of an ideal user workflow.\\
+architecture.\\
 
 % Figure 3
 \noindent{\bf Place Figure\,\ref{fig:cbi-architecture-simple} about here.}\\
+
+Figure\,\ref{fig:cbi-architecture-expanded} provides an expanded view of Figure\,\ref{fig:cbi-architecture-simple} and illustrates in more detail the relationships between the different modules and sub-modules that comprise the CBI architecture. We now introduce their functionality and describe their relationships within the context of an ideal user workflow.\\
+
+% Figure 4
+\noindent{\bf Place Figure\,\ref{fig:cbi-architecture-expanded} about here.}\\
 
 \subsection*{The High Level User Interface Layer}
 
@@ -1193,7 +1198,14 @@ NineML \cite{cannon07:_inter}.
 %model developed for one simulator must be run with a different
 %simulator.
 
-Type\,1 interoperability has recently been implemented as the
+A CBI compliant simulator easily supports Type\,1 interoperability through implementation of the appropriate database interface software
+component.  Such an interface maps the concepts of
+declarative languages to concepts supported by the
+{\tt Biology\,Model\,Container}, which can also be used to
+connect the simulator to external databases that provide support for these
+declarative languages.
+
+Type\,2 interoperability has recently been implemented as the
 capability to communicate simulation data at run-time between
 different simulators using procedural paradigms\cite{ray08:_pymoos,
   davison08:_pynn}.  However, this approach requires the modeler to
@@ -1201,13 +1213,6 @@ understand some of the internals of the model, the simulator, and the
 implementation of the procedural paradigm.  While monolithic software
 applications are typically too complicated to extend, this additional layer of
 complexity makes the modeler's task next to impossible.
-
-A CBI compliant simulator easily supports Type\,2 interoperability through implementation of the appropriate database interface software
-component.  Such an interface maps the concepts of
-declarative languages to concepts supported by the
-{\tt Biology\,Model\,Container}, which can also be used to
-connect the simulator to external databases that provide support for these
-declarative languages.
 
 Ultimately, the CBI architecture moves interoperability problems from a context of
 communication between large monolithic applications to communication between well defined and simpler
@@ -2059,7 +2064,7 @@ Conducting experiments and running simulations are two iterative processes indic
 \includegraphics[width=4in]{figures/cbi-architecture-expanded.eps}
 \end{center}
 \caption{
-{\bf Detailed view of the Computational Biology Initiative federated software architecture.}
+{\bf Detailed view of the Computational Biology Initiative federated software architecture.} Illustration of the sub-modules and their relationships within each of the function modules given in Figure\,\ref{fig:cbi-architecture-simple}. See text for explanation and details.
 }
 \label{fig:cbi-architecture-expanded}
 \end{figure}
