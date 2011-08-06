@@ -86,9 +86,7 @@ $\ast$ E-mail: Corresponding Hugo.Cornelis@gmail.com
 % Please keep the abstract between 250 and 300 words
 \section*{Abstract}
 
-The Computational Biology Initiative federated software architecture
-was developed in response to a growing requirement in computational
-biology for simulator interoperability and extensibility. It is
+Simulator interoperability and extensibility has become a growing requirement in computational biology. To address this, we have developed a federated software architecture. It is
 federated by its union of independent disparate systems under a single
 cohesive view, provides interoperability through its capability to
 communicate, execute programs, or transfer data among different
@@ -272,7 +270,7 @@ Catacomb2 \cite{cannon03:_from}).
 
 %As a complement to the Type\,1 interoperability provided by a `universal' language such as NeuroML or SBML, we here introduce the Computational Biology Initiative federated simulator architecture (CBI architecture). It provides a formal description of the class of simulators that support Type 2, or runtime interoperability.
 
-Here we introduce a new class of simulator architecture, the CBI {\it federated software} architecture, for convenience referred to here as the CBI architecture. As we now show, it is a {\it software architecture} that transparently supports both
+Here we introduce a new class of simulator architecture, the Computational Biology Initiative federated software architecture (for convenience referred to here as the CBI architecture). It takes its name from the Computational Biology Initiative at the University of Texas at San Antonio, where development was first initiated. As we now show, it is a {\it software architecture} that transparently supports both
 interoperability and {\it extensibility} for model building, simulation, and result analysis.
 
 % Results and Discussion can be combined.
@@ -403,8 +401,7 @@ and direct influence on the partitioning of a program into its primary
 functional blocks, and are also crucial for problem diagnosis and
 guaranteed correct behaviour of the software.  Here, we propose there
 are two principal concerns that underly the development of modeling
-software: Separation between data and control through the use of
-data-layering.
+software: (1) Separation between data and control, (2) Separation of biology and mathematics through the use of data-layering.
 
 \subsubsection*{Control versus data}
 \label{sec:data-vs-control}
@@ -788,14 +785,13 @@ neuronal morphology.
 
 \paragraph{\bf Discrete Representations:}
 
-The solver generated discretization that forms the numerical 
-representation of a model is internally published for reuse by other 
-solvers in a process that is invisible to users, e.g. discretized tables 
-of channel gate kinetics, dendritic morphology meshes, and Hines 
+Existing monolithic simulators such as NEURON and GENESIS\,2 currently require the user to explicitly code scripts to avoid duplication of one-off data. In contrast to this, GENESIS\,3, in compliance with the CBI architecture, automatically detects duplicate parameterization of variables such as channel gate kinetics and dynamically shares their tabulated form as necessary. Solver generated discretizations that form the numerical 
+representation of a model are internally published for reuse by other 
+solvers in a process that is invisible to users, e.g. dendritic morphology meshes and Hines 
 enumeration of compartmentalized morphology.  Annotation of the 
 representation is necessary, e.g. annotation with the time step used 
 to generate the representation.  The reuse of such representations 
-considerably reduces the memory requirements of large simulations.
+minimizes the memory requirements of large simulations.
 
 \subsubsection*{Controllers \& Communication}
 
