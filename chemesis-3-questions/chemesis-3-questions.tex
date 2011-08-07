@@ -1,0 +1,652 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Question raised during initial development of Chemesis-3}
+
+\subsection{2011/06/25: Writing custom G-3 extensions}
+
+It appears that the separation of a model into a biological component
+in the model container, and mathematical components in solvers can
+make the process of constructing new objects more difficult in G-3
+than in G2. Can we minimize the complexity of this, while maintaining
+the structure of G-3?
+
+\paragraph{response} This may be the way it appears, but it is
+certainly not true.  Because of the strict separation between the
+biological aspects of a model and their numerical representation,
+extension of G-3 is very different from extension of G-2 and requires
+many more steps.  However, many of these steps can be automated and
+with the exercise of integrating Chemesis-3, we actually already
+automated some of them.  We are currently looking for other solvers to
+be candidates for integration.
+
+
+\subsection{2011/06/25: Selective NDF\_SAVE}
+
+Is there an option to ndf\_save that will allow me to save only /cell?
+If not, can I give a model-container command from the gshell that is
+equivalent to the one used in conversions.t to generate
+simplecell-all.ndf?
+
+What is the easiest way to extract the channel models to get .ndf
+files for the channels that appear in converted cell models?  Of
+course, I could hand-edit the cell .ndf file to create ones for the
+each of the channels, and make a new NDF file for the cell that
+references the channels in the library, instead of having all the gate
+representations be in the cell file.  But, there has to be a better
+way.
+
+\paragraph{response} This needs to be implemented.
+
+
+\subsection{2011/06/22: Browsing user documentation}
+
+I find it easier moving linearly through a users guide/tutorial, with
+occasionally being referred to another document for more in depth
+explanations.  I don't want to be sent to different places frequently.
+
+\paragraph{response} The documentation system has no layout algorithm
+yet that shows the narrative flows in which the displayed document
+participates.
+
+
+\subsection{2011/06/22: Types of user documentation}
+
+I would be tempted to create 2 (3) tutorial tracks:
+\begin{itemize}
+\item one for novices, which would basically translate the G-2 tutorials
+  into G-3
+\item one for G-2 users, which would focus on the new G-3 commands,
+  and model compatibility.
+\item Possibly a third tutorial track for just running existing
+  models, perhaps similar to BoG part 1.
+\end{itemize}
+
+\paragraph{response} This has a relationship with the layers of the
+old G-2 users community.  See the
+\href{../genesis-overview/genesis-overview.tex}{\bf GENESIS overview}.
+
+
+\subsection{2011/06/14: Morphology}
+
+\begin{verbatim}
+morphology_summarize /Purkinje
+\end{verbatim}
+
+and also this one:
+\begin{verbatim}
+morphology_list_spine_heads
+\end{verbatim}
+but I'm not sure how that command works.  I.e., why are spine\_heads
+special?  There is no morphology\_list\_branches.  I would expect that
+spines are just additional compartments (at least I treat them that
+way in terms of calcium, etc.)
+
+
+\subsection{2011/06/14: Simulation Constants}
+
+\begin{verbatim}
+runtime_parameter_show /Purkinje/segments/soma/cat G_MAX
+\end{verbatim}
+As I suspected, you consider G\_MAX a simulation constant and not a
+model constant.  I am strongly opposed to this.  G\_MAX is no more a
+simulation constant than is tau, or V\_half for a channel.
+
+\paragraph{response} When a parameter in the model-container is fixed
+to a value, it becomes a model parameter.  But it is important to
+understand that the model-container does not make a rigid distinction
+between parameter and variables.  For instance binding the same model
+parameter to the value of a variable, such as the membrane potential
+in a compartment, will turn it into a variable too.
+
+The solvers are responsible to recognize the variables in the model,
+or to emit an appropriate error message when the model is
+parameterized in a way beyond the solver's capabilities.
+
+
+\subsection{2011/06/14: Event time tables}
+
+\begin{verbatim}
+runtime_parameter_add /Purkinje/segments/branchlets/b1s06/b1s06[182]/Purkinje_spine_0/head/par/synapse EVENT_FILENAME event_data/events.yml
+\end{verbatim}
+
+gives me no error message, even though I didn't replace
+"EVENT\_FILENAME" with an existing filename.  But I like this
+capability.  This is what we use the time\_table for in genesis 2.  Is
+there more information on this capability?
+
+\paragraph{response} Currently not, but there are test cases for it in
+the gshell, see the test specification single\_synapse.t and
+\href{http://neurospaces.sourceforge.net/neurospaces_project/gshell/tests/html/specifications/single_synapse.html}{its
+  html version}.  In the model library, the file
+'event\_data/events.yml' is an example of an event file.
+
+
+\subsection{2011/06/14: Renaming a cell model}
+
+How to a load the cell model but give it a different name, or make an
+identical copy of a cell, and give it a different name?
+
+\paragraph{response} currently this can only be done by modifying the
+NDF file.
+
+
+\subsection{2011/06/14: Combining existing models}
+
+I would like to combine some of the gates in the NDF library to create
+additional channels (e.g., there are no recognizable calcium channels
+in the channels library), or modify some of the parameters to tailor
+the channels, but I don't know how to do either of these.  Which
+documentation would be most helpful for this?
+
+
+\subsection{2011/06/14: NDF for CHEMESIS-3}
+
+Note that the purpose of NDF is to maybe be readable, but not
+necessarily to verify or write.  For most models I have worked with,
+it was actually human readable.  For models that resulted after a
+conversion from G-2 it was unreadable to a human in most cases.
+
+
+
+1. I see you have parameter thick, and then it's commented out with
+//? so I'm not sure if you're using it.  I prefer having an outer and
+inner diameter or radius, to allow for shells, with the inner radius
+allowed to be zero for the inside shell.  Then, the object itself can
+calculate thickness as well as all the needed surface areas.  I
+suppose with thickness the inner diameter and all surface areas can be
+calculated, but I don't see as they are existing fields in the pool
+object.
+
+\paragraph{response} This is an interesting question.  The POOL
+component is already used for concentrations with exponential decay.
+Depending on the model it can use THICK and DIA (inferred from the
+parent segment) to compute BETA, and for other models it is convenient
+to specify BETA directly.  Generally speaking the implementation of a
+component type can define convenience relationships between the
+different parameters.  An trivial example is the relationship between
+a segment's TAU, RM and CM.
+
+In the example I have used the same POOL model type that is used by
+the other models such as the Purkinje cell, the Traub model ao.  I
+don't know yet if this is a good idea.
+
+
+2. I wouldn't call the various pools substrate\_somaCaBuf or
+product\_somabuf.  Though certainly that is how they act in the
+present simulation, all pools can simultaneously be substrates or
+products, so those names will be confusing as soon as the model is
+extended at all.
+
+\paragraph{response} these have been renamed.
+
+
+3. I don't understand the concept of groups, but I think I understand
+the concept of bindings - similar to messages?  Are bindables just the
+inputs and outputs?
+
+\paragraph{response} Bindings are similar to messages in the sense
+that they define the mathematical connections (and also the
+topological connections) between model components.  Bindings are
+available in the model-container.  But during a simulation the solvers
+can decide to do something clever and not compute some of the
+variables.
+
+For instance, a compartmental solver does not have to compute an ion
+channel current, say soma/kdr->Ik, because it is not required to
+compute the membrane potential.  However, when the user lists this
+current as a desired output, the compartmental solver can reconfigure
+itself to compute ion channel currents.  This is what Heccer does (the
+current G-3 compartmental solver).  This is of course dependent on how
+smart the implementation is.
+
+A solver can also choose to compute variables that are not directly
+available from a model's perspective.  As an example the average
+membrane potential or calcium concentration of selected dendrites in a
+single time step can be computed.  In G-3, you can tag model
+components, then tell Heccer to compute an average value of the tagged
+components.
+
+Note that all these features work and are part of the automated test
+cases.  The tagging is always available for new model components such
+as the reaction type.
+
+
+
+4. On the other hand, I definitely do not understand the code
+following "An extension file with the definition:" which means I
+wouldn't be able to do additional development (though I suppose that
+comment is unfair given I'm still learning).
+
+\paragraph{response} Correct: you don't have to write code to create a
+new type.  In this case the configuration file mapped the reaction
+type to an already existing implementation.  But of course it is
+possible to map to a new implementation and in this implementation
+code the logic specific to handle the parameters of that component.
+For example, the implementation of a segment defines the relationship
+between TAU, RM and CM and the implementation of a concentration pool
+defines the relationships between volume, diameter, thickness, valency
+and beta.
+
+If the reaction.yml would map a reaction type to the segment
+implementation, the new reaction type would know about TAU, RM and CM.
+Of course this is not what you want, but I am just illustrating the
+idea behind.
+
+
+5. Related to groups, one of the nice things about NeuroRD is the
+ability to define a reaction independent of the morphology, and then
+the reaction occurs wherever there are the appropriate substrates.  An
+good alternative for G-3 is to define a reaction independent of
+groups, and then specify which parts of the morphology it occurs in.
+In a large model, you don't want to have to define 100 identical
+reactions, HOWEVER, that is what I did with G-2 - e.g. I looped
+through my 2D array of calcium pools, and created a 2D array of
+reactions (pseudo 2D since genesis doesn't allow 2D arrays of
+elements).
+
+calcium - the compartments must be much smaller than voltage
+compartments.  So, it is necessary to subdivide each voltage segment
+or whatever you call them, into multiple calcium compartments.  The
+calcium channels bridge these two compartments.  I.e., each calcium
+compartment might have its own calcium channel, but each of these
+channels receives an identical voltage message.  As an approximation,
+you could just take the calcium channel in the voltage compartment,
+and subdivide the current by the number of calcium compartments.
+However, using GHK to calculate driving potential, each of these
+calcium comp could have a different conc, e.g. if it had different
+synapses, and thus a different driving potential.
+
+
+\paragraph{response} The model-container allows to instantiate
+repetitive model components in different ways.
+
+It is possible to group arbitrary components and then to reference the
+group from many places.  This does not necessarily mean that all
+(virtual) instances identified by these references must be
+mathematically identical.
+
+As an example, the implementation of a segment defines the parameter
+SOMATOPETAL\_DISTANCE (I might be wrong on the name of this
+parameter).  The value of this parameter is dynamically inferred from
+the path to the soma.  Using the notation '..->DISTANCE' in the
+definition of a reaction, pool or any other component allows to set
+the relationship of a parameter as dependent of its location in a
+morphology.
+
+As I explained in my previous email, the model-container works with
+types (data) and algorithms.  A second way of defining repetitive
+model components is to first declare 10000 identical model components
+then to randomize them (or do something else) using the algorithm
+specific for this purpose (it is called Randomize I believe, but have
+to look up again).
+
+A third way of defining repetitive model components that is specific
+to reading morphologies, is to look at a parameter of a dendritic
+section in the morphology, for instance its diameter, and depending on
+the value of this parameter map the dendritic section to a predefined
+compartmental prototype.  The compartmental prototype may have
+arbitrary complexity.  The tool morphology2ndf implements this type of
+functionality, internally in the model-container it works with
+references to model components.  Section 5 of
+http://www.genesis-sim.org/userdocs/technical-guide-1/technical-guide-1.html
+explains this.
+
+
+6. how to create a passive morphology - either specifying a few
+"compartments" by hand or reading in a cell from neuromorpho.org, and
+how to create different ionic channels.  Second step would be creating
+(or using if it exists) either GHK (for Ca channels) or Mg block (for
+NMDA channels).
+
+
+7. The POOL token sounds like the old genesis ca\_concen object.  This
+is entirely not sufficient for doing general concentration pools.  In
+particular, you absolutely cannot have any exponential decay.  All
+decay is provided by various mechanisms.  And you can't have 2-D (or
+even 1-D) diffusion without additional geometry factors specified.  By
+the time you add and remove stuff, you no longer have the old simple
+exp decay.
+
+\paragraph{response} The model-container stores all the different
+HH-channel types with the same CHANNEL token.  This token is used for
+channels with activation, both activation and inactivation, and for
+channels with a concentration dependent gate.
+
+The CHANNEL implementation defines a derived parameter, called
+CHANNEL\_TYPE that contains a value that changes dynamically with the
+number and type of HH-gates internal to the channel.  This is
+convenient for a solver when it needs to allocate its internal
+structures, and it is convenient for a user when exploring a model.
+
+The CHANNEL\_TYPE parameter is dynamic in the sense that adding or
+removing a gate from a channel will change its value immediately.  The
+value is never stored in memory.
+
+The current implementation of the POOL token is exactly that: a pool
+of ions, whether exponential decay or with other dynamics.  A modeler
+is assumed to think of a pool of ions, independent of whether its with
+simple decay, 1D or 2D diffusion.  The parameterization of the pool
+token and its internal structure will define the behavior at
+simulation time.
+
+Currently three different parameterizations of the POOL token will map
+it to one of the G-2 ca\_concen object, the Chemesis-3 pool, or the
+Chemesis-3 conservepool objects.
+
+For a user who is exploring a model, this means that querying the
+model for all concentration pools and then inspecing the parameters of
+the pools becomes trivial.
+
+
+\subsection{2011/06/14: Creation of the most simple simulations}
+
+If I wanted to create a single cell model with various channels. I
+discovered only a few synaptic channels and hodgkin-huxley channels.
+Then I looked at the introduction to ndf file format, which wasn't too
+helpful, but
+http://www.genesis-sim.org/userdocs/model-variables/model-variables.html
+was probably the best document, though still not sufficient.  This
+shows me how to create a synaptic channel, but I don't need another
+synaptic channel.  Presumaly I can just take the existing ones and
+modify tau.  It would be nice to see the ndf for a vdep channel, then
+I would better understand how to modify it to create other channels.
+
+I must confess another command I really like is the listobjects
+commands in G2. I could see what existed, look at the fields and brief
+explanation of what it did.  Also, I could look at the source code to
+figure out how it worked (I know that this latter step is done by
+almost noone.)
+
+\paragraph{response} The equivalent in the gshell of the G-2
+listobjects command is 'help command create'.  There are also commands
+with similar functionality: 'list structure' list all tokens known to
+the model container to structure a model.  As another example 'list
+physical' lists all tokens knowns to the model-container that
+instantiate model components.  There are a couple of other 'list <this
+and that>' commands, but they are of less interest here.
+
+
+After the tutorials, I still don't know how to get started creating my
+own model, i.e.
+
+1. how to define a simple morphology or read in a realistic one
+
+2. how to add channels to various compartments
+
+
+\subsection{2011/06/14: Tests don't pass on the regression tester.
+  What now?}
+
+Then it is highly unlikely it will work on any other developer
+machine.
+
+
+\subsection{2011/06/08: Empty output when compiling the developer package???}
+
+That may wel be.  'make \&\& sudo make install' is the standard way of
+installing a Unix software package.  Because the developer package is
+a minimal set of utilities, the 'make' phase may be a no-operation
+depending on the revision of this package.  The 'sudo make install' is
+always required.  Just continue with the installation of the other
+packages as explained in the documentation.
+
+
+\subsection{2011/06/03: Five ways to create simulations in GENESIS-3}
+
+\begin{itemize}
+\item Using the g-shell to issue commands (or to read them from a
+  file): This is covered in Tutorials 1 and 2 below.
+
+\item Using the "ns-sli" compatibility mode of the g-shell to load or
+  run GENESIS 2 SLI scripts.  This is covered in Tutorial 3 below.
+  SLI compatibility requires additional bindings than the ones used to
+  make objects available to the g-shell.
+
+\item Using Python as a scripting language.  This will become the
+  prefered method of scripting in G-3.
+
+\item Using ssp directly from the (unix) command line to load and
+  control a model: This is usually used for testing new objects that
+  don't have bindings to higher levels of scripting.  Typical commands
+  are:
+
+\begin{verbatim}
+   $ ssp --help
+   $ ssp '--time' '100.0' '--time-step' '5e-5' '--cell' 'traub91_100s.ndf'
+   $ ssp --cell cells/purkinje/edsjb1994.ndf --time 0.5 --optimize
+   $
+\end{verbatim}
+
+\item Using ssp configuration files.  This is used to run many similar
+  simulations, for examples to compare the responses of different
+  models to similar stimuli, or for a parameter searches.  A number of
+  scripts are available that create these ssp configuration files.
+\end{itemize}
+
+
+\subsection{2011/06/14: Tutorial 1}
+
+1. Instead of creating a cell called /n, I created one called /cell1 -
+so far so good.  But, then later I forgot, and copied the tutorial
+commands "output\_add /n/soma Vm" and there were no complaints/error
+messages, even though I never created a /n object. It does give me an
+error when I try to run it, but not before then.
+
+2. I can't figure out how to examine the objects that exist for my
+use, or the fields/parameters in those objects.
+runtime\_parameters\_show shows me the parameters I created using that
+command (including my "non\_existent" parameter). model\_parameter\_show
+shows me parameters I've added.  list\_elements also helps, but I can't
+examine the fields/parameters that already exist in the elements. Does
+that mean that I can add any parameter?  That wouldn't make sense,
+since parameters such as Rm act differently than parameters such as
+INJECT.
+
+3. set\_verbose warning doesn't seem to be doing what it says, though
+set\_verbose information does.
+
+4. Are SI units required, or can I use any set of consistent units?
+FYI, I really hate being forced to use SI units, since my experiments
+and publications all report stuff using physiological units.
+
+\paragraph{response} Representation of parameter values in a
+user-chosen unit system is a User Interface issue.  The gshell and its
+python based alternative will do the conversion from SI to other unit
+systems.  The model-container and solvers always use SI units.  This
+is to prevent specification of one model in different unit systems.
+
+Conversion between unit systems is a matter of multiplying and
+offsetting the values (when they are numeric).  Dave has recently
+written a document about this and we should incorporate this type of
+functionality into the gshell such that a user can script a model
+using any unit system he likes, and the model-container will always
+see, store and provide SI based values to other components, including
+(G)UIs and solvers.
+
+
+5. In the discussion of simulation constants (tutorial1), it seems you
+are claiming that conductance of the CaT channels is a sim constant
+and not a model constant, but I would strongly disagree.  I think of
+the model as analogous to the tissue an experimentalist records from.
+conductances are definitely model parameters, where as dt, runtime,
+mesh element size, current injection are simulation parameters or
+simulation inputs.
+
+6.  Continuing with tutorial1, I tried
+\begin{verbatim}
+genesis > ndf_load /n myneuron.ndf
+\end{verbatim}
+but it didn't work:
+\begin{verbatim}
+Could not find file (number 1, 1), path name (/n)
+Set one of the environment variables NEUROSPACES_NMC_USER_MODELS,
+NEUROSPACES_NMC_PROJECT_MODELS, NEUROSPACES_NMC_SYSTEM_MODELS or NEUROSPACES_NMC_MODELS
+to point to a library where the required model is located,
+or use the -m switch to configure where neurospaces looks for models.
+*** Error: ndf_load /n
+\end{verbatim}
+
+when I used the -m switch, nothing happened, and there was no help for this command.
+
+7. In the tutorial, you suggest storing output in /tmp :
+\begin{verbatim}
+genesis > sh cat /tmp/output
+\end{verbatim}
+but I would never want to write my output to that directory.  also,
+how is that the default since you specify full path?  I would think
+the default would be the directory from which you invoked genesis.
+Strangely, this command is not working today.  I keep getting "No such
+file or directory" no matter what filename or directory I specify.
+OK, I figured it out.  In the tutorial discuss where simulation output
+is, and then give the sh cat command \_before\_ you present "run
+simulation".  So, of course an error is returned.  I recommend
+changing the tutorial so that the sh cat command is explained after
+the run simulation to prevent errors, or explain not to invoke the
+command till after running the model.  Also, I would change the
+default location of the files, and explain how to specify a file
+location.
+
+9. model\_state\_load doesn't appear to work.  I tried calling it two
+different ways:
+\begin{verbatim}
+genesis > model_state_load tempmodel
+*** Error: <modelname> and <filename> are required
+\end{verbatim}
+\begin{verbatim}
+genesis > model_state_load /n tempmodel
+HeccerConstruct: cannot find model /n
+/usr/local/bin/genesis-g3: While running GENESIS3 SSP schedule initiated for /n, 0: compile failed (error: HeccerConstruct() from the model_container failed) at /usr/local/glue/swig/perl/SSP.pm line 1756.
+ at /usr/local/bin/genesis-g3 line 54
+       main::__ANON__('/usr/local/bin/genesis-g3: While running GENESIS3 SSP schedul...') called at /usr/local/glue/swig/perl/SSP.pm line 1756
+       SSP::run('SSP=HASH(0x2270958)') called at /usr/local/glue/swig/perl/GENESIS3.pm line 1956
+       GENESIS3::Commands::run('/n', 0) called at /usr/local/glue/swig/perl/GENESIS3.pm line 1182
+       GENESIS3::Commands::model_state_load('/n', 'tempmodel') called at (eval 50) line 1
+       eval 'GENESIS3::Commands::model_state_load( \'/n\', \'tempmodel\', )
+;' called at /usr/local/bin/genesis-g3 line 171
+       main::interprete('model_state_load /n tempmodel') called at /usr/local/bin/genesis-g3 line 242
+       main::loop() called at /usr/local/bin/genesis-g3 line 307
+       main::main() called at /usr/local/bin/genesis-g3 line 367
+$Result = undef;
+$
+\end{verbatim}
+
+
+
+\subsection{2011/05/28: Customizing GENESIS-3 (1)}
+
+General question \#1: Is this currently possible, or are there parts of
+the G-3 infrastructure that need to be implmented in order to make
+this task straightforward?  At present, it seems to be a lot harder
+than extending G2, although in principle it should be easier. We also
+talked about a demo using Python scripting to show how G-3 can
+interoperate with an external Python script.  In principle, this
+script could invoke PyMOOSE or PyNEURON and incorporate part of a
+model in one of these simulators, but I had something much simpler in
+mind.  The simplest trivial case (which I would try first) would be a
+simple application that makes a graph like G3Plot, but gets the data
+directly from /cell/soma Vm as it runs, rather than from a file.  The
+demo that I would like to write is an "efield application" (not an
+added object) that works as I described in my "Interoperability
+example" email, with a Python object that recieves compartment or
+channel currents as the simulation runs, calculates the extracellular
+potential, and sends it to a plot object.
+
+
+\subsection{2011/05/28: Customizing GENESIS-3 (2)}
+
+General question \#2: What needs to be done to make this demo
+possible?  Is it already possible to have a Python script access
+something like asc\_file and get the output directly as it is
+generated?  Are their any problems associated with getting the Ik
+values?  I was not able to send Gk to an asc\_file.  The
+simplecell\_spike\_pulse.g in testchannels-0.9/simplecells was designed
+to be another example to convert to Python, but failed to run in
+ns-sli for many reasons.
+
+
+\subsection{2011/05/28: Customizing GENESIS-3 (3)}
+
+General question \#3: I am still trying to get a clear idea of whether
+I should choose Python scripting, SLI backwards compatibility
+scripting, or basic G-shell scripting for this release.
+
+\subsection{2011/05/28: Customizing GENESIS-3 (4)}
+
+General question \#4: Will scripting in G-3 Python (or anything else)
+preserve the GENESIS paradigm of elements coupled with "messages"?  In
+GENESIS 2 SLI, a "message" is not the usual one-time event of other
+languages, but is more of a persistent data connection.
+
+
+\subsection{2011/05/21: an efield object}
+
+Suppose that I want to implement an efield object to measure the
+extracellular potential at some point outside a Purkinje or traub94 cell.
+It needs to know Ik in every compartment at specified intervals (probably
+much less than the simulation time step), and the coordinates of each
+compartment, in order to calculate the inverse square distance.  This can
+be done by either (1) creating a G-3 object in C and making it available to
+gshell, ns-sli, or the Python interface; or (2) creating an external
+"efield application" in Python that loads and runs the cell model and gets
+the needed information for its own Python efield object.
+
+It is the second that I'm most interested in now, and that has the most
+relevance to the chapter I'm writing, but I'd like to think ahead to
+the first.  When you can find the time, could you try to give me some
+general answers in terms of "what things do I need to know about?"
+for these questions?  Later, I may pin you down for names of example
+code files or specific documentation that exists.
+
+1.  If i write an efield object in C, using the vclamp or PulseGen
+code as an example
+
+   a. How do I make it availble to the gshell?  I suspect that the docs
+   genesis-extend-model-container will answer a lot of this.  What else do
+   I need to know about in order to be sure that the efield object gets
+   the Ik information at specified intervals?
+
+   b. How would I make the new efield object accessible to a Python
+   script, and use Python to set up the communication with the cell?
+   This could be called interoperability of a sort, because Python
+   is external to G-3. But it isn't really what I mean by
+   interoperability because it requires changes to G-3 to add a new
+   object.
+
+   c.  What is involved in doing this for ns-sli?  Is it more or
+   less work than doing it for Python?
+
+2.  As a demo of "run-time interoperability" and a useful tool, I'd
+like to write a Python script that, as in (1b), would import nmc and
+heccer, then issue commands to load a cell model from a NDF file.
+But, it would implement its own efield object in Python.
+
+   a.  Do we yet have a way to load a cell from a NDF file in Python?
+   The cbi-scripting/scripting-example files just create and intialize
+   a soma compartment.  This would seem to be the next step.
+
+   b.  How do I get the Ik information to the Python efield object in an
+   efficient manner through the Python interface?
+
+You can ignore question (1) for now.  I posed it just to show the contrast.
+At some point I'll need to create documentation on doing this, after trying
+it myself, but (2) is more important to me now, and I hope easier.
+
+
+
+\bibliographystyle{plain}
+\bibliography{../tex/bib/g3-refs.bib}
+
+\end{document}
