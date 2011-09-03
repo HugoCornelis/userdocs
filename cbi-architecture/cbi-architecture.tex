@@ -661,7 +661,7 @@ signal analysis and binning of spikes.  These libraries are accessible
 to the CBI architecture from the function library software component.
 
 
-\paragraph{Running a Single Cell Model from a Model Database}
+\paragraph{Running a Single Cell Model}
 
 When a user wants to learn more about the electro-physiology of an
 existing cell model, he will need to instantiate the model, configure
@@ -689,6 +689,12 @@ somatic transmembrane currents.
 
 Running the simulation in step 3 of the ideal user workflow starts
 with the initialization of the {\tt Solver} data structure in memory.
+For this, the compressed image of the model must be expanded in a
+detailed representation of only the equations and parameters relevant
+to the simulation.  The spatial layout of segments will not be
+required and is invisible to the {\tt Solver}.  Existing simulators
+such as GENESIS 2, do not make this distinction and duplicated more
+information than needed.
 
 \begin{enumerate}[noitemsep,nolistsep]
 \item {\bf Initialize the simulation.} Here, a solver instance, a
