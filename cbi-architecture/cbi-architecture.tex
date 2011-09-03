@@ -652,16 +652,16 @@ data flows relate to one another in the CBI architecture.
 \subsubsection*{Dataflows in the CBI Architecture}
 
 Models and experimental data is stored in files and databases. In the
-CBI architecture, the calculations performed during a simulation are
-done by the numerical solvers. So there is a natural data flow from
-databases and files, describing models, to the solvers.  Results from
-a simulation must be analyzed.  For this analysis, function libraries
-are needed, e.g. for signal analysis and binning of spikes. These
-libraries are accessible to the CBI architecture from the function
-library software component. So, for results analysis, there is a
-natural data flow from the solvers to the function library.
+CBI architecture, numerical {\tt Solvers} perform the calculations of
+a simulation which then save the output back to files or databases.
+This implies a data flow from databases and files, describing models,
+to the {\tt Solvers} and back to files and databases.  Intermediate
+results may be analyzed or aggregated by analysis libraries, e.g. for
+signal analysis and binning of spikes.  These libraries are accessible
+to the CBI architecture from the function library software component.
 
-\subsubsection*{Running a Single Cell Model from a Model Database}
+
+\paragraph{Running a Single Cell Model from a Model Database}
 
 In this workflow, a user wants to learn more about the
 electro-physiology of an existing cell model.
