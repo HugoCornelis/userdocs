@@ -543,32 +543,41 @@ Simplified development and testing of modules as stand alone
 components, and (5) Clear delineation of scope for new module
 development.
 
-\subsection*{Structural Overview of the Federated Software Architecture}
+\subsection*{Structural Overview of the CBI Architecture}
 
-The CBI architecture is defined as
-a modular paradigm that places stand-alone software components into a
-set of logical relationships. In this sense it defines a modular framework that provides the necessary parts of a neural simulator.
+The CBI architecture is defined as a modular paradigm that places
+stand-alone software components into a set of logical relationships.
+In this sense it defines a modular framework that provides the
+necessary parts of a neural simulator.
 
-The schema identified by the separation of concerns (see Fig.~\ref{fig:data-control}) is expanded in
+The schema identified by the separation of concerns (see
+Fig.~\ref{fig:data-control}) is expanded in
 Figure~\ref{fig:cbi-architecture-simple} to give the components that
 form the building blocks of the CBI architecture. This figure retains
-the four quadrants of simulator functionality revealed by the separation of concerns. They 
-include the notions of
-low-level data for numerics and high-level representations for
-biology, as well as separation between data and control
+the four quadrants of simulator functionality revealed by the
+separation of concerns. They include the notions of low-level data for
+numerics and high-level representations for biology, as well as
+separation between data and control
 (Fig.~\ref{fig:cbi-architecture-simple} indicated by horizontal and
-vertical dashed lines, respectively). The CBI architecture
-draws its inspiration from this partitioning. We refer to the CBI
-architecture as being `federated' as it extends the modular approach
-associated with the development of single applications to the
-functional integration of otherwise independent applications. In doing
-so, federation provides transparency, heterogeneity, a high degree of function, autonomy for the underlying federated sources, extensibility, openness, and the possibility of highly optimized performance. Federation aims to provide a unified interface to diverse applications
-and mask from the user the differences, idiosyncracies, and
-implementations of the underlying applications and data sources
-(see www-128.ibm.com/developerworks/db2/library/techarticle/0203haas/0203haas.html).
-Ideally, it makes the underlying applications look like a
-single system to the user. Enhanced application interoperability is achieved
-through the use of flexible high-level {\it scripting languages} to support diverse workflows and low-level {\it application programmer interfaces} and rigid {\it application binary interfaces} for performance.
+vertical dashed lines, respectively). The CBI architecture draws its
+inspiration from this partitioning. We refer to the CBI architecture
+as being `federated' as it extends the modular approach associated
+with the development of single applications to the functional
+integration of otherwise independent applications. In doing so,
+federation provides transparency, heterogeneity, a high degree of
+function, autonomy for the underlying federated sources,
+extensibility, openness, and the possibility of highly optimized
+performance. Federation aims to provide a unified interface to diverse
+applications and mask from the user the differences, idiosyncracies,
+and implementations of the underlying applications and data sources
+(see
+www-128.ibm.com/developerworks/db2/library/techarticle/0203haas/0203haas.html).
+Ideally, it makes the underlying applications look like a single
+system to the user. Enhanced application interoperability is achieved
+through the use of flexible high-level {\it scripting languages} to
+support diverse workflows and low-level {\it application programmer
+  interfaces} and rigid {\it application binary interfaces} for
+performance.
 % (see companion paper this issue, Cornelis et al., 2010)\marginpar{ref CBI scripting paper}.
 
 % For completeness, we note that northbound and southbound interfaces
@@ -581,80 +590,200 @@ through the use of flexible high-level {\it scripting languages} to support dive
 % interfaces are drawn at the top and bottom of an architectural
 % overview, respectively.
 
-In summary, the CBI architecture provides a template for
-software development that, at its core, contains a simulator.
-Additionally, the modularity and layering of the architecture simplifies connection
-to independent applications indirectly related to model construction and instantiation and the display and analysis of simulation output. Figure\,\ref{fig:cbi-architecture-simple} illustrates the various modules of the CBI
+In summary, the CBI architecture provides a template for software
+development that, at its core, contains a simulator.  Additionally,
+the modularity and layering of the architecture simplifies connection
+to independent applications indirectly related to model construction
+and instantiation and the display and analysis of simulation output.
+Figure\,\ref{fig:cbi-architecture-simple} illustrates the various
+modules of the CBI
 architecture.\\
 
 % Figure 3
 \noindent{\bf Place Figure\,\ref{fig:cbi-architecture-simple} about here.}\\
 
+\subsection*{Behavioural View of the CBI Architecture}
+
+Steps 1-3 of the ideal user workflow fall within the scope of the
+CBI-architecture.
+%  Steps 4-5 are outside the CBI-architecture and
+%cannot induce diagonal connections between the modules inside the
+%CBI-architecture.
+
+
 Figure\,\ref{fig:cbi-architecture-expanded} provides an expanded view
 of Figure\,\ref{fig:cbi-architecture-simple} and illustrates in more
-detail the structural relationships between the different modules and sub-modules
-that comprise the CBI architecture. We now introduce the functionality and describe the relationships of the various software modules that support the CBI architecture.\\
+detail the structural relationships between the different modules and
+sub-modules that comprise the CBI architecture. We now introduce their
+functionality and describe the relationships of the various software
+modules that support the CBI architecture.\\
 %% within the context of our ideal user workflow.\\
+
+%\marginpar{hsolve tutorial}
+
+%\marginpar{first cbi architecture manuscript}
+
+%\marginpar{two lines of code}
 
 % Figure 4
 \noindent{\bf Place Figure\,\ref{fig:cbi-architecture-expanded} about here.}\\
 
-\subsection*{Functional View of the CBI-Architecture}
-
-A functional architecture is an overview of a software system, layered according to low-level vs. high-level functions in the system. These functions are complemented by the data they operate on and are the result of using the software system. As a consequence, a feature of the CBI architecture is that rich data flows occur between software components, but not within them.
-The actions a user takes are translated by the GUI into events in the software system. These events impact the state of software components, and direct components to pass data amongst themselves. Each software component is specialised for implementing one particular function and performs the defined operations on the data it is passed.
+A functional architecture is an overview of a software system, layered
+according to low-level vs. high-level functions in the system. These
+functions are complemented by the data they operate on and are the
+result of using the software system. As a consequence, a feature of
+the CBI architecture is that rich data flows occur between software
+components, but not within them.  The actions a user takes are
+translated by the GUI into events in the software system. These events
+impact the state of software components, and direct components to pass
+data amongst themselves. Each software component is specialised for
+implementing one particular function and performs the defined
+operations on the data it is passed.
 
 \subsubsection*{Dataflows in the CBI Architecture}
 
-Models are stored in databases, and experimental data is stored in files or in databases. In the CBI architecture, the calculations performed during a simulation are done by the numerical solvers. So there is a natural data flow from databases and files, describing models, to the solvers.Results from a simulation must be analyzed. For this analysis, function libraries are needed, e.g. for signal analysis, binning of spikes, etc. These libraries are accessible to the CBI architecture from the function library software component. So, for results analysis, there is a natural data flow from the solvers to the function library.
+Models are stored in databases, and experimental data is stored in
+files or in databases. In the CBI architecture, the calculations
+performed during a simulation are done by the numerical solvers. So
+there is a natural data flow from databases and files, describing
+models, to the solvers. Results from a simulation must be analyzed.
+For this analysis, function libraries are needed, e.g. for signal
+analysis, binning of spikes, etc. These libraries are accessible to
+the CBI architecture from the function library software component. So,
+for results analysis, there is a natural data flow from the solvers to
+the function library.
 
 \subsubsection*{Running a Single Cell Model from a Model Database}
 
-In this workflow, a user wants to learn more about an existing cell model. Specifically, the user wants to learn more about, amongst other things, the spatial and biophysical aspects of the neuron.The emphasis of this example is on the internal data streams in the CBI architecture when a user performs the basic tasks needed to explore an existing model.
-\begin{enumerate}[noitemsep,nolistsep]
-	\item {\bf From the GUI, open the model library.}
-	\begin{enumerate}[noitemsep,nolistsep]		\item Connect to the database.
-		\item Fetch list of models.
-	\end{enumerate}	\item {\bf Select the required cell model.}	\begin{enumerate}[noitemsep,nolistsep]		\item The model container is requested to load the model.		\item The model container loads the top level description file of the model		\item The model container parses the file		\item The model container tracks dependencies, and loads secondary description files		\item The model container activates the necessary algorithms, e.g. to populate the model with active conductances and spines.
-		\item An active algorithm uses the model container API to
-		\begin{enumerate}[noitemsep,nolistsep]
-			\item Inspect the predefined model, a description is presented to the algorithm.
-			\item Insert/modify elements into/from the pre-existing model
-			\item Extract relevant information from the model and store it in aggregate form for later use or user inspection.
-		\end{enumerate}	\end{enumerate}	\item {\bf Examine the cell model.} The GUI employs the model container API to inspect the model and the information that was 
-		aggregated by some of the algorithms. It supports different types of views on this information.
-	\begin{enumerate}[noitemsep,nolistsep]		\item Visualize and examine the cell morphology (3D coordinates of the morphology are streamed to a 3D vizualizer) and the 		
-			electrotonic length.		\item Examine and validate the conductances in the model, e.g. populate and visualize Table\,1 of \cite{deschutter94:_purkin_i}.		\item Examine the location of synaptic channels.		\item Examine the average diameter of the cell.
+In this workflow, a user wants to learn more about an existing cell
+model. Specifically, the user wants to learn more about, amongst other
+things, the spatial and biophysical aspects of the neuron. The
+emphasis of this example is on the internal data streams in the CBI
+architecture when a user performs the basic tasks needed to explore an
+existing model.
+\begin{enumerate}[noitemsep,nolistsep]
+\item {\bf From the GUI, open the model library.}
+  \begin{enumerate}[noitemsep,nolistsep] \item Connect to the
+    database.
+  \item Fetch list of models.
+  \end{enumerate} \item {\bf Select the required cell model.}
+  \begin{enumerate}[noitemsep,nolistsep]
+  \item The model container is requested to load the model.
+  \item The model container loads the top level description file of
+    the model
+  \item The model container parses the file
+  \item The model container tracks dependencies, and loads secondary
+    description files
+  \item The model container activates the necessary algorithms, e.g.
+    to populate the model with active conductances and spines.
+  \item An active algorithm uses the model container API to
+    \begin{enumerate}[noitemsep,nolistsep]
+    \item Inspect the predefined model, a description is presented to
+      the algorithm.
+    \item Insert/modify elements into/from the pre-existing model
+    \item Extract relevant information from the model and store it in
+      aggregate form for later use or user inspection.
+    \end{enumerate}
+  \end{enumerate}
+\item {\bf Examine the cell model.} The GUI employs the model
+  container API to inspect the model and the information that was
+  aggregated by some of the algorithms. It supports different types of
+  views on this information.
+  \begin{enumerate}[noitemsep,nolistsep]
+  \item Visualize and examine the cell morphology (3D coordinates of
+    the morphology are streamed to a 3D vizualizer) and the
+    electrotonic length.
+  \item Examine and validate the conductances in the model, e.g.
+    populate and visualize Table\,1 of \cite{deschutter94:_purkin_i}.
+  \item Examine the location of synaptic channels.
+  \item Examine the average diameter of the cell.
 			
-			The GUI has access to the model container algorithm library. One of the available algorithms is called ``average diameter reporter''. It traverses a single cell model, weighting the diameter with the length for each dendritic segment, and summing up the results.After this algorithm is selected, it is activated as outlined above, and computes a set of aggregated results, the average diameter in this case.
-		\item Define the output of interest.
+    The GUI has access to the model container algorithm library. One
+    of the available algorithms is called ``average diameter
+    reporter''. It traverses a single cell model, weighting the
+    diameter with the length for each dendritic segment, and summing
+    up the results. After this algorithm is selected, it is activated
+    as outlined above, and computes a set of aggregated results, the
+    average diameter in this case.
+  \item Define the output of interest.
 
-			The user tells the simulator what the output of interest is, thereby constructing a set of human readable identifiers that specify output variables. \marginpar{I am not completely sure where in the logical architecture this action starts, in the past it started in the Genesis SLI, propagated through Neurospaces to the solvers.} The model container generates an identifier for each output variable.
-	\end{enumerate}
-		\item {\bf Initialize the simulation.} Here, a solver instance, a solver class, and a mapped solver (given a part of the model, what label identifies the solver instance) are distinguished.
-	\begin{enumerate}[noitemsep,nolistsep]		\item The model container determines the required accuracy.		\item The cell model is mapped to a set of (mapped) solvers		\item All outputs get mapped to solvers that are specifically meant for output.		\item The model container fixes the time step, according to the accuracy and the time constants in the model.
+    The user tells the simulator what the output of interest is,
+    thereby constructing a set of human readable identifiers that
+    specify output variables. \marginpar{I am not completely sure
+      where in the logical architecture this action starts, in the
+      past it started in the Genesis SLI, propagated through
+      Neurospaces to the solvers.} The model container generates an
+    identifier for each output variable.
+  \end{enumerate}
+\item {\bf Initialize the simulation.} Here, a solver instance, a
+  solver class, and a mapped solver (given a part of the model, what
+  label identifies the solver instance) are distinguished.
+  \begin{enumerate}[noitemsep,nolistsep]
+  \item The model container determines the required accuracy.
+  \item The cell model is mapped to a set of (mapped) solvers
+  \item All outputs get mapped to solvers that are specifically meant
+    for output.
+  \item The model container fixes the time step, according to the
+    accuracy and the time constants in the model.
 			
-			Note, this step can be different for different solvers. Also the time step computed by the model container, should be regarded as a 	hint, and is user configurable.		\item Each mapped solver gets a request to instantiate.
-			
-			Each mapped solver becomes associated with a (unique) solver instance The solver classes can be categorized into mathematical and output solvers. Each solver instance inspects the part of the model it has to simulate and sets up its own internal data structures		\item Each solver instance gets a request to determine its connectivity with other solver instances.
-							Each solver instance sets up its internal data structures for communication using the model container API to traverse the communication ports it is supposed to integrate (special support is given for this). For each incoming communication port attributes are stored in a solver specific way (e.g. in some cases it might be necessary to scale the synaptic weight with the time step). For each outgoing communication port, the list of connected incoming communication ports, including attributes of the connections, is requested. Each attribute is a tuple of the form (mapped solver, incoming port on the mapped solver). This list is then stored for use at runtime.
-	\end{enumerate}	\item {\bf Start simulation.}
-		The GUI requests a simulation to start at the address of the controller.
-	\begin{enumerate}[noitemsep,nolistsep]
-		\item The controller updates its own internal state (advance simulation time ao) \marginpar{What's this ao??}
-					The controller asks the model container for all mapped solvers. This gives the controller access to the solver instances.
-				\item The controller requests all solver instances to synchronize the clock.\marginpar{In a particular order ? The order can be important, I have a couple of emails regarding the order of scheduling, especially about the output solvers.}
-		
-			Each mathematical solver updates all variables and performs external calls for discrete event communication. Each output solver fetches the necessary data from the public fields of the mathematical solvers.
-	\end{enumerate}
-		\item {\bf Stop the simulation.}
-	\begin{enumerate}[noitemsep,nolistsep]		\item The user first instructs the system to serialize the current state. The solvers save all solved variables for use if the current simulation is to be resumed.  The model containers saves the structure and parameters of the model, but not the solved variables. The controller saves the current simulation time, and other important data.
-	\end{enumerate}
+    Note, this step can be different for different solvers. Also the
+    time step computed by the model container, should be regarded as a
+    hint, and is user configurable.
+  \item Each mapped solver gets a request to instantiate.
+			 
+    Each mapped solver becomes associated with a (unique) solver
+    instance The solver classes can be categorized into mathematical
+    and output solvers. Each solver instance inspects the part of the
+    model it has to simulate and sets up its own internal data
+    structures
+  \item Each solver instance gets a request to determine its
+    connectivity with other solver instances.  Each solver instance
+    sets up its internal data structures for communication using the
+    model container API to traverse the communication ports it is
+    supposed to integrate (special support is given for this).  For
+    each incoming communication port attributes are stored in a solver
+    specific way (e.g. in some cases it might be necessary to scale
+    the synaptic weight with the time step).  For each outgoing
+    communication port, the list of connected incoming communication
+    ports, including attributes of the connections, is requested. Each
+    attribute is a tuple of the form (mapped solver, incoming port on
+    the mapped solver). This list is then stored for use at runtime.
+  \end{enumerate}
+\item {\bf Start simulation.}  The GUI requests a simulation to start
+  at the address of the controller.
+  \begin{enumerate}[noitemsep,nolistsep]
+  \item The controller updates its own internal state (advance
+    simulation time ao) \marginpar{What's this ao??}  The controller
+    asks the model container for all mapped solvers.  This gives the
+    controller access to the solver instances.
+  \item The controller requests all solver instances to synchronize
+    the clock.  \marginpar{In a particular order ? The order can be
+      important, I have a couple of emails regarding the order of
+      scheduling, especially about the output solvers.}
+		 
+    Each mathematical solver updates all variables and performs
+    external calls for discrete event communication. Each output
+    solver fetches the necessary data from the public fields of the
+    mathematical solvers.
+  \end{enumerate}
+\item {\bf Stop the simulation.}
+  \begin{enumerate}[noitemsep,nolistsep]
+  \item The user first instructs the system to serialize the current
+    state. The solvers save all solved variables for use if the
+    current simulation is to be resumed.  The model containers saves
+    the structure and parameters of the model, but not the solved
+    variables. The controller saves the current simulation time, and
+    other important data.
+  \end{enumerate}
 \end{enumerate}
 
 \subsection*{The High Level User Interface Layer}
 
-Modules in the top level of the CBI architecture (Fig.\,\ref{fig:cbi-architecture-simple}A) provide user accessible interfaces to simulator functionality through a {\tt Graphical\,User\,Interface} (GUI). Model data are controlled by the {\tt Database\,Interfaces}, whereas,
+Modules in the top level of the CBI architecture
+(Fig.\,\ref{fig:cbi-architecture-simple}A) provide user accessible
+interfaces to simulator functionality through a {\tt
+  Graphical\,User\,Interface} (GUI). Model data are controlled by the
+{\tt Database\,Interfaces}, whereas,
 %modules Model\,Tools and the Biology and Experiment\,Model\,Container. Note that for convenience, reference to the Model\,Container are to the Experiment\,Model\,Container. 
 simulations are controlled by {\tt Scripting\,Libraries\,\&\,Applications}. The various modules and submodules located in this layer can be instantiated by a simulator on an as-needed basis. This layer supports the user interfaces for the first three steps in the ideal user workflow, including: (1) Construct Model, (2) Design Experiment, and (3) Run Simulation.  
 % include Implementation\,Libraries and the Scheduler.
