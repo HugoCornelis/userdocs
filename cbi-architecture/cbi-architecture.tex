@@ -602,15 +602,6 @@ architecture.\\
 % Figure 3
 \noindent{\bf Place Figure\,\ref{fig:cbi-architecture-simple} about here.}\\
 
-\subsection*{Behavioural View of the CBI Architecture}
-
-Steps 1-3 of the ideal user workflow fall within the scope of the
-CBI-architecture.
-%  Steps 4-5 are outside the CBI-architecture and
-%cannot induce diagonal connections between the modules inside the
-%CBI-architecture.
-
-
 Figure\,\ref{fig:cbi-architecture-expanded} provides an expanded view
 of Figure\,\ref{fig:cbi-architecture-simple} and illustrates in more
 detail the structural relationships between the different modules and
@@ -628,93 +619,63 @@ modules that support the CBI architecture.\\
 % Figure 4
 \noindent{\bf Place Figure\,\ref{fig:cbi-architecture-expanded} about here.}\\
 
-A functional architecture is an overview of a software system, layered
-according to low-level vs. high-level functions in the system. These
-functions are complemented by the data they operate on and are the
-result of using the software system. As a consequence, a feature of
-the CBI architecture is that rich data flows occur between software
-components, but not within them.  The actions a user takes are
-translated by the GUI into events in the software system. These events
-impact the state of software components, and direct components to pass
-data amongst themselves. Each software component is specialised for
-implementing one particular function and performs the defined
-operations on the data it is passed.
+\subsection*{Behavioural View of the CBI Architecture}
+
+Steps 1-3 of the ideal user workflow fall within the scope of the
+CBI architecture.
+%  Steps 4-5 are outside the CBI architecture and
+%cannot induce diagonal connections between the modules inside the
+%CBI architecture.
+
+
+A functional architecture is an overview of a software system that
+identifies the global functions of the system.  These functions define
+the scope for experts for improvement of the system as a whole.  The
+CBI architecture is structured according to low-level vs. high-level
+functions in the system complemented by the data and control
+functions.  As a consequence, a feature of the CBI architecture is
+that rich data flows occur between software components, but not within
+them.  The actions a user takes are translated into events in the
+software system.  These events impact the state of software
+components, and direct components to pass data between one another.
+Each software component is specialised in implementing one particular
+function and performs the defined operations on the data it is passed.
 
 \subsubsection*{Dataflows in the CBI Architecture}
 
-Models are stored in databases, and experimental data is stored in
-files or in databases. In the CBI architecture, the calculations
-performed during a simulation are done by the numerical solvers. So
-there is a natural data flow from databases and files, describing
-models, to the solvers. Results from a simulation must be analyzed.
-For this analysis, function libraries are needed, e.g. for signal
-analysis, binning of spikes, etc. These libraries are accessible to
-the CBI architecture from the function library software component. So,
-for results analysis, there is a natural data flow from the solvers to
-the function library.
+Models and experimental data is stored in files and databases. In the
+CBI architecture, the calculations performed during a simulation are
+done by the numerical solvers. So there is a natural data flow from
+databases and files, describing models, to the solvers.  Results from
+a simulation must be analyzed.  For this analysis, function libraries
+are needed, e.g. for signal analysis and binning of spikes. These
+libraries are accessible to the CBI architecture from the function
+library software component. So, for results analysis, there is a
+natural data flow from the solvers to the function library.
 
 \subsubsection*{Running a Single Cell Model from a Model Database}
 
-In this workflow, a user wants to learn more about an existing cell
-model. Specifically, the user wants to learn more about, amongst other
-things, the spatial and biophysical aspects of the neuron. The
-emphasis of this example is on the internal data streams in the CBI
-architecture when a user performs the basic tasks needed to explore an
-existing model.
-\begin{enumerate}[noitemsep,nolistsep]
-\item {\bf From the GUI, open the model library.}
-  \begin{enumerate}[noitemsep,nolistsep] \item Connect to the
-    database.
-  \item Fetch list of models.
-  \end{enumerate} \item {\bf Select the required cell model.}
-  \begin{enumerate}[noitemsep,nolistsep]
-  \item The model container is requested to load the model.
-  \item The model container loads the top level description file of
-    the model
-  \item The model container parses the file
-  \item The model container tracks dependencies, and loads secondary
-    description files
-  \item The model container activates the necessary algorithms, e.g.
-    to populate the model with active conductances and spines.
-  \item An active algorithm uses the model container API to
-    \begin{enumerate}[noitemsep,nolistsep]
-    \item Inspect the predefined model, a description is presented to
-      the algorithm.
-    \item Insert/modify elements into/from the pre-existing model
-    \item Extract relevant information from the model and store it in
-      aggregate form for later use or user inspection.
-    \end{enumerate}
-  \end{enumerate}
-\item {\bf Examine the cell model.} The GUI employs the model
-  container API to inspect the model and the information that was
-  aggregated by some of the algorithms. It supports different types of
-  views on this information.
-  \begin{enumerate}[noitemsep,nolistsep]
-  \item Visualize and examine the cell morphology (3D coordinates of
-    the morphology are streamed to a 3D vizualizer) and the
-    electrotonic length.
-  \item Examine and validate the conductances in the model, e.g.
-    populate and visualize Table\,1 of \cite{deschutter94:_purkin_i}.
-  \item Examine the location of synaptic channels.
-  \item Examine the average diameter of the cell.
-			
-    The GUI has access to the model container algorithm library. One
-    of the available algorithms is called ``average diameter
-    reporter''. It traverses a single cell model, weighting the
-    diameter with the length for each dendritic segment, and summing
-    up the results. After this algorithm is selected, it is activated
-    as outlined above, and computes a set of aggregated results, the
-    average diameter in this case.
-  \item Define the output of interest.
+In this workflow, a user wants to learn more about the
+electro-physiology of an existing cell model.
 
-    The user tells the simulator what the output of interest is,
-    thereby constructing a set of human readable identifiers that
-    specify output variables. \marginpar{I am not completely sure
-      where in the logical architecture this action starts, in the
-      past it started in the Genesis SLI, propagated through
-      Neurospaces to the solvers.} The model container generates an
-    identifier for each output variable.
-  \end{enumerate}
+In step 1 of the ideal user workflow, the user opens the GUI and
+selects a cell model from a list of available models in a database.
+Internally this selection is translated to an event that instructs the
+{\tt Biology\,Model\,Container} to load the model from the database
+and store it in internal memory using a datastructures for efficient
+storage and retrieval by other online software components.  For
+example, for large models the {\tt Biology\,Model\,Container} may not
+expand the model in memory, but save on memory cost by storing a
+compressed image of the full model.  A user will typically be
+interested in derived parameters such as the total neuron's surface
+area with and without spine correction.  A sophisticated GUI may
+present a table of the channels employed in the model with their
+conductance densities and reversal potentials.
+
+In step 2 of the ideal user workflow the user designs an experiment
+that applies a simple current clamp to the neuron's soma.
+
+\begin{enumerate}[noitemsep,nolistsep]
 \item {\bf Initialize the simulation.} Here, a solver instance, a
   solver class, and a mapped solver (given a part of the model, what
   label identifies the solver instance) are distinguished.
