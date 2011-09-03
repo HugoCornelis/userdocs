@@ -663,22 +663,24 @@ to the CBI architecture from the function library software component.
 
 \paragraph{Running a Single Cell Model from a Model Database}
 
-In this workflow, a user wants to learn more about the
-electro-physiology of an existing cell model.
+When a user wants to learn more about the electro-physiology of an
+existing cell model, he will need to instantiate the model, configure
+the stimulation and output protocol, then run the simulation and
+interprete the results.
 
-In step 1 of the ideal user workflow, the user opens the GUI and
+In step 1 of the ideal user workflow, this user opens the GUI and
 selects a cell model from a list of available models in a database.
 Internally this selection is translated to an event that instructs the
 {\tt Biology\,Model\,Container} to load the model from the database
-and store it in internal memory using a datastructures for efficient
-storage and retrieval by other online software components.  For
-example, for large models the {\tt Biology\,Model\,Container} may not
-expand the model in memory, but save on memory cost by storing a
-compressed image of the full model.  A user will typically be
-interested in derived parameters such as the total neuron's surface
-area with and without spine correction.  A sophisticated GUI may
-present a table of the channels employed in the model with their
-conductance densities and reversal potentials.
+and store it in internal memory using data structures for efficient
+storage and retrieval by the numerical {\tt Solver}.  For example, a
+large single neuron model may be stored as a compressed image of the
+full model.  During initial inquiry a typical user may be interested
+in derived parameters such as the total neuron's surface area with and
+without spine correction or a sophisticated GUI may present a table of
+the channels employed in the model with their conductance densities
+and reversal potentials.  All these queries operate on the model when
+it is stored by the {\tt Biology\,Model\,Container}.
 
 In step 2 of the ideal user workflow the user designs an experiment
 that applies a simple current clamp to the neuron's soma.  The output
@@ -686,6 +688,7 @@ of the simulation is defined as the somatic membrane potential and
 somatic transmembrane currents.
 
 Running the simulation in step 3 of the ideal user workflow starts
+with the initialization of the {\tt Solver} data structure in memory.
 
 \begin{enumerate}[noitemsep,nolistsep]
 \item {\bf Initialize the simulation.} Here, a solver instance, a
