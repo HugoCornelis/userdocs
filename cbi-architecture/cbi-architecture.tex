@@ -621,12 +621,19 @@ modules that support the CBI architecture.\\
 
 \subsection*{Behavioural View of the CBI Architecture}
 
-Steps 1-3 of the ideal user workflow fall within the scope of the
-CBI architecture.
+%Steps 1-3 of the ideal user workflow fall within the scope of the
+%CBI architecture.
 %  Steps 4-5 are outside the CBI architecture and
 %cannot induce diagonal connections between the modules inside the
 %CBI architecture.
 
+
+Actions a user takes are translated into events in a software system.
+These events then impact the state of the software components, and
+define the overall behaviour of the software architecture.  The events
+also direct the components to pass data between one another.  In this
+section we explain how user actions and data flows related to one
+another in the CBI architecture.
 
 A functional architecture is an overview of a software system that
 identifies the global functions of the system.  These functions define
@@ -634,10 +641,9 @@ the scope for experts for improvement of the system as a whole.  The
 CBI architecture is structured according to low-level vs. high-level
 functions in the system complemented by the data and control
 functions.  As a consequence, a feature of the CBI architecture is
-that rich data flows occur between software components, but not within
-them.  The actions a user takes are translated into events in the
-software system.  These events impact the state of software
-components, and direct components to pass data between one another.
+that rich data flows occur between software components, but not
+necessarily within them.
+
 Each software component is specialised in implementing one particular
 function and performs the defined operations on the data it is passed.
 
