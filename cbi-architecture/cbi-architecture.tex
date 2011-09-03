@@ -359,7 +359,9 @@ configuration\cite{cannon07:_inter}.
 
 \subsection*{The Ideal User Workflow for Simulations in Neurobiology}
 
-Many more possible data flows exist than there are present in reality. So each data flow must be considered in the context of a sequence of user actions, ie. a work flow. The first focus is on regular workflows using CBI simulator architecture applications, ie. where a user wants to model a biological system. The second set of workflows is on user extensions of the functionality of an implementation of the architecture.The flows are described in a technology and implementation neutral way. Examples are given for purpose of illustrating the meaning of the text, and not for illustrating the current (state of the existing) implementation, neither for illustrating a possible implementation in a specific technology.
+
+Many more possible data flows exist than there are present in reality. So each data flow must be considered in the context of a sequence of user actions, ie. a work flow. The first focus is on regular workflows using CBI simulator architecture applications, ie. where a user wants to model a biological system. The second set of workflows is on user extensions of the functionality of an implementation of the architecture.
+The flows are described in a technology and implementation neutral way. Examples are given for purpose of illustrating the meaning of the text, and not for illustrating the current (state of the existing) implementation, neither for illustrating a possible implementation in a specific technology.
 
 A five step outline of an {\it ideal user workflow}
 for the development, implementation, and simulation of a computational
@@ -628,11 +630,10 @@ modules that support the CBI architecture.\\
 %CBI architecture.
 
 
-User actions are translated into events in a software system.  These
-events then propagate to the components of the software system, impact
+A (G)UI translates user actions into a family of events that propagate to the components of a software architecture. They impact
 their internal state, and define the overall behaviour of the software
-architecture.  The events also direct the components to pass data
-between one another.  In this section we explain how user actions and
+system.  These events also direct the different components to pass data
+between themselves.  In this section we explain how user actions and
 data flows relate to one another in the CBI architecture.
 
 %In the CBI architecture each software component is specialised in
@@ -651,7 +652,7 @@ data flows relate to one another in the CBI architecture.
 
 \subsubsection*{Dataflows in the CBI Architecture}
 
-Models and experimental data is stored in files and databases. In the
+Models and experimental data are stored in files and databases. In the
 CBI architecture, numerical {\tt Solvers} perform the calculations of
 a simulation which then save the output back to files or databases.
 This implies a data flow from databases and files, describing models,
@@ -764,7 +765,7 @@ information than needed.
 Modules in the top level of the CBI architecture
 (Fig.\,\ref{fig:cbi-architecture-simple}A) provide user accessible
 interfaces to simulator functionality through a {\tt
-  Graphical\,User\,Interface} (GUI). Model data are controlled by the
+  Graphical\,User\,Interface}. Model data are controlled by the
 {\tt Database\,Interfaces}, whereas,
 %modules Model\,Tools and the Biology and Experiment\,Model\,Container. Note that for convenience, reference to the Model\,Container are to the Experiment\,Model\,Container. 
 simulations are controlled by {\tt Scripting\,Libraries\,\&\,Applications}. The various modules and submodules located in this layer can be instantiated by a simulator on an as-needed basis. This layer supports the user interfaces for the first three steps in the ideal user workflow, including: (1) Construct Model, (2) Design Experiment, and (3) Run Simulation.  
