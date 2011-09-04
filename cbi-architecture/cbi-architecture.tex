@@ -1057,12 +1057,16 @@ Internally, model selection is translated into an event that instructs
 the {\tt Biology\,Model\,Container} to load the selected model from a
 database and store it in memory using data structures for efficient
 storage and retrieval by the numerical {\tt Solver}.  During initial
-inquiry, a typical user may be interested in derived parameters such
+inquiry, a user may typically be interested in derived parameters such
 as the neuron's total surface area with and without spine correction
 or a sophisticated GUI may present a table of the channels employed in
 the model along with their conductance densities and reversal
-potentials.  A model can be queried in this way when it is stored by
-the {\tt Biology\,Model\,Container}.
+potentials.  {\tt Scripting\,Libraries\,\&\,Applications} can
+implement dedicated queries that are related to specific brain areas
+or neuron types.
+
+%A model can be queried in this way when it is stored by
+%the {\tt Biology\,Model\,Container}.
 
 In step 2 of the ideal user workflow the user designs, as a simple
 example, an experiment that applies current clamp to the neuron's
