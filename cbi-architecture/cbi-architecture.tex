@@ -360,15 +360,27 @@ configuration\cite{cannon07:_inter}.
 \subsection*{The Ideal User Workflow for Simulations in Neurobiology}
 
 
-Many more possible data flows exist than there are present in reality. So each data flow must be considered in the context of a sequence of user actions, ie. a work flow. The first focus is on regular workflows using CBI simulator architecture applications, ie. where a user wants to model a biological system. The second set of workflows is on user extensions of the functionality of an implementation of the architecture.
-The flows are described in a technology and implementation neutral way. Examples are given for purpose of illustrating the meaning of the text, and not for illustrating the current (state of the existing) implementation, neither for illustrating a possible implementation in a specific technology.
+Many more possible data flows exist than there are present in reality.
+So each data flow must be considered in the context of a sequence of
+user actions, ie. a work flow. The first focus is on regular workflows
+using CBI simulator architecture applications, ie. where a user wants
+to model a biological system. The second set of workflows is on user
+extensions of the functionality of an implementation of the
+architecture.
 
-A five step outline of an {\it ideal user workflow}
-for the development, implementation, and simulation of a computational
-model has been identified from the workflow of users of the GENESIS
-neural simulation platform \cite{cornelis02:_tutor}.  Importantly, the workflow explicitly
-distinguishes between the static structure of a model of the biology
-(Step 1) and the dynamic state of its simulation (Step 3).
+The work flows are described in a technology and implementation free
+way.  Examples are given for purpose of illustrating the meaning of
+the text, and neither for illustrating the current (state of the
+existing) implementation, nor for illustrating a possible
+implementation in a specific technology.
+
+A five step outline of an {\it ideal user workflow} for the
+development, implementation, and simulation of a computational model
+has been identified from the workflow of users of the GENESIS neural
+simulation platform \cite{cornelis02:_tutor}.  Importantly, the
+workflow explicitly distinguishes between the static structure of a
+model of the biology (Step 1) and the dynamic state of its simulation
+(Step 3).
 
 \subsubsection*{Step 1: Construct Model}
 
@@ -704,70 +716,23 @@ simulators, such as GENESIS 2, that do not make a distinction between
 internal data structures for model represenation and computation, and
 consequently often duplicate redundant data during simulations.
 
+In network simulations and additional step may be required that allows
+the {\tt Solvers} to initialize their simulation-time communication
+data structures and to connect to the {\tt
+  Communication\,Infrastructure}.
 
+The user instructs the simulator to start the simulation, for example
+by pushing a button in a GUI.  This action signals the {\tt
+  Controller} to generate a list of instantiated {\tt Solvers}.  It
+then advances the simulation clock and requests each {\tt Solver} to
+update its internal state.  {\tt Solvers} that were configured for
+output, save results to a file.
 
-\begin{enumerate}[noitemsep,nolistsep]
-\item {\bf Initialize the simulation.} Here, a solver instance, a
-  solver class, and a mapped solver (given a part of the model, what
-  label identifies the solver instance) are distinguished.
-  \begin{enumerate}[noitemsep,nolistsep]
-  \item The model container determines the required accuracy.
-  \item The cell model is mapped to a set of (mapped) solvers
-  \item All outputs get mapped to solvers that are specifically meant
-    for output.
-  \item The model container fixes the time step, according to the
-    accuracy and the time constants in the model.
-			
-    Note, this step can be different for different solvers. Also the
-    time step computed by the model container, should be regarded as a
-    hint, and is user configurable.
-  \item Each mapped solver gets a request to instantiate.
-			 
-    Each mapped solver becomes associated with a (unique) solver
-    instance The solver classes can be categorized into mathematical
-    and output solvers. Each solver instance inspects the part of the
-    model it has to simulate and sets up its own internal data
-    structures
-  \item Each solver instance gets a request to determine its
-    connectivity with other solver instances.  Each solver instance
-    sets up its internal data structures for communication using the
-    model container API to traverse the communication ports it is
-    supposed to integrate (special support is given for this).  For
-    each incoming communication port attributes are stored in a solver
-    specific way (e.g. in some cases it might be necessary to scale
-    the synaptic weight with the time step).  For each outgoing
-    communication port, the list of connected incoming communication
-    ports, including attributes of the connections, is requested. Each
-    attribute is a tuple of the form (mapped solver, incoming port on
-    the mapped solver). This list is then stored for use at runtime.
-  \end{enumerate}
-\item {\bf Start simulation.}  The GUI requests a simulation to start
-  at the address of the controller.
-  \begin{enumerate}[noitemsep,nolistsep]
-  \item The controller updates its own internal state (advance
-    simulation time ao) \marginpar{What's this ao??}  The controller
-    asks the model container for all mapped solvers.  This gives the
-    controller access to the solver instances.
-  \item The controller requests all solver instances to synchronize
-    the clock.  \marginpar{In a particular order ? The order can be
-      important, I have a couple of emails regarding the order of
-      scheduling, especially about the output solvers.}
-		 
-    Each mathematical solver updates all variables and performs
-    external calls for discrete event communication. Each output
-    solver fetches the necessary data from the public fields of the
-    mathematical solvers.
-  \end{enumerate}
-\item {\bf Stop the simulation.}
-  \begin{enumerate}[noitemsep,nolistsep]
-  \item The user first instructs the system to serialize the current
-    state. The solvers save all solved variables for use if the
-    current simulation is to be resumed.  The model containers saves
-    the structure and parameters of the model, but not the solved
-    variables. The controller saves the current simulation time, and
-    other important data.
-  \end{enumerate}
-\end{enumerate}
+When the simulation finishes, either by user action or by a preset
+simulation time that has been reached, output buffers are flushed to
+disk.  The separation of the {\tt Solvers} in their own module of the
+CBI architecture allow them to save their internal state to a file.
+
 
 \subsection*{The High Level User Interface Layer}
 
@@ -860,12 +825,14 @@ component). This requires translation of the user defined model to the necessary
 
 \paragraph{Connectivity Translation:}
 
-This provides translation of the
-connectivity between the components of a biological model into
-connectivity between the low-level back-ends (described below).  For example, in a
-biological representation of a network model there are hierarchical
-projections, each associated with its own sub-projections and connections.  
-However, during a simulation the different back-ends are only connected by a set of communication ports.
+This provides translation of the connectivity between the components
+of a biological model into connectivity between the low-level
+back-ends (described below).  For example, in a biological
+representation of a network model there are
+hierarchical\marginpar{Allan} projections, each associated with its
+own sub-projections and connections.  However, during a simulation the
+different back-ends are only connected by a set of communication
+ports.
 % Note that because a modeler connects biological components,
 %hierarchical translation is a substep of connectivity translation.
 
