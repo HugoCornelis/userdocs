@@ -1073,9 +1073,10 @@ of an experiment that applies current injection pulses to a neuron's
 soma and defines simulation output as the somatic membrane potential
 and transmembrane currents.  The {\tt Experiment\,Model\,Container}
 stores the definition of the current pulse amplitude and duration,
-which is translated by {\tt Function\,Bindings} to a sequence of
-simulation-time events before the stimulation starts, and executed by
-the {\tt Command\,Sequence\,Executor} during a simulation run.
+which is translated by the {\tt Function\,Bindings} to a sequence of
+simulation-time events before the stimulation starts.  These events
+are then executed by the {\tt Command\,Sequence\,Executor} during a
+simulation run.
 
 Running the simulation in step 3 of the ideal user workflow starts
 with the {\tt Biology\,Model\,Container} examining the stored model to
