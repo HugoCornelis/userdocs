@@ -1117,8 +1117,30 @@ functions such as serialization of model state to a file for later
 resumption of a simulation.
 
 
-Steps 4 and 5 are complementary to the first three steps of the ideal
-user workflow.
+
+Steps 4 and 5 are complementary to steps 1-3 of the ideal user
+workflow.
+
+The data cycle between databases and files, and the solvers in steps
+1-3 of the ideal user workflow results in all simulation state data
+being available through these databases and files.  They can then be
+combined with the model parameters and structure available in the {\tt
+  Biology\,Model\,Container} through {\tt
+  Scripting\,Libraries\,\&\,Applications} to implement step 4 and 5 of
+our ideal user workflow.
+
+
+As data flows in the CBI architecture the cycle between databases and
+files, and the solvers in steps 1-3 of the ideal user workflow all
+model data is available through the model container.
+
+fact that all model data is available through the model-container.
+For these reasons {\tt Scripting\,Libraries\,\&\,Applications} may
+readily be interfaced with the CBI architecture at step 4 and 5 while
+maintaining the integrity of the CBI architecture by the separation of
+concerns.
+
+
 
  are technically unrelated to a simulation run and may
 fall outside the scope of the CBI architecture.  On the other hand
@@ -1126,12 +1148,6 @@ fall outside the scope of the CBI architecture.  On the other hand
 tools such as Matlab to implement output analysis and include script
 generators for automation of batch simulations and platforms such as
 RTXI for a direct connection with experiments.
-
-Because the cycle between databases and files in steps 1-3 and the all
-model data is available through the model-container.  For these
-reasons {\tt Scripting\,Libraries\,\&\,Applications} may readily be
-interfaced with the CBI architecture at step 4 and 5 while maintaining
-the integrity of the CBI architecture by the separation of concerns.
 
 For convenience one could implement a short-cut diagonal into the CBI
 architecture for the implementation of steps 4 and 5 (and other
