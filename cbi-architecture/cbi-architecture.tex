@@ -1068,10 +1068,14 @@ or neuron types.
 %A model can be queried in this way when it is stored by
 %the {\tt Biology\,Model\,Container}.
 
-In step 2 of the ideal user workflow the user designs, as a simple
-example, an experiment that applies current clamp to the neuron's
-soma.  The outputs of the simulation are defined as the somatic
-membrane potential and somatic transmembrane currents.
+A typical example of step 2 of the ideal user workflow is the design
+of an experiment that applies current injection pulses to a neuron's
+soma and the definition of simulation output as the somatic membrane
+potential and somatic transmembrane currents.  The {\tt
+  Experiment\,Model\,Container} contains the definition of the current
+pulse amplitude and duration, which is translated by {\tt
+  Function\,Bindings} to a sequence of simulation-time events for the
+{\tt Command\,Sequence\,Executor}.
 
 Running the simulation in step 3 of the ideal user workflow starts
 with the {\tt Biology\,Model\,Container} examining the stored model to
