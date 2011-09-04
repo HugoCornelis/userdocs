@@ -383,7 +383,8 @@ has been identified from the workflow of users of the GENESIS neural
 simulation platform \cite{cornelis02:_tutor}.  Importantly, the
 workflow explicitly distinguishes between the static structure of a
 model of the biology (Step 1) and the dynamic state of its simulation
-(Step 3).
+(Step 3), and the analysis of the dynamic state of the model (Step
+4)\marginpar{new}.
 
 \subsubsection*{Step 1: Construct Model}
 
@@ -1118,13 +1119,22 @@ resumption of a simulation.
 
 
 
+During step 4 the dynamic state of the model is available from the
+files and databases for further analysis.
+
+Importantly as all the data of the dynamic state of the model is
+available through databases and files, there is no requirement to
+query the software components that deal with the numerical data.
+
 Steps 4 and 5 are complementary to steps 1-3 of the ideal user
 workflow.
 
 The data cycle between databases and files, and the solvers in steps
-1-3 of the ideal user workflow results in all simulation state data
-being available through these databases and files.  They can then be
-combined with the model parameters and structure available in the {\tt
+1-3 of the ideal user workflow results in all simulation result data
+being available through these databases and files.  Once these steps
+have been completed, the back-ends of the CBI architecture are not
+available anymore.  The simulation result data can then be combined
+with the model parameters and structure available in the {\tt
   Biology\,Model\,Container} through {\tt
   Scripting\,Libraries\,\&\,Applications} to implement step 4 and 5 of
 our ideal user workflow.
