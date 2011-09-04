@@ -1109,11 +1109,12 @@ The {\tt Communication\,Infrastructure} connects the {\tt Solvers} for
 efficient communication of the solved variables.  {\tt Solvers} that
 were configured for output, save results to a file.
 
-When the simulation finishes, either by user action or when a preset
-simulation period elapses, output buffers are flushed to disk.  The
-independence of the {\tt Solvers} in the CBI architecture allows a
-solver implementation to serialize its internal state to a file for
-later resumption of a simulation.
+When the simulation finishes, either by user action or following a
+preset simulation period, output buffers are flushed to disk.  The
+independence of the {\tt Solvers} in the CBI architecture not only
+allows for better optimized implementation, but also for additional
+functions such as serialization of model state to a file for later
+resumption of a simulation.
 
 
 \section*{Discussion}
