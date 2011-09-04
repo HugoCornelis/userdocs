@@ -1027,17 +1027,17 @@ states of these components, and direct the data flows between them.
 %functions.  As a consequence, a feature of the CBI architecture is
 %that rich data flows occur between software components, but not
 %necessarily within them.
-In step 1 and 2 of the ideal user workflow users combine models and
-experimental data that are stored in files and databases.  In the
-third step the back-ends, such as the numerical {\tt Solvers} and the
-{\tt Communication\,Infrastructure}, perform the calculations of a
+In step 1 (Construct\,Model) and 2 (Design\,Experiment) of the ideal
+user workflow, users combine models and experimental data that are
+stored in files and databases.  In the third step (Run\,Simulation)
+the back-ends, such as the numerical {\tt Solvers} and the {\tt
+  Communication\,Infrastructure}, perform the calculations of a
 simulation, then save the output back to files and databases.  When
-combined these steps of the ideal user workflow imply a data flow from
-files and databases to the back-ends and then back to files and
-databases.
-In this section we explain how user
-actions and data flows relate to one another in the CBI architecture
-and define the overall behaviour of an implemented software system.
+combined, these steps of the ideal user workflow imply a data flow
+from files and databases to the back-ends and then back to files and
+databases.  Here we explain how user actions and data flows relate to
+one another in the CBI architecture and define the overall behaviour
+of an implemented software system.
 
 %Intermediate results may be analyzed or aggregated by
 %analysis libraries, e.g. for signal analysis and binning of spikes.
@@ -1051,39 +1051,39 @@ and define the overall behaviour of an implemented software system.
 %output protocols configured, the simulation run, and the results
 %interpreted.
 
-In step 1 of the ideal user workflow (Construct\,Model), the GUI is
-opened and a cell model is selected from a database listing of
-available models.  Internally, model selection is translated into an
-event that instructs the {\tt Biology\,Model\,Container} to load the
-selected model from a database and store it in memory using data
-structures for efficient storage and retrieval by the numerical {\tt
-  Solver}.  During initial inquiry, a typical user may be interested
-in derived parameters such as the neuron's total surface area with and
-without spine correction or a sophisticated GUI may present a table of
-the channels employed in the model along with their conductance
-densities and reversal potentials.  A model can be queried in this way
-when it is stored by the {\tt Biology\,Model\,Container}.
+In step 1 of the ideal user workflow, the GUI is opened and a cell
+model is selected from a database listing of available models.
+Internally, model selection is translated into an event that instructs
+the {\tt Biology\,Model\,Container} to load the selected model from a
+database and store it in memory using data structures for efficient
+storage and retrieval by the numerical {\tt Solver}.  During initial
+inquiry, a typical user may be interested in derived parameters such
+as the neuron's total surface area with and without spine correction
+or a sophisticated GUI may present a table of the channels employed in
+the model along with their conductance densities and reversal
+potentials.  A model can be queried in this way when it is stored by
+the {\tt Biology\,Model\,Container}.
 
-In step 2 of the ideal user workflow (Design\,Experiment) the user
-designs, as a simple example, an experiment that applies current clamp
-to the neuron's soma.  The outputs of the simulation are defined as
-the somatic membrane potential and somatic transmembrane currents.
+In step 2 of the ideal user workflow the user designs, as a simple
+example, an experiment that applies current clamp to the neuron's
+soma.  The outputs of the simulation are defined as the somatic
+membrane potential and somatic transmembrane currents.
 
-Running the simulation in step 3 of the ideal user workflow
-(Run\,Simulation) starts with the {\tt Biology\,Model\,Container}
-examining the stored model to determine model time constants or other
-parameter that are relevant for the accuracy of a numerical
-simulation.  The {\tt Solvers} then fill their data structures with
-parameter values optimized for simulation, for instance a capacitance
-can be multiplied with the time step during this initialization
-instead of every for every simulation step.  For this, the memory
-image of the model must be expanded in a representation with the
-mathematical equations and parameters relevant to the simulation.  In
-our example, the spatial layout of segments is not required and is
-invisible to the {\tt Solver}.  This is different in existing
-simulators, such as GENESIS 2, that do not make a distinction between
-internal data structures for model represenation and computation, and
-consequently often duplicate redundant data during simulations.
+Running the simulation in step 3 of the ideal user workflow starts
+with the {\tt Biology\,Model\,Container} examining the stored model to
+determine model time constants or other parameter that are relevant
+for the accuracy of a numerical simulation.  The {\tt Solvers} then
+fill their data structures with parameter values optimized for
+simulation, for instance a capacitance can be multiplied with the time
+step during this initialization instead of every for every simulation
+step.  For this, the memory image of the model must be expanded in a
+representation with the mathematical equations and parameters relevant
+to the simulation.  In our example, the spatial layout of segments is
+not required and is invisible to the {\tt Solver}.  This is different
+in existing simulators, such as GENESIS 2, that do not make a
+distinction between internal data structures for model represenation
+and computation, and consequently often duplicate redundant data
+during simulations.
 
 In network simulations an additional step may be required that allows
 the {\tt Solvers} to initialize their simulation-time communication
