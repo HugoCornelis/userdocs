@@ -1116,13 +1116,34 @@ allows for better optimized implementation, but also for additional
 functions such as serialization of model state to a file for later
 resumption of a simulation.
 
-Steps 4 and 5 of the ideal user workflow are technically unrelated to
-a simulation run and may fall outside the scope of the CBI
-architecture.  On the other hand {\tt
-  Scripting\,Libraries\,\&\,Applications} may connect to external
+
+Steps 4 and 5 are complementary to the first three steps of the ideal
+user workflow.
+
+ are technically unrelated to a simulation run and may
+fall outside the scope of the CBI architecture.  On the other hand
+{\tt Scripting\,Libraries\,\&\,Applications} may connect to external
 tools such as Matlab to implement output analysis and include script
 generators for automation of batch simulations and platforms such as
 RTXI for a direct connection with experiments.
+
+Because the cycle between databases and files in steps 1-3 and the all
+model data is available through the model-container.  For these
+reasons {\tt Scripting\,Libraries\,\&\,Applications} may readily be
+interfaced with the CBI architecture at step 4 and 5 while maintaining
+the integrity of the CBI architecture by the separation of concerns.
+
+For convenience one could implement a short-cut diagonal into the CBI
+architecture for the implementation of steps 4 and 5 (and other
+steps?), but this would limit the functional scope of the end
+simulator.
+
+All model data is available through the model container and the output
+(files or databases).  The laterality of the connectivity that are
+activated during step 4 is not an issue.
+
+Modules plugged in during step 4 have access to all data via the model
+container.
 
 
 \section*{Discussion}
