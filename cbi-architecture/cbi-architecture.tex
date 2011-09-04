@@ -653,43 +653,58 @@ the overall behaviour of an implemented software system.
 
 Models and experimental data are stored in files and databases. In the
 CBI architecture, numerical {\tt Solvers} perform the calculations of
-a simulation then save output to files or databases.
-This implies a data flow from databases and files, that describe a model,
-to the {\tt Solvers} and back to files and databases.  Intermediate
-results may be analyzed or aggregated by analysis libraries, e.g. for
-signal analysis and binning of spikes.  These libraries are accessible
-to the CBI architecture from the {\tt Scripting\,Libraries\,\&\,Applications} software component.
+a simulation then save output to files or databases.  This implies a
+data flow from databases and files, that describe a model, to the {\tt
+  Solvers} and back to files and databases.  Intermediate results may
+be analyzed or aggregated by analysis libraries, e.g. for signal
+analysis and binning of spikes.  These libraries are accessible to the
+CBI architecture from the {\tt Scripting\,Libraries\,\&\,Applications}
+software component.
 
 \paragraph{Running a Single Cell Model}
 
 When a user wants to learn more about the electrophysiology of an
-existing cell model, it must be instantiated, 
-the stimulation and output protocols configured, the simulation run, and the results interpreted.
+existing cell model, it must be instantiated, the stimulation and
+output protocols configured, the simulation run, and the results
+interpreted.
 
-In step 1 of the ideal user workflow (Construct\,Model), the GUI is opened and a cell model is selected from a database listing of available models.
-Internally, model selection is translated into an event that instructs the
-{\tt Biology\,Model\,Container} to load the selected model from a database
-and store it in memory using data structures for efficient
-storage and retrieval by the numerical {\tt Solver}.  During initial inquiry, a typical user may be interested
-in derived parameters such as the neuron's total surface area with and
-without spine correction or a sophisticated GUI may present a table of
-the channels employed in the model along with their conductance densities
-and reversal potentials.  A model can be queried in this way when
-it is stored by the {\tt Biology\,Model\,Container}.
+In step 1 of the ideal user workflow (Construct\,Model), the GUI is
+opened and a cell model is selected from a database listing of
+available models.  Internally, model selection is translated into an
+event that instructs the {\tt Biology\,Model\,Container} to load
+the\marginpar{not defined yet, maybe move figure 4 to just before
+  'implementation guide''} selected model from a database and store it
+in memory using data structures for efficient storage and retrieval by
+the numerical {\tt Solver}.  During initial inquiry, a typical user
+may be interested in derived parameters such as the neuron's total
+surface area with and without spine correction or a sophisticated GUI
+may present a table of the channels employed in the model along with
+their conductance densities and reversal potentials.  A model can be
+queried in this way when it is stored by the {\tt
+  Biology\,Model\,Container}.
 
-In step 2 of the ideal user workflow (Design\,Experiment) the user designs, as a simple example, an experiment
-that applies current clamp to the neuron's soma.  The outputs
-of the simulation are defined as the somatic membrane potential and
-somatic transmembrane currents.
+In step 2 of the ideal user workflow (Design\,Experiment) the user
+designs, as a simple example, an experiment that applies current clamp
+to the neuron's soma.  The outputs of the simulation are defined as
+the somatic membrane potential and somatic transmembrane currents.
 
-Running the simulation in step 3 of the ideal user workflow (Run\,Simulation) starts
-with the initialization of the {\tt Solver} data structure in memory.
-For this, the stored image of the model must be expanded in a
-detailed representation of only the equations and parameters relevant
-to the simulation.  The spatial layout of segments is not
-required and is invisible to the {\tt Solver}.  Existing simulators,
-such as GENESIS 2, do not make this distinction and duplicate more
-information than is needed.
+Running the simulation in step 3 of the ideal user workflow
+(Run\,Simulation) starts with the {\tt Biology\,Model\,Container}
+examining the stored model to determine model time constants or other
+parameter that are relevant for the accuracy of a numerical
+simulation.  The {\tt Solvers} then fill their data structures with
+parameter values optimized for simulation, for instance a capacitance
+can be multiplied with the time step during this initialization
+instead of every for every simulation step.  For this, the memory
+image of the model must be expanded in a representation with the
+mathematical equations and parameters relevant to the simulation.  In
+our example, the spatial layout of segments is not required and is
+invisible to the {\tt Solver}.  This is different in existing
+simulators, such as GENESIS 2, that do not make a distinction between
+internal data structures for model represenation and computation, and
+consequently often duplicate redundant data during simulations.
+
+
 
 \begin{enumerate}[noitemsep,nolistsep]
 \item {\bf Initialize the simulation.} Here, a solver instance, a
