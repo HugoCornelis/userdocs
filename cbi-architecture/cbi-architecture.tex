@@ -1083,15 +1083,18 @@ with the {\tt Biology\,Model\,Container} examining the stored model to
 determine model time constants or other parameters that are relevant
 for the accuracy of a numerical simulation.  The {\tt Solvers} then
 fill their data structures with parameter values optimized for
-simulation, for instance a capacitance can be multiplied with the time
-step during this initialization instead of every simulation step.  For
-this, the memory image of the model must be expanded in a
+simulation, for instance a Cranc-Nicolson solver can multiply the
+membrane capacitance with the time step during this initialization
+phase instead of at every simulation
+step\cite{borg-graham00:_addit_effic_comput_branc_nerve_equat}.  For
+this, the memory image of the model must first be expanded in a
 representation with the mathematical equations and parameters relevant
 to the simulation.  For instance, the spatial layout of segments is
 not required by the {\tt Solver}.  This is different in existing
-simulators, such as GENESIS 2, that do not make a distinction between
-internal data structures for model represenation and computation, and
-consequently often duplicate redundant data during simulations.
+simulators, such as GENESIS 2, that do not make a explicit distinction
+between internal data structures for model represenation and
+computation, and consequently often generate redundant data during the
+initialization of a simulation.
 
 In network simulations the {\tt Solvers} may employ the {\tt
   Connectivity\,Translator} to initialize their simulation-time
