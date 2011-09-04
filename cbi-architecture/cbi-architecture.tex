@@ -1033,15 +1033,18 @@ and define the overall behaviour of an implemented software system.
 %that rich data flows occur between software components, but not
 %necessarily within them.
 
-Models and experimental data are stored in files and databases. In the
-CBI architecture, numerical {\tt Solvers} perform the calculations of
-a simulation then save output to files or databases.  This implies a
-data flow from databases and files, that describe a model, to the {\tt
-  Solvers} and back to files and databases.  Intermediate results may
-be analyzed or aggregated by analysis libraries, e.g. for signal
-analysis and binning of spikes.  These libraries are accessible to the
-CBI architecture from the {\tt Scripting\,Libraries\,\&\,Applications}
-software component.
+In step 1 and 2 of the ideal user workflow users combine models and
+experimental data that are stored in files and databases.  In the
+third step numerical {\tt Solvers} perform the calculations of a
+simulation, then save the output back to files and databases.  When
+combined these steps of the ideal user workflow imply a data flow from
+files and databases to the {\tt Solvers} and back to files and
+databases.
+
+%Intermediate results may be analyzed or aggregated by
+%analysis libraries, e.g. for signal analysis and binning of spikes.
+%These libraries are accessible to the CBI architecture from the {\tt
+%  Scripting\,Libraries\,\&\,Applications} software component.
 
 %\paragraph{Running a Single Cell Model:}
 
