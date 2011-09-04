@@ -1105,7 +1105,9 @@ When the user instructs the simulator to start a simulation, for
 instance by pushing a button in a GUI, the {\tt Controller} generates
 a list of instantiated {\tt Solvers}.  It then advances the simulation
 clock and requests each {\tt Solver} to update its internal state.
-{\tt Solvers} that were configured for output, save results to a file.
+The {\tt Communication\,Infrastructure} connects the {\tt Solvers} for
+efficient communication of the solved variables.  {\tt Solvers} that
+were configured for output, save results to a file.
 
 When the simulation finishes, either by user action or when a preset
 simulation period elapses, output buffers are flushed to disk.  The
