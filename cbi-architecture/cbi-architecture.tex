@@ -1071,31 +1071,29 @@ membrane potential and somatic transmembrane currents.
 
 Running the simulation in step 3 of the ideal user workflow starts
 with the {\tt Biology\,Model\,Container} examining the stored model to
-determine model time constants or other parameter that are relevant
+determine model time constants or other parameters that are relevant
 for the accuracy of a numerical simulation.  The {\tt Solvers} then
 fill their data structures with parameter values optimized for
 simulation, for instance a capacitance can be multiplied with the time
-step during this initialization instead of every for every simulation
-step.  For this, the memory image of the model must be expanded in a
+step during this initialization instead of every simulation step.  For
+this, the memory image of the model must be expanded in a
 representation with the mathematical equations and parameters relevant
-to the simulation.  In our example, the spatial layout of segments is
-not required and is invisible to the {\tt Solver}.  This is different
-in existing simulators, such as GENESIS 2, that do not make a
-distinction between internal data structures for model represenation
-and computation, and consequently often duplicate redundant data
-during simulations.
+to the simulation.  For instance, the spatial layout of segments is
+not required by the {\tt Solver}.  This is different in existing
+simulators, such as GENESIS 2, that do not make a distinction between
+internal data structures for model represenation and computation, and
+consequently often duplicate redundant data during simulations.
 
-In network simulations an additional step may be required that allows
-the {\tt Solvers} to initialize their simulation-time communication
-data structures and to connect to the {\tt
+In network simulations the {\tt Solvers} may employ the {\tt
+  Connectivity\,Translator} to initialize their simulation-time
+communication data structures and to connect to the {\tt
   Communication\,Infrastructure}.
 
-The user instructs the simulator to start the simulation, for example
-by pushing a button in a GUI.  This action signals the {\tt
-  Controller} to generate a list of instantiated {\tt Solvers}.  It
-then advances the simulation clock and requests each {\tt Solver} to
-update its internal state.  {\tt Solvers} that were configured for
-output, save results to a file.
+When the user instructs the simulator to start the simulation, for
+instance by pushing a button in a GUI, the {\tt Controller} generates
+a list of instantiated {\tt Solvers}.  It then advances the simulation
+clock and requests each {\tt Solver} to update its internal state.
+{\tt Solvers} that were configured for output, save results to a file.
 
 When the simulation finishes, either by user action or by a preset
 simulation time that has been reached, output buffers are flushed to
