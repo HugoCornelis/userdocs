@@ -1101,16 +1101,17 @@ In network simulations the {\tt Solvers} may employ the {\tt
 communication data structures and to connect to the {\tt
   Communication\,Infrastructure}.
 
-When the user instructs the simulator to start the simulation, for
+When the user instructs the simulator to start a simulation, for
 instance by pushing a button in a GUI, the {\tt Controller} generates
 a list of instantiated {\tt Solvers}.  It then advances the simulation
 clock and requests each {\tt Solver} to update its internal state.
 {\tt Solvers} that were configured for output, save results to a file.
 
-When the simulation finishes, either by user action or by a preset
-simulation time that has been reached, output buffers are flushed to
-disk.  The separation of the {\tt Solvers} in their own module of the
-CBI architecture allow them to save their internal state to a file.
+When the simulation finishes, either by user action or when a preset
+simulation period elapses, output buffers are flushed to disk.  The
+independence of the {\tt Solvers} in the CBI architecture allows
+solver implementations to serialize their internal state to a file for
+resuming the simulation at a later date.
 
 
 \section*{Discussion}
