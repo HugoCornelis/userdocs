@@ -1116,11 +1116,13 @@ allows for better optimized implementation, but also for additional
 functions such as serialization of model state to a file for later
 resumption of a simulation.
 
-The other steps of the ideal user workflow fall outside the scope of
-the CBI architecture.  Output analysis is typically done with a tool
-such as Matlab.  The last step of the ideal user workflow (Iterate)
-closes the loop between the output of results and a new phase of model
-construction.
+Steps 4 and 5 of the ideal user workflow are technically unrelated to
+a simulation run and may fall outside the scope of the CBI
+architecture.  On the other hand {\tt
+  Scripting\,Libraries\,\&\,Applications} may connect to external
+tools such as Matlab to implement output analysis and include script
+generators for automation of batch simulations and platforms such as
+RTXI for a direct connection with experiments.
 
 
 \section*{Discussion}
