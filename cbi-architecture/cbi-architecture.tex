@@ -376,7 +376,7 @@ functionality of an implementation of the CBI architecture. Both sets of workflo
 %illustrating the current (state of the existing) implementation, nor
 %for a possible implementation in a specific technology.
 
-A five Step outline of an {\it ideal user workflow} for the
+A five step outline of an {\it ideal user workflow} for the
 development, implementation, and simulation of a computational model
 has been identified from the workflow of users of the GENESIS neural
 simulation platform \cite{cornelis02:_tutor}.  Importantly, the
@@ -494,7 +494,7 @@ Our analysis generated the primary functions of the CBI architecture illustrated
 
 Many more possible data flows exist than there are present in reality. So each data flow must be considered in the context of a sequence of user actions, i. e. a workflow. The first focus is on regular workflows using CBI simulator architecture applications, i. e. where a user wants to model a biological system. Other workflows support user extensions of the functionality of an implementation of the architecture.
 
-The first Step in our ideal user workflow involves creating or
+The first step in our ideal user workflow involves creating or
 importing a model. It maps directly to high-level biological
 representations via a simulator shell or GUI.
 %Similarly the second
@@ -512,7 +512,7 @@ module or the importation of model descriptions via the
 Fig.~\ref{fig:cbi-architecture-simple}).
 % File formats currently recognized include SWC, the GENESIS P format, the declarative NDF file format, and once finalized, the NeuroML model specification format.
 
-Step two of the ideal user workflow typically requires biological
+Step 2 of the ideal user workflow typically requires biological
 expertise to design an experiment.  This includes the definition of
 constants such as the command voltage of a voltage clamp protocol,
 delays and duration of a current injection protocol and model and
@@ -525,7 +525,7 @@ simulation inputs and outputs.
 
 \subsubsection*{Numerics and Scheduling}
 
-Step three of the ideal user workflow deals with the checking,
+Step 3 of the ideal user workflow deals with the checking,
 resetting and running of a simulation.  This is accomplished via the
 {\tt Function\,Bindings} module of the CBI architecture (see
 Fig.~\ref{fig:cbi-architecture-simple}).
@@ -537,7 +537,7 @@ Fig.~\ref{fig:cbi-architecture-simple}).
 
 At a technical level the simulation involves scheduling mathematical
 operations on and communication of the numerical representations of a
-biological model.  This Step is indicated by the horizontal arrow
+biological model.  This step is indicated by the horizontal arrow
 between {\tt Scheduling} and {\tt Numerics} in Figure~\ref{fig:data-control} and
 is encompassed by the {\tt Controllers\,\&\,Communication} and {\tt Solvers}
 modules illustrated in Figure~\ref{fig:cbi-architecture-simple}.
@@ -628,7 +628,7 @@ interfaces to simulator functionality through a {\tt
   Graphical\,User\,Interface}. Model data are controlled by the
 {\tt Database\,Interfaces}, whereas,
 %modules Model\,Tools and the Biology and Experiment\,Model\,Container. Note that for convenience, reference to the Model\,Container are to the Experiment\,Model\,Container. 
-simulations are controlled by {\tt Scripting\,Libraries\,\&\,Applications}. The various modules and submodules located in this layer can be instantiated by a simulator on an as-needed basis. This layer supports the user interfaces for the first three Steps in the ideal user workflow, including: (1) Construct Model, (2) Design Experiment, and (3) Run Simulation.  
+simulations are controlled by {\tt Scripting\,Libraries\,\&\,Applications}. The various modules and submodules located in this layer can be instantiated by a simulator on an as-needed basis. This layer supports the user interfaces for the first three steps in the ideal user workflow, including: (1) Construct Model, (2) Design Experiment, and (3) Run Simulation.  
 % include Implementation\,Libraries and the Scheduler.
 
 \subsubsection*{The Graphical User Interface}
@@ -1033,7 +1033,7 @@ stored in files and databases.  In Step 3 (Run\,Simulation)
 the back-ends, such as the numerical {\tt Solvers} and the {\tt
   Communication\,Infrastructure}, perform the calculations of a
 simulation, then save the output back to files and databases.  When
-combined, these Steps of the ideal user workflow imply a cyclic data flow
+combined, these steps of the ideal user workflow imply a cyclic data flow
 from files and databases to the back-ends and then back.  Here we explain how user actions and data flows relate to
 one another in the CBI architecture and define the overall behaviour
 of an implemented software system.
@@ -1070,7 +1070,7 @@ areas or neuron types are supported by {\tt
 A typical example of Step 2 of the ideal user workflow is the design
 of an experiment that applies current injection pulses to a neuron's
 soma and defines simulation output as the somatic membrane potential
-and transmembrane currents.  The {\tt Experiment\,Model\,Container}
+and its transmembrane currents.  The {\tt Experiment\,Model\,Container}
 stores the definition of the current pulse amplitude and duration,
 which is translated by {\tt Function\,Bindings} to a sequence of
 simulation-time events prior to the start of a stimulation.  These events
@@ -1112,60 +1112,44 @@ When the simulation finishes, either by user action or following a
 preset simulation period, output buffers are flushed to disk.  The
 independence of the {\tt Solvers} in the CBI architecture not only
 allows for better optimized implementations, but also enables additional simulator
-functionality such as serialization of the model state and simulator output for storage in a file. This allows a simulation to be resumed at a later time.
+functionality such as serialization of the model state and simulator output for storage to file. This allows a simulation to be resumed at a later time.
 
-During Step 4 the dynamic state of the model is available from the
-files and databases for further analysis.
+%During Step 4 the dynamic state of the model is available from the files and databases for further analysis.
 
-Importantly as all the data of the dynamic state of the model is
-available through databases and files, there is no requirement to
+% Steps 4 and 5 are complementary to Steps 1-3 of the ideal user workflow.
+
+%The data cycle between databases and files, and the solvers in Steps
+%1-3 of the ideal user workflow results in all simulation simulation output
+%is available through these databases and files.  Once these steps
+%have been completed, the back-ends of the CBI architecture are not
+%available anymore.  The simulation result data can then be combined
+%with the model parameters and structure available in the {\tt
+%  Biology\,Model\,Container} through {\tt
+%  Scripting\,Libraries\,\&\,Applications} to implement Step 4 and 5 of
+%our ideal user workflow.
+
+In Steps 1-3 of the ideal user workflow, data flows both through and between software components that conform to a CBI architecture. Data cycles between databases and files, and back-end {\tt Solver}s.  When combined with availability of any model data from the {\tt Model\,Container}, while maintaining the integrity of the separation of concerns, it is evident that {\tt Scripting\,Libraries\,\&\,Applications} may readily be interfaced with the CBI architecture at Steps 4 and 5 of the ideal user workflow. 
+%The laterality of the software component connectivity activated during Step 4 is not an issue.
+
+One reason for this simplification is that the back-ends of the CBI architecture (ie. all components below the dotted horizontal line in Figures ??, ??, ??) are unavailable once Step 3 is completed. {\tt Scripting\,Libraries\,\&\,Applications} connect to external tools such as Matlab to implement output analysis. Automated script generators are employed to generate batch simulations and integration with software platforms such as RTXI make direct interaction with experiment possible.
+
+Simulation output data can be combined with the model parameters and structure available in the {\tt Biology\,Model\,Container} through {\tt Scripting\,Libraries\,\&\,Applications} to implement Step 4 and 5 of our ideal user workflow. Importantly, at this stage of the workflow, as all the data of the dynamic state of the model is available through databases and files, there is no requirement to
 query the software components that deal with the numerical data.
 
-Steps 4 and 5 are complementary to Steps 1-3 of the ideal user
-workflow.
-
-The data cycle between databases and files, and the solvers in Steps
-1-3 of the ideal user workflow results in all simulation result data
-being available through these databases and files.  Once these Steps
-have been completed, the back-ends of the CBI architecture are not
-available anymore.  The simulation result data can then be combined
-with the model parameters and structure available in the {\tt
-  Biology\,Model\,Container} through {\tt
-  Scripting\,Libraries\,\&\,Applications} to implement Step 4 and 5 of
-our ideal user workflow.
-
-
-As data flows in the CBI architecture the cycle between databases and
-files, and the solvers in Steps 1-3 of the ideal user workflow all
-model data is available through the model container.
-
-fact that all model data is available through the model-container.
-For these reasons {\tt Scripting\,Libraries\,\&\,Applications} may
-readily be interfaced with the CBI architecture at Steps 4 and 5 while
-maintaining the integrity of the CBI architecture by the separation of
-concerns.
-
-
-
- are technically unrelated to a simulation run and may
-fall outside the scope of the CBI architecture.  On the other hand
-{\tt Scripting\,Libraries\,\&\,Applications} may connect to external
-tools such as Matlab to implement output analysis and include script
-generators for automation of batch simulations and platforms such as
-RTXI for a direct connection with experiments.
+% are technically unrelated to a simulation run and may
+%fall outside the scope of the CBI architecture.  On the other hand
+%{\tt Scripting\,Libraries\,\&\,Applications} may connect to external
+%tools such as Matlab to implement output analysis and include script
+%generators for automation of batch simulations and platforms such as
+%RTXI for a direct connection with experiments.
 
 For convenience one could implement a short-cut diagonal into the CBI
-architecture for the implementation of Steps 4 and 5 (and other
-Steps?), but this would limit the functional scope of the end
-simulator.
+architecture for implementation of aspects of Steps 4 and 5, and for that matter other Steps, but this ultimately would limit the functional scope of the resulting simulator.
 
-All model data is available through the model container and the output
-(files or databases).  The laterality of the connectivity that are
-activated during Step 4 is not an issue.
+%All model data is available through the model container and the output (files or databases).  
 
-Modules plugged in during Step 4 have access to all data via the model
+%Modules plugged in during Step 4 have access to all data via the model
 container.
-
 
 \section*{Discussion}
 
@@ -1453,16 +1437,16 @@ It is within the context of the CBI architecture, that the support of both Type\
 
 \subsection*{The Ideal User Workflow Revisited}
 
-The Steps of the ideal user workflow can be categorized as
+The steps of the ideal user workflow can be categorized as
 user-workflow oriented and data-oriented.  We briefly showed above the
 relationships between the ideal user workflow and the CBI software
 architecture from this viewpoint.
 
-The Steps for model construction and experiment design naturally
+The steps for model construction and experiment design naturally
 correspond to the configuration definitions of the {\tt
   Biology\,Model\,Container} and the {\tt
   Experiment\,Model\,Container}, respectively.  The integration of
-these two Steps, provides a single simulation that can be run by the
+these two steps, provides a single simulation that can be run by the
 mathematical {\tt Solvers}, the {\tt Communication} framework, and the
 {\tt Scheduler}.  Each of these components needs appropriate
 peripheral configuration.  The methods used to analyze the results are
@@ -1471,7 +1455,7 @@ the component {\tt Scripting\,Libraries\,\&\,Applications}.  When
 combined, these configuration definitions determine one run of a
 simulation.
 
-The separation of the Steps for biological model construction and
+The separation of the steps for biological model construction and
 experiment design allows the modeler to build separate libraries of
 biological models and experimental protocols.  In principle this
 allows any model to be combined with any appropriate experimental
@@ -1487,10 +1471,10 @@ designed for the given model.
 The automation of this process would be useful to identify
 the strengths, weaknesses, or deficits of a specific model.
 
-Finally the {\tt Iterate} Step defines the differences in
+Finally the {\tt Iterate} step defines the differences in
 configuration between the simulations belonging to the same simulation
 project, research project, educational tutorial or scientific
-publication.  It is with this Step that the ideal user workflow is
+publication.  It is with this step that the ideal user workflow is
 integrated with the scientific workflow.
  
 \subsection*{Structuring Scientific Communication}
@@ -1830,7 +1814,7 @@ As
 %\marginpar{this order seems best: (1) software architecture, (2) API
 %  and ABI, (3) scripting languages?  Implementation technology should
 %  come after the workflow philosophy.}
-the last Step of our workflow philosophy, a {\it software
+the last step of our workflow philosophy, a {\it software
   architecture} defines a framework that logically organizes a
 collection of modules where each module implements one or more
 concerns, but no concern is identified with more than one module. When
@@ -1843,7 +1827,7 @@ scripting languages, the components form an application.
 
 \paragraph{\bf User Workflow:}
 
-We use the term {\it user workflow} to describe the sequence of necessary Steps typically employed by a person in developing a computational model and employing simulation to generate data for subsequent analysis. In this sense it is a depiction of a sequence of operations, declared as the work of a person or a group of persons \cite{Belhajjame:2001fv}.
+We use the term {\it user workflow} to describe the sequence of necessary steps typically employed by a person in developing a computational model and employing simulation to generate data for subsequent analysis. In this sense it is a depiction of a sequence of operations, declared as the work of a person or a group of persons \cite{Belhajjame:2001fv}.
 
 A comprehensive user workflow can be employed to guide the separation of the different aspects of a model by organizing user actions 
 into different categories during model development.
@@ -1855,7 +1839,7 @@ investigation, the tools used to perform the investigation, and the
 operations performed during the investigation. It also 
 distinguishes between the results obtained from a single
 investigation and the method used to define multiple investigations in
-a series. The user workflow identifies five Steps in
+a series. The user workflow identifies five steps in
 total (explained in more detail in Results).
 
 \paragraph{\bf Ideal User Workflow:}
@@ -1867,7 +1851,7 @@ of a user workflow specific for neural simulators.
 
 \paragraph{\bf Iterator:}
 
-The act of repeating a process, here typically a workflow, to reach a desired goal, target or result is referred to as iteration. The results of one iteration become the starting point for the next. We employ the term {\it iterator} to identify the Step in a workflow that converts it from a linear to a cyclic process, such that one or more people or systems can together traverse all Steps of the workflow, independently of its specific implementation.
+The act of repeating a process, here typically a workflow, to reach a desired goal, target or result is referred to as iteration. The results of one iteration become the starting point for the next. We employ the term {\it iterator} to identify the step in a workflow that converts it from a linear to a cyclic process, such that one or more people or systems can together traverse all steps of the workflow, independently of its specific implementation.
 
 \paragraph{\bf Interoperability}
 
@@ -2088,7 +2072,7 @@ by evaluating different parts of a large neural model'' \cite{cannon07:_inter}.
 %low-level libraries are those that include algorithms for 3D surface
 %reconstruction (e.g. power crust, [R1]), meshing (e.g.  ACO, [R2]),
 %spatial stochastic simulation of chemical reaction networks (e.g.
-%Smoldyn [R3]), and reaction kinetics simulation (e.g.  Steps [R4]).
+%Smoldyn [R3]), and reaction kinetics simulation (e.g.  steps [R4]).
 %Simulation in computational neuroscience could benefit greatly from
 %adopting such newly developed tools.  The advantage is that, rather
 %than integrating monolithic applications\marginpar{reference ?}, the
