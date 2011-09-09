@@ -1027,14 +1027,15 @@ states of these components, and direct the data flows between them.
 %necessarily within them.
 In Step 1 (Construct\,Model) and 2 (Design\,Experiment) of the ideal
 user workflow, users combine models and experimental data that are
-stored in files and databases.  In Step 3 (Run\,Simulation)
-the back-ends, such as the numerical {\tt Solvers} and the {\tt
+stored in files and databases.  In Step 3 (Run\,Simulation) the
+back-ends, such as the numerical {\tt Solvers} and the {\tt
   Communication\,Infrastructure}, perform the calculations of a
 simulation, then save the output back to files and databases.  When
-combined, these steps of the ideal user workflow imply a cyclic data flow
-from files and databases to the back-ends and then back.  Here we explain how user actions and data flows relate to
-one another in the CBI architecture and define the overall behaviour
-of an implemented software system.
+combined, these steps of the ideal user workflow imply a cyclic data
+flow from files and databases to the back-ends.  Here we explain how
+user actions and data flows relate to one another in the CBI
+architecture and define the overall behaviour of an implemented
+software system.
 
 %Intermediate results may be analyzed or aggregated by
 %analysis libraries, e.g. for signal analysis and binning of spikes.
@@ -1053,9 +1054,9 @@ model is selected from a database listing of available models.
 Internally, model selection is translated into an event that instructs
 the {\tt Biology\,Model\,Container} to load a selected model from a
 database and store it in memory using data structures for efficient
-storage and retrieval by the numerical {\tt Solver}.  During initial
-inquiry, a user may typically be interested in derived parameters such
-as the neuron's total surface area with and without spine correction
+storage and retrieval by other modules.  During initial inquiry, a
+user may typically be interested in derived model parameters such as
+the neuron's total surface area with and without spine correction
 while a sophisticated GUI can also present a table of the channels
 employed in the model along with their conductance densities and
 reversal potentials.  More dedicated queries related to specific brain
@@ -1070,8 +1071,8 @@ of an experiment that applies current injection pulses to a neuron's
 soma and defines simulation output as the somatic membrane potential
 and somatic transmembrane currents.  The {\tt
   Experiment\,Model\,Container} stores the definition of the current
-pulse amplitude and duration, which is translated by {\tt
-  Function\,Bindings} to a sequence of simulation-time events prior to
+pulse amplitude and duration, which is translated by a {\tt
+  Sequencer\,Bridge} to a sequence of simulation-time events prior to
 the start of a stimulation.  These events are then executed by the
 {\tt Command\,Sequence\,Executor} during a simulation.
 
@@ -1086,15 +1087,15 @@ phase instead of at every simulation time
 step\cite{borg-graham00:_addit_effic_comput_branc_nerve_equat}.  For
 this, the memory image of a model must first be expanded to a
 representation that includes the mathematical equations and parameters
-relevant to the given simulation but does not include the spatial
-layout of segments as this is not required by the {\tt Solver}.  This
-behaviour is different from that of existing simulators, e.g. GENESIS
-2. Such simulators do not make an explicit distinction between
-internal data structures for model representation and data structures
-for computation.  Consequently, they often generate redundant data
-during the initialization of a simulation.
+relevant to the given simulation but, for instance, does not include
+the spatial layout of segments as this is not required by the {\tt
+  Solver}.  This behaviour is different from that of existing
+simulators, e.g. GENESIS 2. Such simulators do not make an explicit
+distinction between internal data structures for model representation
+and data structures for computation.  Consequently, they often
+generate redundant data during the initialization of a simulation.
 
-In network simulations the {\tt Solver} may employ the {\tt
+In network simulations the {\tt Solver} employ the {\tt
   Connectivity\,Translator} to initialize its simulation-time
 communication data structures and to connect to the {\tt
   Communication\,Infrastructure}.
@@ -1105,16 +1106,17 @@ a list of instantiated {\tt Solvers}.  It then advances the simulation
 clock and requests each {\tt Solver} to update its internal state.
 The {\tt Communication\,Infrastructure} connects the {\tt Solvers} for
 efficient communication of the solved variables.  {\tt Solvers} that
-were configured for output, save results to a file.
+were configured for output, save results to a file.  When the
+simulation finishes, either by user action or following a preset
+simulation period, output buffers are flushed to disk.
 
-When the simulation finishes, either by user action or following a
-preset simulation period, output buffers are flushed to disk.  The
-independence of the {\tt Solvers} in the CBI architecture not only
+The independence of the {\tt Solvers} in the CBI architecture not only
 allows for better optimized implementations, but also enables
 additional simulator functionality such as serialization of the model
 state to a file.  This allows a simulation to be resumed at a later
 time and to save on total simulation time of complex models that need
-a phase of simulated calibration.
+a phase of calibration prior to the application of the experimental
+protocol.
 
 %During Step 4 the dynamic state of the model is available from the files and databases for further analysis.
 
@@ -1130,9 +1132,10 @@ a phase of simulated calibration.
 %  Scripting\,Libraries\,\&\,Applications} to implement Step 4 and 5 of
 %our ideal user workflow.
 
-In Steps 1-3 of the ideal user workflow, data flows both through and
-between software components that conform to a CBI architecture. Data
-cycles between databases and files, and back-end {\tt Solver}s.
+As a result of Steps 1-3 of the ideal user workflow, data flows both
+through and between software components that conform to a CBI
+architecture: the data cycles between databases and files, and
+back-end {\tt Solver}s.
 
 In Steps 4 and 5, the availability of any model data from the {\tt
   Model\,Container} and the functionality of {\tt
@@ -1145,19 +1148,20 @@ such as Matlab to implement output analysis.
 %  Integration, at Step
 %4 of the ideal user workflow, with software platforms such as RTXI
 %make direct interaction with experiment possible.
-Simulation output data can be combined with the model parameters and
-structure available in the {\tt Biology\,Model\,Container} through
-{\tt Scripting\,Libraries\,\&\,Applications} to implement Step 5 of
-our ideal user workflow, for instance to provide automated script
-generators to generate batch simulations.  Importantly, at this stage
-of the workflow, as all the data of the dynamic state of the model are
-available through databases and files, there is no requirement to
-query the software components that deal with the numerical data.  The
-back-ends of the CBI architecture, below the dotted horizontal line in
-Figures~\ref{fig:cbi-architecture-simple}
-and~\ref{fig:cbi-architecture-expanded}, are unavailable once Step 3
-is completed, preventing the implementation of diagonal interactions
-and the creation of a monolythic simulator.
+They also allow simulation output data to be combined with the model
+parameters and structure available in the {\tt
+  Biology\,Model\,Container} to implement Step 5 of our ideal user
+workflow, for instance to provide automated script generators to
+generate batch simulations.  Importantly, at this stage of the
+workflow, the back-ends of the CBI architecture, below the dotted
+horizontal line in Figures~\ref{fig:cbi-architecture-simple}
+and~\ref{fig:cbi-architecture-expanded}, are unavailable.  Once Step 3
+is completed, all the data of the dynamic state of the model are
+available through databases and files.  Consequently, there is no
+requirement to query the software components that deal with the
+numerical data, which ultimately prevents the implementation of
+diagonal interactions in the software and the creation of a monolythic
+simulator.
 
 % are technically unrelated to a simulation run and may
 %fall outside the scope of the CBI architecture.  On the other hand
