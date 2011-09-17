@@ -224,7 +224,7 @@ These software systems have both been highly successful and have continued to gr
 % Hereld M, Stevens RL, van Drongelen W \& Lee HC (2004) Developing a petascale neural simulation.  Proc 26th Ann Int Conf IEEE EMBS 2: 3999--4002.
 
 One response to the
-cumbersome nature of monolithic software applications has been the
+cumbersome nature of {\it monolithic software} applications has been the
 development of specialized simulators capable of modeling different
 levels of biological detail. For example, NEST
 (http://www.nest\-initiative.org/index.php/About\_Us,\cite{diesmann01}) simulates large
@@ -1194,17 +1194,17 @@ of the GENESIS software platform. This has allowed us to identify an ideal user 
 the heart of the new software architecture we describe here. 
 
 By analyzing and decomposing a software system into separate
-functions, it is then straightforward to define the individual software
+functions, it becomes straightforward to define the individual software
 modules of the architecture. Clear delineation of individual
 components in a modular software architecture allows interfaces and
 their accompanying behaviors to be defined and the communication
-between the software layers of to be specified.
+between software layers to be specified.
 %Ultimately, this allows both
 %developers and users to choose to contribute to a single component
 %with limited complexity, instead of being forced to contribute to the
 %whole simulator and be exposed to tremendous complexity. 
 
-We employed the results of a separation of concerns analysis to
+We employed the results of our separation of concerns analysis to
 develop the software architecture for a next generation neural
 simulator.  The resulting CBI architecture provides three significant
 advantages for software development: (1) Modules can be run separately
@@ -1212,11 +1212,11 @@ on different machines.  For example, the GUI and modeling environment
 might run locally, while the simulator is run elsewhere either
 serially or in parallel on more powerful machines. (2) Decomposition
 of an application into multiple software components allows reuse and
-extension of individual modules, whether stand-alone or otherwise,
-clearly facilitating model development and research progress. (3)
+extension of individual modules. %, whether stand-alone or otherwise,
+This clearly facilitates model development and research progress. (3)
 Individual components can be independently updated, enhanced, or
 replaced when needed, thus the life cycle of a modular architecture is
-smoother than that of a non-scalable application.
+less complicated than that of a non-scalable application.
 
 Our approach has the advantage that the mathematical and optimization
 internals of a solver need not be exposed to a user.  The resulting
@@ -1229,7 +1229,7 @@ parallel implementation\cite{hines08:_fully}.  For high-level data and
 control, optimization involves increased support for biological
 concepts and usability by employing both domain specific and
 scripting languages, as opposed to low-level
-languages\,\cite{1118892}.  This provides improved support for
+languages\,\cite{1118892}.  This improves support for
 user-workflows and gives a richer
 user-experience\cite{law09:_under_scopin_defin_user_exper}.
 
@@ -1258,12 +1258,12 @@ self-governance\,\cite{08:_servic}.
 %technology applications\marginpar{needs further explanation and / or citations}.
 Dedicated industry standards have been developed for SOAs. They allow
 routine implementation of business logic with an optimal
-user-experience.  (For example, the Business Process Execution Language--BPEL, see http://en.wikipedia.org/wiki/Business\_Process\_Execution\_Language, was approved by the industry in 2007.)  SOAs often store control tables for
+user-experience. (For example, the Business Process Execution Language--BPEL--was approved by the industry in 2007. See http://en.wikipedia.org/wiki/Business\_Process\_Execution\_Language.)  SOAs often store control tables for
 meta-data describing user workflows \cite{humby07:_progr}.  In this
 way, control software is replaced with software for data management and
-the technical implementation becomes focused on data management. The
-consequence is that SOA code development is highly focused on database
-queries and result integration and presentation. This provides a
+the technical implementation becomes focused on data management. 
+Consequently, SOA code development is highly focused on database
+queries, result integration, and presentation. This provides a
 sharp contrast to preliminary developments in computational
 neuroscience for the standards of educational tutorials, research
 project frameworks, and declarative neuronal modeling standards such
@@ -1328,17 +1328,17 @@ we employ here.
 
 In three-tier architectures it is not uncommon for the second tier,
 comprising so called middle-ware, to be distributed over multiple
-hardware servers.  However, the parallel structure is specific to a
+hardware servers.  However, any parallel structure is specific to a
 given business application and the business logic is fixed
-during the application design phase. This is not usually the case for neuroscience simulators because
-the CPU load of the mathematical model is often used to calculate an
-ideal partitioning for each simulation, thus making the parallel structure
+during the application design phase. This is not usually the case for 
+neuroscience simulators which often use
+the CPU load of the mathematical model to calculate an
+ideal partitioning for each simulation. This makes the parallel structure
 potentially different for each simulation run \cite{hines08:_neuron}.
 In other words, the static parallel structure of a three-tier
 application can be contrasted with the dynamic parallel structure of a CBI
 compliant simulator where the parallel
-structure of the run-time environment may depend on model structure and simulation number \cite{howell00:_pgenes,
-  migliore06:_paral_networ_simul_neuron}.
+structure of the run-time environment may depend on model structure and simulation number \cite{howell00:_pgenes, migliore06:_paral_networ_simul_neuron}.
 
 %A second difference between these industry standards and the CBI
 %architecture is that the parallel run-time structure of a neural
@@ -1391,18 +1391,18 @@ such that it prints the simulation time to the screen. Similarly, it is easy to 
 the average membrane potential of a defined section of a cell or its dendrites.
 
 A second class of simulator extension is the addition of new software
-components.  For instance to connect the simulator to a morphology
+components.  For instance, to connect the simulator to a morphology
 database and a channel model database two database connectors can be
-written.  They convert the database formats to {\it application programing interfaces} (API) calls to the
+written.  They convert the database formats to {\it application programming interface} (API) calls to the
 {\tt Biology\,Model\,Container}.  Simple extension of this module allows it be used for analysis of
 morphological characteristics and for quantification of model
 components.
 
 These different types of extensions stem from the modularity of the
 CBI architecture.  Current simulators typically only support a
-restricted set of extensions. For example, extending the GENESIS 2
+restricted set of extensions. For example, extending the GENESIS\,2
 simulator with new solvers was not possible because its basic
-architecture was not appropriately modularized.
+architecture was not suitably modularized.
 
 %More elaborate software components include a model version history
 %manager for the tracking and recording of the history of model
@@ -1576,7 +1576,7 @@ biological system, expressed as changes made to a model.
 %These changes
 %give structure to scientific discussion about the biology the model
 %represents.
-It is in this way the structure and quantities of a model document
+It is in this way that the structure and quantities of a model document
 advances in the formal scientific understanding of a given biological
 system.  Ultimately, the user workflow integrates a simulator into the
 scientific workflow such that any CBI compliant simulator provides
@@ -1709,11 +1709,11 @@ direct support for scientific publication and communication.
 
 \section*{Materials and Methods}
 
-In this section we define the elements of our ``workflow philosophy''. This workflow guides development of the CBI architecture. It is presented as a glossary of the technical terms, typically specialized for computer science, that are commonly employed in the description and discussion of the architecture. It is followed by a brief technical glossary of terms related to software development.
+In this section we define the elements of our ``workflow philosophy''. It is this workflow that guides development of the CBI architecture. It is presented as a glossary of the technical terms, typically specialized for computer science, that are commonly employed in the description and discussion of the architecture. It is followed by a brief technical glossary of terms related to software development.
 
 \subsection*{The Workflow Philosophy}
 
-Monolithic software and federated software, described below, are the
+Monolithic software and {\it federated software}, described below, are the
 two extremes of a continuum.  The philosophical goal of the CBI
 architecture is to move simulator design away from the extreme of
 monolithic software towards the extreme of federated software.
@@ -1724,13 +1724,12 @@ A {\it monolithic software}
 application is one in which the user interface, data access code, and
 computational algorithms are combined into a single application where
 the smallest software component is the whole application. It is typically comprised of a set of tightly coupled functions where the modification or extension of one function requires
-corresponding alterations throughout or intimate knowledge of the rest
-of the software code to avoid breaking existing software
-functionality.
+either corresponding alterations throughout or intimate knowledge of the rest
+of the software code to avoid breaking existing software functionality.
 
 In the past neural simulators were
-developed or strictly supervised by a single programmer
-leading to monolithic applications \cite{Moore:2010vn}.  As a consequence, the
+developed or strictly supervised by a single programmer, a situation that typically
+led to monolithic applications \cite{Moore:2010vn}.  As a consequence, the
 functionality offered by simulation software and the
 scientific problems that could be addressed were inherently limited in
 scope by the capacity of a single person to manage the required
@@ -1751,12 +1750,12 @@ scientists to work on software dedicated to their own research projects.
 
 \paragraph{\bf Concerns:}
 
-One dictionary definition of {\it concern} is ``a matter for consideration'' \cite{Merriam-Webster:2010kl}. More specifically for software, the concerns for a system are defined as ``... those interests which pertain to the system's development, its operation or any other aspects that are critical or otherwise important ...'' \cite{Group:2000tg}. A more general definition is ``any matter of interest in a software system'' \cite{sutton2001}. On this basis, concerns are considered to be fundamentally conceptual and include, but are not limited to, for example, generality, independence, appropriateness, completeness, and ease of use \cite{Sutton:2004hc}. Further, considerations in the typing of concerns may include: Logical versus physical concerns and simple concerns versus concern groups, also kinds of access, consistency and integrity, and extensibility and stability \cite{sutton2001}. To this list we can add interoperability.
+One dictionary definition of {\it concern} is ``a matter for consideration'' \cite{Merriam-Webster:2010kl}. More specifically for software, the concerns for a system are defined as ``... those interests which pertain to the system's development, its operation or any other aspects that are critical or otherwise important ...'' \cite{Group:2000tg}. A more general definition is ``any matter of interest in a software system'' \cite{sutton2001}. On this basis, concerns are considered to be fundamentally conceptual. They include, but are not limited to, for example, generality, independence, appropriateness, completeness, and ease of use \cite{Sutton:2004hc}. Further, considerations in the typing of concerns may include: Logical versus physical concerns and simple concerns versus concern groups, also kinds of access, consistency and integrity, and extensibility and stability \cite{sutton2001}. To this list we can add interoperability.
 
 Concerns often penetrate into the different layers of a software
-architecture.  Such concerns are called 'cross-cutting' concerns, and,
+architecture.  Such concerns are called `cross-cutting' concerns, and,
 because of this property, are hard to implement and maintain.  Often
-special technology is required to implement 'cross-cutting' concerns
+special technology is required to implement this type of concern
 properly.
 
 % Merriam-Webster. Merriam-Webster collegiate dictionary on line. http://www.merriam-webster.com/.
@@ -1779,10 +1778,10 @@ In practice, this principle actually corresponds to finding the right decomposit
 Modular programming aims to create software composed of separate
 interchangeable parts identified by a separation of concerns. This
 improves software maintainability by enforcing logical boundaries
-between software modules. We refer to the independent parts of the CBI
-architecture as {\it modules} that may contain independent submodules,
+between software modules. We refer to each independent part of the CBI
+architecture as a {\it module} which may contain independent submodules,
 whereas, following implementation a module is referred to as a {\it
-  component}, that may also contain subcomponents. These components
+  component}, which may also contain subcomponents. These components
 communicate with each other by interfaces.
 % typically created with
 %scripting languages.
@@ -1810,7 +1809,7 @@ API provides a library to be used directly via simple function calls.
 An {\it application binary interface} (ABI) describes the low-level details
 of an interface between an application (or any type of) program and
 another application.  ABIs cover details such as data type, size, and
-alignment, calling conventions which controls how functions' arguments
+alignment, calling conventions which control how functions' arguments
 are passed and return values retrieved and sometimes the binary format
 of object files and program libraries
 
@@ -1818,11 +1817,10 @@ A complete ABI allows a program from one operating environment
 supporting that ABI to run without modifications on any other such
 system, provided that the necessary run-time prerequisites such as
 shared libraries are fulfilled.  For an example, see the Intel Binary
-Compatibility Standard (iBCS)
+Compatibility Standard
 (http://www.everything2.com/index.pl?node=iBCS).
 
-An ABI should not be confused with an application programming
-interface (API) which defines a library of routines to call, data
+An ABI should not be confused with an API which defines a library of routines to call, data
 structures to manipulate, and/or object classes to use in the
 construction of an application using that particular (often language
 specific) API.
@@ -1858,7 +1856,7 @@ scripting languages, the components form an application.
 
 \paragraph{\bf User Workflow:}
 
-We use the term {\it user workflow} to describe the sequence of necessary steps typically employed by a person in developing a computational model and employing simulation to generate data for subsequent analysis. In this sense it is a depiction of a sequence of operations, declared as the work of a person or a group of persons \cite{Belhajjame:2001fv}.
+The term {\it user workflow} is employed to describe the sequence of necessary steps typically employed by a person in developing a computational model and employing simulation to generate data for subsequent analysis. In this sense it is a depiction of a sequence of operations, declared as the work of a person or a group of persons \cite{Belhajjame:2001fv}.
 
 A comprehensive user workflow can be employed to guide the separation of the different aspects of a model by organizing user actions 
 into different categories during model development.
@@ -2206,7 +2204,7 @@ Hugo Cornelis is partially supported by the CREA Financing program (CREA/07/027)
 
 \newpage
 
-\section*{Figure Legends}
+\section*{Figures}
 %\begin{figure}[!ht]
 %\begin{center}
 %%\includegraphics[width=4in]{figure-name.2.eps}
