@@ -756,7 +756,7 @@ injection) and their dependencies.
 
 \subsubsection*{Scripting Libraries \& Applications}
 
-This module contains three submodules, (1) {\tt Implementation\,Libraries} containing functions specific to a given application, and (2) {\tt Scripting\,Libraries} that provide scripts to control a specific series of research and tutorial simulations.  (3) The {\tt Scheduler} combines generic aspect of these scripts to instantiate the simulation.
+This module contains three submodules, (1) {\tt Implementation\,Libraries} containing functions specific to a given application and (2) {\tt Scripting\,Libraries} that provide scripts to control a specific series of research and tutorial simulations.  (3) The {\tt Scheduler} combines generic aspect of these scripts to instantiate the simulation.
 
 %Enables user-friendly workflows by providing access to applications written in high-level scripting languages that focus on specific research questions or educational tutorials.
 
@@ -770,7 +770,7 @@ specific for a set of research or tutorial simulations and connect a
 model to a series of stimulus paradigms using a procedural paradigm.
 There are also `glue' functions to connect to external libraries for
 other activities such as result analysis, e.g. via the GNU Scientific
-Library (GSL), the Perl Data Language (http://pdl.perl.org/), and the
+Library (http://www.gnu.org/s/gsl/), the Perl Data Language (http://pdl.perl.org/), and the
 Scientific Library for Python
 (http://sourceforge.net/projects/scipy/).
 
@@ -820,15 +820,15 @@ or hardware level.
 %functionality to solve numerical equations or they implement
 %specific algorithms, or both.
 Because of their numerical nature, some solvers can easily be extended
-to do the necessary discretization of a continous mathematical
-equation according to a settable accuracy. The generation of channel
+to do the necessary discretization of a continuous mathematical
+equation (at a user settable accuracy). The generation of channel
 conductance tables is a common example. Other examples are mesh
 generation for Monte Carlo solvers and compartmentalization of a
 neuronal morphology.
 
 \paragraph{\bf Discrete Representations:}
 
-Existing monolithic simulators such as NEURON and GENESIS\,2 currently require the user to explicitly code scripts to avoid duplication of one-off data. In contrast to this, GENESIS\,3, in compliance with the CBI architecture, automatically detects duplicate parameterization of variables such as channel gate kinetics and dynamically shares their tabulated form as necessary. Solver generated discretizations that form the numerical 
+Existing monolithic simulators such as NEURON and GENESIS\,2 currently require the user to explicitly code scripts to avoid duplication of one-off data. In contrast with this, GENESIS\,3, in compliance with the CBI architecture, automatically detects duplicate parameterization of variables such as channel gate kinetics and dynamically shares their tabulated form as necessary. Solver generated discretizations that form the numerical 
 representation of a model are internally published for reuse by other 
 solvers in a process that is invisible to users, e.g. dendritic morphology meshes and Hines 
 enumeration of compartmentalized morphology.  Annotation of the 
@@ -860,24 +860,27 @@ hardware involved, {\tt Communication\,Infrastructure} deals with issues of
 CPU and whether this is made transparent to the solver implementation, 
 (2) Efficiency of the infrastructure for communicating neighboring 
 lists of values, e.g. all the membrane potentials of a compartmentalized 
-neuronal morphology and (3) Efficient storage and distribution of discrete events used for action potential generation and axonal propagation.
+neuronal morphology and (3) Efficient storage and distribution of discrete 
+events used for action potential generation and axonal propagation.
 
 \paragraph{\bf Controller:}
 
-The {\tt Controller} maintains the operation of all simulator functions and 
+The {\tt Controller} maintains the operation of all simulator functions. It 
 contains core functions such as the global simulation time clock and 
-the functions that start and stop the advance of simulation time. Its main function is to 
-schedule and synchronize the back-ends that participate in the simulation by requesting the numerical level 
-to update its internal states. To leverage the operation 
+the functions that start and stop the advance of simulation time. The 
+main function of the {\tt Controller} is to schedule and synchronize 
+the back-ends that participate in the simulation by requesting the numerical 
+level to update its internal states. To leverage the operation 
 of sophisticated solvers and enhance their maintainability, the 
-{\tt Controller} can also implement facilitatory functions for arithmetic control such as floating point exceptions.
+{\tt Controller} can also implement facilitatory functions for arithmetic control 
+such as floating point exceptions.
 %For other use-cases, such as 
 % a simple model analysis with Matlab as a back-end, the Controller 
 % can provide the function to start the operation.
 
 \subsection*{\bf The Intermediate Layer}
 
-The intermediate layer comprises the bridges for (1) Function bindings and (2) Data bindings that assist with the vertical flow of information during the translation of biological concepts to numerical equations. 
+The intermediate layer comprises the bridges for function and data bindings that assist with the vertical flow of information during the translation of biological concepts into numerical equations. 
 
 %\subsubsection*{Core Bridges}
 %
@@ -897,8 +900,8 @@ The intermediate layer comprises the bridges for (1) Function bindings and (2) D
 \subsubsection*{\bf Data Bindings}
 
 Data bindings translate the expanded representation of a model into
-data structures that are specific to one type of solver.  They
-interface the {\tt Biology\,Model\,Container} with the numerical back-end,
+data structures that are specific for one type of solver.  They
+interface the {\tt Biology\,Model\,Container} with the numerical back-end
 and allow a natural and efficient code for the solution of the
 numerical equations.  Note that a data binding implementation can
 choose to bind a solver to only one of the two translation functions
@@ -1064,8 +1067,8 @@ the neuron's total surface area with and without spine correction
 while a sophisticated GUI can also present a table of the channels
 employed in the model along with their conductance densities and
 reversal potentials.  More dedicated queries related to specific brain
-areas or neuron types are supported by {\tt
-  Scripting\,Libraries\,\&\,Applications}.
+areas or neuron types are supported by the {\tt
+  Scripting\,Libraries\,\&\,Applications} module.
 
 %A model can be queried in this way when it is stored by
 %the {\tt Biology\,Model\,Container}.
@@ -1089,17 +1092,17 @@ simulation, for instance a Crank-Nicolson solver can multiply the
 membrane capacitance with the time step during this initialization
 phase instead of at every simulation time
 step\cite{borg-graham00:_addit_effic_comput_branc_nerve_equat}.  For
-this, the memory image of a model must first be expanded to a
+this, the memory image of a model must first be expanded into a
 representation that includes the mathematical equations and parameters
 relevant to the given simulation but, for instance, does not include
 the spatial layout of segments as this is not required by the {\tt
-  Solver}.  This behaviour is different from that of existing
+  Solvers}.  This behaviour is different from that of existing
 simulators, e.g. GENESIS 2. Such simulators do not make an explicit
 distinction between internal data structures for model representation
 and data structures for computation.  Consequently, they often
 generate redundant data during the initialization of a simulation.
 
-In network simulations the {\tt Solver} employ the {\tt
+In network simulations the {\tt Solvers} employ the {\tt
   Connectivity\,Translator} to initialize its simulation-time
 communication data structures and to connect to the {\tt
   Communication\,Infrastructure}.
@@ -1118,8 +1121,8 @@ The independence of the {\tt Solvers} in the CBI architecture not only
 allows for better optimized implementations, but also enables
 additional simulator functionality such as serialization of the model
 state to a file.  This allows a simulation to be resumed at a later
-time and to save on total simulation time of complex models that need
-a phase of calibration prior to the application of the experimental
+time and reduces the total simulation time of a complex model if it requires
+a calibration phase prior to the application of an experimental
 protocol.
 
 %During Step 4 the dynamic state of the model is available from the files and databases for further analysis.
@@ -1136,7 +1139,7 @@ protocol.
 %  Scripting\,Libraries\,\&\,Applications} to implement Step 4 and 5 of
 %our ideal user workflow.
 
-As a result of Steps 1-3 of the ideal user workflow, data flows both
+As a result of Steps 1--3 of the ideal user workflow, data flows both
 through and between software components that conform to a CBI
 architecture: the data cycles between databases and files, and
 back-end {\tt Solver}s.
@@ -1155,16 +1158,16 @@ such as Matlab to implement output analysis.
 They also allow simulation output data to be combined with the model
 parameters and structure available in the {\tt
   Biology\,Model\,Container} to implement Step 5 of our ideal user
-workflow, for instance to provide automated script generators to
-generate batch simulations.  Importantly, at this stage of the
-workflow, the back-ends of the CBI architecture, below the dotted
+workflow, for instance to provide automated script generators for the
+generation of batch simulations.  Importantly, at this stage of the
+workflow, the back-ends of the CBI architecture (indicated below the dotted
 horizontal line in Figures~\ref{fig:cbi-architecture-simple}
-and~\ref{fig:cbi-architecture-expanded}, are unavailable.  Once Step 3
+and~\ref{fig:cbi-architecture-expanded}) are unavailable.  Once Step 3
 is completed, all the data of the dynamic state of the model are
 available through databases and files.  Consequently, there is no
-requirement to query the software components that deal with the
-numerical data, which ultimately prevents the implementation of
-diagonal interactions in the software and the creation of a monolythic
+requirement to query the software components that deal with
+numerical data. This ultimately prevents the implementation of
+diagonal interactions in the software and the creation of a monolithic
 simulator.
 
 % are technically unrelated to a simulation run and may
@@ -1187,17 +1190,15 @@ Considerable experience with both user and technical concerns related
 to simulator functionality and efficiency has been gained from over
 twenty years of following user requirements during the development of
 bottom up models of neurons and neural circuits within the framework
-of the GENESIS software platform. This
-experience has allowed us to identify an ideal user workflow that we
-employed to constrain the separation of concerns analysis that lies at
-the heart of the new simulator architecture. 
+of the GENESIS software platform. This has allowed us to identify an ideal user workflow. We employed this workflow to constrain the separation of concerns analysis that lies at
+the heart of the new software architecture we describe here. 
 
 By analyzing and decomposing a software system into separate
-functions, it is straightforward to then define the individual software
+functions, it is then straightforward to define the individual software
 modules of the architecture. Clear delineation of individual
 components in a modular software architecture allows interfaces and
 their accompanying behaviors to be defined and the communication
-between the software layers of a simulator to be specified.
+between the software layers of to be specified.
 %Ultimately, this allows both
 %developers and users to choose to contribute to a single component
 %with limited complexity, instead of being forced to contribute to the
