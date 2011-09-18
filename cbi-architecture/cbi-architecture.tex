@@ -2275,11 +2275,7 @@ Conducting experiments and running simulations are two iterative processes indic
   right.  A. The top layer contains conceptual data
   and controls representations of the biology of a model. B. The bottom layer contains
   representations that are numeric and thus close to the hardware.  The middle or intermediate layer
-  bridges between the biology and the numerics implemented in a CBI compliant simulator.
-%  Steps 1--3 of the ideal user workflow induce data flows between the software modules of the CBI
-%  architecture. This results in data cycling between the upper layers (A) and
-%  lower layers (B, divided by the horizontal dashed line).  Ultimately the two layers team to implement a single simulation.  By design any type of model including multi-scale models
-%  will exhibit this data cycle (see text for details). 
+  bridges between the biology and the numerics implemented in a CBI compliant simulator (see text for details). 
   }
 \label{fig:cbi-architecture-simple}
 \end{figure}
@@ -2295,8 +2291,10 @@ Conducting experiments and running simulations are two iterative processes indic
     federated software architecture.} Illustration of the modules that is closer to an implementation of the CBI architecture. It illustrates the relationships of sub-modules within each of the modules given in
   Figure\,\ref{fig:cbi-architecture-simple}.  North bound interfaces
   group and conceptualize the details of the modules and interact with
-  south bound interfaces of higher level modules.  See text for
-  explanation and details.  }
+  south bound interfaces of higher level modules.  Steps 1--3 of the ideal user workflow induce data flows between the software modules of the CBI
+architecture. This results in data cycling between the upper layers (blue and green boxes) and
+lower layers (red box).  Ultimately, the two layers team to implement a single simulation.  By design any type of model including multi-scale models will exhibit this data cycle. See text for explanation and details.
+}
 \label{fig:cbi-architecture-expanded}
 \end{figure}
 
