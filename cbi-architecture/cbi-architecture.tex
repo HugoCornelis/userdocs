@@ -786,7 +786,7 @@ implement a model tutorial (e.g. \cite{bower98:_book_genes}).
 
 \paragraph{\bf Scheduler:}
 
-For stand-alone software components such as the {\tt Model\,Container} and the low-level back-ends to be useful, they must be `glued' together and activated correctly, such that they can work together in co-ordination on a single simulation. This is exactly what the {\tt Scheduler} does. It exploits the sophistication of modern scripting languages to load software components on demand and initialize and activate them from a configuration file. The {\tt Scheduler} does not have any computational load and its implementation is both simple and highly configurable. It can also provide a script-based interface for interactive user
+For stand-alone software components such as the {\tt Model\,Container} and the low-level back-ends to be useful, they must be `glued' together and activated correctly, such that they can work together in co-ordination on a single simulation. This is exactly what the {\tt Scheduler} does. It typically exploits the sophistication of modern scripting languages to load software components on demand and initialize and activate them from a configuration file. The {\tt Scheduler} does not have any computational load and its implementation is both simple and highly configurable. It can also provide a script-based interface for interactive user
 control or the implementation of more sophisticated user-workflows.
 
 % Other configurations will connect the scheduler to other modeling services or solvers. 
@@ -901,8 +901,7 @@ interface the {\tt Biology\,Model\,Container} with the numerical back-end
 and allow a natural and efficient code for the solution of the
 numerical equations.  Note that a data binding implementation can
 choose to bind a solver to only one of the two translation functions
-of the {\tt Biology\,Model\,Container}.  In this case, the solver can still
-be useful for single neuron simulations.
+of the {\tt Biology\,Model\,Container}.  For example, a single neuron solver only needs to access the task of biological model translation.
 
 The most important characteristic of a data binding is that it
 contains no specific algorithms. Instead, it provides a one-to-one mapping of
