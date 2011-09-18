@@ -2277,7 +2277,15 @@ Conducting experiments and running simulations are two iterative processes indic
   right.  A. The top layer contains conceptual data
   and control representations of the biology of a model. B. The bottom layer contains
   representations that are numeric and thus close to the hardware.  The middle or intermediate layer
-  bridges between the biology and the numerics implemented in a CBI compliant simulator.  }
+  bridges between the biology and the numerics implemented in a CBI compliant simulator.
+
+  Steps 1--3 of the ideal user workflow induce data flows between the software modules of the CBI
+  architecture: the data cycles between the upper layers and
+  lower layers.  Ultimately the two layers team to implement a single simulation.  By design any type of model including multi-scale models
+  will exhibit this data cycle (see text for details).
+
+
+}
 \label{fig:cbi-architecture-simple}
 \end{figure}
 
