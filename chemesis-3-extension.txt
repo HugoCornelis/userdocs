@@ -1,3 +1,148 @@
+A note about the problem of multi-scale simulation
+--------------------------------------------------
+
+The most interesting perspective is, as always, one of usability: the
+user-workflow is based on experimental paradigm and childishly simple,
+but, in contrast, the number of available numerical techniques is
+large.  As a consequence any tool will become useful as far as its
+implicit or explicit capacity of simplifying the mapping from this
+large set of techniques to the simple user-workflow.  Currently such a
+tool does not exist.  This is at the core of the problem of
+multi-scale simulation.
+
+The major benefit of G-3 is that it succeeds in simplifying a
+substantial part of the picture: running either a simulation of a
+single neuron or of a network of multicompartmental neurons can be
+done from the command line (and uses many implicit default values).
+Advanced G-3 users can drill down into the details of and make changes
+to either the model, the experiment or the simulation configuration.
+How to expand the G-3 scope for multi-scale simulation is what I
+explain below.
+
+It is simple to run simulations from a command line.  As an example:
+
+ssp --cell cells/purkinje/edsjb1994.ndf --inject-current 1e-9 --time 1
+
+ssp --network networks/spiker3.ndf --network-input 1e-9 --time 1
+
+Both these command lines follow a template of model specification,
+experiment specification, simulation configuration.  Note that line 2
+is essentially a simple multi-scale simulation that instantiates
+solvers and run-time data communication components as necessary.  By
+design this feature of the modular architecture of NS / G-3 works the
+same within and across all scales.
+
+The question 'given all the technology available, why is multi-scale
+modeling so difficult?' is quickly and superficially answered after
+the observation that simulations are limited by their engines and
+solvers.
+
+A good use case is necessary to make this understandable, ie the three
+steps in your email.
+
+<based on such as use case it is easy to make a diagram for further
+clarification during a presentation about these three steps, and it
+can have three 'growing' versions during the presentation where each
+version of the diagram plugs in new software components into the
+system>
+
+I think a presentation should have the following implicit elements:
+
+1. the user-workflow: a scientist first cares about the scientific
+question, the technology is secondary.
+
+2. the model and its computational expression have a central role from
+the science viewpoint (so the requirement for having exactly one
+model-container).  At its essence a scientific model is 'scale-less'
+(but some people will not like this type of expression), or worded
+differently, the expression of the model can be independent of scale,
+and so can be multi-scale, or not (but a scientist does not care
+because he simply implements the simple user-workflow during his daily
+work).
+
+3. the single model-container 'contains' the model with both
+structures of components and values.  It has all the connections
+between the different components of the model, independent of whether
+these components are solved independently / in isolation or,
+alternatively, by a single engine.
+
+The G-3 plugin mechanism interfaces the (single) model-container with
+multiple run-time simulation objects.  Superficially there is a
+discrete event system (action potential propagation abstraction and
+communication), a compartmental solver (crank-nicolson or simpler),
+and may be a kinetic pathway solver (RK or equivalent).  This is what
+G-2 offers (but without a rigid user-workflow).  When you go one level
+down, we encounter a rich set of well understood equations that can be
+solved deterministically or stochastically (Monte-Carlo or otherwise).
+ This landscape is more complex, although mathematically relatively
+well understood.
+
+Some of the equation types in subcellular simulations:
+- K-Epsilon
+- Navier-Stokes
+- Heat-equations
+- Reynold-equations
+- Helmholtz-equations
+- Poisson-Boltzmann equations
+(note that not all these names apply to neuroscience I can update the
+list for neuroscience):
+
+Looking one level up, we see an equally rich set of gamble-and-win
+solution methods:
+
+Some of the model-types in supranetwork (large scale) simulations:
+- IaF
+- Adaptive IaF
+- Izhekevic IaF
+- Conductance based synapses
+- Current based synapses
+- Convolution and Waveform dependent synaptic weights
+
+Two conclusions can be drawn: firstly from the biology point of view
+the single neuron level seems to be the level that is best understood,
+the anchor point for further expansion.  Firstly, in comparison to
+most of the other software tools, this puts G-3 in an excellent
+strategical position.  Both the Neuron and Moose simulators seem to be
+in slightly different but mostly equivalent positions.
+
+Secondly it is clear that the old generation of simulators (not
+including G-3) does not offer the flexibility required to suit the
+next generation of multi-scale models because of the complexity of the
+available solution methods.  In other words current software
+technology limits the scope of the research.  Many people agree with
+the statement, but few truly understand and even fewer are trying to
+change that situation, so I think it is important to make that point
+clear.
+
+
+For a presentation:
+
+1. Contrast the complexity of a Purkinje cell (early in the
+presentation) with that of the user-workflow-to-simulation mapping
+(later in the presentation, eg. a slide that lists some of the
+available solution methods, I do have such a slide somewhere in one of
+my own presentations, let me know whether you would like to see / use
+it).
+
+2. The complexity we are facing is similar to multi-scale simulation
+in other fields.  Nevertheless the pressure of the complexity of
+biology by itself has a multiplicative factor to the already present
+mathematical complexity.
+
+Some additional interesting points:
+
+1. The degree of how much a G-3 user drills down into technical
+details of a simulation puts in him in one of the categories of either
+student, teacher or researcher role, essentially on a mapping ranging
+from the most naive to the most advanced role.  G-3 makes this
+distinction rather intuitive.  The documentation system expands on
+this idea.
+
+2. Complementary to the scales starting from molecules upto system
+networks, and I think as interesting, is the comparative study.
+
+
+
 Some details of the implementation
 ----------------------------------
 
@@ -64,4 +209,132 @@ Chemesis-3.
   4. An interface must be written between the model-container and
   the core of the solver.  The model-container defines an API that
   makes abstraction of the biological structure the model.
+
+
+Time line of the implementation of Chemesis-3
+---------------------------------------------
+
+Only limited was available for the implementation of the chemesis-3
+solver.  A time line reconstructed from the email conversations and
+from the version control system:
+
+- exploratory email conversations May 30th and following two weeks.
+
+- initial preparations and start of implementation on June 13th.
+
+- core implementation on Sunday June 26th, including a fully working
+cal1 regression test case.  This was a day of crazy coding as in the
+old days, total of 18 revisions with many enhancements.
+
+- implementation of cal2 test case on June 29th and July 10th.
+
+- initial scripting bindings were added starting at July 10th for perl
+and July 13 for Python.
+
+- first successful integration with the SSP scheduler on July 12th.
+
+- model-container bindings started on July 13 and finished on July
+17th.  Removes model-related functions such as compartment volume
+computation that are already available in the model-container (and now
+shared with other solvers).
+
+- G-shell integration on July 17th and July 18th.
+
+
+Currently Implemented Chemesis-3 Objects
+----------------------------------------
+
+Currently implemented chemesis3 objects:
+
+
+rxnpool: a concentration pool that interacts with reactions and
+diffuses to other pools.
+
+Maps to NDF token POOL
+
+
+conservepool: mass conservation based pool, computes the difference
+between the total of all molecules (a model parameter, rest state),
+and diffused molecules, divided by compartment volume.
+
+Maps to NDF token POOL, with a different parameterization.
+
+
+reaction: standard forward / backward chemical reactions between pools
+of molecules.
+
+Maps to NDF token REACTION
+
+
+diffusion: Computes flux in molecules between two pools
+
+Maps to NDF *segment parameter* diffusion_constant.  The appearance of
+this parameter in an NDF file requires running the model using a
+chemesis-3 solver.
+
+
+The cal1.ndf and cal2.ndf files in the model-container library are
+examples of chemesis-3 NDF files.
+
+This makes 4 out of 12 objects that have been implemented.
+
+
+
+Performance of Chemesis-3
+-------------------------
+
+In a summary the first version of chemesis-3 is about three times as
+fast as chemesis-2.  A trivial but well designed implementation of a
+solver runs faster under G-3 than an equivalently trivial similar
+implementation under G-2.  That is why chemesis-3 is a good case.
+
+Chemesis-3 is nicely running in user-space as expected.  The removal
+of the G-2 messaging system, it is not present in chemesis-3, removes
+a 25% overhead.
+
+In detail for the cal2 test case, 6 concentration pools connected by
+diffusion and 2 chemical reactions pathways, no output, no graphics, I
+get the following timings, bare numbers:
+
+
+CHEMESIS-3:
+
+hugo@cornelis-Aspire-7715Z:~/neurospaces_project/chemesis3/source/snapshots/0$
+time tests/code/cal2
+
+real    0m8.335s
+user    0m8.325s
+sys     0m0.000s
+hugo@cornelis-Aspire-7715Z:~/neurospaces_project/chemesis3/source/snapshots/0$
+time tests/code/cal2
+
+real    0m8.799s
+user    0m8.785s
+sys     0m0.000s
+hugo@cornelis-Aspire-7715Z:~/neurospaces_project/chemesis3/source/snapshots/0$
+time tests/code/cal2
+
+real    0m8.359s
+user    0m8.349s
+sys     0m0.000s
+
+
+CHEMESIS-2:
+
+time /home/hugo/genesis/source/updates/genesis-2.2.1-beta-20030328/src/genesis
+cal2.g
+real    0m24.381s
+user   0m17.765s
+sys    0m6.492s
+time /home/hugo/genesis/source/updates/genesis-2.2.1-beta-20030328/src/genesis
+cal2.g
+real    0m24.354s
+user   0m17.917s
+sys    0m6.316s
+time /home/hugo/genesis/source/updates/genesis-2.2.1-beta-20030328/src/genesis
+cal2.g
+real    0m24.116s
+user   0m17.613s
+sys    0m6.380s
+
 
