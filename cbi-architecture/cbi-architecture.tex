@@ -923,6 +923,13 @@ in a model the capacitance density must be scaled to account for the
 additional spine surface area, while for a conductance density the
 spine surface area is commonly not taken into account\cite{E:1994hc}.
 
+Other data bindings translate a sequence of stimulus actions and
+output definitions to commands of a {\tt Command\,Sequence\,Executor}. They 
+decouple the sequencer back-end implementation from the
+{\tt Experiment\,Model\,Container} such that the commands from complex 
+stimulus paradigms can be correctly sorted on both
+non-parallel and parallel architectures.
+
 %The Solver\,Bridge mapping allows variables to be recalculated
 %in a solver specific way (e.g. a specific capacitance is mapped to the
 %time step divided by the scaled capacitance).
@@ -941,12 +948,6 @@ The function bindings connect user actions to start and stop a simulation with f
 %is made accessible via small pieces of glue code (e.g. glue code to the GSL).
 %\paragraph*{\bf Sequencer Bridge:}
 %The Sequencer\,Bridge also generates a simple one-to-one mapping/translation of model data with sequencer requirements. 
-Other function bindings translate a sequence of stimulus actions and
-output definitions to commands of a {\tt Command\,Sequence\,Executor}. This
-interface decouples the sequencer back-end implementation from the
-{\tt Experiment\,Model\,Container} such that the commands from complex and
-composed stimulus paradigms can be correctly sorted on both
-non-parallel and parallel architectures.
 
 %\paragraph*{\bf Scripting API:}
 
