@@ -66,7 +66,7 @@
 % Title must be 150 characters or less
 \begin{flushleft}
 {\Large
-\textbf{Python as a Federation Tool for GENESIS 3.0}
+\textbf{Python as a Federation Tool for GENESIS\,3.0}
 }
 % Insert Author names, affiliations and corresponding author email.
 \\
@@ -114,15 +114,15 @@ external libraries and applications from user-defined Python or Perl scripts.
 
 We illustrate our approach with three examples of Python scripting. 
 (1) Generate and run a simple single-compartment model neuron connected to a 
-stand-alone mathematical solver. (2) Interface a mathematical solver with GENESIS 3.0 to explore a neuron morphology from either
+stand-alone mathematical solver. (2) Interface a mathematical solver with GENESIS\,3.0 to explore a neuron morphology from either
 an interactive command-line or graphical user interface.
-(3) Apply scripting bindings to connect the GENESIS 3.0 simulator to
+(3) Apply scripting bindings to connect the GENESIS\,3.0 simulator to
 external graphical libraries and an open source three dimensional content creation
 suite that supports visualization of models based on electron
 microscopy and their conversion to computational
 models.
 
-Employed this way, the stand-alone software components of the GENESIS 3.0 
+Employed this way, the stand-alone software components of the GENESIS\,3.0 
 simulator provide a framework for progressive federated
 software development in computational neuroscience.\\
 
@@ -133,7 +133,7 @@ software development in computational neuroscience.\\
 The GEneral NEural SImulation System (GENESIS,
 http://genesis-sim.org/) is a general purpose simulation platform originally
 developed to support the simulation of neural systems ranging from
-subcellular components and biochemical reactions to complex models of
+sub-cellular components and biochemical reactions to complex models of
 single neurons, simulations of large networks, and systems-level
 models.
 
@@ -178,19 +178,19 @@ GENESIS 3.0 (G-3) is a major reconfiguration and update of the GENESIS
 simulation system.  The core simulator functionality has been
 restructured such that it is the first neural simulator to comply with a more modular design, the Computational 
 Biology Initiative federated software architecture (referred to as the CBI
- architecture, described in Materials and Methods and in more detail in\,\cite{cornelis11:_feder_desig_neurob_simul_engin}). The CBI
+ architecture, described in Materials and Methods and in more detail in\,\cite{cornelis11b}). The CBI
 architecture is specifically designed to support
 the integration of stand-alone software components and applications by
 using common integration technologies such as modern scripting
 languages. This not only results in
 improved simulator performance, portability, and reusability but also enables both the
 use of new script parsers and user interfaces and the capacity
-to communicate with other modeling programs and environments.
+to communicate with other modeling programs and environments and external model and data analysis and presentation software.
 
 In the following sections we illustrate the use of the general purpose Python scripting
 language for making high performance simulation software coded in
 system programming languages accessible to neuroscientists and
-biologists. We note that equivalent functionality is available from G-3 using the Perl scripting language. 
+biologists. We note that equivalent functionality is available from G-3 using the Perl (http://www.perl.org/) scripting language. 
 
 % Results and Discussion can be combined.
 \section*{Results}
@@ -218,14 +218,14 @@ simple models with many default settings (e.g. to start a new research
 project) from more complicated interfaces that expose the full
 functionality of the simulator.
 
-As an example, the G-3 Python module\,{\it nmc} contains functions to
+As an example, the G-3 Python module {\it nmc}\footnote{Note, {\it italicized} text indicates the names of Python modules, whereas, {\tt Typewriter} text is reserved for Python coding examples and the dimensions of physical quantities. {\bf Bold} text indicates the names of software components in G-3.} contains functions to
 simplify the storage of neuron models in computer memory.  This module
 is a simple front-end to the {\bf Model\,Container}, a G-3 component
 which for efficiency is coded in the system programming language C.
 Likewise,\,{\it Heccer} is a wrapper module for the {\bf Heccer}
 component which in turn is an interface to a low-level single neuron
 solver written in C.  Python bindings for the {\bf Discrete Event
-  System (DES)} to facilitate network modeling are under construction.
+  System (DES)} to facilitate network modeling also exist.
 
 Here we show a simple high-level Python script\,\footnote{This script
   is written for clarity of presentation rather than compactness or
@@ -329,7 +329,7 @@ The CBI architecture allows G-3 to accommodate many user
 interfaces.  As an example, the compartmental solver {\bf Heccer} can be driven
 stand-alone from C code, Python, or Perl to run the simplest
 models, or it can be interfaced with the {\bf Model\,Container} to
-run more realistic multicompartment models based on morphological
+run more realistic multi-compartment models based on morphological
 data. To illustrate this flexibility we now compare the above Python
 script with alternative implementations in C and the GENESIS SLI.
 
@@ -343,7 +343,7 @@ The complexity of the GENESIS SLI interface falls between that of the
 Python interface and the C code interface\footnote{Note,
  the G-2 SLI is supported by G-3 through its backward compatibility
   component {\bf NS-SLI}.}.  While
-compartments and parameters have names, numerical values are given in
+compartments and parameters have names and numerical values are given in
 a format used by solvers.
 
 { 

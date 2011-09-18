@@ -218,7 +218,7 @@ Historically, the development of neuronal simulation software for the constructi
 % Wilson MA & Bower JM (1989) Computer simulation of oscillatory behavior in cerebral cortical networks. In D Anderson (ed.) Neural Information Processing Systems. American Institute of Physics: New York. pp. 84--91.
 % Wilson MA, Bhalla US, Uhley JD & Bower JM (1989) GENESIS: A system for simulating neural networks. In D Anderson (ed.) Neural Information Processing Systems. American Institute of Physics: New York. pp. 485--492.
 
-These software systems have both been highly successful and have continued to grow in complexity through cycles of research project extension (see for example parallel NEURON \cite{migliore06:_paral_networ_simul_neuron} and PGENESIS \cite{Hereld:2004ly}). However, after more than twenty years of extending their functionality, usually by the direct incorporation of source code into the core of the simulator, code structures have become so complicated that it is now increasingly difficult, if not impossible, to easily continue this process. The resulting stand-alone applications have become {\it monolithic} \footnote{Note, {\it italicized} text indicates the first appearance of a technical term defined in Materials and Methods. {\tt Typewriter} text indicates the name of a software {\it module} defined in Results.} with their life cycles inevitably moving  from extension to maintenance. A significant consequence of this process is that the development of an optimized simulation can be a considerable challenge for the neuroscientist unfamiliar with the underlying mathematical and computational theory.
+These software systems have both been highly successful and have continued to grow in complexity through cycles of research project extension (see for example parallel NEURON \cite{migliore06:_paral_networ_simul_neuron} and PGENESIS \cite{Hereld:2004ly}). However, after more than twenty years of extending their functionality, usually by the direct incorporation of source code into the core of the simulator, code structures have become so complicated that it is now increasingly difficult, if not impossible, to easily continue this process. The resulting stand-alone applications have become {\it monolithic} \footnote{Note, {\it italicized} text indicates the first appearance of a technical term defined in Materials and Methods. {\tt Typewriter} text indicates the name of a software {\it module} described in Results.} with their life cycles inevitably moving  from extension to maintenance. A significant consequence of this process is that the development of an optimized simulation can be a considerable challenge for the neuroscientist unfamiliar with the underlying mathematical and computational theory.
 
 % Migliore, M, Cannia, C., Lytton, W.W., Markram, H. and Hines, M.L. (2006) Parallel network simulations with NEURON. J Comput Neurosci 21: 119--129.
 % Hereld M, Stevens RL, van Drongelen W \& Lee HC (2004) Developing a petascale neural simulation.  Proc 26th Ann Int Conf IEEE EMBS 2: 3999--4002.
@@ -272,14 +272,14 @@ Catacomb2 http://www.compneuro.org/catacomb/ccmb\_help/index.html, \cite{cannon0
 
 %As a complement to the Type\,1 interoperability provided by a `universal' language such as NeuroML or SBML, we here introduce the Computational Biology Initiative federated simulator architecture (CBI architecture). It provides a formal description of the class of simulators that support Type 2, or runtime interoperability.
 
-Here we introduce a new class of simulator architecture, the Computational Biology Initiative federated software architecture (for convenience referred to here as the CBI architecture). It takes its name from the Computational Biology Initiative at the University of Texas at San Antonio, where development was first initiated. It has been fully implemented as the basis of the recently reconfigured GENESIS (see following paper, Cornelis {\it et al}., 2011). As we now show, it is a {\it software architecture} that transparently supports both
+Here we introduce a new class of simulator architecture, the Computational Biology Initiative federated software architecture (for convenience referred to here as the CBI architecture). It takes its name from the Computational Biology Initiative at the University of Texas at San Antonio, where development was first initiated. It has been fully implemented as the basis of the recently reconfigured GENESIS (see \cite{Cornelis:2011fk})\marginpar{\bf Editor: Could you please complete and insert the reference for citation [28] in the References for the associated manuscript, {\it Python as a Federation Tool for GENESIS 3.0}.}. As we now show, it is a {\it software architecture} that transparently supports both
 interoperability and {\it extensibility} for model building, simulation, and result analysis.
 
 % Results and Discussion can be combined.
 \section*{Results}
 
 A biological system can be characterized as rich, complex, and
-multi-dimensional.  These characterics distinguish it from the
+multi-dimensional.  These characteristcs distinguish it from the
 mathematical representations and data formats employed by a
 computer-based model.  Specifically, the dynamical properties of
 a biological system do not map easily to the logical principles
@@ -361,7 +361,7 @@ configuration\cite{cannon07:_inter}.
 
 As many more data flows exist than are present in reality, each actual
 data flow can be considered in the context of a sequence of user
-actions, ie. a workflow. In this section, we introduce
+actions, i. e. a workflow. In this section, we introduce
 the set of regular workflows that use CBI simulator architecture
 applications by describing an {\it ideal user workflow} where a user wants to model a biological system. We
 then briefly mention a second set of workflows that comprise user extensions of the
@@ -419,7 +419,7 @@ the neurosciences. User {\it concerns} have a direct influence on the
 user's experience of an application.  Technical concerns have a clear
 and direct influence on the partitioning of a program into its primary
 functional blocks, and are also crucial for problem diagnosis and
-guaranteeing the correct behaviour of software.  Here, we propose there
+guaranteeing the correct behavior of software.  Here, we propose there
 are two principal concerns that underly the development of modeling
 software: (1) Separation between data and control, and (2) Separation of biology and mathematics through the use of data-layering.
 
@@ -578,7 +578,6 @@ separation between data and control
 vertical dashed lines, respectively). The CBI architecture draws its
 inspiration from this partitioning.
 
-
 We refer to the CBI architecture
 as being `federated' as it extends the modular approach associated
 with the development of single applications to the functional
@@ -590,7 +589,7 @@ and implementations of the underlying applications and data sources
 In doing so,
 federation provides transparency, heterogeneity, a high degree of
 function, autonomy for the underlying federated sources,
-extensibility, openness, and the possibility of highly optimised
+extensibility, openness, and the possibility of highly optimized
 performance. 
 Ideally, it makes the underlying applications look like a single
 system to the user. Enhanced application interoperability is achieved
@@ -673,7 +672,7 @@ The {\tt Biology\,Model\,Container}, which allows a user to define a model
 in terms of biological properties such as spine, morphology, circuits
 and their connectivity, and (3) The {\tt Experiment\,Model\,Container},
 which enables the definition of an experiment in terms of actions
-taken on a biological model. For simplicity, we collectively refer to the {\tt Biology\,Model\,Container} and the {\tt Experiment\,Model\,Container} as the {\tt Model\,Containers}.
+taken on a biological model.
 
 \paragraph{\bf Model Tools:}
 
@@ -682,7 +681,7 @@ a good GUI for model construction (for a typical
 example see \cite{gleeson07}).  The difference with these tools is that in the CBI
 architecture this part of the GUI does not export a model in a
 simulator specific language. Instead, it interacts directly with the
-{\tt Model\,Containers} via a low-level {\it application binary interface}
+{\tt Model\,Containers}\footnote{ For simplicity, where appropriate, we collectively refer to the {\tt Biology\,Model\,Container} and the {\tt Experiment\,Model\,Container} as the {\tt Model\,Containers}.} via a low-level {\it application binary interface}
 (ABI).  The ABI provides a direct
 coupling between the implementation technologies of the different
 software components, creates a much tighter loop between the GUI,
@@ -802,7 +801,7 @@ Modules in the lowest level of the CBI architecture
 employ specific algorithms for the solution of numerical equations.
 They include difference equation solvers and sequence executors that
 can discretize and tabulate fixed mathematical functions according to
-a user setable accuracy, and (2) {\tt Controllers} (such as the simulation
+a user settable accuracy, and (2) {\tt Controllers} (such as the simulation
 clock) and {\tt Communication\,Infrastructures} optimized for discrete
 events and numerics.  Collectively these modules implement the
 run-time environment of a simulator.
@@ -1003,9 +1002,9 @@ Figure\,\ref{fig:cbi-architecture-expanded} provides an expanded view
 of Figure\,\ref{fig:cbi-architecture-simple} and illustrates in more
 detail the structural relationships between the different modules and
 sub-modules that comprise the CBI architecture. We introduced their
-functionality above.  The behaviour of the CBI architecture is defined
+functionality above.  The behavior of the CBI architecture is defined
 by the functional and dynamic connectivity provided by these
-individual modules.  We now describe this behaviour within the
+individual modules.  We now describe this behavior within the
 context of our ideal user workflow.\\
 
 % Figure 4
@@ -1017,7 +1016,7 @@ context of our ideal user workflow.\\
 %cannot induce diagonal connections between the modules inside the
 %CBI architecture.
 
-\paragraph{Dataflows in the CBI Architecture}
+\paragraph{Data-flows in the CBI Architecture}
 A (G)UI translates user actions into a family of events that propagate
 to other components of a software architecture, impact the internal
 states of these components, and direct the data flows between them.
@@ -1041,7 +1040,7 @@ simulation, then save the output back to files and databases.  When
 combined, these steps of the ideal user workflow imply a cyclic data
 flow from files and databases to the back-ends.  Here we explain how
 user actions and data flows relate to one another in the CBI
-architecture and define the overall behaviour of an implemented
+architecture and define the overall behavior of an implemented
 software system.
 
 %Intermediate results may be analyzed or aggregated by
@@ -1096,7 +1095,7 @@ this, the memory image of a model must first be expanded into a
 representation that includes the mathematical equations and parameters
 relevant to the given simulation but, for instance, does not include
 the spatial layout of segments as this is not required by the {\tt
-  Solvers}.  This behaviour is different from that of existing
+  Solvers}.  This behavior is different from that of existing
 simulators, e.g. GENESIS 2. Such simulators do not make an explicit
 distinction between internal data structures for model representation
 and data structures for computation.  Consequently, they often
@@ -1582,7 +1581,6 @@ system.  Ultimately, the user workflow integrates a simulator into the
 scientific workflow such that any CBI compliant simulator provides
 direct support for scientific publication and communication.
 
-
 %\subsubsection*{Computational Modeling and Scientific Communication}
 
 %The translation of a mental model and the implementation choices made
@@ -1742,7 +1740,6 @@ allows different individuals to work in parallel on the same software
 application \cite{DeRemer:1975oq}.  In particular, federated
 software supports the scientific enterprise in general and scientific research in particular, by allowing individual
 scientists to work on software dedicated to their own research projects.
-
 
 % Moore JW (2010) A personal view of the early development of computational neuroscience in the USA. Frontiers in Computational Neuroscience 4: 20.
 % Brooks, Frederick P., Jr. (1995). The Tar Pit, published in The Mythical Man-Month - Anniversary Edition. ISBN 0-201-83595-9.  Reading, MA: Addison-Wesley Pub. Co. pp. 3--6.
