@@ -114,40 +114,6 @@ the statement, but few truly understand and even fewer are trying to
 change that situation, so I think it is important to make that point
 clear.
 
-<technical intermezzo>
-
-Besides our efforts there are two other efforts that I am aware of
-that try to solve this problem.  Firstly Neuron now includes
-additional solvers for subcellular modeling.  I have strong personal
-doubts that this will be truly successful for two reasons: the Neuron
-environment does not have a mature plugin mechanism (read: it is
-previous generation).  As a consequence the new solvers are tightly
-integrated with the rest of the code and new solvers cannot be
-contributed by external developers.  It also seems that the networking
-capabilities in Neuron are still immature from a usability
-perspective.  Overall I have the impression that Neuron is at the
-limits of its internal (monolythic) architecture.
-
-Secondly Moose also has a plugin architecture that allows developers
-to plugin new solvers but it is immature.  The API is unstable
-(changes over time) and is hardly documented.  The API is based on the
-mathematics of the model (via the Moose messaging system) which is
-conceptually similar to G-2 and I consider it a limiting factor.
-
-In part because of these problems with Moose and Neuron for
-multi-scale simulation, it is clear now that advanced middle-ware is /
-will be necessary for the implementation of efficient communication
-between solvers.  Currently people try to hack in the middle-ware as
-necessary, but neither Neuron nor Moose nor any other simulator I
-know, offers the handles necessary to manage this type of middle-ware
-at run-time.  G-3 does and it works.  As a proof of concept, Mando
-recently started to interface with these handles without understanding
-their full scope (because he does not have to).  But except for the
-model-container there are no G-3 components nor middle-ware available
-for running multi-scale simulations.  So it currently stays a proof of
-concept.
-
-<end technical intermezzo>
 
 For a presentation:
 
