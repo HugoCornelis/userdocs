@@ -218,7 +218,7 @@ simple models with many default settings (e.g. to start a new research
 project) from more complicated interfaces that expose the full
 functionality of the simulator.
 
-As an example, the G-3 Python module {\it nmc}\footnote{Note, {\it italicized} text indicates the names of Python modules, whereas, {\tt Typewriter} text is reserved for Python coding examples and the dimensions of physical quantities. {\bf Bold} text indicates the names of software components in G-3.} contains functions to
+As an example, the G-3 Python module {\it nmc}\footnote{Note, {\it italicized} text indicates the names of Python modules, directory paths, and file names, whereas, {\tt Typewriter} text is reserved for Python coding examples and the dimensions of physical quantities. {\bf Bold} text indicates the names of software components in G-3.} contains functions to
 simplify the storage of neuron models in computer memory.  This module
 is a simple front-end to the {\bf Model\,Container}, a G-3 component
 which for efficiency is coded in the system programming language C.
@@ -563,9 +563,12 @@ example,\,{\it event\_data/events.yml}:
       EVENT_FILENAME ``event_data/events.yml''
 \end{verbatim}
 
-Finally, following the addition of an output for the somatic membrane potential, a simulation can conveniently be started using:
+Finally, following the addition of an output for the somatic membrane potential:
 \begin{verbatim}
    add_output /Purkinje/segments/soma Vm
+\end{verbatim}
+A simulation can then conveniently be started using:
+\begin{verbatim}
    run /Purkinje 0.1
 \end{verbatim}
 This simulation produces the somatic response to the given dendritic stimulus in a file named, by default,\,{\it /tmp/output}.
@@ -583,7 +586,7 @@ with the command:
 Figure~\ref{fig:cbi-studio} shows sample output of running this
 command.  Other capabilities of the {\bf Studio} include rendering
 morphologies in three dimensions (3D) and generating overviews of network
-models (not shown).  In the next section we explore more graphical
+models (not shown).  In the next section we explore some of the more graphical
 capabilities of G-3.
 
 \subsection*{Integration of Pre-existing Applications and Libraries}
@@ -643,7 +646,7 @@ interface builders.
 One such builder is\,{\it wxFormBuilder}\,\footnote{A user interface designer for the\,{\it
     wxPython} toolkit and the Linux desktop environment GNOME. It is
   available from http://wxformbuilder.org/.}. It allows a user to construct a GUI with visual elements
-such as menus and buttons, then write a description of the elements and
+such as menus and buttons and write a description of these elements and
 their bindings to a file known as an XML resource (XRC) file.  The GUI
 definitions in this file can then be rendered with the\,{\it wxWidgets} library and its Python front end\,{\it
   wxPython}.  Further integration with additional G-3 specific data
@@ -976,7 +979,7 @@ applications, we now show how to validate and analyze models of the
 morphology of small dendritic segments obtained from electron
 microscopy data.  The required geometrical algorithms are typically
 available in state-of-the-art rendering applications.  Blender
-(http://www.blender.org/) is a free open source 3D content creation
+(http://www.blender.org/) is one such application. It is a free open source 3D content creation
 suite available for all major operating systems that have Python
 enabled bindings\footnote{ One restriction is that code must be run
   from inside the Blender specific Python interpreter.}. In our
