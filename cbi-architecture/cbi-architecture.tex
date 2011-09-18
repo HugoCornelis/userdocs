@@ -696,10 +696,7 @@ The translation between conceptual and mathematical representations
 involves separate tasks, (1) Linearization of the hierarchical
 structure of the biological model for use by the solvers, and (2)
 Translation of model connectivity to connectivity between these
-solvers.
-
-This requires the {\tt Biology\,Model\,Container} to also act as a model component identification system: given the identifier of a
-biological component in the mathematical representation, the {\tt Biology\,Model\,Container} must be able to translate it into an identifier for a mathematical variable that can be used by a solver.
+solvers. We now briefly expand on these tasks.
 
 \paragraph{\bf Biological Concept Translation:}
 
@@ -717,7 +714,8 @@ hierarchical projections, each containing their own sub-projections and
 connections.  However, during a simulation the different back-ends of the CBI architecture are
 only connected by a set of serial communication ports.  
 It is the {\tt Connectivity\,Translator} that translates the connectivity
-between the components of a biological model to that of the connectivity between low-level back-ends (described below).
+between the components of a biological model to that of the connectivity between low-level back-ends (described below). This requires the {\tt Biology\,Model\,Container} to also act as a model component identification system: given the identifier of a
+biological component in the mathematical representation, the {\tt Biology\,Model\,Container} must be able to translate it into an identifier for a mathematical variable that can be used by a solver.
 % Note that because a modeler connects biological components,
 %hierarchical translation is a substep of connectivity translation.
 
