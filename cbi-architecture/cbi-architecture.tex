@@ -309,7 +309,7 @@ To address these issues, we developed the CBI architecture, a meta-framework for
 functioning simulator. It is the principled result of a
 bottom-up restructuring of the source code of the GENESIS\,2 neural
 simulation system (described in an accompanying paper [reference to
-accompanying paper to be inserted]) that was developed on the basis of our understanding of a general scientific workflow, an {\it ideal user
+accompanying paper to be inserted]) that was developed on the basis of our understanding of a general scientific workflow\marginpar{\bf Hugo, this does not seem to be an appropriate reference.}, an {\it ideal user
 workflow}, and an analytic method referred to as a {\it separation of
 concerns}. The software modules resulting from
 this analysis are described and a brief overview of our implementation of the CBI architecture is then given. 
@@ -375,13 +375,13 @@ functionality of an implementation of the CBI architecture. Both sets of workflo
 %illustrating the current (state of the existing) implementation, nor
 %for a possible implementation in a specific technology.
 
-A five step outline of an {\it ideal user workflow} for the
+A five step outline of an ideal user workflow for the
 development, implementation, and simulation of a computational model
 has been identified from the workflow of users of the GENESIS neural
 simulation platform \cite{cornelis02:_tutor}.  Importantly, the
 workflow explicitly distinguishes between the static structure of a
 model of the biology (Step 1), the dynamic state of its simulation
-(Step 3), and the analysis of this dynamic state (Step 4).
+(Step 3), and the analysis of this dynamic state (Step 4). We also note that this workflow does not specify any particular order for its completion. However, for any given case meaningful simulation output will only occur with completion of Steps 1--4.
 
 \subsubsection*{Step 1: Construct Model}
 
@@ -490,7 +490,7 @@ Our analysis generated the primary functions of the CBI architecture illustrated
 
 \subsubsection*{User Workflows and Biological Data}
 
-Many more possible data flows exist than there are present in reality. So each data flow must be considered in the context of a sequence of user actions, i.\,e. a workflow. Initially, the focus is on regular workflows using CBI simulator architecture applications, i.\,e. where a user wants to model a biological system. We then briefly mention other workflows that support user extensions of the functionality of an implementation of the architecture.
+Many more possible data flows exist than there are present in reality. So each data flow must be considered in the context of a sequence of user actions, i. e. a workflow. Initially, the focus is on regular workflows using CBI simulator architecture applications, i. e. where a user wants to model a biological system. We then briefly mention other workflows that support user extensions of the functionality of an implementation of the architecture.
 
 The first step in our ideal user workflow involves creating or
 importing a model. It maps directly to high-level biological
@@ -585,8 +585,7 @@ Federation aims to provide a unified interface to diverse
 applications and mask from the user the differences, idiosyncrasies,
 and implementations of the underlying applications and data sources
 (see www-128.ibm.com/developerworks/db2/library/techarticle/0203haas/0203haas.html). 
-In doing so,
-federation provides transparency, heterogeneity, a high degree of
+In doing so, federation provides transparency, heterogeneity, a high degree of
 function, autonomy for the underlying federated sources,
 extensibility, openness, and the possibility of highly optimized
 performance. 
@@ -786,8 +785,7 @@ implement a model tutorial (e.g. \cite{bower98:_book_genes}).
 
 \paragraph{\bf Scheduler:}
 
-For stand-alone software components such as the {\tt Model\,Container} and the low-level back-ends to be useful, they must be `glued' together and activated correctly, such that they can work together in co-ordination on a single simulation. This is exactly what the {\tt Scheduler} does. It typically exploits the sophistication of modern scripting languages to load software components on demand and initialize and activate them from a configuration file. The {\tt Scheduler} does not have any computational load and its implementation is both simple and highly configurable. It can also provide a script-based interface for interactive user
-control or the implementation of more sophisticated user-workflows.
+For stand-alone software components such as the {\tt Model\,Container} and the low-level back-ends to be useful, they must be `glued' together and activated correctly, such that they can work together in co-ordination on a single simulation. This is exactly what the {\tt Scheduler} does. It typically exploits the sophistication of modern scripting languages to load software components on demand and initialize and activate them from a configuration file. The {\tt Scheduler} does not have any computational load and its implementation is both simple and highly configurable. It can also provide a script-based interface for interactive user control or the implementation of more sophisticated user-workflows.
 
 % Other configurations will connect the scheduler to other modeling services or solvers. 
 
@@ -824,7 +822,7 @@ neuronal morphology.
 
 \paragraph{\bf Discrete Representations:}
 
-Existing monolithic simulators such as NEURON and GENESIS\,2 currently require the user to explicitly code scripts to avoid duplication of one-off data. In contrast with this, GENESIS\,3, in compliance with the CBI architecture, automatically detects duplicate parameterization of variables such as channel gate kinetics and dynamically shares their tabulated form as necessary. Solver generated discretizations that form the numerical 
+Existing monolithic simulators such as NEURON and GENESIS\,2 currently require the user to explicitly code scripts to avoid duplication of one-off data. In contrast with this, GENESIS\,3, in compliance with the CBI architecture, automatically detects duplicate parameterization of variables such as channel gate kinetics and dynamically shares their tabulated form as necessary. Solver generated discretisations that form the numerical 
 representation of a model are internally published for reuse by other 
 solvers in a process that is invisible to users, e.g. dendritic morphology meshes and Hines 
 enumeration of compartmentalized morphology.  Annotation of the 
@@ -2270,12 +2268,12 @@ Conducting experiments and running simulations are two iterative processes indic
 \includegraphics[width=4in]{figures/cbi-architecture-simple.eps}
 \end{center}
 \caption{ {\bf Overview of a federated software architecture:} Graphical
-  illustration of the different modules defined for the CBI
+  illustration of the primary functional modules defined for the CBI
   federated software architecture.  Control modules are given to the left and data modules to the
   right.  A. The top layer contains conceptual data
   and controls representations of the biology of a model. B. The bottom layer contains
   representations that are numeric and thus close to the hardware.  The middle or intermediate layer
-  bridges between the biology and the numerics implemented in a CBI compliant simulator (see text for details). 
+  bridges between the biology and the numerics implemented in a CBI compliant simulator. Importantly, as our separation of concerns shows (see Fig. \ref{fig:data-control} and text), Control (Scripting\,Libraries\,\&\,Applications) and Data (Database\,Interfaces) modules can interact either directly or via the Graphical\,User\,Interface.
   }
 \label{fig:cbi-architecture-simple}
 \end{figure}
@@ -2288,12 +2286,12 @@ Conducting experiments and running simulations are two iterative processes indic
 \includegraphics[width=4in]{figures/cbi-architecture-expanded.eps}
 \end{center}
 \caption{ {\bf Detailed view of the Computational Biology Initiative
-    federated software architecture.} Illustration of the modules that is closer to an implementation of the CBI architecture. It illustrates the relationships of sub-modules within each of the modules given in
+    federated software architecture.} Illustration of the functional modules that is closer to an implementation of the CBI architecture. It illustrates the relationships of sub-modules within each of the primary functional modules given in
   Figure\,\ref{fig:cbi-architecture-simple}.  North bound interfaces
   group and conceptualize the details of the modules and interact with
   south bound interfaces of higher level modules.  Steps 1--3 of the ideal user workflow induce data flows between the software modules of the CBI
 architecture. This results in data cycling between the upper layers (blue and green boxes) and
-lower layers (red box).  Ultimately, the two layers team to implement a single simulation.  By design any type of model including multi-scale models will exhibit this data cycle. See text for explanation and details.
+lower layers (red box).  Ultimately, the two layers team to implement a single simulation.  By design, any type of model including multi-scale models will exhibit this data cycle. See text for explanation and details.
 }
 \label{fig:cbi-architecture-expanded}
 \end{figure}
