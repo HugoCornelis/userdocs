@@ -151,7 +151,7 @@ scientific questions in computational neuroscience. Simulator functionality was
 expanded through life cycles of research project extension.
 For example, libraries for kinetic pathway modeling were added for
 projects investigating how signaling networks store learned
-behavor\,\cite{bhalla99:_emerg} and how light controls photoreception by regulating calcium release from
+behavior\,\cite{bhalla99:_emerg} and how light controls photoreception by regulating calcium release from
 intracellular calcium stores\,\cite{blackwell00:_eviden_distin_light_induc_calcium}.
 A fast implicit solver was developed for
 complex Purkinje cell modeling\,\cite{deschutter94:_purkin_i,
@@ -175,15 +175,15 @@ and the software life cycle moved from extension to maintenance.
 %components, running simulations, and output collection.
 
 GENESIS 3.0 (G-3) is a major reconfiguration and update of the GENESIS
-simulation system.  The core simulator functionality has been
+simulation system.  This reconfiguration is based on the {\it Neurospaces Project} (http://neurospaces.sourceforge.net/) which was initiated in 1998 as a development center for software components for computational neuroscience simulators. It embodies many software components that all have been developed in full isolation. In it, the core GENESIS simulator functionality has been
 restructured such that it is the first neural simulator to comply with a more modular design, the Computational 
 Biology Initiative federated software architecture (referred to as the CBI
- architecture, described in Materials and Methods and in more detail in\,\cite{cornelis11b}). The CBI
+ architecture, described in Materials and Methods and in more detail in\,\cite{cornelis11b}).\marginpar{\bf Editor: Could you please complete and insert the reference for citation [6] in the References for the associated manuscript, {\it A Federated Design for a Neurobiological Simulation Engine: The CBI federated software architecture}.} The CBI
 architecture is specifically designed to support
 the integration of stand-alone software components and applications by
 using common integration technologies such as modern scripting
 languages. This not only results in
-improved simulator performance, portability, and reusability but also enables both the
+improved simulator performance, portability, and code reusability but also enables both the
 use of new script parsers and user interfaces and the capacity
 to communicate with other modeling programs and environments and external model and data analysis and presentation software.
 
@@ -191,6 +191,346 @@ In the following sections we illustrate the use of the general purpose Python sc
 language for making high performance simulation software coded in
 system programming languages accessible to neuroscientists and
 biologists. We note that equivalent functionality is available from G-3 using the Perl (http://www.perl.org/) scripting language. 
+
+\section*{Materials and Methods}
+
+In the following sections we overview the GENESIS software platform
+and its recent reconfiguration to comply with the CBI architecture
+(described below). We also introduce two scripting languages employed
+by G-3 (Python and Perl) and a simplified wrapper and interface
+generator (SWIG). We outline how they are suitable as federation tools
+for the continued extension of GENESIS functionality. Our approach to
+software development is based on, but not limited to, such languages
+and provides a paradigm that simplifies the extension, modification,
+and customization of complex neurobiological simulation software, not
+only for developers but also most importantly for users.
+
+Starting from an existing source code base, and learning from
+previous experience in simulator development, G-3 is a modularization of the core functions of the GENESIS
+simulator.  The guiding principles that define the implementation and
+function of the G-3 simulator are based on the CBI
+architecture, a modular abstracted architecture
+that layers the data in a simulator and separates data
+representations from the algorithms that process them.
+
+\subsection*{GENESIS 1 and 2}
+\label{sec:genesis}
+
+%GENESIS is a general purpose simulation
+%platform developed to support simulation of neural
+%systems ranging from subcellular components and biochemical reactions
+%to complex models of single neurons, simulations of large networks,
+%and systems-level models. It was the first broad scale modeling system
+%in computational biology to encourage modelers to develop and share
+%model features and components. For these people, it was the
+%object-oriented approach taken by the simulator along with its
+%high-level simulation language that allowed the exchange,
+%modification, and reuse of models or model
+%components. 
+% It was this community of developers and
+% users that ultimately drove the development of the GENESIS platform.
+
+GENESIS simulations are constructed from model components that receive
+inputs, perform calculations on them, and then generate outputs. Model
+neurons are constructed from basic parts, such as compartments, and
+variable conductance ion channels. Channels are linked to their
+compartments which in turn are linked to form
+multi-compartmental neurons of any desired level of complexity.
+Neurons may be then be connected to form neural circuits \cite{bower98:_book_genes}. 
+% It is the paradigm used by the GENESIS 2 script language interpreter (SLI), 
+
+The GENESIS SLI was a high-level simulation language that provided a
+framework within which a modeler could extend the capabilities of the
+simulator and manipulate models or model components by exchange,
+modification, and reuse. The SLI interpreted statements in the GENESIS
+simulation language and constituted the operating system `shell'.
+User-defined SLI scripts were then used to glue together the pieces of
+a simulation. These scripts also controlled the graphical objects used
+to define the front end of a simulation and the GENESIS data handlers.
+It was the commands the SLI recognized and the many GENESIS `objects'
+available for constructing simulations that have most powerfully
+assisted in the sharing of model features amongst the broader modeling
+community.
+
+\subsection*{Scripting Languages}
+
+Historically, there have been fundamental differences between the Unix
+shells and system programming languages such as C or C++ and scripting
+languages such as Perl\,\cite{wall99:_perl_progr_refer_guide},
+Python\,\cite{martelli06:_python_nutsh},
+Rexx\,\cite{ohara88:_moder_progr_using_rexx},
+Tcl\,\cite{ousterhout94:_tcl_tk_toolk}, and VBScript\,\cite{Childs:1995uq}.  System
+programming languages typically start from the most primitive computer
+elements, usually the `words' of memory. They are designed to manage
+the complexity of building data structures and algorithms from scratch
+and generally require pre-declared data types.  Alternatively, as a
+replacement for shell scripts and shell communication pipes, scripting
+languages assume the existence of a set of software components and are
+primarily intended to assemble or glue together these components.
+%They
+%are also often small, lightweight languages, suitable for embedding,
+%and provide higher levels of programming in an interpreted development
+%environment.
+In this way, scripting languages operate at a higher level than system
+programming languages in the sense that on average a single statement
+in a scripting language does more work.  For example, a typical statement in a system
+programming language executes about five machine instructions, whereas,
+in a scripting language a typical statement may execute hundreds or thousands of machine instructions\,\cite{ousterhout98:_scrip}.
+
+%9.  L. Wall, T. Christiansen, and R. Schwartz, Programming Perl, Second Edition, O'Reilly and Associates, ISBN 1-56592-149-6, 1996.
+%4. M. Lutz, Programming Python, O'Reilly, ISBN 1-56592-197-6, 1996.
+%6. R. O'Hara and D. Gomberg, Modern Programming Using REXX, Prentice Hall, ISBN 0-13-597329-5, 1988.
+%8.  J. Ousterhout, Tcl and the Tk Toolkit, Addison-Wesley, ISBN 0-201-63337-X, 1994.
+% 1. John K. Ousterhout (1998) Scripting: Higher Level Programming for the 21st Century. IEEE COMPUTER 31: 23-30.
+
+%A scripting language is not a replacement for a system programming
+%language or vice versa. Each is suited to a different set of tasks.
+%The power of scripting languages arises from the fact that they are
+%typically loosely typed and do not need a visible compilation step.
+%This simplifies connectivity between components and allows for rapid
+%prototyping of a software system.  For example, for gluing and system
+%integration, applications can be developed five to ten times faster
+%with a scripting language when compared with system programming
+%languages which require large amounts of `boilerplate' and conversion
+%code to connect the pieces, functionality that is implicit in
+%scripting languages. When execution speed is key, a system programming
+%language can often run several orders of magnitude faster than a
+%scripting language due to the requirement of fewer run-time checks.
+
+The strongly typed nature of system programming languages discourages
+reuse. Scripting languages, on the other hand, have actually
+stimulated significant software reuse. They use a model where
+interesting components are built in a system programming language and
+then glued together into applications.
+This division of labor provides a natural framework for reusability.
+When well-defined interfaces exist between components and scripts, software reuse becomes easy.
+In this sense scripting and system programming are symbiotic. Used
+together, they produce programming environments of exceptional power where applications can be developed
+five to ten times more rapidly than when a system programming language alone is used.\\
+
+\noindent{\bf Place Figure\,3 about here.}\\
+
+Figure~\ref{fig:g3-interfacing} gives the levels of programing available in G-3. They range from the C coding employed to create the independent components, through Python and Perl interface scripting, the declarative NDF file format used for model construction and the associated reusable NDF libraries coding membrane channels and synapses, to the highest level of coding via the G-Tube GUI. Also indicated is the location of the SLI in this coding hierarchy.
+
+In summary, system programming languages are well suited for building functional software
+components where there is a requirement for computing speed because data structures and
+algorithms are complex, whereas, scripting languages are well suited for assembling
+applications where the complexity is in the connections. With an
+increasing requirement for software integration, scripting is
+providing an important programming paradigm.
+
+%Here, we have illustrated the use of the general purpose scripting
+%languages such as Python and Perl for making high performance
+%simulation software coded in system programming languages accessible
+%to neuroscientists and biologists.
+
+%http://en.wikipedia.org/wiki/Scripting\_languages
+%Historical overview
+
+%http://www.google.com/trends?q=perl\%2C+Python
+
+%http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html
+
+\subsection*{Python}
+
+Python is a powerful dynamic programming language comparable to Perl,
+Ruby, or Scheme. In September 2011, 4\% of internet references to programing and scripting languages were to Python, making it the 8th most popular programming
+language (see Tiobe Index at http://www.tiobe.com/index.php/content/company/Home.html)\footnote{Ratings are based on the number of skilled engineers world-wide, courses and third party vendors. The popular search engines Google, Bing, Yahoo!, Wikipedia, YouTube and Baidu are used to calculate the ratings.}.  It combines
+considerable power with very clear syntax and has modules, classes,
+exceptions, high level data types, and dynamic and loose typing. It
+runs on many hardware architectures, integrates with scientific and
+user interface libraries, and new modules are easily written in C or
+C++ (or other languages, depending on the chosen implementation). It
+is also usable as an extension language for applications written in
+other languages that need easy-to-use scripting or automated
+interfaces.  It is currently the highest ranked scripting language.
+
+% 9. http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html.
+
+\subsection*{Perl}
+
+Perl was one of the first open source scripting languages. First
+released in 1987
+(http://groups.google.com/group/comp.sources.unix/msg/bb3ee125385ae25f?pli=1),
+it is unique in that it is very much informed by linguistic
+principles.  Originally developed as a scripting language for UNIX, it
+aimed to blend the ease of use of the UNIX shell with the power and
+flexibility of a system programming language like C.  With over 20
+years of development and nearly half a million lines of code, Perl now
+runs on over 100 different platforms [ref:
+http://www.perl.org/about.html].  Currently, there are over 18,000
+open source modules available from the Comprehensive Perl Archive
+Network (CPAN, http://http://www.cpan.org/), assisting in system integration, scientific
+application, and user interface development.  Via the CPAN Inline
+module, Perl integrates seamlessly with both system programming
+languages such as C and C++, and scripting languages including Python.
+Perl supports object-oriented programming, functional programming, and
+procedural programming paradigms. In September 2011, nearly
+2.5\,\% of internet references to programing and scripting languages were to Perl, making
+it the 9th most popular programming
+language (see Tiobe Index at http://www.tiobe.com/index.php/content/company/Home.html).
+
+\subsection*{Meta-Programming in Perl and Python}
+
+Meta-programming is a programming technique where a program generates
+a new program and then executes it.  This technique is employed by
+the G-3 Python and Perl bindings to generate an
+additional layer of script code that provides increased flexibility
+for defining models and simulations.  A predefined Python  or
+Perl data structure defines high-level interfaces that are translated
+into strings containing Python or Perl code such as class and method
+definitions.  During program initialization these are bound to the run-time
+environment using the Perl or Python\,{\it eval} functions.
+
+\subsection*{SWIG for Federated Software Integration}
+
+SWIG is a software development tool that connects programs written
+in system programming languages such as C and C++ with high-level scripting 
+languages such as Python or Perl. SWIG was chosen to facilitate 
+the use of these bindings in
+G-3. It controls most aspects of wrapper
+generation and automates the generation of the required Perl and
+Python interfaces. SWIG uses a layered approach to build extension
+modules where different parts are defined in either C or the chosen
+scripting language. The C layer contains low-level wrappers whereas
+the script code is used to define high-level features.  Considerably
+more flexibility is obtained by generating code in both languages as
+an extension module can then be enhanced with support code in either
+language.  Table~\ref{tab:cbi-codecounts} gives an overview of the
+resulting code.  As expected, low-level software components emphasize
+low-level languages and have more lines of code (e.g. C), whereas, high-level
+software components emphasize high-level languages and have fewer
+lines of code (e.g. Python, Perl).\\
+
+\noindent {\bf Place Table 1 About Here.}\\
+
+\subsection*{The CBI Federated Software Architecture}
+\label{subsec:cbi}
+
+The CBI architecture provides a modular paradigm that places stand-alone
+software components into logical relationships.  Each software module
+is an independent component that allows development and
+maintenance to be implemented concurrently.
+%  In this it shares a
+%number of ideas with the well-known three-tier architecture
+%paradigm\cite{Eckerson1995}.  The distinguishing feature of the CBI
+%architecture is that the data layers in the CBI architecture
+%correspond to high-level data associated with biological concepts and
+%extend to low level data such as numerical values.  The benefit of
+%this layering of data is that it allows the mathematical and
+%biological aspects of a model to be distinguished and separated.  As a
+%consequence, the simulator back end comprises mathematical solvers
+%rather than relational databases as is the case in a traditional
+%three-tier software architecture.
+(In this section we summarize the concepts of the CBI architecture.
+For an in-depth explanation see the accompanying paper titled ``A
+Federated Design for a Neurobiological Simulation Engine: The CBI
+federated software architecture.''.)
+
+The core components of the architecture are shown in
+Figure~\ref{fig:cbi-arch} (see next section). On the bottom left are
+databases of neuronal models or experimental data that can be accessed
+by the simulator. Optional model processors (e.g. the Reconstruct
+interface) load a model into the {\bf Model\,Container} which stores a
+model in memory and makes it available to other software components in
+different formats.  One function of the {\bf Model\,Container} is to
+translate biological concepts and properties into mathematical
+concepts that can be understood by the mathematical solvers. Thus,
+importantly and unlike other existing neural simulators, the
+mathematical solvers are independent of the biological representation
+of a model. A simulation controller orchestrates the actions taken by
+the {\bf Model\,Container} (e.g. when to load a model, the definition
+of the stimulus, and when to export a model) and mathematical solvers
+(e.g. when to fetch a model from the {\bf Model\,Container}, when to
+start
+calculations, and what the output variables are).\\
+
+\noindent{\bf Place Figure\,4 About Here} \\
+
+A scripting layer allows the simulation system to be driven from
+multiple scripting languages. Python and Perl are currently supported,
+as is (for backward compatibility) the GENESIS SLI. The G-3 GUI is shown at the top of
+Figure~\ref{fig:cbi-arch} and is entirely being developed in Python.  It supports many functions and
+allows models to be imported from databases or constructed from
+scratch, the exploration of model structure and parameters, and the
+visualization of variables and model behavior.
+
+%Clear delineation of the components in the CBI architecture allows
+%both developers and users to choose to contribute to a single
+%component with limited complexity, instead of being forced to
+%contribute to the whole simulator and be exposed to tremendous
+%complexity.
+Within the CBI paradigm each software component is self contained and
+can be run independently. This facilitates the interoperability of
+software obtained from different sources and has several important
+advantages for software development, including: (1) Reduced complexity
+of software components compared to a unitary system, (2) simplified
+documentation of components in terms of inputs and outputs, (3) simplified development and testing of components as stand
+alone software, (4) clear delineation of scope for the development
+of new components, and (5)
+%easy incorporation or removal of individual components
+%as required.  The federated approach provides three significant
+%advantages for software development: (1) components can be run
+%separately on different machines, for example, the GUI and the
+%modeling environment might run locally, while the mathematical solvers
+%run elsewhere, either serially or in parallel, on more powerful
+%machines, (2) decomposition of an application into multiple software
+%components allows reuse and extension of individual components,
+%whether stand alone or otherwise, clearly facilitating model
+%development and research progress, and (3) 
+independent update, enhancement, or
+replacement of individual components when needed, making the life cycle of a modular architecture
+smoother than that of a non-scalable application.
+
+The CBI architecture provides a framework for the
+integration of independent software components into a functioning
+simulator using a scripting language of choice.  Here, we specifically
+illustrate the use of Python for this purpose.
+
+\subsection*{G-3 as a CBI Compliant Simulator}
+
+G-3 is a major revision and update of the GENESIS system.  The core
+simulator functionality is restructured, with a more modern modular software
+design referred to as the CBI architecture. This not
+only results in improved simulator performance and portability, but
+allows the use of alternate script parsers and user interfaces that provide the ability to communicate with other modeling programs and
+environments.
+
+Much existing software such as GUI libraries and plotting libraries,
+are application neutral.  Other software packages are tailored to the
+needs of computational neuroscience.  The Neurospaces project
+(http://www.neurospaces.org/) provides core software components for the
+G-3 simulator\,\cite{cornelis03:_neuros}. These include, the (1) {\bf
+  Model Container}: Stores two representations of a model, the first
+is conceptual and can be regarded as an enumeration of biological
+concepts and their relationships, the second is an expanded
+mathematical representation that, if complete, can be simulated, (2)
+{\bf Heccer}: A fast compartmental solver based on the GENESIS\,{\it
+  hsolve} object that can be instantiated from C, Perl, Python or
+other scripting languages, (3) {\bf SSP} (Simple Scheduler in Perl):
+Binds {\bf Heccer} and the {\bf Model\,Container}, and activates them
+correctly, such that they work together on a single simulation, (4)
+{\bf Studio} and {\bf G-Tube}: Contain graphical tools for model
+construction, exploration, and simulation, (5) {\bf G-Shell} (G-3
+Interactive Shell): Dynamically loads other software components in an
+interactive environment, and the (6) {\bf Project\,Browser}: For
+inspection of projects and simulation results. For completeness, we
+also mention (7) {\bf NS-SLI}: G-3 component that provides
+backward compatibility for the GENESIS SLI. All software can be
+downloaded from the GENESIS web site
+(http://genesis-sim.org/download/) and extensive installation
+instructions with examples are available from the GENESIS
+documentation website
+(http://www.genesis-sim.org/userdocs/genesis-installation/genesis-installation.html).
+Simulator correctness can be established by running automated
+regression and integration tests.
+
+%\cite{stewart09:_python}
+%\cite{deschutter09:_review_paper_descr_neuroin_softw}.
+%\pagebreak
+
+%Using Python for integration makes
+%the application much more accessible to users.
 
 % Results and Discussion can be combined.
 \section*{Results}
@@ -671,12 +1011,12 @@ via a text control widget and contains a button to start the simulation.
 
 The first lines of code in the script load the necessary Python
 modules which in turn load low-level libraries coded in a system
-programming language.  Importing\,{\it example} makes the
-previously defined function\,{\it run\_simulation} available to G-3.  The\,{\it
-  DataPlot} class is a specialized class designed to read in GENESIS data
-output and load it into a\,{\it wxPython} plot widget.  The import of
-{\it wx} references a system wide install of\,{\it wxPython} and makes
-the GUI functions of\,{\it wxWidgets} available to the script.
+programming language. % Importing\,{\it example} makes the
+%previously defined function\,{\it run\_simulation} available to G-3.  The\,{\it
+%  DataPlot} class is a specialized class designed to read in GENESIS data
+%output and load it into a\,{\it wxPython} plot widget.  The import of
+%{\it wx} references a system wide install of\,{\it wxPython} and makes
+%the GUI functions of\,{\it wxWidgets} available to the script.
 
 \begin{verbatim}
 import DataPlot
@@ -1133,7 +1473,7 @@ http://www.morphml.org/), can be used to visually validate network
 layout and design\,\cite{crook07:_morph}, and can be connected to
 Python applications (e.g.  see http://www.jython.org/).  In principle
 this allows it to be interfaced with other simulators that have Python
-bindings, including NEURON and NEST.
+bindings, including NEURON  (http://www.neuron.yale.edu/neuron/, \cite{m93:_neural_system}) and NEST (http://www.nest\-initiative.org/index.php/About\_Us,\cite{diesmann01}).
 
 A serial communication framework for event delivery of action
 potentials to afferent synapses has been developed.  Called
@@ -1197,7 +1537,7 @@ This provides functionality that powerfully supports the development of
 \subsection*{Federated Software Development in Neuroscience}
 
 Processes of software development have traditionally been described as
-either cathedral-like where there is a closed developement group under
+either cathedral-like where there is a closed development group under
 central direction and software releases are infrequent, or
 bazaar-like where software is developed by
 volunteers and software releases occur early and
@@ -1220,353 +1560,12 @@ Here, based on the CBI paradigm, we have outlined a solution for
 multi-threaded development of software components for neuroscience
 (for other examples of this approach to neural simulation
 see\,\cite{schuermann09:_neuron, nordlie09:_visual}).  We have given
-examples that use Python and Perl.
+examples that use Python.
 
 Employed in this way, the modularized design of the G-3 simulator
 gives rise to an ecology of software components that can be integrated
 in a variety of ways to provide a software development environment
 that is both progressive and federated.
-
-\section*{Materials and Methods}
-
-In the following sections we overview the GENESIS software platform
-and its recent reconfiguration to comply with the CBI architecture
-(described below). We also introduce two scripting languages employed
-by G-3 (Python and Perl) and a simplified wrapper and interface
-generator (SWIG). We outline how they are suitable as federation tools
-for the continued extension of GENESIS functionality. Our approach to
-software development is based on, but not limited to, such languages
-and provides a paradigm that simplifies the extension, modification,
-and customization of complex neurobiological simulation software, not
-only for developers but also most importantly for users.
-
-Starting from an existing source code base, and learning from
-previous experience in simulator development, G-3 is a modularization of the core functions of the GENESIS
-simulator.  The guiding principles that define the implementation and
-function of the G-3 simulator are based on the CBI
-architecture, a modular abstracted architecture
-that layers the data in a simulator and separates data
-representations from the algorithms that process them.
-
-\subsection*{GENESIS 1 and 2}
-\label{sec:genesis}
-
-%GENESIS is a general purpose simulation
-%platform developed to support simulation of neural
-%systems ranging from subcellular components and biochemical reactions
-%to complex models of single neurons, simulations of large networks,
-%and systems-level models. It was the first broad scale modeling system
-%in computational biology to encourage modelers to develop and share
-%model features and components. For these people, it was the
-%object-oriented approach taken by the simulator along with its
-%high-level simulation language that allowed the exchange,
-%modification, and reuse of models or model
-%components. 
-% It was this community of developers and
-% users that ultimately drove the development of the GENESIS platform.
-
-GENESIS simulations are constructed from model components that receive
-inputs, perform calculations on them, and then generate outputs. Model
-neurons are constructed from basic parts, such as compartments, and
-variable conductance ion channels. Channels are linked to their
-compartments which in turn are linked to form
-multi-compartmental neurons of any desired level of complexity.
-Neurons may be then be connected to form neural circuits (ref to BOG). 
-% It is the paradigm used by the GENESIS 2 script language interpreter (SLI), 
-
-The GENESIS SLI was a high-level simulation language that provided a
-framework within which a modeler could extend the capabilities of the
-simulator and manipulate models or model components by exchange,
-modification, and reuse. The SLI interpreted statements in the GENESIS
-simulation language and constituted the operating system `shell'.
-User-defined SLI scripts were then used to glue together the pieces of
-a simulation. These scripts also controlled the graphical objects used
-to define the front end of a simulation and the GENESIS data handlers.
-It was the commands the SLI recognized and the many GENESIS `objects'
-available for constructing simulations that have most powerfully
-assisted in the sharing of model features amongst the broader modeling
-community.
-
-\subsection*{Scripting Languages}
-
-Historically, there have been fundamental differences between the Unix
-shells and system programming languages such as C or C++ and scripting
-languages such as Perl\,\cite{wall99:_perl_progr_refer_guide},
-Python\,\cite{martelli06:_python_nutsh},
-Rexx\,\cite{ohara88:_moder_progr_using_rexx},
-Tcl\,\cite{ousterhout94:_tcl_tk_toolk}, and Visual Basic.  System
-programming languages typically start from the most primitive computer
-elements, usually the `words' of memory. They are designed to manage
-the complexity of building data structures and algorithms from scratch
-and generally require pre-declared data types.  Alternatively, as a
-replacement for shell scripts and shell communication pipes, scripting
-languages assume the existence of a set of software components and are
-primarily intended to assemble or glue together these components.
-%They
-%are also often small, lightweight languages, suitable for embedding,
-%and provide higher levels of programming in an interpreted development
-%environment.
-In this way, scripting languages operate at a higher level than system
-programming languages in the sense that on average a single statement
-in a scripting language does more work.  For example, a typical statement in a system
-programming language executes about five machine instructions, whereas,
-in a scripting language a typical statement may execute hundreds or thousands of machine instructions\,\cite{ousterhout98:_scrip}.
-
-%9.  L. Wall, T. Christiansen, and R. Schwartz, Programming Perl, Second Edition, O'Reilly and Associates, ISBN 1-56592-149-6, 1996.
-%4. M. Lutz, Programming Python, O'Reilly, ISBN 1-56592-197-6, 1996.
-%6. R. O'Hara and D. Gomberg, Modern Programming Using REXX, Prentice Hall, ISBN 0-13-597329-5, 1988.
-%8.  J. Ousterhout, Tcl and the Tk Toolkit, Addison-Wesley, ISBN 0-201-63337-X, 1994.
-% 1. John K. Ousterhout (1998) Scripting: Higher Level Programming for the 21st Century. IEEE COMPUTER 31: 23-30.
-
-%A scripting language is not a replacement for a system programming
-%language or vice versa. Each is suited to a different set of tasks.
-%The power of scripting languages arises from the fact that they are
-%typically loosely typed and do not need a visible compilation step.
-%This simplifies connectivity between components and allows for rapid
-%prototyping of a software system.  For example, for gluing and system
-%integration, applications can be developed five to ten times faster
-%with a scripting language when compared with system programming
-%languages which require large amounts of `boilerplate' and conversion
-%code to connect the pieces, functionality that is implicit in
-%scripting languages. When execution speed is key, a system programming
-%language can often run several orders of magnitude faster than a
-%scripting language due to the requirement of fewer run-time checks.
-
-The strongly typed nature of system programming languages discourages
-reuse. Scripting languages, on the other hand, have actually
-stimulated significant software reuse. They use a model where
-interesting components are built in a system programming language and
-then glued together into applications.
-This division of labor provides a natural framework for reusability.
-When well-defined interfaces exist between components and scripts, software reuse becomes easy.
-In this sense scripting and system programming are symbiotic. Used
-together, they produce programming environments of exceptional power where applications can be developed
-five to ten times more rapidly than when a system programming language alone is used.\\
-
-\noindent{\bf Place Figure\,3 about here.}\\
-
-Figure~\ref{fig:g3-interfacing} gives the levels of programing available in G-3. They range from the C coding employed to create the independent components, through Python and Perl interface scripting, the declarative NDF file format used for model construction and the associated reusable NDF libraries coding membrane channels and synapses, to the highest level of coding via the G-Tube GUI. Also indicated is the location of the SLI in this coding hierarchy.
-
-In summary, system programming languages are well suited for building functional software
-components where there is a requirement for computing speed because data structures and
-algorithms are complex, whereas, scripting languages are well suited for assembling
-applications where the complexity is in the connections. With an
-increasing requirement for software integration, scripting is
-providing an important programming paradigm.
-
-%Here, we have illustrated the use of the general purpose scripting
-%languages such as Python and Perl for making high performance
-%simulation software coded in system programming languages accessible
-%to neuroscientists and biologists.
-
-%http://en.wikipedia.org/wiki/Scripting\_languages
-%Historical overview
-
-%http://www.google.com/trends?q=perl\%2C+Python
-
-%http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html
-
-\subsection*{Python}
-
-Python is a powerful dynamic programming language comparable to Perl,
-Ruby, or Scheme. In March 2011 nearly 5\% of all code written was
-developed in Python to make it the 4th most popular programming
-language\,\cite{software11:_tiobe_progr_commun_index}.  It combines
-considerable power with very clear syntax and has modules, classes,
-exceptions, high level data types, and dynamic and loose typing. It
-runs on many hardware architectures, integrates with scientific and
-user interface libraries, and new modules are easily written in C or
-C++ (or other languages, depending on the chosen implementation). It
-is also usable as an extension language for applications written in
-other languages that need easy-to-use scripting or automated
-interfaces.  It is currently the highest ranked scripting language.
-
-% 9. http://www.tiobe.com/index.php/content/paperinfo/tpci/index.html.
-
-\subsection*{Perl}
-
-Perl was one of the first open source scripting languages. First
-released in 1987
-[http://groups.google.com/group/comp.sources.unix/msg/bb3ee125385ae25f?pli=1],
-it is unique in that it is very much informed by linguistic
-principles.  Originally developed as a scripting language for UNIX, it
-aimed to blend the ease of use of the UNIX shell with the power and
-flexibility of a system programming language like C.  With over 20
-years of development and nearly half a million lines of code, Perl now
-runs on over 100 different platforms [ref:
-http://www.perl.org/about.html].  Currently, there are over 18,000
-open source modules available from the Comprehensive Perl Archive
-Network (CPAN), assisting in system integration, scientific
-application, and user interface development.  Via the CPAN Inline
-module, Perl integrates seemlessly with both system programming
-languages such as C and C++, and scripting languages including Python.
-Perl supports object-oriented programming, functional programming, and
-procedural programming paradigms. In October 2010,
-2.3\,\% of programming code were written in Perl to make
-it the 10th most popular programming
-language\,\cite{software11:_tiobe_progr_commun_index}.
-
-\subsection*{Meta-Programming in Perl and Python}
-
-Meta-programming is a programming technique where a program generates
-a new program and then executes it.  This technique is employed by
-the G-3 Python and Perl bindings to generate an
-additional layer of script code that provides increased flexibility
-for defining models and simulations.  A predefined Python  or
-Perl data structure defines high-level interfaces that are translated
-into strings containing Python or Perl code such as class and method
-definitions.  During program initialization these are bound to the run-time
-environment using the Perl or Python\,{\it eval} functions.
-
-\subsection*{SWIG for Federated Software Integration}
-
-SWIG is a software development tool that connects programs written
-in system programming languages such as C and C++ with high-level scripting 
-languages such as Python or Perl. SWIG was chosen to facilitate 
-the use of these bindings in
-G-3. It controls most aspects of wrapper
-generation and automates the generation of the required Perl and
-Python interfaces. SWIG uses a layered approach to build extension
-modules where different parts are defined in either C or the chosen
-scripting language. The C layer contains low-level wrappers whereas
-the script code is used to define high-level features.  Considerably
-more flexibility is obtained by generating code in both languages as
-an extension module can then be enhanced with support code in either
-language.  Table~\ref{tab:cbi-codecounts} gives an overview of the
-resulting code.  As expected, low-level software components emphasize
-low-level languages and have more lines of code (e.g. C), whereas, high-level
-software components emphasize high-level languages and have fewer
-lines of code (e.g. Python, Perl).\\
-
-\noindent {\bf Place Table 1 About Here.}\\
-
-\subsection*{The CBI Federated Software Architecture}
-\label{subsec:cbi}
-
-The CBI architecture provides a modular paradigm that places stand-alone
-software components into logical relationships.  Each software module
-is an independent component that allows development and
-maintenance to be implemented concurrently.
-%  In this it shares a
-%number of ideas with the well-known three-tier architecture
-%paradigm\cite{Eckerson1995}.  The distinguishing feature of the CBI
-%architecture is that the data layers in the CBI architecture
-%correspond to high-level data associated with biological concepts and
-%extend to low level data such as numerical values.  The benefit of
-%this layering of data is that it allows the mathematical and
-%biological aspects of a model to be distinguished and separated.  As a
-%consequence, the simulator back end comprises mathematical solvers
-%rather than relational databases as is the case in a traditional
-%three-tier software architecture.
-(In this section we summarize the concepts of the CBI architecture.
-For an in-depth explanation see the accompanying paper titled ``A
-Federated Design for a Neurobiological Simulation Engine: The CBI
-federated software architecture.''.)
-
-The core components of the architecture are shown in
-Figure~\ref{fig:cbi-arch} (see next section). On the bottom left are
-databases of neuronal models or experimental data that can be accessed
-by the simulator. Optional model processors (e.g. the Reconstruct
-interface) load a model into the {\bf Model\,Container} which stores a
-model in memory and makes it available to other software components in
-different formats.  One function of the {\bf Model\,Container} is to
-translate biological concepts and properties into mathematical
-concepts that can be understood by the mathematical solvers. Thus,
-importantly and unlike other existing neural simulators, the
-mathematical solvers are independent of the biological representation
-of a model. A simulation controller orchestrates the actions taken by
-the {\bf Model\,Container} (e.g. when to load a model, the definition
-of the stimulus, and when to export a model) and mathematical solvers
-(e.g. when to fetch a model from the {\bf Model\,Container}, when to
-start
-calculations, and what the output variables are).\\
-
-\noindent{\bf Place Figure\,4 About Here} \\
-
-A scripting layer allows the simulation system to be driven from
-multiple scripting languages. Python and Perl are currently supported,
-as is (for backward compatibility) the GENESIS SLI. The G-3 GUI is shown at the top of
-Figure~\ref{fig:cbi-arch} and is entirely being developed in Python.  It supports many functions and
-allows models to be imported from databases or constructed from
-scratch, the exploration of model structure and parameters, and the
-visualization of variables and model behavior.
-
-%Clear delineation of the components in the CBI architecture allows
-%both developers and users to choose to contribute to a single
-%component with limited complexity, instead of being forced to
-%contribute to the whole simulator and be exposed to tremendous
-%complexity.
-Within the CBI paradigm each software component is self contained and
-can be run independently. This facilitates the interoperability of
-software obtained from different sources and has several important
-advantages for software development, including: (1) Reduced complexity
-of software components compared to a unitary system, (2) simplified
-documentation of components in terms of inputs and outputs, (3) simplified development and testing of components as stand
-alone software, (4) clear delineation of scope for the development
-of new components, and (5)
-%easy incorporation or removal of individual components
-%as required.  The federated approach provides three significant
-%advantages for software development: (1) components can be run
-%separately on different machines, for example, the GUI and the
-%modeling environment might run locally, while the mathematical solvers
-%run elsewhere, either serially or in parallel, on more powerful
-%machines, (2) decomposition of an application into multiple software
-%components allows reuse and extension of individual components,
-%whether stand alone or otherwise, clearly facilitating model
-%development and research progress, and (3) 
-independent update, enhancement, or
-replacement of individual components when needed, making the life cycle of a modular architecture
-smoother than that of a non-scalable application.
-
-The CBI architecture provides a framework for the
-integration of independent software components into a functioning
-simulator using a scripting language of choice.  Here, we specifically
-illustrate the use of Perl and Python for this purpose.
-
-\subsection*{G-3 as a CBI Compliant Simulator}
-
-G-3 is a major revision and update of the GENESIS system.  The core
-simulator functionality is restructured, with a more modern modular software
-design referred to as the CBI architecture. This not
-only results in improved simulator performance and portability, but
-allows the use of alternate script parsers and user interfaces that provide the ability to communicate with other modeling programs and
-environments.
-
-Much existing software such as GUI libraries and plotting libraries,
-are application neutral.  Other software packages are tailored to the
-needs of computational neuroscience.  The Neurospaces project
-(http://www.neurospaces.org/) provides core software components for the
-G-3 simulator\,\cite{cornelis03:_neuros}. These include, the (1) {\bf
-  Model Container}: Stores two representations of a model, the first
-is conceptual and can be regarded as an enumeration of biological
-concepts and their relationships, the second is an expanded
-mathematical representation that, if complete, can be simulated, (2)
-{\bf Heccer}: A fast compartmental solver based on the GENESIS\,{\it
-  hsolve} object that can be instantiated from C, Perl, Python or
-other scripting languages, (3) {\bf SSP} (Simple Scheduler in Perl):
-Binds {\bf Heccer} and the {\bf Model\,Container}, and activates them
-correctly, such that they work together on a single simulation, (4)
-{\bf Studio} and {\bf G-Tube}: Contain graphical tools for model
-construction, exploration, and simulation, (5) {\bf G-Shell} (G-3
-Interactive Shell): Dynamically loads other software components in an
-interactive environment, and the (6) {\bf Project\,Browser}: For
-inspection of projects and simulation results. For completeness, we
-also mention (7) {\bf NS-SLI}: G-3 component that provides
-backward compatibility for the GENESIS SLI. All software can be
-downloaded from the GENESIS web site
-(http://genesis-sim.org/download/) and extensive installation
-instructions with examples are available from the GENESIS
-documentation website
-(http://www.genesis-sim.org/userdocs/genesis-installation/genesis-installation.html).
-Simulator correctness can be established by running automated
-regression and integration tests.
-
-%\cite{stewart09:_python}
-%\cite{deschutter09:_review_paper_descr_neuroin_softw}.
-%\pagebreak
-
-%Using Python for integration makes
-%the application much more accessible to users.
 
 % Do NOT remove this, even if you are not including acknowledgments
 \section*{Acknowledgements}
