@@ -11,8 +11,19 @@ use Getopt::Long;
 use YAML;
 use Data::Dumper;
 
+
+$0 =~ m(.*/(.*));
+
+my $program_name = $1;
+
+$program_name =~ m((.*?)-(.*));
+
+my $documentation_set_name = $1;
+my $root_operation_name = $2;
+
+
 my $option_verbose;
-my $option_set_name = "userdocs";
+my $option_set_name = $documentation_set_name || "userdocs";
 my $option_tags = [];
 
 
