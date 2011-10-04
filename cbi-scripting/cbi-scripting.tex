@@ -113,7 +113,7 @@ to be `glued' together and connected to
 external libraries and applications from user-defined Python or Perl scripts.
 
 We illustrate our approach with three examples of Python scripting. 
-(1) Generate and run a simple single-compartment model neuron connected to a 
+(1) Generate and run a simple single-compartment model neuron\footnote{We use the segment for a dendritic extension and a the term compartment for its numerical representation} connected to a 
 stand-alone mathematical solver. (2) Interface a mathematical solver with GENESIS\,3.0 to explore a neuron morphology from either
 an interactive command-line or graphical user interface.
 (3) Apply scripting bindings to connect the GENESIS\,3.0 simulator to
@@ -259,7 +259,7 @@ shells and system programming languages such as C or C++ and scripting
 languages such as Perl\,\cite{wall99:_perl_progr_refer_guide},
 Python\,\cite{martelli06:_python_nutsh},
 Rexx\,\cite{ohara88:_moder_progr_using_rexx},
-Tcl\,\cite{ousterhout94:_tcl_tk_toolk}, and VBScript\,\cite{Childs:1995uq}.  System
+Tcl\,\cite{ousterhout94:_tcl_tk_toolk}.  System
 programming languages typically start from the most primitive computer
 elements, usually the `words' of memory. They are designed to manage
 the complexity of building data structures and algorithms from scratch
@@ -591,11 +591,11 @@ Comment: Python script running a simple model with G-3.
 """
 from g3.nmc import ModelContainer
 
-def run_simulation(simulation_time):
-    my_dt = 1e-5
+def RunSimulation(simulationTime):
+    timeStep = 1e-5
     
 #------------------------------------------------------------------------------
-# Create a model container and some compartments
+# Create a model container with a segment
 #------------------------------------------------------------------------------
     my_nmc = ModelContainer()
     my_cell = my_nmc.CreateCell("/cell")
@@ -639,12 +639,12 @@ def run_simulation(simulation_time):
     schedulees.append(my_heccer)
     schedulees.append(my_output)
 
-    current_time = 0.0
-    while current_time < simulation_time:
-        current_time += my_dt
+    currentTime = 0.0
+    while currentTime < simulationTime:
+        currentTime += timeStep
 
         for schedulee in schedulees:
-            schedulee.Advance(current_time)
+            schedulee.Advance(currentTime)
 
     my_heccer.Finish()
     my_output.Finish()
@@ -655,7 +655,7 @@ def run_simulation(simulation_time):
 #------------------------------------------------------------------------------
 
 if __name__ == '__main__':
-    run_simulation(0.5)
+    RunSimulation(0.5)
 \end{verbatim}
 
 %# Second Example: use a wildcard to activate endogenous synapses (see text)
@@ -737,12 +737,12 @@ setfield /cell/soma dia 2e-05
 setfield /cell/soma len 4.47e-05
 
 
-setfield /cell/soma Cm 4.60608e-11
+setfield /cell/soma Cm 4.57537e-11
 setfield /cell/soma Em -0.0800
 setfield /cell/soma Vm_init -0.068
 setfield /cell/soma inject 1e-9
-setfield /cell/soma Ra 355711
-setfield /cell/soma Rm 3.56051e+08
+setfield /cell/soma Ra 360502
+setfield /cell/soma Rm 3.58441e+08
 
 
 
@@ -808,10 +808,10 @@ the statements:
 The {\bf Model\,Container} can export models constructed in a
 scripting language as a library for incorporation into new models or
 for use with other G-3 components such as the {\bf Project\,Browser}.
-These new models can then be imported by a call to the\,{\it
-  Neurospaces}\,{\it read} method. For example, importing a Purkinje
-cell model with over 4,000 compartments may be done with the following
-statement:
+These new models can then be imported by a call to the\,{\bf
+  Model\,Container}\,{\it Read} method. For example, importing a
+Purkinje cell model with over 4,000 compartments may be done with the
+following statement:
 
 \begin{verbatim}
    my_nmc.Read("cells/purkinje/edsjb1994.ndf")
@@ -1053,11 +1053,11 @@ class G3App(wx.App):
     # and plot the output.
     def OnRun(self,evt):
 
-        simulation_time = float(self.durationTextCtrl.GetValue())
-        print "Simulation time is: " + str(simulation_time)
+        simulationTime = float(self.durationTextCtrl.GetValue())
+        print "Simulation time is: " + str(simulationTime)
         print "running simulation..."
 
-        example.run_simulation(simulation_time)
+        example.RunSimulation(simulationTime)
 
         print "Simulation Complete!"
 
