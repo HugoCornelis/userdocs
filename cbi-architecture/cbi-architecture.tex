@@ -308,8 +308,7 @@ represent (see Supplementary Material--S1, S2 for examples from GENESIS 2; S3, S
 To address these issues, we developed the CBI architecture, a meta-framework for software development that defines a fully
 functioning simulator. It is the principled result of a
 bottom-up restructuring of the source code of the GENESIS\,2 neural
-simulation system (described in an accompanying paper [reference to
-accompanying paper to be inserted]) that was developed on the basis of our understanding of a general scientific workflow\marginpar{\bf Hugo, this does not seem to be an appropriate reference.}, an {\it ideal user
+simulation system that was developed on the basis of our understanding of a general scientific workflow\marginpar{\bf Hugo, this does not seem to be an appropriate reference.}, an {\it ideal user
 workflow}, and an analytic method referred to as a {\it separation of
 concerns}. The software modules resulting from
 this analysis are described and a brief overview of our implementation of the CBI architecture is then given. 
@@ -836,9 +835,8 @@ This module contains several submodules related to the low-level control of a si
 
 \paragraph{\bf Command Sequence Executors:} These provide a 
 physical implementation of an
-experimental protocol {\it in computo}.  A command passes a particular
-value to the input port of a solver at a given time step. Note that connectivity between command executors and numerical
-solvers is provided by the connectivity translation function of the {\tt Model\,Container}.
+experimental protocol {\it in\,computo}.  A stimulation protocol stored by the {\tt Experiment\,Model\,Container} originates a {\tt Command\,Sequence\,Executor} and the stimulus events associated with the given protocol propagate to the input port of a solver at a given time step. Note, connectivity between command executors and numerical
+solvers is provided by the connectivity translation function of the {\tt Experiment\,Model\,Container}.
 
 \paragraph{\bf Communication Infrastructure:}
 
@@ -854,7 +852,7 @@ hardware involved, {\tt Communication\,Infrastructure} deals with issues of
 CPU and whether this is made transparent to the solver implementation, 
 (2) Efficiency of the infrastructure for communicating neighboring 
 lists of values, e.g. all the membrane potentials of a compartmentalized 
-neuronal morphology and (3) Efficient storage and distribution of discrete 
+neuronal morphology, and (3) Efficient storage and distribution of discrete 
 events used for action potential generation and axonal propagation.
 
 \paragraph{\bf Controller:}
