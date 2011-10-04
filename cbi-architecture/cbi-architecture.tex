@@ -308,7 +308,7 @@ represent (see Supplementary Material--S1, S2 for examples from GENESIS 2; S3, S
 To address these issues, we developed the CBI architecture, a meta-framework for software development that defines a fully
 functioning simulator. It is the principled result of a
 bottom-up restructuring of the source code of the GENESIS\,2 neural
-simulation system that was developed on the basis of our understanding of a general scientific workflow\marginpar{\bf Hugo, this does not seem to be an appropriate reference.}, an {\it ideal user
+simulation system that was developed on the basis of our understanding of a general scientific workflow\marginpar{\bf Hugo, this does not seem to be an appropriate reference.}\marginpar{\bf Allan, I don't understand what you mean}, an {\it ideal user
 workflow}, and an analytic method referred to as a {\it separation of
 concerns}. The software modules resulting from
 this analysis are described and a brief overview of our implementation of the CBI architecture is then given. 
@@ -758,16 +758,16 @@ This module contains three submodules, (1) {\tt Implementation\,Libraries} conta
 
 \paragraph{\bf Implementation Libraries:}
 
-These libraries have a defined focus, e.g. investigation of a synaptic
-learning rule.  They are typically implemented directly and are
-specific for a set of research or tutorial simulations. They connect a 
-model to a series of stimulus paradigms using a procedural paradigm,
-for example a library of stimulus paradigms representing in-vitro and
-in-vivo conditions of a Purkinje cell model.
-There are also `glue' functions to connect to external libraries for
-other activities such as result analysis, e.g. via the GNU Scientific
-Library (http://www.gnu.org/s/gsl/), the Perl Data Language
-(http://pdl.perl.org/), and the Scientific Library for Python
+Each library has a defined focus, e.g. the investigation of a synaptic
+learning rule applied to given neuron, or a library of stimulus
+paradigms representing in-vitro and in-vivo conditions for a
+cerebellar Purkinje cell model\cite{De-Schutter-E:1994vn, E:1994hc}.
+The library implementation typically occurs for a set of research or
+tutorial simulations.  It may connect a model to a series of stimulus
+paradigms or implement `glue' functions to connect to external
+libraries for other activities such as result analysis, e.g.  via the
+GNU Scientific Library (http://www.gnu.org/s/gsl/), the Perl Data
+Language (http://pdl.perl.org/), and the Scientific Library for Python
 (http://sourceforge.net/projects/scipy/).
 
 %This sub-module also contains tools that enable external model construction, visually or otherwise.  Functionally, neuroConstruct (software platform for the development of biologically realistic 3D neural networks) and CVapp (supports editing and conversion of morphology files)
