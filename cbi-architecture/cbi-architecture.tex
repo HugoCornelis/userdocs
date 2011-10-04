@@ -821,6 +821,16 @@ conductance tables is a common example. Other examples are mesh
 generation for Monte Carlo solvers and compartmentalization of a
 neuronal morphology.
 
+The {\bf Command Sequence Executors} provide a physical implementation
+of an experimental protocol {\it in\,computo}.  A stimulation protocol
+stored by the {\tt Experiment\,Model\,Container} originates a {\tt
+  Command\,Sequence\,Executor} and the stimulus events associated with
+the given protocol propagate to the input port of a solver at a given
+time step. Note, connectivity between command executors and numerical
+solvers is provided by the connectivity translation function of the
+{\tt Model\,Containers}.
+
+
 \paragraph{\bf Discrete Representations:}
 
 Existing monolithic simulators such as NEURON and GENESIS\,2 currently require the user to explicitly code scripts to avoid duplication of one-off data. In contrast with this, GENESIS\,3, in compliance with the CBI architecture, automatically detects duplicate parameterization of variables such as channel gate kinetics and dynamically shares their tabulated form as necessary. Solver generated discretisations that form the numerical 
@@ -834,11 +844,6 @@ minimizes the memory requirements of large simulations.
 \subsubsection*{Controllers \& Communication}
 
 This module contains several submodules related to the low-level control of a simulation.
-
-\paragraph{\bf Command Sequence Executors:} These provide a 
-physical implementation of an
-experimental protocol {\it in\,computo}.  A stimulation protocol stored by the {\tt Experiment\,Model\,Container} originates a {\tt Command\,Sequence\,Executor} and the stimulus events associated with the given protocol propagate to the input port of a solver at a given time step. Note, connectivity between command executors and numerical
-solvers is provided by the connectivity translation function of the {\tt Experiment\,Model\,Container}.
 
 \paragraph{\bf Communication Infrastructure:}
 
