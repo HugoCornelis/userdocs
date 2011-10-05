@@ -43,7 +43,7 @@
 \usepackage[labelfont=bf,labelsep=period,justification=raggedright]{caption}
 
 % Use the PLoS provided bibtex style
-\bibliographystyle{plos2009}
+\bibliographystyle{./plos2009}
 
 % Remove brackets from numbering in List of References
 \makeatletter
@@ -1095,7 +1095,7 @@ step\cite{borg-graham00:_addit_effic_comput_branc_nerve_equat}.  For
 this, the memory image of a model must first be expanded into a
 representation that includes the mathematical equations and parameters
 relevant to the given simulation but, for instance, does not include
-the spatial layout of segments as this is not required by the {\tt
+the spatial layout of segments\footnote{`Segment' is a high level term employed to describe different parts of the biological model of a dendritic morphology. The equivalent low level (computational) term is `compartment'. It refers to the numerical representation of a segment.} as this is not required by the {\tt
   Solvers}.  This behavior is different from that of existing
 simulators, e.g. GENESIS 2. Such simulators do not make an explicit
 distinction between internal data structures for model representation
