@@ -595,7 +595,7 @@ def RunSimulation(simulationTime):
     timeStep = 1e-5
     
 #------------------------------------------------------------------------------
-# Create a model container with a segment
+# Create a model container with a neuron cell and a dendritic segment
 #------------------------------------------------------------------------------
     my_nmc = ModelContainer()
     my_cell = my_nmc.CreateCell("/cell")
@@ -616,22 +616,26 @@ def RunSimulation(simulationTime):
 # Apply current injection to the soma
     my_segment.SetParameter("INJECT", 1e-9)
 
-#----------------------------------------------------------------------------- 
-# Create a Heccer for processing the model stored by the model container.
+#------------------------------------------------------------------------------
+# Create a Heccer for computing the neuron model stored by the model container.
 #------------------------------------------------------------------------------
     from g3.heccer import Heccer
     my_heccer = Heccer(name="/cell", model=my_nmc)
     my_heccer.CompileAll()
 
 #----------------------------------------------------------------------------- 
-# Create an output generator and link it to the variable of interest.
+# Create an output object.
 #------------------------------------------------------------------------------
     from g3.experiment.output import Output
     my_output = Output("/tmp/output")
+
+#----------------------------------------------------------------------------- 
+# Link the output object to the address of the computed variable of interest.
+#------------------------------------------------------------------------------
     my_output.AddOutput("output", my_heccer.GetAddress("/cell/soma", "Vm"))
 
 #----------------------------------------------------------------------------- 
-# Create an array of objects to be scheduled.
+# Create an array of the objects that participate in the simulation.
 #------------------------------------------------------------------------------
     schedulees = []
 
@@ -639,6 +643,9 @@ def RunSimulation(simulationTime):
     schedulees.append(my_heccer)
     schedulees.append(my_output)
 
+#----------------------------------------------------------------------------- 
+# Advance all the particpating objects for the duration of the simulation.
+#------------------------------------------------------------------------------
     currentTime = 0.0
     while currentTime < simulationTime:
         currentTime += timeStep
@@ -1637,6 +1644,24 @@ Hugo Cornelis is partially supported by the CREA Financing program (CREA/07/027)
 {\bf Relation of components in the Computational Biology Initiative (CBI) federated software architecture.} The CBI architecture defines the relationships between the necessary components of a computer-based neural simulation system. The architecture contains three layers that include a graphical user interface (GUI) connected to the functional components of a simulator by an interposed layer of application programming interfaces (APIs) and scripts. Components in the lowest layer are interconnected by APIs while their particular functionality is needed. GENESIS 3 is the first simulator to be implemented in compliance with the CBI architecture.
 }
 \label{fig:cbi-arch}
+\end{figure}
+
+\clearpage
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=2in]{figures/Screenshot-G3-Example.eps}
+\includegraphics[width=4in]{figures/Screenshot-Graph-display.eps}
+\end{center}
+\caption{ {\bf Simple Integration of G-3 with the {\it wxPython}
+    widget set.}  The CBI architecture defines a separation between
+  GUI statements and peripheral code.  This allows GUI construction
+  kits to be used for the creation of a user-friendly interface to a
+  simulation.  In this example {\it wxFormBuilder} was used to
+  construct a text control widget and a button to start the simulation
+  using its standard drag \& drop interface.  The same approach can be
+  used for the development of research and educational projects.  }
+\label{fig:g3-wx}
 \end{figure}
 
 \clearpage
