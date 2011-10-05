@@ -398,9 +398,9 @@ more flexibility is obtained by generating code in both languages as
 an extension module can then be enhanced with support code in either
 language.  Table~\ref{tab:cbi-codecounts} gives an overview of the
 resulting code.  As expected, low-level software components emphasize
-low-level languages and have more lines of code (e.g. C), whereas, high-level
-software components emphasize high-level languages and have fewer
-lines of code (e.g. Python, Perl).\\
+low-level languages and contain more code (e.g. C), whereas, high-level
+software components emphasize high-level languages and contain fewer
+code (e.g. Python, Perl).\\
 
 \noindent {\bf Place Table 1 About Here.}\\
 
@@ -569,10 +569,11 @@ solver written in C.  Python bindings for the {\bf Discrete Event
 
 Here we show a simple high-level Python script\,\footnote{This script
   is written for clarity of presentation rather than compactness or
-  efficiency.} that runs
-a simulation of a single cylindrical segment. It is defined by standard
-values for the parameters of membrane resistance ({\tt RM}), axial resistance ({\tt RA}), and
-membrane capacitance ({\tt CM}).
+  efficiency.  Python version 2.6.6 is used on Linux Ubuntu 10.10
+  Maveric.} that runs a simulation of a single cylindrical segment. It
+is defined by standard values for the parameters of membrane
+resistance ({\tt RM}), axial resistance ({\tt RA}), and membrane
+capacitance ({\tt CM}).
 %\footnote{The solver requires {\tt RA} for all
 %  compartments.}
 These parameters are given by their specific values (in SI units) as
@@ -1742,7 +1743,7 @@ Hugo Cornelis is partially supported by the CREA Financing program (CREA/07/027)
     & 623
     & 836 \\
 \end{tabular}
-\begin{flushleft} A comparison of hand-written (H) and automatically generated (G) code that supports the functionality of the independent components of the GENESIS simulation platform. Software hand-written in a system programming language such as C contains many more lines of code than the equivalent functionality replicated in a scripting language. The number of automatically generated lines of code is considerably greater than those written by hand.
+\begin{flushleft} A comparison of hand-written (H) and automatically generated (G) code that supports the functionality of the independent components of the GENESIS simulation platform. Software hand-written in a system programming language such as C contains more code (in bytes) than the equivalent functionality replicated in a scripting language. The amount of automatically generated code is considerably greater than that written by hand.
 \end{flushleft}
 \label{tab:cbi-codecounts}
 \end{table}
