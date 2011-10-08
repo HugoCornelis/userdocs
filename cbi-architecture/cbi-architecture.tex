@@ -279,7 +279,7 @@ interoperability and {\it extensibility} for model building, simulation, and res
 \section*{Results}
 
 A biological system can be characterized as rich, complex, and
-multi-dimensional.  These characteristcs distinguish it from the
+multi-dimensional.  These characteristics distinguish it from the
 mathematical representations and data formats employed by a
 computer-based model.  Specifically, the dynamical properties of
 a biological system do not map easily to the logical principles
@@ -306,18 +306,18 @@ represent (see Supplementary Material--S1, S2 for examples from GENESIS 2; S3, S
 %biological intuition of a user.
 
 To address these issues, we developed the CBI architecture, a meta-framework for software development that defines a fully
-functioning simulator. It is the principled result of a
+functioning simulator. The architecture is the principled result of a
 bottom-up restructuring of the source code of the GENESIS\,2 neural
-simulation system that was developed on the basis of our understanding of a general scientific workflow, an {\it ideal user
-workflow}, and an analytic method referred to as a {\it separation of
+simulation system. It was developed on the basis of our understanding of a general scientific workflow, referred to as an {\it ideal user
+workflow}, and an analytic method known as a {\it separation of
 concerns}. The software modules resulting from
-this analysis are described and a brief overview of our implementation of the CBI architecture is then given. 
+this analysis are described and a brief overview of the structural and functional relationships of the CBI architecture is then given. 
 %The software modules resulting from
 %this analysis are then described and a brief overview of implementation of the CBI architecture is given. 
 
 \subsection*{The Scientific Workflow}
 
-The relationship between the activities involved in conducting an experiment and running a simulation in computational biology is illustrated in Figure\,\ref{fig:data-flows}. These two iterative processes are connected by a feedback loop that employs interpretation of results as an {\it iterator} to design new experimental setups and model constructions.\\
+The relationship in computational biology between the activities involved in conducting an experiment and running a simulation is illustrated in Figure\,\ref{fig:data-flows}. These two iterative processes are connected by a feedback loop that employs interpretation of results as an {\it iterator} to design new experimental setups and model constructions.\\
 
 % Figure 1
 \noindent{\bf Place Figure\,\ref{fig:data-flows} about here.}\\
@@ -329,7 +329,7 @@ developed in an effort to resolve the complexities associated with
 continual addition of functionality to simulators.  Ultimately,
 simulators become monolithic and it is increasingly difficult for
 users and developers to maintain and extend them, with the logical
-consequence that {\it user workflow}s were often similarly degraded.
+consequence that {\it user workflow}s are often similarly degraded.
 Contemporary simulator scripts are also typically unstructured in the
 sense that a biological model is mixed with other code that defines
 and controls inputs, outputs and simulation
@@ -358,10 +358,10 @@ configuration\cite{cannon07:_inter}.
 
 \subsection*{The Ideal User Workflow for Simulations in Neurobiology}
 
-As many more data flows exist than are present in reality, each actual
+As many more data flows can exist than are present in reality, each actual
 data flow can be considered in the context of a sequence of user
-actions, i. e. a workflow. In this section, we introduce
-the set of regular workflows that use CBI simulator architecture
+actions or workflow. In this section, we introduce
+the set of typical workflows that use CBI simulator architecture
 applications by describing an {\it ideal user workflow} where a user wants to model a biological system. We then briefly mention a second set of workflows that comprise user extensions of the
 functionality of an implementation of the CBI architecture. Both sets of workflows are presented in a technology and implementation free manner.
 
@@ -380,11 +380,11 @@ has been identified from the workflow of users of the GENESIS neural
 simulation platform \cite{cornelis02:_tutor}.  Importantly, the
 workflow explicitly distinguishes between the static structure of a
 model of the biology (Step 1), the dynamic state of its simulation
-(Step 3), and the analysis of this dynamic state (Step 4). We also note that this workflow does not specify any particular order for its completion. However, for any given case meaningful simulation output will only occur with completion of Steps 1--4.
+(Step 3), and the analysis of this dynamic state (Step 4). We also note that this workflow does not specify any particular order for its completion. However, for any given case, meaningful simulation output will only occur with completion of Steps 1--4.
 
 \subsubsection*{Step 1: Construct Model}
 
-The simulator shell and the graphical user interface each provide an interface that interprets user input such that the simulator `understands' different commands and performs the appropriate actions. Simple models can be created directly within the simulator shell by entering a sequence of commands. More complex models are available to the shell from libraries or databases external to the simulator. Shell tools can then be used to explore and check the integrity of a model. Following any necessary or desired changes, a new version of the model can be saved.
+The simulator shell and the graphical user interface (GUI) each provide an interface that interprets user input such that the simulator `understands' different commands and performs the appropriate actions. Simple models can be created directly within the simulator shell by entering a sequence of commands. More complex models are available to the shell from libraries or databases external to the simulator. Shell tools can then be used to explore and check the integrity of a model. Following any necessary or desired changes, a new version of the model can be saved.
 
 \subsubsection*{Step 2: Design Experiment}
 
@@ -485,11 +485,11 @@ Consideration of the principal concerns of data, control, and data layering were
 
 In this section we present the outcome of a separation of concerns based on the principal concerns of data- and control-related simulator components introduced above. Initially, the biological and numeric representations and user workflows and scheduling modules are expanded to give the principal functions of the CBI architecture.
 
-Our analysis generated the primary functions of the CBI architecture illustrated in Figure~\ref{fig:cbi-architecture-simple}. The mechanism identified for separation of model construction from the low level computations performed during a simulation was the addition of a mid-level software layer. This intermediate layer provides function and data bindings between scripting applications and database interfaces, respectively, and the low-level back-ends. Note, this figure maintains the relationships between the four principal concerns identified in Figure~\ref{fig:data-control} by separating high level biological representations (Fig.~\ref{fig:cbi-architecture-simple}A) and low level mathematical implementation (Fig.~\ref{fig:cbi-architecture-simple}B), as well as separating control functions from data streams. Note also, the addition of a graphical user interface (GUI) to connect high level scripting applications with database interfaces.
+Our analysis generated the primary functions of the CBI architecture illustrated in Figure~\ref{fig:cbi-architecture-simple}. The mechanism identified for separation of model construction from the low level computations performed during a simulation was the addition of a mid-level software layer. This intermediate layer provides function and data bindings between scripting applications and database interfaces, respectively, and the low-level back-ends. Note, this figure maintains the relationships between the four principal concerns identified in Figure~\ref{fig:data-control} by separating high level biological representations (Fig.~\ref{fig:cbi-architecture-simple}A) and low level mathematical implementation (Fig.~\ref{fig:cbi-architecture-simple}B), as well as separating control functions from data streams. Note also, the addition of a GUI to connect high level scripting applications with database interfaces.
 
 \subsubsection*{User Workflows and Biological Data}
 
-Many more possible data flows exist than there are present in reality. So each data flow must be considered in the context of a sequence of user actions, i. e. a workflow. Initially, the focus is on regular workflows using CBI simulator architecture applications, i. e. where a user wants to model a biological system. We then briefly mention other workflows that support user extensions of the functionality of an implementation of the architecture.
+Many more possible data flows exist than there are present in reality. So each data flow must be considered in the context of a sequence of user actions or workflow. Initially, the focus is on regular workflows using CBI simulator architecture applications, e. g. where a user wants to model a biological system. We then briefly mention other workflows that support user extensions of the functionality of an implementation of the architecture.
 
 The first step in our ideal user workflow involves creating or
 importing a model. It maps directly to high-level biological
@@ -545,7 +545,7 @@ the low-level back-ends via the controller.
 
 \subsection*{Overall Design Objectives}
 
-Several important objectives emerged from the separation of concern used to guide the development
+Several important objectives emerged from the separation of concerns and were used to guide the development
 of our federated approach to the design and development of a neuronal
 simulation engine. 
 % where software components are self contained in the sense that they can be run independently.
@@ -633,7 +633,7 @@ simulations are controlled by {\tt Scripting\,Libraries\,\&\,Applications}. The 
 \subsubsection*{The Graphical User Interface}
 
 Based on the distinction between data and control, the GUI comprises
-two submodules. One is related to model data and incorporates model
+two submodules (illustrated in Fig.\,\ref{fig:cbi-architecture-expanded}). One is related to model data and incorporates model
 construction and visualization of simulation results, the other is
 related to simulation control.
 
