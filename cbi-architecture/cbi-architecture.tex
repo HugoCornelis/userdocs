@@ -648,7 +648,7 @@ database connectors in the module {\tt Model\,Tools} and the {\tt Biological} an
 or alter a model and instruct the modeling component to save the model
 back to disk as a conceptual representation available for later use.
 
-The result visualization functionality of the GUI provides different views of a model and supports the possible workflows between them. It can be divided into generic and application specific parts.  The generic parts are those commonly provided by external tools such as GNUplot (http://www.gnuplot.info/), Matlab (http://www.mathworks.com/), or Grace (http://plasma-gate.weizmann.ac.il/Grace/) for display of the temporal evolution of variables. Examples of the application specific parts include, user specified neuron morphology visualization via morphologically related color coding of variables solved during a
+The result visualization functionality of the GUI provides different views of a model and supports the possible workflows between them. It can be divided into generic and application specific parts.  The generic parts are those commonly provided by external tools such as GNUplot (http://www.gnuplot.info/), Matlab (http://www.mathworks.com/), or Grace (http://plasma-gate.weizmann.ac.il/Grace/) for display of the temporal evolution of variables. Examples of the application specific parts include, user specified visualization of neuron morphology via morphologically related color coding of variables solved during a
 simulation, axons showing propagating action potentials, and higher level visualizations of network behavior\cite{schutter94:_simul_purkin, robbins04:_visual}.
 
 \paragraph{\bf Simulation Control:}
@@ -712,7 +712,7 @@ hierarchical projections, each containing their own sub-projections and
 connections.  However, during a simulation the different back-ends of the CBI architecture are
 only connected by a set of serial communication ports.  
 It is the {\tt Connectivity\,Translator} that translates the connectivity
-between the components of a biological model to that of the connectivity between low-level back-ends (described below). This requires the {\tt Biology\,Model\,Container} to also act as a model component identification system: given the identifier of a
+between the components of a biological model to that of the connectivity between low-level back-ends (described below). This requires the {\tt Biology\,Model\,Container} to also act as a model component identification system: Given the identifier of a
 biological component in the mathematical representation, the {\tt Biology\,Model\,Container} must be able to translate it into an identifier for a mathematical variable that can be used by a solver.
 % Note that because a modeler connects biological components,
 %hierarchical translation is a substep of connectivity translation.
@@ -832,7 +832,7 @@ solvers is provided by the connectivity translation function of the
 
 \paragraph{\bf Discrete Representations:}
 
-Existing monolithic simulators such as NEURON and GENESIS\,2 currently require the user to explicitly code scripts to avoid duplication of one-off data. In contrast with this, GENESIS\,3, in compliance with the CBI architecture, automatically detects duplicate parameterization of variables such as channel gate kinetics and dynamically shares their tabulated form as necessary. Solver generated discretisations that form the numerical 
+Existing monolithic simulators such as NEURON and GENESIS\,2 currently require the user to explicitly code scripts to avoid duplication of one-off data. In contrast with this GENESIS\,3, in compliance with the CBI architecture, automatically detects duplicate parameterization of variables such as channel gate kinetics and dynamically shares their tabulated form as necessary. Solver generated discretisations that form the numerical 
 representation of a model are internally published for reuse by other 
 solvers in a process that is invisible to users, e.g. dendritic morphology meshes and Hines 
 enumeration of compartmentalized morphology.  Annotation of the 
@@ -1063,7 +1063,7 @@ the {\tt Biology\,Model\,Container} to load a selected model from a
 database and store it in memory using data structures for efficient
 storage and retrieval by other modules.  During initial inquiry, a
 user may typically be interested in derived model parameters such as
-the neuron's total surface area with and without spine correction
+the total surface area of a neuron, with and without spine correction,
 while a sophisticated GUI can also present a table of the channels
 employed in the model along with their conductance densities and
 reversal potentials.  More dedicated queries related to specific brain
@@ -1142,7 +1142,7 @@ protocol.
 As a result of Steps 1--3 of the ideal user workflow, data flows both
 through and between software components that conform to a CBI
 architecture: the data cycles between databases and files, and
-back-end {\tt Solver}s.  Here we have shown this cycle for a single
+back-end {\tt Solver}s.  Here we have described this cycle for a single
 neuron model and, as we briefly noted, it also occurs for network
 models.  By design any type of model including multi-scale models
 will exhibit this data cycle.
@@ -1404,8 +1404,8 @@ components.
 These different types of extensions stem from the modularity of the
 CBI architecture.  Current simulators typically only support a
 restricted set of extensions. For example, extending the GENESIS\,2
-simulator with new solvers was not possible because its basic
-architecture was not suitably modularized.
+simulator with new solvers is not possible because its basic
+architecture is not suitably modularized.
 
 %More elaborate software components include a model version history
 %manager for the tracking and recording of the history of model
