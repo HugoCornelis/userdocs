@@ -1390,18 +1390,26 @@ generation of 3D cross-sections and 2D cuts also becomes possible.
 
 \section*{Discussion}
 
-The Python and Perl bindings of the G-3 simulator embed similar
+GENESIS is the first neural simulator to be reconfigured in compliance
+with the CBI federated software architecture. In it, the Python and Perl bindings embed similar
 functionality to that of the GENESIS SLI, although their purpose is different.
 While the SLI had as major goals the integration of model components,
 running simulations, and output collection, the primary goal of
 scripting languages has become application
 integration.
 
-GENESIS is the first neural simulator to be reconfigured in compliance
-with the CBI federated software architecture. Through the Neurospaces
+Through the Neurospaces
 project, GENESIS now provides a series of independent software
 components that can readily be combined to support computational
-modeling in the neurosciences.  We have described how scripting
+modeling in the neurosciences. As examples of this scripted integration we have shown how to run a
+simple model using {\bf Heccer} and the ability of the {\bf
+  Model\,Container} to query the structure of a neuronal morphology.
+%The CBI architecture also defines clear
+%boundaries for integration using existing scripting technology.
+In a third interactive example, synaptic stimulation was delivered to
+a Purkinje cell model.  
+
+We have described how scripting
 languages such as Python provide powerful integration tools
 and can be used to connect simulator components to general purpose
 external libraries and appropriately configured external applications.
@@ -1409,55 +1417,11 @@ This expanded simulator functionality will lead to the development of
 considerably more sophisticated GUIs, result visualization, and data
 analysis.
 
-%Software libraries can either provide general support or can be
-%tailored for specific scientific disciplines.
-
-%{\bf Hugo: The following lines 950-973, now commented out in the tex file are an exact replication of lines 150-174.}
-%\subsection*{From Monolithic Software Applications to Modular
-%  Frameworks}
-%\label{sec:from-monol-softw}
-%
-%The development of the GENESIS simulator was initiated during the
-%eighties through research projects that addressed specific scientific
-%questions in computational neuroscience.  Software development was
-%then continued with a life cycle of research project extensions.  For
-%example the libraries for kinetic pathway modeling were added for
-%projects investigating how signalling networks store learned
-%behaviour\,\cite{bhalla99:_emerg} and how light regulates release from
-%intracellular calcium stores for
-%photoreception\,\cite{blackwell00:_eviden_distin_light_induc_calcium}.
-%The fast implicit solver was developed with the specific focus of
-%complex Purkinje cell modeling\,\cite{deschutter94:_purkin_i,
-%  deschutter94:_purkin_ii} and more recently synaptic learning rules
-%have been
-%implemented\,\cite{guenay08:_chann_densit_distr_explain_spikin}.  In
-%principle such linear or single-threaded development processes can
-%continue forever.  However, repetitive extension of the GENESIS
-%simulator with source code of diverse functions and origin
-%ultimately made the code structure so complicated that it became
-%difficult, if not impossible, to extend.  Because of the density of
-%the G-2 source code the application became become 'monolithic' and 
-%user contributions to simulation functionality were minimalized.
-%This
-%suggested that the software life cycle has moved from extension to
-%maintenance\marginpar{citation here}.
-
-<opening sentence>
-As examples of this scripted integration we have shown how to run a
-simple model using {\bf Heccer} and the ability of the {\bf
-  Model\,Container} to query the structure of a neuronal morphology.
-%The CBI architecture also defines clear
-%boundaries for integration using existing scripting technology.
-In a third interactive example, synaptic stimulation was delivered to
-a Purkinje cell model.  However in the paradigm of the CBI
-architecture, model parameters are stored and processed separately
-from stimulus protocols and the way simulations are run.  This
+It is notable that in the paradigm of the CBI
+architecture, although model parameters are stored and processed separately
+from stimulus protocols and the way simulations are run, the modularity of the software does not interrupt but actually enhances an integrated user experience. Simultaneously, this
 modularity greatly facilitates the development and maintenance of
 individual G-3 components.
-% In this way software improvements can be obtained
-%in parallel using distributed software development processes
-%rather than the more linear ones typical of centrally developed
-%monolithic software applications.
 
 \subsection*{Extensibility in The G-3 Software Federation}
 
