@@ -547,12 +547,20 @@ support sophisticated model visualization and morphological analysis.
 \subsection*{A Python Enabled Neural Simulator}
 \label{ss-apens}
 
-Python uses modules to group related functions together.
-G-3 scripting bindings use modules to separate interfaces for
-simple models with many default settings (e.g. to start a new research
-project) from more complicated interfaces that expose the full
-functionality of the simulator.
+%\marginpar{
+%  \begin{picture}(100,30)
+%    \put(0,0){\line(0,1){50}}
+%  \end{picture}
+%}
 
+Python uses modules to group related functions.  G-3 employs Python's
+module system to group functions that provide an interface to each of
+its software components.
+%G-3 scripting
+%bindings use modules to separate interfaces for simple models with
+%many default settings (e.g. to start a new research project) from more
+%complicated interfaces that expose the full functionality of the
+%simulator.
 As an example, the G-3 Python module {\it nmc} contains functions to
 simplify the storage of neuron models in computer memory.  This module
 is a simple front-end to the {\bf Model\,Container}, a G-3 component
@@ -720,7 +728,7 @@ int piC2m[] = { 0, -1, };
 struct Intermediary inter =
 { 1, &compSoma, NULL, piC2m, };
 
-// main simulation script
+// include commands for simulation
 #include "main.c"
 
 \end{verbatim}
@@ -1378,7 +1386,7 @@ integration of G-3 and Blender (see Figure~\ref{fig:cbi-blender}).
 However, the development of small focused plugins allows for more than
 just this functionality. For example, 3D measurement and manipulation of
 neuron morphology, computation of surface areas and volumes, and the
-generation of 3D crossections and 2D cuts also becomes possible.
+generation of 3D cross-sections and 2D cuts also becomes possible.
 
 \section*{Discussion}
 
@@ -1440,10 +1448,10 @@ simulations are run.  This greatly facilitates the development and
 maintenance of individual G-3
 components.  As examples of the added functionality this approach 
 provides, we have shown how to run a simple model using {\bf Heccer} and the ability of the
-{\bf Model\,Container} to query the structure of EM level neuronal morphology. 
-The CBI architecture also defines clear
-boundaries for integration using existing scripting technology.
-In one interactive example, highly specific synaptic stimulation was delivered to a Purkinje cell model.
+{\bf Model\,Container} to query the structure of a neuronal morphology. 
+%The CBI architecture also defines clear
+%boundaries for integration using existing scripting technology.
+In a third interactive example, synaptic stimulation was delivered to a Purkinje cell model.
 % In this way software improvements can be obtained
 %in parallel using distributed software development processes
 %rather than the more linear ones typical of centrally developed
