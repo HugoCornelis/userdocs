@@ -11,44 +11,47 @@
 
 {\bf Related Documentation:}
 
+\href{../tutorial1/tutorial1.tex}{\bf Tutorial 1}
+
+\href{../units-conversion/units-conversion.tex} {\bf Conversion From Physiological to SI Units in
+GENESIS 3}
+
 \href{../model-container/model-container.tex}{\bf The Model\,Container}
 
-\href{../ndf-procedural-description/ndf-procedural-description.tex}{\bf The NDF File Format and Procedural Model Descriptions}
+\href{../ndf-file-format/ndf-file-format.tex}{\bf Introduction to the  NDF File Format}
+
+\href{../ndf-procedural-description/ndf-procedural-description.tex}{\bf The NDF File Format and
+Procedural Model Descriptions}
 
 % start: userdocs-tag-replace-items related-ssp
 % end: userdocs-tag-replace-items related-ssp
 
 \section*{Technical User Guide 1}
 
-  This documents introduces the modular components of GENESIS 3.
-  Following installation of the Neurospaces software components
-  (www.neurospaces.org), this document may be consulted as a user
-  tutorial. It illustrates how to construct a biophysically realistic
-  single compartment neuron from a {\tt swc} neuron morphology file.
-  This tutorial may be usefully read in conjunction with [1, 2].
+  This documents introduces the modular components of GENESIS 3.  Following installation of the
+  Neurospaces software components (www.neurospaces.org), this document may be consulted as a user
+  tutorial. It illustrates how to construct a biophysically realistic single compartment neuron from
+  a {\tt swc} neuron morphology file.  This tutorial may be usefully read in conjunction with [1,
+  2].  It also provides further explanation of the way that GENESIS 3 represents the single
+  cell models that are used in the \href{../tutorial-genesis/tutorial-genesis.tex} {\bf Introductory
+  Tutorials on creating and running simulations}.
 
 \section{Introduction}
 
-GENESIS 3 (G-3) has been
-developed following the Computational Biology Initiative (CBI)
-federated software architecture described in [1]. That document
-specifies a software architecture appropriate for a neuronal
-simulator. In such a simulator the layers of the software architecture
-naturally correspond to high- and low level data, or biological
-concepts and numerical values, respectively. One consequence of this
-approach is that each software component in the architecture is
-self-contained and can be run stand-alone. In this sense the CBI
-architecture describes a highly modular system that provides a radical
-departure from currently available neuronal simulation packages. Those
-packages are typically monolithic and expose an arbitrary mixture of
-biological and mathematical detail to the mathematical solvers and
-users. In comparison with such packages, the data layering employed by
-the G-3 architecture clearly separates the mathematical details from
-the biological framework required for a computational model. Thus, the
-CBI functional simulator architecture has several important practical
-consequences. For the developer, it greatly reduces the tremendous
-complexity of dealing with a whole simulator, and for the modeller it
-greatly increases the usability of the mathematical solvers.
+GENESIS 3 (G-3) has been developed following the Computational Biology Initiative (CBI) federated
+software architecture described in [1]. That document specifies a software architecture appropriate
+for a neuronal simulator. In such a simulator the layers of the software architecture naturally
+correspond to high- and low level data, or biological concepts and numerical values, respectively.
+One consequence of this approach is that each software component in the architecture is
+self-contained and can be run stand-alone. In this sense the CBI architecture describes a highly
+modular system that provides a radical departure from currently available neuronal simulation
+packages. Those packages are typically monolithic and expose an arbitrary mixture of biological and
+mathematical detail to the mathematical solvers and users. In comparison with such packages, the
+data layering employed by the G-3 architecture clearly separates the mathematical details from the
+biological framework required for a computational model. Thus, the CBI functional simulator
+architecture has several important practical consequences. For the developer, it greatly reduces the
+tremendous complexity of dealing with a whole simulator, and for the modeller it greatly increases
+the usability of the mathematical solvers.
 
 In this section we introduce the major components of the Neurospaces
 instantiation of G-3 (NS) which includes: Neurospaces Model Container
@@ -312,7 +315,7 @@ In the next paragraphs we outline the steps required to construct a
 NDF file that generates a single compartment model neuron.  This model
 will generate action potentials via activation of the
 classical fast sodium and delayed rectifying potassium conductances as
-described by Hodgkin and Huxley (HH-{\it J. Physiol.} {\bf 117}: 500).
+described by Hodgkin and Huxley (1952; {\it J. Physiol.} {\bf 117}: 500).
 
 The NDF files that generate this model can be found in the model
 library bundled with the NMC\,\footnote{After installation, the channel descriptions can be found in the directory\\
@@ -414,9 +417,6 @@ and for converting back to the $\alpha$-$\beta$ form:
 \begin{equation}
   \alpha(V) = A(V)
 \end{equation}
-\marginpar{give out the relationship between these
-  parameters and exponential, sigmoid, linoid in the genesis sense,
-  see hh\_channel docs.}
 
 \paragraph{The NMC Gate Description:} The parameter names used to define a HH-like gate are based on the
 above $A$-$B$ representation (a representation also used by the
@@ -424,53 +424,67 @@ GENESIS 2 {\tt tabchan} object).  Its general form is:
 
 \begin{equation}
   \label{eq:hh-general-1}
-  A(V), B(V) = \mathrm{HH_{-}AB_{-}Scale} * \frac{ ( \mathrm{HH_{-}AB_{-}Mult} * V - \mathrm{HH_{-}AB_{-}Offset_{-}M} ) }{ \mathrm{HH_{-}AB_{-}Add} + e ^ {\frac{ V - \mathrm{HH_{-}AB_{-}Offset_{-}E} }{ \mathrm{HH_{-}AB_{-}Tau} } } }
+  A(V), B(V) =	\frac{\mathrm{HH_{-}AB_{-}Add_{-}Num} +  \mathrm{HH_{-}AB_{-}Mult} * V }
+   { \mathrm{HH_{-}AB_{-}Add_{-}Den} +	 e ^ {\frac { V + \mathrm{HH_{-}AB_{-}Offset_{-}E} }
+   { \mathrm{HH_{-}AB_{-}Div_{-}E}}}}
 \end{equation}
 
-In the NMC all these parameter names are prefixed with {\tt HH\_},
-followed by a descriptor for the type of the gate representation, for
-example {\tt AB\_} for parameters of the $A$-$B$ based representation.
-In most channel descriptions the {\tt HH\_AB\_Offset\_M} parameter has a
-value of zero, such that the only offset that needs to be specified is
-{\tt HH\_AB\_Offset\_E}.
+In the NMC all these parameter names are prefixed with {\tt HH\_}, followed by a descriptor for the
+type of the gate representation, for example {\tt AB\_} for parameters of
+the $A$ - $B$ based representation.
 
-\begin{itemize}
-\item {\tt HH\_AB\_Add}:\marginpar{Add units to all pars}.
-\item {\tt HH\_AB\_Mult}:
-\item {\tt HH\_AB\_Offset\_E}:
-\item {\tt HH\_AB\_Offset\_M}: In most cases, {\tt HH\_AB\_Offset\_M} will be 0
-  and may be omitted\marginpar{still more checks required, not
-    correct}.
-\item {\tt HH\_AB\_Scale}:
-\item {\tt HH\_AB\_Tau}:
-\end{itemize}
+This equation corresponds to a general parameterized form for Hodgkin-Huxley type channel rate
+functions:
 
-The last parameter is the {\tt HH\_AB\_Factor\_Flag} parameter.  It
-indicates whether the exponential factor is being used as a divisor or
-a multiplier:
-
-\begin{itemize}
-\item {\tt HH\_AB\_Factor\_Flag} has value -1:
 \begin{equation}
-  \label{eq:hh-general-ff-1}
-  \mathrm{HH_{-}AB_{-}Scale} * \frac{ ( \mathrm{HH_{-}AB_{-}Mult} * V - \mathrm{HH_{-}AB_{-}Offset_{-}M} ) }{ \mathrm{HH_{-}AB_{-}Add} + e ^ {\frac{ V - \mathrm{HH_{-}AB_{-}Offset_{-}E} }{ \mathrm{HH_{-}AB_{-}Tau} } } }
+\label{eq:setupalpha}
+y = \frac{A + B V}{C + \exp((V + D) / F))}
 \end{equation}
-%\item {\tt HH\_AB\_Factor\_Flag} has value 0:
-%\begin{equation}
-%  \label{eq:hh-general-ff0}
-%  \mathrm{HH_{-}AB_{-}Scale} * \frac{ ( \mathrm{HH_{-}AB_{-}Mult} * V - \mathrm{HH_{-}AB_{-}Offset_{-}M} ) }{ \mathrm{HH_{-}AB_{-}Add} + e ^ {\frac{ V - \mathrm{HH_{-}AB_{-}Offset_{-}E} }{ \mathrm{HH_{-}AB_{-}Tau} } } }
-%\end{equation}
-\item {\tt HH\_AB\_Factor\_Flag} has value 1:
+
+This is a generalization of the exponential, sigmoid, and linoid forms used by Hodgkin and Huxley
+(1952), with the variable $y$ representing $\alpha(V)$ or $\beta(V)$.  It is used by the GENESIS 2
+{\it setupalpha} command, which is implemented in the G-3 {\bf ns-sli} module.
+This representation and its conversion from other rate expressions in other units is described
+in further detail in the document \href{../units-conversion/units-conversion.tex}
+{\bf Conversion From Physiological to SI Units in GENESIS 3}.
+The correspondence between the parameters $A$ -- $F$ and those in Eq. \ref{eq:hh-general-1}, with
+their SI units, is given in the table:
+
+\begin{table}[thb]
+\label{tab:HHparams}
+\centering
+\begin{tabular}{lll} \hline
+{\em NMC parameter}	 & {\em setupalpha parameter} & {\em SI Units} \\
+\hline
+ HH\_AB\_Add\_Num  & $A$ & $1/\mathrm{sec}$ \\
+ HH\_AB\_Mult & $B$ & $1/(\mathrm{sec} \mathrm{Volts})$ \\
+ HH\_AB\_Add\_Den   & $C$ & dimensionless \\
+ HH\_AB\_Offset\_E & $D$ & $\mathrm{Volts}$ \\
+ HH\_AB\_Div\_E & $F$  & $\mathrm{Volts}$ \\
+\hline
+\end{tabular}
+\caption{Correspondence between NMC and {\em setupalpha} parameters.}
+\end{table}
+
+
+There is one further parameter called the {\tt HH\_AB\_Factor\_Flag} parameter, having a default
+value of $-1$.  If the value is set to $+1$, then it indicates that the
+denominator in Eq. \ref {eq:hh-general-1}
+becomes a numerator or multiplier instead of a divisor, resulting in the equation:
+
 \begin{equation}
   \label{eq:hh-general-ff1}
-  \mathrm{HH_{-}AB_{-}Scale} * \mathrm{HH_{-}AB_{-}Add} + e ^ {\frac{ V - \mathrm{HH_{-}AB_{-}Offset_{-}E} }{ \mathrm{HH_{-}AB_{-}Tau} } }
+(\mathrm{HH_{-}AB_{-}Add_{-}Num} +  \mathrm{HH_{-}AB_{-}Mult} *  V )
+( \mathrm{HH_{-}AB_{-}Add_{-}Den} + e ^ {\frac { V +\mathrm{HH_{-}AB_{-}Offset_{-}E} }
+{\mathrm{HH_{-}AB_{-}Div_{-}E}}})
 \end{equation}
-\end{itemize}
+
+This option is rarely used.
 
 %\subsubsection{$\alpha$-$\beta$ based Description}
 %The parameters associated with the $\alpha$-$\beta$ form
 %are\footnote{It is currently not possible to define a gate using the
-%  $\alpha$-$\beta$ form, or using the steady-state and tua form.}:
+%  $\alpha$-$\beta$ form, or using the steady-state and tau form, but see units-conversion doc.}:
 %\begin{itemize}
 %\item {\tt Multiplier}
 %\end{itemize}
@@ -499,7 +513,7 @@ potassium conductance is raised to the power of four.
 
 The kinetics of the individual {\it n} gates of the potassium channel are
 determined by the functions $\alpha_h(V)$ and $\beta_h(V)$ for which
-the definitions are:
+the definitions (in Physiological Units) are:
 
 \begin{equation}
   \label{eq:hh-alpha}
@@ -514,8 +528,8 @@ the definitions are:
 
 In the NMC, parameters are (name, value) tuples.  Names are simple
 labels.  Parameter values are defined using the {\tt PARAMETER} token,
-which must occur within the scope of a {\tt PARAMETERS} token. For example, to set {\tt HH\_AB\_Scale}
-to -600.0 in the NDF file:
+which must occur within the scope of a {\tt PARAMETERS} token. For example,
+to set {\tt HH\_AB\_Add\_Num} to -600.0 in the NDF file:
 
 \begin{verbatim}
         PARAMETER ( HH_AB_Add_Num = -600.0 ),
