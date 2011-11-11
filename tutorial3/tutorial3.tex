@@ -13,6 +13,11 @@
 % start: userdocs-tag-replace-items related-tutorial
 % end: userdocs-tag-replace-items related-tutorial
 
+\begin{itemize}
+   \item[]\href{../tutorial-python-scripting/tutorial-python-scripting.html}
+          {\bf Creating GENESIS 3 Simulations with Python}
+\end{itemize}
+
 \section*{Convert a GENESIS\,2 Simulation to GENESIS\,3}
 
 \subsection*{Background}
@@ -29,22 +34,18 @@ tutorial these have been saved in the library in \href{../ndf-file-format/ndf-fi
 Of course, as mentioned in Tutorial\,2, it would be very difficult to create a large multi-compartmental
 cell model by entering commands in the {\bf G-shell}.
 
-In the future, GENESIS will support import of models represented in
-neural exchange formats such as NeuroML (neuroml.org), and from scripts
-that use a Python-based scripting language.  This tutorial is devoted
-to the process of loading existing GENESIS 2 simulation scripts into
-the G-shell, running them, and converting them to GENESIS 3.
+In the future, GENESIS will support import of models represented in neural exchange formats such as
+\href{http://neuroml.org}{\bf NeuroML}, and from scripts that use a Python-based scripting language.
+This tutorial is devoted to the process of loading existing GENESIS 2 simulation scripts into the
+G-shell, running them, and converting them to GENESIS 3 NDF format.
 
-In GENESIS 2, scripts are interpreted by the Script Language
-Interpreter (SLI), so these scripts are in the "SLI format".  The
-process of creating a simulation in this format is described with
-examples in the GENESIS Modeling Tutorial
-(http://www.genesis-sim.org/GENESIS/UGTD/Tutorials/genprog/genprog.html)
-for GENESIS 2.  This is part of a larger package "The Ultimate GENESIS
-Tutorial Distribution" (http://www.genesis-sim.org/GENESIS/UGTD.html)
-that is gradually being converted to GENESIS 3.  Some familiarity with
-the GENESIS Modeling Tutorial section "Building a cell the easy way",
-is assumed in what follows below.
+In GENESIS 2, scripts are interpreted by the Script Language Interpreter (SLI), so these scripts are
+in the ``SLI format''.  The process of creating a simulation in this format is described with
+examples in the \href{http://genesis-sim.org/GENESIS/UGTD/Tutorials/genprog/genprog.html}{GENESIS
+Modeling Tutorial} for GENESIS 2.  This is part of a larger package
+\href{http://www.genesis-sim.org/GENESIS/UGTD.html}{\bf The Ultimate GENESIS Tutorial Distribution}
+that is gradually being converted to GENESIS 3.  Some familiarity with the GENESIS Modeling Tutorial
+section "Building a cell the easy way", is assumed in what follows below.
 
 The simulation script used as an example in "Building a cell the easy
 way" is called simplecell.g, and it uses the cell reader with the file
@@ -63,7 +64,7 @@ represent biological models (e.g. compartments and channels), device
 objects that are used to provide input to the model (e.g. a pulsegen or
 randomspike), those that provide output (e.g. {\it asc\_file} or {\it disk\_out}),
 analysis objects (e.g. various modes of the {\it table} object, {\it interspike},
-{\it autocor}r, or {\it peristim} objects), or graphical objects for control or
+{\it autocorr}, or {\it peristim} objects), or graphical objects for control or
 visualization.  All of these may be freely combined in any desired
 manner in a GENESIS 2 script.  This accounts for the great versatility
 and flexibility of scripted GENESIS simulations.
@@ -76,22 +77,18 @@ allow the scriptable construction of custom GUIs by the user.
 However, these will not be an attempt to reproduce the old XODUS
 widgets and commands.
 
-Also, the GENESIS 3 Workflow Diagram (link) makes a distinction between
-these different functionalities, based on a modeling or experimental
-paradigm involving an iterative process of model design, experimental
-design (e.g. providing stimuli to the model), running the simulation, and
-output and analysis of results.  The CBI Architecture (link) incorporates
-this separation of functionality into the internal representation of the
-simulation.  Commands given in the G-shell allow these to be incorporated
-into G3, while retaining the flexibility of G2.
-
-[Hugo and Allan, can you improve on this description?  I had intended
- the paragraphs above to be an overview and set up for the final
- unwritten section on incorporating ones input, output, and analysis
- code from the G2 script into G3.]
+Also, the \href{../workflow-user/workflow-user.html}{GENESIS 3 User Workflow} makes a distinction
+between these different functionalities, based on a modeling or experimental paradigm involving an
+iterative process of model design, experimental design (e.g. providing stimuli to the model),
+running the simulation, and output and analysis of results.  The
+\href{../genesis-overview/genesis-overview.tex}{\bf Overview of the G-3 CBI Architecture}
+describes how this separation of functionality is incorporated into the
+internal representation of the simulation.  Commands given in the G-shell
+allow these to be incorporated into G-3, while retaining the flexibility of
+GENESIS 2.
 
 For these reasons, it is best to separate these functional categories
-by making changes to the SLI script that will facilitate conversion.
+by making changes to the SLI script which will facilitate the conversion.
 
 Excluding the initial comments, the original {\it simplecell.g} script reads:
 \begin{verbatim}
@@ -126,10 +123,9 @@ been isolated to the included script {\it graphics.g}.   For use with GENESIS 3,
 this file should not be included, and there will need to be commands
 that write equivalent simulation results to files, instead of a graph.
 
-The example script simplecell-g3.g (link to simplecell-g3.g) illustrates
-how the orignal script can be reorganized to run under either GENESIS
-2 or 3.  When creating GENESIS 2 scripts that will eventually be converted
-to run under GENESIS 3, the organization described below will help you
+The example script \href{figures/simplecell-g3.txt}{\bf simplecell-g3.g} illustrates how the orignal
+script can be reorganized to run under either GENESIS 2 or 3.  When creating GENESIS 2 scripts that
+will eventually be converted to run under GENESIS 3, the organization described below will help you
 to avoid potential problems under GENESIS 3.
 
 By defining some Boolean constants at the begining of the script,
@@ -260,43 +256,47 @@ Provide current injection:
 \end{verbatim}
 
 Provide output of the soma membrane potential to a file, specifying
-a filename other than the default:
+a filename or path other than the default of {\tt /tmp/output}:
 \begin{verbatim}
    genesis > output_add /cell/soma Vm
    genesis > output_filename simplecell-g3-ndf_Vm.out
 \end{verbatim}
 
-Finally run the simulation on the model "/cell" for 0.5 seconds:
+Heccer, the numerical solver used by G-3 for compartmental cell models and channels,
+uses a default simulation time step of 20 microseconds.  To set the time step to the
+50 microsecond value used in the original GENESIS 2 simulation, give the command:
+
 \begin{verbatim}
-   genesis > run /cell 0.5
+    genesis > heccer_set_timestep 50.0e-6
 \end{verbatim}
 
-The G3Plot toolkit (link to docs) is a suite of Python-based tools under
-development for visualizing and analyzing the output of GENESIS
-simulations.  Many of the tools are based on \href{http://matplotlib.sourceforge.net/}{\bf Matplotlib} that allow analysis
-capabilities similar to Matlab to be provided within GENESIS.
-In the future, these will be integrated into GENESIS for direct use
-without the necessity of creating files.
+Finally, run the simulation on the model {\tt /cell} for 0.5 seconds:
+\begin{verbatim}
+    genesis > run /cell 0.5
+\end{verbatim}
 
-At present, if the G3Plot toolkit has been installed, the results from
-{\it simplecell-g3.ndf} may be compared with those from the GENESIS 2 run of
-{\it simplecell-g3.g} with the command
+The \href{../g3plot/g3plot.html}{G3Plot} toolkit is a suite of Python-based tools under development
+for visualizing and analyzing the output of GENESIS simulations.  Many of the tools are based on
+\href{http://matplotlib.sourceforge.net/}{\bf Matplotlib} that allow analysis capabilities similar
+to Matlab to be provided within GENESIS.  In the future, these will be integrated into GENESIS for
+direct use without the necessity of creating files.
+
+At present, if G3Plot has been installed, the results from {\it simplecell-g3.ndf} may be compared
+with those from the GENESIS 2 run of {\it simplecell-g3.g} with the command
 \begin{verbatim}
    $ G3Plot.py simplecell-g3-ndf__Vm.out Vm.out
 \end{verbatim}
 
 \subsection*{Converting user-defined input and output functions}
 
-Although the {\bf G-Shell} will continue to gain more paradigms for model
+Although the G-Shell will continue to gain more paradigms for model
 input or output that will be sufficient for most single cell modeling,
 it will sometimes be necessary to script custom functions in GENESIS 2
 to provide unique capabilities.  This is particularly likely to be
 true with network simulations.
 
-The following section of this tutorial deals with ways to import the {\it make\_input} and
-{\it make\_output} functions above into the the {\it G-Shell}, and save them as part
-of a complete GENESIS simulation.
-
-\noindent UNDER CONSTRUCTION--To be continued in a future version of Tutorial 3.
+A future tutorial will demonstrate how to interface this model with objects in the Experiment module
+in order to import the {\it make\_input} and {\it make\_output} functions above into the the
+G-Shell, and save them as part of a complete GENESIS simulation.
 
 \end{document}

@@ -47,6 +47,8 @@ which returns in part:
        ...
 \end{verbatim}
 This indicates the existence of a directory in the library where one or more Purkinje cell models are stored.
+The documentation on \href{../models-library-additions/models-library-additions.html}{\bf Additions to the Models Library}
+describes some other NDF files of models that have been converted from GENESIS 2.
 
 The contents of the {\it purkinje} directory can be displayed with:
 \begin{verbatim}
@@ -58,7 +60,13 @@ The contents of the {\it purkinje} directory can be displayed with:
        - edsjb1994_partitioned.ndf
 \end{verbatim}
 
-To run one of these models the model description file (NDF) must first be loaded into the {\bf G-Shell}.  (To learn more about the NDF format see  \href{../ndf-file-format/ndf-file-format.tex}{\bf Introduction\,to\,the\,NDF\,File\,Format}.) For example, to load the multicompartment De Schutter and Bower Purkinje cell model referenced above, enter:
+To run one of these models the model description file (NDF) must first be loaded into the {\bf G-Shell}.  (To learn more
+about the NDF format see \href{../ndf-file-format/ndf-file-format.tex}{\bf Introduction\,to\,the\,NDF\,File\,Format}.)
+More details of cell model representation can be found in \href{../technical-guide-1/technical-guide-1.tex}
+{\bf Technical Guide 1}.
+
+For example, to load the multicompartment De Schutter and Bower Purkinje cell model referenced above, enter:
+
 \begin{verbatim}
     ndf_load cells/purkinje/edsjb1994.ndf
 \end{verbatim}
@@ -255,6 +263,8 @@ The value of model parameters for $Ca_T$ channels located at the soma can then b
        value: 5
     . . .  
 \end{verbatim}
+
+As discussed in \href{../tutorial1/tutorial1.tex}{\bf Tutorial 1}, this may also be treated as a run-time parameter.
 The runtime value of {\tt G\_MAX} can then be set with the following command:
 \begin{verbatim}
    genesis > runtime_parameter_add /Purkinje/segments/soma/cat G_MAX 4
@@ -405,5 +415,10 @@ Simulation output (in the default location) can be checked with the following co
 This will print the values in {\it /tmp/output} to the screen.
 
 {\bf Note:} Most common UNIX shell commands can be run in the {\bf G-Shell} if passed as arguments to the {\tt sh} command.
+
+The next tutorial in this series (\href{../tutorial3/tutorial3.html}{\bf Tutorial 3}) is devoted to the process of
+loading existing GENESIS 2 simulation scripts into the G-shell, saving the
+models in NDF files, and running them in GENESIS 3.
+
 
 \end{document}
