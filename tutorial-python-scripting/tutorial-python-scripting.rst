@@ -3,7 +3,11 @@ Creating GENESIS 3 Simulations with Python
 
 **Related Documentation:**
 
+.. start: userdocs-tag-replace-items related-tutorial
+.. end: userdocs-tag-replace-items related-tutorial
+
 `Index of GENESIS 3 User Tutorials <../tutorial-genesis/tutorial-genesis.html>`_
+
 
 Introduction
 ------------
