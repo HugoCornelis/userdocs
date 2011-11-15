@@ -11,6 +11,7 @@
 {\bf Related Documentation:}
 % start: userdocs-tag-replace-items related-do-nothing
 % end: userdocs-tag-replace-items related-do-nothing
+\href{../technical-guide-1/technical-guide-1.html}{\bf Technical Guide 1}
 
 \section*{Conversion From Physiological to SI Units in GENESIS 3}
 
@@ -18,11 +19,15 @@
 This documentation describes procedures for converting between
 the physiological units often used in papers describing the results of
 electrophysiological experiments, and the SI units used in GENESIS 3.
+It also explains the relationship between common parameterized descriptions
+of channel gate rate functions and corresponding parameters in the
+\href{../ndf-file-format/ndf-file-format.tex}{\bf Neurospaces Description
+Format} (NDF).
 
 \section{Introduction}
 
 Section 3 of the GENESIS 3 Technical Guide 1
-\href{../technical-guide-1/technical-guide-1.html}{technical-guide-1}
+\href{../technical-guide-1/technical-guide-1.html}{\bf Technical Guide 1}
 explains the representation of a simple cell model containing
 Hodgkin-Huxley channels in the Neurospaces Model Container (NMC).
 Equations (15) and (16), restated below, give the forward and backward rate
@@ -49,8 +54,8 @@ Amperes.  Unfortunately, quantities typical of neurons tend to
 have either very large or very small values when expressed in SI units.
 For this reason, many people prefer to use physiological units.
 
-Technical Guide 1 shows the {\tt PARAMETERS} block representing the forward
-rate of Eq. (\ref{eq1}) as:
+Technical Guide 1 shows the {\tt PARAMETERS} block of the NDF represention
+of the forward rate of Eq. (\ref{eq1}) as:
 
 \begin{verbatim}
       PARAMETERS
@@ -197,12 +202,12 @@ For other cases, it is necessary to have the function that creates the
 channel use a {\em for\/} loop to evaluate the equation and to fill each
 gate table.
 
-GENESIS 2 and the backeards compatibiliry module {\em ns-sli} have a
+GENESIS 2 and the backwards compatibility module {\em ns-sli} have a
 command, {\em setupalpha} that can be used to create and fill the $A$ and
 $B$ tables when a gate has rate equations of the general form
 
 \begin{equation}
-y = \frac{A + B x}{C + \exp((V + D) / F))}
+y = \frac{A + B V}{C + \exp((V + D) / F))}
 \label{eq9}
 \end{equation}
 
@@ -259,14 +264,16 @@ by the table
 \begin{table}[thb]
 \label{tab3}
 \centering
-\begin{tabular}{ll} \hline
+\begin{tabular}{lll} \hline
 {\em NMC parameter}	 & {\em setupalpha parameter} \\
 \hline
- HH\_AB\_Add\_Num  & $A$ \\
- HH\_AB\_Mult & $B$ \\
- HH\_AB\_Add\_Den   & $C$ \\
- HH\_AB\_Offset\_E & $D$ \\
- HH\_AB\_Div\_E & $F$ \\
+{\em NMC parameter}	 & {\em setupalpha parameter} & {\em SI Units} \\
+\hline
+ HH\_AB\_Add\_Num  & $A$ & $1/\mathrm{sec}$ \\
+ HH\_AB\_Mult & $B$ & $1/(\mathrm{sec} \mathrm{Volts})$ \\
+ HH\_AB\_Add\_Den   & $C$ & dimensionless \\
+ HH\_AB\_Offset\_E & $D$ & $\mathrm{Volts}$ \\
+ HH\_AB\_Div\_E & $F$  & $\mathrm{Volts}$ \\
 \hline
 \end{tabular}
 \caption{Correspondence between NMC and {\em setupalpha} parameters.}

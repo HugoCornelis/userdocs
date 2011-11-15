@@ -1,45 +1,10 @@
-The GENESIS (GEneral NEural SImulation System,
-http://genesis-sim.org/) simulation platform was one of the first
-broad-scale modeling systems in computational biology to encourage
-modelers to develop and share model features and components.
-Supported by a large developer community the GENESIS simulator
-participated in innovative simulator technologies such as
-benchmarking, parallelization and declarative model specification and
-it was the first neural simulator to define binding for the Python
-scripting language.
+The GENESIS simulation platform was one of the first broad-scale modeling systems in computational biology to encourage modelers to develop and share model features and components. Supported by a large developer community it participated in innovative simulator technologies such as benchmarking, parallelization, and declarative model specification and was the first neural simulator to define bindings for the Python scripting language.
 
-An important feature of the latest version of GENESIS, GENESIS 3.0
-(G-3), is that it decomposes into self-contained software components,
-that conform to the CBI simulator architecture.  This federated
-architecture allows separate scripting bindings to be defined for the
-mathematical solvers and the GUI, as well as for other necessary
-simulator components.
+An important feature of the latest version of GENESIS is that it decomposes into self-contained software components complying with the Computational Biology Initiative federated software architecture.  This architecture allows separate scripting bindings to be defined for different necessary components of the simulator, e.g. the mathematical solvers and graphical user interface.
 
-Python and Perl are scripting languages that provide rich sets of
-freely available open source libraries.  With a clean dynamic
-object-oriented design producing highly readable code, Python and Perl
-are widely employed in specialized areas of software component
-integration.  SWIG (Simplified Wrapper and Interface Generator)
-examines an application programming interface (API) and makes it
-available to a scripting language of choice.  This way the software
-components of the G-3 simulator can be glued together, instantiated
-and connected to external libraries and applications from user-defined
-scripts in either Python or Perl.
+Python is a scripting language that provides rich sets of freely available open source libraries. With clean dynamic object-oriented designs, they produce highly readable code and are widely employed in specialized areas of software component integration. We employ a simplified wrapper and interface generator to examine an application programming interface and make it available to a given scripting language.  This allows independent software components to be `glued' together and connected to external libraries and applications from user-defined Python or Perl scripts.
 
-We illustrate this approach with examples using Python scripting.  The
-first example uses a mathematical solver as a stand-alone software
-component driven from a Python script that generates and runs a simple
-single compartment model neuron.  This script is then contrasted with
-C code and GENESIS 2 (G-2) implementations that connect to the same
-mathematical solver.  The second example interfaces the mathematical
-solver to a modeling environment for the exploration of a neuron
-morphology from an interactive command-line and a graphical shell.
-The third example applies scripting bindings to connect the G-3
-simulator to external graphical libraries and an open source 3D
-content creation suite. This allows us to visualize 3D models based on
-electron microscopy and convert them to computational models.
+We illustrate our approach with three examples of Python scripting.  (1) Generate and run a simple single-compartment model neuron connected to a stand-alone mathematical solver. (2) Interface a mathematical solver with GENESIS\,3.0 to explore a neuron morphology from either an interactive command-line or graphical user interface. (3) Apply scripting bindings to connect the GENESIS\,3.0 simulator to external graphical libraries and an open source three dimensional content creation suite that supports visualization of models based on electron microscopy and their conversion to computational models.
 
-Employed this way the stand-alone software components of the G-3
-simulator provide a framework for progressive federated development in
-the computational neurosciences.
+Employed in this way, the stand-alone software components of the GENESIS\,3.0 simulator provide a framework for progressive federated software development in computational neuroscience.
 
