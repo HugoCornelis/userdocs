@@ -224,11 +224,11 @@ Historically, the development of neuronal simulation software for the constructi
 % Wilson MA & Bower JM (1989) Computer simulation of oscillatory behavior in cerebral cortical networks. In D Anderson (ed.) Neural Information Processing Systems. American Institute of Physics: New York. pp. 84--91.
 % Wilson MA, Bhalla US, Uhley JD & Bower JM (1989) GENESIS: A system for simulating neural networks. In D Anderson (ed.) Neural Information Processing Systems. American Institute of Physics: New York. pp. 485--492.
 
-These software systems have both been highly successful and have continued to grow in complexity through cycles of research project extension (see for example parallel NEURON \cite{migliore06:_paral_networ_simul_neuron} and PGENESIS \cite{Hereld:2004ly}). However, after more than twenty years of extending their functionality, usually by the direct incorporation of source code into the core of the simulator, code structures have become so complicated that it is now increasingly difficult, if not impossible, to easily continue this process. The resulting stand-alone applications have become {\it monolithic} \footnote{Note,\marginnote{
+These software systems have both been highly successful and have continued to grow in complexity through cycles of research project extension (see for example parallel NEURON \cite{migliore06:_paral_networ_simul_neuron} and PGENESIS \cite{Hereld:2004ly}). However, after more than twenty years of extending their functionality, usually by the direct incorporation of source code into the core of the simulator, code structures have become so complicated that it is now increasingly difficult, if not impossible, to easily continue this process. The resulting stand-alone applications have become {\it monolithic} \marginnote{
   \begin{picture}(0,0)
     \put(-10,10){\line(0,-1){0}}
   \end{picture}
-} {\it italicized} text indicates the first appearance of a technical term defined in Materials and Methods. {\tt Typewriter} text indicates the name of a software {\it module} described in Results.} with their life cycles inevitably moving  from extension to maintenance. A significant consequence of this process is that the development of an optimized simulation can be a considerable challenge for the neuroscientist unfamiliar with the underlying mathematical and computational theory.
+} with their life cycles inevitably moving  from extension to maintenance. (Note:  {\it italicized} text indicates the first appearance of a technical term defined in Materials and Methods. {\tt Typewriter} text indicates the name of a software {\it module} described in Results.) A significant consequence of this process is that the development of an optimized simulation can be a considerable challenge for the neuroscientist unfamiliar with the underlying mathematical and computational theory.
 
 % Migliore, M, Cannia, C., Lytton, W.W., Markram, H. and Hines, M.L. (2006) Parallel network simulations with NEURON. J Comput Neurosci 21: 119--129.
 % Hereld M, Stevens RL, van Drongelen W \& Lee HC (2004) Developing a petascale neural simulation.  Proc 26th Ann Int Conf IEEE EMBS 2: 3999--4002.
@@ -815,12 +815,12 @@ simulator specific language. Instead,\marginnote{
     \put(-10,10){\line(0,-1){0}}
   \end{picture}
 } it interacts directly with the
-{\tt Model\,Containers}\footnote{For\marginnote{
+{\tt Model\,Containers} \marginnote{
   \begin{picture}(0,0)
     \put(-10,10){\line(0,-1){0}}
   \end{picture}
-} simplicity, where appropriate, we collectively refer to the {\tt Biology\,Model\,Container} and the {\tt Experiment\,Model\,Container} as the {\tt Model\,Containers}.} via a low-level {\it application binary interface}
-(ABI).  The ABI provides a direct
+} via a low-level {\it application binary interface}
+(ABI). (Note: For simplicity, where appropriate, we collectively refer to the {\tt Biology\,Model\,Container} and the {\tt Experiment\,Model\,Container} as the {\tt Model\,Containers}.) The ABI provides a direct
 coupling between the implementation technologies of the different
 software components, creates a much tighter loop between the GUI,
 {\tt Simulation\,Control}, and lower level back-end functions (described
@@ -1320,12 +1320,12 @@ step\cite{borg-graham00:_addit_effic_comput_branc_nerve_equat}.  For
 this, the memory image of a model must first be expanded into a
 representation that includes the mathematical equations and parameters
 relevant to the given simulation but, for instance, does not include
-the spatial layout of segments\footnote{`Segment'\marginnote{
+the spatial layout of segments\marginnote{
   \begin{picture}(0,0)
     \put(-10,10){\line(0,-1){0}}
   \end{picture}
-} is a high level term employed to describe different parts of the biological model of a dendritic morphology. The equivalent low level (computational) term is `compartment'. It refers to the numerical representation of a segment.} as this is not required by the {\tt
-  Solvers}.  This\marginnote{
+} as this is not required by the {\tt
+  Solvers}.  (Note: `Segment' is a high level term employed to describe different parts of the biological model of a dendritic morphology. The equivalent low level (computational) term is `compartment'. It refers to the numerical representation of a segment.) This\marginnote{
   \begin{picture}(0,0)
     \put(-10,10){\line(0,-1){00}}
   \end{picture}
