@@ -256,12 +256,12 @@ representations from the algorithms that process them.
 
 GENESIS simulations are constructed from model components that receive
 inputs, perform calculations on them, and then generate outputs. Model
-neurons are constructed from basic parts, such as segments\footnote{`Segment'\marginnote{
+neurons are constructed from basic parts, such as segments\marginnote{
   \begin{picture}(0,0)
     \put(-10,10){\line(0,-1){24}}
   \end{picture}
-} is a high level term employed to describe different parts of the biological model of a dendritic morphology. The equivalent low level (computational) term is `compartment'. It refers to the numerical representation of a segment.}, and
-variable conductance ion channels. Channels are linked to their
+}, and
+variable conductance ion channels. (Note: `Segment' is a high level term employed to describe different parts of the biological model of a dendritic morphology. The equivalent low level (computational) term is `compartment'. It refers to the numerical representation of a segment.) Channels are linked to their
 segments\marginnote{
   \begin{picture}(0,0)
     \put(-10,10){\line(0,-1){20}}
@@ -348,7 +348,7 @@ In this sense scripting and system programming are symbiotic. Used
 together, they produce programming environments of exceptional power where applications can be developed
 five to ten times more rapidly than when a system programming language alone is used.\\
 
-\noindent{\bf Place Figure\,1 about here.}\\
+% \noindent{\bf Place Figure\,1 about here.}\\
 
 Figure~\ref{fig:g3-interfacing} gives the levels of programing available in G-3. They range from the C coding employed to create the independent components, through Python and Perl interface scripting, the declarative NDF file format used for model construction and the associated reusable NDF libraries coding membrane channels and synapses, to the highest level of coding via the G-Tube GUI. Also indicated is the location of the SLI in this coding hierarchy.
 
@@ -375,7 +375,7 @@ providing an important programming paradigm.
 
 Python is a powerful dynamic programming language comparable to Perl,
 Ruby, or Scheme. In September 2011, 4\% of internet references to programing and scripting languages were to Python, making it the 8th most popular programming
-language (see Tiobe Index at http://www.tiobe.com/index.php/content/company/Home.html)\footnote{Ratings are based on the number of skilled engineers world-wide, courses and third party vendors. The popular search engines Google, Bing, Yahoo!, Wikipedia, YouTube and Baidu are used to calculate the ratings.}.  It combines
+language (see Tiobe Index at http://www.tiobe.com/index.php/content/company/Home.html. Note: Ratings are based on the number of skilled engineers world-wide, courses, and third party vendors. The search engines Google, Bing, Yahoo!, Wikipedia, YouTube and Baidu are used to calculate the ratings).  It combines
 considerable power with very clear syntax and has modules, classes,
 exceptions, high level data types, and dynamic and loose typing. It
 runs on many hardware architectures, integrates with scientific and
@@ -404,13 +404,13 @@ runs on over 100 different platforms\marginnote{
 } (http://www.perl.org/about.html).  Currently, there are over 18,000
 open source modules available from the Comprehensive Perl Archive
 Network (CPAN, http://www.cpan.org/), assisting in system integration, scientific
-application, and user interface development.  Via the CPAN {\it Inline}\footnote{\marginnote{
+application, and user interface development.  Via the CPAN {\it Inline}\marginnote{
   \begin{picture}(0,0)
     \put(-10,6){\line(0,-1){20}}
   \end{picture}
-}Note, {\it italicized} text indicates the names of Python modules, directory paths, and file names, whereas, {\tt Typewriter} text is reserved for Python coding examples and the dimensions of physical quantities. {\bf Bold} text indicates the names of software components in G-3.}
+}
 module, Perl integrates seamlessly with both system programming
-languages such as C and C++, and scripting languages including Python.
+languages such as C and C++, and scripting languages including Python. (Note: {\it italicized} text indicates the names of Python modules, directory paths, and file names, whereas, {\tt Typewriter} text is reserved for Python coding examples and the dimensions of physical quantities. {\bf Bold} text indicates the names of software components in G-3.)
 Perl supports object-oriented programming, functional programming, and
 procedural programming paradigms. In September 2011, nearly
 2.5\,\% of internet references to programing and scripting languages were to Perl, making
@@ -453,7 +453,7 @@ low-level\marginnote{
 software components emphasize high-level languages and contain less
 code (e.g. Python, Perl).\\
 
-\noindent {\bf Place Table 1 About Here.}\\
+% \noindent {\bf Place Table 1 About Here.}\\
 
 \subsection*{The CBI Federated Software Architecture}
 \label{subsec:cbi}
@@ -502,7 +502,7 @@ of the stimulus, and when to export a model) and mathematical solvers
 start
 calculations, and what the output variables are).\\
 
-\noindent{\bf Place Figure\,2 About Here} \\
+%\noindent{\bf Place Figure\,2 About Here} \\
 
 A scripting layer allows the simulation system to be driven from
 multiple scripting languages. Python and Perl are currently supported,
@@ -645,17 +645,17 @@ solver written in C.  Python bindings for the {\bf Discrete\,Event\,System} to f
   \end{picture}
 }.
 
-Here we show a simple high-level Python script\,\footnote{This script
-  is written for clarity of presentation rather than compactness or
-  efficiency.  Python\marginnote{
+Here we show a simple high-level Python script\marginnote{
   \begin{picture}(0,0)
     \put(-10,10){\line(0,-1){20}}
   \end{picture}
-} version 2.6.6 is used on Linux Ubuntu 10.10
-  Maveric.} that runs a simulation of a single cylindrical segment. It
+} that runs a simulation of a single cylindrical segment. It
 is defined by standard values for the parameters of membrane
 resistance ({\tt RM}), axial resistance ({\tt RA}), and membrane
-capacitance ({\tt CM}).
+capacitance ({\tt CM}). (Note: This script
+  is written for clarity of presentation rather than compactness or
+  efficiency. Python version 2.6.6 is used on Linux Ubuntu 10.10
+  Maveric.)
 %\footnote{The solver requires {\tt RA} for all
 %  compartments.}
 These parameters are given by their specific values (in SI units) as
@@ -766,13 +766,11 @@ script with alternative implementations in C and the GENESIS SLI.
 In the C code there is an abundance of low level detail that
 interfaces directly to the solver.  For example, compartments are
 identified by their position in an array and parameters such as {\tt
-  RM} and {\tt CM} must be provided as an unlabeled ordered sequence
+  RM} and {\tt CM} must be provided as an unlabelled ordered sequence
 of their actual values (scaled to the compartment surface area).
 
 The complexity of the GENESIS SLI interface falls between that of the
-Python interface and the C code interface\footnote{Note,
- the G-2 SLI is supported by G-3 through its backward compatibility
-  component {\bf NS-SLI}.}.  While
+Python interface and the C code interface. (Note: the G-2 SLI is supported by G-3 through its backward compatibility component {\bf NS-SLI}.)  While
 compartments and parameters have names and numerical values are given in
 a format used by solvers.
 
@@ -1023,7 +1021,7 @@ with the command:
    explore
 \end{verbatim}
 
-\noindent {\bf Place Figure\,3 About Here.}\\
+% \noindent {\bf Place Figure\,3 About Here.}\\
 
 Figure~\ref{fig:cbi-studio} shows sample output of running this
 command.  Other capabilities of the {\bf Studio} include rendering
@@ -1047,9 +1045,9 @@ XODUS provided graphical objects that could be
 connected to model components from within the SLI.  Rather than
 providing a full GUI instance, the flexibility of XODUS came from its
 infrastructure which allowed modelers to easily develop new GUIs
-dedicated to their particular research or teaching projects\,\footnote{The
+dedicated to their particular research or teaching projects. (Note: The
   official GENESIS software distribution contained both simple and
-  sophisticated example GUIs.}.  However, the XODUS paradigm
+  sophisticated example GUIs.)  However, the XODUS paradigm
 inevitably resulted in modelers contaminating their model script with GUI
 related statements.
 %\marginpar{this is a new paragraph: problem statement to
@@ -1093,15 +1091,15 @@ interface builders.
 %A Python interface to a 2D plotting library ({\it
 %  matplotlib}) can be used to produce publication quality figures in a
 %variety of hardcopy formats.
-One such builder is\,{\it wxFormBuilder}\,\footnote{A user interface designer for the\,{\it
+One such builder is\,{\it wxFormBuilder}.  (Note: This builder is a user interface designer for the\,{\it
     wxPython} toolkit and the Linux desktop environment GNOME. It is
-  available from http://wxformbuilder.org/.}. It\marginnote{
+  available from http://wxformbuilder.org/.) It\marginnote{
   \begin{picture}(0,0)
     \put(-10,10){\line(0,-1){20}}
   \end{picture}
 } can be used to construct a GUI with visual elements
 such as menus and buttons and writes a description of these elements and
-their bindings to a file known as an XML resource (XRC) file.  The GUI
+their bindings to a file known as an XML resource (XRC) file. The GUI
 definitions in this file can then be rendered with the\,{\it wxWidgets} library and its Python front end\,{\it
   wxPython}.  Further integration with additional G-3 specific data
 bindings ensures that, for example, the data produced by a
@@ -1416,7 +1414,7 @@ if __name__ == '__main__':
 
 %end --->
 
-\noindent{\bf Place Figure\,4 about here.}\\
+% \noindent{\bf Place Figure\,4 about here.}\\
 
 %Figure~\ref{fig:g3-wx}
 In this example we have shown how the CBI architecture defines a
@@ -1450,8 +1448,8 @@ available in state-of-the-art rendering applications such as  Blender
   \end{picture}
 }
 suite available for all major operating systems that have Python
-enabled bindings\footnote{One restriction is that code must be run
-  from inside the Blender specific Python interpreter.}. In our
+enabled bindings (Note: One restriction is that code must be run
+  from inside the Blender specific Python interpreter.) In our
 example it replaces the functionality otherwise provided by the
 {\bf G-Shell}.
 
@@ -1470,7 +1468,7 @@ with Reconstruct\marginnote{
 morphologies of small segments of Purkinje cell
 dendrites\,\cite{huo09:_purkin, cornelis08:_model_neuros_genes}.\\
 
-\noindent{\bf Place Figure\,5 About Here}\marginnote{
+% \noindent{\bf Place Figure\,5 About Here}\marginnote{
   \begin{picture}(0,0)
     \put(-10,10){\line(0,-1){20}}
   \end{picture}
@@ -1695,8 +1693,8 @@ often\,\cite{raymond01:_cathed_bazaar, citeulike:126678}.
 While cathederal-like software development leads to a single-threaded
 development cycle commonly used by commercial applications, the
 bazaar-like leads to multi-threaded development cycles of
-applications that come in different flavours\,\footnote{A classical
-  example is the family of editors based on Emacs.}.
+applications that come in different flavours. (Note: A classical
+  example is the family of editors based on Emacs.)
 
 Here, based on the CBI paradigm, we have outlined a solution for
 multi-threaded development of software components for neuroscience
@@ -1714,7 +1712,7 @@ that is both progressive and federated.
 
 We thank the Computational Biology Initiative at UTSA (http://www.cbi.utsa.edu) for their excellent support when installing and updating G-3 on their computers.
 
-Hugo Cornelis is partially supported by the CREA Financing program (CREA/07/027) of the K.U.Leuven, Belgium, EU. Both Hugo Cornelis and Allan D. Coop are partially supported by NIH grant 3 R01 NS049288-06S1 to James M Bower.
+%Hugo Cornelis is partially supported by the CREA Financing program (CREA/07/027) of the K.U.Leuven, Belgium, EU. Both Hugo Cornelis and Allan D. Coop are partially supported by NIH grant 3 R01 NS049288-06S1 to James M Bower.
 
 %\section*{References}
 % The bibtex filename
