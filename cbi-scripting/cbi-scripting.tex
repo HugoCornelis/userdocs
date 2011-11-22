@@ -68,14 +68,14 @@
 % Title must be 150 characters or less
 \begin{flushleft}
 {\Large
-\textbf{Python as a Federation Tool for GENESIS\,3.0}
+\textbf{Python as a Federation Tool for GENESIS 3.0}
 }
 % Insert Author names, affiliations and corresponding author email.
 \\
-Cornelis H.$^{1,\ast}$, 
-Rodriguez A. L.$^{2}$, 
-Coop A. D.$^{3}$,
-Bower J. M.$^{4}$.
+Hugo Cornelis$^{1,\ast}$, 
+Armando L. Rodriguez$^{2}$, 
+Allan D. Coop$^{3}$,
+James M. Bower$^{4}$.
 \\
 \bf{1} Cornelis H. Research Imaging Institute, University of Texas Health Science Center at San Antonio, San Antonio, TX, United States
 \\
@@ -116,17 +116,17 @@ external libraries and applications from user-defined Python or Perl scripts.
 
 We illustrate our approach with three examples of Python scripting. 
 (1) Generate and run a simple single-compartment model neuron connected to a 
-stand-alone mathematical solver. (2) Interface a mathematical solver with GENESIS\,3.0 to explore a neuron morphology from either
+stand-alone mathematical solver. (2) Interface a mathematical solver with GENESIS 3.0 to explore a neuron morphology from either
 an interactive command-line or graphical user interface.
-(3) Apply scripting bindings to connect the GENESIS\,3.0 simulator to
+(3) Apply scripting bindings to connect the GENESIS 3.0 simulator to
 external graphical libraries and an open source three dimensional content creation
 suite that supports visualization of models based on electron
 microscopy and their conversion to computational
 models.
 
-Employed in this way, the stand-alone software components of the GENESIS\,3.0 
+Employed in this way, the stand-alone software components of the GENESIS 3.0 
 simulator provide a framework for progressive federated
-software development in computational neuroscience.\\
+software development in computational neuroscience.
 
 %\noindent{\bf HUGO: The abstract is at 299 words cf. the maximum allowed 300 words. Acronyms and references can not appear in the abstract.}
 
@@ -153,13 +153,13 @@ scientific questions in computational neuroscience. Simulator functionality was
 expanded through life cycles of research project extension.
 For example, libraries for kinetic pathway modeling were added for
 projects investigating how signaling networks store learned
-behavior\,\cite{bhalla99:_emerg} and how light controls photoreception by regulating calcium release from
-intracellular calcium stores\,\cite{blackwell00:_eviden_distin_light_induc_calcium}.
+behavior \cite{bhalla99:_emerg} and how light controls photoreception by regulating calcium release from
+intracellular calcium stores \cite{blackwell00:_eviden_distin_light_induc_calcium}.
 A fast implicit solver was developed for
-complex Purkinje cell modeling\,\cite{deschutter94:_purkin_i,
+complex Purkinje cell modeling \cite{deschutter94:_purkin_i,
   deschutter94:_purkin_ii} and more recently synaptic learning rules
 have been
-implemented\,\cite{guenay08:_chann_densit_distr_explain_spikin}.  In
+implemented \cite{guenay08:_chann_densit_distr_explain_spikin}.  In
 principle such linear or single-threaded development processes can
 continue forever.  However, repetitive extension of GENESIS
 with\marginnote{
@@ -190,7 +190,7 @@ simulation system.  This reconfiguration is\marginnote{
 } based on the {\it Neurospaces Project} (http://neurospaces.sourceforge.net/) which was initiated in 1998 as a development center for software components for computational neuroscience simulators. It embodies many software components, each of which has been developed in full isolation. In it, the core GENESIS simulator functionality has been
 restructured such that it is the first neural simulator to comply with a more modular design, the Computational 
 Biology Initiative federated software architecture (referred to as the CBI
- architecture, described in Materials and Methods and in more detail in\,\cite{cornelis11b}).\marginpar{\bf Editor: Could you please complete and insert the reference for citation [6] in the References for the associated manuscript, {\it A Federated Design for a Neurobiological Simulation Engine: The CBI federated software architecture}.} The CBI
+ architecture, described in Materials and Methods and in more detail in \cite{cornelis11b}).\marginpar{\bf Editor: Could you please complete and insert the reference for citation [6] in the References for the associated manuscript, {\it A Federated Design for a Neurobiological Simulation Engine: The CBI federated software architecture}.} The CBI
 architecture is specifically designed to support
 the integration of stand-alone software components and applications by
 using common integration technologies such as modern scripting
@@ -292,10 +292,10 @@ community.
 
 Historically, there have been fundamental differences between the Unix
 shells and system programming languages such as C or C++ and scripting
-languages such as Perl\,\cite{wall99:_perl_progr_refer_guide},
-Python\,\cite{martelli06:_python_nutsh},
-Rexx\,\cite{ohara88:_moder_progr_using_rexx},
-Tcl\,\cite{ousterhout94:_tcl_tk_toolk}\marginnote{
+languages such as Perl \cite{wall99:_perl_progr_refer_guide},
+Python \cite{martelli06:_python_nutsh},
+Rexx \cite{ohara88:_moder_progr_using_rexx},
+Tcl \cite{ousterhout94:_tcl_tk_toolk}\marginnote{
   \begin{picture}(0,0)
     \put(-10,10){\line(0,-1){18}}
   \end{picture}
@@ -315,7 +315,7 @@ In this way, scripting languages operate at a higher level than system
 programming languages in the sense that on average a single statement
 in a scripting language does more work.  For example, a typical statement in a system
 programming language executes about five machine instructions, whereas,
-in a scripting language a typical statement may execute hundreds or thousands of machine instructions\,\cite{ousterhout98:_scrip}.
+in a scripting language a typical statement may execute hundreds or thousands of machine instructions \cite{ousterhout98:_scrip}.
 
 %9.  L. Wall, T. Christiansen, and R. Schwartz, Programming Perl, Second Edition, O'Reilly and Associates, ISBN 1-56592-149-6, 1996.
 %4. M. Lutz, Programming Python, O'Reilly, ISBN 1-56592-197-6, 1996.
@@ -346,9 +346,9 @@ This division of labor provides a natural framework for reusability.
 When well-defined interfaces exist between components and scripts, software reuse becomes easy.
 In this sense scripting and system programming are symbiotic. Used
 together, they produce programming environments of exceptional power where applications can be developed
-five to ten times more rapidly than when a system programming language alone is used.\\
+five to ten times more rapidly than when a system programming language alone is used.
 
-% \noindent{\bf Place Figure\,1 about here.}\\
+% \noindent{\bf Place Figure 1 about here.}\\
 
 Figure~\ref{fig:g3-interfacing} gives the levels of programing available in G-3. They range from the C coding employed to create the independent components, through Python and Perl interface scripting, the declarative NDF file format used for model construction and the associated reusable NDF libraries coding membrane channels and synapses, to the highest level of coding via the G-Tube GUI. Also indicated is the location of the SLI in this coding hierarchy.
 
@@ -413,7 +413,7 @@ module, Perl integrates seamlessly with both system programming
 languages such as C and C++, and scripting languages including Python. (Note: {\it italicized} text indicates the names of Python modules, directory paths, and file names, whereas, {\tt Typewriter} text is reserved for Python coding examples and the dimensions of physical quantities. {\bf Bold} text indicates the names of software components in G-3.)
 Perl supports object-oriented programming, functional programming, and
 procedural programming paradigms. In September 2011, nearly
-2.5\,\% of internet references to programing and scripting languages were to Perl, making
+2.5 \% of internet references to programing and scripting languages were to Perl, making
 it the 9th most popular programming
 language (see Tiobe Index at http://www.tiobe.com/index.php/content/company/Home.html).
 
@@ -427,7 +427,7 @@ for defining models and simulations.  A predefined Python  or
 Perl data structure defines high-level interfaces that are translated
 into strings containing Python or Perl code such as class and method
 definitions.  During program initialization these are bound to the run-time
-environment using the Perl or Python\,{\it eval} functions.
+environment using the Perl or Python {\it eval} functions.
 
 \subsection*{SWIG for Federated Software Integration}
 
@@ -451,7 +451,7 @@ low-level\marginnote{
   \end{picture}
 } languages and contain more code (e.g. C), whereas, high-level
 software components emphasize high-level languages and contain less
-code (e.g. Python, Perl).\\
+code (e.g. Python, Perl).
 
 % \noindent {\bf Place Table 1 About Here.}\\
 
@@ -478,7 +478,7 @@ In\marginnote{
     \put(-10,10){\line(0,-1){40}}
   \end{picture}
 } this section we summarize the concepts of the CBI architecture.
-For an in-depth explanation see the accompanying paper\,\cite{cornelis11b}.
+For an in-depth explanation see the accompanying paper \cite{cornelis11b}.
 
 The core components of the architecture are shown in
 Figure~\ref{fig:cbi-arch}. On the bottom left are\marginnote{
@@ -488,21 +488,21 @@ Figure~\ref{fig:cbi-arch}. On the bottom left are\marginnote{
 }
 databases of neuronal models or experimental data that can be accessed
 by the simulator. Optional model processors (e.g. the Reconstruct
-interface) load a model into the {\bf Model\,Container} which stores a
+interface) load a model into the {\bf Model Container} which stores a
 model in memory and makes it available to other software components in
-different formats.  One function of the {\bf Model\,Container} is to
+different formats.  One function of the {\bf Model Container} is to
 translate biological concepts and properties into mathematical
 concepts that can be understood by the mathematical solvers. Thus,
 importantly and unlike other existing neural simulators, the
 mathematical solvers are independent of the biological representation
 of a model. A simulation controller orchestrates the actions taken by
-the {\bf Model\,Container} (e.g. when to load a model, the definition
+the {\bf Model Container} (e.g. when to load a model, the definition
 of the stimulus, and when to export a model) and mathematical solvers
-(e.g. when to fetch a model from the {\bf Model\,Container}, when to
+(e.g. when to fetch a model from the {\bf Model Container}, when to
 start
-calculations, and what the output variables are).\\
+calculations, and what the output variables are).
 
-%\noindent{\bf Place Figure\,2 About Here} \\
+%\noindent{\bf Place Figure 2 About Here} \\
 
 A scripting layer allows the simulation system to be driven from
 multiple scripting languages. Python and Perl are currently supported,
@@ -561,24 +561,24 @@ Much existing software such as GUI libraries and plotting libraries,
 are application neutral.  Other software packages are tailored to the
 needs of computational neuroscience.  The Neurospaces project
 (http://www.neurospaces.org/) provides core software components for the
-G-3 simulator\,\cite{cornelis03:_neuros}. These include, the (1) {\bf
+G-3 simulator \cite{cornelis03:_neuros}. These include, the (1) {\bf
   Model Container}: Stores two representations of a model, the first
 is conceptual and can be regarded as an enumeration of biological
 concepts and their relationships, the second is an expanded
 mathematical representation that, if complete, can be simulated, (2)
-{\bf Heccer}: A fast compartmental solver based on the GENESIS\,{\it
+{\bf Heccer}: A fast compartmental solver based on the GENESIS {\it
   hsolve} object that can be instantiated from C, Python\marginnote{
   \begin{picture}(0,0)
     \put(-10,10){\line(0,-1){20}}
   \end{picture}
 }, Perl or
 other scripting languages, (3) {\bf SSP} (Simple Scheduler in Perl):
-Binds {\bf Heccer} and the {\bf Model\,Container}, and activates them
+Binds {\bf Heccer} and the {\bf Model Container}, and activates them
 correctly, such that they work together on a single simulation, (4)
 {\bf Studio} and {\bf G-Tube}: Contain graphical tools for model
 construction, exploration, and simulation, (5) {\bf G-Shell} (G-3
 Interactive Shell): Dynamically loads other software components in an
-interactive environment, and the (6) {\bf Project\,Browser}: For
+interactive environment, and the (6) {\bf Project Browser}: For
 inspection of projects and simulation results. For completeness, we
 also mention (7) {\bf NS-SLI}: The G-3 component that provides
 backward compatibility for the GENESIS SLI. All software can be
@@ -635,11 +635,11 @@ its software components.
 %simulator.
 As an example, the G-3 Python module {\it nmc} contains functions to
 simplify the storage of neuron models in computer memory.  This module
-is a simple front-end to the {\bf Model\,Container}, a G-3 component
+is a simple front-end to the {\bf Model Container}, a G-3 component
 which for efficiency is coded in the system programming language C.
-Likewise,\,{\it Heccer} is a wrapper module for the {\bf Heccer}
+Likewise, {\it Heccer} is a wrapper module for the {\bf Heccer}
 component which in turn is an interface to a low-level single neuron
-solver written in C.  Python bindings for the {\bf Discrete\,Event\,System} to facilitate network modeling also exist\marginnote{
+solver written in C.  Python bindings for the {\bf Discrete Event System} to facilitate network modeling also exist\marginnote{
   \begin{picture}(0,0)
     \put(-10,10){\line(0,-1){12}}
   \end{picture}
@@ -661,11 +661,11 @@ capacitance ({\tt CM}). (Note: This script
 These parameters are given by their specific values (in SI units) as
 commonly reported in the literature, instead of their actual values
 scaled to the compartment surface area as used by a mathematical
-solver\,\cite{cornelis04:_neuros_param_handl}. The script defines a
-Python function\,{\it run\_simulation} that will load and run a model when invoked from
+solver \cite{cornelis04:_neuros_param_handl}. The script defines a
+Python function {\it run\_simulation} that will load and run a model when invoked from
 a system command line on an appropriately configured computer.  The script
 can also be imported into G-3 as a Python module, thus allowing access
-to this function.  For convenience, we call this Python module\,{\it
+to this function.  For convenience, we call this Python module {\it
   example}.
 
 \begin{verbatim}
@@ -758,7 +758,7 @@ if __name__ == '__main__':
 The CBI architecture allows G-3 to accommodate many user
 interfaces.  As an example, the compartmental solver {\bf Heccer} can be driven
 stand-alone from C code, Python, or Perl to run the simplest
-models, or it can be interfaced with the {\bf Model\,Container} to
+models, or it can be interfaced with the {\bf Model Container} to
 run more realistic multi-compartment models based on morphological
 data. To illustrate this flexibility we now compare the above Python
 script with alternative implementations in C and the GENESIS SLI.
@@ -882,10 +882,10 @@ step 0.5 -time
 While script language bindings are suitable for construction of toy
 models from scratch, it is better to use a domain specific language to
 construct the various parts of a model. For example, the {\bf
-  Model\,Container} is installed with a library of domain specific
+  Model Container} is installed with a library of domain specific
 model components where the standard Hodgkin-Huxley channels are
-provided in the file\,{\it channels/hodgkin-huxley.ndf}.  These
-channels can be included in the Python\,{\it example} given above by adding
+provided in the file {\it channels/hodgkin-huxley.ndf}.  These
+channels can be included in the Python {\it example} given above by adding
 the statements:
 
 \begin{verbatim}
@@ -893,15 +893,15 @@ the statements:
    my_segment.ImportChild("channels/hodgkin-huxley.ndf::/na")
 \end{verbatim}
 
-The {\bf Model\,Container} can export models constructed in a
+The {\bf Model Container} can export models constructed in a
 scripting language as a library for incorporation into new models or
-for use with other G-3 components such as the {\bf Project\,Browser}.
+for use with other G-3 components such as the {\bf Project Browser}.
 These\marginnote{
   \begin{picture}(0,0)
     \put(-10,10){\line(0,-1){60}}
   \end{picture}
-} new models can then be imported by a call to the\,{\bf
-  Model\,Container}\,{\it Read} method. For example, importing a
+} new models can then be imported by a call to the {\bf
+  Model Container} {\it Read} method. For example, importing a
 Purkinje cell model with over 4,000 compartments may be done with the
 following statement:
 
@@ -909,7 +909,7 @@ following statement:
    my_nmc.Read("cells/purkinje/edsjb1994.ndf")
 \end{verbatim}
 
-After importation, the {\bf Model\,Container} provides a set of
+After importation, the {\bf Model Container} provides a set of
 functions to analyze the structure of a model morphology.  For
 example, the names of the most distal segment of each dendrite can be
 obtained with:
@@ -924,7 +924,7 @@ The {\bf G-Shell} integrates other
 G-3 components and makes their functions available through an
 interactive environment available from a command line.  Coded in Perl, the {\bf G-Shell} is a
 communication abstraction layer for 
-the {\bf Model\,Container}, {\bf Heccer}, {\bf SSP}, {\bf DES} and the {\bf
+the {\bf Model Container}, {\bf Heccer}, {\bf SSP}, {\bf DES} and the {\bf
   Studio}.  After the {\bf G-Shell} has been started from a system
 shell with
 \begin{verbatim}
@@ -938,7 +938,7 @@ the list of loaded software components can be printed to the screen with the com
 
 Each loaded software component will be shown with associated status
 information that helps diagnose possible problems.  For
-example, after correct initialization of the {\bf Model\,Container} the\marginnote{
+example, after correct initialization of the {\bf Model Container} the\marginnote{
   \begin{picture}(0,0)
     \put(-10,10){\line(0,-1){20}}
   \end{picture}
@@ -956,19 +956,19 @@ status information appears as:
       layer: 2
 \end{verbatim}
 
-Integration of the {\bf G-Shell} with the {\bf Model\,Container}
+Integration of the {\bf G-Shell} with the {\bf Model Container}
 allows for real-time analysis of the quantitative and structural
 aspects of a neuronal morphology.  The library of model components
-that is installed with the {\bf Model\,Container} provides a
-definition of a model Purkinje cell in the file\,{\it
+that is installed with the {\bf Model Container} provides a
+definition of a model Purkinje cell in the file {\it
   cells/purkinje/edsjb1994.ndf}.  The command:
 \begin{verbatim}
    ndf_load cells/purkinje/edsjb1994.ndf
 \end{verbatim}
 makes this model Purkinje cell available for interactive analysis.
 Alternatively, if the model is encoded in a GENESIS SLI script with the
-name\,{\it PurkM9\_model/CURRENT9.g}, the command\,{\it ndf\_load} can be
-replaced by\,{\it sli\_load}:
+name {\it PurkM9\_model/CURRENT9.g}, the command {\it ndf\_load} can be
+replaced by {\it sli\_load}:
 
 \begin{verbatim}
    sli_load PurkM9_model/CURRENT9.g
@@ -977,7 +977,7 @@ replaced by\,{\it sli\_load}:
 This command imports the model that is specified in the SLI script
 without running the simulation.  A similar command ({\it pynn\_load})
 is currently in active development to interface with the PyNN network modeling
-environment\,\cite{davison08:_pynn}.
+environment \cite{davison08:_pynn}.
 
 Given the name of one of its dendritic segments, the number of branch
 points between the segment and the soma can be determined. After
@@ -992,7 +992,7 @@ can be obtained with:
 
 If a dendritic segment contains a synaptic channel, it can be
 stimulated with a precomputed spike train stored in a file named, for
-example,\,{\it event\_data/events.yml}:
+example, {\it event\_data/events.yml}:
 
 \begin{verbatim}
    set_runtime_parameter /Purkinje/segments/b1s06[182]/Purkinje_spine_0/head/par/synapse
@@ -1011,7 +1011,7 @@ A simulation can then conveniently be started using:
 \begin{verbatim}
    run /Purkinje 0.1
 \end{verbatim}
-This simulation produces the somatic response to the given dendritic stimulus in a file named, by default,\,{\it /tmp/output}.
+This simulation produces the somatic response to the given dendritic stimulus in a file named, by default, {\it /tmp/output}.
 
 To query the parameters of the stimulated compartment the model can
 then be analyzed using the graphical front-end of the {\bf Studio}
@@ -1021,7 +1021,7 @@ with the command:
    explore
 \end{verbatim}
 
-% \noindent {\bf Place Figure\,3 About Here.}\\
+% \noindent {\bf Place Figure 3 About Here.}\\
 
 Figure~\ref{fig:cbi-studio} shows sample output of running this
 command.  Other capabilities of the {\bf Studio} include rendering
@@ -1070,11 +1070,11 @@ button-rich tutorial applications.
 %events such as starting and stopping a simulation.
 GUI libraries typically communicate with other software components
 using an event based system.  The functional core of such a system is an
-event dispatching loop, usually called the\,{\it main\,loop}.
+event dispatching loop, usually called the {\it main loop}.
 %How to
 %setup communication between a main loop and simple actions such as
 %starting and stopping a simulation is specific to the GUI library.
-The binding between a button click event and the\,{\it main\,loop}, and
+The binding between a button click event and the {\it main loop}, and
 the visual layout of most contemporary GUI applications is
 conveniently constructed using one of a number of freely available user
 interface builders.
@@ -1091,7 +1091,7 @@ interface builders.
 %A Python interface to a 2D plotting library ({\it
 %  matplotlib}) can be used to produce publication quality figures in a
 %variety of hardcopy formats.
-One such builder is\,{\it wxFormBuilder}.  (Note: This builder is a user interface designer for the\,{\it
+One such builder is {\it wxFormBuilder}.  (Note: This builder is a user interface designer for the {\it
     wxPython} toolkit and the Linux desktop environment GNOME. It is
   available from http://wxformbuilder.org/.) It\marginnote{
   \begin{picture}(0,0)
@@ -1100,7 +1100,7 @@ One such builder is\,{\it wxFormBuilder}.  (Note: This builder is a user interfa
 } can be used to construct a GUI with visual elements
 such as menus and buttons and writes a description of these elements and
 their bindings to a file known as an XML resource (XRC) file. The GUI
-definitions in this file can then be rendered with the\,{\it wxWidgets} library and its Python front end\,{\it
+definitions in this file can then be rendered with the {\it wxWidgets} library and its Python front end {\it
   wxPython}.  Further integration with additional G-3 specific data
 bindings ensures that, for example, the data produced by a
 mathematical solver flows to a widget that plots the value of a
@@ -1110,15 +1110,15 @@ to model components and simulation actions, with a more contemporary
 paradigm that separates simulator and model scripts from GUI related
 statements.
 
-In the following example, we create a\,{\it wxPython} application class
-called\,{\it G3App}. This demonstrates the Python scripting required to
+In the following example, we create a {\it wxPython} application class
+called {\it G3App}. This demonstrates the Python scripting required to
 connect the software components that create a small GUI for G-3.  We
 specifically show how to initialize the application (implementation of
-method\,{\it OnInit}), how to run a simple simulation based on the
-previous\,{\it example} (method\,{\it OnRun}), and how to plot output
-(method\,{\it Plot}).  To achieve this, it is assumed that a XRC file with the
-name\,{\it G3.xrc} can be found that describes a GUI with one frame
-(here,\,{\it mainFrame}) which allows the simulation duration to be set
+method {\it OnInit}), how to run a simple simulation based on the
+previous {\it example} (method {\it OnRun}), and how to plot output
+(method {\it Plot}).  To achieve this, it is assumed that a XRC file with the
+name {\it G3.xrc} can be found that describes a GUI with one frame
+(here, {\it mainFrame}) which allows the simulation duration to be set
 via a text control widget and contains a button to start the simulation.
 
 The first lines of code in the script load the necessary Python\marginnote{
@@ -1127,12 +1127,12 @@ The first lines of code in the script load the necessary Python\marginnote{
   \end{picture}
 }
 modules which in turn load low-level libraries coded in a system
-programming language. % Importing\,{\it example} makes the
-%previously defined function\,{\it run\_simulation} available to G-3.  The\,{\it
+programming language. % Importing {\it example} makes the
+%previously defined function {\it run\_simulation} available to G-3.  The {\it
 %  DataPlot} class is a specialized class designed to read in GENESIS data
-%output and load it into a\,{\it wxPython} plot widget.  The import of
-%{\it wx} references a system wide install of\,{\it wxPython} and makes
-%the GUI functions of\,{\it wxWidgets} available to the script.
+%output and load it into a {\it wxPython} plot widget.  The import of
+%{\it wx} references a system wide install of {\it wxPython} and makes
+%the GUI functions of {\it wxWidgets} available to the script.
 
 \begin{verbatim}
 import DataPlot
@@ -1217,8 +1217,8 @@ if __name__ == '__main__':
 %from wx import xrc
 %\end{verbatim}
 %
-%To ensure correct system initialization via the method\,{\it OnInit},
-%the\,{\it G3App} class is declared to inherit the functions of the\,{\it
+%To ensure correct system initialization via the method {\it OnInit},
+%the {\it G3App} class is declared to inherit the functions of the {\it
 %  wx.App} class.
 %
 %\begin{verbatim}
@@ -1227,8 +1227,8 @@ if __name__ == '__main__':
 %\end{verbatim}
 %
 %After correct system initialization, application specific
-%initialization can start.  Inside the\,{\it OnInit} method we first
-%load the XML resource file previously created using\,{\it
+%initialization can start.  Inside the {\it OnInit} method we first
+%load the XML resource file previously created using {\it
 %  wxFormBuilder}.
 %
 %\begin{verbatim}
@@ -1245,9 +1245,9 @@ if __name__ == '__main__':
 %        self.runButton = xrc.XRCCTRL(self.frame, 'runButton')
 %\end{verbatim}
 %
-%After retrieving the run button, we bind it to the method\,{\it OnRun}
+%After retrieving the run button, we bind it to the method {\it OnRun}
 %(given below).  This translates the GUI event generated when
-%the run button is clicked to an action that invokes the\,{\it OnRun}
+%the run button is clicked to an action that invokes the {\it OnRun}
 %method.
 %
 %\begin{verbatim}
@@ -1286,11 +1286,11 @@ if __name__ == '__main__':
 %%}
 %%end --->
 %
-%The\,{\it OnRun} method reads a numerical value for the the simulation
+%The {\it OnRun} method reads a numerical value for the the simulation
 %time from the text control widget ({\it durationTextCtrl}) and stores it
-%in a variable that is passed to the function\,{\it
-%  run\_simulation}.  After the simulation is complete a call to a\,{\it
-%  Plot} method is made. This displays the generated data in a\,{\it
+%in a variable that is passed to the function {\it
+%  run\_simulation}.  After the simulation is complete a call to a {\it
+%  Plot} method is made. This displays the generated data in a {\it
 %  wxPython} plot widget.
 %
 %\begin{verbatim}
@@ -1307,8 +1307,8 @@ if __name__ == '__main__':
 %
 %%        print "Plotting output"
 %
-%The\,{\it Plot} method uses the\,{\it DataPlot} class to display G-3 data
-%output with a\,{\it wxPython} plot widget.  The\,{\it DataPlot} widget
+%The {\it Plot} method uses the {\it DataPlot} class to display G-3 data
+%output with a {\it wxPython} plot widget.  The {\it DataPlot} widget
 %is part of the libraries of the {\bf G-Tube}, a Python GUI under
 %development for G-3.
 %
@@ -1333,7 +1333,7 @@ if __name__ == '__main__':
 %\end{verbatim}
 %
 %The code of the GUI application ({\it G3App}) is terminated with a
-%call to the main event loop of\,{\it wxPython}.
+%call to the main event loop of {\it wxPython}.
 %
 %% {\footnotesize
 %%   \resetlinenumber[14]
@@ -1414,7 +1414,7 @@ if __name__ == '__main__':
 
 %end --->
 
-% \noindent{\bf Place Figure\,4 about here.}\\
+% \noindent{\bf Place Figure 4 about here.}\\
 
 %Figure~\ref{fig:g3-wx}
 In this example we have shown how the CBI architecture defines a
@@ -1428,10 +1428,10 @@ interface with highly specialized GUI kits.
 \subsection*{Interfacing GENESIS with External Applications}
 
 % Another possible example is that of integration
-%of the {\bf Model\,Container} with a web server to allow measurement
+%of the {\bf Model Container} with a web server to allow measurement
 %and analysis of morphologies in a morphology database.  Such a
 %platform would likely be useful, for example, for the neuro-morpho
-%database\,\cite{ascoli06:_mobil, ascoli07:_neurom}.
+%database \cite{ascoli06:_mobil, ascoli07:_neurom}.
 
 As an example of how to interface GENESIS with specialized external
 applications, we now show how to validate and analyze models of the
@@ -1455,7 +1455,7 @@ example it replaces the functionality otherwise provided by the
 
 %Past research has shown that the balance between excitation and
 %inhibition plays an important role in dendritic processing in
-%cerebellar Purkinje cells\,\cite{santamaria02:_modul_purkin,
+%cerebellar Purkinje cells \cite{santamaria02:_modul_purkin,
 %  mittmann07:_linkin_purkin}.  However, the spatial resolution of the
 %models employed in such studies was limited by the available
 %reconstruction techniques.  
@@ -1466,9 +1466,9 @@ with Reconstruct\marginnote{
   \end{picture}
 } (http://www.bu.edu/neural/Reconstruct.html, \cite{jc05:_recon}) to obtain precise
 morphologies of small segments of Purkinje cell
-dendrites\,\cite{huo09:_purkin, cornelis08:_model_neuros_genes}.\\
+dendrites \cite{huo09:_purkin, cornelis08:_model_neuros_genes}.
 
-% \noindent{\bf Place Figure\,5 About Here}
+% \noindent{\bf Place Figure 5 About Here}
 \marginnote{
   \begin{picture}(0,0)
     \put(-10,10){\line(0,-1){20}}
@@ -1476,24 +1476,24 @@ dendrites\,\cite{huo09:_purkin, cornelis08:_model_neuros_genes}.\\
 }
 
 %Special purpose software has been written to convert Reconstruct data
-%for importation into the {\bf Model\,Container}.
+%for importation into the {\bf Model Container}.
 The Reconstruct interface converts the application
 into a G-3 simulator component by making it CBI compliant. This allows
-Reconstruct data to be imported into the {\bf Model\,Container}.
+Reconstruct data to be imported into the {\bf Model Container}.
 %  It converts
 %contours exported by the Reconstruct software to the declarative NDF
 %format (the file format used by G-3). 
 The core of the interface implements geometrical transformation
 algorithms that convert EM contours provided by Reconstruct to
 equivalent cylinders suitable for cable modeling. The necessary conversion algorithms are accessible from the
-{\bf Model\,Container} via Python.
+{\bf Model Container} via Python.
 % The core of these algorithms
 %implements geometrical transformations such that EM contours are
 %extracted to provide equivalent cylinders suitable for cable modeling.
 The geometrical properties of the cylinders are stored in the native
-G-3 NDF file format and algorithms provided by the {\bf Model\,Container}
+G-3 NDF file format and algorithms provided by the {\bf Model Container}
 link them to the cable parameters required by the mathematical
-solvers.  A simulation can then be run with the\,{\it read} and\,{\it
+solvers.  A simulation can then be run with the {\it read} and {\it
   run} methods given above.
 
 The Python interface of Blender links it to the G-3 simulator to
@@ -1534,7 +1534,7 @@ modeling in the neurosciences. As\marginnote{
   \end{picture}
 } examples of this scripted integration we have shown how to run a
 simple model using {\bf Heccer} and the ability of the {\bf
-  Model\,Container} to query the structure of a neuronal morphology.
+  Model Container} to query the structure of a neuronal morphology.
 %The CBI architecture also defines clear
 %boundaries for integration using existing scripting technology.
 In\marginnote{
@@ -1570,7 +1570,7 @@ individual G-3 components.
 
 An important benefit of the CBI architecture is
 that third party software libraries become available to users.  For
-example,\,{\it wxFormBuilder} can be employed to generate GUI bindings for
+example, {\it wxFormBuilder} can be employed to generate GUI bindings for
 {\it wxPython} and integrate them with the G-3 software platform.
 
 To demonstrate the power of our approach, we
@@ -1585,14 +1585,14 @@ movie generation.
 %interface the G-3 simulator with external libraries and applications.
 
 Complementary functionality to that provided by interfacing G-3 with
-Blender would be available after interfacing G-3 with\,{\it
+Blender would be available after interfacing G-3 with {\it
   neuro}Construct (http://www.neuroconstruct.org/), a software package
 designed to simplify the development of complex networks of
-biologically realistic neurons\,\cite{gleeson10:neuroml,
-  gleeson07}.  Implemented in Java,\,{\it neuro}Construct uses the
+biologically realistic neurons \cite{gleeson10:neuroml,
+  gleeson07}.  Implemented in Java, {\it neuro}Construct uses the
 latest NeuroML specifications (see http://www.neuroml.org/,
 http://www.morphml.org/), can be used to visually validate network
-layout and design\,\cite{crook07:_morph}, and can be connected to
+layout and design \cite{crook07:_morph}, and can be connected to
 Python applications (e.g.  see http://www.jython.org/).  In principle
 this allows it to be interfaced with other simulators that have Python
 bindings, including NEURON\marginnote{
@@ -1616,20 +1616,20 @@ with the mathematical solvers of G-3 using either\marginnote{
 DES is optimized for communication over serial hardware. However, it is straight forward
 to extend it to support communication frameworks for parallel
 hardware such as those provided by the MOOSE
-simulator\,\cite{ray08:_pymoos} and the MUSIC
-framework\,\cite{djurfeldt10:_run_time_inter_between_neuron}.
+simulator \cite{ray08:_pymoos} and the MUSIC
+framework \cite{djurfeldt10:_run_time_inter_between_neuron}.
 %ekeberg08:_music_multis_coord,
 
 The digital reconstruction of neuronal arborization is an important step in the
 quantitative investigation of cellular neuroanatomy.  The NeuroMorpho.Org database of neuronal morphologies
 (http://www.neuromorpho.org/) is a centrally curated inventory of
-digitally reconstructed neurons\,\cite{ascoli06:_mobil}.  It\marginnote{
+digitally reconstructed neurons \cite{ascoli06:_mobil}.  It\marginnote{
   \begin{picture}(0,0)
     \put(-10,10){\line(0,-1){18}}
   \end{picture}
 } allows
 extensive morphometric analysis, when linked to a simulator and provides a first step in the large scale
-implementation of biophysical models of electrophysiology.  Interfaced with the functionality of the {\bf Model\,Container} it has the capacity to
+implementation of biophysical models of electrophysiology.  Interfaced with the functionality of the {\bf Model Container} it has the capacity to
 accelerate the development of neuronal models by providing a direct
 link to data from experiments.  Preliminary implementations of this
 functionality are now part of an automated test framework for G-3.
@@ -1638,10 +1638,10 @@ G-3 also significantly extends the ability of GENESIS to transparently
 interact with experimental technologies such as open source dynamic
 clamp software.  As an example, the modular approach taken by the RTXI
 platform for dynamic
-clamp\,\cite{bettencourt08:_effec_imper_dynam_clamp, dorval01:_real}
+clamp \cite{bettencourt08:_effec_imper_dynam_clamp, dorval01:_real}
 and the modular structure of G-3 mean that the solver, {\bf Heccer},
 can be directly integrated as an RTXI
-plug-in\,\cite{cornelis10:_realt_rtxi_genes}.  This greatly simplifies
+plug-in \cite{cornelis10:_realt_rtxi_genes}.  This greatly simplifies
 the required software development.
 
 Ultimately, the extensibility of the CBI 
@@ -1653,21 +1653,21 @@ choice.
 
 The current generation of neural simulators can be characterized as
 software applications that support a user workflow extending from
-model construction to data analysis.  Due to their simplicity\,\cite{goodman08:_brian} and ease of use\,\cite{pecevski09:_pcsim}, many of these simulators support Python bindings. 
+model construction to data analysis.  Due to their simplicity \cite{goodman08:_brian} and ease of use \cite{pecevski09:_pcsim}, many of these simulators support Python bindings. 
 They range from Monte-Carlo
-simulators for reaction-diffusion systems\,\cite{wils09:_steps} and
-dedicated large network simulators\,\cite{eppler08:_pynes} to the
+simulators for reaction-diffusion systems \cite{wils09:_steps} and
+dedicated large network simulators \cite{eppler08:_pynes} to the
 general purpose simulators\marginnote{
   \begin{picture}(0,0)
     \put(-10,10){\line(0,-1){20}}
   \end{picture}
-} NEURON and GENESIS\,\cite{hines09:_neuron_python, bower98:_book_genes}.
+} NEURON and GENESIS \cite{hines09:_neuron_python, bower98:_book_genes}.
 
 For these simulators, interoperability can be implemented using
 one of the emerging standards for model exchange such as
-NeuroML\,\cite{nigel01:_towar_neurom},
-NineML\,\cite{gortechnikov10:_ninem_user_layer} or
-PyNN\,\cite{davison08:_pynn}.  While dedicated G-3 modules supporting
+NeuroML \cite{nigel01:_towar_neurom},
+NineML \cite{gortechnikov10:_ninem_user_layer} or
+PyNN \cite{davison08:_pynn}.  While dedicated G-3 modules supporting
 the use of these interoperability standards are currently under
 development, the G-3 platform also provides an alternative
 approach. By employing scripting languages a CBI 
@@ -1682,7 +1682,7 @@ either cathedral-like where there is a closed development group under
 central direction and software releases are infrequent, or
 bazaar-like where software is developed by
 volunteers and software releases occur early and
-often\,\cite{raymond01:_cathed_bazaar, citeulike:126678}.
+often \cite{raymond01:_cathed_bazaar, citeulike:126678}.
 %Brooks' Law and Linus' Law.
 %Currently, successful open source software development 
 %seems to depart on the one hand from the popular view of being the
@@ -1690,7 +1690,7 @@ often\,\cite{raymond01:_cathed_bazaar, citeulike:126678}.
 %hierarchal organization and central control of the ``cathederal''
 %model pervasive in the commercial world and, on the other hand, also
 %depart from the flat structure of the open source development
-%``bazaar''\,\cite{Open-Source03theecology}.
+%``bazaar'' \cite{Open-Source03theecology}.
 While cathederal-like software development leads to a single-threaded
 development cycle commonly used by commercial applications, the
 bazaar-like leads to multi-threaded development cycles of
@@ -1700,7 +1700,7 @@ applications that come in different flavours. (Note: A classical
 Here, based on the CBI paradigm, we have outlined a solution for
 multi-threaded development of software components for neuroscience
 (for other examples of this approach to neural simulation
-see\,\cite{schuermann09:_neuron, nordlie09:_visual}).  We have given
+see \cite{schuermann09:_neuron, nordlie09:_visual}).  We have given
 examples that use Python.
 
 Employed in this way, the modularized design of the G-3 simulator
@@ -1711,7 +1711,7 @@ that is both progressive and federated.
 % Do NOT remove this, even if you are not including acknowledgments
 \section*{Acknowledgements}
 
-We thank the Computational Biology Initiative at UTSA (http://www.cbi.utsa.edu) for their excellent support when installing and updating G-3 on their computers.
+We thank the Computational Biology Initiative at UTSA (http://www.cbi.utsa.edu) for their support when installing, using, and updating G-3 on their computers.
 
 %Hugo Cornelis is partially supported by the CREA Financing program (CREA/07/027) of the K.U.Leuven, Belgium, EU. Both Hugo Cornelis and Allan D. Coop are partially supported by NIH grant 3 R01 NS049288-06S1 to James M Bower.
 
@@ -1825,7 +1825,7 @@ We thank the Computational Biology Initiative at UTSA (http://www.cbi.utsa.edu) 
 %    & {\bf Python (H)}
 %    & {\bf Python (G)} \\
 %
-%    {\bf Model\,Container}
+%    {\bf Model Container}
 %    & 1,832,580
 %    & 4,416,163
 %    & 30,406
