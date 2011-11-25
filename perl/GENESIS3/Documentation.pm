@@ -1679,7 +1679,8 @@ sub expand
 
     # only expand in regular latex files
 
-    if (not $self->is_latex())
+    if (not $self->is_latex()
+        and not $self->is_restructured_text())
     {
 	return $result;
     }
@@ -1701,7 +1702,9 @@ sub expand
 
     if ($contents_documents->{$document_name})
     {
-	my $command = "userdocs-tag-replace-items '$document_name' '$document_name/output/$document_name.tex' --verbose";
+	my $command = "userdocs-tag-replace-items '$document_name' '$document_name' --verbose";
+
+	print "$0: executing \"$command\"\n";
 
 	system $command;
 
@@ -1730,7 +1733,9 @@ sub expand
 	{
 	    # expand the document
 
-	    my $command = "userdocs-tag-replace-items $related_tag '$document_name/output/$document_name.tex' --verbose --exclude '$document_name'";
+	    my $command = "userdocs-tag-replace-items $related_tag '$document_name' --verbose --exclude '$document_name'";
+
+	    print "$0: executing \"$command\"\n";
 
 	    system $command;
 
@@ -1975,6 +1980,38 @@ sub nop
 }
 
 
+sub output_filename
+{
+    my $self = shift;
+
+    my $document_name = $self->{name};
+
+    my $result;
+
+    if (exists $self->{output_filename})
+    {
+	$result = $self->{output_filename};
+    }
+    else
+    {
+	$result = "$document_name/output/$document_name";
+
+	if ($self->is_latex())
+	{
+	    $result .= ".tex";
+	}
+	elsif ($self->is_restructured_text())
+	{
+	    $result .= ".rst";
+	}
+    }
+
+    $self->{output_filename} = $result;
+
+    return $result;
+}
+
+
 sub output_register
 {
     my $self = shift;
@@ -2195,6 +2232,8 @@ sub update_hyperlinks
     $source_text =~ s(\\href\{\.\./([^}]*)\.pdf)(\\href\{../$1.html)g;
 
     $source_text =~ s(\\href\{\.\./([^}]*)\.tex)(\\href\{../$1.html)g;
+
+    $source_text =~ s(\\href\{\.\./([^}]*)\.rst)(\\href\{../$1.html)g;
 
     # remove empty itemize environments (otherwise latex complains)
 

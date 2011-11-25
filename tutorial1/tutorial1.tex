@@ -58,11 +58,17 @@ To run the simulator, first make sure that you are at a UNIX shell command promp
 \end{verbatim}
 If you get an error message such as {\tt Command not found}, check your path (``{\tt echo \$PATH}'') to be sure that it contains the directory where the GENESIS shell program is located (often {\it /usr/local/bin}).
 
-The remainder of this tutorial assumes that you are working within the GENESIS shell.
+The remainder of this tutorial assumes that you are working within the
+GENESIS shell.  If you have not done so already, you may wish to begin
+experimenting with some of the informative \href{../gshell/gshell.tex}{\bf G-shell} 
+commands such as {\it list commands} or the various options for the {\it
+help} command.
 
 \subsection*{Create Model}
 
-As the \href{../workflow-user/workflow-user.tex}{GENESIS\,User\,Workflow} suggests, a simple single compartment cell model can be created within the GENESIS shell. In this exercise we will create and simulate a passive compartment. How to import a model into the GENESIS shell is described in \href{../tutorial2/tutorial2.tex}{\bf Tutorial \,2}.
+As the \href{../workflow-user/workflow-user.tex}{GENESIS\,User\,Workflow} suggests, a simple single compartment cell
+model can be created within the GENESIS shell. In this exercise we will create and simulate a passive compartment. How
+to import an existing model into the GENESIS shell is described in \href{../tutorial2/tutorial2.tex}{\bf Tutorial 2}.
 
 \subsubsection*{Creating and deleting elements}
 
@@ -70,11 +76,14 @@ To keep track of the many elements that go into a simulation each element must b
 \begin{verbatim}
     create cell /n
 \end{verbatim}
-With the  ``{\tt set\_verbose warnings}'' flag set, the GENESIS shell responds with
-\begin{verbatim}
-    /n
-\end{verbatim}
-If the ``{\tt set\_verbose information}'' flag is set the GENESIS shell responds with
+
+%% There is no message produced with set_verbose warnings
+%% With the  ``{\tt set\_verbose warnings}'' flag set, the GENESIS shell responds with
+%% \begin{verbatim}
+%%     /n
+%% \end{verbatim}
+
+If the ``{\tt set\_verbose information}'' flag has been set, the GENESIS shell will respond with
 \begin{verbatim}
     create_cell: /n
 \end{verbatim}
@@ -97,7 +106,11 @@ Note that the {\it create} command only operates on single elements, whereas, th
 
 \subsubsection*{Setting element values}
 
-Once the element {\it /n/soma} exists, we can set (1) morphological  parameters of the segment such as the diameter ({\tt DIA}) and length ({\tt LENGTH}), (2) passive parameters such as  the membrane resistance ($R_M$), axial resistance ($R_A$), membrane capacitance ($C_M$), and the leak conductance ($E_{leak}$), and (3) initialize segment parameter values such as the initial membrane potential ($Vm_{init}$), e.g.
+Once the element {\it /n/soma} exists, we can set (1) morphological parameters of the segment such as the diameter ({\tt
+DIA}) and length ({\tt LENGTH}), (2) passive parameters such as the dimensionless specific parameters of membrane
+resistance ($R_M$), axial resistance ($R_A$), and membrane capacitance ($C_M$), and the leakage voltage ($E_{leak}$),
+and (3) initialize segment parameter values such as the initial membrane potential ($Vm_{init}$), e.g.
+
 \begin{verbatim}
     genesis > model_parameter_add /n/soma DIA 2e-5
     genesis > model_parameter_add /n/soma LENGTH 4.47e-5
@@ -108,7 +121,11 @@ Once the element {\it /n/soma} exists, we can set (1) morphological  parameters 
     genesis > model_parameter_add /n/soma Vm_init -0.0680
 \end{verbatim}
 
-Importantly, remember that GENESIS assumes parameter values are in SI units, which in the case of $C_M$ is Farads$\cdot$m$^{-2}$ ($F/m^2$) and for $R_M$ and $R_A$ Amperes$\cdot$m$^{-2}$ ($A/m^2$).
+Importantly, remember that GENESIS assumes parameter values are in SI units, which in the case of $C_M$ are
+Farads/$m^{2}$, for $R_M$ $\Omega they are \cdot m^{2}$, and $R_A$ has units of $\Omega \cdot m$. GENESIS is able to
+convert model representations in other units to SI units, but it will be simplest and less error-prone to
+use SI units from the beginning.  For an explanation of the units used in GENESIS, see the document
+\href{../units-conversion/units-conversion.tex}{\bf Conversion From Physiological to SI Units in GENESIS 3}.
 
 \subsection*{Explore Model}
 
@@ -128,7 +145,7 @@ We now also demonstrate a powerful new feature of GENESIS. That is, although we 
 
 Saving a model is as simple as issuing the ``{\tt ndf\_save}'' command with an associated model and file name, e.g. for our example
 \begin{verbatim}
-   genesis > ndf_save /n myneuron.ndf
+   genesis > ndf_save /n  myneuron.ndf
 \end{verbatim}
 The model is then saved in the \href{../ndf-file-format/ndf-file-format.tex}{\bf NDF} format. The default location for {\it ndf\_save} (as given in the above example) is the directory where you started GENESIS. However, the file can be saved at another location by giving the absolute path, e.g.
 \begin{verbatim}
@@ -142,12 +159,21 @@ Here, the construct {\tt /**} is a wild card that expands to describe the curren
 
 Once a model has been saved, the next time GENESIS is run the file can be loaded into the {\bf G-Shell} with, for example,
 \begin{verbatim}
-   genesis > ndf_load /n myneuron.ndf
+   genesis > ndf_load myneuron.ndf
 \end{verbatim}
+
+Note that the name of the model ({\it /n}) is not given.  It is contained within the NDF file.
 
 \subsection*{Define Simulation Constants}
 
-The GENESIS shell distinguishes between model parameters such as those used to build our simple single compartment model, i.e. those generated above by the {\it create} command, and parameters that do not alter the model but only affect model behavior at run-time during a simulation, e.g. the maximum conductance of the $Ca_T$ channels located in the soma. However, as in this introductory tutorial we have constructed a passive compartment, a description of how to define simulation constants is delayed until \href{../tutorial2/tutorial2.tex}{Tutorial\,2}.  
+The GENESIS shell distinguishes between model parameters such as those used to build our simple single compartment
+model, i.e. those generated above by the {\it create} command, and parameters that do not alter the model but only
+affect model behavior at run-time during a simulation. For example, the maximum conductance of the $Ca_T$ channels located in
+the soma is specified as a model parameter because it is defined in the model.  However, it and other {\it model
+parameters} may also be treated as {\it run-time parameters}.  This allows them to be modified during a simulation run
+without changing the default values in the \href{../model-container/model-container.tex}{Model Container}.
+However, as in this introductory tutorial we have constructed only a passive compartment, a description of how to
+define simulation constants is delayed until the corresponding section of \href{../tutorial2/tutorial2.tex}{Tutorial\,2}.
 
 \subsection*{Define Simulation Inputs}
 
@@ -159,11 +185,14 @@ Having created a passive neuron, we can now define the output, typically the mem
 \begin{verbatim}
    genesis > output_add /n/soma Vm
 \end{verbatim}
-By default, simulation output is placed in the file {\it /tmp/output}, where it can be viewed following termination of the simulation with
+By default, simulation output is placed in the file {\it /tmp/output}, where it can be viewed following termination of
+the simulation.  Alternatively, the path (relative or absolute) and
+filename may be set using the {\it output\_filename}
+command, e.g.:
+
 \begin{verbatim}
-    genesis > sh cat /tmp/output
+   output_filename /tmp/myneuron_Vm.out
 \end{verbatim}
-This will list the contents of the output file at the GENESIS shell prompt.
 
 \subsection*{Check Simulation}
 
@@ -218,7 +247,8 @@ Simulation output (in the default location) can be checked with the following co
 \begin{verbatim}
    genesis > sh cat /tmp/output
 \end{verbatim}
-This will print the values in {\it /tmp/output} to the screen.
+This will print the values in {\it /tmp/output} to the screen.  Alternatively, the values in the file may be plotted
+with a utility such as the \href{../g3plot/g3plot.tex}{\bf G3Plot} package.
 
 {\bf Note:} Most common UNIX shell commands can be run in the {\bf G-Shell} if passed as arguments to the {\tt sh} command.
 
