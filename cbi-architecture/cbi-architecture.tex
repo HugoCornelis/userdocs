@@ -270,7 +270,9 @@ The rapidly growing diversity of modeling environments and tools raises signific
 
 Problems of incremental model extension, incomplete model
 specification, and reproducibility of results, have resulted in the
-idea of the {\it interoperability} of neuroscience modeling software.
+idea of the ``interoperability'' of neuroscience modeling software. Interoperability has been defined as ``all mechanisms that allow two
+or more simulators to use the same model description or to collaborate
+by evaluating different parts of a large neural model'' \cite{cannon07:_inter}.
 Various\marginnote{
   \begin{picture}(0,0)
     \put(-10,10){\line(0,-1){0}}
@@ -307,7 +309,7 @@ Here\marginnote{
     \put(-10,10){\line(0,-1){0}}
   \end{picture}
 } we introduce a new class of simulator architecture, the Computational Biology Initiative federated software architecture (for convenience referred to here as the CBI architecture). It takes its name from the Computational Biology Initiative at the University of Texas at San Antonio, where development was first initiated. It has been fully implemented as the basis of the recently reconfigured GENESIS (see \cite{Cornelis:2011fk})\marginpar{\bf Editor: Could you please complete and insert the reference for citation [28] in the References for the associated manuscript, {\it Python as a Federation Tool for GENESIS 3.0}.}. As we now show, it is a {\it software architecture} that transparently supports both
-interoperability and {\it extensibility} for model building, simulation, and result analysis.
+interoperability and ``extensibility'' for model building, simulation, and result analysis.
 
 % Results and Discussion can be combined.
 \section*{Results}
@@ -359,7 +361,7 @@ The\marginnote{
   \begin{picture}(0,0)
     \put(-10,10){\line(0,-1){0}}
   \end{picture}
-} relationship in computational biology between the activities involved in conducting an experiment and running a simulation is illustrated in Figure \ref{fig:data-flows}. These two iterative processes are connected by a feedback loop that employs interpretation of results as an {\it iterator} to design new experimental setups and model constructions.
+} relationship in computational biology between the activities involved in conducting an experiment and running a simulation is illustrated in Figure \ref{fig:data-flows}. These two iterative processes are connected by a feedback loop that employs interpretation of results as an iterator to design new experimental setups and model constructions.
 
 % Figure 1
 % \noindent{\bf Place Figure \ref{fig:data-flows} about here.}\\
@@ -402,17 +404,28 @@ configuration\cite{cannon07:_inter}.
 %
 %\subsubsection*{Optimized performance}
 
-\subsection*{The Ideal User Workflow for Simulations in Neurobiology}
+\subsection*{The User Workflow}
 
-As\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} many more data flows can exist than are present in reality, each actual
+The term {\it user workflow} is employed to describe the sequence of necessary steps typically employed by a person in developing a computational model and employing simulation to generate data for subsequent analysis. In this sense it is a depiction of a sequence of operations, declared as the work of a person or a group of persons \cite{Belhajjame:2001fv}.
+
+A comprehensive user workflow can be employed to guide the separation of the different aspects of a model by organizing user actions 
+into different categories during model development.
+The workflow allows distinctions to be made between an object under
+investigation, the tools used to perform the investigation, and the
+operations performed during the investigation. It also 
+distinguishes between the results obtained from a single
+investigation and the method used to define multiple investigations in
+a series. The user workflow identifies five steps in
+total (explained in more detail in Results).
+
+\subsubsection*{The Ideal User Workflow for Simulations in Neurobiology}
+
+As many more data flows can exist than are present in reality, each actual
 data flow can be considered in the context of a sequence of user
-actions or workflow. In this section, we introduce
+actions or workflow. We define an ``ideal user workflow'' that provides a canonical form
+of a user workflow specific for neural simulators. In this section, we introduce
 the set of typical workflows that use CBI simulator architecture
-applications by describing an {\it ideal user workflow} where a user wants to model a biological system. We then briefly mention a second set of workflows that comprise user extensions of the
+applications by describing the ideal user workflow where a user wants to model a biological system. We then briefly mention a second set of workflows that comprise user extensions of the
 functionality of an implementation of the CBI architecture. Both sets of workflows are presented in a technology and implementation free manner.
 
 %In this paper we discuss the first set of workflows by introducing an
@@ -708,7 +721,8 @@ and implementations of the underlying applications and data sources
 In doing so, federation provides transparency, heterogeneity, a high degree of
 function, autonomy for the underlying federated sources,
 extensibility, openness, and the possibility of highly optimized
-performance. 
+performance. Here, extensibility is defined as a system design principle where an implementation takes into consideration future developments. An extendible system is one that includes mechanisms for expanding or enhancing the system with new capabilities without having to make major changes to the system infrastructure.
+
 Ideally, it makes the underlying applications look like a single
 system to the user. Enhanced application interoperability is achieved
 through the use of flexible high-level {\it scripting languages} to
@@ -2157,51 +2171,9 @@ scripting languages, the components form an application.
 
 %http://existentialprogramming.blogspot.com/search/label/components
 
-\subsubsection*{Incidental Terms}
-
-\paragraph{\bf User Workflow:}
-
-The\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} term {\it user workflow} is employed to describe the sequence of necessary steps typically employed by a person in developing a computational model and employing simulation to generate data for subsequent analysis. In this sense it is a depiction of a sequence of operations, declared as the work of a person or a group of persons \cite{Belhajjame:2001fv}.
-
-A comprehensive user workflow can be employed to guide the separation of the different aspects of a model by organizing user actions 
-into different categories during model development.
-%We therefore first describe a comprehensive user workflow that can be
-%employed by simulator users as a guide to separate and distinguish the
-%different aspects of the control code of the simulator software.
-The workflow allows distinctions to be made between an object under
-investigation, the tools used to perform the investigation, and the
-operations performed during the investigation. It also 
-distinguishes between the results obtained from a single
-investigation and the method used to define multiple investigations in
-a series. The user workflow identifies five steps in
-total (explained in more detail in Results).
-
-\paragraph{\bf Ideal User Workflow:}
-
-We define an {\it ideal user workflow} that provides a canonical form
-of a user workflow specific for neural simulators.
-
 % Belhajjame K, Collet C, Vargas-Solar G. (2002) A Flexible Workflow Model for Process-Oriented Applications. 2nd International Conference on Web Information Systems Engineering (WISE 2001), IEEE CS PROCEEDINGS 1: 72-80.
 
-\paragraph{\bf Iterator:}
-
-The act of repeating a process, here typically a workflow, to reach a desired goal, target or result is referred to as iteration. The results of one iteration become the starting point for the next. We employ the term {\it iterator} to identify the step in a workflow that converts it from a linear to a cyclic process, such that one or more people or systems can together traverse all steps of the workflow, independently of its specific implementation.
-
-\paragraph{\bf Interoperability}
-
-Interoperability has been defined as ``all mechanisms that allow two
-or more simulators to use the same model description or to collaborate
-by evaluating different parts of a large neural model'' \cite{cannon07:_inter}.
-
 % Institute of Electrical and Electronics Engineers (1990) IEEE Standard Computer Dictionary: A Compilation of IEEE Standard Computer Glossaries. New York, NY.
-
-\paragraph{\bf Extensibility}
-
-{\it Extensibility} is a system design principle where an implementation takes into consideration future developments. An extendible system is one that includes mechanisms for expanding or enhancing the system with new capabilities without having to make major changes to the system infrastructure.
 
 %\section*{Results: The CBI Simulator Architecture}
 %\label{sec:constr-cbi-simul}
