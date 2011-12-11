@@ -51,7 +51,7 @@
 \makeatletter
 \renewcommand{\@biblabel}[1]{\quad#1.}
 \makeatother
-
+%\renewcommand{\paragraph}[1]{{#1}}
 
 % Leave date blank
 \date{}
@@ -308,7 +308,9 @@ Here\marginnote{
   \begin{picture}(0,0)
     \put(-10,10){\line(0,-1){0}}
   \end{picture}
-} we introduce a new class of simulator architecture, the Computational Biology Initiative federated software architecture (for convenience referred to here as the CBI architecture). It takes its name from the Computational Biology Initiative at the University of Texas at San Antonio, where development was first initiated. It has been fully implemented as the basis of the recently reconfigured GENESIS (see \cite{Cornelis:2011fk})\marginpar{\bf Editor: Could you please complete and insert the reference for citation [28] in the References for the associated manuscript, {\it Python as a Federation Tool for GENESIS 3.0}.}. As we now show, it is a {\it software architecture} that transparently supports both
+} we introduce a new class of simulator architecture, the Computational Biology Initiative federated software architecture (for convenience referred to here as the CBI architecture). It takes its name from the Computational Biology Initiative at the University of Texas at San Antonio, where development was first initiated. It has been fully implemented as the basis of the recently reconfigured GENESIS (see \cite{Cornelis:2011fk})
+%\marginpar{\bf Editor: Could you please complete and insert the reference for citation [28] in the References for the associated manuscript, {\it Python as a Federation Tool for GENESIS 3.0}.}
+. As we now show, it is a {\it software architecture} that transparently supports both
 interoperability and ``extensibility'' for model building, simulation, and result analysis.
 
 % Results and Discussion can be combined.
@@ -2485,9 +2487,9 @@ We thank the Computational Biology Initiative at UTSA (http://www.cbi.utsa.edu) 
 % The bibtex filename
 \bibliography{../tex/bib/g3-refs}
 
-%\newpage
-%
-%\section*{Figures}
+\newpage
+
+\section*{Figure Captions}
 %\begin{figure}[!ht]
 %\begin{center}
 %%\includegraphics[width=4in]{figure-name.2.eps}
@@ -2516,72 +2518,76 @@ We thank the Computational Biology Initiative at UTSA (http://www.cbi.utsa.edu) 
 %\clearpage
 
 
-% Figure 1
-%\begin{figure}[ht]
-%\begin{center}
+Figure 1
+
+\begin{figure}[ht]
+\begin{center}
 %\includegraphics[width=4in]{figures/exp-sim.eps}
-%\end{center}
-%\caption{
-%{\bf Data flows in science.}
-%Conducting experiments and running simulations are two iterative processes indicated by the upper and lower dashed outlines. They are connected by an interposed feedback loop that uses the iterative interpretation of results to design new experimental setups and model constructions.
-%}
-%\label{fig:data-flows}
-%\end{figure}
-%
-%\clearpage
-%
-%% Figure 2
-%\begin{figure}[ht]
-%\begin{center}
+\end{center}
+\caption{
+{\bf Data flows in science.}
+Conducting experiments and running simulations are two iterative processes indicated by the upper and lower dashed outlines. They are connected by an interposed feedback loop that uses the iterative interpretation of results to design new experimental setups and model constructions.
+}
+\label{fig:data-flows}
+\end{figure}
+
+\clearpage
+
+Figure 2
+
+\begin{figure}[ht]
+\begin{center}
 %\includegraphics[width=4in]{figures/matrix.eps}
-%\end{center}
-%\caption{ {\bf Principle concerns.}  The four fundamental building
-%  blocks of a simulator are distinguished by separating (i) Data from
-%  control, and (ii) High level biological concepts from their
-%  mathematical implementation. In a federated architecture the only
-%  allowed interactions between modules are those indicated by the
-%  vertical and horizontal arrows. Diagonal interactions are forbidden
-%  as they ultimately lead to interactions that result in the existence
-%  of a monolithic software architecture.
-%}
-%\label{fig:data-control}
-%\end{figure}
-%
-%\clearpage
-%
-%% Figure 3
-%\begin{figure}[ht]
-%\begin{center}
+\end{center}
+\caption{ {\bf Principle concerns.}  The four fundamental building
+  blocks of a simulator are distinguished by separating (i) Data from
+  control, and (ii) High level biological concepts from their
+  mathematical implementation. In a federated architecture the only
+  allowed interactions between modules are those indicated by the
+  vertical and horizontal arrows. Diagonal interactions are forbidden
+  as they ultimately lead to interactions that result in the existence
+  of a monolithic software architecture.
+}
+\label{fig:data-control}
+\end{figure}
+
+\clearpage
+
+Figure 3
+
+\begin{figure}[ht]
+\begin{center}
 %\includegraphics[width=4in]{figures/cbi-architecture-simple.eps}
-%\end{center}
-%\caption{ {\bf Overview of a federated software architecture:} Graphical
-%  illustration of the primary functional modules defined for the CBI
-%  federated software architecture.  Control modules are given to the left and data modules to the
-%  right.  A. The top layer contains conceptual data
-%  and controls representations of the biology of a model. B. The bottom layer contains
-%  representations that are numeric and thus close to the hardware.  The middle or intermediate layer
-%  bridges between the biology and the numerics implemented in a CBI compliant simulator. Importantly, as our separation of concerns shows (see Fig. \ref{fig:data-control} and text), Control (Scripting Libraries \& Applications) and Data (Database Interfaces) modules can interact either directly or via the Graphical User Interface.
-%  }
-%\label{fig:cbi-architecture-simple}
-%\end{figure}
-%
-%\clearpage
-%
-%% Figure 4
-%\begin{figure}[ht]
-%\begin{center}
+\end{center}
+\caption{ {\bf Overview of a federated software architecture:} Graphical
+  illustration of the primary functional modules defined for the CBI
+  federated software architecture.  Control modules are given to the left and data modules to the
+  right.  A. The top layer contains conceptual data
+  and controls representations of the biology of a model. B. The bottom layer contains
+  representations that are numeric and thus close to the hardware.  The middle or intermediate layer
+  bridges between the biology and the numerics implemented in a CBI compliant simulator. Importantly, as our separation of concerns shows (see Fig. \ref{fig:data-control} and text), Control (Scripting Libraries \& Applications) and Data (Database Interfaces) modules can interact either directly or via the Graphical User Interface.
+  }
+\label{fig:cbi-architecture-simple}
+\end{figure}
+
+\clearpage
+
+Figure 4
+
+\begin{figure}[ht]
+\begin{center}
 %\includegraphics[width=4in]{figures/cbi-architecture-expanded.eps}
-%\end{center}
-%\caption{ {\bf Detailed view of the Computational Biology Initiative
-%    federated software architecture.} Illustration of the functional modules that is closer to an implementation of the CBI architecture. It illustrates the relationships of sub-modules within each of the primary functional modules given in
-%  Figure \ref{fig:cbi-architecture-simple}.  North bound interfaces
-%  group and conceptualize the details of the modules and interact with
-%  south bound interfaces of higher level modules.  Steps 1--3 of the ideal user workflow induce data flows between the software modules of the CBI
-%architecture. This results in data cycling between the upper layers (blue and green boxes) and
-%lower layers (red box).  Ultimately, the two layers team to implement a single simulation.  By design, any type of model including multi-scale models will exhibit this data cycle. See text for explanation and details.
-%}
-%\label{fig:cbi-architecture-expanded}
-%\end{figure}
+\end{center}
+\caption{ {\bf Detailed view of the Computational Biology Initiative
+    federated software architecture.} Illustration of the functional modules that is closer to an implementation of the CBI architecture. It illustrates the relationships of sub-modules within each of the primary functional modules given in
+  Figure \ref{fig:cbi-architecture-simple}.  North bound interfaces
+  group and conceptualize the details of the modules and interact with
+  south bound interfaces of higher level modules.  Steps 1--3 of the ideal user workflow induce data flows between the software modules of the CBI
+architecture. This results in data cycling between the upper layers (blue and green boxes) and
+lower layers (red box).  Ultimately, the two layers team to implement a single simulation.  By design, any type of model including multi-scale models will exhibit this data cycle. See text for explanation and details.
+}
+\label{fig:cbi-architecture-expanded}
+\end{figure}
 
 %\section*{Tables}
 %\begin{table}[!ht]
