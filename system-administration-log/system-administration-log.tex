@@ -51,6 +51,15 @@ System specs:
 \item
   \begin{itemize}
   \item[] {\bf Admin:} Mando
+  \item[] {\bf Date:} 12/15/2011
+  \item[] {\bf Actions:} Killed around 80 open office processes that were left in memory along with 12 zombie processes for neurospaces\_serve.  Added a cron script that performs a killall on all soffice.bin processes just before the userdocs system performs its cron run. As well as a cron script that will kill all zombie processes daily.
+  \item[] {\bf Reason:} The large amount of processes lying around was causing out of memory errors during some cron runs. 
+  \item[] {\bf Impact:} Tester should proceed as normal, will monitor for any problems.
+  \end{itemize}
+  
+\item
+  \begin{itemize}
+  \item[] {\bf Admin:} Mando
   \item[] {\bf Date:} 12/14/2011
   \item[] {\bf Actions:} Reset permissions on the model container output directory.
   \item[] {\bf Reason:} The output directory was owned by root. Not sure why this happened, other tester was fine and there are no erroneous commands in the bash history. Will monitor for any changes.
