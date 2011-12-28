@@ -28,6 +28,97 @@
 
 \subsection*{Introduction}
 
+\subsection*{The User Workflow}
+
+The term {\it user workflow} is employed to describe the sequence of
+necessary steps typically employed by a person in developing a
+computational model and employing simulation to generate data for
+subsequent analysis. In this sense it is a depiction of a sequence of
+operations, declared as the work of a person or a group of persons
+\cite{Belhajjame:2001fv}.
+
+A comprehensive user workflow can be employed to guide the separation
+of the different aspects of a model by organizing user actions into
+different categories during model development.  The workflow allows
+distinctions to be made between an object under investigation, the
+tools used to perform the investigation, and the operations performed
+during the investigation. It also distinguishes between the results
+obtained from a single investigation and the method used to define
+multiple investigations in a series. The user workflow identifies five
+steps in total (explained in more detail in Results).
+
+\subsubsection*{The Ideal User Workflow for Simulations in Neurobiology}
+
+As many more data flows can exist than are present in reality, each actual
+data flow can be considered in the context of a sequence of user
+actions or workflow. We define an ``ideal user workflow'' that provides a canonical form
+of a user workflow specific for neural simulators. In this section, we introduce
+the set of typical workflows that use CBI simulator architecture
+applications by describing the ideal user workflow where a user wants to model a biological system. We then briefly mention a second set of workflows that comprise user extensions of the
+functionality of an implementation of the CBI architecture. Both sets of workflows are presented in a technology and implementation free manner.
+
+%In this paper we discuss the first set of workflows by introducing an
+%and we superficially touch upon the second
+%set of workflows.  All workflows described in the following sections
+%are technology and implementation free.
+%Examples are given for
+%purpose of illustrating the meaning of the text, and neither for
+%illustrating the current (state of the existing) implementation, nor
+%for a possible implementation in a specific technology.
+
+A five step outline of an ideal user workflow for the development,
+implementation, and simulation of a computational model has been
+identified from the workflow of users of the GENESIS neural simulation
+platform \cite{cornelis02:_tutor}.  Importantly, the workflow
+explicitly distinguishes between the static structure of a model of
+the biology (Step 1), the dynamic state of its simulation (Step 3),
+and the analysis of this dynamic state (Step 4). We also note that
+this workflow does not specify any particular order for its
+completion. However, for any given case, meaningful simulation output
+will only occur with completion of Steps 1--4.
+
+\subsubsection*{Step 1: Construct Model}
+
+The simulator shell and the graphical user interface (GUI) each
+provide an interface that interprets user input such that the
+simulator `understands' different commands and performs the
+appropriate actions. Simple models can be created directly within the
+simulator shell by entering a sequence of commands. More complex
+models are available to the shell from libraries or databases external
+to the simulator. Shell tools can then be used to explore and check
+the integrity of a model. Following any necessary or desired changes,
+a new version of the model can be saved.
+
+\subsubsection*{Step 2: Design Experiment}
+
+Specific change management tools can be used to make small
+modification to a model, e.g. to set model parameter values specific
+to a given simulation.  Configuration tools support the definition of
+the stimulus or activation parameters for a given simulation run or
+experiment and the output variables to be stored for subsequent
+analysis by independent software.
+
+\subsubsection*{Step 3: Run Simulation}
+
+Shell tools can be used to check the state of a given simulation or reset the simulation time step and solved variables to their initial values. After a simulation is run, output values are flushed to raw result storage for subsequent data analysis. The model state can be saved at any simulation time step. This allows it to be imported into a subsequent simulator session for further development and exploration.
+
+\subsubsection*{Step 4: Process Output}
+
+The validity and location of simulator output is checked prior to data
+analysis. Output can be analyzed either within the simulator or piped
+to external applications such as
+Matlab. % for subsequent data analysis.
+
+\subsubsection*{Step 5: Iterate}
+
+A modeling project is established by the introduction of iterators
+into the user workflow. Iterators close the loop between the output of
+results and model construction, they include: Automated construction
+of simulations and batch files, static parameter searching, and active
+parameter searching using, for example, dynamic clamp technology.
+
+
+\subsection*{Multi-Scale Modeling and the User-Workflow}
 The user-workflow is based on experimental paradigm and childishly
 simple, but, in contrast, the number of available numerical techniques
 is large.  As a consequence any tool will become useful as far as its
