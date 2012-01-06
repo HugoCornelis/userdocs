@@ -6,26 +6,6 @@
 use strict;
 
 
-BEGIN
-{
-    #! make check
-
-    push @INC, '../perl';
-
-    #! make distcheck
-
-    push @INC, '../../perl';
-
-    #! normal run
-
-    push @INC, './perl';
-
-    #! after install
-
-    push @INC, '/usr/local/glue/swig/perl';
-}
-
-
 use GENESIS3::Documentation;
 
 use Getopt::Long;

@@ -2207,9 +2207,9 @@ sub source_filenames
 	   {
 	       chomp; $_
 	   }
-	   `ls *.tex`,
-	   `ls *.rst`,
-	   `ls *.rtf`,
+	   `ls 2>/dev/null "$self->{name}.tex"`,
+	   `ls 2>/dev/null "$self->{name}.rst"`,
+	   `ls 2>/dev/null "$self->{name}.rtf"`,
 	  ];
 
     return $result;
