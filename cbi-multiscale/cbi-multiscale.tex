@@ -239,7 +239,17 @@ of a model for simulation or otherwise, that is contained by a single
 software entity (a single model-container), but using solvers that
 implement different mathematical tools and that communicate with one
 another during run-time using the communication infrastructure
-provided by the CBI architecture.
+provided by the CBI architecture
+(figure~\ref{fig:mental-model-simulation-path}).
+
+
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width=4in]{figures/NS-abstraction-implementation.eps}
+  \end{center}
+  \caption{ {\bf The Path from Mental Model to Simulation.} }
+  \label{fig:mental-model-simulation-path}
+\end{figure}
 
 
 
@@ -247,12 +257,12 @@ provided by the CBI architecture.
 
 \subsection*{The User Workflow}
 
-The term {\it user workflow} is employed to describe the sequence of
-necessary steps typically employed by a person in developing a
-computational model and employing simulation to generate data for
-subsequent analysis. In this sense it is a depiction of a sequence of
-operations, declared as the work of a person or a group of persons
-\cite{Belhajjame:2001fv}.
+The term {\it user workflow}\cite{10.1371/journal.pone.0028956} is
+employed to describe the sequence of necessary steps typically
+employed by a person in developing a computational model and employing
+simulation to generate data for subsequent analysis. In this sense it
+is a depiction of a sequence of operations, declared as the work of a
+person or a group of persons \cite{Belhajjame:2001fv}.
 
 A comprehensive user workflow can be employed to guide the separation
 of the different aspects of a model by organizing user actions into
@@ -1029,8 +1039,6 @@ documentation "G-3 Extension" (genesis-extend-functionality) and
 "chemesis-3-log".
 
 
-[integrate this from Hugo]
-
 Different numerical solution methods are required to solve the different
 types of mathematical equations associated with different scales of
 modeling.  The cable equation and ion currents are numerically solved with
@@ -1077,12 +1085,80 @@ components of his or her model.
   we had originally meant it to be a major part.  Perhaps the first item
   can be glossed over for this audience.]
 
+\subsection*{Extending GENESIS-3}
 
-\subsection*{Discusion}
+The G-3 documentation systems describes the procedures used for G-3
+extension.  Extending G-3 can involve the implementation of a new
+solver, or, when the required functionality is tangential to an
+existing solver, it can require source code additions to an
+pre-existing software component.  Here we describe the integration of
+a new solver, ie. the steps followed for the implementation of
+Chemesis-3.
+
+  1. The developer package integrates the different software
+  components of G-3.  The definition of a new component "chemesis3" in
+  the developer package allows for its smooth integration with other
+  G-3 software components such as the model-container.
+
+  2. The implementation of the core of a new solver is independent of
+  the development of other software components.  This allows full
+  focus on the mathematic aspects of the solver and their
+  implementation.
+
+  3. Optionally, the model-container can be extended with new tokens
+  that are specific to the new solver.  Configuration of the
+  model-container defines the new tokens and their parameters.
+
+  4. An interface must be written between the model-container and
+  the core of the solver.  The model-container defines an API that
+  makes abstraction of the biological structure the model.
+
+
+\subsection*{Multi-scale modeling support in G-3}
+
+Supported types by the model-container:
+
+- Grid3D / Populations / Networks
+
+- VolumeConnect / Individual Connections
+
+- Single Cells / Morphology
+
+- HH - Channels / Synaptic (NMDA / AMPA) Channels
+
+- Reaction -- Diffusion
+
+
+Available solvers, starting at the highest scale:
+
+- DES: discrete event queuing and distribution
+
+- Heccer: single neuron solver.
+
+- Chemesis-3: simple reaction-diffusion systems,
+
+- Experiment: current injections, time-tables and output.
+
+
+\section*{Discusion}
 
 - Summary.
 
 - Parts of the multiscale grant.
+
+The definition of the multi-scale modeling as used in this paper
+allows to define a taxonomy of models in computational neurobiology
+based on both the biological scale of a model and the level of detail
+it aims to represent (figure~\ref{fig:multi-scale-taxonomy}).
+
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width=4in]{figures/multi-scale-taxonomy.eps}
+  \end{center}
+  \caption{ {\bf Taxonomy of Multi-scale Models.} }
+  \label{fig:multi-scale-taxonomy}
+\end{figure}
+
 
 
 \subsection*{text sources}
