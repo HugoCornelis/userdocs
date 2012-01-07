@@ -227,7 +227,12 @@ channels).
 Both definitions may mean that 99\% of the models out there is already
 multi-scale, rendering those definitions void of meaning.
 
-new definition, based on software principles, separation of concerns:
+{\LARGE include here one of the multi-scale figures here (NS based,
+  Jim's, or other?).  It will make the point that many more
+  definitions are possible.}
+
+new definition, definition used in this paper, based on software
+principles and separation of concerns (CBI-architecture):
 
 3. software definition: based on the CBI architecture: the application
 of a model for simulation or otherwise, that is contained by a single
@@ -235,6 +240,8 @@ software entity (a single model-container), but using solvers that
 implement different mathematical tools and that communicate with one
 another during run-time using the communication infrastructure
 provided by the CBI architecture.
+
+
 
 \section*{Methods}
 
@@ -781,14 +788,295 @@ simulator.
 
 %Modules plugged in during Step 4 have access to all data via the model container.
 
+\subsection*{Heccer: A Numerical Solver}
 
-\subsection*{Results}
+% example: direct link to external documentation
+%
+%Uses the
+%\href{http://www.neuron.yale.edu/ftp/neuron/papers/effic84.pdf}{Hines
+%  enumeration algorithm} for efficient solution of the cable matrix.
+
+% example: link to external documentation using a redirect
+%
+%Uses the
+%\href{../effic84/descriptor.yml->redirect}{Hines
+%  enumeration algorithm} for efficient solution of the cable matrix.
+
+The optimization of a neuronal solver ultimately focuses on accuracy and performance. Transforming complex biological parameters into precomputed tables and optimizing for a high CPU cache hit ratio are the most important features for a good solver, and gives the solver a performance boost of about a factor four to six.
+
+{\bf Heccer} is a fast compartmental solver, that is based on {\it hsolve} of the GENESIS simulator. To find out more about the numerical principles implemented in {\bf Heccer} see \href{http://www.genesis-sim.org/GENESIS/gum-tutorials/cornelis/doc/html/node3.html}{a small tutorial on numerical theory}. The efficiency of {\bf Heccer} is explained in \href{http://www.genesis-sim.org/GENESIS/gum-tutorials/cornelis/doc/html/node53.html}{Byte Code Compilation}.
+
+{\bf Heccer} can be instantiated from C, or from Perl (or other scripting languages). It is also possible to link {\bf Heccer} directly to Matlab. {\bf Heccer} comes with \href{http://www.swig.org/}{\bf Swig} interface definitions, such that linking {\bf Heccer} to any other technologies should be easy.
+
+Adding new channel types to {\bf Heccer} can be done using callouts.
+The callout mechanism allows for general user extensions that
+contribute a current or conductance at a particular time in a
+simulation. {\bf Heccer} automatically integrates this contribution
+into the membrane potential.  Check the tests of the callouts for more
+information (tests/code/callout1.c and tests/code/calloutInjector.c).
+
+The source code of {\bf Heccer} contains inline developer documentation. As yet, there is no stable API but the Swig interfaces for {\bf Heccer} are not expected to change much. If you are interested in this, look at \href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/glue/swig/perl/fork4p1.source.html#line51}{a simple example} for driving {\bf Heccer} from Perl, and \href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/glue/swig/perl/pool1-feedback1.source.html#line51}{another example} with active channels and a calcium pool. {\bf Heccer} is currently capable of simulating Purkinje cells (see the \href{../purkinje-cell-model/purkinje-cell-model.tex}{\bf Purkinje\,Cell\,Model}), and, at first evaluation, runs slightly faster than {\it hsolve} (It is difficult to assess why exactly: while the {\it hsolve} implementation is much more optimized than {\bf Heccer's}, the {\bf Heccer} design is slightly better optimized than {\it hsolve}'s.).
+
+\subsubsection*{Heccer Features}
+
+\begin{itemize}
+
+\item Can be driven from C, Perl, SSP, and fetches the model
+  parameters from the
+  \href{../model-container/model-container.tex}{\bf Model\,Container}.
+  The test specification in the Heccer package have examples of
+  C-level tests (see the tests/code/ directory) and Perl-level tests
+  (check the tests/glue/swig/perl/ directory).  The SSP package
+  defines many tests that integrate Heccer and the model-container.
+\item Computes the behaviour of single neurons.
+\item Integrates Hodgkin-Huxley-like channels.
+\item Integrates exponentially decaying calcium concentrations and Nernst potentials. Interfaces will be provided for more elaborate calcium models.
+\item Can operate in a ``passive-only'' mode, i.e. all channels in a model are ignored with exception of the synaptic channels.
+\item Tables to speed up computations, are dynamically generated and optimized.
+\item All parts of a model with the same kinetics automatically share tables.
+\item Computes the contribution of one channel type to the overall dendritic current, e.g. the contribution of all calcium channels or the contribution of all persistent calcium channels.
+\item Can serialize the current neuron state to an external stream for later resuming the simulation (or for multiple use).
+\item Generalizing the previous point, can be initialized from external sources.
+\item Can be used with or without the {\bf Model\,Container}. To use {\bf Heccer} without the {\bf Model\,Container}, configure the module with the command line ``{\tt ./configure --without-neurospaces}''. To use {\bf Heccer} with the {\bf Model\,Container}, the {\bf Model\,Container} must be installed before {\bf Heccer} is compiled. 
+\end{itemize}
+{\bf Heccer} has been validated with a Purkinje cell model and produces an exact match with {\it hsolve} (see the purkinje cell model and the Purkinje cell tutorial in the GENESIS simulator distribution). {\bf Heccer} is constantly undergoing regression tests. Link to  \href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/index.html}{\bf Regression\,Test\,Output}. These tests give an idea of the functionality of {\bf Heccer} as a compartmental solver.
+
+Besides being open source, {\bf Heccer} is also hypersource and \href{http://repo-genesis3.cbi.utsa.edu/crossref/heccer/heccer/index.html}{\bf Heccer\,Source\,Code} is browsable.
+% An example test file with points of entry into {\bf Heccer}, can be found \href{}{here}.
+
+\subsubsection*{Extending Heccer}
+\begin{itemize}
+   \item Adding new channel types to {\bf Heccer} can be done using
+     callouts.  The callout mechanism allows for general user
+     extensions that contribute a current or conductance at a
+     particular time in a simulation. {\bf Heccer} automatically
+     integrates this contribution into the membrane potential.  Check
+     the tests of the callouts for more information
+     (tests/code/callout1.c and tests/code/calloutInjector.c).
+%   \item \href{../genesis-add-object-solver/genesis-add-object-solver.tex}{\bf Create and Add New Solver Object:} Shows by example how to add a new simulation object to {\bf Heccer} and integrate the modified component with GENESIS.
+%   \item \href{../genesis-add-swigbinding-heccer/genesis-add-swigbinding-heccer.tex}{Add a SWIG binding to {\bf HECCER:}} Shows by example how to implement the necessary bindings to make a \href{../simulation-objects/simulation-objects.tex}{\bf Simulation\,Object} callable from Perl using SWIG.
+\end{itemize}
+
+
+\subsection*{Chemesis-3}
+
+NOTE: this section is written as structured text instead of latex.
+
+*Chemesis* is a G-2 'add-on' library of objects for modeling biochemical
+reactions, models of second messengers, and calcium dynamics, created by K.
+T. (Avrama) Blackwell (2000).  As a test case for user-extensibility of G-3
+we began implementing the Chemesis library as a G-3 software component.
+Our goal was to determine how difficult and time-consuming it would be to
+implement a new G-3 software component *chemesis3* based on a G-2
+implementation of a set of new objects.  The original implementation relied
+on the generic G-2 numerical solver.  Only limited time was available for
+the implementation of the specialized chemesis-3 solver.  A time line
+reconstructed from the email conversations and from the version control
+system shows the course of development:
+
+- exploratory email conversations May 30th and following two weeks.
+
+- initial preparations and start of implementation on June 13th.
+
+- core implementation on Sunday June 26th, including a fully working
+  cal1 regression test case.  This was a day of crazy coding as in the
+  old days, total of 18 revisions with many enhancements.
+
+- implementation of cal2 test case on June 29th and July 10th.
+
+- initial scripting bindings were added starting at July 10th for perl
+  and July 13 for Python.
+
+- first successful integration with the SSP scheduler on July 12th.
+
+- model-container bindings started on July 13 and finished on July
+  17th.  Removed model-related functions such as compartment volume
+  computation that are already available in the model-container (and now
+  shared with other solvers).
+
+- G-shell integration on July 17th and July 18th.
+
+The objects currently implemented in the G-3 *chemesis3* component are:
+
+*rxnpool*: a concentration pool that interacts with reactions and
+diffuses to other pools. (Maps to NDF token POOL.)
+
+*conservepool*: mass conservation based pool, computes the difference
+between the total of all molecules (a model parameter, rest state),
+and diffused molecules, divided by compartment volume.
+(Maps to NDF token POOL, with a different parameterization.)
+
+reaction: standard forward / backward chemical reactions between pools
+of molecules. (Maps to NDF token REACTION.)
+
+*diffusion*: Computes flux in molecules between two pools.
+(Maps to NDF *segment parameter* diffusion\_constant.  The appearance of
+this parameter in an NDF file requires running the model using a
+chemesis3 solver.)
+
+
+\section*{Results}
+
+\subsection*{Simple Python Scripting}
 
 - CBI-scripting, python scripting.
 
+\subsection*{Scripting Chemesis}
+
 - Chemesis CNS report.
 
-- integration heccer and chemesis into the gshell.
+Our goal was to implement and run two of the G-2 Chemesis tutorial examples.
+
+The example script *cal1.g* creates a single compartment with interaction
+between calcium and a buffer.  A second example *cal2.g* creates a two
+compartment model with a dendrite and soma. One additional diffusion object
+is required to allow for diffusion between compartments.
+
+The two listings below show the G-2 SLI language script *cal1.g* and the G-3
+NDF representation *cal1.ndf*, found with *cal2.ndf* in
+'/usr/local/neurospaces/models/library/chemesis'.
+
+
+**cal1.ndf**::
+
+\begin{verbatim}
+#!neurospacesparse
+// -*- NEUROSPACES -*-
+NEUROSPACES NDF
+// VERSION 0.1
+PUBLIC_MODELS
+  KINETICS cal1
+    PARAMETERS
+      PARAMETER ( DIA = 24e-4 ),
+      PARAMETER ( LENGTH = 24e-4 ),
+    END PARAMETERS
+    POOL somaCa
+      BINDABLES
+        OUTPUT concen
+      END BINDABLES
+      PARAMETERS
+        PARAMETER ( concen_init = 0.001 ),
+        PARAMETER ( DIA =  ..->DIA ),
+        PARAMETER ( LENGTH =  ..->LENGTH ),
+        PARAMETER ( "UNITS" = 1e-3 ),
+      END PARAMETERS
+    END POOL
+    POOL somaCabuf
+      BINDABLES
+        OUTPUT concen
+      END BINDABLES
+      PARAMETERS
+        PARAMETER ( concen_init = 0.003 ),
+        PARAMETER ( DIA =  ..->DIA ),
+        PARAMETER ( LENGTH =  ..->LENGTH ),
+        PARAMETER ( "UNITS" = 1e-3 ),
+      END PARAMETERS
+    END POOL
+    POOL somabuf
+      BINDABLES
+        OUTPUT concen
+      END BINDABLES
+      BINDINGS
+        INPUT ../somaCabuf->concen,
+      END BINDINGS
+      PARAMETERS
+        PARAMETER ( concen_init = 0.153 ),
+        PARAMETER ( concen_total = 0.153 ),
+        PARAMETER ( DIA =  ..->DIA ),
+        PARAMETER ( LENGTH =  ..->LENGTH ),
+      END PARAMETERS
+    END POOL
+    REACTION somacabufrxn
+      BINDABLES
+        INPUT concen, OUTPUT concen
+      END BINDABLES
+      BINDINGS
+                    INPUT ("substrate") ../somaCa->concen,
+        INPUT ("substrate") ../somabuf->concen,
+        INPUT ("product") ../somaCabuf->concen,
+      END BINDINGS
+      PARAMETERS
+        PARAMETER ( FORWARD_RATE = 1e2 ),
+        PARAMETER ( BACKWARD_RATE = 0.5 ),
+      END PARAMETERS
+    END REACTION
+  END KINETICS
+END PUBLIC_MODELS
+\end{verbatim}
+
+
+The commands below illustrate how the G-3 Studio (model explorer) is used
+to load  *cal1.ndf* into the Model Container and explore the model::
+
+\begin{verbatim}
+  \$ genesis-g3
+  Welcome to the GENESIS 3 shell
+  genesis > ndf_load /usr/local/neurospaces/models/library/chemesis/cal1.ndf
+  genesis > explore
+\end{verbatim}
+
+[chemesis-cal1.png - sent by Hugo]
+[chemesis-cals.png - sent by Hugo]
+
+[if possible -  G-shell commands to run cal1.ndf and output to a file]
+
+
+
+\subsection*{Multiscale Scripting}
+
+The details of the procedure followed can be seen in the online
+documentation "G-3 Extension" (genesis-extend-functionality) and
+"chemesis-3-log".
+
+
+[integrate this from Hugo]
+
+Different numerical solution methods are required to solve the different
+types of mathematical equations associated with different scales of
+modeling.  The cable equation and ion currents are numerically solved with
+implicit Crank-Nicolson integration.  In G-3 this method of solution is
+implemented in a dedicated compartmental solver called Heccer.  In the G-3
+shell the user has to create a mapping from the name of the neuron model to
+the solver.  In the past, this was not necessary, as Heccer was the only
+solver.  Under planned extensions to the G-shell syntax, the correct syntax
+for a loaded single neuron model with name "/traub94" would be::
+
+  genesis > solverset "/traub94 => heccer"
+
+Biochemical pathways in neuronal modeling are complex networks of
+interacting ion concentration pools.  The G-3 implementation for
+simulation of biochemical pathways is called Chemesis-3 and has a
+dedicated optimized implementation to represent networks parameterized
+with biochemical pathways.  To simulate a complex network model of
+biochemical pathways, in this example called "/cal1", a user would
+typically type from the G-3 shell::
+
+  genesis > solverset "/cal1 => chemesis3"
+
+In case the network of biochemical pathways is defined inside the
+single neuron model, a user would have to type two commands with
+wildcards that associate the correct solver with each component of the
+model, for example::
+
+  genesis > solverset "/**/cal1 => chemesis3"
+  genesis > solverset "/traub94/**[!cal1] => heccer"
+
+In later version of G-3 these rules will be built in but still allow
+the user to select a different method of solution for different
+components of his or her model.
+
+
+* VERY brief list of steps or description of steps to convert chemesis
+
+  1. Creating a new component "chemesis3"
+
+  2. Creating a new object within an existing "chemesis3".
+     "model-container", or "experiment" module
+
+  [Hugo, I will need some help here.  This can be very short, although
+  we had originally meant it to be a major part.  Perhaps the first item
+  can be glossed over for this audience.]
+
 
 
 \subsection*{Discusion}
