@@ -328,16 +328,463 @@ of simulations and batch files, static parameter searching, and active
 parameter searching using, for example, dynamic clamp technology.
 
 
-CBI-architecture.
+\subsection*{Principal Concerns}
 
-CBI-behavioral view.
+In software engineering, the process of partitioning a program into
+logical functions that minimize overlap is referred to as a
+{\it separation of concerns}.  We consider that a principled separation of concerns is a prerequisite
+for the development of advanced computational modeling techniques in
+the neurosciences. User {\it concerns} have a direct influence on the
+user's experience of an application.  Technical concerns have a clear
+and direct influence on the partitioning of a program into its primary
+functional blocks, and are also crucial for problem diagnosis and
+guaranteeing the correct behavior of software.  Here, we propose there
+are two principal concerns that underly the development of modeling
+software: (1) Separation between data and control, and (2) Separation of biology and mathematics through the use of data-layering.
 
-CBI-scripting, python scripting.
+\subsubsection*{Control versus data}
+\label{sec:data-vs-control}
+
+All software can be understood in terms of algorithms operating on
+input data to produce output data. For experimental research, the
+natural distinction between data and algorithms can be compared to the
+distinction between the biological system (data to be investigated)
+and the stimulation paradigm (tools supporting data investigation).
+For computational research, the distinction between data and
+algorithms leads to a separation between model (data) and simulation
+control (control of data flows).
+
+\subsubsection*{The requirement for data-layering}
+\label{sec:data-layering}
+
+%For example, at the biological level,
+%a dendritic spine is considered to be a single morphological entity
+%but its mathematical equivalent is commonly described by a circuit
+%composed of two cable equations: one for the head and one for the
+%neck. Similarly, many empirical advances have been made in our
+%understanding of the electrophysiological role played by intracellular
+%calcium. However, this has frequently been at the expense of
+%conflating calcium channel activity with intracellular calcium
+%concentrations which, computationally, are at least two distinct
+%components of a realistic model. An important consequence is that the
+%development of an optimized simulation can be a significant challenge
+%for the neuroscientist unfamiliar with mathematical and computational
+%theory.
+
+It is the capacity to represent a model in terms of
+biological concepts such as neuron, dendrite, soma, channels, and molecules, that
+allows a user to clearly relate a model to the original scientific
+questions.  One way to achieve this goal is to separate the high-level
+biological representation of a model from its low-level mathematical
+implementation and provide operators that convert between them.
+This insulates the process of model construction
+from the computations performed during a simulation. 
+
+The relationships between simulator control and data modules in a federated architecture are symbolized by the horizontal arrows in Figure~\ref{fig:data-control}, whereas the relationship between high level biological concepts and their mathematical implementation are symbolized by the vertical arrows. It is the separation of the principle concerns along the horizontal and vertical axes that allows independent modules to be designed. This process underlies the
+construction of a simulator composed of stand-alone
+{\it component}s and forms the basic meta-framework
+referred to as the CBI architecture.
+
+Importantly, we note that a simulator can be efficiently modularized
+when only horizontal or vertical interactions are allowed between the
+modules illustrated in Figure~\ref{fig:data-control}. The larger the
+number of interactions allowed between diagonally located components,
+the more difficult it becomes to functionally separate simulator
+components and to maintain and extend the
+resulting software application. Diagonal interactions are forbidden in the CBI architecture as they foster the mixing of functionality across different levels that ultimately leads to the creation of monolithic software applications.
+
+%The first implementation of the CBI architecture has been that of  G-3. We use this software platform to present an overview of the CBI federated software architecture through the example of the the new G-3 simulator. In doing this we follow the ideal simulator workflow presented in Methods.
+
+% Figure 2
+% \noindent {\bf Place Figure \ref{fig:data-control} about here.}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=4in]{figures/matrix.eps}
+\end{center}
+\caption{ {\bf Principle concerns.}  The four fundamental building
+  blocks of a simulator are distinguished by separating (i) Data from
+  control, and (ii) High level biological concepts from their
+  mathematical implementation. In a federated architecture the only
+  allowed interactions between modules are those indicated by the
+  vertical and horizontal arrows. Diagonal interactions are forbidden
+  as they ultimately lead to interactions that result in the existence
+  of a monolithic software architecture.
+}
+\label{fig:data-control}
+\end{figure}
+
+
+\subsection*{Separation of Concerns}
+
+Consideration of the principal concerns of data, control, and data layering were used to expand Figure~\ref{fig:data-control} by the separation of concerns principle. This key principle in software engineering states that a given problem involves different kinds of concerns. To cope with complexity, these concerns should be identified and separated \cite{Dijkstra:1982fu}. The aim is to achieve engineering quality factors such as robustness, adaptability, maintainability, and reusability.  Ultimately, this results in clear model scripts where the biological aspects of a model are separated from the peripheral code that implements a model during a simulation.
+
+% Dijkstra EW (1982) On the role of scientific thought. in Dijkstra, Edsger W.. Selected writings on Computing: A Personal Perspective. New York, NY, USA: Springer-Verlag New York, Inc. pp. 60Ð66.
+
+In this section we present the outcome of a separation of concerns based on the principal concerns of data- and control-related simulator components introduced above. Initially, the biological and numeric representations and user workflows and scheduling modules are expanded to give the principal functions of the CBI architecture.
+
+Our analysis generated the primary functions of the CBI architecture illustrated in Figure~\ref{fig:cbi-architecture-simple}. The mechanism identified for separation of model construction from the low level computations performed during a simulation was the addition of a mid-level software layer. This intermediate layer provides function and data bindings between scripting applications and database interfaces, respectively, and the low-level back-ends. Note, this figure maintains the relationships between the four principal concerns identified in Figure~\ref{fig:data-control} by separating high level biological representations (Fig.~\ref{fig:cbi-architecture-simple}A) and low level mathematical implementation (Fig.~\ref{fig:cbi-architecture-simple}B), as well as separating control functions from data streams. Note also, the addition of a GUI to connect high level scripting applications with database interfaces.
+
+\subsubsection*{User Workflows and Biological Data}
+
+%Many more possible data flows exist than there are present in reality. So each data flow must be considered in the context of a sequence of user actions or workflow. Initially, the focus is on regular workflows using CBI simulator architecture applications, e. g. where a user wants to model a biological system. We then briefly mention other workflows that support user extensions of the functionality of an implementation of the architecture.
+%
+The first step in our ideal user workflow involves creating or
+importing a model. It maps directly to high-level biological
+representations via a simulator shell or GUI.
+%Similarly the second
+%step in the ideal user workflow allows for the construction and
+%management of high-level representations of experimental protocols and
+%the physical objects used to implement them.
+This interface
+straddles the Control/Data divide and replaces the upper horizontal
+arrow connecting the {\tt User Workflow} and {\tt Biology} modules in
+Figure~\ref{fig:data-control}. It enables the workflow by assisting
+either the development of simple cell models from the command line of
+a simulator shell via the {\tt Scripting Libraries \& Applications}
+module or the importation of model descriptions via the
+{\tt Database Interfaces} module (see
+Fig.~\ref{fig:cbi-architecture-simple}).
+% File formats currently recognized include SWC, the GENESIS P format, the declarative NDF file format, and once finalized, the NeuroML model specification format.
+
+Step 2 of the ideal user workflow typically requires biological
+expertise to design an experiment.  This includes the definition of
+constants such as the command voltage of a voltage clamp protocol,
+delays and duration of a current injection protocol, and model and
+simulation inputs and outputs.
+
+%For example given a
+%morphology, what are the total surface and volume of the cell, convert
+%it to a model, apply current injection into the soma, and record the
+%response from a distal dendrite.
+
+\subsubsection*{Numerics and Scheduling}
+
+Step 3 of the ideal user workflow deals with the checking,
+resetting, and running of a simulation.  This is accomplished via the
+{\tt Function Bindings} module of the CBI architecture (see
+Fig.~\ref{fig:cbi-architecture-simple}).
+%This module provides a
+%mid-level software layer that separates the high level biological
+%implementation from the low level numerical implementation of a model
+%by providing translators that are capable of making intelligent
+%decisions about mapping the given biology to the required numerics.
+
+At a technical level the simulation involves scheduling mathematical
+operations on, and communication of, the numerical representations of a
+biological model.  This step is indicated by the horizontal arrow
+between {\tt Scheduling} and {\tt Numerics} in Figure~\ref{fig:data-control} and
+is encompassed by the {\tt Controllers \& Communication} and {\tt Solvers}
+modules illustrated in Figure~\ref{fig:cbi-architecture-simple}.
+
+Elaborate user workflows can stop and restart running simulations and
+provide new inputs to a model thereby imposing high-level control on
+the low-level back-ends via the controller.
+
+\subsection*{Overall Design Objectives}
+
+Several important objectives emerged from the separation of concerns and were used to guide the development
+of our federated approach to the design and development of a neuronal
+simulation engine. 
+% where software components are self contained in the sense that they can be run independently.
+They include: (1) Reduced complexity of
+software modules when compared to a monolithic system, (2) Simplified
+documentation of modules in terms of inputs and outputs, (3) Easy
+incorporation or removal of individual modules as required, (4)
+Simplified development and testing of modules as stand alone
+components, and (5) Clear delineation of scope for new module
+development.
+
+\subsection*{Structural Overview of the CBI Architecture}
+
+The CBI architecture is defined as a modular paradigm that places
+stand-alone software components into a set of logical relationships.
+In this sense it defines a modular framework that provides the
+necessary parts of a neural simulator.
+
+The schema identified by the separation of concerns (see
+Fig.~\ref{fig:data-control}) is expanded in
+Figure~\ref{fig:cbi-architecture-simple} to give the modules that
+form the building blocks of the CBI architecture. This figure retains
+the four quadrants of simulator functionality identified by our
+separation of concerns. It includes the notions of low-level data for
+numerics and high-level representations for biology, as well as
+separation between data and control
+(Fig.~\ref{fig:cbi-architecture-simple} indicated by horizontal and
+vertical dashed lines, respectively).
+% The CBI architecture draws its
+% inspiration from this
+% partitioning.
+
+We refer to the CBI architecture
+as being `federated' as it extends the modular approach associated
+with the development of single applications to the functional
+integration of otherwise independent applications. 
+Federation aims to provide a unified interface to diverse
+applications and mask from the user the differences, idiosyncrasies,
+and implementations of the underlying applications and data sources
+(see www-128.ibm.com/developerworks/db2/library/techarticle/0203haas/0203haas.html). 
+In doing so, federation provides transparency, heterogeneity, a high degree of
+function, autonomy for the underlying federated sources,
+extensibility, openness, and the possibility of highly optimized
+performance. Here, extensibility is defined as a system design principle where an implementation takes into consideration future developments. An extendible system is one that includes mechanisms for expanding or enhancing the system with new capabilities without having to make major changes to the system infrastructure.
+
+Ideally, it makes the underlying applications look like a single
+system to the user. Enhanced application interoperability is achieved
+through the use of flexible high-level {\it scripting languages} to
+support diverse workflows and low-level {\it application programmer
+  interfaces} and {\it application binary interfaces} for
+performance.
+% (see companion paper this issue, Cornelis et al., 2010)\marginpar{ref CBI scripting paper}.
+
+% For completeness, we note that northbound and southbound interfaces
+% are indicated in this figure. Northbound interfaces conceptualize
+% lower level details, whereas, the southbound interfaces decompose
+% the concepts in technical details, which are mostly specific to a
+% single component of a software architecture. Northbound interfaces
+% normally communicate with southbound interfaces of higher level
+% components and vice versa. By convention, north- and southbound
+% interfaces are drawn at the top and bottom of an architectural
+% overview, respectively.
+
+In summary, the CBI architecture provides a template for software
+development that, at its core, contains a simulator.  Additionally,
+the modularity and layering of the architecture simplifies connection
+to independent applications indirectly related to model construction
+and instantiation and the display and analysis of simulation output.
+Figure \ref{fig:cbi-architecture-simple} illustrates the various
+modules of the CBI
+architecture.
+
+% Figure 3
+% \noindent{\bf Place Figure \ref{fig:cbi-architecture-simple} about here.}\\
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=4in]{figures/cbi-architecture-simple.eps}
+\end{center}
+\caption{ {\bf Overview of a federated software architecture:} Graphical
+  illustration of the primary functional modules defined for the CBI
+  federated software architecture.  Control modules are given to the left and data modules to the
+  right.  A. The top layer contains conceptual data
+  and controls representations of the biology of a model. B. The bottom layer contains
+  representations that are numeric and thus close to the hardware.  The middle or intermediate layer
+  bridges between the biology and the numerics implemented in a CBI compliant simulator. Importantly, as our separation of concerns shows (see Fig. \ref{fig:data-control} and text), Control (Scripting Libraries \& Applications) and Data (Database Interfaces) modules can interact either directly or via the Graphical User Interface.
+  }
+\label{fig:cbi-architecture-simple}
+\end{figure}
+
+
+\subsubsection*{Behavioural View of the CBI Architecture}
+
+Figure \ref{fig:cbi-architecture-expanded} provides an expanded view
+of Figure \ref{fig:cbi-architecture-simple} and illustrates in more
+detail the structural relationships between the different modules and
+sub-modules that comprise the CBI architecture. We introduced their
+functionality above.  The behavior of the CBI architecture is defined
+by the functional and dynamic connectivity provided by these
+individual modules.  We now describe this behavior within the
+context of our ideal user workflow.
+
+% Figure 4
+% \noindent{\bf Place Figure \ref{fig:cbi-architecture-expanded} about here.}
+
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=4in]{figures/cbi-architecture-expanded.eps}
+\end{center}
+\caption{ {\bf Detailed view of the Computational Biology Initiative
+    federated software architecture.} Illustration of the functional modules that is closer to an implementation of the CBI architecture. It illustrates the relationships of sub-modules within each of the primary functional modules given in
+  Figure \ref{fig:cbi-architecture-simple}.  North bound interfaces
+  group and conceptualize the details of the modules and interact with
+  south bound interfaces of higher level modules.  Steps 1--3 of the ideal user workflow induce data flows between the software modules of the CBI
+architecture. This results in data cycling between the upper layers (blue and green boxes) and
+lower layers (red box).  Ultimately, the two layers team to implement a single simulation.  By design, any type of model including multi-scale models will exhibit this data cycle. See text for explanation and details.
+}
+\label{fig:cbi-architecture-expanded}
+\end{figure}
+
+
+%Steps 1-3 of the ideal user workflow fall within the scope of the
+%CBI architecture.
+%  Steps 4-5 are outside the CBI architecture and
+%cannot induce diagonal connections between the modules inside the
+%CBI architecture.
+
+\paragraph{Data-flows in the CBI Architecture}
+A (G)UI translates user actions into a family of events that propagate
+to other components of a software architecture, impact the internal
+states of these components, and direct the data flows between them.
+%In the CBI architecture each software component is specialised in
+%implementing one particular function and performs the defined
+%operations on the data it is passed.
+%A functional architecture is an overview of a software system that
+%identifies the global functions of the system.  These functions define
+%the scope for experts for improvement of the system as a whole.  The
+%CBI architecture is structured according to low-level vs. high-level
+%functions in the system complemented by the data and control
+%functions.  As a consequence, a feature of the CBI architecture is
+%that rich data flows occur between software components, but not
+%necessarily within them.
+In Step 1 (Construct Model) and 2 (Design Experiment) of the ideal
+user workflow, users combine models and experimental data that are
+stored in files and databases.  In Step 3 (Run Simulation) the
+back-ends, such as the numerical {\tt Solvers} and the {\tt
+  Communication Infrastructure}, perform the calculations of a
+simulation, then save the output back to files and databases.  When
+combined, these steps of the ideal user workflow imply a cyclic data
+flow from files and databases to the back-ends.  Here we explain how
+user actions and data flows relate to one another in the CBI
+architecture and define the overall behavior of an implemented
+software system.
+
+%Intermediate results may be analyzed or aggregated by
+%analysis libraries, e.g. for signal analysis and binning of spikes.
+%These libraries are accessible to the CBI architecture from the {\tt
+%  Scripting Libraries \& Applications} software component.
+
+%\paragraph{Running a Single Cell Model:}
+
+%When a user wants to learn more about the electrophysiology of an
+%existing cell model, it must be instantiated, the stimulation and
+%output protocols configured, the simulation run, and the results
+%interpreted.
+
+In Step 1 of the ideal user workflow, the GUI is opened and a cell
+model is selected from a database listing of available models.
+Internally, model selection is translated into an event that instructs
+the {\tt Biology Model Container} to load a selected model from a
+database and store it in memory using data structures for efficient
+storage and retrieval by other modules.  During initial inquiry, a
+user may typically be interested in derived model parameters such as
+the total surface area of a neuron, with and without spine correction,
+while a sophisticated GUI can also present a table of the channels
+employed in the model along with their conductance densities and
+reversal potentials.  More dedicated queries related to specific brain
+areas or neuron types are supported by the {\tt
+  Scripting Libraries \& Applications} module.
+
+%A model can be queried in this way when it is stored by
+%the {\tt Biology Model Container}.
+
+A typical example of Step 2 of the ideal user workflow is the design
+of an experiment that applies current injection pulses to a neuron's
+soma and defines simulation output as the somatic membrane potential
+and somatic transmembrane currents.  The {\tt
+  Experiment Model Container} stores the definition of the current
+pulse amplitude and duration, which is translated by a {\tt
+  Sequencer Bridge} to a sequence of simulation-time events prior to
+the start of a stimulation.  These events are then executed by the
+{\tt Command Sequence Executor} during a simulation.
+
+Running the simulation in Step 3 of the ideal user workflow starts
+with the {\tt Biology Model Container} examining a stored model to
+determine model time constants or other parameters that are relevant
+for the accuracy of a numerical simulation.  The {\tt Solvers} then
+fill their data structures with parameter values optimized for
+simulation, for instance a Crank-Nicolson solver can multiply the
+membrane capacitance with the time step during this initialization
+phase instead of at every simulation time
+step\cite{borg-graham00:_addit_effic_comput_branc_nerve_equat}.  For
+this, the memory image of a model must first be expanded into a
+representation that includes the mathematical equations and parameters
+relevant to the given simulation but, for instance, does not include
+the spatial layout of segments as this is not required by the {\tt
+  Solvers}.  (Note: `Segment' is a high level term employed to describe different parts of the biological model of a dendritic morphology. The equivalent low level (computational) term is `compartment'. It refers to the numerical representation of a segment.) This behavior is different from that of existing
+simulators, e.g. GENESIS 2. Such simulators do not make an explicit
+distinction between internal data structures for model representation
+and data structures for computation.  Consequently, they often
+generate redundant data during the initialization of a simulation.
+
+In network simulations the {\tt Solvers} employ the {\tt
+  Connectivity Translator} to initialize its simulation-time
+communication data structures and to connect to the {\tt
+  Communication Infrastructure}.
+
+When a user instructs the simulator to start a simulation, for
+instance by pushing a button in a GUI, the {\tt Controller} generates
+a list of instantiated {\tt Solvers}.  It then advances the simulation
+clock and requests each {\tt Solver} to update its internal state.
+The {\tt Communication Infrastructure} connects the {\tt Solvers} for
+efficient communication of the solved variables.  {\tt Solvers} that
+were configured for output, save results to a file.  When the
+simulation finishes, either by user action or following a preset
+simulation period, output buffers are flushed to disk.
+
+The independence of the {\tt Solvers} in the CBI architecture not only
+allows for better optimized implementations, but also enables
+additional simulator functionality such as serialization of the model
+state to a file.  This allows a simulation to be resumed at a later
+time and reduces the total simulation time of a complex model if it requires
+a calibration phase prior to the application of an experimental
+protocol.
+
+%During Step 4 the dynamic state of the model is available from the files and databases for further analysis.
+
+% Steps 4 and 5 are complementary to Steps 1-3 of the ideal user workflow.
+
+%The data cycle between databases and files, and the solvers in Steps
+%1-3 of the ideal user workflow results in all simulation simulation output
+%is available through these databases and files.  Once these steps
+%have been completed, the back-ends of the CBI architecture are not
+%available anymore.  The simulation result data can then be combined
+%with the model parameters and structure available in the {\tt
+%  Biology Model Container} through {\tt
+%  Scripting Libraries \& Applications} to implement Step 4 and 5 of
+%our ideal user workflow.
+
+As a result of Steps 1--3 of the ideal user workflow, data flows both
+through and between software components that conform to a CBI
+architecture: the data cycles between databases and files, and
+back-end {\tt Solver}s.  Here we have described this cycle for a single
+neuron model and, as we briefly noted, it also occurs for network
+models.  By design any type of model including multi-scale models
+will exhibit this data cycle.
+
+In Steps 4 and 5, the availability of any model data from the {\tt
+  Model Container} and the functionality of {\tt
+  Scripting Libraries \& Applications} can connect the CBI
+architecture with external tools while maintaining the integrity of
+the separation of concerns.
+%The laterality of the software component connectivity activated during Step 4 is not an issue.
+{\tt Scripting Libraries \& Applications} connect to external tools
+such as Matlab to implement output analysis.
+%  Integration, at Step
+%4 of the ideal user workflow, with software platforms such as RTXI
+%make direct interaction with experiment possible.
+They also allow simulation output data to be combined with the model
+parameters and structure available in the {\tt
+  Biology Model Container} to implement Step 5 of our ideal user
+workflow, for instance to provide automated script generators for the
+generation of batch simulations.  Importantly, at this stage of the
+workflow, the back-ends of the CBI architecture (indicated below the dotted
+horizontal line in Figures~\ref{fig:cbi-architecture-simple}
+and~\ref{fig:cbi-architecture-expanded}) are unavailable.  Once Step 3
+is completed, all the data of the dynamic state of the model are
+available through databases and files.  Consequently, there is no
+requirement to query the software components that deal with
+numerical data. This ultimately prevents the implementation of
+diagonal interactions in the software and the creation of a monolithic
+simulator.
+
+% are technically unrelated to a simulation run and may
+%fall outside the scope of the CBI architecture.  On the other hand
+%{\tt Scripting Libraries \& Applications} may connect to external
+%tools such as Matlab to implement output analysis and include script
+%generators for automation of batch simulations and platforms such as
+%RTXI for a direct connection with experiments.
+
+%For convenience one could implement a short-cut diagonal into the CBI
+%architecture for implementation of aspects of Steps 4 and 5, and for that matter other Steps, but this ultimately would limit the functional scope of the resulting simulator.
+
+%All model data is available through the model container and the output (files or databases).  
+
+%Modules plugged in during Step 4 have access to all data via the model container.
 
 
 \subsection*{Results}
 
-- cbi-scripting
+- CBI-scripting, python scripting.
 
 - Chemesis CNS report.
 
