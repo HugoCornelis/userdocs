@@ -820,15 +820,42 @@ simulator.
 \subsection*{GENESIS 3.0}
 
 
-redesigned and modernized the core structure of GENESIS producing
+The redesigned and modernized core structure of GENESIS produces
 GENESIS version 3.0 or G-3.  The new structure of G-3 provides a new
 and unique capacity for federated and modular software development in
 support of multi-scale modeling.  Furthermore, G-3s structure also
 supports the direct real time interaction, or embedding of models at
-different levels of scale. As described in more detail below, this is
+different levels of scale.  As described in more detail below, this is
 accomplished through specific software modules that create
 intermediary representation of variables present at multiple scales as
 described in more detail in subsequent sections.
+
+Several explicit features of G-3 allow the rapid incorporation of new
+software components.  As illustrated below these include: 1) the
+modular separation of the development of the core of new solvers from
+that of other software components, allowing full focus on the
+mathematical aspects of the solver and their implementation, and
+better optimization; 2) the G-3 Developer package facilitates
+integration of the Chemesis-3 solver into the build system of G-3
+enabling immediate regression tests; 3) easy extension of the
+configuration of the model-container to establish new declarative
+model tokens and parameters recognized by the Chemesis-3 solvers; 4)
+easy construction of an interface between the model-container
+application programmers interface (API) and the core of the Chemesis-3
+solver and finally 5) the specific development of a communication
+software component that interfaces the new solver with the existing
+linear cable solver.
+
+Because each of these sub-cellular modeling components are an
+integrated part of a single model-container (see Cornelis 2011a), the
+existing and new G-3 solvers can be integrated to simulate different
+aspects of the same model.  This 'scale-linking' functionality of G-3
+instantiates dedicated run-time software components that contain
+intermediary representations of solved variables that can pass both
+'upscale' and 'downscale' values to solvers at different levels of
+scale.  Technically, in the case of Chemesis-3 and the linear cable
+solver, for example, these modules calculate weighted space-time
+averages.
 
 
 \subsection*{Extending GENESIS-3}
@@ -1192,6 +1219,27 @@ it aims to represent (figure~\ref{fig:multi-scale-taxonomy}).
   \label{fig:multi-scale-taxonomy}
 \end{figure}
 
+
+Incorporate two
+types of 3-D Monte Carlo-based techniques for modeling reaction/diffusion kinetics. Specifically, Dr. Avrama
+Blackwell will work with the G-3 development team to implement NeuroRD (Oliveira et al., 2010), a
+computationally efficient approximate Monte Carlo approach to modeling reaction-diffusion systems.
+
+In
+addition, the G-3 development team will work with Dr. Yoshi Kubota to incorporate 'CDS' (Cellular Dynamics
+Simulator: http://nba.uth.tmc.edu/cds/) a precise particle-based Monte Carlo simulator specifically supporting
+the modeling of Ca2+ binding and diffusion dynamics within biochemical networks (Byrne et al. 2010; Kubota
+and Waxham 2011). CDS is based on the event-driven first passage time algorithm (Byrne et al. 2010) and is
+designed to serve as a flexible platform for multi-scale hybrid algorithms. For this reason, the CDS algorithm
+can be directly combined with any deterministic ODE/PDE (Reaction-Diffusion Equation) solvers (e.g., V-Cell
+used in Hernjak et al. 2005) including those already included in G-3. High-resolution cellular morphology
+including that of dendritic spines can be directly transported to CDS allowing electro-diffusion to be simulated
+by both deterministic (as in Lopreore et al. 2008) as well as particle-based 3-D stochastic methods. The CDS
+research team will work closely with NeuroRD and G-3 developing team to establish a series of hybrid
+algorithms applicable to several different model scales. This will allow us to compare different simulation
+algorithms for Ca2+ binding diffusion, voltage clamp, and biochemical network within the same platform and will
+help derive and validate simplified macroscopic (biochemical) synaptic rules relevant to the objectives of
+Specific Aim 2.
 
 
 \subsection*{text sources}
