@@ -1220,26 +1220,47 @@ it aims to represent (figure~\ref{fig:multi-scale-taxonomy}).
 \end{figure}
 
 
-Incorporate two
-types of 3-D Monte Carlo-based techniques for modeling reaction/diffusion kinetics. Specifically, Dr. Avrama
-Blackwell will work with the G-3 development team to implement NeuroRD (Oliveira et al., 2010), a
-computationally efficient approximate Monte Carlo approach to modeling reaction-diffusion systems.
+Incorporate two types of 3-D Monte Carlo-based techniques for modeling
+reaction/diffusion kinetics. Specifically, Dr. Avrama Blackwell will
+work with the G-3 development team to implement NeuroRD (Oliveira et
+al., 2010), a computationally efficient approximate Monte Carlo
+approach to modeling reaction-diffusion systems.
 
-In
-addition, the G-3 development team will work with Dr. Yoshi Kubota to incorporate 'CDS' (Cellular Dynamics
-Simulator: http://nba.uth.tmc.edu/cds/) a precise particle-based Monte Carlo simulator specifically supporting
-the modeling of Ca2+ binding and diffusion dynamics within biochemical networks (Byrne et al. 2010; Kubota
-and Waxham 2011). CDS is based on the event-driven first passage time algorithm (Byrne et al. 2010) and is
-designed to serve as a flexible platform for multi-scale hybrid algorithms. For this reason, the CDS algorithm
-can be directly combined with any deterministic ODE/PDE (Reaction-Diffusion Equation) solvers (e.g., V-Cell
-used in Hernjak et al. 2005) including those already included in G-3. High-resolution cellular morphology
-including that of dendritic spines can be directly transported to CDS allowing electro-diffusion to be simulated
-by both deterministic (as in Lopreore et al. 2008) as well as particle-based 3-D stochastic methods. The CDS
-research team will work closely with NeuroRD and G-3 developing team to establish a series of hybrid
-algorithms applicable to several different model scales. This will allow us to compare different simulation
-algorithms for Ca2+ binding diffusion, voltage clamp, and biochemical network within the same platform and will
-help derive and validate simplified macroscopic (biochemical) synaptic rules relevant to the objectives of
-Specific Aim 2.
+In addition, the G-3 development team will work with Dr. Yoshi Kubota
+to incorporate 'CDS' (Cellular Dynamics Simulator:
+http://nba.uth.tmc.edu/cds/) a precise particle-based Monte Carlo
+simulator specifically supporting the modeling of Ca2+ binding and
+diffusion dynamics within biochemical networks (Byrne et al. 2010;
+Kubota and Waxham 2011). CDS is based on the event-driven first
+passage time algorithm (Byrne et al. 2010) and is designed to serve as
+a flexible platform for multi-scale hybrid algorithms.  For this
+reason, the CDS algorithm can be directly combined with any
+deterministic ODE/PDE (Reaction-Diffusion Equation) solvers (e.g.,
+V-Cell used in Hernjak et al. 2005) including those already included
+in G-3.  High-resolution cellular morphology including that of
+dendritic spines can be directly transported to CDS allowing
+electro-diffusion to be simulated by both deterministic (as in
+Lopreore et al. 2008) as well as particle-based 3-D stochastic
+methods.
+
+This will allow us to compare different simulation algorithms for Ca2+
+binding diffusion, voltage clamp, and biochemical network within the
+same platform and will help derive and validate simplified macroscopic
+(biochemical) synaptic rules relevant to the objectives of Specific
+Aim 2.
+
+From a technical point of view, the incorporation of simulations
+modules that specifically involve spatial dimensions is, in principle,
+much more difficult than the integration of biochemical kinetic
+models. In fact the accurate representation of space and time for
+multi-scale simulations is an open research area.  However, the
+explicit provision of software modules for the intermediary
+representation of solved variables allows to compare and evaluate
+different methods of scale-linking, for instance by comparing
+different resolutions of a fixed grid with adaptive grid intermediary
+representations (Bernabeul et al., 2009). In effect, this will allow
+us to use multi-scale G-3 models as a framework to compare different
+technical strategies.
 
 
 \subsection*{text sources}
