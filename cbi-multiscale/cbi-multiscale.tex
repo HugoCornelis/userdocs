@@ -40,19 +40,13 @@ James M. Bower$^{5}$.
 $\ast$ E-mail: Corresponding Hugo.Cornelis@gmail.com
 \end{flushleft}
 
+\newpage
 
-\subsection*{structure}
+\tableofcontents
 
-- problem statement: multi-scale modeling requires a single model-container
+\newpage
 
-- explain CBI architecture
-
-- apply: G-3 and scripting
-
-- explain communication infrastructure for multi-scale modeling
-
-
-\subsection*{Multi-Scale Modeling and the User-Workflow}
+\subsection{Multi-Scale Modeling and the User-Workflow}
 The user-workflow is a simple workflow based on experimental paradigm
 to allow experimentalists access to neuronal simulation.  In contrast,
 the number of available numerical algorithms is large.  As a
@@ -237,7 +231,7 @@ to send you some slides.
 
 {\LARGE Start of paper here ----------}
 
-\section*{Introduction}
+\section{Introduction}
 
 Three possible definitions of multi-scale modeling.
 
@@ -279,9 +273,9 @@ provided by the CBI architecture
 
 
 
-\section*{Methods}
+\section{Methods}
 
-\subsection*{The User Workflow}
+\subsection{The User Workflow}
 
 The term {\it user workflow}\cite{10.1371/journal.pone.0028956} is
 employed to describe the sequence of necessary steps typically
@@ -300,7 +294,7 @@ obtained from a single investigation and the method used to define
 multiple investigations in a series. The user workflow identifies five
 steps in total (explained in more detail in Results).
 
-\subsubsection*{The Ideal User Workflow for Simulations in Neurobiology}
+\subsubsection{The Ideal User Workflow for Simulations in Neurobiology}
 
 As many more data flows can exist than are present in reality, each actual
 data flow can be considered in the context of a sequence of user
@@ -330,7 +324,7 @@ this workflow does not specify any particular order for its
 completion. However, for any given case, meaningful simulation output
 will only occur with completion of Steps 1--4.
 
-\subsubsection*{Step 1: Construct Model}
+\subsubsection{Step 1: Construct Model}
 
 The simulator shell and the graphical user interface (GUI) each
 provide an interface that interprets user input such that the
@@ -342,7 +336,7 @@ to the simulator. Shell tools can then be used to explore and check
 the integrity of a model. Following any necessary or desired changes,
 a new version of the model can be saved.
 
-\subsubsection*{Step 2: Design Experiment}
+\subsubsection{Step 2: Design Experiment}
 
 Specific change management tools can be used to make small
 modification to a model, e.g. to set model parameter values specific
@@ -351,18 +345,18 @@ the stimulus or activation parameters for a given simulation run or
 experiment and the output variables to be stored for subsequent
 analysis by independent software.
 
-\subsubsection*{Step 3: Run Simulation}
+\subsubsection{Step 3: Run Simulation}
 
 Shell tools can be used to check the state of a given simulation or reset the simulation time step and solved variables to their initial values. After a simulation is run, output values are flushed to raw result storage for subsequent data analysis. The model state can be saved at any simulation time step. This allows it to be imported into a subsequent simulator session for further development and exploration.
 
-\subsubsection*{Step 4: Process Output}
+\subsubsection{Step 4: Process Output}
 
 The validity and location of simulator output is checked prior to data
 analysis. Output can be analyzed either within the simulator or piped
 to external applications such as
 Matlab. % for subsequent data analysis.
 
-\subsubsection*{Step 5: Iterate}
+\subsubsection{Step 5: Iterate}
 
 A modeling project is established by the introduction of iterators
 into the user workflow. Iterators close the loop between the output of
@@ -371,7 +365,7 @@ of simulations and batch files, static parameter searching, and active
 parameter searching using, for example, dynamic clamp technology.
 
 
-\subsection*{Principal Concerns}
+\subsection{Principal Concerns}
 
 In software engineering, the process of partitioning a program into
 logical functions that minimize overlap is referred to as a
@@ -385,7 +379,7 @@ guaranteeing the correct behavior of software.  Here, we propose there
 are two principal concerns that underly the development of modeling
 software: (1) Separation between data and control, and (2) Separation of biology and mathematics through the use of data-layering.
 
-\subsubsection*{Control versus data}
+\subsubsection{Control versus data}
 \label{sec:data-vs-control}
 
 All software can be understood in terms of algorithms operating on
@@ -397,7 +391,7 @@ For computational research, the distinction between data and
 algorithms leads to a separation between model (data) and simulation
 control (control of data flows).
 
-\subsubsection*{The requirement for data-layering}
+\subsubsection{The requirement for data-layering}
 \label{sec:data-layering}
 
 %For example, at the biological level,
@@ -458,7 +452,7 @@ resulting software application. Diagonal interactions are forbidden in the CBI a
 \end{figure}
 
 
-\subsection*{Separation of Concerns}
+\subsection{Separation of Concerns}
 
 Consideration of the principal concerns of data, control, and data layering were used to expand Figure~\ref{fig:data-control} by the separation of concerns principle. This key principle in software engineering states that a given problem involves different kinds of concerns. To cope with complexity, these concerns should be identified and separated \cite{Dijkstra:1982fu}. The aim is to achieve engineering quality factors such as robustness, adaptability, maintainability, and reusability.  Ultimately, this results in clear model scripts where the biological aspects of a model are separated from the peripheral code that implements a model during a simulation.
 
@@ -468,7 +462,7 @@ In this section we present the outcome of a separation of concerns based on the 
 
 Our analysis generated the primary functions of the CBI architecture illustrated in Figure~\ref{fig:cbi-architecture-simple}. The mechanism identified for separation of model construction from the low level computations performed during a simulation was the addition of a mid-level software layer. This intermediate layer provides function and data bindings between scripting applications and database interfaces, respectively, and the low-level back-ends. Note, this figure maintains the relationships between the four principal concerns identified in Figure~\ref{fig:data-control} by separating high level biological representations (Fig.~\ref{fig:cbi-architecture-simple}A) and low level mathematical implementation (Fig.~\ref{fig:cbi-architecture-simple}B), as well as separating control functions from data streams. Note also, the addition of a GUI to connect high level scripting applications with database interfaces.
 
-\subsubsection*{User Workflows and Biological Data}
+\subsubsection{User Workflows and Biological Data}
 
 %Many more possible data flows exist than there are present in reality. So each data flow must be considered in the context of a sequence of user actions or workflow. Initially, the focus is on regular workflows using CBI simulator architecture applications, e. g. where a user wants to model a biological system. We then briefly mention other workflows that support user extensions of the functionality of an implementation of the architecture.
 %
@@ -501,7 +495,7 @@ simulation inputs and outputs.
 %it to a model, apply current injection into the soma, and record the
 %response from a distal dendrite.
 
-\subsubsection*{Numerics and Scheduling}
+\subsubsection{Numerics and Scheduling}
 
 Step 3 of the ideal user workflow deals with the checking,
 resetting, and running of a simulation.  This is accomplished via the
@@ -524,7 +518,7 @@ Elaborate user workflows can stop and restart running simulations and
 provide new inputs to a model thereby imposing high-level control on
 the low-level back-ends via the controller.
 
-\subsection*{Overall Design Objectives}
+\subsection{Overall Design Objectives}
 
 Several important objectives emerged from the separation of concerns and were used to guide the development
 of our federated approach to the design and development of a neuronal
@@ -538,7 +532,7 @@ Simplified development and testing of modules as stand alone
 components, and (5) Clear delineation of scope for new module
 development.
 
-\subsection*{Structural Overview of the CBI Architecture}
+\subsection{Structural Overview of the CBI Architecture}
 
 The CBI architecture is defined as a modular paradigm that places
 stand-alone software components into a set of logical relationships.
@@ -618,7 +612,7 @@ architecture.
 \end{figure}
 
 
-\subsubsection*{Behavioural View of the CBI Architecture}
+\subsubsection{Behavioural View of the CBI Architecture}
 
 Figure \ref{fig:cbi-architecture-expanded} provides an expanded view
 of Figure \ref{fig:cbi-architecture-simple} and illustrates in more
@@ -843,7 +837,7 @@ simulator.
 
 %Modules plugged in during Step 4 have access to all data via the model container.
 
-\subsection*{GENESIS 3.0}
+\subsection{GENESIS 3.0}
 
 
 The redesigned and modernized core structure of GENESIS produces
@@ -884,7 +878,7 @@ solver, for example, these modules calculate weighted space-time
 averages.
 
 
-\subsection*{Extending GENESIS-3}
+\subsection{Extending GENESIS-3}
 
 The G-3 documentation systems describes the procedures used for G-3
 extension.  Extending G-3 can involve the implementation of a new
@@ -913,7 +907,7 @@ Chemesis-3.
   makes abstraction of the biological structure the model.
 
 
-\subsection*{Heccer: A Numerical Solver}
+\subsection{Heccer: A Numerical Solver}
 
 % example: direct link to external documentation
 %
@@ -942,7 +936,7 @@ information (tests/code/callout1.c and tests/code/calloutInjector.c).
 
 The source code of {\bf Heccer} contains inline developer documentation. As yet, there is no stable API but the Swig interfaces for {\bf Heccer} are not expected to change much. If you are interested in this, look at \href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/glue/swig/perl/fork4p1.source.html#line51}{a simple example} for driving {\bf Heccer} from Perl, and \href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/glue/swig/perl/pool1-feedback1.source.html#line51}{another example} with active channels and a calcium pool. {\bf Heccer} is currently capable of simulating Purkinje cells (see the \href{../purkinje-cell-model/purkinje-cell-model.tex}{\bf Purkinje\,Cell\,Model}), and, at first evaluation, runs slightly faster than {\it hsolve} (It is difficult to assess why exactly: while the {\it hsolve} implementation is much more optimized than {\bf Heccer's}, the {\bf Heccer} design is slightly better optimized than {\it hsolve}'s.).
 
-\subsubsection*{Heccer Features}
+\subsubsection{Heccer Features}
 
 \begin{itemize}
 
@@ -969,7 +963,7 @@ The source code of {\bf Heccer} contains inline developer documentation. As yet,
 Besides being open source, {\bf Heccer} is also hypersource and \href{http://repo-genesis3.cbi.utsa.edu/crossref/heccer/heccer/index.html}{\bf Heccer\,Source\,Code} is browsable.
 % An example test file with points of entry into {\bf Heccer}, can be found \href{}{here}.
 
-\subsubsection*{Extending Heccer}
+\subsubsection{Extending Heccer}
 \begin{itemize}
    \item Adding new channel types to {\bf Heccer} can be done using
      callouts.  The callout mechanism allows for general user
@@ -983,7 +977,7 @@ Besides being open source, {\bf Heccer} is also hypersource and \href{http://rep
 \end{itemize}
 
 
-\subsection*{Chemesis-3}
+\subsection{Chemesis-3}
 
 NOTE: this section is written as structured text instead of latex.
 
@@ -1040,13 +1034,13 @@ this parameter in an NDF file requires running the model using a
 chemesis3 solver.)
 
 
-\section*{Results}
+\section{Results}
 
-\subsection*{Simple Python Scripting}
+\subsection{Simple Python Scripting}
 
 - CBI-scripting, python scripting.
 
-\subsection*{Scripting Chemesis}
+\subsection{Scripting Chemesis}
 
 - Chemesis CNS report.
 
@@ -1147,7 +1141,7 @@ to load  *cal1.ndf* into the Model Container and explore the model::
 
 
 
-\subsection*{Multiscale Scripting}
+\subsection{Multiscale Scripting}
 
 The details of the procedure followed can be seen in the online
 documentation "G-3 Extension" (genesis-extend-functionality) and
@@ -1200,7 +1194,7 @@ components of his or her model.
   we had originally meant it to be a major part.  Perhaps the first item
   can be glossed over for this audience.]
 
-\subsection*{Multi-scale modeling support in G-3}
+\subsection{Multi-scale modeling support in G-3}
 
 Supported types by the model-container:
 
@@ -1226,7 +1220,7 @@ Available solvers, starting at the highest scale:
 - Experiment: current injections, time-tables and output.
 
 
-\section*{Discusion}
+\section{Discusion}
 
 - Summary.
 
@@ -1305,7 +1299,7 @@ system will also be critical to the ability to run large scale models
 on Linux clusters of 100-500 CPU cores.
 
 
-\subsection*{text sources}
+\subsection{text sources}
 
 - email jim single model -container
 
@@ -1318,7 +1312,7 @@ on Linux clusters of 100-500 CPU cores.
 - two papers
 
 
-\subsection*{additional references}
+\subsection{additional references}
 
 Blackwell, K. T. (2000) Evidence for a Distinct Light-Induced
 Calcium-Dependent Potassium Current in Hermissenda Crassicornis,
