@@ -24,8 +24,6 @@
 
 \usepackage{color} 
 
-\usepackage{marginnote}
-
 % Use doublespacing - comment out for single spacing
 \usepackage{setspace} 
 \doublespacing
@@ -162,15 +160,7 @@ have been
 implemented \cite{guenay08:_chann_densit_distr_explain_spikin}.  In
 principle such linear or single-threaded development processes can
 continue forever.  However, repetitive extension of GENESIS
-with\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} source code of diverse functions and origin\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} has
+with source code of diverse functions and origin has
 made the code structure so complicated that it is almost impossible to extend.  The unitary nature and density of
 the source code has ultimately created a`monolithic' application.
 This marginalizes user contributions to simulator functionality, updates and releases have become less frequent,
@@ -183,11 +173,7 @@ and the software life cycle is moved from extension to maintenance.
 %components, running simulations, and output collection.
 
 GENESIS 3.0 (G-3) is a major reconfiguration and update of the GENESIS
-simulation system.  This reconfiguration is\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} based on the {\it Neurospaces Project} (http://neurospaces.sourceforge.net/) which was initiated in 1998 as a development center for software components for computational neuroscience simulators. It embodies many software components, each of which has been developed in full isolation. In it, the core GENESIS simulator functionality has been
+simulation system.  This reconfiguration is based on the {\it Neurospaces Project} (http://neurospaces.sourceforge.net/) which was initiated in 1998 as a development center for software components for computational neuroscience simulators. It embodies many software components, each of which has been developed in full isolation. In it, the core GENESIS simulator functionality has been
 restructured such that it is the first neural simulator to comply with a more modular design, the Computational 
 Biology Initiative federated software architecture (referred to as the CBI
  architecture, described in Materials and Methods and in more detail in \cite{cornelis11b}).
@@ -197,26 +183,14 @@ architecture is specifically designed to support
 the integration of stand-alone software components and applications by
 using common integration technologies such as modern scripting
 languages. This not only results in
-improved simulator performance, portability, and code\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} reusability but also enables both the
+improved simulator performance, portability, and code reusability but also enables both the
 use of new script parsers and user interfaces and the capacity
-to communicate with other modeling programs and environments and external model and data analysis and presentation software\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-}.
+to communicate with other modeling programs and environments and external model and data analysis and presentation software.
 
 In the following sections we illustrate the use of the general purpose Python scripting
 language for making high performance simulation software coded in
 system programming languages accessible to neuroscientists and
-biologists. We note that equivalent functionality is available from G-3 through the Perl (http://www.perl.org/) scripting language\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-}. 
+biologists. We note that equivalent functionality is available from G-3 through the Perl (http://www.perl.org/) scripting language. 
 
 \section*{\LARGE Materials and Methods}
 
@@ -258,17 +232,9 @@ representations from the algorithms that process them.
 
 GENESIS simulations are constructed from model components that receive
 inputs, perform calculations on them, and then generate outputs. Model
-neurons are constructed from basic parts, such as segments\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-}, and
+neurons are constructed from basic parts, such as segments, and
 variable conductance ion channels. (Note: `Segment' is a high level term employed to describe different parts of the biological model of a dendritic morphology. The equivalent low level (computational) term is `compartment'. It refers to the numerical representation of a segment.) Channels are linked to their
-segments\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} which in turn are linked to form
+segments which in turn are linked to form
 multi-segment neurons of any desired level of complexity.
 Neurons may be then be connected to form neural circuits \cite{bower98:_book_genes}. 
 % It is the paradigm used by the GENESIS 2 script language interpreter (SLI), 
@@ -282,11 +248,7 @@ User-defined SLI scripts were then used to glue together the pieces of
 a simulation. These scripts also controlled the graphical objects used
 to define the front end of a simulation and the GENESIS data handlers.
 It was the commands the SLI recognized and the many GENESIS `objects'
-available for constructing models\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} and simulations that have most powerfully
+available for constructing models and simulations that have most powerfully
 assisted in the sharing of model features amongst the broader modeling
 community.
 
@@ -297,11 +259,7 @@ shells and system programming languages such as C or C++ and scripting
 languages such as Perl \cite{wall99:_perl_progr_refer_guide},
 Python \cite{martelli06:_python_nutsh},
 Rexx \cite{ohara88:_moder_progr_using_rexx},
-Tcl \cite{ousterhout94:_tcl_tk_toolk}\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-}.  System
+Tcl \cite{ousterhout94:_tcl_tk_toolk}.  System
 programming languages typically start from the most primitive computer
 elements, usually the `words' of memory. They are designed to manage
 the complexity of building data structures and algorithms from scratch
@@ -352,7 +310,34 @@ five to ten times more rapidly than when a system programming language alone is 
 
 % \noindent{\bf Place Figure 1 about here.}\\
 
-Figure~\ref{fig:g3-interfacing} gives the levels of programing available in G-3. They range from the C coding employed to create the independent components, through Python and Perl interface scripting, the declarative NDF file format used for model construction and the associated reusable NDF libraries coding membrane channels and synapses, to the highest level of coding via the G-Tube GUI. Also indicated is the location of the SLI in this coding hierarchy.
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width=4in]{figures/g3-interfacing.eps}
+  \end{center}
+  \caption{ {\bf Levels of programing in GENESIS 3.0.} The concept
+    hierarchy used for communication by GENESIS developers. C Coding:
+    System programing languages are used to program individual
+    simulator components and extend simulator functionality. SLI:
+    Indicates the level of the GENESIS-2 Script Language Interface in
+    the concept hierarchy. Script Languages: Python and Perl are used
+    to interface individual simulator components. NDF: The native
+    declarative file format used to build models and model components.
+    NDF Libraries: Model components such as membrane channels and
+    synapses provide a library of functional components available for
+    accelerated model development. G-Tube: The GENESIS graphical user
+    interface allows users to access models and model components for
+    the rapid development of single cell and network models.  }
+  \label{fig:g3-interfacing}
+\end{figure}
+
+
+Figure~\ref{fig:g3-interfacing} gives the levels of programing
+available in G-3. They range from the C coding employed to create the
+independent components, through Python and Perl interface scripting,
+the declarative NDF file format used for model construction and the
+associated reusable NDF libraries coding membrane channels and
+synapses, to the highest level of coding via the G-Tube GUI. Also
+indicated is the location of the SLI in this coding hierarchy.
 
 In summary, system programming languages are well suited for building functional software
 components where there is a requirement for computing speed because data structures and
@@ -399,18 +384,10 @@ principles.  Originally developed as a scripting language for UNIX, it
 aimed to blend the ease of use of the UNIX shell with the power and
 flexibility of a system programming language like C.  With over 20
 years of development and nearly half a million lines of code, Perl now
-runs on over 100 different platforms\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} (http://www.perl.org/about.html).  Currently, there are over 18,000
+runs on over 100 different platforms (http://www.perl.org/about.html).  Currently, there are over 18,000
 open source modules available from the Comprehensive Perl Archive
 Network (CPAN, http://www.cpan.org/), assisting in system integration, scientific
-application, and user interface development.  Via the CPAN {\it Inline}\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,6){\line(0,-1){0}}
-  \end{picture}
-}
+application, and user interface development.  Via the CPAN {\it Inline}
 module, Perl integrates seamlessly with both system programming
 languages such as C and C++, and scripting languages including Python. (Note: {\it italicized} text indicates the names of Python modules, directory paths, and file names, whereas, {\tt Typewriter} text is reserved for Python coding examples and the dimensions of physical quantities. {\bf Bold} text indicates the names of software components in G-3.)
 Perl supports object-oriented programming, functional programming, and
@@ -447,15 +424,78 @@ more flexibility is obtained by generating code in both languages as
 an extension module can then be enhanced with support code in either
 language.  Table~\ref{tab:cbi-codecounts} gives an overview of the
 resulting code.  As expected, low-level software components emphasize
-low-level\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} languages and contain more code (e.g. C), whereas, high-level
+low-level languages and contain more code (e.g. C), whereas, high-level
 software components emphasize high-level languages and contain less
 code (e.g. Python, Perl).
 
 % \noindent {\bf Place Table 1 About Here.}\\
+
+\begin{table}[ht]
+  \caption{
+    \bf{Comparison of Hand-Written and Generated Code (in Byte Counts).}}
+  \begin{tabular}{l c c c c c c}
+
+    {\bf Language:}
+    & {\bf C (H)}
+    & {\bf C (G)}
+    & {\bf Perl (H)}
+    & {\bf Perl (G)}
+    & {\bf Python (H)}
+    & {\bf Python (G)} \\
+
+    {\bf Model Container}
+    & 1,832,580
+    & 4,416,163
+    & 30,406
+    & 207,638
+    & 14,568
+    & 250,178 \\
+
+    {\bf Heccer}
+    & 1,163,991
+    & 1,575,615
+    & 57,565
+    & 107,261
+    & 1,586
+    & 171,219 \\
+
+    {\bf NS-SLI}
+    & 1,448,636
+    & 483,641
+    & 4,603
+    & 2,802
+    & ---
+    & --- \\
+
+    {\bf SSP}
+    & 829
+    & 2,323
+    & 55,063
+    & ---
+    & ---
+    & --- \\
+
+    {\bf Studio}
+    & ---
+    & ---
+    & 174,923
+    & ---
+    & ---
+    & --- \\
+
+    {\bf G-Shell}
+    & ---
+    & ---
+    & 28,142
+    & ---
+    & 623
+    & 836 \\
+  \end{tabular}
+  \begin{flushleft} A comparison of hand-written (H) and automatically generated (G) code that supports the functionality of the independent components of the GENESIS simulation platform. Software hand-written in a system programming language such as C contains more code (in bytes) than the equivalent functionality replicated in a scripting language. The amount of automatically generated code is considerably greater than that written by hand.
+  \end{flushleft}
+  \label{tab:cbi-codecounts}
+\end{table}
+
 
 \subsection*{The CBI Federated Software Architecture}
 \label{subsec:cbi}
@@ -475,20 +515,12 @@ maintenance to be implemented concurrently.
 %consequence, the simulator back end comprises mathematical solvers
 %rather than relational databases as is the case in a traditional
 %three-tier software architecture.
-In\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} this section we summarize the data-flow related concepts of the CBI
+In this section we summarize the data-flow related concepts of the CBI
 architecture.  For an in-depth explanation see the accompanying paper
 \cite{cornelis11b}.
 
 The important data-flow related components of the architecture are
-shown in Figure~\ref{fig:cbi-arch}. On the bottom left are\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-}
+shown in Figure~\ref{fig:cbi-arch}. On the bottom left are
 databases of neuronal models or experimental data that can be accessed
 by the simulator. Optional model processors (e.g. the Reconstruct
 interface) load a model into the {\bf Model Container} which stores a
@@ -507,17 +539,32 @@ calculations, and what the output variables are).
 
 %\noindent{\bf Place Figure 2 About Here} \\
 
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width=4in]{figures/G3arch.eps}
+  \end{center}
+  \caption{ {\bf Relation of components in the Computational Biology
+      Initiative (CBI) federated software architecture.} The CBI
+    architecture defines the relationships between the necessary
+    components of a computer-based neural simulation system. The
+    architecture contains three layers that include a graphical user
+    interface (GUI) connected to the functional components of a
+    simulator by an interposed layer of application programming
+    interfaces (APIs) and scripts. Components in the lowest layer are
+    interconnected by APIs while their particular functionality is
+    needed. GENESIS 3 is the first simulator to be implemented in
+    compliance with the CBI architecture.  }
+  \label{fig:cbi-arch}
+\end{figure}
+
 A scripting layer allows the simulation system to be driven from
 multiple scripting languages. Python and Perl are currently supported,
-as is (for backward compatibility) the GENESIS SLI. The G-3 GUI is shown at the top of
-Figure~\ref{fig:cbi-arch} and is being developed\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} entirely in Python.  It supports many functions and
-allows models to be imported from databases or constructed from
-scratch, the exploration of model structure and parameters, and the
-visualization of variables and model behavior.
+as is (for backward compatibility) the GENESIS SLI. The G-3 GUI is
+shown at the top of Figure~\ref{fig:cbi-arch} and is being developed
+entirely in Python.  It supports many functions and allows models to
+be imported from databases or constructed from scratch, the
+exploration of model structure and parameters, and the visualization
+of variables and model behavior.
 
 %Clear delineation of the components in the CBI architecture allows
 %both developers and users to choose to contribute to a single
@@ -570,11 +617,7 @@ is conceptual and can be regarded as an enumeration of biological
 concepts and their relationships, the second is an expanded
 mathematical representation that, if complete, can be simulated, (2)
 {\bf Heccer}: A fast compartmental solver based on the GENESIS {\it
-  hsolve} object that can be instantiated from C, Python\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-}, Perl or
+  hsolve} object that can be instantiated from C, Python, Perl or
 other scripting languages, (3) {\bf SSP} (Simple Scheduler in Perl):
 Binds {\bf Heccer} and the {\bf Model Container}, and activates them
 correctly, such that they work together on a single simulation, (4)
@@ -613,22 +656,14 @@ GENESIS to comply with the CBI architecture, Python interfaces have
 been developed for several of G-3's core simulator components.  While
 it is possible to drive each component in isolation from these
 interfaces, here we show how individual components may be integrated
-via Python\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} to create a simple simulator, explore a
+via Python to create a simple simulator, explore a
 dendritic morphology, and connect to external applications that
 support sophisticated model visualization and morphological analysis.
 
 \subsection*{A Python Enabled Neural Simulator}
 \label{ss-apens}
 
-Python\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} uses modules to group related functions.  G-3 employs Python's
+Python uses modules to group related functions.  G-3 employs Python's
 module system to group functions that provide an interface to each of
 its software components.
 %G-3 scripting
@@ -642,17 +677,9 @@ is a simple front-end to the {\bf Model Container}, a G-3 component
 which for efficiency is coded in the system programming language C.
 Likewise, {\it Heccer} is a wrapper module for the {\bf Heccer}
 component which in turn is an interface to a low-level single neuron
-solver written in C.  Python bindings for the {\bf Discrete Event System} to facilitate network modeling also exist\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-}.
+solver written in C.  Python bindings for the {\bf Discrete Event System} to facilitate network modeling also exist.
 
-Here we show a simple high-level Python script\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} that runs a simulation of a single cylindrical segment. It
+Here we show a simple high-level Python script that runs a simulation of a single cylindrical segment. It
 is defined by standard values for the parameters of membrane
 resistance ({\tt RM}), axial resistance ({\tt RA}), and membrane
 capacitance ({\tt CM}). (Note: This script
@@ -899,11 +926,7 @@ the statements:
 The {\bf Model Container} can export models constructed in a
 scripting language as a library for incorporation into new models or
 for use with other G-3 components such as the {\bf Project Browser}.
-These\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} new models can then be imported by a call to the {\bf
+These new models can then be imported by a call to the {\bf
   Model Container} {\it Read} method. For example, importing a
 Purkinje cell model with over 4,000 compartments may be done with the
 following statement:
@@ -941,11 +964,7 @@ the list of loaded software components can be printed to the screen with the com
 
 Each loaded software component will be shown with associated status
 information that helps diagnose possible problems.  For
-example, after correct initialization of the {\bf Model Container} the\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-}
+example, after correct initialization of the {\bf Model Container} the
 status information appears as:
 
 \begin{verbatim}
@@ -1002,11 +1021,7 @@ example, {\it event\_data/events.yml}:
       EVENT_FILENAME ``event_data/events.yml''
 \end{verbatim}
 
-Finally, following the addition of an output for the somatic membrane potential\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-}:
+Finally, following the addition of an output for the somatic membrane potential:
 \begin{verbatim}
    add_output /Purkinje/segments/soma Vm
 \end{verbatim}
@@ -1026,18 +1041,24 @@ with the command:
 
 % \noindent {\bf Place Figure 3 About Here.}\\
 
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width=4in]{figures/studio-screenshot.eps}
+  \end{center}
+  \caption{ {\bf Querying a model in GENESIS 3.0.} The {\bf Studio} is
+    a component of the reconfigured GENESIS software platform. It can
+    be used to query the parameters of individual compartments in a
+    multi-compartment model neuron. The {\bf Studio} also renders 3D
+    morphology of dendrites and generates overviews of network models.
+  }
+  \label{fig:cbi-studio}
+\end{figure}
+
+
 Figure~\ref{fig:cbi-studio} shows sample output of running this
 command.  Other capabilities of the {\bf Studio} include rendering
-morphologies in three dimensions\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} and generating overviews of network
-models (not shown).  In the next section we explore some of the more graphical\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-}
+morphologies in three dimensions and generating overviews of network
+models (not shown).  In the next section we explore some of the more graphical
 capabilities of G-3.
 
 \subsection*{Integration of Pre-existing Applications and Libraries}
@@ -1096,11 +1117,7 @@ interface builders.
 %variety of hardcopy formats.
 One such builder is {\it wxFormBuilder}.  (Note: This builder is a user interface designer for the {\it
     wxPython} toolkit and the Linux desktop environment GNOME. It is
-  available from http://wxformbuilder.org/.) It\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} can be used to construct a GUI with visual elements
+  available from http://wxformbuilder.org/.) It can be used to construct a GUI with visual elements
 such as menus and buttons and writes a description of these elements and
 their bindings to a file known as an XML resource (XRC) file. The GUI
 definitions in this file can then be rendered with the {\it wxWidgets} library and its Python front end {\it
@@ -1124,11 +1141,7 @@ name {\it G3.xrc} can be found that describes a GUI with one frame
 (here, {\it mainFrame}) which allows the simulation duration to be set
 via a text control widget and contains a button to start the simulation.
 
-The first lines of code in the script load the necessary Python\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} modules which in turn load low-level libraries coded in a system
+The first lines of code in the script load the necessary Python modules which in turn load low-level libraries coded in a system
 programming language.  The widget output is shown in
 Figure~\ref{fig:g3-wx}.  % Importing {\it example} makes the
 %previously defined function {\it run\_simulation} available to G-3.  The {\it
@@ -1419,6 +1432,24 @@ if __name__ == '__main__':
 
 % \noindent{\bf Place Figure 4 about here.}\\
 
+\begin{figure}[ht]
+  \begin{center}
+    %% \includegraphics[width=2in]{figures/Screenshot-G3-Example.eps}
+    %% \includegraphics[width=4in]{figures/Screenshot-Graph-display.eps}
+    \includegraphics[width=4in]{figures/Screenshot-Graph-display-merged.eps}
+  \end{center}
+  \caption{ {\bf Simple Integration of G-3 with the {\it wxPython}
+      widget set.}  The CBI architecture defines a separation between
+    GUI statements and peripheral code.  This allows GUI construction
+    kits to be used for the creation of a user-friendly interface to a
+    simulation.  In this example {\it wxFormBuilder} was used to
+    construct a text control widget and a button to start the
+    simulation using its standard drag \& drop interface.  The same
+    approach can be used for the development of research and
+    educational projects.  }
+  \label{fig:g3-wx}
+\end{figure}
+
 %Figure~\ref{fig:g3-wx}
 In this example we have shown how the CBI architecture defines a
 separation between GUI statements and peripheral code such as input
@@ -1439,17 +1470,9 @@ interface with highly specialized GUI kits.
 As an example of how to interface GENESIS with specialized external
 applications, we now show how to validate and analyze models of the
 morphology of small dendritic segments obtained from electron
-microscopy data.  The required geometrical algorithms are typically\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-}
+microscopy data.  The required geometrical algorithms are typically
 available in state-of-the-art rendering applications such as  Blender
-(http://www.blender.org/). Blender is a free open source 3D content creation\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,32){\line(0,-1){0}}
-  \end{picture}
-}
+(http://www.blender.org/). Blender is a free open source 3D content creation
 suite available for all major operating systems that have Python
 enabled bindings (Note: One restriction is that code must be run
   from inside the Blender specific Python interpreter.) In our
@@ -1463,20 +1486,27 @@ example it replaces the functionality otherwise provided by the
 %models employed in such studies was limited by the available
 %reconstruction techniques.  
 Over the last several years we have used electron microscopy (EM) in conjunction
-with Reconstruct\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} (http://www.bu.edu/neural/Reconstruct.html, \cite{jc05:_recon}) to obtain precise
+with Reconstruct (http://www.bu.edu/neural/Reconstruct.html, \cite{jc05:_recon}) to obtain precise
 morphologies of small segments of Purkinje cell
 dendrites \cite{huo09:_purkin, cornelis08:_model_neuros_genes}.
 
 % \noindent{\bf Place Figure 5 About Here}
-\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-}
+
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width=4in]{figures/blender-python-bw.eps}
+  \end{center}
+  \caption{ {\bf Image of reconstructed Purkinje neuron dendritic
+      segment.} Blender is an open source 3D content creation suite
+    that can be interfaced with the GENESIS neural simulation platform
+    to replace the functionality otherwise provided by the {\bf
+      G-Shell} (a stand-alone GENESIS component). The rendering
+    functions of Blender can then be used to analyze the morphology of
+    small dendritic segments imported from electron microscopy data.
+  }
+  \label{fig:cbi-blender}
+\end{figure}
+
 
 %Special purpose software has been written to convert Reconstruct data
 %for importation into the {\bf Model Container}.
@@ -1521,49 +1551,29 @@ with the CBI federated software architecture. In it, the Python and Perl binding
 functionality to that of the GENESIS SLI, although their purpose is different.
 While the SLI had as major goals the integration of model components,
 running simulations, and output collection, the primary goal of
-scripting languages\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} has become application
+scripting languages has become application
 integration.
 
 Through the Neurospaces
 project, GENESIS now provides a series of independent software
 components that can readily be combined to support computational
-modeling in the neurosciences. As\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} examples of this scripted integration we have shown how to run a
+modeling in the neurosciences. As examples of this scripted integration we have shown how to run a
 simple model using {\bf Heccer} and the ability of the {\bf
   Model Container} to query the structure of a neuronal morphology.
 %The CBI architecture also defines clear
 %boundaries for integration using existing scripting technology.
-In\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} a third interactive example, synaptic stimulation was delivered to
+In a third interactive example, synaptic stimulation was delivered to
 a Purkinje cell model.  
 
 We have described how scripting
-languages such as Python\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} provide powerful integration tools
+languages such as Python provide powerful integration tools
 and can be used to connect simulator components to general purpose
 external libraries and appropriately configured external applications.
 This expanded simulator functionality will lead to the development of
 considerably more sophisticated GUIs, result visualization, and data
 analysis.
 
-It\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} is notable that in the paradigm of the CBI
+It is notable that in the paradigm of the CBI
 architecture, although model parameters are stored and processed separately
 from stimulus protocols and the way simulations are run, the modularity of the software does not interrupt but actually enhances an integrated user experience. Simultaneously, this
 modularity greatly facilitates the development and maintenance of
@@ -1598,24 +1608,12 @@ http://www.morphml.org/), can be used to visually validate network
 layout and design \cite{crook07:_morph}, and can be connected to
 Python applications (e.g.  see http://www.jython.org/).  In principle
 this allows it to be interfaced with other simulators that have Python
-bindings, including NEURON\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-}  (http://www.neuron.yale.edu/neuron/, \cite{m93:_neural_system}) and NEST (http://www.nest\-initiative.org/index.php/About\_Us,\cite{diesmann01}).
+bindings, including NEURON  (http://www.neuron.yale.edu/neuron/, \cite{m93:_neural_system}) and NEST (http://www.nest\-initiative.org/index.php/About\_Us,\cite{diesmann01}).
 
 A serial communication framework for event delivery of action
 potentials to afferent synapses has been developed.  Called
 DES, it can be integrated
-with the mathematical solvers of G-3 using either\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} Python or Perl. It\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} allows a user to stimulate one or more synapses with a specific train of afferent impulses.
+with the mathematical solvers of G-3 using either Python or Perl. It allows a user to stimulate one or more synapses with a specific train of afferent impulses.
 DES is optimized for communication over serial hardware. However, it is straight forward
 to extend it to support communication frameworks for parallel
 hardware such as those provided by the MOOSE
@@ -1626,11 +1624,7 @@ framework \cite{djurfeldt10:_run_time_inter_between_neuron}.
 The digital reconstruction of neuronal arborization is an important step in the
 quantitative investigation of cellular neuroanatomy.  The NeuroMorpho.Org database of neuronal morphologies
 (http://www.neuromorpho.org/) is a centrally curated inventory of
-digitally reconstructed neurons \cite{ascoli06:_mobil}.  It\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} allows
+digitally reconstructed neurons \cite{ascoli06:_mobil}.  It allows
 extensive morphometric analysis, when linked to a simulator and provides a first step in the large scale
 implementation of biophysical models of electrophysiology.  Interfaced with the functionality of the {\bf Model Container} it has the capacity to
 accelerate the development of neuronal models by providing a direct
@@ -1660,11 +1654,7 @@ model construction to data analysis.  Due to their simplicity \cite{goodman08:_b
 They range from Monte-Carlo
 simulators for reaction-diffusion systems \cite{wils09:_steps} and
 dedicated large network simulators \cite{eppler08:_pynes} to the
-general purpose simulators\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} NEURON and GENESIS \cite{hines09:_neuron_python, bower98:_book_genes}.
+general purpose simulators NEURON and GENESIS \cite{hines09:_neuron_python, bower98:_book_genes}.
 
 For these simulators, interoperability can be implemented using
 one of the emerging standards for model exchange such as
@@ -1740,169 +1730,165 @@ We thank the Computational Biology Initiative at UTSA (http://www.cbi.utsa.edu) 
 %%\label{Figure-label}
 %%\end{figure}
 
-Figure 1
+%Figure 1
 
-\begin{figure}[ht]
-\begin{center}
-\includegraphics[width=4in]{figures/g3-interfacing.eps}
-\end{center}
-\caption{
-{\bf Levels of programing in GENESIS 3.0.} The concept hierarchy used for communication by GENESIS developers. C Coding: System programing languages are used to program individual simulator components and extend simulator functionality. SLI: Indicates the level of the GENESIS-2 Script Language Interface in the concept hierarchy. Script Languages: Python and Perl are used to interface individual simulator components. NDF: The native declarative file format used to build models and model components. NDF Libraries: Model components such as membrane channels and synapses provide a library of functional components available for accelerated model development. G-Tube: The GENESIS graphical user interface allows users to access models and model components for the rapid development of single cell and network models.
-}
-\label{fig:g3-interfacing}
-\end{figure}
+%\begin{figure}[ht]
+%\begin{center}
+%\includegraphics[width=4in]{figures/g3-interfacing.eps}
+%\end{center}
+%\caption{
+%{\bf Levels of programing in GENESIS 3.0.} The concept hierarchy used for communication by GENESIS developers. C Coding: System programing languages are used to program individual simulator components and extend simulator functionality. SLI: Indicates the level of the GENESIS-2 Script Language Interface in the concept hierarchy. Script Languages: Python and Perl are used to interface individual simulator components. NDF: The native declarative file format used to build models and model components. NDF Libraries: Model components such as membrane channels and synapses provide a library of functional components available for accelerated model development. G-Tube: The GENESIS graphical user interface allows users to access models and model components for the rapid development of single cell and network models.
+%}
+%\label{fig:g3-interfacing}
+%\end{figure}
 
-\clearpage
+%\clearpage
 
-Figure 2
+%Figure 2
 
-\begin{figure}[ht]
-\begin{center}
-\includegraphics[width=4in]{figures/G3arch.eps}
-\end{center}
-\caption{
-{\bf Relation of components in the Computational Biology Initiative (CBI) federated software architecture.} The CBI architecture defines the relationships between the necessary components of a computer-based neural simulation system. The architecture contains three layers that include a graphical user interface (GUI) connected to the functional components of a simulator by an interposed layer of application programming interfaces (APIs) and scripts. Components in the lowest layer are interconnected by APIs while their particular functionality is needed. GENESIS 3 is the first simulator to be implemented in compliance with the CBI architecture.
-}
-\label{fig:cbi-arch}
-\end{figure}
+%\begin{figure}[ht]
+%\begin{center}
+%\includegraphics[width=4in]{figures/G3arch.eps}
+%\end{center}
+%\caption{
+%{\bf Relation of components in the Computational Biology Initiative (CBI) federated software architecture.} The CBI architecture defines the relationships between the necessary components of a computer-based neural simulation system. The architecture contains three layers that include a graphical user interface (GUI) connected to the functional components of a simulator by an interposed layer of application programming interfaces (APIs) and scripts. Components in the lowest layer are interconnected by APIs while their particular functionality is needed. GENESIS 3 is the first simulator to be implemented in compliance with the CBI architecture.
+%}
+%\label{fig:cbi-arch}
+%\end{figure}
 
-\clearpage
+%\clearpage
 
-Figure 3
+%Figure 3
 
-\begin{figure}[ht]
-\begin{center}
-\includegraphics[width=4in]{figures/studio-screenshot.eps}
-\end{center}
-\caption{
-{\bf Querying a model in GENESIS 3.0.} The {\bf Studio} is a component of the reconfigured GENESIS software platform. It can be used to query the parameters of individual compartments in a multi-compartment model neuron. The {\bf Studio} also renders 3D morphology of dendrites and generates overviews of network models.
-}
-\label{fig:cbi-studio}
-\end{figure}
+%\begin{figure}[ht]
+%\begin{center}
+%\includegraphics[width=4in]{figures/studio-screenshot.eps}
+%\end{center}
+%\caption{
+%{\bf Querying a model in GENESIS 3.0.} The {\bf Studio} is a component of the reconfigured GENESIS software platform. It can be used to query the parameters of individual compartments in a multi-compartment model neuron. The {\bf Studio} also renders 3D morphology of dendrites and generates overviews of network models.
+%}
+%\label{fig:cbi-studio}
+%\end{figure}
 
-\clearpage
+%\clearpage
 
-Figure 4
+%Figure 4
 
-\begin{figure}[ht]
-\begin{center}
-%%\includegraphics[width=2in]{figures/Screenshot-G3-Example.eps}
-%%\includegraphics[width=4in]{figures/Screenshot-Graph-display.eps}
-\includegraphics[width=4in]{figures/Screenshot-Graph-display-merged.eps}
-\end{center}
-\caption{ {\bf Simple Integration of G-3 with the {\it wxPython}
-    widget set.}  The CBI architecture defines a separation between
-  GUI statements and peripheral code.  This allows GUI construction
-  kits to be used for the creation of a user-friendly interface to a
-  simulation.  In this example {\it wxFormBuilder} was used to
-  construct a text control widget and a button to start the simulation
-  using its standard drag \& drop interface.  The same approach can be
-  used for the development of research and educational projects.  }
-\label{fig:g3-wx}
-\end{figure}
+%\begin{figure}[ht]
+%\begin{center}
+%%%\includegraphics[width=2in]{figures/Screenshot-G3-Example.eps}
+%%%\includegraphics[width=4in]{figures/Screenshot-Graph-display.eps}
+%\includegraphics[width=4in]{figures/Screenshot-Graph-display-merged.eps}
+%\end{center}
+%\caption{ {\bf Simple Integration of G-3 with the {\it wxPython}
+%    widget set.}  The CBI architecture defines a separation between
+%  GUI statements and peripheral code.  This allows GUI construction
+%  kits to be used for the creation of a user-friendly interface to a
+%  simulation.  In this example {\it wxFormBuilder} was used to
+%  construct a text control widget and a button to start the simulation
+%  using its standard drag \& drop interface.  The same approach can be
+%  used for the development of research and educational projects.  }
+%\label{fig:g3-wx}
+%\end{figure}
 
-\clearpage
+%\clearpage
 
-Figure 5
+%Figure 5
 
-\begin{figure}[ht]
-\begin{center}
-\includegraphics[width=4in]{figures/blender-python-bw.eps}
-\end{center}
-\caption{
-{\bf Image of reconstructed Purkinje neuron dendritic segment.} Blender is an open source 3D content creation suite that can be interfaced with the GENESIS neural simulation platform to replace the functionality otherwise provided by the {\bf G-Shell} (a stand-alone GENESIS component). The rendering functions of Blender can then be used to analyze the morphology of small dendritic segments imported from electron microscopy data.
-}
-\label{fig:cbi-blender}
-\end{figure}
+%\begin{figure}[ht]
+%\begin{center}
+%\includegraphics[width=4in]{figures/blender-python-bw.eps}
+%\end{center}
+%\caption{
+%{\bf Image of reconstructed Purkinje neuron dendritic segment.} Blender is an open source 3D content creation suite that can be interfaced with the GENESIS neural simulation platform to replace the functionality otherwise provided by the {\bf G-Shell} (a stand-alone GENESIS component). The rendering functions of Blender can then be used to analyze the morphology of small dendritic segments imported from electron microscopy data.
+%}
+%\label{fig:cbi-blender}
+%\end{figure}
 
-\clearpage
+%\clearpage
 
-\section*{\LARGE Tables}
+%\section*{\LARGE Tables}
 
-Table 1
+%Table 1
 
-%
-%%\section*{Tables}
-%%\begin{table}[!ht]
-%%\caption{
-%%\bf{Table title}}
-%%\begin{tabular}{|c|c|c|}
-%%table information
-%%\end{tabular}
-%%\begin{flushleft}Table caption
-%%\end{flushleft}
-%%\label{tab:label}
-%% \end{table}
-%
-\begin{table}[ht]
-\caption{
-\bf{Comparison of Hand-Written and Generated Code (in Byte Counts).}}
-\begin{tabular}{l c c c c c c}
+%%
+%%%\section*{Tables}
+%%%\begin{table}[!ht]
+%%%\caption{
+%%%\bf{Table title}}
+%%%\begin{tabular}{|c|c|c|}
+%%%table information
+%%%\end{tabular}
+%%%\begin{flushleft}Table caption
+%%%\end{flushleft}
+%%%\label{tab:label}
+%%% \end{table}
+%%
+%\begin{table}[ht]
+%\caption{
+%\bf{Comparison of Hand-Written and Generated Code (in Byte Counts).}}
+%\begin{tabular}{l c c c c c c}
 
-    {\bf Language:}
-    & {\bf C (H)}
-    & {\bf C (G)}
-    & {\bf Perl (H)}
-    & {\bf Perl (G)}
-    & {\bf Python (H)}
-    & {\bf Python (G)} \\
+%    {\bf Language:}
+%    & {\bf C (H)}
+%    & {\bf C (G)}
+%    & {\bf Perl (H)}
+%    & {\bf Perl (G)}
+%    & {\bf Python (H)}
+%    & {\bf Python (G)} \\
 
-    {\bf Model Container}
-    & 1,832,580
-    & 4,416,163
-    & 30,406
-    & 207,638
-    & 14,568
-    & 250,178 \\
+%    {\bf Model Container}
+%    & 1,832,580
+%    & 4,416,163
+%    & 30,406
+%    & 207,638
+%    & 14,568
+%    & 250,178 \\
 
-    {\bf Heccer}
-    & 1,163,991
-    & 1,575,615
-    & 57,565
-    & 107,261
-    & 1,586
-    & 171,219 \\
+%    {\bf Heccer}
+%    & 1,163,991
+%    & 1,575,615
+%    & 57,565
+%    & 107,261
+%    & 1,586
+%    & 171,219 \\
 
-    {\bf NS-SLI}
-    & 1,448,636
-    & 483,641
-    & 4,603
-    & 2,802
-    & ---
-    & --- \\
+%    {\bf NS-SLI}
+%    & 1,448,636
+%    & 483,641
+%    & 4,603
+%    & 2,802
+%    & ---
+%    & --- \\
 
-    {\bf SSP}
-    & 829
-    & 2,323
-    & 55,063
-    & ---
-    & ---
-    & --- \\
+%    {\bf SSP}
+%    & 829
+%    & 2,323
+%    & 55,063
+%    & ---
+%    & ---
+%    & --- \\
 
-    {\bf Studio}
-    & ---
-    & ---
-    & 174,923
-    & ---
-    & ---
-    & --- \\
+%    {\bf Studio}
+%    & ---
+%    & ---
+%    & 174,923
+%    & ---
+%    & ---
+%    & --- \\
 
-    {\bf G-Shell}
-    & ---
-    & ---
-    & 28,142
-    & ---
-    & 623
-    & 836 \\
-\end{tabular}
-\begin{flushleft} A\marginnote{
-  \begin{picture}(0,0)
-    \put(-10,10){\line(0,-1){0}}
-  \end{picture}
-} comparison of hand-written (H) and automatically generated (G) code that supports the functionality of the independent components of the GENESIS simulation platform. Software hand-written in a system programming language such as C contains more code (in bytes) than the equivalent functionality replicated in a scripting language. The amount of automatically generated code is considerably greater than that written by hand.
-\end{flushleft}
-\label{tab:cbi-codecounts}
-\end{table}
+%    {\bf G-Shell}
+%    & ---
+%    & ---
+%    & 28,142
+%    & ---
+%    & 623
+%    & 836 \\
+%\end{tabular}
+%\begin{flushleft} A comparison of hand-written (H) and automatically generated (G) code that supports the functionality of the independent components of the GENESIS simulation platform. Software hand-written in a system programming language such as C contains more code (in bytes) than the equivalent functionality replicated in a scripting language. The amount of automatically generated code is considerably greater than that written by hand.
+%\end{flushleft}
+%\label{tab:cbi-codecounts}
+%\end{table}
 
 %\clearpage
 
