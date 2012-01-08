@@ -544,9 +544,9 @@ stand-alone software components into a set of logical relationships.
 In this sense it defines a modular framework that provides the
 necessary parts of a neural simulator.
 
-The schema identified by the separation of concerns (see
-Fig.~\ref{fig:data-control}) is expanded in
-Figure~\ref{fig:cbi-architecture-simple} to give the modules that
+%The schema identified by the separation of concerns (see
+%Fig.~\ref{fig:data-control}) is expanded in
+Figure~\ref{fig:cbi-architecture-simple} gives the modules that
 form the building blocks of the CBI architecture. This figure retains
 the four quadrants of simulator functionality identified by our
 separation of concerns. It includes the notions of low-level data for
@@ -605,14 +605,20 @@ architecture.
 \begin{center}
 \includegraphics[width=4in]{figures/cbi-architecture-simple.eps}
 \end{center}
-\caption{ {\bf Overview of a federated software architecture:} Graphical
-  illustration of the primary functional modules defined for the CBI
-  federated software architecture.  Control modules are given to the left and data modules to the
-  right.  A. The top layer contains conceptual data
-  and controls representations of the biology of a model. B. The bottom layer contains
-  representations that are numeric and thus close to the hardware.  The middle or intermediate layer
-  bridges between the biology and the numerics implemented in a CBI compliant simulator. Importantly, as our separation of concerns shows (see Fig. \ref{fig:data-control} and text), Control (Scripting Libraries \& Applications) and Data (Database Interfaces) modules can interact either directly or via the Graphical User Interface.
-  }
+\caption{ {\bf Overview of a federated software architecture:}
+  Graphical illustration of the primary functional modules defined for
+  the CBI federated software architecture.  Control modules are given
+  to the left and data modules to the right.  A. The top layer
+  contains conceptual data and controls representations of the biology
+  of a model. B. The bottom layer contains representations that are
+  numeric and thus close to the hardware.  The middle or intermediate
+  layer bridges between the biology and the numerics implemented in a
+  CBI compliant simulator.
+%  Importantly, as our separation of concerns
+%  shows (see Fig. \ref{fig:data-control} and text), Control (Scripting
+%  Libraries \& Applications) and Data (Database Interfaces) modules
+%  can interact either directly or via the Graphical User Interface.
+}
 \label{fig:cbi-architecture-simple}
 \end{figure}
 
@@ -636,32 +642,19 @@ context of our ideal user workflow.
     \includegraphics[width=4in]{figures/cbi-architecture-expanded.eps}
   \end{center}
   \caption{ {\bf Detailed view of the Computational Biology Initiative
-      federated software architecture.} Illustration of the functional
-    modules that is closer to an implementation of the CBI
-    architecture. It illustrates the relationships of sub-modules
-    within each of the primary functional modules given in Figure
-    \ref{fig:cbi-architecture-simple}.  North bound interfaces group
-    and conceptualize the details of the modules and interact with
-    south bound interfaces of higher level modules.  Steps 1--3 of the
-    ideal user workflow induce data flows between the software modules
-    of the CBI architecture. This results in data cycling between the
-    upper layers (blue and green boxes) and lower layers (red box).
-    Ultimately, the two layers team to implement a single simulation.
-    By design, any type of model including multi-scale models will
-    exhibit this data cycle. See text for explanation and details.
-    \vspace{1mm}
-    This figure shows a graphical representation of the core structure
-    of G-3. In sharp contrast to previous versions of GENESIS and
-    other neuronal simulation platforms, the design of G-3 is
-    fundamentally modular, separating different functional components
-    of the simulator into their own modules. Importantly, G-3
-    separates model descriptions from the mathematical representations
-    used in actual model simulation.  This simplifies the
-    implementation of new solvers and other simulation- time software
-    components. The communication infrastructure connects different
-    solvers simulating the same model and can 'upscale' or 'downscale'
-    numerical data as needed. For additional detail see Cornelis et
-    al. 2011a;b.  }
+      federated software architecture.} This figure shows a graphical
+    representation of the core structure of G-3. In sharp contrast to
+    previous versions of GENESIS and other neuronal simulation
+    platforms, the design of G-3 is fundamentally modular, separating
+    different functional components of the simulator into their own
+    modules. Importantly, G-3 separates model descriptions from the
+    mathematical representations used in actual model simulation.
+    This simplifies the implementation of new solvers and other
+    simulation- time software components. The communication
+    infrastructure connects different solvers simulating the same
+    model and can 'upscale' or 'downscale' numerical data as needed.
+    For additional detail
+    see\cite{10.1371/journal.pone.0028956}\cite{Cornelis:2011fk}.  }
   \label{fig:cbi-architecture-expanded}
 \end{figure}
 
@@ -1452,9 +1445,9 @@ with the command:
    explore
 \end{verbatim}
 
-\begin{figure}[ht]
+\begin{figure}[h]
   \begin{center}
-    \includegraphics[width=4in]{figures/studio-screenshot.eps}
+    \includegraphics[scale=0.33]{figures/studio-screenshot.eps}
   \end{center}
   \caption{ {\bf Querying a model in GENESIS 3.0.} The {\bf Studio} is
     a component of the reconfigured GENESIS software platform. It can
@@ -1797,7 +1790,7 @@ For centuries, the world view underlying science has been Newtonian. The corresp
   \begin{center}
     \includegraphics[width=4in]{figures/multi-scale-taxonomy.eps}
   \end{center}
-  \caption{ {\bf The Path from Mental Model to Simulation.} }
+  \caption{ {\bf A Proposed Taxonomy for Multi-Scale Modeling.} }
   \label{fig:multi-scale-taxonomy}
 \end{figure}
 
