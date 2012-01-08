@@ -13,7 +13,7 @@
 % start: userdocs-tag-replace-items related-cbi-architecture
 % end: userdocs-tag-replace-items related-cbi-architecture
 
-\section*{Multi-Scale Modeling within the CBI Simulator Framework}
+%\section*{Multi-Scale Modeling within the CBI Simulator Framework}
 
 \begin{flushleft}
 {\Large
@@ -21,23 +21,26 @@
 }
 % Insert Author names, affiliations and corresponding author email.
 \\
-Hugo Cornelis$^{1,\ast}$, 
+Hugo Cornelis$^{1,^\ast}$, 
 Allan D. Coop$^{2}$,
 Armando L. Rodriguez$^{3}$, 
 Dave Beeman$^{4}$,
 James M. Bower$^{5}$.
 \\
-\bf{1} Cornelis H. Department of Neurophysiology, Catholic University of Leuven, Leuven, 3000, Belgium
+\vspace*{5mm}
+\begin{small}
+{1.} Cornelis H. Department of Neurophysiology, Catholic University of Leuven, Leuven, 3000, Belgium
 \\
-\bf{2} Coop A. D. Director of Flight Simulation, Merindah Energy.
+{2.} Coop A. D. Director of Flight Simulation, Merindah Energy.
 \\
-\bf{3} Rodriguez A. L. Research Imaging Institute, University of Texas Health Science Center at San Antonio, San Antonio, TX, United States
+{3.} Rodriguez A. L. Research Imaging Institute, University of Texas Health Science Center at San Antonio, San Antonio, TX, United States
 \\
-\bf{4} David Beeman Department of Electrical, Computer, and Energy Engineering, University of Colorado, Boulder, CO 80309
+{4.} Beeman D. Department of Electrical, Computer, and Energy Engineering, University of Colorado, Boulder, CO 80309
 \\
-\bf{5} Bower J. M. Research Imaging Institute, University of Texas Health Science Center at San Antonio, San Antonio, TX, United States
+{5.} Bower J. M. Research Imaging Institute, University of Texas Health Science Center at San Antonio, San Antonio, TX, United States
 \\
-$\ast$ E-mail: Corresponding Hugo.Cornelis@gmail.com
+$^\ast$ E-mail: Corresponding Author Hugo.Cornelis@gmail.com
+\end{small}
 \end{flushleft}
 
 \newpage
@@ -227,11 +230,23 @@ networks, and I think as interesting, is the comparative study.
 Let me know if I can be of further help.  Specifically if you want me
 to send you some slides.
 
-\vspace{1cm}
+%==========================================================
+
+\vspace*{1cm}
 
 {\LARGE Start of paper here ----------}
 
 \section{Introduction}
+
+Since the 19th century, two groundbreaking discoveries have guided exploration of nervous system function\cite{Churchland:1992uq}: (1) macro effects displayed by nervous systems are dependent on individual cells with axons and dendrites [ref], and (2) these cells can essentially be modelled as electrical devices [ref]. Consequently, the working hypothesis for computational neuroscience has become that emergent properties are high level effects dependent on lower level phenomena in some systematic way\cite{Churchland:1992uq}, with the ultimate aim considered to be an explanation of how electrical and chemical signals are used to represent and process information \cite{Sejnowski:1988fk}.
+
+Over the last 30 years several widely accepted axioms have typically guided investigators. (1) Levels of analysis: Three independent top-down levels have been proposed \cite{Marr:19821kx}: (a) computation, (b) algorithm, and (c) implementation, (2) Levels of processing: For example, the visual system has roughly hierarchical, reciprocally connected levels of primary processing that fan out upon reaching the level of the cortex, and (3) Levels of structural organization: Here, seven broad levels have been proposed\cite{Churchland:1992uq}: (a) systems, (b) topographic maps, (c) layers and columns, (d) local networks, (e) neurons, (f) synapses, and (g) molecules. This complexity generated two propositions\cite{Sejnowski:1988fk}: (1) Because of the the many different structural levels of organization and the fact that models rarely span more than two levels, more comprehensive understanding will require many different types of model, and (2) Intermediate level models must necessarily simplify with respect to the structural properties of lower level elements, but ought to attempt to incorporate as many of that level's functional properties as actually figure in the higher level's computational tasks.
+
+With hindsight, it can be seen that the foregoing paradigm lies firmly within the traditional scientific method which is based  on the gathering of complete information about a phenomenon. Historically, biology in general, and computational neuroscience in particular, has adopted this mechanistic or `Newtonion' view due to its compelling simplicity, coherence, and common-sense\cite{Heylighen:2006vn}. In this view, our knowledge is an imperfect reflection of particular external arrangements of matters. The task of science is to make the mapping or correspondence between the external, material objects and the internal, cognitive elements (concepts or symbols) that represent them as accurate as possible. That can be achieved by simple observation, where information about external phenomena is collected and arranged, thus further completing the internal picture that is taking shape. In the limit, this should lead to a perfect, objective representation of the world outside us, which would allow us to accurately predict all phenomena\cite{Turchin:1990ys}.
+
+This changed with the formulation of systems theory (see \cite{Bertalanffy:1973zr}) that, in contrast with the elements of Newtonian ontology (matter, the absolute space and time in which that matter moves, and the forces or natural laws that govern movement), noted that living systems are intrinsically open. They have to interact with their environment, absorbing and releasing matter and energy in order to stay alive. The reason for the predictive success of Newtonian models was that they only considered closed systems, whereas, open systems depend on an environment much larger and more complex than the system itself, so that its effect can never be truly controlled or predicted\cite{Heylighen:2006vn}.
+
+Recent developments in the multi-scale definition of a system define a system as a collection of properties and relationships that exhibit an essential duality\cite{Heylighen:2006vn}. It is both a whole and part of a more expansive whole or `holon'\cite{Koestler:1990ly}, i.e. there is a cohesion to its parts that allows its treatment as a whole; and that whole is itself is part of the system's environment. There are at least two fundamental reasons why is is not possible to conceptualize a system defined in this way: (1) It is only possible to conceptualize at specific scales, not conceptualize with combinations of conceptualizations at multible scales, and (2) It is not possible to conceptualize properties separately when they are portions of a system as they are always `of' something. At any scale of conceptualizatiopn, properties are always aggregated at least as simple objects. A system at any scale of conceptualization is an approximation or loose congruence of the system. A scale specific conceptualization of a system is partial if there are patterns pertinent to an observer's interest in a system that are only available at other scales (where patterns are simple objects, relationships, and their aggregations). This is not an `abstraction' of the system as this means leaving things out with the understanding that what is left out can always be reinserted. What are ``left out'' of a scale specific conceptualization of a system are patterns that might be available at other scales. Such patterns cannot be returned to a scale specific approximation of a system, regardless of resolution or field of view. The `missing' content has no place in the conceptualization. as it was never available to begin with. A scale specific approximation of a system can, however, be abstracted. At each scale the scale specific approximation of the system can be disjointly partitioned from its environment. This means that the whole of the system (as a holon) has a well defined boundary with its environment. To say that a boundary disjointly partitions the approximation of a system from its environment
 
 Three possible definitions of multi-scale modeling.
 
@@ -1221,6 +1236,8 @@ Available solvers, starting at the highest scale:
 
 
 \section{Discusion}
+
+For centuries, the world view underlying science has been Newtonian. The corresponding philosophy has been variously called reductionism, mechanicism or modernism. Ontologically, it reduces all phenomena to movements of independent, material particles governed by deterministic laws. Epistemologically, it holds the promise of complete, objective and certain knowledge of past and future. However, it ignores or even denies any idea of value, ethics, or creative processes, describing the universe as merely a complicated clockwork mechanism\cite{Heylighen:2006vn}.
 
 - Summary.
 
