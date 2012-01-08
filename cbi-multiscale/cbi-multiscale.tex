@@ -1045,25 +1045,24 @@ previous versions of GENESIS. To learn more about that functionality
 see \href{../backward-compatibility/backward-compatibility.tex}{here}.
 
 
-\subsection{Heccer: A Numerical Solver}
+\subsection{Heccer: A Single-Neuron Solver}
 
-% example: direct link to external documentation
-%
-%Uses the
-%\href{http://www.neuron.yale.edu/ftp/neuron/papers/effic84.pdf}{Hines
-%  enumeration algorithm} for efficient solution of the cable matrix.
+{\bf Heccer} is a G-3 reimplementation of the compartmental solver
+({\it hsolve}) of the GENESIS-2 simulator.  {\bf Heccer} employs the
+Crank-Nicolson solution to the cable equations of a neuronal
+morphology and the Hodgkin-Huxley equations of their transmembrane
+currents\cite{segev95:_theor_found_dendr_funct}\cite{hha52}\cite{cornelis02:_tutor}.
 
-% example: link to external documentation using a redirect
-%
-%Uses the
-%\href{../effic84/descriptor.yml->redirect}{Hines
-%  enumeration algorithm} for efficient solution of the cable matrix.
+{\bf Heccer} can be instantiated from C, Python or Perl.  It is also
+possible to link {\bf Heccer} directly to Matlab. {\bf Heccer} comes
+with \href{http://www.swig.org/}{\bf Swig} interface definitions, such
+that linking {\bf Heccer} to any other technologies should be easy.
 
-The optimization of a neuronal solver ultimately focuses on accuracy and performance. Transforming complex biological parameters into precomputed tables and optimizing for a high CPU cache hit ratio are the most important features for a good solver, and gives the solver a performance boost of about a factor four to six.
-
-{\bf Heccer} is a fast compartmental solver, that is based on {\it hsolve} of the GENESIS simulator. To find out more about the numerical principles implemented in {\bf Heccer} see \href{http://www.genesis-sim.org/GENESIS/gum-tutorials/cornelis/doc/html/node3.html}{a small tutorial on numerical theory}. The efficiency of {\bf Heccer} is explained in \href{http://www.genesis-sim.org/GENESIS/gum-tutorials/cornelis/doc/html/node53.html}{Byte Code Compilation}.
-
-{\bf Heccer} can be instantiated from C, or from Perl (or other scripting languages). It is also possible to link {\bf Heccer} directly to Matlab. {\bf Heccer} comes with \href{http://www.swig.org/}{\bf Swig} interface definitions, such that linking {\bf Heccer} to any other technologies should be easy.
+%The optimization of a neuronal solver ultimately focuses on accuracy
+%and performance. Transforming complex biological parameters into
+%precomputed tables and optimizing for a high CPU cache hit ratio are
+%the most important features for a good solver, and gives the solver a
+%performance boost of about a factor four to six.
 
 Adding new channel types to {\bf Heccer} can be done using callouts.
 The callout mechanism allows for general user extensions that
@@ -1072,7 +1071,7 @@ simulation. {\bf Heccer} automatically integrates this contribution
 into the membrane potential.  Check the tests of the callouts for more
 information (tests/code/callout1.c and tests/code/calloutInjector.c).
 
-The source code of {\bf Heccer} contains inline developer documentation. As yet, there is no stable API but the Swig interfaces for {\bf Heccer} are not expected to change much. If you are interested in this, look at \href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/glue/swig/perl/fork4p1.source.html#line51}{a simple example} for driving {\bf Heccer} from Perl, and \href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/glue/swig/perl/pool1-feedback1.source.html#line51}{another example} with active channels and a calcium pool. {\bf Heccer} is currently capable of simulating Purkinje cells (see the \href{../purkinje-cell-model/purkinje-cell-model.tex}{\bf Purkinje\,Cell\,Model}), and, at first evaluation, runs slightly faster than {\it hsolve} (It is difficult to assess why exactly: while the {\it hsolve} implementation is much more optimized than {\bf Heccer's}, the {\bf Heccer} design is slightly better optimized than {\it hsolve}'s.).
+%The source code of {\bf Heccer} contains inline developer documentation. As yet, there is no stable API but the Swig interfaces for {\bf Heccer} are not expected to change much. If you are interested in this, look at \href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/glue/swig/perl/fork4p1.source.html#line51}{a simple example} for driving {\bf Heccer} from Perl, and \href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/glue/swig/perl/pool1-feedback1.source.html#line51}{another example} with active channels and a calcium pool. {\bf Heccer} is currently capable of simulating Purkinje cells (see the \href{../purkinje-cell-model/purkinje-cell-model.tex}{\bf Purkinje\,Cell\,Model}), and, at first evaluation, runs slightly faster than {\it hsolve} (It is difficult to assess why exactly: while the {\it hsolve} implementation is much more optimized than {\bf Heccer's}, the {\bf Heccer} design is slightly better optimized than {\it hsolve}'s.).
 
 \subsubsection{Heccer Features}
 
@@ -1096,10 +1095,9 @@ The source code of {\bf Heccer} contains inline developer documentation. As yet,
 \item Generalizing the previous point, can be initialized from external sources.
 \item Can be used with or without the {\bf Model\,Container}. To use {\bf Heccer} without the {\bf Model\,Container}, configure the module with the command line ``{\tt ./configure --without-neurospaces}''. To use {\bf Heccer} with the {\bf Model\,Container}, the {\bf Model\,Container} must be installed before {\bf Heccer} is compiled. 
 \end{itemize}
-{\bf Heccer} has been validated with a Purkinje cell model and produces an exact match with {\it hsolve} (see the purkinje cell model and the Purkinje cell tutorial in the GENESIS simulator distribution). {\bf Heccer} is constantly undergoing regression tests. Link to  \href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/index.html}{\bf Regression\,Test\,Output}. These tests give an idea of the functionality of {\bf Heccer} as a compartmental solver.
 
-Besides being open source, {\bf Heccer} is also hypersource and \href{http://repo-genesis3.cbi.utsa.edu/crossref/heccer/heccer/index.html}{\bf Heccer\,Source\,Code} is browsable.
-% An example test file with points of entry into {\bf Heccer}, can be found \href{}{here}.
+{\bf Heccer} has been validated with a Purkinje cell model and
+produces an exact match with {\it hsolve}.
 
 \subsubsection{Extending Heccer}
 \begin{itemize}
