@@ -246,7 +246,7 @@ It is for these reasons that it was possible to consider realistic and simplifyi
 
 With hindsight, it can be seen that the foregoing paradigm lies firmly within the traditional scientific method which is based  on the gathering of complete information about a phenomenon. Historically, biology in general, and computational neuroscience in particular, has adopted this mechanistic or `Newtonion' view due to its compelling simplicity, coherence, and common-sense\cite{Heylighen:2006vn}. In this view, our knowledge is an imperfect reflection of particular external arrangements of matter. The task of science is to make the mapping or correspondence between the external, material objects and the internal, cognitive elements (concepts or symbols) that represent them as accurate as possible. That can be achieved by simple observation, where information about external phenomena is collected and arranged, thus further completing the internal picture that is taking shape. In the limit, this should lead to a perfect, objective representation of the world outside us, which would allow us to accurately predict all phenomena\cite{Turchin:1990ys}.
 
-This view has been changed with the formulation of systems theory (see \cite{Bertalanffy:1973zr}) that, in contrast with the elements of Newtonian ontology (matter, the absolute space and time in which that matter moves, and the forces or natural laws that govern movement), considers living systems to be intrinsically open. They have to interact with their environment, and absorb and release matter and energy to stay alive. The reason for the predictive success of Newtonian models was that they only considered closed systems, whereas, open systems depend on an environment much larger and more complex than the system itself, so that its effect can never be truly controlled or predicted\cite{Heylighen:2006vn}. Regularity or organization is not a given, but emerges dynamically out of a tangle of conflicting forces and random fluctuations, a process aptly summarized as ``order out of chaos”\cite{Prigogine:1984ve}.
+This view has been changed with the formulation of systems theory (see \cite{Bertalanffy:1973zr}) that, in contrast with the elements of Newtonian ontology (matter, the absolute space and time in which that matter moves, and the forces or natural laws that govern movement), considers living systems to be intrinsically open. They have to interact with their environment, and absorb and release matter and energy to stay alive. The reason for the predictive success of Newtonian models was that they only considered closed systems, whereas, open systems depend on an environment much larger and more complex than the system itself, so that its effect can never be truly controlled or predicted\cite{Heylighen:2006vn}. Regularity or organization is not a given, but emerges dynamically out of a tangle of conflicting forces and random fluctuations, a process aptly summarized as ``order out of chaos''\cite{Prigogine:1984ve}.
 
 Recent developments in the multi-scale definition of a system define it as a collection of properties and relationships that exhibit an essential duality\cite{Heylighen:2006vn}. It is both a whole and a part of a more expansive whole or `holon'\cite{Koestler:1990ly}, i.e. there is a cohesion to its parts that allows it to be treated as a whole; and that whole itself is part of the system's environment. There are at least two fundamental reasons why is is not possible to conceptualize a system defined in this way: (1) It is only possible to conceptualize at specific scales, not conceptualize with combinations of conceptualizations at multiple scales, and (2) It is not possible to conceptualize properties separately when they are parts of a system as they are always `of' something. At any scale of conceptualization, properties are always aggregated at least as simple objects. A system at any scale of conceptualization is an approximation or loose congruence of the system. A scale specific conceptualization of a system is partial if there are patterns pertinent to an observer's interest in a system that are only available at other scales (where patterns are simple objects, relationships, and their aggregations). This is not an `abstraction' of the system as this means leaving things out with the understanding that what is left out can always be reinserted. What is ``left out'' of a scale specific conceptualization of a system are patterns that might be available at other scales. Such patterns cannot be returned to a scale specific approximation of a system, regardless of resolution or field of view. The `missing' content has no place in the conceptualization as it was never available to begin with.
 
@@ -260,11 +260,15 @@ Regardless of the number of scales used to conceptualize a system, it can never 
 
 It is on these grounds that the futility of the Newtonian analytic approach becomes apparent. That is, to understand any complex phenomenon, it must be taken apart and reduced to its individual components. If these are still too complex, analysis must be taken one step further, and the resulting components studied. If this subdivision is continued sufficiently, the smallest possible part will eventually be obtained. It is in this extreme that the materialistic nature of the Newtonian ontology is revealed.
 
-Alternatively, there are at least three possible definitions of multi-scale modeling. The first two definitions are common and are either: (1) Biologically inspired, eg. a model is specified as a network and a population of detailed channel models, or (2) Mathematically inspired, eg. use cable equations to model a neuron, discrete event models for axonal propagation, and Hodgkin Huxley equations for the channels. Unfortunately, both these definitions are void of meaning as they suggest that by far the majority of models are already multi-scaled as they comprise more than one level.
+Alternatively, as indicated in Figure\,\ref{fig:mental-model-simulation-path}, there are at least three possible definitions of multi-scale modelling. The first two are widespread, either: (1) Biologically inspired, eg. a model is specified as a network and a population of detailed channel models, or (2) Mathematically inspired, eg. use cable equations to model a neuron, discrete event models for axonal propagation, and Hodgkin Huxley equations for the channels. Unfortunately, both these definitions are void of meaning as they suggest that by far the majority of models are already multi-scaled as they comprise more than one level.
 
-{\LARGE include here one of the multi-scale figures here (NS based,
-  Jim's, or other?).  It will make the point that many more
-  definitions are possible.}
+\begin{figure}[ht]
+  \begin{center}
+    \includegraphics[width=4in]{figures/multi-scale-taxonomy.eps}
+  \end{center}
+  \caption{ {\bf The Path from Mental Model to Simulation.} }
+  \label{fig:multi-scale-taxonomy}
+\end{figure}
 
 The third definition is the one employed here: (3) Software definition: Based on the CBI architecture: the application
 of a model for simulation or otherwise, that is contained by a single
@@ -274,7 +278,6 @@ another during run-time using the communication infrastructure
 provided by the CBI architecture
 (figure~\ref{fig:mental-model-simulation-path}).
 
-
 \begin{figure}[ht]
   \begin{center}
     \includegraphics[width=4in]{figures/NS-abstraction-implementation.eps}
@@ -282,8 +285,6 @@ provided by the CBI architecture
   \caption{ {\bf The Path from Mental Model to Simulation.} }
   \label{fig:mental-model-simulation-path}
 \end{figure}
-
-
 
 \section{Methods}
 
