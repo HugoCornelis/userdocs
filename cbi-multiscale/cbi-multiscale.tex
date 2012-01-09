@@ -265,25 +265,24 @@ System theory shows the futility of the Newtonian analytic approach for neurosci
 
 According to the principles of system theoretic analysis outlined above, it is clear there are numerous phenomenological approaches to the development of multi-scale models suitable to transform a mental model into a computational simulation. Figure\,\ref{fig:mental-model-simulation-path} illustrates a selection of some of the possible levels and components of this process. Interestingly, from this perspective, two possible multi-scale models have been in widespread use but not generally recognized for their multi-scale characteristics. One is: (1) Biologically inspired, e.g. a model is specified as a network and a population of detailed channel models, the other (2) Mathematically inspired, e.g. use continuous cable equations to model a neuron, discrete event models for axonal propagation, and Hodgkin-Huxley equations for the channels.
 
-We note that because the multi-scale nature of realistic neuron models was not originally fully appreciated, first generation simulators did not appropriately reflect or incorporate the three essential levels (computational theory, representation and algorithm, and hardware implementation) originally proposed by Marr\cite{Marr:19821kx}. The outcome was a family of first generation simulators that were monolithic and entirely unsuited for the integration of new functionality, which now can be seen to actually be software support for the extension of novel multi-level functionality into a simulator.
-
-We further note that there is a plethora of so-called second generation simulators that remain primarily focused on the biological and mathematical aspects of multi-scale modelling. It is likely that the fact that they did not include all three of Marr's levels prevented the progress that might otherwise be expected from a completely configured multi-scale simulator. Following the recent reconfiguration of the GENESIS simulator it is now clear that it is necessary to incorporate Marr's third level to give a comprehensive multi-scale simulator.
-
-A third definition is the one employed here: (3) Software definition: Based on the CBI architecture: the application
-of a model for simulation or otherwise, that is contained by a single
-software entity (a single model-container), but using solvers that
-implement different mathematical tools and that communicate with one
-another during run-time using the communication infrastructure
-provided by the CBI architecture
-(figure~\ref{fig:mental-model-simulation-path}).
-
 \begin{figure}[ht]
   \begin{center}
     \includegraphics[width=4in]{figures/NS-abstraction-implementation.eps}
   \end{center}
-  \caption{ {\bf The Path from Mental Model to Simulation.} }
+  \caption{ {\bf A Multi-Scale Path from Mental Model to Simulation.} }
   \label{fig:mental-model-simulation-path}
 \end{figure}
+
+We note that because the multi-scale nature of realistic neuron models was not originally fully appreciated, first generation simulators did not appropriately reflect or incorporate the three essential levels (computational theory, representation and algorithm, and hardware implementation) originally proposed by Marr\cite{Marr:19821kx}. The outcome was a family of first generation simulators that were monolithic and entirely unsuited for the integration of new functionality, which now can be seen to actually be software support for the extension of novel multi-level functionality into a simulator.
+
+We further note that there is a plethora of so-called second generation simulators that remain primarily focused on the biological and mathematical aspects of multi-scale modelling. It is likely that because they did not incorporate all three of Marr's levels, the progress that might otherwise be expected from a completely configured multi-scale simulator was greatly reduced. Following the recent reconfiguration of the GENESIS simulator it is now clear that it is necessary to incorporate Marr's third level or `hardware', i.e. software functionality, to give a comprehensive multi-scale simulator.
+
+On this basis, the third element of a well configured multi-scale simulator is: (3) Software definition. In the remainder if this paper we introduce and describe this ``third leg'' necessary for the construction of an extendable, fully functional, multi-scale simulator. It is based on the Computational Biology Federated Software Architecture (CBI architecture). In this approach, it is the implementation
+of a model for simulation or otherwise, that is contained by a single
+software entity (in this case a single `model-container') that employs the solvers necessary to
+implement different mathematical tools and that communicate with each other at run-time using a communication infrastructure
+provided by the CBI architecture
+(Fig.~\ref{fig:mental-model-simulation-path}).
 
 \section{Methods}
 
@@ -551,9 +550,9 @@ stand-alone software components into a set of logical relationships.
 In this sense it defines a modular framework that provides the
 necessary parts of a neural simulator.
 
-%The schema identified by the separation of concerns (see
-%Fig.~\ref{fig:data-control}) is expanded in
-Figure~\ref{fig:cbi-architecture-simple} gives the modules that
+The schema identified by the separation of concerns (see
+Fig.~\ref{fig:data-control}) is expanded in
+Figure~\ref{fig:cbi-architecture-simple} to give the modules that
 form the building blocks of the CBI architecture. This figure retains
 the four quadrants of simulator functionality identified by our
 separation of concerns. It includes the notions of low-level data for
@@ -612,20 +611,14 @@ architecture.
 \begin{center}
 \includegraphics[width=4in]{figures/cbi-architecture-simple.eps}
 \end{center}
-\caption{ {\bf Overview of a federated software architecture:}
-  Graphical illustration of the primary functional modules defined for
-  the CBI federated software architecture.  Control modules are given
-  to the left and data modules to the right.  A. The top layer
-  contains conceptual data and controls representations of the biology
-  of a model. B. The bottom layer contains representations that are
-  numeric and thus close to the hardware.  The middle or intermediate
-  layer bridges between the biology and the numerics implemented in a
-  CBI compliant simulator.
-%  Importantly, as our separation of concerns
-%  shows (see Fig. \ref{fig:data-control} and text), Control (Scripting
-%  Libraries \& Applications) and Data (Database Interfaces) modules
-%  can interact either directly or via the Graphical User Interface.
-}
+\caption{ {\bf Overview of a federated software architecture:} Graphical
+  illustration of the primary functional modules defined for the CBI
+  federated software architecture.  Control modules are given to the left and data modules to the
+  right.  A. The top layer contains conceptual data
+  and controls representations of the biology of a model. B. The bottom layer contains
+  representations that are numeric and thus close to the hardware.  The middle or intermediate layer
+  bridges between the biology and the numerics implemented in a CBI compliant simulator. Importantly, as our separation of concerns shows (see Fig. \ref{fig:data-control} and text), Control (Scripting Libraries \& Applications) and Data (Database Interfaces) modules can interact either directly or via the Graphical User Interface.
+  }
 \label{fig:cbi-architecture-simple}
 \end{figure}
 
@@ -649,19 +642,32 @@ context of our ideal user workflow.
     \includegraphics[width=4in]{figures/cbi-architecture-expanded.eps}
   \end{center}
   \caption{ {\bf Detailed view of the Computational Biology Initiative
-      federated software architecture.} This figure shows a graphical
-    representation of the core structure of G-3. In sharp contrast to
-    previous versions of GENESIS and other neuronal simulation
-    platforms, the design of G-3 is fundamentally modular, separating
-    different functional components of the simulator into their own
-    modules. Importantly, G-3 separates model descriptions from the
-    mathematical representations used in actual model simulation.
-    This simplifies the implementation of new solvers and other
-    simulation- time software components. The communication
-    infrastructure connects different solvers simulating the same
-    model and can 'upscale' or 'downscale' numerical data as needed.
-    For additional detail
-    see\cite{10.1371/journal.pone.0028956}\cite{Cornelis:2011fk}.  }
+      federated software architecture.} Illustration of the functional
+    modules that is closer to an implementation of the CBI
+    architecture. It illustrates the relationships of sub-modules
+    within each of the primary functional modules given in Figure
+    \ref{fig:cbi-architecture-simple}.  North bound interfaces group
+    and conceptualize the details of the modules and interact with
+    south bound interfaces of higher level modules.  Steps 1--3 of the
+    ideal user workflow induce data flows between the software modules
+    of the CBI architecture. This results in data cycling between the
+    upper layers (blue and green boxes) and lower layers (red box).
+    Ultimately, the two layers team to implement a single simulation.
+    By design, any type of model including multi-scale models will
+    exhibit this data cycle. See text for explanation and details.
+    \vspace{1mm}
+    This figure shows a graphical representation of the core structure
+    of G-3. In sharp contrast to previous versions of GENESIS and
+    other neuronal simulation platforms, the design of G-3 is
+    fundamentally modular, separating different functional components
+    of the simulator into their own modules. Importantly, G-3
+    separates model descriptions from the mathematical representations
+    used in actual model simulation.  This simplifies the
+    implementation of new solvers and other simulation- time software
+    components. The communication infrastructure connects different
+    solvers simulating the same model and can 'upscale' or 'downscale'
+    numerical data as needed. For additional detail see Cornelis et
+    al. 2011a;b.  }
   \label{fig:cbi-architecture-expanded}
 \end{figure}
 
@@ -1452,9 +1458,9 @@ with the command:
    explore
 \end{verbatim}
 
-\begin{figure}[h]
+\begin{figure}[ht]
   \begin{center}
-    \includegraphics[scale=0.33]{figures/studio-screenshot.eps}
+    \includegraphics[width=4in]{figures/studio-screenshot.eps}
   \end{center}
   \caption{ {\bf Querying a model in GENESIS 3.0.} The {\bf Studio} is
     a component of the reconfigured GENESIS software platform. It can
@@ -1797,7 +1803,7 @@ For centuries, the world view underlying science has been Newtonian. The corresp
   \begin{center}
     \includegraphics[width=4in]{figures/multi-scale-taxonomy.eps}
   \end{center}
-  \caption{ {\bf A Proposed Taxonomy for Multi-Scale Modeling.} }
+  \caption{ {\bf The Path from Mental Model to Simulation.} }
   \label{fig:multi-scale-taxonomy}
 \end{figure}
 
