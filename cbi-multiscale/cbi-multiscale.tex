@@ -529,18 +529,18 @@ We also describe a relationship between the cognitive workflow and three indepen
 
 \subsection{The CBI Meta-Framework for Simulator Development in Neurobiology}
 
-\subsubsection{Overall Design Objectives}
+%\subsubsection{Overall Design Objectives}
 
-During development of the Computational Biology Federated Software
-Architecture (CBI architecture), several important objectives emerged
-from a separation of concerns. They were used as a guide for the
-design of this next generation neuronal simulation engine and
-included: (1) Reduced complexity of software modules when compared to
-a monolithic system, (2) Simplified documentation of modules in terms
-of inputs and outputs, (3) Easy incorporation or removal of individual
-modules as required, (4) Simplified development and testing of modules
-as stand alone components, and (5) Clear delineation of scope for new
-module development.
+%During development of the Computational Biology Federated Software
+%Architecture (CBI architecture), several important objectives emerged
+%from a separation of concerns.  They were used as a guide for the
+%design of this next generation neuronal simulation engine and
+%included: (1) Reduced complexity of software modules when compared to
+%a monolithic system, (2) Simplified documentation of modules in terms
+%of inputs and outputs, (3) Easy incorporation or removal of individual
+%modules as required, (4) Simplified development and testing of modules
+%as stand alone components, and (5) Clear delineation of scope for new
+%module development.
 
 \subsubsection{Structural Overview of the CBI Architecture}
 
@@ -552,7 +552,7 @@ necessary parts of a simulator.
 The schema identified by the separation of concerns (see
  \cite{10.1371/journal.pone.0028956} for details) is expanded in
 Figure~\ref{fig:cbi-architecture-simple} to give the modules that
-form the building blocks of the CBI architecture. It retains
+form the building blocks of the CBI architecture.  It retains
 the four quadrants of simulator functionality identified by the
 separation of concerns, including the notions of low-level data for
 numerics and high-level representations for biology, as well as
@@ -564,36 +564,42 @@ vertical dashed lines, respectively).
 \begin{center}
 \includegraphics[width=4in]{figures/cbi-architecture-simple.eps}
 \end{center}
-\caption{ {\bf Overview of a federated software architecture:} Graphical
-  illustration of the primary functional modules defined for the CBI
-  federated software architecture.  Control modules are given to the left and data modules to the
-  right.  A. The top layer contains conceptual data
-  and controls representations of the biology of a model. B. The bottom layer contains
-  representations that are numeric and thus close to the hardware.  The middle or intermediate layer
-  bridges between the biology and the numerics implemented in a CBI compliant simulator. Importantly, Control (Scripting Libraries \& Applications) and Data (Database Interfaces) modules can interact either directly or via the Graphical User Interface.
-  }
+\caption{ {\bf Overview of a federated software architecture:}
+  Graphical illustration of the primary functional modules defined for
+  the CBI federated software architecture.  Control modules are given
+  to the left and data modules to the right.  A. The top layer
+  contains conceptual data and controls representations of the biology
+  of a model. B. The bottom layer contains representations that are
+  numeric and thus close to the hardware.  The middle or intermediate
+  layer bridges between the biology and the numerics implemented in a
+  CBI compliant simulator. Importantly, Control (Scripting Libraries
+  \& Applications) and Data (Database Interfaces) modules can interact
+  either directly or via the Graphical User Interface.  }
 \label{fig:cbi-architecture-simple}
 \end{figure}
 
-We refer to the CBI architecture
-as being `federated' as it extends the modular approach associated
-with the development of single applications to the functional
-integration of otherwise independent applications. 
-Federation aims to provide a unified interface to diverse
-applications and mask from the user the differences, idiosyncrasies,
-and implementations of the underlying applications and data sources
-(see www-128.ibm.com/developerworks/db2/library/techarticle/0203haas/0203haas.html). 
-In doing so, federation provides transparency, heterogeneity, a high degree of
-function, autonomy for the underlying federated sources,
+We refer to the CBI architecture as being `federated' as it extends
+the modular approach associated with the development of single
+applications to the functional integration of otherwise independent
+applications.  Federation aims to provide a unified interface to
+diverse applications and mask from the user the differences,
+idiosyncrasies, and implementations of the underlying applications and
+data sources (see
+www-128.ibm.com/developerworks/db2/library/techarticle/0203haas/0203haas.html).
+In doing so, federation provides transparency, heterogeneity, a high
+degree of function, autonomy for the underlying federated sources,
 extensibility, openness, and the possibility of highly optimized
-performance. Here, extensibility is defined as a system design principle where an implementation takes into consideration future developments. An extensible system is one that includes mechanisms for expanding or enhancing the system with new capabilities without having to make major changes to the system infrastructure.
+performance. Here, extensibility is defined as a system design
+principle where an implementation takes into consideration future
+developments. An extensible system is one that includes mechanisms for
+expanding or enhancing the system with new capabilities without having
+to make major changes to the system infrastructure.
 
 Ideally, it makes the underlying applications look like a single
-system to the user. Enhanced application interoperability is achieved
-through the use of flexible high-level scripting languages to
-support diverse workflows and low-level application programmer
-  interfaces (API)s and application binary interfaces (ABI)s for
-performance.
+system to the user.  Enhanced application interoperability is achieved
+through the use of flexible high-level scripting languages to support
+diverse workflows and low-level application programmer interfaces
+(API)s and application binary interfaces (ABI)s for performance.
 
 % For completeness, we note that northbound and southbound interfaces
 % are indicated in this figure. Northbound interfaces conceptualize
@@ -616,15 +622,15 @@ and instantiation and the display and analysis of simulation output.
 Figure \ref{fig:cbi-architecture-expanded} provides an expanded view
 of Figure \ref{fig:cbi-architecture-simple} and illustrates in more
 detail the structural relationships between the different modules and
-sub-modules that comprise the CBI architecture. We introduced their
-functionality in \cite{10.1371/journal.pone.0028956}.  The behavior of the CBI architecture is defined
-by the functional and dynamic connectivity provided by these
-individual modules.  We now describe this behavior within the
-context of our ideal user workflow.
+sub-modules that comprise the CBI architecture.  We introduced their
+functionality in \cite{10.1371/journal.pone.0028956}.  The behavior of
+the CBI architecture is defined by the functional and dynamic
+connectivity provided by these individual modules.  We now describe
+this behavior within the context of our ideal user workflow.
 
 \begin{figure}[h]
   \begin{center}
-    \includegraphics[width=4in]{figures/cbi-architecture-expanded.eps}
+    \includegraphics[width=3.33in]{figures/cbi-architecture-expanded.eps}
   \end{center}
   \caption{ {\bf Detailed view of the Computational Biology Initiative
       federated software architecture.} Illustration of the functional
@@ -650,10 +656,10 @@ context of our ideal user workflow.
   \label{fig:cbi-architecture-expanded}
 \end{figure}
 
-\subsubsection{Data-flows in the CBI Architecture}
-A (G)UI translates user actions into a family of events that propagate
-to other components of a software architecture, impact the internal
-states of these components, and direct the data flows between them.
+%\subsubsection{Data-flows in the CBI Architecture}
+%A (G)UI translates user actions into a family of events that propagate
+%to other components of a software architecture, impact the internal
+%states of these components, and direct the data flows between them.
 %In the CBI architecture each software component is specialised in
 %implementing one particular function and performs the defined
 %operations on the data it is passed.
@@ -665,17 +671,16 @@ states of these components, and direct the data flows between them.
 %functions.  As a consequence, a feature of the CBI architecture is
 %that rich data flows occur between software components, but not
 %necessarily within them.
-In Step 1 (Construct Model) and 2 (Design Experiment) of the ideal
-user workflow, users combine models and experimental data that are
-stored in files and databases.  In Step 3 (Run Simulation) the
-back-ends, such as the numerical {\tt Solvers} and the {\tt
-  Communication Infrastructure}, perform the calculations of a
-simulation, then save the output back to files and databases.  When
-combined, these steps of the ideal user workflow imply a cyclic data
-flow from files and databases to the back-ends.  Here we explain how
-user actions and data flows relate to one another in the CBI
-architecture and define the overall behavior of an implemented
-software system.\\
+During the phase of model construction prior to simulation, users
+combine models from files and databases.  When the simulation runs,
+the numerical {\tt Solvers} perform the calculations of a simulation,
+and save the output back to files and databases.  When these two steps
+are combined they imply a cyclic data flow from files and databases to
+the {\tt Solvers}.
+%  Here we explain how user actions and data flows
+%relate to one another in the CBI architecture and define the overall
+%behavior of an implemented
+%software system.\\
 
 {\bf ADC: Got this Far.}\\
 
@@ -691,425 +696,227 @@ software system.\\
 %output protocols configured, the simulation run, and the results
 %interpreted.
 
-In Step 1 of the user workflow, the GUI is opened and a cell
-model is selected from a database listing of available models.
-Internally, model selection is translated into an event that instructs
-the {\tt Biology Model Container} to load a selected model from a
-database and store it in memory using data structures for efficient
-storage and retrieval by other modules.  During initial inquiry, a
-user may typically be interested in derived model parameters such as
-the total surface area of a neuron, with and without spine correction,
-while a sophisticated GUI can also present a table of the channels
-employed in the model along with their conductance densities and
-reversal potentials.  More dedicated queries related to specific brain
-areas or neuron types are supported by the {\tt
-  Scripting Libraries \& Applications} module.
+%In Step 1 of the user workflow, the GUI is opened and a cell
+%model is selected from a database listing of available models.
+%Internally, model selection is translated into an event that instructs
+%the {\tt Biology Model Container} to load a selected model from a
+%database and store it in memory using data structures for efficient
+%storage and retrieval by other modules.  During initial inquiry, a
+%user may typically be interested in derived model parameters such as
+%the total surface area of a neuron, with and without spine correction,
+%while a sophisticated GUI can also present a table of the channels
+%employed in the model along with their conductance densities and
+%reversal potentials.  More dedicated queries related to specific brain
+%areas or neuron types are supported by the {\tt
+%  Scripting Libraries \& Applications} module.
 
-%A model can be queried in this way when it is stored by
-%the {\tt Biology Model Container}.
+%%A model can be queried in this way when it is stored by
+%%the {\tt Biology Model Container}.
 
-A typical example of Step 2 of the ideal user workflow is the design
-of an experiment that applies current injection pulses to a neuron's
-soma and defines simulation output as the somatic membrane potential
-and somatic transmembrane currents.  The {\tt
-  Experiment Model Container} stores the definition of the current
-pulse amplitude and duration, which is translated by a {\tt
-  Sequencer Bridge} to a sequence of simulation-time events prior to
-the start of a stimulation.  These events are then executed by the
-{\tt Command Sequence Executor} during a simulation.
+%A typical example of Step 2 of the ideal user workflow is the design
+%of an experiment that applies current injection pulses to a neuron's
+%soma and defines simulation output as the somatic membrane potential
+%and somatic transmembrane currents.  The {\tt
+%  Experiment Model Container} stores the definition of the current
+%pulse amplitude and duration, which is translated by a {\tt
+%  Sequencer Bridge} to a sequence of simulation-time events prior to
+%the start of a stimulation.  These events are then executed by the
+%{\tt Command Sequence Executor} during a simulation.
 
-Running the simulation in Step 3 of the ideal user workflow starts
-with the {\tt Biology Model Container} examining a stored model to
-determine model time constants or other parameters that are relevant
-for the accuracy of a numerical simulation.  The {\tt Solvers} then
-fill their data structures with parameter values optimized for
-simulation, for instance a Crank-Nicolson solver can multiply the
-membrane capacitance with the time step during this initialization
-phase instead of at every simulation time
-step\cite{borg-graham00:_addit_effic_comput_branc_nerve_equat}.  For
-this, the memory image of a model must first be expanded into a
-representation that includes the mathematical equations and parameters
-relevant to the given simulation but, for instance, does not include
-the spatial layout of segments as this is not required by the {\tt
-  Solvers}.  (Note: `Segment' is a high level term employed to describe different parts of the biological model of a dendritic morphology. The equivalent low level (computational) term is `compartment'. It refers to the numerical representation of a segment.) This behavior is different from that of existing
-simulators, e.g. GENESIS 2. Such simulators do not make an explicit
-distinction between internal data structures for model representation
-and data structures for computation.  Consequently, they often
-generate redundant data during the initialization of a simulation.
+%Running the simulation in Step 3 of the ideal user workflow starts
+%with the {\tt Biology Model Container} examining a stored model to
+%determine model time constants or other parameters that are relevant
+%for the accuracy of a numerical simulation.  The {\tt Solvers} then
+%fill their data structures with parameter values optimized for
+%simulation, for instance a Crank-Nicolson solver can multiply the
+%membrane capacitance with the time step during this initialization
+%phase instead of at every simulation time
+%step\cite{borg-graham00:_addit_effic_comput_branc_nerve_equat}.  For
+%this, the memory image of a model must first be expanded into a
+%representation that includes the mathematical equations and parameters
+%relevant to the given simulation but, for instance, does not include
+%the spatial layout of segments as this is not required by the {\tt
+%  Solvers}.  (Note: `Segment' is a high level term employed to describe different parts of the biological model of a dendritic morphology. The equivalent low level (computational) term is `compartment'. It refers to the numerical representation of a segment.) This behavior is different from that of existing
+%simulators, e.g. GENESIS 2. Such simulators do not make an explicit
+%distinction between internal data structures for model representation
+%and data structures for computation.  Consequently, they often
+%generate redundant data during the initialization of a simulation.
 
-In network simulations the {\tt Solvers} employ the {\tt
-  Connectivity Translator} to initialize its simulation-time
-communication data structures and to connect to the {\tt
-  Communication Infrastructure}.
+%In network simulations the {\tt Solvers} employ the {\tt
+%  Connectivity Translator} to initialize its simulation-time
+%communication data structures and to connect to the {\tt
+%  Communication Infrastructure}.
 
-When a user instructs the simulator to start a simulation, for
-instance by pushing a button in a GUI, the {\tt Controller} generates
-a list of instantiated {\tt Solvers}.  It then advances the simulation
-clock and requests each {\tt Solver} to update its internal state.
-The {\tt Communication Infrastructure} connects the {\tt Solvers} for
-efficient communication of the solved variables.  {\tt Solvers} that
-were configured for output, save results to a file.  When the
-simulation finishes, either by user action or following a preset
-simulation period, output buffers are flushed to disk.
+%When a user instructs the simulator to start a simulation, for
+%instance by pushing a button in a GUI, the {\tt Controller} generates
+%a list of instantiated {\tt Solvers}.  It then advances the simulation
+%clock and requests each {\tt Solver} to update its internal state.
+%The {\tt Communication Infrastructure} connects the {\tt Solvers} for
+%efficient communication of the solved variables.  {\tt Solvers} that
+%were configured for output, save results to a file.  When the
+%simulation finishes, either by user action or following a preset
+%simulation period, output buffers are flushed to disk.
 
-The independence of the {\tt Solvers} in the CBI architecture not only
-allows for better optimized implementations, but also enables
-additional simulator functionality such as serialization of the model
-state to a file.  This allows a simulation to be resumed at a later
-time and reduces the total simulation time of a complex model if it requires
-a calibration phase prior to the application of an experimental
-protocol.
+%The independence of the {\tt Solvers} in the CBI architecture not only
+%allows for better optimized implementations, but also enables
+%additional simulator functionality such as serialization of the model
+%state to a file.  This allows a simulation to be resumed at a later
+%time and reduces the total simulation time of a complex model if it requires
+%a calibration phase prior to the application of an experimental
+%protocol.
 
-%During Step 4 the dynamic state of the model is available from the files and databases for further analysis.
+%%During Step 4 the dynamic state of the model is available from the files and databases for further analysis.
 
-% Steps 4 and 5 are complementary to Steps 1-3 of the ideal user workflow.
+%% Steps 4 and 5 are complementary to Steps 1-3 of the ideal user workflow.
 
-%The data cycle between databases and files, and the solvers in Steps
-%1-3 of the ideal user workflow results in all simulation simulation output
-%is available through these databases and files.  Once these steps
-%have been completed, the back-ends of the CBI architecture are not
-%available anymore.  The simulation result data can then be combined
-%with the model parameters and structure available in the {\tt
-%  Biology Model Container} through {\tt
-%  Scripting Libraries \& Applications} to implement Step 4 and 5 of
-%our ideal user workflow.
+%%The data cycle between databases and files, and the solvers in Steps
+%%1-3 of the ideal user workflow results in all simulation simulation output
+%%is available through these databases and files.  Once these steps
+%%have been completed, the back-ends of the CBI architecture are not
+%%available anymore.  The simulation result data can then be combined
+%%with the model parameters and structure available in the {\tt
+%%  Biology Model Container} through {\tt
+%%  Scripting Libraries \& Applications} to implement Step 4 and 5 of
+%%our ideal user workflow.
 
-As a result of Steps 1--3 of the ideal user workflow, data flows both
-through and between software components that conform to a CBI
-architecture: the data cycles between databases and files, and
-back-end {\tt Solver}s.  Here we have described this cycle for a single
-neuron model and, as we briefly noted, it also occurs for network
-models.  By design any type of model including multi-scale models
-will exhibit this data cycle.
+%As a result of Steps 1--3 of the ideal user workflow, data flows both
+%through and between software components that conform to a CBI
+%architecture: the data cycles between databases and files, and
+%back-end {\tt Solver}s.  Here we have described this cycle for a single
+%neuron model and, as we briefly noted, it also occurs for network
+%models.  By design any type of model including multi-scale models
+%will exhibit this data cycle.
 
-In Steps 4 and 5, the availability of any model data from the {\tt
-  Model Container} and the functionality of {\tt
-  Scripting Libraries \& Applications} can connect the CBI
-architecture with external tools while maintaining the integrity of
-the separation of concerns.
-%The laterality of the software component connectivity activated during Step 4 is not an issue.
-{\tt Scripting Libraries \& Applications} connect to external tools
-such as Matlab to implement output analysis.
-%  Integration, at Step
-%4 of the ideal user workflow, with software platforms such as RTXI
-%make direct interaction with experiment possible.
-They also allow simulation output data to be combined with the model
-parameters and structure available in the {\tt
-  Biology Model Container} to implement Step 5 of our ideal user
-workflow, for instance to provide automated script generators for the
-generation of batch simulations.  Importantly, at this stage of the
-workflow, the back-ends of the CBI architecture (indicated below the dotted
-horizontal line in Figures~\ref{fig:cbi-architecture-simple}
-and~\ref{fig:cbi-architecture-expanded}) are unavailable.  Once Step 3
-is completed, all the data of the dynamic state of the model are
-available through databases and files.  Consequently, there is no
-requirement to query the software components that deal with
-numerical data. This ultimately prevents the implementation of
-diagonal interactions in the software and the creation of a monolithic
-simulator.
+%In Steps 4 and 5, the availability of any model data from the {\tt
+%  Model Container} and the functionality of {\tt
+%  Scripting Libraries \& Applications} can connect the CBI
+%architecture with external tools while maintaining the integrity of
+%the separation of concerns.
+%%The laterality of the software component connectivity activated during Step 4 is not an issue.
+%{\tt Scripting Libraries \& Applications} connect to external tools
+%such as Matlab to implement output analysis.
+%%  Integration, at Step
+%%4 of the ideal user workflow, with software platforms such as RTXI
+%%make direct interaction with experiment possible.
+%They also allow simulation output data to be combined with the model
+%parameters and structure available in the {\tt
+%  Biology Model Container} to implement Step 5 of our ideal user
+%workflow, for instance to provide automated script generators for the
+%generation of batch simulations.  Importantly, at this stage of the
+%workflow, the back-ends of the CBI architecture (indicated below the dotted
+%horizontal line in Figures~\ref{fig:cbi-architecture-simple}
+%and~\ref{fig:cbi-architecture-expanded}) are unavailable.  Once Step 3
+%is completed, all the data of the dynamic state of the model are
+%available through databases and files.  Consequently, there is no
+%requirement to query the software components that deal with
+%numerical data. This ultimately prevents the implementation of
+%diagonal interactions in the software and the creation of a monolithic
+%simulator.
 
-% are technically unrelated to a simulation run and may
-%fall outside the scope of the CBI architecture.  On the other hand
-%{\tt Scripting Libraries \& Applications} may connect to external
-%tools such as Matlab to implement output analysis and include script
-%generators for automation of batch simulations and platforms such as
-%RTXI for a direct connection with experiments.
+%% are technically unrelated to a simulation run and may
+%%fall outside the scope of the CBI architecture.  On the other hand
+%%{\tt Scripting Libraries \& Applications} may connect to external
+%%tools such as Matlab to implement output analysis and include script
+%%generators for automation of batch simulations and platforms such as
+%%RTXI for a direct connection with experiments.
 
-%For convenience one could implement a short-cut diagonal into the CBI
-%architecture for implementation of aspects of Steps 4 and 5, and for that matter other Steps, but this ultimately would limit the functional scope of the resulting simulator.
+%%For convenience one could implement a short-cut diagonal into the CBI
+%%architecture for implementation of aspects of Steps 4 and 5, and for that matter other Steps, but this ultimately would limit the functional scope of the resulting simulator.
 
-%All model data is available through the model container and the output (files or databases).  
+%%All model data is available through the model container and the output (files or databases).  
 
-%Modules plugged in during Step 4 have access to all data via the model container.
+%%Modules plugged in during Step 4 have access to all data via the model container.
 
 \subsection{GENESIS 3.0}
 
-
 The redesigned and modernized core structure of GENESIS produces
-GENESIS version 3.0 or G-3.  The new structure of G-3 provides a new
-and unique capacity for federated and modular software development in
-support of multi-scale modeling.  Furthermore, G-3s structure also
-supports the direct real time interaction, or embedding of models at
-different levels of scale.  This is accomplished through specific
-software modules that create intermediary representation of variables
-present at multiple scales as described in more detail in subsequent
-sections.
+GENESIS version 3.0 or G-3.  The structure of G-3 provides a new and
+unique capacity for federated and modular software development in
+support of multi-scale modeling.  Furthermore, its structure also
+supports the direct interaction or embedding of models at different
+levels of scale.  During model construction this is accomplished
+through the reconfiguration of the internal model storage format,
+while during the simulation run-time this is accomplished through
+specific software modules that create intermediary representation of
+variables present at multiple scales as described in more detail in
+subsequent sections.
 
-Several explicit features of G-3 allow the rapid incorporation of new
-software components.  As illustrated below these include: 1) the
-modular separation of the development of the core of new solvers from
-that of other software components, allowing full focus on the
-mathematical aspects of the solver and their implementation, and
-better optimization; 2) the G-3 Developer package facilitates
-integration of the {\bf Chemesis-3} solver into the build system of G-3
-enabling immediate regression tests; 3) easy extension of the
-configuration of the model-container to establish new declarative
-model tokens and parameters recognized by the {\bf Chemesis-3} solvers; 4)
-easy construction of an interface between the model-container
-application programmers interface (API) and the core of the {\bf Chemesis-3}
-solver and finally 5) the specific development of a communication
-software component that interfaces the new solver with the existing
-linear cable solver.
+Following the CBI-architecture several explicit features of G-3 allow
+the rapid incorporation of new software components: 1) the modular
+separation of the development of the core of new solvers from that of
+other software components allows full focus on the mathematical
+aspects of the solver and their implementation, and better
+optimization; 2) the G-3 Developer package facilitates integration of
+new solvers into the build system of G-3 enabling immediate regression
+tests; 3) easy extension of the configuration of the internal model
+storage format to establish new declarative model tokens and
+parameters recognized by the new solvers; 4) easy construction of an
+interface between the internal storage format and the core of the new
+solvers and finally 5) the specific development of a communication
+software component to create simulation run-time interfaces between
+the solvers.
 
-Because each of these sub-cellular modeling components are an
-integrated part of a single
+
+%\subsubsection{Extending GENESIS-3}
+
+%The G-3 documentation systems describes the procedures used for G-3
+%extension.  Extending G-3 can involve the implementation of a new
+%solver, or, when the required functionality is tangential to an
+%existing solver, it can require source code additions to an
+%pre-existing software component.  Here we describe the integration of
+%a new solver, ie. the steps followed for the implementation of
+%{\bf Chemesis-3}.
+
+%\begin{enumerate}[noitemsep,nolistsep]
+%\item The developer package integrates the different software
+%  components of G-3.  The definition of a new component ``chemesis3'' in
+%  the developer package allows for its smooth integration with other
+%  G-3 software components such as the model-container.
+%\item The implementation of the core of a new solver is independent of
+%  the development of other software components.  This allows full
+%  focus on the mathematic aspects of the solver and their
+%  implementation.
+%\item Optionally, the model-container can be extended with new tokens
+%  that are specific to the new solver.  Configuration of the
+%  model-container defines the new tokens and their parameters.
+%\item An interface must be written between the model-container and the
+%  core of the solver.  The model-container defines an API that makes
+%  abstraction of the biological structure the model.
+%\end{enumerate}
+
+
+\subsubsection{Model-Container}
+
+The {\bf Model\,Container} stores biological entities and end-user
+concepts and provides a solver independent internal storage format for
+models.  By `containing' the biological model, the {\bf
+  Model\,Container} makes the implementation of the numerical core of
+a solver independent of software implementation.
+
+Because all the modeling components are an integrated part of a single
 model-container\cite{10.1371/journal.pone.0028956}, the existing and
 new G-3 solvers can be integrated to simulate different aspects of the
 same model.  This {\em scale-linking} functionality of G-3
 instantiates dedicated run-time software components that contain
 intermediary representations of solved variables that can pass both
 {\em upscale} and {\em downscale} values to solvers at different
-levels of scale.  Technically, in the case of {\bf Chemesis-3} and the
-linear cable solver, for example, these modules calculate weighted
-space-time averages.
+levels of scale.
+%  Technically, in the case of {\bf Chemesis-3} and the
+%linear cable solver, for example, these modules calculate weighted
+%space-time averages.
+
+The {\bf Model\,Container} annotates the structures and concepts of a
+model with biological, physical, and mathematical quantities.
+
+Therefore in principle, the {\bf Model\,Container} is capable of
+supporting the transparent construction of multiscale models and
+simulations.
+
+The {\bf Model\,Container} defines models in a purely declarative,
+extensible language.
 
 
-\subsubsection{Extending GENESIS-3}
-
-The G-3 documentation systems describes the procedures used for G-3
-extension.  Extending G-3 can involve the implementation of a new
-solver, or, when the required functionality is tangential to an
-existing solver, it can require source code additions to an
-pre-existing software component.  Here we describe the integration of
-a new solver, ie. the steps followed for the implementation of
-{\bf Chemesis-3}.
-
-\begin{enumerate}[noitemsep,nolistsep]
-\item The developer package integrates the different software
-  components of G-3.  The definition of a new component ``chemesis3'' in
-  the developer package allows for its smooth integration with other
-  G-3 software components such as the model-container.
-\item The implementation of the core of a new solver is independent of
-  the development of other software components.  This allows full
-  focus on the mathematic aspects of the solver and their
-  implementation.
-\item Optionally, the model-container can be extended with new tokens
-  that are specific to the new solver.  Configuration of the
-  model-container defines the new tokens and their parameters.
-\item An interface must be written between the model-container and the
-  core of the solver.  The model-container defines an API that makes
-  abstraction of the biological structure the model.
-\end{enumerate}
-
-
-\subsubsection{Heccer: A Single-Neuron Solver}
-
-{\bf Heccer} is a G-3 reimplementation of the compartmental solver
-({\it hsolve}) of the GENESIS-2 simulator.  {\bf Heccer} employs the
-Crank-Nicolson solution to the cable equations of a neuronal
-morphology and the Hodgkin-Huxley equations of their transmembrane
-currents\cite{segev95:_theor_found_dendr_funct}\cite{hha52}\cite{cornelis02:_tutor}.
-
-{\bf Heccer} can be instantiated from C, Python or Perl.  It is also
-possible to link {\bf Heccer} directly to Matlab. {\bf Heccer} comes
-with \href{http://www.swig.org/}{\bf Swig} interface definitions, such
-that linking {\bf Heccer} to any other technologies should be easy.
-
-%The optimization of a neuronal solver ultimately focuses on accuracy
-%and performance. Transforming complex biological parameters into
-%precomputed tables and optimizing for a high CPU cache hit ratio are
-%the most important features for a good solver, and gives the solver a
-%performance boost of about a factor four to six.
-
-Adding new channel types to {\bf Heccer} can be done using callouts.
-The callout mechanism allows for general user extensions that
-contribute a current or conductance at a particular time in a
-simulation. {\bf Heccer} automatically integrates this contribution
-into the membrane potential.  Check the tests of the callouts for more
-information (tests/code/callout1.c and tests/code/calloutInjector.c).
-
-%The source code of {\bf Heccer} contains inline developer documentation. As yet, there is no stable API but the Swig interfaces for {\bf Heccer} are not expected to change much. If you are interested in this, look at \href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/glue/swig/perl/fork4p1.source.html#line51}{a simple example} for driving {\bf Heccer} from Perl, and \href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/glue/swig/perl/pool1-feedback1.source.html#line51}{another example} with active channels and a calcium pool. {\bf Heccer} is currently capable of simulating Purkinje cells (see the \href{../purkinje-cell-model/purkinje-cell-model.tex}{\bf Purkinje\,Cell\,Model}), and, at first evaluation, runs slightly faster than {\it hsolve} (It is difficult to assess why exactly: while the {\it hsolve} implementation is much more optimized than {\bf Heccer's}, the {\bf Heccer} design is slightly better optimized than {\it hsolve}'s.).
-
-Heccer features include:
-
-\begin{itemize}[noitemsep,nolistsep]
-
-\item Can be driven from C, Perl, SSP, and fetches the model
-  parameters from the
-  \href{../model-container/model-container.tex}{\bf Model\,Container}.
-  The test specification in the Heccer package have examples of
-  C-level tests (see the tests/code/ directory) and Perl-level tests
-  (check the tests/glue/swig/perl/ directory).  The SSP package
-  defines many tests that integrate Heccer and the model-container.
-\item Computes the behaviour of single neurons.
-\item Integrates Hodgkin-Huxley-like channels.
-\item Integrates exponentially decaying calcium concentrations and Nernst potentials. Interfaces will be provided for more elaborate calcium models.
-\item Can operate in a ``passive-only'' mode, i.e. all channels in a model are ignored with exception of the synaptic channels.
-\item Tables to speed up computations, are dynamically generated and optimized.
-\item All parts of a model with the same kinetics automatically share tables.
-\item Computes the contribution of one channel type to the overall dendritic current, e.g. the contribution of all calcium channels or the contribution of all persistent calcium channels.
-\item Can serialize the current neuron state to an external stream for later resuming the simulation (or for multiple use).
-\item Generalizing the previous point, can be initialized from external sources.
-\end{itemize}
-
-{\bf Heccer} has been validated with a Purkinje cell model and
-produces an exact match with {\it hsolve}.
-
-
-\subsubsection{Chemesis-3}
-
-{\bf Chemesis} is a GENESIS-2 'add-on' library of objects for modeling
-biochemical reactions, models of second messengers, and calcium
-dynamics\cite{blackwell00:_eviden_distin_light_induc_calcium}.  As a
-test case for user-extensibility of G-3 we began implementing a
-{\bf Chemesis-3} library as a G-3 software component, based on the G-2
-implementation.  While the the G-2 implementation relies on the
-generic G-2 numerical routines, the {\bf Chemesis-3} implementation embeds
-only the most commonly used numerical routine.
-A time line reconstructed from the email conversations and from the
-version control system shows the course of development:
-
-%- exploratory email conversations May 30th and following two weeks.
-
-%- initial preparations and start of implementation on June 13th.
-
-%- core implementation on Sunday June 26th, including a fully working
-%  cal1 regression test case.  This was a day of crazy coding as in the
-%  old days, total of 18 revisions with many enhancements.
-
-%- implementation of cal2 test case on June 29th and July 10th.
-
-%- initial scripting bindings were added starting at July 10th for perl
-%  and July 13 for Python.
-
-%- first successful integration with the SSP scheduler on July 12th.
-
-%- model-container bindings started on July 13 and finished on July
-%  17th.  Removed model-related functions such as compartment volume
-%  computation that are already available in the model-container (and now
-%  shared with other solvers).
-
-%- G-shell integration on July 17th and July 18th.
-
-The functions currently implemented in the {\bf Chemesis-3} are:
-\begin{itemize}[noitemsep,nolistsep]
-\item {\bf rxnpool}: a concentration pool that interacts with
-  reactions and diffuses to other pools.
-\item {\bf conservepool}: mass conservation based pool, computes the
-  difference between the total of all molecules (a model parameter,
-  rest state), and diffused molecules, divided by compartment volume.
-\item {\bf reaction}: standard forward / backward chemical reactions
-  between pools of molecules.
-\item {\bf diffusion}: Computes flux in molecules between two pools.
-\end{itemize}
-
-Three of these functions map to a declarative token in the {\bf
-  model-container}: {\bf rxnpool} and {\bf conservepool} map to the
-(pre-existing) token {\bf POOL} (each with a different
-parameterization), {\bf reaction} maps to the token {\bf REACTION}.
-Similar to the representation of membrane depolarization diffusion
-with axial resistance (the {\bf AXIAL} parameter of a segment), the
-{\bf diffusion} function of ions is represented with the {\bf
-  diffusion\_constant} parameter of a pool.
-
-\subsubsection{Model-Container}
-
-The {\bf Model\,Container} is used as an abstraction layer on top of a simulator and deals with biological entities and end-user concepts instead of mathematical equations. It provides a solver independent internal storage format for models that allows user independent optimizations of the numerical core. By `containing' the biological model, the {\bf Model\,Container} makes the implementation of the numerical core independent of software implementation.
-
-The {\bf Model\,Container} API abstracts away all the mathematical and computational details of the simulator. Optimized to store large models in little memory--it stores neuronal models in a fraction of the memory that would be used by conventional simulators--and provides automatic partitioning of the model such that simulations can be run in parallel. From the modeler's perspective, the {\bf Model\,Container} will be able to import and export NeuroML files to facilitate model exchange and ideas.
-
-Features of the {\bf Model\,Container} include:
-
-\begin{itemize}[noitemsep,nolistsep]
-
-\item Covers models from the network level down to the level of mechanism. A Perl interface converts and imports GENESIS {\tt .p} and SWC morphology files. These conversions are done on an ``as needed just in time'' basis. (For example, it can reproduce an exact match with the \href{../purkinje-cell-model/purkinje-cell-model.tex}{\bf Purkinje\,Cell\,Model}).
-
-\item Defines models in a purely declarative, extensible language.
-
-\item Keeps and maintains a conceptual `algorithmic' representation of a model, as well as an expanded representation of the model.
-
-\item Knows about biological entities like cells, populations and projections (note that for some simulators such entities can be commands instead of biological entities).
-
-\item Annotates the structures and concepts of the model with biological, physical, and mathematical quantities.
-
-\item Supports setup of the most complicated mathematical solvers. In principle, it is capable of supporting the transparent setup of multiscale models and simulations.
-
-\item Gives different views of the same network model. These views are visualized in the GUI.
-
-\item Knows about specific parameters vs. actual parameters, e.g. specific membrane capacitance vs. scaled membrane capacitance. The biological objects in the model container generally rely on the parent, children, and siblings of the model hierarchy to infer a number of their own properties.
-
-\item Provides for arbitrary nesting of network models, including nesting of projections and populations.
-
-\item Allows inspection of the connectivity of a network model in an intuitive way.
-
-\item Stores very large models in little memory, needed for full model inspection and automated validation (the more complicated the model the more efficient the compression scheme--from the theoretical perspective the compressed image scales logarithmically with the original).
-
-\item Can save and reload connections between components. Costly computation of connections required to be done only once.
-    
-\end{itemize}
-
-\subsubsection*{Extending the Model\,Container}
-\begin{itemize}[noitemsep,nolistsep]
-   \item \href{../genesis-extend-model-container/genesis-extend-model-container.tex}{\bf Extend the Model\,Container:} Details the steps a developer must go through to extend the {\bf Model\,Container} by adding a {\it PulseGen()} object.
-\end{itemize}
-
-
-\subsubsection{Schedulers and User Interfaces}
-
-\subsubsection{SSP}
-
-Both the \href{../model-container/model-container.tex}{\bf
-  Model\,Container} and the mathematical solver
-\href{../heccer/heccer.tex}{\bf Heccer} are stand-alone GENESIS
-components. To be useful, these components must be `glued' together
-and activated correctly, such that they can work together in
-co-ordination on a single simulation. This is exactly what the Simple
-Scheduler in Perl ({\bf SSP}) does. It is currently the standard
-scheduler for GENESIS. {\bf SSP} exploits the sophistication of the
-Perl scripting language to load software components on demand, and
-activate them from a configuration file. It achieves this by loading
-dynamically those software components referenced in its configuration.
-Because the {\bf SSP} scheduler does not have any computational load,
-its implementation is very simple and highly configurable. Other
-configurations will connect {\bf SSP} to other modeling services or
-solvers.
-
-In summary {\bf SSP}:
-
-\begin{itemize}[noitemsep,nolistsep]
-\item {\bf Glues} other software components together.
-\item {\bf Synchronizes} the activities of other components during a simulation.
-\item {\bf Is configurable}. 
-\end{itemize}
-
-
-\subsubsection{SSPY}
-
-GENESIS is composed of several independent software components, each
-of which has a presence in Python. It is possible via the API of
-components such as the
-\href{../model-container/model-container.tex}{Model Container},
-\href{../heccer/heccer.tex}{Heccer}, and
-\href{../experiment/experiment.tex}{Experiment}, to script your
-simulations via Python. However this is not desirable since all
-simulations would be composed of code which contain their own control
-flow, that would often times require the user to understand all of the
-internals in order to expand on existing simulations. {\bf SSPy} is
-designed in the same vein as the \href{../ssp/ssp.tex}{SSP (Simple
-  Scheduler in Perl)} in that it encapsulates the operations for
-loading and running a complete simulation while allowing for complete
-control of simulation parameters and simulator options via a
-declarative configuration file. It also provides an easy plugin
-framework so that new modeling services, experimental protocols and
-solvers can be dynamically loaded from a plugin directory, making them
-immediately available without the need to change any of the core code.
-For more information on the plugin framework and extending SSPy, see
-the \href{../sspy-developer/sspy-developer.tex} {SSPy developer
-  document}.
-
-
-\subsubsection{G-Shell}
-
-After GENESIS has completed its startup procedure you should see the
-command prompt, {\tt genesis $>$}, indicating that you are now in the
-GENESIS shell environment ({\bf G-Shell}) and running an interactive
-GENESIS session. Note that to provide backward compatibility, the {\bf
-  G-Shell} interfaces with the Script Language Interpreter (SLI) of
-previous versions of GENESIS. To learn more about that functionality
-see \href{../backward-compatibility/backward-compatibility.tex}{here}.
-
-
-\subsection{The Neurospaces Description Format}
+\subsubsection{The Neurospaces Description Format}
 
 The {\bf Model Container}'s {\it Neurospaces Description Format} ({\it
   NDF}) file format was originally designed as a file-based
@@ -1323,6 +1130,182 @@ The NDF format supports an extensible set of tokens including {\tt
   SEGMENT}, {\tt CHANNEL}, {\tt CELL}, {\tt POPULATION}, {\tt
   PROJECTION}, {\tt NETWORK} and many more that allow the construction of
 models ranging from subcellular dynamics up to the network level.
+
+
+\subsubsection{Heccer: A Single-Neuron Solver}
+
+{\bf Heccer} is a G-3 reimplementation of the compartmental solver
+({\it hsolve}) of the GENESIS-2 simulator.  {\bf Heccer} employs the
+Crank-Nicolson solution to the cable equations of a neuronal
+morphology and the Hodgkin-Huxley equations of their transmembrane
+currents\cite{segev95:_theor_found_dendr_funct}\cite{hha52}\cite{cornelis02:_tutor}.
+
+{\bf Heccer} can be instantiated from C, Python or Perl.  It is also
+possible to link {\bf Heccer} directly to Matlab. {\bf Heccer} comes
+with \href{http://www.swig.org/}{\bf Swig} interface definitions, such
+that linking {\bf Heccer} to any other technologies should be easy.
+
+%The optimization of a neuronal solver ultimately focuses on accuracy
+%and performance. Transforming complex biological parameters into
+%precomputed tables and optimizing for a high CPU cache hit ratio are
+%the most important features for a good solver, and gives the solver a
+%performance boost of about a factor four to six.
+
+Adding new channel types to {\bf Heccer} can be done using callouts.
+The callout mechanism allows for general user extensions that
+contribute a current or conductance at a particular time in a
+simulation. {\bf Heccer} automatically integrates this contribution
+into the membrane potential.  Check the tests of the callouts for more
+information (tests/code/callout1.c and tests/code/calloutInjector.c).
+
+%The source code of {\bf Heccer} contains inline developer documentation. As yet, there is no stable API but the Swig interfaces for {\bf Heccer} are not expected to change much. If you are interested in this, look at \href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/glue/swig/perl/fork4p1.source.html#line51}{a simple example} for driving {\bf Heccer} from Perl, and \href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/glue/swig/perl/pool1-feedback1.source.html#line51}{another example} with active channels and a calcium pool. {\bf Heccer} is currently capable of simulating Purkinje cells (see the \href{../purkinje-cell-model/purkinje-cell-model.tex}{\bf Purkinje\,Cell\,Model}), and, at first evaluation, runs slightly faster than {\it hsolve} (It is difficult to assess why exactly: while the {\it hsolve} implementation is much more optimized than {\bf Heccer's}, the {\bf Heccer} design is slightly better optimized than {\it hsolve}'s.).
+
+Heccer features include:
+
+\begin{itemize}[noitemsep,nolistsep]
+
+\item Can be driven from C, Perl, SSP, and fetches the model
+  parameters from the
+  \href{../model-container/model-container.tex}{\bf Model\,Container}.
+  The test specification in the Heccer package have examples of
+  C-level tests (see the tests/code/ directory) and Perl-level tests
+  (check the tests/glue/swig/perl/ directory).  The SSP package
+  defines many tests that integrate Heccer and the model-container.
+\item Computes the behaviour of single neurons.
+\item Integrates Hodgkin-Huxley-like channels.
+\item Integrates exponentially decaying calcium concentrations and Nernst potentials. Interfaces will be provided for more elaborate calcium models.
+\item Can operate in a ``passive-only'' mode, i.e. all channels in a model are ignored with exception of the synaptic channels.
+\item Tables to speed up computations, are dynamically generated and optimized.
+\item All parts of a model with the same kinetics automatically share tables.
+\item Computes the contribution of one channel type to the overall dendritic current, e.g. the contribution of all calcium channels or the contribution of all persistent calcium channels.
+\item Can serialize the current neuron state to an external stream for later resuming the simulation (or for multiple use).
+\item Generalizing the previous point, can be initialized from external sources.
+\end{itemize}
+
+{\bf Heccer} has been validated with a Purkinje cell model and
+produces an exact match with {\it hsolve}.
+
+
+\subsubsection{Chemesis-3}
+
+{\bf Chemesis} is a GENESIS-2 'add-on' library of objects for modeling
+biochemical reactions, models of second messengers, and calcium
+dynamics\cite{blackwell00:_eviden_distin_light_induc_calcium}.  As a
+test case for user-extensibility of G-3 we began implementing a
+{\bf Chemesis-3} library as a G-3 software component, based on the G-2
+implementation.  While the the G-2 implementation relies on the
+generic G-2 numerical routines, the {\bf Chemesis-3} implementation embeds
+only the most commonly used numerical routine.
+A time line reconstructed from the email conversations and from the
+version control system shows the course of development:
+
+%- exploratory email conversations May 30th and following two weeks.
+
+%- initial preparations and start of implementation on June 13th.
+
+%- core implementation on Sunday June 26th, including a fully working
+%  cal1 regression test case.  This was a day of crazy coding as in the
+%  old days, total of 18 revisions with many enhancements.
+
+%- implementation of cal2 test case on June 29th and July 10th.
+
+%- initial scripting bindings were added starting at July 10th for perl
+%  and July 13 for Python.
+
+%- first successful integration with the SSP scheduler on July 12th.
+
+%- model-container bindings started on July 13 and finished on July
+%  17th.  Removed model-related functions such as compartment volume
+%  computation that are already available in the model-container (and now
+%  shared with other solvers).
+
+%- G-shell integration on July 17th and July 18th.
+
+The functions currently implemented in the {\bf Chemesis-3} are:
+\begin{itemize}[noitemsep,nolistsep]
+\item {\bf rxnpool}: a concentration pool that interacts with
+  reactions and diffuses to other pools.
+\item {\bf conservepool}: mass conservation based pool, computes the
+  difference between the total of all molecules (a model parameter,
+  rest state), and diffused molecules, divided by compartment volume.
+\item {\bf reaction}: standard forward / backward chemical reactions
+  between pools of molecules.
+\item {\bf diffusion}: Computes flux in molecules between two pools.
+\end{itemize}
+
+Three of these functions map to a declarative token in the {\bf
+  model-container}: {\bf rxnpool} and {\bf conservepool} map to the
+(pre-existing) token {\bf POOL} (each with a different
+parameterization), {\bf reaction} maps to the token {\bf REACTION}.
+Similar to the representation of membrane depolarization diffusion
+with axial resistance (the {\bf AXIAL} parameter of a segment), the
+{\bf diffusion} function of ions is represented with the {\bf
+  diffusion\_constant} parameter of a pool.
+
+
+\subsubsection{Schedulers and User Interfaces}
+
+\subsubsection{SSP}
+
+Both the \href{../model-container/model-container.tex}{\bf
+  Model\,Container} and the mathematical solver
+\href{../heccer/heccer.tex}{\bf Heccer} are stand-alone GENESIS
+components. To be useful, these components must be `glued' together
+and activated correctly, such that they can work together in
+co-ordination on a single simulation. This is exactly what the Simple
+Scheduler in Perl ({\bf SSP}) does. It is currently the standard
+scheduler for GENESIS. {\bf SSP} exploits the sophistication of the
+Perl scripting language to load software components on demand, and
+activate them from a configuration file. It achieves this by loading
+dynamically those software components referenced in its configuration.
+Because the {\bf SSP} scheduler does not have any computational load,
+its implementation is very simple and highly configurable. Other
+configurations will connect {\bf SSP} to other modeling services or
+solvers.
+
+In summary {\bf SSP}:
+
+\begin{itemize}[noitemsep,nolistsep]
+\item {\bf Glues} other software components together.
+\item {\bf Synchronizes} the activities of other components during a simulation.
+\item {\bf Is configurable}. 
+\end{itemize}
+
+
+\subsubsection{SSPY}
+
+GENESIS is composed of several independent software components, each
+of which has a presence in Python. It is possible via the API of
+components such as the
+\href{../model-container/model-container.tex}{Model Container},
+\href{../heccer/heccer.tex}{Heccer}, and
+\href{../experiment/experiment.tex}{Experiment}, to script your
+simulations via Python. However this is not desirable since all
+simulations would be composed of code which contain their own control
+flow, that would often times require the user to understand all of the
+internals in order to expand on existing simulations. {\bf SSPy} is
+designed in the same vein as the \href{../ssp/ssp.tex}{SSP (Simple
+  Scheduler in Perl)} in that it encapsulates the operations for
+loading and running a complete simulation while allowing for complete
+control of simulation parameters and simulator options via a
+declarative configuration file. It also provides an easy plugin
+framework so that new modeling services, experimental protocols and
+solvers can be dynamically loaded from a plugin directory, making them
+immediately available without the need to change any of the core code.
+For more information on the plugin framework and extending SSPy, see
+the \href{../sspy-developer/sspy-developer.tex} {SSPy developer
+  document}.
+
+
+\subsubsection{G-Shell}
+
+After GENESIS has completed its startup procedure you should see the
+command prompt, {\tt genesis $>$}, indicating that you are now in the
+GENESIS shell environment ({\bf G-Shell}) and running an interactive
+GENESIS session. Note that to provide backward compatibility, the {\bf
+  G-Shell} interfaces with the Script Language Interpreter (SLI) of
+previous versions of GENESIS. To learn more about that functionality
+see \href{../backward-compatibility/backward-compatibility.tex}{here}.
 
 
 \section{Results}
