@@ -1594,15 +1594,19 @@ The projection between them is solved by {\bf DES}.
 SSP (perl) syntax:
 \begin{verbatim}
 {
- modelname => "/$modelname/target1",
+ modelname => "/network/target1",
  solverclass => "heccer",
 },
 {
- modelname => "/$modelname/target2",
+ modelname => "/network/target2",
  solverclass => "heccer",
 },
 {
- modelname => "/$modelname/projection1",
+ modelname => "/network/receiver",
+ solverclass => "heccer",
+},
+{
+ modelname => "/network/projection1",
  solverclass => "des",
 },
 \end{verbatim}
