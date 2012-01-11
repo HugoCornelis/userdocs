@@ -856,6 +856,16 @@ interface between the internal data storage format and the core of the new
 solvers, and finally 5) the specific development of a communication
 software component to create simulation run-time interfaces between solvers.
 
+The solvers currently available in G-3, starting at the highest scale:
+
+\begin{itemize}
+\item {\bf DES} discrete event queuing and distribution.
+\item {\bf Heccer} single neuron solver.
+\item {\bf Chemesis-3} solves simple reaction-diffusion systems.
+\item {\bf Experiment} provides current injections, time-tables and
+  output.
+\end{itemize}
+
 %\subsubsection{Extending GENESIS-3}
 
 %The G-3 documentation systems describes the procedures used for G-3
@@ -1015,6 +1025,7 @@ of certain (private) components, while allowing reuse of other
 (public) components.  This supports the controlled and modular construction of a multi-scale model as a given {\bf }NDF file
 can depend on other {\bf NDF} files.  
 
+
 \subsubsection{Physical Processes and Model Variables}
 Mathematical models can be used to describe physical processes that underly the functional activity
 of biological entities by associating the physical
@@ -1131,6 +1142,17 @@ The {\bf NDF} format supports an extensible set of tokens including {\tt
   SEGMENT}, {\tt CHANNEL}, {\tt CELL}, {\tt POPULATION}, {\tt
   PROJECTION}, {\tt NETWORK} and many more that allow the construction of
 models ranging from subcellular dynamics up to the network level.
+
+\subsubsection{Supported tokens by the model-container}
+
+The {\bf Model\,Container} supports tokens for:
+\begin{itemize}
+\item Grid3D / Populations / Networks
+\item VolumeConnect / Individual Connections
+\item Single Cells / Morphology
+\item HH-Channels / Synaptic (NMDA / AMPA) Channels
+\item Reaction -- Diffusion
+\end{itemize}
 
 
 \subsubsection{A Single-Neuron Solver: Heccer}
@@ -1621,32 +1643,26 @@ a file:
 
 \subsection{Multiscale Scripting}
 
-The details of the procedure followed can be seen in the online
-documentation "G-3 Extension" (genesis-extend-functionality) and
-"chemesis-3-log".
-
-
-Different numerical solution methods are required to solve the different
-types of mathematical equations associated with different scales of
-modeling.  The cable equation and ion currents are numerically solved with
-implicit Crank-Nicolson integration.  In G-3 this method of solution is
-implemented in a dedicated compartmental solver called Heccer.  In the G-3
-shell the user has to create a mapping from the name of the neuron model to
-the solver.  In the past, this was not necessary, as Heccer was the only
-solver.  Under planned extensions to the G-shell syntax, the correct syntax
-for a loaded single neuron model with name "/traub94" would be::
-
+In  a typical multi-scale model
+different numerical solution methods are required to solve the different
+types of mathematical equations associated with the different scales of the
+model.  In G-3 the cable equation and ion currents are numerically solved with
+implicit Crank-Nicolson integration using {\bf Heccer}.  Calcium models are numerically solved with {\bf Chemesis=3}.
+The association between a given model and its solver can be configured by the user.
+%Under planned extensions to the G-shell syntax, the correct syntax
+%for a loaded single neuron model with name "/purkinje" would be:
+For example to associate the model with name ``/purkinje'' with the solver ``heccer'', one issues the command:
 \begin{verbatim}
-  genesis > solverset "/traub94 => heccer"
+  genesis > solverset "/purkinje => heccer"
 \end{verbatim}
 
 Biochemical pathways in neuronal modeling are complex networks of
 interacting ion concentration pools.  The G-3 implementation for
-simulation of biochemical pathways is called Chemesis-3 and has a
+simulation of biochemical pathways is called {\bf Chemesis-3} and has a
 dedicated optimized implementation to represent networks parameterized
 with biochemical pathways.  To simulate a complex network model of
 biochemical pathways, in this example called "/cal1", a user would
-typically type from the G-3 shell::
+typically type from the G-3 shell:
 
 \begin{verbatim}
   genesis > solverset "/cal1 => chemesis3"
@@ -1655,7 +1671,7 @@ typically type from the G-3 shell::
 In case the network of biochemical pathways is defined inside the
 single neuron model, a user would have to type two commands with
 wildcards that associate the correct solver with each component of the
-model, for example::
+model, for example:
 
 \begin{verbatim}
   genesis > solverset "/**/cal1 => chemesis3"
@@ -1666,42 +1682,6 @@ In later version of G-3 these rules will be built in but still allow
 the user to select a different method of solution for different
 components of his or her model.
 
-
-* VERY brief list of steps or description of steps to convert chemesis
-
-  1. Creating a new component "chemesis3"
-
-  2. Creating a new object within an existing "chemesis3".
-     "model-container", or "experiment" module
-
-  [Hugo, I will need some help here.  This can be very short, although
-  we had originally meant it to be a major part.  Perhaps the first item
-  can be glossed over for this audience.]
-
-\subsection{Multi-scale modeling support in G-3}
-
-Supported types by the model-container:
-
-- Grid3D / Populations / Networks
-
-- VolumeConnect / Individual Connections
-
-- Single Cells / Morphology
-
-- HH - Channels / Synaptic (NMDA / AMPA) Channels
-
-- Reaction -- Diffusion
-
-
-Available solvers, starting at the highest scale:
-
-- DES: discrete event queuing and distribution
-
-- Heccer: single neuron solver.
-
-- Chemesis-3: simple reaction-diffusion systems,
-
-- Experiment: current injections, time-tables and output.
 
 
 %\begin{figure}[h]
@@ -1797,19 +1777,6 @@ support for use of parallel computing resources within the GENESIS
 system will also be critical to the ability to run large scale models
 (Cornelis 2011a; b) with the large scale simulations being carried out
 on Linux clusters of 100-500 CPU cores.
-
-
-\subsection{text sources}
-
-- email jim single model -container
-
-- multiscale grant
-
-- dave's chapter
-
-- chemesis cns report
-
-- two papers
 
 
 \subsection{additional references}
