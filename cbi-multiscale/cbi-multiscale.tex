@@ -917,23 +917,23 @@ extensible language.
 
 \subsubsection{The Neurospaces Description Format}
 
-The model container's Neurospaces Description Format (NDF) file format was originally designed as a file-based
+The model container's Neurospaces Description Format ({\bf NDF}) file format was originally designed as a file-based
 user-editable declarative interface to the {\bf HSolve} method in
-GENESIS-2 in 1999\cite{cornelis03:_neuros}.  In that same year it was
-expanded with single neuron and network modeling capabilities.
+GENESIS-2 in 1999\cite{cornelis03:_neuros}.  In that same year its single neuron modeling capabilities were
+expanded with network modeling capabilities.
 
 The file format is indicated by the {\tt .ndf} file name extension and
 integrates and extends the previous GENESIS {\tt .p} and {\tt .g}
 declarative file formats.  {\bf NDF} files are purely declarative and can be stored in a model database. In an
-  NDF file, a model exists as a hierarchy of tokens, each
+  {\bf NDF} file, a model exists as a hierarchy of tokens, each
 representing a biological component.  Each component is a physical
 process and can have parameters and shared variables.
 
-\subsubsection{Overview of a NDF File}
+\subsubsection{Overview of a {\bf NDF} File}
 \label{sec:overview-ndf-file}
 %We now introduce the basic parts of a simple {\bf NDF} file that defines a single compartment neuron containing classical Hodgkin-Huxley descriptions of $Na$ and $K$ channels.
-A NDF file contains four sections. They are not necessarily
-filled, but must be present in the given order.  A NDF file has
+A {\bf NDF} file contains four sections. They are not necessarily
+filled, but must be present in the given order.  A {\bf NDF} file has
 the following general form (described in more detail below).
 
 \begin{center}
@@ -967,9 +967,8 @@ the following general form (described in more detail below).
 %  \end{boxedminipage}
 \end{center}
 
-\paragraph*{Header Section}
-The header must
-always be present and start with the interpreter sequence
+The {\bf Header Section}
+must starts with the {\it Unix interpreter} sequence
 giving the system specific absolute path to the NMC executable (for example):
 \begin{verbatim}
     #!/usr/local/bin/neurospacesparse
@@ -977,48 +976,44 @@ giving the system specific absolute path to the NMC executable (for example):
 This is followed by two declarations on separate lines. 
 \begin{verbatim}
     //-*- NEUROSPACES -*-
-    
     NEUROSPACES NDF
-    \end{verbatim}
+\end{verbatim}
 The first (optional) declaration flags an appropriate major
 mode and keyword highlighting for Emacs and XEmacs (the Neurospaces Emacs major mode is bundled with the
-  NMC package). The second declaration identifies the file type (here NDF).
+  NMC package). The second declaration identifies the file type (here {\bf NDF}).
 
-\paragraph*{Import Section}
-This section uses the {\tt FILE} keyword to declare
-dependencies on other NDF files, e.g.
+The {\bf Import Section}
+ uses the {\tt FILE} keyword to declare
+dependencies on other {\bf NDF} files, e.g.
 \begin{verbatim}
     IMPORT
         FILE <namespace> "<path>/<fname>.ndf"
     END IMPORT
 \end{verbatim}
 
-To simplify model development, G-3 supports construction of NDF files that define different components of a model.  These files
+To simplify model development, G-3 supports construction of {\bf NDF} files that define different components of a model.  These files
 may be thought of as {\it library} files.  To expedite model
-development, all NDF files can be shared by being imported into
-other NDF files.
+development, all {\bf NDF} files can be shared by being imported into
+other {\bf NDF} files.
 
-\paragraph*{Private Model Section}
-These are models that are private to the NDF file
-that contains them.  They may depend on imported public models of
-other files or be hard coded.
+The {\bf Private Model Section}
+defines models that are private to a single {\bf NDF} file.  They may depend on imported public models of
+other files.
 
-\paragraph*{Public Model Section}
-These models are visible to the NDF files into
+The {\bf Public Model Section} defines models are visible to the {\bf NDF} files into
 which they are imported.  Typically, for example, a neuron morphology
 would be located here.  Public models may depend on private models or
 be hard coded.
 
-\subsubsection{Summary}
-One important feature of a NDF file is that it can contain
+One important feature of a {\bf NDF} file is that it can contain
 either a single model or a library of models that represent different
 levels of neuronal morphology and/or electrophysiological function.
-This supports the modular construction of a model as a given NDF file
-can depend on other NDF files, i.e. the models declared in a
-NDF file can be `private' to that file, or `public' and
-available to other NDF files. This mechanism prevents the use
+Models declared in a
+{\bf NDF} file can be `private' to that file, or `public' and
+available to other {\bf NDF} files. This mechanism prevents the use
 of certain (private) components, while allowing reuse of other
-(public) components.
+(public) components.  This supports the controlled and modular construction of a multi-scale model as a given {\bf }NDF file
+can depend on other {\bf NDF} files.  
 
 \subsubsection{Physical Processes and Model Variables}
 Mathematical models can be used to describe physical processes that underly the functional activity
@@ -1051,7 +1046,7 @@ to this equation is a dual-exponential equation:
 %\end{equation}
 This equation has two parameters {\tt TAU1} and {\tt TAU2}, sometimes
 called the rise and decay time constants, respectively.  Assigning
-values to the two parameters, this can be expressed in the NDF file
+values to the two parameters, this can be expressed in the {\bf NDF} file
 as:
 %EQUATION_EXPONENTIAL exp2
 
@@ -1068,7 +1063,7 @@ When one biological entity modulates the behavior of another,
 their physical processes share one or more variables.  In the case of
 a synaptic channel the incoming spikes raise the neurotransmitter
 concentration level in the synaptic cleft, which then modulates total
-ionic conductance through channels in the post-synaptic membrane.  The NDF file format expresses the
+ionic conductance through channels in the post-synaptic membrane.  The {\bf NDF} file format expresses the
 neurotransmitter concentration level as {\tt activation} and
 conductance as {\tt G}.  As these variables  are shared they must be declared using
 the {\tt BINDABLES} keyword:
@@ -1087,7 +1082,7 @@ activation level can be bound to the channel activation level using a
 \end{verbatim}
 
 Putting everything together using the {\tt EQUATION\_EXPONENTIAL}
-token to represent the dual-exponential equation, we get the NDF
+token to represent the dual-exponential equation, we get the {\bf NDF}
 snippet that defines a model's component with name `exp2':
 \begin{verbatim}
 EQUATION_EXPONENTIAL exp2
@@ -1106,12 +1101,12 @@ END EQUATION_EXPONENTIAL
 
 In this example, the order of the clauses of {\tt BINDABLES}, {\tt
   BINDINGS} and {\tt PARAMETERS} was chosen for readibility.  
-Importantly, neither the NDF file format nor
+Importantly, neither the {\bf NDF} file format nor
 the model container
 make a syntactical distinction between the variables and parameters of a
 physical process.
 
-The NDF format supports an extensible set of tokens including {\tt
+The {\bf NDF} format supports an extensible set of tokens including {\tt
   SEGMENT}, {\tt CHANNEL}, {\tt CELL}, {\tt POPULATION}, {\tt
   PROJECTION}, {\tt NETWORK} and many more that allow the construction of
 models ranging from subcellular dynamics up to the network level.
