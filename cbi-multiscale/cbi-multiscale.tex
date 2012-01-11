@@ -1428,7 +1428,7 @@ capacitance ({\tt CM}). (Note: This script
   Maveric.)
 %\footnote{The solver requires {\tt RA} for all
 %  compartments.}
-These parameters are given by their specific values (in SI units) as
+These\marginpar{move to methods, NDF} parameters are given by their specific values (in SI units) as
 commonly reported in the literature, instead of their actual values
 scaled to the compartment surface area as used by a mathematical
 solver \cite{cornelis04:_neuros_param_handl}. The script defines a
@@ -1525,16 +1525,14 @@ if __name__ == '__main__':
 
 \subsection{Scripting Chemesis-3}
 
-Our goal was to implement and run two of the G-2 Chemesis tutorial examples.
+In this section we show how to implement two of the G-2 Chemesis tutorial examples in G-3.
 
 The example script {\it cal1.g} creates a single compartment with interaction
-between calcium and a buffer.  A second example *cal2.g* creates a two
-compartment model with a dendrite and soma. One additional diffusion object
-is required to allow for diffusion between compartments.
+between calcium and a buffer, {\it cal2.g} creates a two
+compartment model with a dendrite and soma with an additional diffusion object
+for diffusion between the compartments.
 
-The two listings below show the G-2 SLI language script *cal1.g* and the G-3
-{\bf NDF} representation *cal1.ndf*, found with *cal2.ndf* in
-'/usr/local/neurospaces/models/library/chemesis'.
+Below is the  G-3 representation of {\it cal1.ndf} 
 
 \begin{verbatim}
 #!neurospacesparse
@@ -1602,8 +1600,8 @@ END PUBLIC_MODELS
 \end{verbatim}
 
 
-The commands below illustrate how the G-3 Studio (model explorer) is used
-to load  *cal1.ndf* into the Model Container and explore the model::
+The commands below illustrate how the {\bf G-Shell} and the {\bf G-3 Studio} (model explorer) is used
+to load  {\it cal1.ndf} into the {\bf Model\,Container} and explore the model:
 
 \begin{verbatim}
   \$ genesis-g3
@@ -1612,11 +1610,13 @@ to load  *cal1.ndf* into the Model Container and explore the model::
   genesis > explore
 \end{verbatim}
 
-[chemesis-cal1.png - sent by Hugo]
-[chemesis-cals.png - sent by Hugo]
 
-[if possible -  G-shell commands to run cal1.ndf and output to a file]
+The {\bf G-Shell} command to run the {\it cal1.ndf} and send output to
+a file:
 
+\begin{verbatim}
+  genesis > run /cal1 2
+\end{verbatim}
 
 
 \subsection{Multiscale Scripting}
