@@ -1059,6 +1059,27 @@ as:
 \end{verbatim}
 %END EQUATION_EXPONENTIAL
 
+Values are either constant, point to a parameter of another symbol,
+or have a function value.  As an example:
+
+\begin{verbatim}
+PARAMETERS
+   PARAMETER ( DIAMETER = 0.3 ),
+   PARAMETER ( LENGTH = ..->LENGTH ),
+   PARAMETER ( SEED = SERIAL () )
+END PARAMETERS
+\end{verbatim}
+
+Here\marginpar{makes sense?}, the {\tt DIAMETER} parameter has a constant value, the {\tt
+LENGTH} parameter is inherited from the parent component (the
+'$..$' notation is a reference to the parent symbol\footnote{The NDF
+format supports both the '$..$', and $^\wedge$ notations to
+reference the parent symbol.  While non-technical people might
+prefer the $^\wedge$ notation,
+technical people will prefer the '$..$' notation.}),
+and {\tt SEED} has a value defined by the function {\tt SERIAL()}.
+
+
 When one biological entity modulates the behavior of another,
 their physical processes share one or more variables.  In the case of
 a synaptic channel the incoming spikes raise the neurotransmitter
@@ -1115,14 +1136,16 @@ models ranging from subcellular dynamics up to the network level.
 \subsubsection{A Single-Neuron Solver: Heccer}
 
 {\bf Heccer} is a G-3 reimplementation of the compartmental solver
-({\it hsolve}) of the GENESIS-2 simulator.  {\bf Heccer} employs the
-Crank-Nicolson solution to the cable equations of a neuronal
+({\it hsolve}) of the GENESIS-2 simulator\cite{cornelis02:_tutor}.  {\bf Heccer} employs the
+Crank-Nicolson solution to integrate the cable equation of a neuronal
 morphology and the Hodgkin-Huxley equations of their transmembrane
 currents\cite{segev95:_theor_found_dendr_funct, hha52, cornelis02:_tutor}.
+{\bf Heccer} also integrates exponentially decaying calcium concentrations and Nernst potentials but for 
+more elaborate calcium models it must be interfaced with other solvers.
 
-{\bf Heccer} can be instantiated from C, Python or Perl.  It is also
-possible to link {\bf Heccer} directly to Matlab as it includes {\bf Swig} (www.swig.org) interface definitions, such
-that linking {\bf Heccer} to other technologies should be easy.
+%{\bf Heccer} can be instantiated from C, Python or Perl.  It is also
+%possible to link {\bf Heccer} directly to Matlab as it includes {\bf Swig} (www.swig.org) interface definitions, such
+%that linking {\bf Heccer} to other technologies should be easy.
 
 %The optimization of a neuronal solver ultimately focuses on accuracy
 %and performance. Transforming complex biological parameters into
@@ -1130,32 +1153,32 @@ that linking {\bf Heccer} to other technologies should be easy.
 %the most important features for a good solver, and gives the solver a
 %performance boost of about a factor four to six.
 
-Adding new channel types to {\bf Heccer} can be done using callouts.
-The callout mechanism allows for general user extensions that
-contribute a current or conductance at a particular time in a
-simulation. {\bf Heccer} automatically integrates this contribution
-into the membrane potential.  
+%Adding new channel types to {\bf Heccer} can be done using callouts.
+%The callout mechanism allows for general user extensions that
+%contribute a current or conductance at a particular time in a
+%simulation. {\bf Heccer} automatically integrates this contribution
+%into the membrane potential.  
 %Check the tests of the callouts for more
 %information (tests/code/callout1.c and tests/code/calloutInjector.c).
 
 %The source code of {\bf Heccer} contains inline developer documentation. As yet, there is no stable API but the Swig interfaces for {\bf Heccer} are not expected to change much. If you are interested in this, look at \href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/glue/swig/perl/fork4p1.source.html#line51}{a simple example} for driving {\bf Heccer} from Perl, and \href{http://neurospaces.sourceforge.net/neurospaces_project/heccer/tests/html/glue/swig/perl/pool1-feedback1.source.html#line51}{another example} with active channels and a calcium pool. {\bf Heccer} is currently capable of simulating Purkinje cells (see the \href{../purkinje-cell-model/purkinje-cell-model.tex}{\bf Purkinje\,Cell\,Model}), and, at first evaluation, runs slightly faster than {\it hsolve} (It is difficult to assess why exactly: while the {\it hsolve} implementation is much more optimized than {\bf Heccer's}, the {\bf Heccer} design is slightly better optimized than {\it hsolve}'s.).
 
-Heccer functionality and features include:
+%Heccer functionality and features include:
 
-\begin{itemize}[noitemsep,nolistsep]
+%\begin{itemize}[noitemsep,nolistsep]
 
-\item Can be driven from C, Perl, SSP, and fetches model
-  parameters from the model containers.
-\item Computes the behaviour of single neurons.
-\item Integrates Hodgkin-Huxley-like channels.
-\item Integrates exponentially decaying calcium concentrations and Nernst potentials. Interface with more elaborate calcium models is possible.
-\item Can operate in a ``passive-only'' mode, i.e. all channels in a model are ignored with exception of synaptic channels.
-\item Tables that speed up computations are dynamically generated and optimized.
-\item All parts of a model with the same kinetics automatically share tables.
-\item Computes the contribution of one channel type to the overall dendritic current, e.g. the contribution of all calcium channels or the contribution of all persistent calcium channels.
-\item Can serialize the current neuron state to an external stream for multiple use or later resuming a simulation.
-\item Can be initialized from external sources.
-\end{itemize}
+%\item Can be driven from C, Perl, SSP, and fetches model
+%  parameters from the model containers.
+%\item Computes the behaviour of single neurons.
+%\item Integrates Hodgkin-Huxley-like channels.
+%\item Integrates exponentially decaying calcium concentrations and Nernst potentials. Interface with more elaborate calcium models is possible.
+%\item Can operate in a ``passive-only'' mode, i.e. all channels in a model are ignored with exception of synaptic channels.
+%\item Tables that speed up computations are dynamically generated and optimized.
+%\item All parts of a model with the same kinetics automatically share tables.
+%\item Computes the contribution of one channel type to the overall dendritic current, e.g. the contribution of all calcium channels or the contribution of all persistent calcium channels.
+%\item Can serialize the current neuron state to an external stream for multiple use or later resuming a simulation.
+%\item Can be initialized from external sources.
+%\end{itemize}
 
 %{\bf Heccer} has been validated with a Purkinje cell model and
 %produces an exact match with {\it hsolve}.
@@ -1379,7 +1402,7 @@ models (not shown).  In the next section we explore some of the more
 graphical capabilities of G-3.
 
 
-\subsection{Simple Scripting with a CBI Compliant Simulator}
+\subsection{Simple Scripting}
 \label{ss-apens}
 
 Python uses modules to group related functions.  G-3 employs Python's
@@ -1392,11 +1415,9 @@ its software components.
 %simulator.
 As an example, the G-3 Python module {\it nmc} contains functions to
 simplify the storage of neuron models in computer memory.  This module
-is a simple front-end to the {\bf Model Container}, a G-3 component
-which for efficiency is coded in the system programming language C.
+is a simple front-end to the {\bf Model Container}.
 Likewise, {\it Heccer} is a wrapper module for the {\bf Heccer}
-component which in turn is an interface to a low-level single neuron
-solver written in C.  Python bindings for the {\bf Discrete Event System} to facilitate network modeling also exist.
+component.  Python bindings for the {\bf Discrete Event System} to facilitate network modeling also exist.
 
 Here we show a simple high-level Python script that runs a simulation of a single cylindrical segment. It
 is defined by standard values for the parameters of membrane
@@ -1504,11 +1525,9 @@ if __name__ == '__main__':
 
 \subsection{Scripting Chemesis-3}
 
-- Chemesis CNS report.
-
 Our goal was to implement and run two of the G-2 Chemesis tutorial examples.
 
-The example script *cal1.g* creates a single compartment with interaction
+The example script {\it cal1.g} creates a single compartment with interaction
 between calcium and a buffer.  A second example *cal2.g* creates a two
 compartment model with a dendrite and soma. One additional diffusion object
 is required to allow for diffusion between compartments.
@@ -1516,9 +1535,6 @@ is required to allow for diffusion between compartments.
 The two listings below show the G-2 SLI language script *cal1.g* and the G-3
 {\bf NDF} representation *cal1.ndf*, found with *cal2.ndf* in
 '/usr/local/neurospaces/models/library/chemesis'.
-
-
-**cal1.ndf**::
 
 \begin{verbatim}
 #!neurospacesparse
@@ -1572,7 +1588,7 @@ PUBLIC_MODELS
         INPUT concen, OUTPUT concen
       END BINDABLES
       BINDINGS
-                    INPUT ("substrate") ../somaCa->concen,
+        INPUT ("substrate") ../somaCa->concen,
         INPUT ("substrate") ../somabuf->concen,
         INPUT ("product") ../somaCabuf->concen,
       END BINDINGS
