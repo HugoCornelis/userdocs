@@ -231,9 +231,9 @@ $^\ast$ E-mail: Corresponding Author Hugo.Cornelis@gmail.com
 
 \section{Introduction}
 
-In computational neuroscience, the term ``user workflow'' can be used to describe a sequence of steps typically necessary for the development and simulation of a computational model, including data generation and analysis. Such a workflow allows the object under investigation, the operations performed during the investigation, and the tools used to perform the investigation to be distinguished (for more detail see \cite{10.1371/journal.pone.0028956}).
+In computational neuroscience, the term ``user workflow'' (construct model, design experiment, run simulation, process output, iterate \cite{10.1371/journal.pone.0028956})can be used to describe a sequence of steps typically necessary for the development and simulation of a computational model, including data generation and analysis. Such a workflow allows the object under investigation, the tools used to perform the investigation, and the operations performed during the investigation to be distinguished (for more detail see \cite{10.1371/journal.pone.0028956}).
 
-Here, we extend the workflow paradigm by introducing a ``cognitive workflow'' that describes the process by which a mental model can be transformed from an abstraction into an implementation. One cognitive workflow that facilitates such a path is illustrated in Figure\,\ref{fig:mental-model-simulation-path}. In this figure, the columns give the spatial scale of the biology (the object under investigation) to the left, the software implementation (computer science) to the right, and the mathematical implementation or algorithm (continuous mathematics) in the center. The rows in each column give simulator functionality appropriate for the given structural level of the biology. 
+Here, we extend the workflow paradigm by introducing a ``cognitive workflow''. This workflow describes the process by which a mental model is transformed from an abstraction into an implementation. One cognitive workflow that facilitates such a path is given by the top row in Figure \ref{fig:mental-model-simulation-path} (Biology\,$\rightarrow$\,Computer Simulation). In this figure, the column to the left gives the spatial scale and lists the level of structural organization of the biology (object under investigation), the column to the right lists the equivalent level of software and hardware (operations performed during the investigation), and the central column gives the mathematical implementation or algorithm (tools used to perform the investigation). The rows in each column give simulator functionality appropriate for the given level. 
 
 \begin{figure}[ht]
   \begin{center}
@@ -243,7 +243,9 @@ Here, we extend the workflow paradigm by introducing a ``cognitive workflow'' th
   \label{fig:mental-model-simulation-path}
 \end{figure}
 
-We also describe a relationship between the cognitive workflow and three independent top-down levels of modelling previously proposed by Marr\cite{Marr:19821kx}. These include:  (a) computational theory--what does the system do or what problems does it solve? (b) representation and algorithm--how does the system solve the problem? and (c) hardware implementation--how is the system physically realized? Finally, we describe the implications of this workflow for multi-scale modelling. 
+The matrix that is implicit in Figure\,\ref{fig:mental-model-simulation-path} reveals a relationship between the cognitive workflow and the three independent top-down levels of modelling previously proposed by Marr\cite{Marr:19821kx}, including:  (a) computational theory--what does the system do or what problems does it solve? (b) representation and algorithm--how does the system solve the problem? and (c) hardware implementation--how is the system physically realized? 
+
+To explain the role of the cognitive workflow in the development of a multi-scale model, initially we introduce the reconfigured GENESIS simulator (G-3) and the primary  components that support multi-scale modelling. We then describe how to extend G-3 functionality for multi-scale modeling and give examples of interactive query and simple and multi-scale modelling scripting.
 
 %\newpage
 %
@@ -544,12 +546,12 @@ We also describe a relationship between the cognitive workflow and three indepen
 
 \subsubsection{Structural Overview of the CBI Architecture}
 
-The CBI architecture is defined as a modular paradigm that places
+The Computational Biology Initiative Federated Software Architecture (CBI architecture) is defined as a modular paradigm that places
 stand-alone software components into a set of logical relationships.
 In this sense it defines a modular framework that provides the
 necessary parts of a simulator.
 
-The schema identified by the separation of concerns (see
+A schema identified by separation of concerns (see
  \cite{10.1371/journal.pone.0028956} for details) is expanded in
 Figure~\ref{fig:cbi-architecture-simple} to give the modules that
 form the building blocks of the CBI architecture.  It retains
@@ -584,8 +586,7 @@ applications to the functional integration of otherwise independent
 applications.  Federation aims to provide a unified interface to
 diverse applications and mask from the user the differences,
 idiosyncrasies, and implementations of the underlying applications and
-data sources (see
-www-128.ibm.com/developerworks/db2/library/techarticle/0203haas/0203haas.html).
+data sources (see \cite{federated-2002-xyz}).
 In doing so, federation provides transparency, heterogeneity, a high
 degree of function, autonomy for the underlying federated sources,
 extensibility, openness, and the possibility of highly optimized
@@ -599,7 +600,7 @@ Ideally, it makes the underlying applications look like a single
 system to the user.  Enhanced application interoperability is achieved
 through the use of flexible high-level scripting languages to support
 diverse workflows and low-level application programmer interfaces
-(API)s and application binary interfaces (ABI)s for performance.
+(API)s and application binary interfaces (ABI)s for performance (see \cite{Cornelis:2011fk}).
 
 % For completeness, we note that northbound and southbound interfaces
 % are indicated in this figure. Northbound interfaces conceptualize
@@ -622,7 +623,7 @@ and instantiation and the display and analysis of simulation output.
 Figure \ref{fig:cbi-architecture-expanded} provides an expanded view
 of Figure \ref{fig:cbi-architecture-simple} and illustrates in more
 detail the structural relationships between the different modules and
-sub-modules that comprise the CBI architecture.  We introduced their
+sub-modules that comprise the CBI architecture.  We described their
 functionality in \cite{10.1371/journal.pone.0028956}.  The behavior of
 the CBI architecture is defined by the functional and dynamic
 connectivity provided by these individual modules.  We now describe
@@ -682,7 +683,9 @@ the {\tt Solvers}.
 %behavior of an implemented
 %software system.\\
 
-{\bf ADC: Got this Far.}\\
+As a result of Steps 1--3 of the user workflow, data flows both through and between software components that conform to a CBI architecture: the data cycles between databases and files, and back-end Solvers. Here we have described this cycle for a single neuron model and, as we briefly noted, it also occurs for network models. By design any type of model including multi-scale models will exhibit this data cycle.
+
+In Steps 4 and 5, the availability of any model data from the {\tt Biology\,Model\,Container} and the functionality of {\bf Scripting\,Libraries\,\&\,Applications} can connect the CBI architecture with external tools while maintaining the integrity of the separation of concerns. {\bf Scripting\,Libraries\,\&\,Applications} connect to external tools such as Matlab to implement output analysis. They also allow simulation output data to be combined with the model parameters and structure available in the {\tt Biology\,Model\,Container} to implement Step 5 of the user workflow, for instance to provide automated script generators for the generation of batch simulations. Importantly, at this stage of the workflow, the back-ends of the CBI architecture (indicated below the dotted horizontal line in Figures \ref{fig:cbi-architecture-simple} and \ref{fig:cbi-architecture-expanded}) are unavailable. Once Step 3 is completed, all data generated by dynamic states of the model are available through databases and files. Consequently, there is no requirement to query software components that deal with numerical data. This ultimately prevents the creation of a monolithic simulator.
 
 %Intermediate results may be analyzed or aggregated by
 %analysis libraries, e.g. for signal analysis and binning of spikes.
@@ -829,33 +832,27 @@ the {\tt Solvers}.
 
 \subsection{GENESIS 3.0}
 
-The redesigned and modernized core structure of GENESIS produces
-GENESIS version 3.0 or G-3.  The structure of G-3 provides a new and
-unique capacity for federated and modular software development in
-support of multi-scale modeling.  Furthermore, its structure also
+The software architecture developed for G-3 supports a new and
+unique capacity for federated and modular software development of multi-scale modelling.  Furthermore, its structure also
 supports the direct interaction or embedding of models at different
 levels of scale.  During model construction this is accomplished
 through the reconfiguration of the internal model storage format,
-while during the simulation run-time this is accomplished through
-specific software modules that create intermediary representation of
-variables present at multiple scales as described in more detail in
-subsequent sections.
+while during simulation run-time it is accomplished through
+specific software modules that create intermediary representations of
+variables present at multiple scales as described in more detailbelow.
 
-Following the CBI-architecture several explicit features of G-3 allow
-the rapid incorporation of new software components: 1) the modular
-separation of the development of the core of new solvers from that of
-other software components allows full focus on the mathematical
-aspects of the solver and their implementation, and better
-optimization; 2) the G-3 Developer package facilitates integration of
+Several explicit features of G-3 allow
+new software components to be rapidly incorporated into the simulator: 1) the modular CBI structure allows the development of new solvers independently of
+other software components. This encourages full focus on the mathematical
+aspects of solvers and their implementation, thus better
+optimization; 2) the G-3 {\it Developer\,Package} facilitates integration of
 new solvers into the build system of G-3 enabling immediate regression
-tests; 3) easy extension of the configuration of the internal model
+testing; 3) easy extension of the configuration of the internal model
 storage format to establish new declarative model tokens and
-parameters recognized by the new solvers; 4) easy construction of an
-interface between the internal storage format and the core of the new
-solvers and finally 5) the specific development of a communication
-software component to create simulation run-time interfaces between
-the solvers.
-
+parameters recognized by new solvers; 4) easy construction of an
+interface between the internal data storage format and the core of the new
+solvers, and finally 5) the specific development of a communication
+software component to create simulation run-time interfaces between solvers.
 
 %\subsubsection{Extending GENESIS-3}
 
@@ -914,7 +911,6 @@ simulations.
 
 The {\bf Model\,Container} defines models in a purely declarative,
 extensible language.
-
 
 \subsubsection{The Neurospaces Description Format}
 
