@@ -1580,6 +1580,33 @@ The individual neurons are solved by different {\bf Heccer} instances.
 
 The projection between them is solved by {\bf DES}.
 
+{\bf G-Shell} syntax:
+\begin{verbatim}
+  genesis > solverset "/network/target1 => heccer"
+  genesis > solverset "/network/target2 => heccer"
+  genesis > solverset "/network/receiver => heccer"
+\end{verbatim}
+
+\begin{verbatim}
+  genesis > solverset "/network/projection => chemesis3"
+\end{verbatim}
+
+SSP (perl) syntax:
+\begin{verbatim}
+{
+ modelname => "/$modelname/target1",
+ solverclass => "heccer",
+},
+{
+ modelname => "/$modelname/target2",
+ solverclass => "heccer",
+},
+{
+ modelname => "/$modelname/projection1",
+ solverclass => "des",
+},
+\end{verbatim}
+
 
 \subsection{Scripting Chemesis-3}
 
