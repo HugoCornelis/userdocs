@@ -925,6 +925,16 @@ For completeness we note that the {\bf Experimental\,Model\,Container} stores a 
 Finally, we note that the model containers define models in a purely declarative,
 extensible language.
 
+The {\bf Biology\,Model\,Container} supports tokens for:
+\begin{itemize}
+\item Grid3D / Populations / Networks
+\item VolumeConnect / Individual Connections
+\item Single Cells / Morphology
+\item HH-Channels / Synaptic (NMDA / AMPA) Channels
+\item Reaction -- Diffusion
+\end{itemize}
+
+
 \subsubsection{The Neurospaces Description Format}
 
 The model container's Neurospaces Description Format ({\bf NDF}) file format was originally designed as a file-based
@@ -1143,17 +1153,6 @@ The {\bf NDF} format supports an extensible set of tokens including {\tt
   PROJECTION}, {\tt NETWORK} and many more that allow the construction of
 models ranging from subcellular dynamics up to the network level.
 
-\subsubsection{Supported tokens by the model-container}
-
-The {\bf Model\,Container} supports tokens for:
-\begin{itemize}
-\item Grid3D / Populations / Networks
-\item VolumeConnect / Individual Connections
-\item Single Cells / Morphology
-\item HH-Channels / Synaptic (NMDA / AMPA) Channels
-\item Reaction -- Diffusion
-\end{itemize}
-
 
 \subsubsection{A Single-Neuron Solver: Heccer}
 
@@ -1204,6 +1203,32 @@ more elaborate calcium models it must be interfaced with other solvers.
 
 %{\bf Heccer} has been validated with a Purkinje cell model and
 %produces an exact match with {\it hsolve}.
+
+\subsubsection{DES: Action Potential Propagation Abstraction}
+
+The {\it D}iscrete {\it E}vent {\it S}ystem is used for abstract
+modeling of action potentials.  This functionality is needed for
+running network simulations.  Action potentials generated at the soma
+of one neuron, are translated to a discrete event, that is delivered
+at a post-synaptic target of a connected neuron. The {\bf DES}
+component borrows ideas from previous research in discrete event
+simulation.
+
+{\bf DES} can queue a single event and deliver it to many targets.  It
+allows to associate 'secondary' data with a connection, like weight,
+delay and other data specific for the model.
+
+From a software architecture viewpoint, {\bf DES} is a separate
+solver that simulates action potential propagation in an efficient way.
+Splitting this functionality from the rest of the simulator,
+facilitates customization for modeling of sophisticated learning
+rules, especially related to STDP, diffusion and spillover.
+
+Internally, the discrete event system contains two subcomponents, one
+component for event distribution that contains a connectivity matrix,
+a second component for event queuing.
+
+
 
 \subsubsection{Chemesis-3}
 
@@ -1545,6 +1570,17 @@ if __name__ == '__main__':
 %#    my_nmc.Query("setparameter thickd::gaba::/Purk_GABA 1")
 
 
+\subsection{Multi-Scale Network Modeling}
+
+This was previously already possible with G-2.
+
+See tests/perl/spiker4.
+
+The individual neurons are solved by different {\bf Heccer} instances.
+
+The projection between them is solved by {\bf DES}.
+
+
 \subsection{Scripting Chemesis-3}
 
 In this section we show how to implement two of the G-2 Chemesis tutorial examples in G-3.
@@ -1693,6 +1729,8 @@ components of his or her model.
 
 
 \section{Discusion}
+
+Contrast this with \cite{ray08:_pymoos}
 
 \begin{figure}[ht]
   \begin{center}
