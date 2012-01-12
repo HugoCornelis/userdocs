@@ -267,7 +267,7 @@ Initially, we describe features of the reconfigured GENESIS simulator (G-3), the
 %
 %There are at least two fundamental reasons why is is not possible to conceptualize a system defined in this way\marginpar{which way?}: (1) It is only humanly possible to conceptualize at specific scales, not with combinations of conceptualizations at multiple scales, and (2) It is not humanly possible to conceptualize properties separately when they are parts of a system as they are always parts `of' something.
 %
-%At any scale of conceptualization, properties are always aggregated at least as simple objects and a system at any scale of conceptualization is an approximation or loose congruence of the system. A scale specific conceptualization of a system is partial if there are patterns pertinent to an observer's interest in a system that are only available at other scales (where patterns are simple objects, relationships, and their aggregations). This is not an `abstraction' of the system as this means leaving things out with the understanding that what is left out can always be reinserted. What is ``left out'' of a scale specific conceptualization of a system are patterns that might be available at other scales. Such patterns cannot be returned to a scale specific approximation of a system, regardless of resolution or field of view. The `missing' content has no place in the conceptualization as it was never available to it in the first place\marginpar{needs more clarification?}.
+%At any scale of conceptualization, properties are always aggregated at least as simple objects and a system at any scale of conceptualization is an approximation or loose congruence of the system. A scale specific conceptualization of a system is partial if there are patterns pertinent to an observer's interest in a system that are only available at other scales (where patterns are simple objects, relationships, and their aggregations). This is not an `abstraction' of the system as this means leaving things out with the understanding that what is left out can always be reinserted. What is ``left out'' of a scale specific conceptualization of a system are patterns that might be available at other scales. Such patterns cannot be returned to a scale specific approximation of a system, regardless of resolution or field of view. The `missing' content has no place in the conceptualization as it was never available to it in the first place\marginpar{needs more clarification?}.f
 %
 %A scale specific approximation of a system can, however, be abstracted at each scale and can be disjointly partitioned from its environment. This means that the whole of the system (as a holon) has a well defined boundary with its environment. To say that a boundary disjointly partitions the approximation of a system from its environment means that simple objects in the conceptualization belong either to the scale specific approximation of the system or to its environment. They can never belong to both\marginpar{is this defining 'open' and 'closed'?}.
 %
@@ -1686,24 +1686,24 @@ their projections are solved by {\bf DES} where the {\bf G-Shell} syntax is:
   genesis > solverset "/network/projection => des"
 \end{verbatim}
 
-In {\bf SSP} the syntax is, for example:
+Alternatively, in {\bf SSP} the syntax is:
 \begin{verbatim}
-{
- modelname => "/network/target1",
- solverclass => "heccer",
-},
-{
- modelname => "/network/target2",
- solverclass => "heccer",
-},
-{
- modelname => "/network/receiver",
- solverclass => "heccer",
-},
-{
- modelname => "/network/projection1",
- solverclass => "des",
-},
+  {
+   modelname => "/network/target1",
+   solverclass => "heccer",
+  },
+  {
+   modelname => "/network/target2",
+   solverclass => "heccer",
+  },
+  {
+   modelname => "/network/receiver",
+   solverclass => "heccer",
+  },
+  {
+   modelname => "/network/projection1",
+   solverclass => "des",
+  },
 \end{verbatim}
 
 %\begin{figure}[h]
@@ -1715,24 +1715,34 @@ In {\bf SSP} the syntax is, for example:
 
 \section{Discusion}
 
-Contrast this with \cite{ray08:_pymoos}
+Simulation provides a framework to organize our understanding of biological systems. Historically, the development of neuronal simulation software for the construction of morphologically detailed neuron models and small networks has been instigated by research projects that specifically addressed complementary technical and scientific questions \cite{Moore:2010vn}. These software systems have been both highly successful and continued to grow in complexity through cycles of research project extension. However, more than twenty years of extending their functionality, usually by the direct incorporation of source code into the core of the simulator, has led to code structures so complicated that it has become increasingly difficult, if not impossible, to easily continue this process. Ultimately, the resulting stand-alone applications have become `monolithic'. That is, it has become increasingly difficult for users and developers to maintain and extend them, with the logical consequence that user workflows are often similarly degraded. A significant consequence of this process is that the development of an optimized simulation can be a considerable challenge for a neuroscientist unfamiliar with the necessary mathematical and computational theory.
 
-\begin{figure}[ht]
+One significant reason for this situation is that
+ no distinction is made between biological data, numerical data, and control
+operations. In practice, the result is that the complexity and monolithic nature of the software
+results in a non-scalable software architecture \cite{jaeger02:_comput_neuros_realis_model_exper}.
+
+ The CBI architecture was designed and developed in an effort to resolve the complexities associated with continual addition of functionality to simulators. As illustrated in Figure \ref{fig:cbi-architecture-simple}, the relationships between simulator control and data modules in such a federated architecture are symbolized by the relationship between high level biological concepts and their mathematical implementation. Diagonal interactions are forbidden as they foster the mixing of functionality across different levels that ultimately leads to the creation of monolithic software applications.
+ 
+ According to principles of systems theoretic analysis (see \cite{Bertalanffy:1973zr,Heylighen:2006vn}), it is clear there are numerous phenomenological approaches to the development of multi-scale models suited to the transformation of a mental model into a computational simulation. Figure\,\ref{fig:mental-model-simulation-path} illustrates a selection of some of the possible steps, levels, and components of this process. Interestingly, two possible multi-scale models have been in widespread use but not generally recognized for their multi-scale characteristics: (1) Biologically inspired, e.g. a model is specified as a network and a population of detailed channel models, and (2) Mathematically inspired, e.g. use continuous cable equations to model a neuron, discrete event models for axonal propagation, and Hodgkin-Huxley equations for the channels.
+
+Many so-called second generation simulators remain primarily focused on the biological and mathematical aspects of multi-scale modelling. It is likely that because they do not respect all three of Marr's levels, the complexity of multi-scale simulation is greatly increased. Following the recent reconfiguration of the GENESIS simulator it is now possible to incorporate Marr's third level of `hardware', as software functionality, to give a comprehensive multi-scale simulator. In this approach, it is the implementation of a model for simulation or otherwise, that is contained by a single software entity (in this case a single `model-container') and that employs the solvers necessary to implement different mathematical tools that communicate with each other at run-time using a communication infrastructure provided by the CBI architecture that solves the problem of creating a software platform that efficiently supports the simulation of multi-scale models.
+
+That this is the case is evident when the matrix given in Figure \ref{fig:mental-model-simulation-path} is compared with the structural level matrix illustrated in Figure \ref{fig:multi-scale-taxonomy}. 
+
+% Contrast this with \cite{ray08:_pymoos}
+
+\begin{figure}[h!t]
   \begin{center}
     \includegraphics[width=4in]{figures/multi-scale-taxonomy.eps}
   \end{center}
-  \caption{ {\bf The Path from Mental Model to Simulation.} }
+  \caption{ {\bf A Multi-Scale Structural Taxonomy.} }
   \label{fig:multi-scale-taxonomy}
 \end{figure}
 
-- Summary.
-
-- Parts of the multiscale grant.
-
-The definition of the multi-scale modeling as used in this paper
-allows to define a taxonomy of models in computational neurobiology
-based on both the biological scale of a model and the level of detail
-it aims to represent (figure~\ref{fig:multi-scale-taxonomy}).
+%- Summary.
+%
+%- Parts of the multiscale grant.
 
 %\begin{figure}[ht]
 %  \begin{center}
@@ -1742,81 +1752,79 @@ it aims to represent (figure~\ref{fig:multi-scale-taxonomy}).
 %  \label{fig:multi-scale-taxonomy}
 %\end{figure}
 
+%Incorporate two types of 3-D Monte Carlo-based techniques for modeling
+%reaction/diffusion kinetics. Specifically, Dr. Avrama Blackwell will
+%work with the G-3 development team to implement NeuroRD (Oliveira et
+%al., 2010), a computationally efficient approximate Monte Carlo
+%approach to modeling reaction-diffusion systems.
+%
+%In addition, the G-3 development team will work with Dr. Yoshi Kubota
+%to incorporate 'CDS' (Cellular Dynamics Simulator:
+%http://nba.uth.tmc.edu/cds/) a precise particle-based Monte Carlo
+%simulator specifically supporting the modeling of Ca2+ binding and
+%diffusion dynamics within biochemical networks (Byrne et al. 2010;
+%Kubota and Waxham 2011). CDS is based on the event-driven first
+%passage time algorithm (Byrne et al. 2010) and is designed to serve as
+%a flexible platform for multi-scale hybrid algorithms.  For this
+%reason, the CDS algorithm can be directly combined with any
+%deterministic ODE/PDE (Reaction-Diffusion Equation) solvers (e.g.,
+%V-Cell used in Hernjak et al. 2005) including those already included
+%in G-3.  High-resolution cellular morphology including that of
+%dendritic spines can be directly transported to CDS allowing
+%electro-diffusion to be simulated by both deterministic (as in
+%Lopreore et al. 2008) as well as particle-based 3-D stochastic
+%methods.
+%
+%This will allow us to compare different simulation algorithms for Ca2+
+%binding diffusion, voltage clamp, and biochemical network within the
+%same platform and will help derive and validate simplified macroscopic
+%(biochemical) synaptic rules relevant to the objectives of Specific
+%Aim 2.
 
-Incorporate two types of 3-D Monte Carlo-based techniques for modeling
-reaction/diffusion kinetics. Specifically, Dr. Avrama Blackwell will
-work with the G-3 development team to implement NeuroRD (Oliveira et
-al., 2010), a computationally efficient approximate Monte Carlo
-approach to modeling reaction-diffusion systems.
-
-In addition, the G-3 development team will work with Dr. Yoshi Kubota
-to incorporate 'CDS' (Cellular Dynamics Simulator:
-http://nba.uth.tmc.edu/cds/) a precise particle-based Monte Carlo
-simulator specifically supporting the modeling of Ca2+ binding and
-diffusion dynamics within biochemical networks (Byrne et al. 2010;
-Kubota and Waxham 2011). CDS is based on the event-driven first
-passage time algorithm (Byrne et al. 2010) and is designed to serve as
-a flexible platform for multi-scale hybrid algorithms.  For this
-reason, the CDS algorithm can be directly combined with any
-deterministic ODE/PDE (Reaction-Diffusion Equation) solvers (e.g.,
-V-Cell used in Hernjak et al. 2005) including those already included
-in G-3.  High-resolution cellular morphology including that of
-dendritic spines can be directly transported to CDS allowing
-electro-diffusion to be simulated by both deterministic (as in
-Lopreore et al. 2008) as well as particle-based 3-D stochastic
-methods.
-
-This will allow us to compare different simulation algorithms for Ca2+
-binding diffusion, voltage clamp, and biochemical network within the
-same platform and will help derive and validate simplified macroscopic
-(biochemical) synaptic rules relevant to the objectives of Specific
-Aim 2.
-
-From a technical point of view, the incorporation of simulations
+From a technical point of view, the incorporation of simulation
 modules that specifically involve spatial dimensions is, in principle,
 much more difficult than the integration of biochemical kinetic
 models. In fact the accurate representation of space and time for
 multi-scale simulations is an open research area.  However, the
 explicit provision of software modules for the intermediary
-representation of solved variables allows to compare and evaluate
+representation of solved variables allows the comparison and evaluation of
 different methods of scale-linking, for instance by comparing
 different resolutions of a fixed grid with adaptive grid intermediary
-representations (Bernabeul et al., 2009). In effect, this will allow
-us to use multi-scale G-3 models as a framework to compare different
+representations \cite{MO:2009bh}. In effect, this will allow
+the use of multi-scale G-3 models as a framework to compare different
 technical strategies.
 
 G-3 supports the construction of very large scale network and system
 models based on more abstracted neuronal components.  In support of
-this function, the G-3 model-container applies specific algorithms to
+this function, the G-3 {\bf Biology\,Model\,Container} applies specific algorithms to
 instantiate systems level connectivity models and convert them to
-mathematical representations, relieving the mathematical solvers from
-the pressure typical for rich heterogeneous model structures.  At the
-same time, the intermediate simulation system modules already
-described as the mechanism used to link Chemesis-3 and the linear
-cable solver, will also be used to share values and functions between
-larger scale network simulations and lower scale models.  The long
-term (Nelson et al., 1989; De Schutter and Bower, 1992) and intrinsic
-support for use of parallel computing resources within the GENESIS
-system will also be critical to the ability to run large scale models
-(Cornelis 2011a; b) with the large scale simulations being carried out
-on Linux clusters of 100-500 CPU cores.
+mathematical representations. This relieves the mathematical solvers from
+the algorithmic pressures typical for rich heterogeneous model structures.  At the
+same time, intermediate simulation system modules, already
+described as the mechanism used to link {\bf Chemesis-3} and linear
+cable solvers, will also be used to share values and functions between
+larger scale network simulations and lower scale models.
 
+The definition of multi-scale modelling arrived at in this paper
+enables the generation of a taxonomy of models in computational neurobiology
+based on both the biological scale of a model and the level of detail
+it aims to represent.
 
-\subsection{additional references}
-
-DeSchutter, E., and Bower, J.M. (1994)  An Active Membrane Model of the
-Cerebellar Purkinje Cell: I simulation of current clamps in slice   J.
-Neurophysiol.  71:375-400.
-
-Kotaleski, J. H., Plenz, D. and Blackwell, K. T. (2006) Using potassium
-currents to solve signal-to-noise problems in inhibitory feedforward
-networks of the striatum. J. Neurophysiol.  95: 331-341.
-
-- dave's chapter
-
-- visual interface to neuron (see Jim's review invitation)
-
-- numerical solvers, see Andrew Davison's email.
+%\subsection{additional references}
+%
+%DeSchutter, E., and Bower, J.M. (1994)  An Active Membrane Model of the
+%Cerebellar Purkinje Cell: I simulation of current clamps in slice   J.
+%Neurophysiol.  71:375-400.
+%
+%Kotaleski, J. H., Plenz, D. and Blackwell, K. T. (2006) Using potassium
+%currents to solve signal-to-noise problems in inhibitory feedforward
+%networks of the striatum. J. Neurophysiol.  95: 331-341.
+%
+%- dave's chapter
+%
+%- visual interface to neuron (see Jim's review invitation)
+%
+%- numerical solvers, see Andrew Davison's email.
 
 
 %\begin{figure}[h]
@@ -1825,6 +1833,8 @@ networks of the striatum. J. Neurophysiol.  95: 331-341.
 %\caption{{\bf A Dummy Figure:} Example of \LaTeX\,\,\,code to incorporate a figure into documentation.}
 %  \label{fig:df-2}
 %\end{figure}
+
+\newpage
 
 \bibliographystyle{plain}
 \bibliography{../tex/bib/g3-refs.bib}
