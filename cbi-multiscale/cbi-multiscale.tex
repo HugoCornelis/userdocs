@@ -1207,8 +1207,6 @@ rules, especially those related to STDP, diffusion, and spillover.
 Internally, the discrete event system contains two subcomponents, one for event distribution that contains a connectivity matrix,
 the second for event queuing.
 
-
-
 \subsubsection{Chemesis-3}
 
 {\bf Chemesis-3} was adapted from a GENESIS-2 `add-on' library of objects for modelling
@@ -1285,7 +1283,7 @@ In summary, {\bf SSP} glues other software components together, synchronizes the
 G-3 is composed of several independent software components, each
 of which has a presence in Python. It is possible via the API of
 components such as the model containers and {\bf Heccer} to script
-simulations via Python. However this is not desirable as all
+simulations via Python (see below). However this is not desirable as all
 simulations would be composed of code which contained their own control
 flow. Like GENESIS-2, this would often require a user to understand all the
 internals to be able to expand existing simulations. To avoid this, {\bf SSPy} is
@@ -1303,17 +1301,15 @@ command prompt  ({\tt genesis\,$>$}) appears in the terminal window. This indica
 existence of a G-3 shell environment ({\bf G-Shell}), which runs an interactive
 G-3 session. To provide backward compatibility, the {\bf
   G-Shell} interfaces with the GENESIS-2 Script Language Interpreter (SLI).
-
-\section{Results}
-
-\subsection{Interactive Query and Simulation}
+  
+  \subsection{Interactive Query and Simulation}
 
 The {\bf G-Shell} integrates other G-3 components and makes their
 functions available through an interactive environment available from
 a command line.  Coded in Perl, the {\bf G-Shell} is a communication
 abstraction layer for the {\bf Model Container}, {\bf Heccer}, {\bf
-  SSP}, {\bf DES} and the {\bf Studio}.  After the {\bf G-Shell} has
-been started from a system shell with
+  SSP}, {\bf DES} and the {\bf Studio}, after the {\bf G-Shell} has
+been started from a system shell with:
 \begin{verbatim}
    genesis-g3
 \end{verbatim}
@@ -1350,10 +1346,10 @@ The command:
    ndf_load cells/purkinje/edsjb1994.ndf
 \end{verbatim}
 makes this model Purkinje cell available for interactive analysis.
-Similar commands exists or are in development for backward-compatible
-loading of GENESIS-2 SLI scripts ({\it sli\_load} or to interface with
-the PyNN network modeling environment ({\it
-  pynn\_load}) \cite{davison08:_pynn}.
+Similar commands exist for backward-compatible
+loading of GENESIS-2 SLI scripts with {\it sli\_load} or alternatively with {\it
+  pynn\_load} (to interface to
+the PyNN network modeling environment \cite{davison08:_pynn}).
 
 %Given the name of one of its dendritic segments, the number of branch
 %points between the segment and the soma can be determined. After
@@ -1381,7 +1377,7 @@ potential:
 \begin{verbatim}
    add_output /Purkinje/segments/soma Vm
 \end{verbatim}
-A simulation can then conveniently be started using:
+a simulation can conveniently be started using:
 \begin{verbatim}
    run /Purkinje 0.1
 \end{verbatim}
@@ -1396,12 +1392,12 @@ with the command:
    explore
 \end{verbatim}
 
-\begin{figure}[ht]
+\begin{figure}[h!t]
   \begin{center}
     \includegraphics[width=4in]{figures/studio-screenshot.eps}
   \end{center}
   \caption{ {\bf Querying a model in GENESIS 3.0.} The {\bf Studio} is
-    a component of the reconfigured GENESIS software platform. It can
+    a G-3 simulator component that can
     be used to query the parameters of individual compartments in a
     multi-compartment model neuron. The {\bf Studio} also renders 3D
     morphology of dendrites and generates overviews of network models.
@@ -1415,34 +1411,32 @@ morphologies in three dimensions and generating overviews of network
 models (not shown).  In the next section we explore some of the more
 graphical capabilities of G-3.
 
-
 \subsection{Simple Scripting}
 \label{ss-apens}
 
-Python uses modules to group related functions.  G-3 employs Python's
-module system to group functions that provide an interface to each of
-its software components.
+Python is a high-level scripting language that uses modules to group related functions.  G-3 employs Python's
+module system to group the functions that provide an interface to each of
+the simulators software components.
 %G-3 scripting
 %bindings use modules to separate interfaces for simple models with
 %many default settings (e.g. to start a new research project) from more
 %complicated interfaces that expose the full functionality of the
 %simulator.
 As an example, the G-3 Python module {\it nmc} contains functions to
-simplify the storage of neuron models in computer memory.  This module
-is a simple front-end to the {\bf Model Container}.
+simplify the storage of neuron models in computer memory.  The module
+is a simple front-end to the {\bf Model\,Container}.
 Likewise, {\it Heccer} is a wrapper module for the {\bf Heccer}
-component.  Python bindings for the {\bf Discrete Event System} to facilitate network modeling also exist.
+component.  Python bindings for {\bf DES} that facilitate network modelling also exist.
 
 Here we show a simple high-level Python script that runs a simulation of a single cylindrical segment. It
 is defined by standard values for the parameters of membrane
 resistance ({\tt RM}), axial resistance ({\tt RA}), and membrane
 capacitance ({\tt CM}). (Note: This script
   is written for clarity of presentation rather than compactness or
-  efficiency. Python version 2.6.6 is used on Linux Ubuntu 10.10
-  Maveric.)
+  efficiency.)
 %\footnote{The solver requires {\tt RA} for all
 %  compartments.}
-These\marginpar{move to methods, NDF} parameters are given by their specific values (in SI units) as
+Parameters are given by their specific values (in SI units) as
 commonly reported in the literature, instead of their actual values
 scaled to the compartment surface area as used by a mathematical
 solver \cite{cornelis04:_neuros_param_handl}. The script defines a
@@ -1536,49 +1530,6 @@ if __name__ == '__main__':
 %#    my_nmc.Query("setparameter spine::/Purk_spine/head/par 25")
 %#    my_nmc.Query("setparameter thickd::gaba::/Purk_GABA 1")
 
-
-\subsection{Multi-Scale Network Modeling}
-
-This was previously already possible with G-2.
-
-See tests/perl/spiker4.
-
-The individual neurons are solved by different {\bf Heccer} instances.
-
-The projection between them is solved by {\bf DES}.
-
-{\bf G-Shell} syntax:
-\begin{verbatim}
-  genesis > solverset "/network/target1 => heccer"
-  genesis > solverset "/network/target2 => heccer"
-  genesis > solverset "/network/receiver => heccer"
-\end{verbatim}
-
-\begin{verbatim}
-  genesis > solverset "/network/projection => des"
-\end{verbatim}
-
-SSP (perl) syntax:
-\begin{verbatim}
-{
- modelname => "/network/target1",
- solverclass => "heccer",
-},
-{
- modelname => "/network/target2",
- solverclass => "heccer",
-},
-{
- modelname => "/network/receiver",
- solverclass => "heccer",
-},
-{
- modelname => "/network/projection1",
- solverclass => "des",
-},
-\end{verbatim}
-
-
 \subsection{Scripting Chemesis-3}
 
 In this section we show how to implement two of the G-2 Chemesis tutorial examples in G-3.
@@ -1588,7 +1539,7 @@ between calcium and a buffer, {\it cal2.g} creates a two
 compartment model with a dendrite and soma with an additional diffusion object
 for diffusion between the compartments.
 
-Below is the  G-3 representation of {\it cal1.ndf} 
+The G-3 representation of {\it cal1.ndf} follows: 
 
 \begin{verbatim}
 #!neurospacesparse
@@ -1656,7 +1607,7 @@ END PUBLIC_MODELS
 \end{verbatim}
 
 
-The commands below illustrate how the {\bf G-Shell} and the {\bf G-3 Studio} (model explorer) is used
+Finally, the following commands illustrate how the {\bf G-Shell} and the {\bf G-3 Studio} (model explorer) is used
 to load  {\it cal1.ndf} into the {\bf Model\,Container} and explore the model:
 
 \begin{verbatim}
@@ -1667,25 +1618,26 @@ to load  {\it cal1.ndf} into the {\bf Model\,Container} and explore the model:
 \end{verbatim}
 
 
-The {\bf G-Shell} command to run the {\it cal1.ndf} and send output to
-a file:
+while, the {\bf G-Shell} command to run {\it cal1.ndf} and send output to
+a file is:
 
 \begin{verbatim}
   genesis > run /cal1 2
 \end{verbatim}
 
+\section{Results}
 
-\subsection{Multiscale Scripting}
+\subsection{Multi-Scale Scripting}
 
 In  a typical multi-scale model
 different numerical solution methods are required to solve the different
 types of mathematical equations associated with the different scales of the
 model.  In G-3 the cable equation and ion currents are numerically solved with
-implicit Crank-Nicolson integration using {\bf Heccer}.  Calcium models are numerically solved with {\bf Chemesis=3}.
+implicit Crank-Nicolson integration using {\bf Heccer}.  Calcium models are numerically solved with {\bf Chemesis-3}.
 The association between a given model and its solver can be configured by the user.
 %Under planned extensions to the G-shell syntax, the correct syntax
 %for a loaded single neuron model with name "/purkinje" would be:
-For example to associate the model with name ``/purkinje'' with the solver ``heccer'', one issues the command:
+For example to associate the model named ``/purkinje'' with the solver ``heccer'', one issues the command:
 \begin{verbatim}
   genesis > solverset "/purkinje => heccer"
 \end{verbatim}
@@ -1695,14 +1647,14 @@ interacting ion concentration pools.  The G-3 implementation for
 simulation of biochemical pathways is called {\bf Chemesis-3} and has a
 dedicated optimized implementation to represent networks parameterized
 with biochemical pathways.  To simulate a complex network model of
-biochemical pathways, in this example called "/cal1", a user would
+biochemical pathways, in this example called {\it cal1}, a user would
 typically type from the G-3 shell:
 
 \begin{verbatim}
   genesis > solverset "/cal1 => chemesis3"
 \end{verbatim}
 
-In case the network of biochemical pathways is defined inside the
+In the case where a network of biochemical pathways is defined inside a
 single neuron model, a user would have to type two commands with
 wildcards that associate the correct solver with each component of the
 model, for example:
@@ -1712,11 +1664,43 @@ model, for example:
   genesis > solverset "/traub94/**[!cal1] => heccer"
 \end{verbatim}
 
-In later version of G-3 these rules will be built in but still allow
+In later versions of G-3 these rules will be built in but still allow
 the user to select a different method of solution for different
-components of his or her model.
+components of a model.
 
+\subsection{Multi-Scale Network Modeling}
 
+See tests/perl/spiker4.
+
+Network modelling was previously already possible with G-2. In G-3 multi-scale network modelling of 
+individual neurons is also solved by different {\bf Heccer} instances. For example, 
+their projections are solved by {\bf DES} where the {\bf G-Shell} syntax is:
+\begin{verbatim}
+  genesis > solverset "/network/target1 => heccer"
+  genesis > solverset "/network/target2 => heccer"
+  genesis > solverset "/network/receiver => heccer"
+  genesis > solverset "/network/projection => des"
+\end{verbatim}
+
+In {\bf SSP} the syntax is, for example:
+\begin{verbatim}
+{
+ modelname => "/network/target1",
+ solverclass => "heccer",
+},
+{
+ modelname => "/network/target2",
+ solverclass => "heccer",
+},
+{
+ modelname => "/network/receiver",
+ solverclass => "heccer",
+},
+{
+ modelname => "/network/projection1",
+ solverclass => "des",
+},
+\end{verbatim}
 
 %\begin{figure}[h]
 %  \centering
@@ -1724,7 +1708,6 @@ components of his or her model.
 %\caption{{\bf A Dummy Figure:} Example of \LaTeX\,\,\,code to incorporate a figure into documentation.}
 %  \label{fig:df-2}
 %\end{figure}
-
 
 \section{Discusion}
 
