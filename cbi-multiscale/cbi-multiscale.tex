@@ -1024,14 +1024,14 @@ processes with parameters (fixed during a simulation) and variables
 (computed during a simulation).
 
 As an example, a synaptic current is commonly modelled using a
-second-order differential equation (where in computational neuroscience the right-hand side of this equation
+second-order differential equation (where in computational neuroscience the right-hand side of the equation
 corresponds to the level of synaptic activation delivered by spikes
 arriving at times $t_i$):
 \begin{equation}
   \label{eq:second-order-synchan}
   G'' + \alpha G' + \beta G = S
 \end{equation}
-with $\alpha = \frac{\tau_1 + \tau_2}{\tau_1 \tau_2}$, $\beta =
+where $\alpha = \frac{\tau_1 + \tau_2}{\tau_1 \tau_2}$, $\beta =
 \frac{1}{\tau_1 \tau_2}$, and $S = \delta(t - t_1) + \cdots + \delta(t - t_N)$.
 
 Assuming the initial values $G(0) = 0$ and $G'(0) = 0$, the solution
@@ -1048,8 +1048,7 @@ to this equation is a dual-exponential equation:
 %\end{equation}
 This equation has two parameters {\tt TAU1} and {\tt TAU2}, sometimes
 called the rise and decay time constants, respectively.  Assigning
-values to the two parameters, this can be expressed in the NDF file
-as:
+values to these two parameters in an NDF file is done as follows:
 %EQUATION_EXPONENTIAL exp2
 
 %  ...
@@ -1062,7 +1061,7 @@ as:
 %END EQUATION_EXPONENTIAL
 
 Values are either constant, point to a parameter of another symbol,
-or have a function value.  As an example:
+or have a function value.  For example:
 
 \begin{verbatim}
 PARAMETERS
@@ -1072,14 +1071,16 @@ PARAMETERS
 END PARAMETERS
 \end{verbatim}
 
-Here\marginpar{makes sense?}, the {\tt DIAMETER} parameter has a constant value, the {\tt
+Here, the {\tt DIAMETER} parameter has a constant value, the {\tt
 LENGTH} parameter is inherited from the parent component (the
-'$..$' notation is a reference to the parent symbol\footnote{The NDF
-format supports both the '$..$', and $^\wedge$ notations to
-reference the parent symbol.  While non-technical people might
-prefer the $^\wedge$ notation,
-technical people will prefer the '$..$' notation.}),
+'$..$' notation is a reference to the parent symbol,
 and {\tt SEED} has a value defined by the function {\tt SERIAL()}.
+
+We note that the NDF file
+format supports both the '$..$', and $^\wedge$ notations to
+reference the parent symbol.  (While non-technical people might
+prefer the $^\wedge$ notation,
+technical people will prefer the '$..$' notation.)
 
 
 When one biological entity modulates the behavior of another,
@@ -1106,7 +1107,7 @@ activation level can be bound to the channel activation level using a
 
 Putting everything together using the {\tt EQUATION\_EXPONENTIAL}
 token to represent the dual-exponential equation, we get the NDF
-snippet that defines a model's component with name `exp2':
+snippet that defines a model's component with name {\it exp2}:
 \begin{verbatim}
 EQUATION_EXPONENTIAL exp2
   BINDABLES
@@ -1123,13 +1124,13 @@ END EQUATION_EXPONENTIAL
 \end{verbatim}
 
 In this example, the order of the clauses of {\tt BINDABLES}, {\tt
-  BINDINGS} and {\tt PARAMETERS} was chosen for readibility.  
+  BINDINGS}, and {\tt PARAMETERS} was chosen for readibility.  
 Importantly, neither the NDF file format nor
 the model container
 make a syntactical distinction between the variables and parameters of a
 physical process.
 
-The NDF format supports an extensible set of tokens including {\tt
+The NDF file format supports an extensible set of tokens including {\tt
   SEGMENT}, {\tt CHANNEL}, {\tt CELL}, {\tt POPULATION}, {\tt
   PROJECTION}, {\tt NETWORK} and many more that allow the construction of
 models ranging from subcellular dynamics up to the network level.
@@ -1138,7 +1139,7 @@ models ranging from subcellular dynamics up to the network level.
 \subsubsection{A Single-Neuron Solver: Heccer}
 
 {\bf Heccer} is a G-3 reimplementation of the compartmental solver
-({\it hsolve}) of the GENESIS-2 simulator \cite{cornelis02:_tutor}.  {\bf Heccer} employs the
+({\it hsolve}) of the GENESIS-2 simulator \cite{cornelis02:_tutor}.  It employs the
 Crank-Nicolson solution to integrate the cable equation of a neuronal
 morphology and the Hodgkin-Huxley equations of their transmembrane
 currents \cite{segev95:_theor_found_dendr_funct, hha52, cornelis02:_tutor}.
@@ -1187,27 +1188,24 @@ more elaborate calcium models it must be interfaced with other solvers.
 
 \subsubsection{DES: Action Potential Propagation Abstraction}
 
-The {\it D}iscrete {\it E}vent {\it S}ystem is used for abstract
+The Discrete Event System ({\bf DES}) is used for abstract
 modeling of action potentials.  This functionality is needed for
 running network simulations.  Action potentials generated at the soma
-of one neuron, are translated to a discrete event, that is delivered
-at a post-synaptic target of a connected neuron. The {\bf DES}
-component borrows ideas from previous research in discrete event
-simulation.
+of one neuron are translated to a discrete event that is delivered
+to a post-synaptic target of a connected neuron.
 
 {\bf DES} can queue a single event and deliver it to many targets.  It
 allows to associate 'secondary' data with a connection, like weight,
 delay and other data specific for the model.
 
-From a software architecture viewpoint, {\bf DES} is a separate
+From the viewpoint of the software architecture, {\bf DES} is a separate
 solver that simulates action potential propagation in an efficient way.
-Splitting this functionality from the rest of the simulator,
-facilitates customization for modeling of sophisticated learning
-rules, especially related to STDP, diffusion and spillover.
+Splitting this functionality from the rest of the simulator
+facilitates customization for the modeling of sophisticated learning
+rules, especially those related to STDP, diffusion, and spillover.
 
-Internally, the discrete event system contains two subcomponents, one
-component for event distribution that contains a connectivity matrix,
-a second component for event queuing.
+Internally, the discrete event system contains two subcomponents, one for event distribution that contains a connectivity matrix,
+the second for event queuing.
 
 
 
@@ -1247,17 +1245,11 @@ dynamics \cite{blackwell00:_eviden_distin_light_induc_calcium}.
 
 %- G-shell integration on July 17th and July 18th.
 
-The functions currently implemented in {\bf Chemesis-3} include:
-\begin{itemize}[noitemsep,nolistsep]
-\item {\it rxnpool}--a concentration pool that interacts with
-  reactions and diffuses to other pools.
-\item {\it conservepool}--mass conservation based pool, computes the
+The functions currently implemented in {\bf Chemesis-3} include: {\it rxnpool}--a concentration pool that interacts with
+  reactions and diffuses to other pools; {\it conservepool}--a mass conservation based pool, it computes the
   difference between the total of all molecules (a model parameter,
-  rest state), and diffused molecules, divided by compartment volume.
-\item {\it reaction}--standard forward / backward chemical reactions
-  between pools of molecules.
-\item {\it diffusion}--computes flux in molecules between two pools.
-\end{itemize}
+  rest state) and diffused molecules, divided by compartment volume; {\it reaction}--provides standard forward/backward chemical reactions
+  between pools of molecules; and {\it diffusion}--computes flux in molecules between two pools.
 
 %Three of these functions map to a declarative token in the {\bf
 %  model-container}: {\bf rxnpool} and {\bf conservepool} map to the
@@ -1272,7 +1264,7 @@ The functions currently implemented in {\bf Chemesis-3} include:
 
 \paragraph{SSP}
 
-Both the model containers and the mathematical solver{\bf Heccer} are stand-alone G-3
+Both the model containers and the mathematical solvers are stand-alone G-3
 components. To be useful, they must be `glued' together
 and activated correctly, such that they can coordinate during a single simulation. This is exactly what the Simple
 Scheduler in Perl ({\bf SSP}) does. It is currently the standard
@@ -1282,19 +1274,13 @@ activate them from a configuration file. It achieves this by loading
 dynamically those software components referenced in its configuration.
 Because the {\bf SSP} scheduler does not have any computational load,
 its implementation is very simple and highly configurable. Other
-configurations can connect {\bf SSP} to other modelling services or
+configurations can connect {\bf SSP} to different modelling services or
 solvers.
 
-In summary {\bf SSP}:
-
-\begin{itemize}[noitemsep,nolistsep]
-\item Glues other software components together.
-\item Synchronizes the activities of other components during a simulation.
-\item Is configurable. 
-\end{itemize}
+In summary, {\bf SSP} glues other software components together, synchronizes the activities of other components during a simulation, and Is configurable. 
 
 
-\subsubsection{SSPY}
+\paragraph{SSPY}
 
 G-3 is composed of several independent software components, each
 of which has a presence in Python. It is possible via the API of
@@ -1310,11 +1296,11 @@ declarative configuration file. It also provides an easy plugin
 framework so that new modelling services, experimental protocols, and
 solvers can be dynamically loaded from a plugin directory. This extends simulator functionality without the need to change any core code.
 
-\subsubsection{G-Shell}
+\paragraph{G-Shell}
 
 When running from a command line, after G-3 has completed its startup procedure, a
-command prompt  ({\tt genesis\,$>$}) appears in the terminal window. This indicating that you are now in the
-G-3 shell environment ({\bf G-Shell}) and running an interactive
+command prompt  ({\tt genesis\,$>$}) appears in the terminal window. This indicates the
+existence of a G-3 shell environment ({\bf G-Shell}), which runs an interactive
 G-3 session. To provide backward compatibility, the {\bf
   G-Shell} interfaces with the GENESIS-2 Script Language Interpreter (SLI).
 
