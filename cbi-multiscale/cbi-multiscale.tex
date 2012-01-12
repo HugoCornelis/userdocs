@@ -1013,7 +1013,7 @@ levels of neuronal morphology and/or electrophysiological function.
 This supports the controlled and modular construction of a multi-scale
 model as a given NDF file can depend on other NDF files.
 
-\paragraph{Physical Processes and Model Variables in NDF}
+\paragraph{Physical Processes and Model Parameters in NDF}
 Mathematical models can be used to describe physical processes that
 underly the functional activity of biological entities by associating
 the physical processes with parameters (fixed during a simulation) and
@@ -1112,9 +1112,13 @@ END PARAMETERS
 \end{verbatim}
 
 Here, the {\tt DIAMETER} parameter has a constant value, the {\tt
-LENGTH} parameter is inherited from the parent component (the
-'$..$' notation is a reference to the parent symbol,
-and {\tt SEED} has a value defined by the function {\tt SERIAL()}.
+  LENGTH} parameter is inherited from the parent component (the '$..$'
+notation is a reference to the parent symbol, and {\tt SEED} has a
+value defined by the function {\tt SERIAL()}.  Importantly, neither
+the NDF file format nor the model container make a syntactical
+distinction between the variables and parameters of a physical
+process.  For instance the previous example neither defines the {\tt
+  LENGTH} as a parameter with a fixed value nor as a solved variable.
 
 %We note that the NDF file
 %format supports both the '$..$', and $^\wedge$ notations to
@@ -1164,10 +1168,6 @@ clause:
 
 %In this example, the order of the clauses of {\tt BINDABLES}, {\tt
 %  BINDINGS}, and {\tt PARAMETERS} was chosen for readibility.  
-Importantly, neither the NDF file format nor
-the model container
-make a syntactical distinction between the variables and parameters of a
-physical process.
 
 The NDF file format supports an extensible set of tokens including {\tt
   SEGMENT}, {\tt CHANNEL}, {\tt CELL}, {\tt POPULATION}, {\tt
