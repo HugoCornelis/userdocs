@@ -1657,10 +1657,16 @@ spillover.
 
 \subsection{Addressing Scheme Algorithm}
 
-During a simulation, the addressing scheme algorithm enables the {\bf Solvers} and the {\bf Communication Infrastructure} to
-relate their equivalent variables these components contain.  As
-this happens during a simulation, the addressing scheme must be
-highly optimized to maximize run-time performance.
+The different solvers contributing to a multi-scale simulation can
+hold equivalent variables.  These equivalent variables exist because
+two or more physical processes of the model have been bound using the
+{\tt BINDINGS} in an NDF file.
+
+During a simulation, the addressing scheme algorithm enables the {\bf
+  Solvers} and the {\bf Communication Infrastructure} to relate their
+equivalent variables these components contain.  As this happens during
+a simulation, the addressing scheme must be highly optimized to
+maximize run-time performance.
 
 The information required to identify a variable (and hence its address) is
 obtained from the model stored in the {\bf Biology\,Model\,Container}. To achieve this, the {\bf Biology\,Model\,Container} defines an addressing scheme
