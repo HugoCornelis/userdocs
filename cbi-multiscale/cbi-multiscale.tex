@@ -38,6 +38,10 @@ $^\ast$ E-mail: Corresponding Author Hugo.Cornelis@gmail.com
 \end{small}
 \end{flushleft}
 
+\section*{Abstract}
+
+Extension of simulator functionality may frequently result in the unintentional creation of monolithic software platforms. Typically, this greatly increases the difficulty of extending simulator software code to support efficient multi-scale modelling. As one alternative, the modular functionality of the CBI federated software architecture has resolved this problem for the recently reconfigured GENESIS simulator. We present an analysis of core axioms in computational neuroscience and conclude that the difficulties of simulator extensibility faced by many software developers originates in their primary focus on the biology and mathematical implementation of a model, at the expense of considering the underlying software architecture. This limits software development efforts, thus simulator functionality and ultimately simulator extensibility. We outline our approach to development of simulator structure and function by describing essential components of the GENESIS simulator that conform to the layers of the CBI architecture. Careful consideration of these issues greatly facilitates the development of a simulator capable of transparently implementing multi-scale biological modelling across levels from the ionic and molecular to those of complete systems.
+
 \newpage
 
 \tableofcontents
@@ -555,7 +559,7 @@ Based on this clarification of the multi-dimensional complexity associated with 
 The Computational Biology Initiative Federated Software Architecture (CBI architecture) is defined as a modular paradigm that places
 stand-alone software components into a set of logical relationships.
 In this sense it defines a modular framework that provides the
-necessary parts of a simulator.
+necessary parts of a simulator. The architecture takes its name from the Computational Biology Initiative at the University of Texas at San Antonio, where development was first initiated.
 
 A schema identified by separation of concerns (see
  \cite{10.1371/journal.pone.0028956} for details) is expanded in
@@ -838,7 +842,7 @@ In Step 4 of the user workflow (output), the availability of any model data from
 
 \subsection{GENESIS 3.0}
 
-The software architecture developed for G-3 supports a new and
+The software architecture developed for G-3 (http://genesis-sim.org) supports a new and
 unique capacity for federated and modular software development that directly supports multi-scale modelling.  Furthermore, its structure also
 supports the direct interaction or embedding of models at different
 levels of scale.  During model construction this is accomplished
