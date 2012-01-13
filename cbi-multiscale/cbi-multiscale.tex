@@ -40,7 +40,7 @@ $^\ast$ E-mail: Corresponding Author Hugo.Cornelis@gmail.com
 
 \section*{Abstract}
 
-Extension of simulator functionality may frequently result in the unintentional creation of monolithic software platforms. Typically, this greatly increases the difficulty of extending simulator software code to support efficient multi-scale modelling. As one alternative, the modular functionality of the CBI federated software architecture has resolved this problem for the recently reconfigured GENESIS simulator. We present an analysis of core axioms in computational neuroscience and conclude that the difficulties of simulator extensibility faced by many software developers originates in their primary focus on the biology and mathematical implementation of a model, at the expense of considering the underlying software architecture. This limits software development efforts, thus simulator functionality and ultimately simulator extensibility. We outline our approach to development of simulator structure and function by describing essential components of the GENESIS simulator that conform to the layers of the CBI architecture. Careful consideration of these issues greatly facilitates the development of a simulator capable of transparently implementing multi-scale biological modelling across levels from the ionic and molecular to those of complete systems.
+Extension of simulator functionality may frequently result in the unintentional creation of monolithic software platforms. Typically, this greatly increases the difficulty of extending simulator software code to support efficient multi-scale modelling. As one alternative, the modular functionality of the CBI federated software architecture has resolved this problem for the recently reconfigured GENESIS simulator. We present an analysis of core axioms in computational neuroscience and conclude that the difficulties of simulator extensibility faced by many software developers originates in their primary focus on the biology and mathematical implementation of a model, at the expense of considering the underlying software architecture. This limits software development efforts, thus simulator functionality, and ultimately simulator extensibility. We outline our approach to development of simulator structure and function by describing essential components of the GENESIS simulator that conform to the layers of the CBI architecture. Careful consideration of the issues we identify greatly facilitates the development of a simulator capable of transparently implementing multi-scale biological modelling across levels from the ionic and molecular to those of complete systems.
 
 \newpage
 
@@ -1644,6 +1644,10 @@ also associates 'secondary' data with a connection, for example,
 propagation delay, synaptic weight, or other data specific for the
 model.
 
+Internally, the discrete event system contains two subcomponents, one
+for event distribution that contains a connectivity matrix, the second
+for event queuing.
+
 From the viewpoint of the software architecture, {\bf DES} is a
 separate solver that simulates action potential propagation in an
 efficient way.  Splitting this functionality from the rest of the
@@ -1651,33 +1655,25 @@ simulator facilitates customization for the modeling of sophisticated
 learning rules, especially those related to STDP, diffusion, and
 spillover.
 
-Internally, the discrete event system contains two subcomponents, one
-for event distribution that contains a connectivity matrix, the second
-for event queuing.
+\subsection{Addressing Scheme Algorithm}
 
-\subsection{Algorithm: Addressing Scheme}
+During a simulation, the addressing scheme algorithm enables the {\bf Solvers} and the {\bf Communication Infrastructure} to
+relate their equivalent variables these components contain.  As
+this happens during a simulation, the addressing scheme must be
+highly optimized to maximize run-time performance.
 
-Addressing scheme: enables solvers and communication infrastructure to
-find the variables of one another during simulation run-time.  Because
-this happens during simulation run-time, the addressing scheme must be
-highly optimized for maximum run-time performance.
-
-The information to identify a variable (and hence its address) is
-available from the model stored in the {\bf Model\,Container}.
-
-What the {\bf Model\,Container} must do is define an addressing scheme
-that allows to refer to ('address') every model component and its
-simulated variables.  These references then become hooks for attaching
-'experimental protocols' (output specification and stimulus
-specification) and to connect the solver.  The addressing scheme is
-not necessarily tied into the NDF format, because it can be more
+The information required to identify a variable (and hence its address) is
+obtained from the model stored in the {\bf Biology\,Model\,Container}. To achieve this, the {\bf Biology\,Model\,Container} defines an addressing scheme
+that is able to refer or `address' the variables of every model component.  These addresses provide the `hooks' for attaching
+``experimental protocols'' (e.g. stimulus and output specifications) and connections to the {\bf Solvers}.  The addressing scheme is
+not necessarily dependent on the NDF format. It is more
 general in the sense that it provides an interface to external
 software applications such as GUIs and databases.
 
 In G-3 the algorithm for taking the address of a computed variable
-consists of three steps: The first step translates NDF names to a
-hierarchical namespace.  The second step translates this hierarchical
-namespace to tuples of the form (integers, types).  The third step
+consists of three steps: (1) translate NDF names to a
+hierarchical namespace, (2) translate this hierarchical
+namespace to tuples of the form [integers, types].  The third step
 translates these tuples to tuples of the form (solver instance,
 internal ID).
 
