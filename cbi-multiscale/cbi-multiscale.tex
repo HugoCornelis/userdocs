@@ -1569,18 +1569,16 @@ component.  Python bindings for {\bf DES} that facilitate network modelling also
 
 \subsection{Scripting Chemesis-3}
 
-The following example, {\it cal1.g}, shows how to implement a G-2 Chemesis tutorial example in G-3. It creates a single compartment that contains interaction
-between calcium and a buffer. 
+The following example, {\it cal1.g}, shows how to implement a G-2
+Chemesis tutorial example in G-3. It creates a single compartment that
+contains interaction between calcium and a buffer.
 
 %, {\it cal2.g} creates a two
 %compartment model with a dendrite and soma with an additional diffusion object
 %for diffusion between the compartments
 
 \begin{verbatim}
-#!neurospacesparse
-// -*- NEUROSPACES -*-
 NEUROSPACES NDF
-// VERSION 0.1
 PUBLIC_MODELS
   KINETICS cal1
     PARAMETERS
@@ -1588,45 +1586,31 @@ PUBLIC_MODELS
       PARAMETER ( LENGTH = 24e-4 ),
     END PARAMETERS
     POOL somaCa
-      BINDABLES
-        OUTPUT concen
-      END BINDABLES
+      BINDABLES OUTPUT concen END BINDABLES
       PARAMETERS
         PARAMETER ( concen_init = 0.001 ),
-        PARAMETER ( DIA =  ..->DIA ),
-        PARAMETER ( LENGTH =  ..->LENGTH ),
         PARAMETER ( "UNITS" = 1e-3 ),
       END PARAMETERS
     END POOL
     POOL somaCabuf
-      BINDABLES
-        OUTPUT concen
-      END BINDABLES
+      BINDABLES OUTPUT concen END BINDABLES
       PARAMETERS
         PARAMETER ( concen_init = 0.003 ),
-        PARAMETER ( DIA =  ..->DIA ),
-        PARAMETER ( LENGTH =  ..->LENGTH ),
         PARAMETER ( "UNITS" = 1e-3 ),
       END PARAMETERS
     END POOL
     POOL somabuf
-      BINDABLES
-        OUTPUT concen
-      END BINDABLES
+      BINDABLES OUTPUT concen END BINDABLES
       BINDINGS
         INPUT ../somaCabuf->concen,
       END BINDINGS
       PARAMETERS
         PARAMETER ( concen_init = 0.153 ),
         PARAMETER ( concen_total = 0.153 ),
-        PARAMETER ( DIA =  ..->DIA ),
-        PARAMETER ( LENGTH =  ..->LENGTH ),
       END PARAMETERS
     END POOL
     REACTION somacabufrxn
-      BINDABLES
-        INPUT concen, OUTPUT concen
-      END BINDABLES
+      BINDABLES INPUT concen, OUTPUT concen END BINDABLES
       BINDINGS
         INPUT ("substrate") ../somaCa->concen,
         INPUT ("substrate") ../somabuf->concen,
@@ -1641,6 +1625,12 @@ PUBLIC_MODELS
 END PUBLIC_MODELS
 \end{verbatim}
 
+The length and diameter of the pools required to complete the model
+take on their implicit default values of:
+\begin{verbatim}
+  PARAMETER ( DIA =  ..->DIA ),
+  PARAMETER ( LENGTH =  ..->LENGTH ),
+\end{verbatim}
 
 The following commands illustrate how the {\bf G-Shell} and the {\bf G-3 Studio} (model explorer) may be employed
 to load  {\it cal1.ndf} into the {\bf Model\,Container} for exploration of a model:
@@ -1648,7 +1638,7 @@ to load  {\it cal1.ndf} into the {\bf Model\,Container} for exploration of a mod
 \begin{verbatim}
   \$ genesis-g3
   Welcome to the GENESIS 3 shell
-  genesis > ndf_load /usr/local/neurospaces/models/library/chemesis/cal1.ndf
+  genesis > ndf_load chemesis/cal1.ndf
   genesis > explore
 \end{verbatim}
 
@@ -1661,6 +1651,76 @@ to load  {\it cal1.ndf} into the {\bf Model\,Container} for exploration of a mod
 
 \section{Results}
 
+\subsection{Algorithm: Addressing Scheme}
+
+Addressing scheme: enables solvers and communication infrastructure to
+find the variables of one another during simulation run-time.  Because
+this happens during simulation run-time, the addressing scheme must be
+highly optimized for maximum run-time performance.
+
+The information to identify a variable (and hence its address) is
+available from the model stored in the {\bf Model\,Container}.
+
+What the {\bf Model\,Container} must do is define an addressing scheme
+that allows to refer to ('address') every model component and its
+simulated variables.  These references then become hooks for attaching
+'experimental protocols' (output specification and stimulus
+specification) and to connect the solver.  The addressing scheme is
+not necessarily tied into the NDF format, because it can be more
+general in the sense that it provides an interface to external
+software applications such as GUIs and databases.
+
+In G-3 the algorithm for taking the address of a computed variable
+consists of three steps: The first step translates NDF names to a
+hierarchical namespace.  The second step translates this hierarchical
+namespace to tuples of the form (integers, types).  The third step
+translates these tuples to tuples of the form (solver instance,
+internal ID).
+
+The first step defines a symbolic syntax for the 'hierarchical
+addressing of model components', their parameters and their variables.
+This syntax allows a user to express the address of a variable, for
+instance for the address of the $\mathrm{Ca}^{2+}$ concentration in a
+segment with name ``soma'' is:
+\begin{verbatim}
+  soma/Ca->conc
+\end{verbatim}
+
+The {\bf Model\,Container} translates these symbolic references to
+simulation wide unique tuples of the form (integer, type) where the
+integer identifies the physical process (the $\mathrm{Ca}^{2+}$ pool
+in this case) and the type identifies the concentration level.
+
+The second step of the algorithm defines an interface to identify the
+solver instance associated with the physical process.
+
+The third step defines an interface to obtain the communication port
+of this solver that attaches to the variables.  This interface allows
+to obtain a solver instance internal ID for directly addressing the
+variable.  Software may choose to implement this interface using
+memory pointers for maximum efficiency, or, alternatively, using a
+low-level function that reads and writes the variable.  This may be
+useful in a parallel implementation for example.
+
+This algorithm allows solvers to communicate through tuples of the
+form (solver instance, internal ID) and it removes the requirement for
+expensive computation on symbolic or hierarchical addresses during
+simulation run-time.
+
+The first step of the addressing scheme is only required during
+simulation construction time, but not during simulation run-time.  The
+second step is free of symbolic references and thus does not need the
+{\bf Model\,Container}.  However it may be required during simulation
+run-time, depending on the model and stimulus
+paradigm\marginpar{I don't see when?}.
+
+In G-3 the translation of symbolic references to IDs is implemented in
+the model-container.  The third step of the addressing algorithm is
+low-level and has been implemented in the solvers.  This has the
+advantage that the model-container does not have to be in memory
+during simulation run-time.
+
+
 \subsection{Multi-Scale Scripting}
 
 In  a typical multi-scale model
@@ -1670,10 +1730,10 @@ model.  In G-3 the cable equation and ion currents are numerically solved with
 implicit Crank-Nicolson integration using {\bf Heccer}.  Calcium models are numerically solved with {\bf Chemesis-3}.
 The association between a given model and its solvers can be configured by the user.
 %Under planned extensions to the G-shell syntax, the correct syntax
-%for a loaded single neuron model with name "/purkinje" would be:
-For example to associate the model named ``/purkinje'' with the solver ``heccer'', the command is:
+%for a loaded single neuron model with name "/Purkinje" would be:
+For example to associate the model named ``/Purkinje'' with the solver ``heccer'', the command is:
 \begin{verbatim}
-  genesis > solverset "/purkinje => heccer"
+  genesis > solverset "/Purkinje => heccer"
 \end{verbatim}
 
 Biochemical pathways in neuronal modeling are complex networks of
@@ -1695,7 +1755,7 @@ model, for example:
 
 \begin{verbatim}
   genesis > solverset "/**/cal1 => chemesis3"
-  genesis > solverset "/traub94/**[!cal1] => heccer"
+  genesis > solverset "/Purkinje/**[!cal1] => heccer"
 \end{verbatim}
 
 %In later versions of G-3 these rules will be built in but still allow
@@ -1704,44 +1764,37 @@ model, for example:
 
 \subsection{Multi-Scale Network Modeling}
 
-See tests/perl/spiker4.
+Network modelling was previously possible in G-2. Multi-scale network
+modelling of individual neurons In G-3 is also solved with different
+{\bf Heccer} instances.  The {\bf SSP} software component defines
+several software regression tests with network models.  One of the
+network models used in this test has a ``source'' neuron that during
+the simulation delivers a spike to two ``target'' neurons.
 
-Network modelling was previously possible in G-2. Multi-scale network modelling of 
-individual neurons In G-3 is also solved with different {\bf Heccer} instances. For example, 
-projections are solved by {\bf DES}, where the {\bf G-Shell} syntax is:
+
+For example, projections are solved by {\bf DES}, where the {\bf
+  G-Shell} syntax is:
 \begin{verbatim}
+  genesis > ndf_load tests/networks/spiker4.ndf
   genesis > solverset "/network/target1 => heccer"
   genesis > solverset "/network/target2 => heccer"
-  genesis > solverset "/network/receiver => heccer"
+  genesis > solverset "/network/Purkinje => heccer"
   genesis > solverset "/network/projection => des"
 \end{verbatim}
 
-Alternatively, in {\bf SSP} the syntax is:
+Internally, the {\bf G-Shell} translates these statements to their
+equivalent {\bf SSP} syntax:
 \begin{verbatim}
-  {
-   modelname => "/network/target1",
-   solverclass => "heccer",
-  },
-  {
-   modelname => "/network/target2",
-   solverclass => "heccer",
-  },
-  {
-   modelname => "/network/receiver",
-   solverclass => "heccer",
-  },
-  {
-   modelname => "/network/projection1",
-   solverclass => "des",
-  },
+  { modelname => "/network/target1",
+    solverclass => "heccer", },
+  { modelname => "/network/target2",
+    solverclass => "heccer", },
+  { modelname => "/network/Purkinje",
+    solverclass => "heccer", },
+  { modelname => "/network/projection1",
+    solverclass => "des", },
 \end{verbatim}
 
-%\begin{figure}[h]
-%  \centering
-%   \includegraphics[scale=0.5]{figures/dummyfig.eps}
-%\caption{{\bf A Dummy Figure:} Example of \LaTeX\,\,\,code to incorporate a figure into documentation.}
-%  \label{fig:df-2}
-%\end{figure}
 
 \section{Discusion}
 
