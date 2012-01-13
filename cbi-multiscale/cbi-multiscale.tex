@@ -1635,27 +1635,30 @@ to load  {\it cal1.ndf} into the {\bf Model\,Container} for exploration of a mod
 
 The Discrete Event System ({\bf DES}) is used for the abstract
 modelling of action potentials.  This functionality is typically
-required for the simulation of network models.  Action potentials
-generated at the soma of one neuron are translated to a discrete event
-that is delivered to the post-synaptic targets of the connected
-neurons.
+required for the efficient simulation of network models where action
+potentials generated at the soma of one neuron are translated to a
+discrete event that is delivered to the post-synaptic targets of the
+connected neurons.
 
-{\bf DES} is capable of associating 'secondary' data with a
-connection, such as propagation delay, synaptic weight, or other
-data specific for the model.
-
-{\bf DES} can queue a single event and deliver it to many targets.
-Internally, the discrete event system contains two subcomponents, one
-for event distribution that contains a connectivity matrix, the second
+{\bf DES} queues the generated events and delivers each to the
+appropriate targets respecting the connectivity of the model.  This
+has the consequence that {\bf DES} contains a subcomponent for event
+distribution that includes the connectivity matrix, and a subcomponent
 for event queuing.
+
+{\bf DES} is capable of associating 'secondary' parameters with each
+connection, such as propagation delay, synaptic weight, or other model
+specific parameters.
 
 From the viewpoint of the CBI architecture, the {\bf DES} event queuer
 is a separate solver that simulates action potential propagation in an
-efficient way.  The event distributor is part of the CBI {\bf
+efficient way.  The event distributor connects different solvers that
+participate in the simulation and is part of the CBI {\bf
   Communication Infrastructure}.  Splitting this functionality from
 the rest of the simulator facilitates customization for the modeling
 of learning rules, {\it Spike Timing Dependent Plasticity}, and
 diffusion and spillover.
+
 
 \subsection{Addressing Scheme Algorithm}
 
