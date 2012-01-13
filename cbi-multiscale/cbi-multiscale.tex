@@ -933,7 +933,7 @@ integrates and extends the previous GENESIS {\tt .p} and {\tt .g}
 declarative file formats.  NDF files are purely declarative and can be stored in a model database. In an
   NDF file, a model exists as a hierarchy of tokens, each
 representing a biological component.  Each component is a physical
-process and can have parameters and shared variables. To give a sense of this format we now outline the general structure of an NDF file.
+process and can have parameters and shared variables. To introduce the format we now outline the general structure of an NDF file.
 
 \paragraph{Overview of an NDF File}
 \label{sec:overview-ndf-file}
@@ -969,8 +969,8 @@ the following general form (described in more detail below).
 \end{center}
 
 The header section
-typically starts with the Unix {\it interpreter} sequence
-giving the system specific absolute path to the {\bf Model\,Container} stand-alone executable.
+typically starts with a UNIX {\it interpreter} sequence that
+gives the system specific absolute path to the {\bf Model\,Container} stand-alone executable.
 %\begin{verbatim}
 %    #!/usr/local/bin/neurospacesparse
 %\end{verbatim}
@@ -1012,19 +1012,19 @@ levels of neuronal morphology and/or electrophysiological function.
 %available to other NDF files. This mechanism prevents the use
 %of certain (private) components, while allowing reuse of other
 %(public) components.
-This supports the controlled and modular construction of a multi-scale
+This supports and controls the modular construction of a multi-scale
 model as a given NDF file can depend on other NDF files.
 
 \paragraph{Physical Processes and Model Parameters in NDF}
-Mathematical models can be used to describe physical processes that
-underly the functional activity of biological entities by associating
+Mathematical models can be used to describe physical processes
+underlying the functional activity of biological entities by associating
 the physical processes with parameters (fixed during a simulation) and
 variables (computed during a simulation).
 
 A variety of techniques exist to model diffusion and concentrations of
-ions in a (segment of a) dendritic tree.  The most simple of all cases
-is the concentration of an ion, often $\mathrm{Ca}^{2+}$, is supposed
-to follow an exponential decay according to the equation:
+ions in a (segment of a) dendritic tree.  The simplest case is that of
+the concentration of an ion. For example, $\mathrm{Ca}^{2+}$ often 
+follows an exponential decay according to the equation:
 
 \begin{equation}
   \label{eq:decay-concentration}
@@ -1032,9 +1032,9 @@ to follow an exponential decay according to the equation:
   - \frac{[\mathrm{Ca}^{2+}]}{\tau}
 \end{equation}
 
-$I_{\mathrm{Ca}^{2+}}$ is a current of ions flowing into the segment.
+where $I_{\mathrm{Ca}^{2+}}$ is an ionic current flowing into the segment
 %(here expressed in amperes).  
-The parameter $B$, sometimes referred to as $\beta$, is often found by
+and $B$ is the decay constant (sometimes referred to as $\beta$), often found by
 fitting experimental data.
 %  In some cases the above equation is used
 %as a model for the concentration in a thin shell near the surface of a
@@ -1050,7 +1050,7 @@ fitting experimental data.
 %shell, here both expressed in meters (the outer diameter of the shell
 %is the same as the diameter of the segment).
 
-In NDF the physical process of decaying calcium is represented with:
+In an NDF file calcium decay  is represented as follows:
 %note: based on granule_ca.ndf
 \begin{verbatim}
   POOL Ca_concen
@@ -1102,9 +1102,8 @@ In NDF the physical process of decaying calcium is represented with:
 %\end{verbatim}
 %%END EQUATION_EXPONENTIAL
 
-A parameter has either a constant value, points to a parameter of
-another symbol, or has a function value.  For example:
-
+Note that a parameter can either be a constant value, point to a parameter of
+another symbol, or have the value of a function.  For example:
 \begin{verbatim}
 PARAMETERS
    PARAMETER ( DIAMETER = 0.3 ),
@@ -1112,15 +1111,14 @@ PARAMETERS
    PARAMETER ( SEED = SERIAL () )
 END PARAMETERS
 \end{verbatim}
-
-Here, the {\tt DIAMETER} parameter has a constant value, the {\tt
-  LENGTH} parameter is inherited from the parent component (the '$..$'
-notation is a reference to the parent symbol, and {\tt SEED} has a
+where {\tt DIAMETER} has a constant value, {\tt
+  LENGTH} is inherited from the parent component (the `$..$'
+notation is a reference to the parent symbol), and {\tt SEED} has a
 value defined by the function {\tt SERIAL()}.  Importantly, neither
 the NDF file format nor the model container make a syntactical
-distinction between the variables and parameters of a physical
-process.  For instance the previous example neither defines the {\tt
-  LENGTH} as a parameter with a fixed value nor as a solved variable.
+distinction between the parameters and variables of a physical
+process.  For example, {\tt
+  LENGTH} is neither defined as a parameter with a fixed value nor as a solved variable.
 
 %We note that the NDF file
 %format supports both the '$..$', and $^\wedge$ notations to
@@ -1130,19 +1128,18 @@ process.  For instance the previous example neither defines the {\tt
 
 
 When one biological entity modulates the behavior of another, their
-physical processes share one or more variables.  For example in the
-case of a pool with calcium ions, a transmembrane calcium current may
-raise the concentration level in the pool.  The current, denoted {\tt
-  I} is a variable that is common to the conductance and the pool.
-Such common variables that are shared between multiple physical
-processes must be declared using the {\tt BINDABLES} keyword.
+physical processes share one or more variables.  For example, in the
+case of a `pool' containing calcium ions, a transmembrane calcium current may
+raise the concentration of the pool. Under these circumstances, the current ({\tt I}) is a variable common to both the conductance and the pool.
+Such variables, when shared between multiple physical
+processes, must be declared using the {\tt BINDABLES} keyword.
 \begin{verbatim}
   BINDABLES
     INPUT I
   END BINDABLES
 \end{verbatim}
 Assuming a calcium current is present under the label {\tt ../cat},
-its calcium current can be bound to the pool using a {\tt BINDINGS}
+it can be bound to the pool by using a {\tt BINDINGS}
 clause:
 \begin{verbatim}
   BINDINGS
@@ -1173,7 +1170,7 @@ clause:
 
 The NDF file format supports an extensible set of tokens including {\tt
   SEGMENT}, {\tt CHANNEL}, {\tt CELL}, {\tt POPULATION}, {\tt
-  PROJECTION}, {\tt NETWORK} and many more that allow the construction of
+  PROJECTION}, {\tt NETWORK}, amongst others, that allow the construction of
 models ranging from subcellular dynamics up to the network level.
 
 
