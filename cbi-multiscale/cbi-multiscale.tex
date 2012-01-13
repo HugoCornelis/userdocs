@@ -40,7 +40,7 @@ $^\ast$ E-mail: Corresponding Author Hugo.Cornelis@gmail.com
 
 \section*{Abstract}
 
-Extension of simulator functionality may frequently result in the unintentional creation of monolithic software platforms. Typically, this greatly increases the difficulty of extending simulator software code to support efficient multi-scale modelling. As one alternative, the modular functionality of the CBI federated software architecture has resolved this problem for the recently reconfigured GENESIS simulator. We present an analysis of core axioms in computational neuroscience and conclude that the difficulties of simulator extensibility faced by many software developers originates in their primary focus on the biology and mathematical implementation of a model, at the expense of considering the underlying software architecture. This limits software development efforts, thus simulator functionality, and ultimately simulator extensibility. We outline our approach to development of simulator structure and function by describing essential components of the GENESIS simulator that conform to the layers of the CBI architecture. Careful consideration of the issues we identify greatly facilitates the development of a simulator capable of transparently implementing multi-scale biological modelling across levels from the ionic and molecular to those of complete systems.
+Extension of simulator functionality may frequently result in the unintentional creation of monolithic software platforms. Typically, this greatly increases the difficulty of extending simulator software code to support new functionality such as efficient multi-scale modelling. As one alternative, the modular design of the CBI federated software architecture has resolved this problem for the recently reconfigured GENESIS simulator. We present an analysis of core axioms in computational neuroscience and conclude that the difficulties of simulator extensibility faced by many software developers originates in their primary focus on the biology and mathematical implementation of a model, at the expense of considering the underlying software architecture. This limits software development efforts, thus simulator functionality, and ultimately simulator extensibility. We outline our approach to development of simulator structure and function by describing essential components of the GENESIS simulator that conform to the layers of the CBI architecture. Careful consideration of the issues we identify greatly facilitates the development of a simulator capable of transparently supporting multi-scale biological modelling across biological levels from the ionic and molecular to complete systems.
 
 \newpage
 
@@ -237,11 +237,11 @@ Extension of simulator functionality may frequently result in the unintentional 
 
 \section{Introduction}
 
-Scientific understanding of problems involving the interaction between different temporal and spatial scales is very challenging and it is an area of active research in computational neuroscience. For example, over the last 30 years several schemas have been introduced. The earliest was a proposal by Marr \cite{Marr:19821kx} who identified three independent approaches to understand visual processing: (a) computational theory--what does the system do or what problems does it solve? (b) representation and algorithm--how does the system solve the problem? and (c) hardware implementation--how is the system physically realized? More recently, Churchland and Sejnowski \cite{Churchland:1992uq} have also proposed three levels: (1) level of analysis, which includes Marr's three levels, (2) level of processing, for example the levels of processing in the visual pathway, and (3) level of structural organization, for which they proposed seven general levels--systems, topographic maps, layers and columns, local networks, (e) neurons, (f) synapses, and (g) molecules.
+Scientific understanding of problems involving the interaction between different temporal and spatial scales is very challenging and is an area of active research in computational neuroscience. For example, over the last 30 years several schemas have been introduced. The earliest was a proposal by Marr \cite{Marr:19821kx} who identified three independent approaches to understand visual processing: (a) computational theory--what does the system do or what problems does it solve? (b) representation and algorithm--how does the system solve the problem? and (c) hardware implementation--how is the system physically realized? More recently, Churchland and Sejnowski \cite{Churchland:1992uq} have also proposed three levels: (1) level of analysis, which includes Marr's three levels, (2) level of processing, for example the levels of processing in the visual pathway, and (3) level of structural organization, for which they proposed seven general levels--systems, topographic maps, layers and columns, local networks, (e) neurons, (f) synapses, and (g) molecules.
 
-Recently, we proposed a five step ``ideal user workflow'', or user workflow. This workflow organizes the sequence of steps typically employed for the development and simulation of a computational model, including data generation and analysis. It consists of five steps: construct model, design experiment, run simulation, analyze output, and iterate \cite{10.1371/journal.pone.0028956}. Such a workflow allows the object under investigation, the tools used to perform the investigation, and the operations performed during a simulation to be distinguished. For clarification, in the biological domain we refer to `multi-level', in the modelling domain we refer to `multi-scale', and in the software domain we refer to `multi-layer'.
+Recently, we proposed a five step ``ideal user workflow'', or user workflow. This workflow organizes the sequence of steps typically employed for the development and simulation of a computational model, including data generation and analysis. It consists of five steps: construct model, design experiment, run simulation, analyze output, and iterate \cite{10.1371/journal.pone.0028956}. Such a workflow allows the object under investigation, the tools used to perform the investigation, and the operations performed during a simulation to be distinguished. For clarification, in the biological domain we refer to `multi-level' (level), in the modelling domain we refer to `multi-scale' (scale), and in the software domain we refer to `multi-layer' (layer).
 
-Here, we extend our workflow paradigm by introducing the organizing principle of a ``cognitive workflow''. This workflow describes the process whereby a mental model is transformed from an abstraction into an implementation. One cognitive workflow that facilitates such a path is given by the top row in Figure \ref{fig:mental-model-simulation-path} (Biology\,$\rightarrow$\,Computer Simulation). In this figure, the column to the left gives the spatial scale and lists the level of biological organization (object under investigation), the column to the right lists the equivalent layers of software and hardware (operations performed during the investigation), and the central column gives the scale of the mathematical implementation or algorithm (tools used to perform the investigation). The rows in each column give examples of the functionality appropriate for the given level. 
+Here, we extend our workflow paradigm by introducing the organizing principle of a ``cognitive workflow''. This workflow describes the process whereby an abstraction is transformed into an implementation by the development of a mental model into a simulation. One cognitive workflow that facilitates such a path is given by the top row in Figure \ref{fig:mental-model-simulation-path} (Biology\,$\rightarrow$\,Computer Simulation). In this figure, the column to the left gives the spatial scale and lists the level of biological organization (object under investigation), the column to the right lists the equivalent layers of software and hardware (operations performed during the investigation), and the central column gives the scale of the mathematical implementation or algorithm (tools used to perform the investigation). The rows in each column give examples of the functionality appropriate for the given level.
 
 \begin{figure}[h!t]
   \begin{center}
@@ -249,6 +249,16 @@ Here, we extend our workflow paradigm by introducing the organizing principle of
   \end{center}
   \caption{ {\bf A Multi-Scale Path from Mental Model to Simulation.} }
   \label{fig:mental-model-simulation-path}
+\end{figure}
+
+Each step in the cognitive workflow can be expanded into a matrix where columns span the range of desired detail at each given biological level. As an example, Figure \ref{fig:multi-scale-taxonomy} expands the Biology step of the cognitive workflow to give a matrix that describes a taxonomy of possible models. Each row in this matrix  illustrates a set of models that spans the range of model detail at a given biological level.
+
+\begin{figure}[h!t]
+  \begin{center}
+    \includegraphics[width=4in]{figures/multi-scale-taxonomy.eps}
+  \end{center}
+  \caption{ {\bf A Multi-Scale Model Taxonomy.} }
+  \label{fig:multi-scale-taxonomy}
 \end{figure}
 
 The matrix implicit in Figure \ref{fig:mental-model-simulation-path} reveals a relationship between the cognitive and user workflows and the schema outlined by Marr.  Here, we use these relationships to develop a novel and simplifying approach to the simulation of multi-scale models. 
@@ -1826,14 +1836,6 @@ Many so-called second\marginpar{where is this defined?} generation simulators re
 That this is the case is evident when the matrix given in Figure \ref{fig:mental-model-simulation-path} is compared with the structural level matrix illustrated in Figure \ref{fig:multi-scale-taxonomy}. 
 
 % Contrast this with \cite{ray08:_pymoos}
-
-\begin{figure}[h!t]
-  \begin{center}
-    \includegraphics[width=4in]{figures/multi-scale-taxonomy.eps}
-  \end{center}
-  \caption{ {\bf A Multi-Scale Structural Taxonomy.} }
-  \label{fig:multi-scale-taxonomy}
-\end{figure}
 
 %- Summary.
 %
