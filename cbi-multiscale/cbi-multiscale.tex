@@ -1228,26 +1228,6 @@ more elaborate calcium models must be interfaced with other solvers.
 %{\bf Heccer} has been validated with a Purkinje cell model and
 %produces an exact match with {\it hsolve}.
 
-\subsubsection{DES: Action Potential Propagation Abstraction}
-
-The Discrete Event System ({\bf DES}) is used for the abstract
-modelling of action potentials, a functionality required for the
-running of network simulations.  Action potentials generated at the soma
-of one neuron are translated to a discrete event that is delivered
-to the post-synaptic targets of a connected neuron.
-
-{\bf DES} can queue a single event and deliver it to many targets.  It
-also associates 'secondary' data with a connection, for example, propagation delay, synaptic weight, or other data specific for the model.
-
-From the viewpoint of the software architecture, {\bf DES} is a separate
-solver that simulates action potential propagation in an efficient way.
-Splitting this functionality from the rest of the simulator
-facilitates customization for the modeling of sophisticated learning
-rules, especially those related to STDP, diffusion, and spillover.
-
-Internally, the discrete event system contains two subcomponents, one for event distribution that contains a connectivity matrix,
-the second for event queuing.
-
 \subsubsection{Chemesis-3}
 
 {\bf Chemesis-3} was adapted from a GENESIS-2 `add-on' library of objects for modelling
@@ -1650,6 +1630,30 @@ to load  {\it cal1.ndf} into the {\bf Model\,Container} for exploration of a mod
 %\end{verbatim}
 
 \section{Results}
+
+\subsection{DES: Action Potential Propagation Abstraction}
+
+The Discrete Event System ({\bf DES}) is used for the abstract
+modelling of action potentials, a functionality required for the
+running of network simulations.  Action potentials generated at the
+soma of one neuron are translated to a discrete event that is
+delivered to the post-synaptic targets of a connected neuron.
+
+{\bf DES} can queue a single event and deliver it to many targets.  It
+also associates 'secondary' data with a connection, for example,
+propagation delay, synaptic weight, or other data specific for the
+model.
+
+From the viewpoint of the software architecture, {\bf DES} is a
+separate solver that simulates action potential propagation in an
+efficient way.  Splitting this functionality from the rest of the
+simulator facilitates customization for the modeling of sophisticated
+learning rules, especially those related to STDP, diffusion, and
+spillover.
+
+Internally, the discrete event system contains two subcomponents, one
+for event distribution that contains a connectivity matrix, the second
+for event queuing.
 
 \subsection{Algorithm: Addressing Scheme}
 
