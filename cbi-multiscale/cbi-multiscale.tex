@@ -6,6 +6,7 @@
 \usepackage{url}
 \usepackage[colorlinks=true]{hyperref}
 \usepackage{enumitem} % [noitemsep,nolistsep]
+\usepackage{setspace} 
 
 
 \begin{document}
@@ -38,15 +39,19 @@ $^\ast$ E-mail: Corresponding Author Hugo.Cornelis@gmail.com
 \end{small}
 \end{flushleft}
 
+\doublespacing
+
+\newpage
+
 \section*{Abstract}
 
-Extension of simulator functionality may frequently result in the unintentional creation of monolithic software platforms. This greatly increases the difficulty of extending simulator software code to support new functionality such as efficient multi-scale modelling. Analysis suggests that the difficulties of simulator extensibility faced by many software developers originates in a primary focus on the biology and mathematical implementation of a model, at the expense of considering the underlying software architecture. This limits software development efforts, thus simulator functionality, and ultimately simulator extensibility. Here, we employ axioms defining the domain of computational neuroscience to provide a logical framework that organizes our approach to multi-scale simulation. This framework underpins the modular design of the CBI federated software architecture employed to reconfigure the GENESIS simulator. This has resolved many problems associated with multi-scale modelling that previously existed with this simulator.  We outline our approach to development of simulator structure and function by describing components of the simulator essential for multi-scale modelling. Careful consideration of issues we identify greatly facilitates the development of a simulator capable of transparently supporting multi-scale biological modelling across levels ranging from the ionic and molecular to complete systems.
+Extension of simulator functionality may result in the unintentional creation of a monolithic software platform. This greatly increases the difficulty of extending simulator software code to support new functionality such as efficient multi-scale modelling. Analysis suggests that the difficulties of simulator extensibility faced by many software developers originates in a primary focus on the biological and mathematical implementation of a model, at the expense of considering the underlying software architecture. This limits software development efforts, thus simulator functionality, and ultimately simulator extensibility. Here, we employ axioms defining the domain of computational neuroscience to provide a logical framework that organizes our approach to multi-scale simulation. This framework underpins the modular design of the CBI federated software architecture employed to reconfigure the GENESIS simulator. This has resolved many problems associated with multi-scale modelling that previously existed with this simulator.  We outline our approach to development of simulator structure and function by describing components of the simulator essential for multi-scale modelling. Careful consideration of issues we identify greatly facilitates the development of a simulator capable of transparently supporting multi-scale biological modelling across levels ranging from the ionic and molecular to complete systems.
 
-\newpage
+%\newpage
+%
+%\tableofcontents
 
-\tableofcontents
-
-\newpage
+%\newpage
 
 %\section{Preface: Multi-Scale Modeling and the User-Workflow}
 %The user-workflow is a simple workflow based on experimental paradigm
@@ -237,11 +242,11 @@ Extension of simulator functionality may frequently result in the unintentional 
 
 \section{Introduction}
 
-Scientific understanding of problems involving the interaction between different temporal and spatial scales is very challenging and is an area of active research in computational neuroscience. For example, over the last 30 years several schemas have been introduced. The earliest was a proposal by Marr \cite{Marr:19821kx} who identified three independent approaches to understand visual processing: (a) computational theory--what does the system do or what problems does it solve? (b) representation and algorithm--how does the system solve the problem? and (c) hardware implementation--how is the system physically realized? More recently, Churchland and Sejnowski \cite{Churchland:1992uq} have also proposed three levels: (1) level of analysis, which includes Marr's three levels, (2) level of processing, for example the levels of processing in the visual pathway, and (3) level of structural organization, for which they proposed seven general levels--molecules, synapses, neurons, local networks, layers and columns, topographic maps, and systems.
+Scientific understanding of problems involving the interaction between different temporal and spatial scales is very challenging and currently is an area of active research. Over the last 30 years several schemas have been introduced. The earliest was a proposal by Marr \cite{Marr:19821kx} who identified three independent approaches to understand visual processing: (a) computational theory--what does the system do or what problems does it solve? (b) representation and algorithm--how does the system solve the problem? and (c) hardware implementation--how is the system physically realized? More recently, Churchland and Sejnowski \cite{Churchland:1992uq} have also proposed three levels: (1) level of analysis, which includes Marr's three levels, (2) level of processing, for example the levels of processing in the visual pathway, and (3) level of structural organization, for which they proposed seven general levels--molecules, synapses, neurons, local networks, layers and columns, topographic maps, and systems.
 
 Recently, we proposed a five step ``ideal user workflow'', or user workflow. This workflow organizes the sequence of activities typically employed for the development and simulation of a computational model, including data generation and analysis. It consists of five steps: construct model, design experiment, run simulation, analyze output, and iterate \cite{10.1371/journal.pone.0028956}. Such a workflow allows the object under investigation, the tools used to perform the investigation, and the operations performed during a simulation to be distinguished. These categories correspond to the approaches to computational modelling identified by Marr. For clarification, in the biological domain we refer to `multi-level' (level), in the modelling domain we refer to `multi-scale' (scale), and in the software domain we refer to `multi-layer' (layer).
 
-Here, we extend our workflow paradigm by introducing the organizing principle of a ``cognitive workflow''. This workflow describes the process whereby an abstraction is transformed into an implementation by the development of a mental model into a simulation. One cognitive workflow that facilitates such a path is given by the top row in Figure \ref{fig:mental-model-simulation-path} (Biology\,$\rightarrow$\,Computer Simulation). In this figure, the column to the left gives the spatial scale and lists the level of biological organization (object under investigation), the column to the right lists the equivalent layers of software and hardware (operations performed during the investigation), and the central column gives the scale of the mathematical implementation or algorithm (tools used to perform the investigation). The rows in each column give examples of the functionality appropriate for the given level.
+Here, we extend our workflow paradigm by introducing the organizing principle of a ``cognitive workflow''. This workflow describes the process whereby an abstraction is transformed into an implementation by the conversion of a mental model into a simulation. One cognitive workflow that facilitates such a path is given by the top row in Figure \ref{fig:mental-model-simulation-path} (Biology\,$\rightarrow$\,Computer Simulation). In this figure, the column to the left gives the spatial scale and lists levels of biological organization (object under investigation), the column to the right lists the equivalent layers of software and hardware (operations performed during the investigation), and the central column gives the scale of the mathematical implementation or algorithm (tools used to perform the investigation). The rows in each column give examples of possible simulator functionality at the given level.
 
 \begin{figure}[h!t]
   \begin{center}
@@ -251,7 +256,7 @@ Here, we extend our workflow paradigm by introducing the organizing principle of
   \label{fig:mental-model-simulation-path}
 \end{figure}
 
-Each step in the cognitive workflow can be expanded into a matrix where columns span the range of available detail at a given biological level. As an example, Figure \ref{fig:multi-scale-taxonomy} expands the Biology step of the cognitive workflow to give a matrix describing a taxonomy of possible models. Each row illustrates a set of models that spans the range of model detail at the given biological level. The other steps in the cognitive workflow can similarly be expanded to collectively give a comprehensive framework for multi-scale modelling.
+Each step in the cognitive workflow can be expanded into a matrix where columns span the range of structural detail available for simulation. As an example, Figure \ref{fig:multi-scale-taxonomy} expands the Biology step of the cognitive workflow to give a matrix describing a taxonomy of possible models. Each row illustrates a set of models that spans the range of model detail available at the given biological level. The other steps in the cognitive workflow can similarly be expanded to collectively give a comprehensive framework for multi-scale modelling.
 
 \begin{figure}[h!t]
   \begin{center}
@@ -261,11 +266,11 @@ Each step in the cognitive workflow can be expanded into a matrix where columns 
   \label{fig:multi-scale-taxonomy}
 \end{figure}
 
-The multidimensional framework implied by Figures \ref{fig:mental-model-simulation-path} and \ref{fig:multi-scale-taxonomy} is based on the relationships between the cognitive and user workflows and the schemas outlined by Marr, Churchland, and Sejnowski.  Here, we use these relationships to develop a novel and simplifying approach to the simulation of multi-scale models. 
+The multidimensional framework implied by Figures \ref{fig:mental-model-simulation-path} and \ref{fig:multi-scale-taxonomy} is based on the relationships between the schemas outlined by Marr, Churchland, and Sejnowski and the user and cognitive workflows described here. We use these relationships to develop a novel and simplifying approach to the simulation of multi-scale models. 
 
 If it is accepted that: (1) a scale specific approximation can be abstracted at each level of a system and disjointly partitioned from its environment \cite{Bertalanffy:1973zr, Heylighen:2006vn}, and (2) the biological levels listed in Figure \ref{fig:mental-model-simulation-path} are plausible, then it is apparent that a realistic neuron model comprised of at least a soma and dendrites, that includes channels and synapses, is a multi-level model simulated at multiple scales. 
 
-Based on these clarifications of the multi-dimensional complexity associated with modelling biological structures and functions as `simple' as a single neuron, we describe relevant features of the reconfigured GENESIS simulator (G-3--http://genesis-sim.org). Together with several scripting examples, we show how primary components of G-3 transparently support multi-scale simulation at the biological levels of cells, channels, and synapses (see Fig. \ref{fig:mental-model-simulation-path}).
+Based on the foregoing descriptions of the multi-dimensional complexity associated with modelling biological structures and functions as `simple' as a single neuron, we describe the features  of the reconfigured GENESIS simulator (G-3--http://genesis-sim.org) relevant for multi-scale simulation. Together with several scripting examples, we show how primary components of G-3 transparently support multi-scale simulation at the biological levels of cells, channels, and synapses (see Fig. \ref{fig:mental-model-simulation-path}).
 
 %\newpage
 %
@@ -574,13 +579,12 @@ necessary parts of a simulator. The architecture takes its name from the Computa
 A schema identified by separation of concerns (see
  \cite{10.1371/journal.pone.0028956} for details) is expanded in
 Figure~\ref{fig:cbi-architecture-simple} to give the modules that
-form the building blocks of the CBI architecture.  It retains
+form the building blocks of the CBI architecture.  The schema retains
 the four quadrants of simulator functionality identified by the
-separation of concerns, including the notions of low-level data for
-numerics and high-level representations for biology, as well as
-separation between control and data
-(Fig.~\ref{fig:cbi-architecture-simple}: indicated by horizontal and
- vertical dashed lines, respectively).
+separation of concerns, including separation between control and data 
+and the notions of high-level representations for biology and low-level data for
+numerics (Fig.~\ref{fig:cbi-architecture-simple}: indicated by vertical and
+horizontal dashed lines, respectively).
 
 We note that the integrity of the simulator is maintained by only allowing interactions between vertically and horizontally located modules. Diagonal interactions are forbidden as they foster the mixing of functionality across different levels that inevitably leads to the creation of monolithic software applications. Ultimately, it is this partitioning of simulator functionality that lies at the core of simulator extensibility and provides the architectural foundation for transparent multi-scale simulation.
 
@@ -616,7 +620,7 @@ performance  (see \cite{federated-2002-xyz}). Here, extensibility is defined as 
 principle where an implementation takes into consideration future
 developments. An extensible system is one that includes mechanisms for
 expanding or enhancing the system with new capabilities without having
-to make major changes to the system infrastructure. 
+to make major changes to system infrastructure. 
 
 Importantly, enhanced application interoperability and performance is available
 through the use of flexible high-level scripting languages that support
@@ -872,7 +876,7 @@ new solvers into the build system of G-3 enabling immediate regression
 testing, (3) easy extension of the configuration of the internal model
 storage format to establish new declarative model tokens and
 parameters recognized by new solvers, (4) easy construction of an
-interface between the internal data storage format and the core of the new
+interface between the internal data storage format and the core of new
 solvers, and finally, (5) a communication
 software component that creates simulation run-time interfaces between solvers.
 
@@ -1050,7 +1054,7 @@ follows an exponential decay according to the equation:
   - \frac{[\mathrm{Ca}^{2+}]}{\tau}
 \end{equation}
 
-where $I_{\mathrm{Ca}^{2+}}$ is an ionic current flowing into the segment
+where $I_{\mathrm{Ca}^{2+}}$ is an ionic current flowing into a segment
 %(here expressed in amperes).  
 and $B$ is a decay constant (sometimes referred to as $\beta$), often found by
 fitting experimental data.
@@ -1135,9 +1139,10 @@ notation is a reference to the parent symbol), and {\tt SEED} has a
 value defined by the function {\tt SERIAL()}.  Importantly, neither
 the NDF file format nor the model container make a syntactical
 distinction between the parameters and variables of a physical
-process.  For example, {\tt
-  LENGTH} is neither defined as a parameter with a fixed value nor as a solved variable.
-
+process.  For example, {\tt LENGTH} is neither defined as a parameter 
+with a fixed value nor as a solved variable.  This logic is employed 
+as a numerical value may be a parameter at one biological level 
+but a variable at another.
 %We note that the NDF file
 %format supports both the '$..$', and $^\wedge$ notations to
 %reference the parent symbol.  (While non-technical people might
@@ -1157,7 +1162,7 @@ processes, are declared using the {\tt BINDABLES} keyword.
   END BINDABLES
 \end{verbatim}
 Assuming a calcium current is present under the label {\tt ../cat},
-it can be bound to the pool by using a {\tt BINDINGS}
+it can be bound to a pool by using a {\tt BINDINGS}
 clause:
 \begin{verbatim}
   BINDINGS
@@ -1186,9 +1191,9 @@ clause:
 %In this example, the order of the clauses of {\tt BINDABLES}, {\tt
 %  BINDINGS}, and {\tt PARAMETERS} was chosen for readibility.  
 
-The NDF file format supports an extensible set of tokens including {\tt
-  SEGMENT}, {\tt CHANNEL}, {\tt CELL}, {\tt POPULATION}, {\tt
-  PROJECTION}, and {\tt NETWORK}, amongst others, that allow the construction of
+The NDF file format supports an extensible set of tokens, including {\tt
+  SEGMENT}, {\tt CHANNEL}, {\tt CELL}, {\tt
+  PROJECTION}, {\tt POPULATION}, and {\tt NETWORK}, amongst others, that allow the construction of
 models ranging from subcellular dynamics up to the network level.
 
 
