@@ -672,9 +672,9 @@ connectivity provided by these individual modules. It is now described within th
     fundamentally modular, separating different functional components
     of the simulator into their own modules. Importantly, G-3
     separates model descriptions from their mathematical representations.  This simplifies the
-    implementation of new solvers and other run-time software
+    implementation of new {\bf Solvers} and other run-time software
     components. The communication infrastructure connects different
-    solvers to simulate different parts of a model and can `upscale' or `downscale'
+    {\bf Solvers} to simulate different parts of a model and can `upscale' or `downscale'
     numerical data as needed. Additional detail is given in \cite{10.1371/journal.pone.0028956}.}
   \label{fig:cbi-architecture-expanded}
 \end{figure}
@@ -868,17 +868,17 @@ specific software modules that create intermediary representations of
 variables present at multiple scales (described in more detail below).
 
 Several explicit features of G-3 allow
-new software components to be rapidly incorporated into the simulator: (1) modularity of the CBI architecture supports the development of new solvers independently of
+new software components to be rapidly incorporated into the simulator: (1) modularity of the CBI architecture supports the development of new {\bf Solvers} independently of
 other software components. This encourages full focus on the mathematical
-aspects of solvers and their implementation and leads to better
+aspects of {\bf Solvers} and their implementation and leads to better
 optimization, (2) the {\it Developer\,Package} facilitates integration of
-new solvers into the build system of G-3 enabling immediate regression
+new {\bf Solvers} into the build system of G-3 enabling immediate regression
 testing, (3) easy extension of the configuration of the internal model
 storage format to establish new declarative model tokens and
-parameters recognized by new solvers, (4) easy construction of an
+parameters recognized by new {\bf Solvers}, (4) easy construction of an
 interface between the internal data storage format and the core of new
-solvers, and finally, (5) a communication
-software component that creates simulation run-time interfaces between solvers.
+{\bf Solvers}, and finally, (5) a communication
+software component that creates simulation run-time interfaces between {\bf Solvers}.
 
 Solvers currently available in G-3, starting at the highest level, include: {\bf DES}, a discrete event queuing and distribution infrastructure for network modelling, {\bf Heccer}, a single neuron solver, {\bf Chemesis-3}, a simple reaction-diffusion system solver, and {\bf Experiment}, which provides current injections, time-tables, and output (not to be confused with the {\bf Experiment\,Model\,Container}).
 
@@ -922,11 +922,11 @@ pressure of user-friendly model representation.
 
 Because all model components are an integrated part of a single
 model-container \cite{10.1371/journal.pone.0028956}, existing and
-new G-3 solvers can be integrated to simulate different aspects of the
+new G-3 {\bf Solvers} can be integrated to simulate different aspects of the
 same model.  This {\em scale-linking} functionality of G-3
 instantiates dedicated run-time software components that contain
 intermediary representations of solved variables able to pass both
-{\em upscale} and {\em downscale} values to solvers operating at different
+{\em upscale} and {\em downscale} values to {\bf Solvers} operating at different
 levels of scale.
 %  Technically, in the case of {\bf Chemesis-3} and the
 %linear cable solver, for example, these modules calculate weighted
@@ -1205,7 +1205,7 @@ Crank-Nicolson solution to integrate the cable equation of a neuronal
 morphology and the Hodgkin-Huxley equations of their transmembrane
 currents \cite{segev95:_theor_found_dendr_funct, hha52, cornelis02:_tutor}.
 {\bf Heccer} also integrates exponentially decaying calcium concentrations and Nernst potentials but 
-more elaborate calcium models must be interfaced with other solvers.
+more elaborate calcium models must be interfaced with other {\bf Solvers}.
 
 %{\bf Heccer} can be instantiated from C, Python or Perl.  It is also
 %possible to link {\bf Heccer} directly to Matlab as it includes {\bf Swig} (www.swig.org) interface definitions, such
@@ -1302,43 +1302,43 @@ The functions currently implemented in {\bf Chemesis-3} include: {\it rxnpool}--
 
 \paragraph{SSP}
 
-Both the model containers and the mathematical solvers are stand-alone G-3
+Both the model containers and {\bf Solvers} are stand-alone G-3
 components. To be useful, they must be `glued' together
 and activated correctly, such that they can coordinate during a single simulation. This is exactly what the Simple
 Scheduler in Perl ({\bf SSP}) does. It is currently the standard
 scheduler for G-3. {\bf SSP} exploits the sophistication of the
-Perl scripting language to load software components on demand, and
+Perl scripting language to load software components on demand and
 activate them from a configuration file. It achieves this by loading
 dynamically those software components referenced in its configuration.
 Because the {\bf SSP} scheduler does not have any computational load,
 its implementation is very simple and highly configurable. Other
 configurations can connect {\bf SSP} to different modelling services or
-solvers.
+{\bf Solvers}.
 
 In summary, {\bf SSP} glues other software components together, synchronizes the activities of other components during a simulation, and is configurable. 
 
 
-\paragraph{SSPY}
+\paragraph{SSPy}
 
 G-3 is composed of several independent software components, each
 of which has a presence in Python. It is possible via the API of
 components such as the model containers and {\bf Heccer} to script
-simulations via Python (see below). However, this is not desirable as all
-simulations would be composed of code which determined their own control
+simulations via Python (see below). However, this is not desirable as
+simulations would then be composed of code which determined their own control
 flow. Like GENESIS-2, this would often require a user to understand all the
 internals to be able to expand existing simulations. To avoid this, {\bf SSPy} is
 designed similarly to {\bf SSP}. It encapsulates the operations for
-loading and running a complete simulation while giving complete
+loading and running a complete simulation while giving 
 control of simulation parameters and simulator options to a
 declarative configuration file. It also provides an easy plugin
 framework so that new modelling services, experimental protocols, and
-solvers can be dynamically loaded from a plugin directory. This extends simulator functionality without the need to change any core code.
+{\bf Solvers} can be dynamically loaded from a plugin directory. This extends simulator functionality without the need to change core code.
 
 \paragraph{G-Shell}
 
 When running from a command line, after G-3 has completed its startup procedure, a
 command prompt  ({\tt genesis\,$>$}) appears in the terminal window. This indicates the
-existence of a G-3 shell environment ({\bf G-Shell}) is running an interactive
+existence of a G-3 shell environment ({\bf G-Shell}) running an interactive
 G-3 session. To provide backward compatibility, the {\bf
   G-Shell} interfaces with the GENESIS-2 Script Language Interpreter (SLI).
   
@@ -1374,10 +1374,10 @@ been started from a system shell with the {\it  genesis-g3} command.
 %      layer: 2
 %\end{verbatim}
 
-Integration of the {\bf G-Shell} with the {\bf Model Container} enables
+Integration of the {\bf G-Shell} with the {\bf Biology\,Model\,Container} enables
 real-time analysis of the quantitative and structural aspects of a
 neuronal morphology.  The library of model components
-installed with the {\bf Model Container} provides, for example, the definition of a
+installed with the {\bf Biology\,Model\,Container} provides, for example, the definition of a
 model Purkinje cell in the file {\it cells/purkinje/edsjb1994.ndf}.
 The command:
 \begin{verbatim}
@@ -1419,11 +1419,11 @@ a simulation can conveniently be started using:
 \begin{verbatim}
    run /Purkinje 0.1
 \end{verbatim}
-This simulation produces the somatic response to the given dendritic
-stimulus in a file named, by default, {\it /tmp/output}.
+This simulation produces the somatic response to given dendritic
+stimulation in a file named, by default, {\it /tmp/output}.
 
-To query the parameters of the stimulated compartment the model can
-then be analyzed using the graphical front-end of the {\bf Studio}
+To query the parameters of the stimulated compartment the model can 
+be analyzed using the graphical front-end of the {\bf Studio}
 with the command {\it explore}.
 
 \begin{figure}[h!]
@@ -1460,7 +1460,7 @@ the simulators software components.
 %simulator.
 As an example, the G-3 Python module {\it nmc} contains functions to
 simplify the storage of neuron models in computer memory.  The module
-is a simple front-end to the {\bf Model\,Container}.
+is a simple front-end to the {\bf Biology\,Model\,Container}.
 Likewise, {\it Heccer} is a wrapper module for the {\bf Heccer}
 component.  Python bindings for {\bf DES} that facilitate network modelling also exist.
 
@@ -1569,7 +1569,7 @@ component.  Python bindings for {\bf DES} that facilitate network modelling also
 \subsection{Scripting Chemesis-3}
 
 The following example, {\it cal1.g}, shows how to implement a G-2
-Chemesis tutorial example in G-3. It creates a single compartment that
+Chemesis tutorial in G-3. It creates a single compartment that
 contains interaction between calcium and a buffer.
 
 %, {\it cal2.g} creates a two
@@ -1631,14 +1631,12 @@ take on their implicit default values of:
   PARAMETER ( LENGTH =  ..->LENGTH ),
 \end{verbatim}
 
-The following commands illustrate how the {\bf G-Shell} and the {\bf G-3 Studio} (model explorer) may be employed
-to load  {\it cal1.ndf} into the {\bf Model\,Container} for exploration of a model:
+The following commands illustrate how the {\bf G-Shell} and the {\bf Studio} may be employed
+to load  {\it cal1.ndf} into the {\bf Biology\,Model\,Container} for exploration of a model:
 
 \begin{verbatim}
-  \$ genesis-g3
-  Welcome to the GENESIS 3 shell
-  genesis > ndf_load chemesis/cal1.ndf
-  genesis > explore
+  ndf_load chemesis/cal1.ndf
+  explore
 \end{verbatim}
 
 %while, the {\bf G-Shell} command to run {\it cal1.ndf} and send output to
@@ -1654,18 +1652,16 @@ to load  {\it cal1.ndf} into the {\bf Model\,Container} for exploration of a mod
 
 The Discrete Event System ({\bf DES}) is used for the abstract
 modelling of action potentials, a functionality required for the
-running of network simulations.  Action potentials generated at the
-soma of one neuron are translated to a discrete event that is
-delivered to the post-synaptic targets of a connected neuron.
-
-{\bf DES} can queue a single event and deliver it to many targets.  It
-also associates 'secondary' data with a connection, for example,
-propagation delay, synaptic weight, or other data specific for the
-model.
-
-Internally, the discrete event system contains two subcomponents, one
+running of network simulations.  Internally, {\bf DES} contains two subcomponents, one
 for event distribution that contains a connectivity matrix, the second
 for event queuing.
+
+Action potentials generated at the
+soma of one neuron are translated to a discrete event that is
+delivered to the post-synaptic targets of a connected neuron.
+{\bf DES} also associates 'secondary' data with a connection, for example,
+propagation delay, synaptic weight, or other data specific for the
+model.
 
 From the viewpoint of the software architecture, {\bf DES} is a
 separate solver that simulates action potential propagation in an
@@ -1677,20 +1673,20 @@ spillover.
 \subsection{Addressing Scheme Algorithm}
 
 The different solvers contributing to a multi-scale simulation can
-hold equivalent variables.  These equivalent variables exist because
+hold equivalent variables.  These variables exist because
 two or more physical processes of the model have been bound using the
 {\tt BINDINGS} in an NDF file.
 
 During a simulation, the addressing scheme algorithm enables the {\bf
-  Solvers} and the {\bf Communication Infrastructure} to relate their
-equivalent variables these components contain.  As this happens during
+Solvers} and the {\bf Communication\,Infrastructure} to relate 
+any equivalent variables these components contain.  As this happens during
 a simulation, the addressing scheme must be highly optimized to
 maximize run-time performance.
 
 The information required to identify a variable (and hence its address) is
 obtained from the model stored in the {\bf Biology\,Model\,Container}. To achieve this, the {\bf Biology\,Model\,Container} defines an addressing scheme
 that is able to refer or `address' the variables of every model component.  These addresses provide the `hooks' for attaching
-``experimental protocols'' (e.g. stimulus and output specifications) and connections to the {\bf Solvers}.  The addressing scheme is
+``experimental protocols'' (e.g. stimulus and output specifications) to the {\bf Solvers}.  The addressing scheme is
 not necessarily dependent on the NDF format. It is more
 general in the sense that it provides an interface to external
 software applications such as GUIs and databases.
@@ -1699,50 +1695,50 @@ In G-3 the algorithm for taking the address of a computed variable
 consists of three steps: (1) translate NDF names to a
 hierarchical namespace, (2) translate this hierarchical
 namespace to tuples of the form [integers, types].  The third step
-translates these tuples to tuples of the form (solver instance,
-internal ID).
+translates these tuples to tuples of the form [solver instance,
+internal ID].
 
-The first step defines a symbolic syntax for the 'hierarchical
-addressing of model components', their parameters and their variables.
+The first step defines a symbolic syntax for the hierarchical
+addressing of model components and their parameters and variables.
 This syntax allows a user to express the address of a variable, for
-instance for the address of the $\mathrm{Ca}^{2+}$ concentration in a
-segment with name ``soma'' is:
+example, the address of the $\mathrm{Ca}^{2+}$ concentration in a
+segment, with the name ``soma'':
 \begin{verbatim}
   /soma/Ca->conc
 \end{verbatim}
 
-The {\bf Model\,Container} translates these symbolic references to
-simulation wide unique tuples of the form (integer, type) where the
-integer identifies the physical process (the $\mathrm{Ca}^{2+}$ pool
-in this case) and the type identifies the concentration level.
+The {\bf Biology\,Model\,Container} translates these symbolic references to
+simulation wide unique tuples of the form [integer, type] where the
+integer identifies the physical process (in this case the $\mathrm{Ca}^{2+}$ pool) 
+and the type identifies the concentration level.
 
 The second step of the algorithm defines an interface to identify the
 solver instance associated with the physical process.
 
 The third step defines an interface to obtain the communication port
 of this solver that attaches to the variables.  This interface allows
-to obtain a solver instance internal ID for directly addressing the
+a solver instance internal ID to be obtained for directly addressing the
 variable.  Software may choose to implement this interface using
 memory pointers for maximum efficiency, or, alternatively, using a
 low-level function that reads and writes the variable.  This may be
 useful in a parallel implementation for example.
 
-This algorithm allows solvers to communicate through tuples of the
-form (solver instance, internal ID) and it removes the requirement for
+The algorithm allows {\bf Solvers} to communicate through tuples of the
+form [solver instance, internal ID]. This removes the requirement for
 expensive computation on symbolic or hierarchical addresses during
 simulation run-time.
 
 The first step of the addressing scheme is only required during
-simulation construction time, but not during simulation run-time.  The
-second step is free of symbolic references and thus does not need the
-{\bf Model\,Container}.  However it may be required during simulation
+simulation construction, not during simulation run-time.  The
+second step is free of symbolic references, thus does not need the
+{\bf Biology\,Model\,Container}.  However it may be required during simulation
 run-time, depending on the model and stimulus
 paradigm\marginpar{I don't see when?}.
 
 In G-3 the translation of symbolic references to IDs is implemented in
-the model-container.  The third step of the addressing algorithm is
-low-level and has been implemented in the solvers.  This has the
-advantage that the model-container does not have to be in memory
+the {\bf Biology\,Model\,Container}.  The third step of the addressing algorithm is
+low-level and is implemented in the {\bf Solvers}.  This has the
+advantage that the {\bf Biology\,Model\,Container} does not have to be in memory
 during simulation run-time.
 
 
@@ -1753,12 +1749,12 @@ different numerical solution methods are required to solve the different
 types of mathematical equations associated with the different scales of the
 model.  In G-3 the cable equation and ion currents are numerically solved with
 implicit Crank-Nicolson integration using {\bf Heccer}.  Calcium models are numerically solved with {\bf Chemesis-3}.
-The association between a given model and its solvers can be configured by the user.
+The association between a given model and its {\bf Solvers} can be configured by the user.
 %Under planned extensions to the G-shell syntax, the correct syntax
 %for a loaded single neuron model with name "/Purkinje" would be:
 For example to associate the model named ``/Purkinje'' with the solver ``heccer'', the command is:
 \begin{verbatim}
-  genesis > solverset "/Purkinje => heccer"
+  solverset "/Purkinje => heccer"
 \end{verbatim}
 
 Biochemical pathways in neuronal modeling are complex networks of
@@ -1766,11 +1762,11 @@ interacting ion concentration pools.  The G-3 implementation for
 simulation of biochemical pathways is called {\bf Chemesis-3} and has a
 dedicated optimized implementation to represent networks parameterized
 with biochemical pathways.  To simulate a complex network model of
-biochemical pathways, in this example called {\it cal1}, a user would
-typically type from the G-3 shell:
+biochemical pathways, here called {\it cal1}, a user would
+typically type in the G-3 shell:
 
 \begin{verbatim}
-  genesis > solverset "/cal1 => chemesis3"
+  solverset "/cal1 => chemesis3"
 \end{verbatim}
 
 In the case where a network of biochemical pathways is defined inside a
@@ -1779,8 +1775,8 @@ wildcards to associate the correct solver with each component of the
 model, for example:
 
 \begin{verbatim}
-  genesis > solverset "/**/cal1 => chemesis3"
-  genesis > solverset "/Purkinje/**[!cal1] => heccer"
+  solverset "/**/cal1 => chemesis3"
+  solverset "/Purkinje/**[!cal1] => heccer"
 \end{verbatim}
 
 %In later versions of G-3 these rules will be built in but still allow
@@ -1790,7 +1786,7 @@ model, for example:
 \subsection{Multi-Scale Network Modeling}
 
 Network modelling was previously possible in G-2. Multi-scale network
-modelling of individual neurons In G-3 is also solved with different
+modelling of individual neurons in G-3 is also solved with different
 {\bf Heccer} instances.  The {\bf SSP} software component defines
 several software regression tests with network models.  One of the
 network models used in this test has a ``source'' neuron that during
@@ -1800,11 +1796,11 @@ the simulation delivers a spike to two ``target'' neurons.
 For example, projections are solved by {\bf DES}, where the {\bf
   G-Shell} syntax is:
 \begin{verbatim}
-  genesis > ndf_load tests/networks/spiker4.ndf
-  genesis > solverset "/network/target1 => heccer"
-  genesis > solverset "/network/target2 => heccer"
-  genesis > solverset "/network/Purkinje => heccer"
-  genesis > solverset "/network/projection => des"
+  ndf_load tests/networks/spiker4.ndf
+  solverset "/network/target1 => heccer"
+  solverset "/network/target2 => heccer"
+  solverset "/network/Purkinje => heccer"
+  solverset "/network/projection => des"
 \end{verbatim}
 
 Internally, the {\bf G-Shell} translates these statements to their
