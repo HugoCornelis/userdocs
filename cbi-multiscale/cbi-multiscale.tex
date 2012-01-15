@@ -1805,9 +1805,10 @@ before the simulation starts.  As with G-2, this is a manual
 operation.
 %In G-3 multi-scale network modelling of individual neurons requires a
 %{\bf Heccer} instance for each neuron.
-However, the integration of the user workflow into G-3 allows the {\bf
-  Heccer} instances, once created, to share internal data structures
-as required, thereby reducing overall memory consumption.
+However, the integration of the user workflow into G-3 clearly defines
+the scope of user actions and in the case of network modeling, allows
+the {\bf Heccer} instances, once created, to share internal data
+structures as required, thereby reducing overall memory consumption.
 
 In G-3 the action potential propagation through the fibers of a
 projection is simulated by the event queuing component of {\bf DES}.
@@ -1820,18 +1821,18 @@ The {\bf G-Shell} syntax is:
   solverset "/network/projection => des"
 \end{verbatim}
 
-Internally, the {\bf G-Shell} translates these statements to their
-equivalent {\bf SSP} syntax:
-\begin{verbatim}
-  { modelname => "/network/target1",
-    solverclass => "heccer", },
-  { modelname => "/network/target2",
-    solverclass => "heccer", },
-  { modelname => "/network/source",
-    solverclass => "heccer", },
-  { modelname => "/network/projection1",
-    solverclass => "des", },
-\end{verbatim}
+%Internally, the {\bf G-Shell} translates these statements to their
+%equivalent {\bf SSP} syntax:
+%\begin{verbatim}
+%  { modelname => "/network/target1",
+%    solverclass => "heccer", },
+%  { modelname => "/network/target2",
+%    solverclass => "heccer", },
+%  { modelname => "/network/source",
+%    solverclass => "heccer", },
+%  { modelname => "/network/projection1",
+%    solverclass => "des", },
+%\end{verbatim}
 
 
 \section{Discusion}
