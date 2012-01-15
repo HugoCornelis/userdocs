@@ -1729,11 +1729,12 @@ expensive computation on symbolic or hierarchical addresses during
 simulation run-time.
 
 The first step of the addressing scheme is only required during
-simulation construction, not during simulation run-time.  The
+simulation construction, and not during simulation run-time.  The
 second step is free of symbolic references, thus does not need the
-{\bf Biology\,Model\,Container}.  However it may be required during simulation
-run-time, depending on the model and stimulus
-paradigm\marginpar{I don't see when?}.
+{\bf Biology\,Model\,Container}.
+%  However it may be required during
+%simulation run-time, depending on the model and stimulus
+%paradigm\marginpar{I don't see when?}.
 
 In G-3 the translation of symbolic references to IDs is implemented in
 the {\bf Biology\,Model\,Container}.  The third step of the addressing algorithm is
@@ -1785,36 +1786,54 @@ model, for example:
 
 \subsection{Multi-Scale Network Modeling}
 
-Network modelling was previously possible in G-2. Multi-scale network
-modelling of individual neurons in G-3 is also solved with different
-{\bf Heccer} instances.  The {\bf SSP} software component defines
-several software regression tests with network models.  One of the
-network models used in this test has a ``source'' neuron that during
-the simulation delivers a spike to two ``target'' neurons.
+Network modelling was previously possible in
+G-2\cite{cornelis02:_tutor}.  To simulate networks of cells the user
+must manually initialize the numerical solver of G-2 initialized for
+every cell in the network.  Careful G-2 script coding is required to
+prevent memory exhaustion errors.  Here we shortly compare this with
+the G-3 behaviour.
 
 
-For example, projections are solved by {\bf DES}, where the {\bf
-  G-Shell} syntax is:
+The {\bf SSP} software component defines several software regression
+tests with network models.  One of the simplest network models used in
+this test has a ``source'' neuron that delivers a spike to two
+``target'' neurons during the simulation .
+
+To simulate this simple network, the simulation configuration has to
+associate each neuron model in the {\bf Model\,Container} with {\bf
+  Heccer}.  This association will then create a {\bf Heccer} instance
+before the simulation starts.  As with G-2, this is a manual
+operation.
+%In G-3 multi-scale network modelling of individual neurons requires a
+%{\bf Heccer} instance for each neuron.
+However, the integration of the user workflow into G-3 clearly defines
+the scope of user actions and in the case of network modeling, allows
+the {\bf Heccer} instances, once created, to share internal data
+structures as required, thereby reducing overall memory consumption.
+
+In G-3 the action potential propagation through the fibers of a
+projection is simulated by the event queuing component of {\bf DES}.
+The {\bf G-Shell} syntax is:
 \begin{verbatim}
   ndf_load tests/networks/spiker4.ndf
   solverset "/network/target1 => heccer"
   solverset "/network/target2 => heccer"
-  solverset "/network/Purkinje => heccer"
+  solverset "/network/source => heccer"
   solverset "/network/projection => des"
 \end{verbatim}
 
-Internally, the {\bf G-Shell} translates these statements to their
-equivalent {\bf SSP} syntax:
-\begin{verbatim}
-  { modelname => "/network/target1",
-    solverclass => "heccer", },
-  { modelname => "/network/target2",
-    solverclass => "heccer", },
-  { modelname => "/network/Purkinje",
-    solverclass => "heccer", },
-  { modelname => "/network/projection1",
-    solverclass => "des", },
-\end{verbatim}
+%Internally, the {\bf G-Shell} translates these statements to their
+%equivalent {\bf SSP} syntax:
+%\begin{verbatim}
+%  { modelname => "/network/target1",
+%    solverclass => "heccer", },
+%  { modelname => "/network/target2",
+%    solverclass => "heccer", },
+%  { modelname => "/network/source",
+%    solverclass => "heccer", },
+%  { modelname => "/network/projection1",
+%    solverclass => "des", },
+%\end{verbatim}
 
 
 \section{Discusion}
