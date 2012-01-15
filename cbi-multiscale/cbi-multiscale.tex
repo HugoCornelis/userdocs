@@ -1841,36 +1841,30 @@ The {\bf G-Shell} syntax is:
 Simulation provides a framework to organize our understanding of biological systems. Historically, the development of neuronal simulation software for the construction of morphologically detailed neuron models and small networks has been instigated by research projects that specifically addressed complementary technical and scientific questions \cite{Moore:2010vn}. These software systems have been both highly successful and continue to grow in complexity through cycles of research project extension. However, after more than twenty years of extending their functionality, usually by the direct incorporation of source code into the core of the simulator (typically comprising a single solver), code structures become so complicated that it is increasingly difficult, if not impossible, to easily continue extension of simulator functionality. Ultimately, the resulting stand-alone applications become `monolithic'. In these conditions it is a considerable challenge for a neuroscientist lacking the necessary mathematical and computational skills to extend a model. In practice, the complexity and monolithic nature of the software results in a non-scalable software architecture \cite{jaeger02:_comput_neuros_realis_model_exper}.
 
 At the core of this problem is the 
-lack of distinction made by the majority of contemporary simulators between biological data, numerical data, and control operations during the design and development of a simulator. The majority of these simulators remain primarily focused on the biological and mathematical aspects of a model. As they do not respect all three of Marr's levels, i.e. the third of Marr's levels (hardware implementation) is not addressed during simulator design, the complexity of multi-scale simulation is greatly increased. However, just as the `hardware' of the biological system should be accounted for in the cognitive process of model development, so must it be accounted for during the simulation of the model. This is possible as a model is a virtual representation of a physical system, in a simulator it is software architecture and the software functionality that it organizes that must be accounted for in the  
+lack of distinction made by the majority of contemporary simulators between biological data, numerical data, and control operations during the design and development of a simulator. The majority of these simulators remain primarily focused on the biological and mathematical aspects of a model. As they do not respect all three of Marr's levels, i.e. the third of Marr's levels (hardware implementation) is not addressed during software design, the complexity of multi-scale simulation is greatly increased. 
 
-It has previously been proposed that \cite{Sejnowski:1988fk}: (1) because of the the many different structural levels of organization and the fact that models rarely span more than two levels, a more comprehensive understanding of a system requires many different types of model, and (2) intermediate level models must necessarily simplify with respect to the structural properties of lower level elements.
+We note that just as the `hardware' of a biological system should be accounted for in the cognitive process of model development, so must it be accounted for during the simulation of the model. In a simulator this can be achieved by the software architecture and its organization of simulator functionality. Making the cognitive model concordant with simulator functionality removes many of the problematic aspects of multi-scale modeling.  
 
-As discussed in \cite{Heylighen:2006vn}, systems theory shows that regardless of the number of scales used to conceptualize a system, it is not possible to know whether the system has been completely conceptualized. This is a consequence of changing scales as when this occurs it adds, deletes, and reconfigures patterns that are the content of the associated conceptualizations. There is no way to know or learn that all patterns have been conceptualized at one or more scales, as completeness is not possible. Nevertheless, the use of multiple scales of conceptualization provides a way to asymptotically approach completeness.
+It has previously been proposed that \cite{Sejnowski:1988fk}: (1) because of the the many different structural levels of organization and the fact that models rarely span more than two levels, a more comprehensive understanding of a system requires many different types of model, and (2) intermediate level models must necessarily simplify with respect to the structural properties of lower level elements. We consider this view to be based on the consequences of employing a a monolithic simulator to address a multi-level problem.
+
+for a representative perspective on these issues, we turn to a discussion in \cite{Heylighen:2006vn}. Systems theory shows that regardless of the number of scales used to conceptualize a system, it is not possible to know whether the system has been completely conceptualized. This is a consequence of changing scales as when this occurs it adds, deletes, and reconfigures patterns that are the content of the associated conceptualizations. There is no way to know or learn that all patterns have been conceptualized at one or more scales, as completeness is not possible. Nevertheless, the use of multiple scales of conceptualization provides a way to asymptotically approach completeness.
  
-However, as \cite{Heylighen:2006vn} discusses, at any scale of conceptualization, properties are always aggregated at least as simple objects. Thus, a system at any scale of conceptualization is an approximation or loose congruence of the actual system. This is not an `abstraction' of the system as that means leaving things out of a model with the understanding that what is absent can always be reinserted. What is ``left out'' of a scale specific conceptualization of a system are patterns (simple objects, relationships, and their aggregations) that might be available at other scales. Such patterns cannot be returned to a scale specific approximation of a system, regardless of resolution or field of view. This means that `missing' content has no place in a conceptualization at a given scale as it was never available in the first place.
+However, as \cite{Heylighen:2006vn} continues, at any scale of conceptualization, properties are always aggregated at least as simple objects. Thus, a system at any scale of conceptualization is an approximation or loose congruence of the actual system. This is not an `abstraction' of the system as that means leaving things out of a model with the understanding that what is absent can always be reinserted. What is ``left out'' of a scale specific conceptualization of a system are patterns (simple objects, relationships, and their aggregations) that might be available at other scales. Such patterns cannot be returned to a scale specific approximation of a system, regardless of resolution or field of view. This means that `missing' content has no place in a conceptualization at a given scale as it was never available in the first place.
 
-According to the foregoing principles of systems theoretic analysis (see \cite{Bertalanffy:1973zr,Heylighen:2006vn}), it is clear there are numerous phenomenological approaches to the development of multi-scale models suited to the transformation of a mental model into a computational simulation.
+According to principles of systems theoretic analysis (see \cite{Bertalanffy:1973zr,Heylighen:2006vn}), it is clear there are numerous phenomenological approaches to the development of multi-scale models suited to the transformation of a mental model into a computational simulation. We resolve this problem by expansion of the cognitive workflow as illustrated in Figure \cite{fig:mental-model-simulation-path}.
 
+The cognitive workflow is an adaption of a previously described user workflow that organizes the sequence of necessary steps typically employed by a person in developing a computational model and employing simulation to generate data for subsequent analysis \cite{10.1371/journal.pone.0028956}. In this sense it is a depiction of a sequence of operations, declared as the work of a person or a group of persons (Belhajjame et al., 2002). Similarly, the cognitive workflow describes the process whereby an abstraction is transformed into an implementation by the conversion of a mental model into a simulation. This is made possible due to the recent reconfiguration of the GENESIS simulator. 
 
+This reconfiguration was based compliance with the CBI architecture. The CBI architecture is based on a separation of concerns that partitions data and control functions from software layering that separates high level biological data from low level mathematical operations. The immediate benefit of this partitioning of the software architecture into highly modular and independent components (see \cite{10.1371/journal.pone.0028956} for details), is transparent support of multi-scale simulation.
 
-
-In our approach to addressing these concerns, we have developed the concept of a cognitive workflow. It is an adaption of a previously described user workflow that organizes the sequence of necessary steps typically employed by a person in developing a computational model and employing simulation to generate data for subsequent analysis \cite{10.1371/journal.pone.0028956}. In this sense it is a depiction of a sequence of operations, declared as the work of a person or a group of persons (Belhajjame et al., 2002). Similarly, the cognitive workflow describes the process whereby an abstraction is transformed into an implementation by the conversion of a mental model into a simulation. This is made possible due to the recent reconfiguration of the GENESIS simulator. This reconfiguration
-
-
-
-
- has led to the incorporation Marr's third level (`hardware') as software functionality, to give a comprehensive multi-scale simulator. In this approach, it is the implementation of a model for simulation contained by a single software entity (here a single {\bf Biology\,Model\,Container} that incorporaties multiple solvers. The communication infrastructure enables communication at run-time between these solvers and thus across different levels of a simulation. This reduces the requirement for multiple models and simplification of intermediate modes with respect to lower levels stipulated by \cite{Sejnowski:1988fk}. 
+This approach is based on the implementation of a model for simulation being contained by a single software entity (here a single {\bf Biology\,Model\,Container} that incorporates the multiple solvers required to address the different scales of a model. A communication infrastructure enables communication at run-time between these solvers and thus across different levels of a simulation. In this paradigm, the requirement for multiple models is removed by implementation of multiple solvers. As a consequence, simplification of intermediate models with respect to lower levels as proposed by \cite{Sejnowski:1988fk} is eliminated. 
 
 %, but ought to attempt to incorporate as many of the given level's functional properties as actually exist in the higher level's computational tasks. This approach has led to the development of both realistic brain models containing considerable biological detail and simplifying brain models that `abstract' both structural and functional principles, although any given model may have features of both.
 
-Here, we describe one resolution of this situation. It was achieved with the development and implementation of a simulator as exemplified by G-3 (by virtue of its compliance with the CBI architecture) which is based on a separation of concerns that partitions data and control functions while partitioning software functionality into  `layers' that separate high level biological data from low level mathematical operations. The immediate benefit of this partitioning of the software architecture into highly modular and independent components (see \cite{10.1371/journal.pone.0028956} for details), is support multi-scale simulation.
-
 %The CBI architecture was designed to address this situation, thereby enabling transparent simulator extensibility and as a consequence the implicit implementation of multi-scale modelling.
 
-The core of these problem is the 
-lack of distinction in the majority of contemporary simulators between biological data, numerical data, and control operations during the design and development of a simulator. The majority of contemporary simulators remain primarily focused on these biological and mathematical aspects of a model. As they do not respect all three of Marr's levels, the complexity of multi-scale simulation is greatly increased. 
-
-The 
+%The core of these problem is the 
+%lack of distinction in the majority of contemporary simulators between biological data, numerical data, and control operations during the design and development of a simulator. The majority of contemporary simulators remain primarily focused on these biological and mathematical aspects of a model. As they do not respect all three of Marr's levels, the complexity of multi-scale simulation is greatly increased. 
 
 To this end, G-3 supports the construction of very large scale network and system
 models based on realistic neuronal components.  In support of
@@ -1882,17 +1876,6 @@ same time, intermediate simulation system modules, already
 described as the mechanism used to link {\bf Chemesis-3} and linear
 cable solvers, are used to share values and functions between
 larger scale network simulations and lower scale models.
-%Ignoring these distinctions results in `collapse' of the cognitive workflow into a single node located at the last step of the cognitive workflow. This convergence is illustrated in Figure \ref{fig:mental-model-simulation-part}. The figure shows that in a monolithic software system high convergence allows only a single (monolithic) software component to exist. This suggests that in the absence of a clean separation of concerns, otherwise prohibited diagonal interactions are introduced between the Control/Data and High/Low software axes defined in Figure \ref{fig:cbi-architecture-simple}.
-%
-%\begin{figure}[h!t]
-%  \begin{center}
-%    \includegraphics[width=4in]{figures/NS-abstraction-implementation-part.eps}
-%  \end{center}
-%  \caption{ {\bf Cognitive Workflow of Monolithic Software.} }
-%  \label{fig:mental-model-simulation-part}
-%\end{figure}
- 
-Figure \ref{fig:mental-model-simulation-path} illustrates a selection of some of the possible steps, levels, and components of the cognitive workflow we employ here. Interestingly, two possible multi-scale models have been in widespread use but not generally recognized for their multi-scale characteristics: (1) Biologically inspired, e.g. a model is specified as a network and a population of detailed channel models, and (2) Mathematically inspired, e.g. use continuous cable equations to model a neuron, discrete event models for axonal propagation, and Hodgkin-Huxley equations for the channels.
 
 From a technical point of view, the incorporation of simulation
 modules that specifically involve spatial dimensions is, in principle,
@@ -1907,10 +1890,22 @@ representations \cite{MO:2009bh}. In effect, this allows
 the use of multi-scale G-3 models as a framework to compare different
 technical strategies.
 
-The elaboration of multi-scale modelling presented in this paper
+The paradigm of multi-scale modelling presented in this paper
 enables the generation of a taxonomy of models in computational neurobiology
 based on both the biological scale of a model and the level of detail
-it aims to represent.
+it aims to represent. By accounting for each of the levels proposed in \cite{Marr:19821kx} during development of a simulator, it is possible to transparently resolves many of the technical and conceptual issues currently surrounding the successful simulation of multi-scale models.
+
+%Ignoring these distinctions results in `collapse' of the cognitive workflow into a single node located at the last step of the cognitive workflow. This convergence is illustrated in Figure \ref{fig:mental-model-simulation-part}. The figure shows that in a monolithic software system high convergence allows only a single (monolithic) software component to exist. This suggests that in the absence of a clean separation of concerns, otherwise prohibited diagonal interactions are introduced between the Control/Data and High/Low software axes defined in Figure \ref{fig:cbi-architecture-simple}.
+%
+%\begin{figure}[h!t]
+%  \begin{center}
+%    \includegraphics[width=4in]{figures/NS-abstraction-implementation-part.eps}
+%  \end{center}
+%  \caption{ {\bf Cognitive Workflow of Monolithic Software.} }
+%  \label{fig:mental-model-simulation-part}
+%\end{figure}
+ 
+%Figure \ref{fig:mental-model-simulation-path} illustrates a selection of some of the possible steps, levels, and components of the cognitive workflow we employ here. Interestingly, two possible multi-scale models have been in widespread use but not generally recognized for their multi-scale characteristics: (1) Biologically inspired, e.g. a model is specified as a network and a population of detailed channel models, and (2) Mathematically inspired, e.g. use continuous cable equations to model a neuron, discrete event models for axonal propagation, and Hodgkin-Huxley equations for the channels.
 
  % Contrast this with \cite{ray08:_pymoos}
 
