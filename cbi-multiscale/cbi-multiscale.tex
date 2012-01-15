@@ -1804,11 +1804,11 @@ this test has a ``source'' neuron that delivers a spike to two
 To simulate this simple network, the simulation configuration has to
 associate each neuron model in the {\bf Model\,Container} with {\bf
   Heccer}.  This association will then create a {\bf Heccer} instance
-before the simulation starts.  As with G-2, this is a manual
+before the simulation starts.  As with G-2, in G-3 this is currently a manual
 operation.
 %In G-3 multi-scale network modelling of individual neurons requires a
 %{\bf Heccer} instance for each neuron.
-However, the integration of the user workflow into G-3 clearly defines
+However, the integration of the user workflow into G-3 defines
 the scope of user actions and in the case of network modeling, allows
 the {\bf Heccer} instances, once created, to share internal data
 structures as required, thereby reducing overall memory consumption.
@@ -1849,7 +1849,7 @@ We note that just as the `hardware' of a biological system should be accounted f
 
 It has previously been proposed that \cite{Sejnowski:1988fk}: (1) because of the the many different structural levels of organization and the fact that models rarely span more than two levels, a more comprehensive understanding of a system requires many different types of model, and (2) intermediate level models must necessarily simplify with respect to the structural properties of lower level elements. We consider this view to be based on the consequences of employing a a monolithic simulator to address a multi-level problem.
 
-for a representative perspective on these issues, we turn to a discussion in \cite{Heylighen:2006vn}. Systems theory shows that regardless of the number of scales used to conceptualize a system, it is not possible to know whether the system has been completely conceptualized. This is a consequence of changing scales as when this occurs it adds, deletes, and reconfigures patterns that are the content of the associated conceptualizations. There is no way to know or learn that all patterns have been conceptualized at one or more scales, as completeness is not possible. Nevertheless, the use of multiple scales of conceptualization provides a way to asymptotically approach completeness.
+For a representative perspective on these issues, we turn to a discussion in \cite{Heylighen:2006vn}. Systems theory shows that regardless of the number of scales used to conceptualize a system, it is not possible to know whether the system has been completely conceptualized. This is a consequence of changing scales as when this occurs it adds, deletes, and reconfigures patterns that are the content of the associated conceptualizations. There is no way to know or learn that all patterns have been conceptualized at one or more scales, as completeness is not possible. Nevertheless, the use of multiple scales of conceptualization provides a way to asymptotically approach completeness.
  
 However, as \cite{Heylighen:2006vn} continues, at any scale of conceptualization, properties are always aggregated at least as simple objects. Thus, a system at any scale of conceptualization is an approximation or loose congruence of the actual system. This is not an `abstraction' of the system as that means leaving things out of a model with the understanding that what is absent can always be reinserted. What is ``left out'' of a scale specific conceptualization of a system are patterns (simple objects, relationships, and their aggregations) that might be available at other scales. Such patterns cannot be returned to a scale specific approximation of a system, regardless of resolution or field of view. This means that `missing' content has no place in a conceptualization at a given scale as it was never available in the first place.
 
