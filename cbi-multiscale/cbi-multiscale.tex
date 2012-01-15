@@ -1785,28 +1785,13 @@ model, for example:
 
 \subsection{Multi-Scale Network Modeling}
 
-Network modelling was previously possible in
-G-2\cite{cornelis02:_tutor}.  
+Network modelling was previously possible in G-2. Multi-scale network
+modelling of individual neurons in G-3 is also solved with different
+{\bf Heccer} instances.  The {\bf SSP} software component defines
+several software regression tests with network models.  One of the
+network models used in this test has a ``source'' neuron that during
+the simulation delivers a spike to two ``target'' neurons.
 
-To simulate networks of cells the user must manually initialize the
-numerical solver of G-2 initialized for every cell in the network.
-Careful G-2 script coding is required to prevent memory exhaustion
-errors.
-
-
-The {\bf SSP} software component defines several software regression
-tests with network models.  One of the simplest network models used in
-this test has a ``source'' neuron that during the simulation delivers
-a spike to two ``target'' neurons.
-
-To simulate this simple network, the simulation configuration has to
-associate each neuron model in the {\bf Model\,Container} to {\bf
-  Heccer}.  As of G-2, this is a manual operation.
-%In G-3 multi-scale network modelling of individual neurons requires a
-%{\bf Heccer} instance for each neuron.
-However, these {\bf Heccer}
-instances can share internal data structures as requried, thereby
-reducing memory consumption.
 
 For example, projections are solved by {\bf DES}, where the {\bf
   G-Shell} syntax is:
@@ -1865,7 +1850,7 @@ Here, we describe one resolution of this situation. It is relies on the introduc
  
  Figure \ref{fig:mental-model-simulation-path} illustrates a selection of some of the possible steps, levels, and components of this process. Interestingly, two possible multi-scale models have been in widespread use but not generally recognized for their multi-scale characteristics: (1) Biologically inspired, e.g. a model is specified as a network and a population of detailed channel models, and (2) Mathematically inspired, e.g. use continuous cable equations to model a neuron, discrete event models for axonal propagation, and Hodgkin-Huxley equations for the channels. It is based on the separation of data from control functions and the
 
-The majority of contemporary simulators remain primarily focused on the biological and mathematical aspects of multi-scale modelling. As they do not respect all three of Marr's levels, the complexity of multi-scale simulation is greatly increased. The recent reconfiguration of the GENESIS simulator has led to the incorporation Marr's third level (`hardware') as software functionality, to give a comprehensive multi-scale simulator. In this approach, it is the implementation of a model for simulation contained by a single software entity (in this case a single {\bf Biology\,Model\,Container) that employs divergence by incorporation multiple solvers to implement the different mathematical tools that communicate with each other at run-time using a communication infrastructure provided by the CBI architecture that solves the problem of creating a software platform that efficiently supports the simulation of multi-scale models\marginpar{long sentence}.
+The majority of contemporary simulators remain primarily focused on the biological and mathematical aspects of multi-scale modelling. As they do not respect all three of Marr's levels, the complexity of multi-scale simulation is greatly increased. The recent reconfiguration of the GENESIS simulator has led to the incorporation Marr's third level (`hardware') as software functionality, to give a comprehensive multi-scale simulator. In this approach, it is the implementation of a model for simulation contained by a single software entity (in this case a single {\bf Biology\,Model\,Container} that employs divergence by incorporation multiple solvers to implement the different mathematical tools that communicate with each other at run-time using a communication infrastructure provided by the CBI architecture that solves the problem of creating a software platform that efficiently supports the simulation of multi-scale models\marginpar{long sentence}.
 
 That this is the case is evident when the matrix given in Figure \ref{fig:mental-model-simulation-path} is compared with the structural level matrix illustrated in Figure \ref{fig:multi-scale-taxonomy}. 
 
