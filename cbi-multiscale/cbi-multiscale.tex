@@ -1785,13 +1785,28 @@ model, for example:
 
 \subsection{Multi-Scale Network Modeling}
 
-Network modelling was previously possible in G-2. Multi-scale network
-modelling of individual neurons in G-3 is also solved with different
-{\bf Heccer} instances.  The {\bf SSP} software component defines
-several software regression tests with network models.  One of the
-network models used in this test has a ``source'' neuron that during
-the simulation delivers a spike to two ``target'' neurons.
+Network modelling was previously possible in
+G-2\cite{cornelis02:_tutor}.  
 
+To simulate networks of cells the user must manually initialize the
+numerical solver of G-2 initialized for every cell in the network.
+Careful G-2 script coding is required to prevent memory exhaustion
+errors.
+
+
+The {\bf SSP} software component defines several software regression
+tests with network models.  One of the simplest network models used in
+this test has a ``source'' neuron that during the simulation delivers
+a spike to two ``target'' neurons.
+
+To simulate this simple network, the simulation configuration has to
+associate each neuron model in the {\bf Model\,Container} to {\bf
+  Heccer}.  As of G-2, this is a manual operation.
+%In G-3 multi-scale network modelling of individual neurons requires a
+%{\bf Heccer} instance for each neuron.
+However, these {\bf Heccer}
+instances can share internal data structures as requried, thereby
+reducing memory consumption.
 
 For example, projections are solved by {\bf DES}, where the {\bf
   G-Shell} syntax is:
