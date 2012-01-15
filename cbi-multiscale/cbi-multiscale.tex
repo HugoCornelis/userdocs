@@ -1300,39 +1300,41 @@ The functions currently implemented in {\bf Chemesis-3} include: {\it rxnpool}--
 
 \subsubsection{Schedulers and User Interfaces}
 
-\paragraph{SSP}
+\paragraph{SSPy and SSP}
 
 Both the model containers and {\bf Solvers} are stand-alone G-3
 components. To be useful, they must be `glued' together
 and activated correctly, such that they can coordinate during a single simulation. This is exactly what the Simple
-Scheduler in Perl ({\bf SSP}) does. It is currently the standard
-scheduler for G-3. {\bf SSP} exploits the sophistication of the
-Perl scripting language to load software components on demand and
-activate them from a configuration file. It achieves this by loading
-dynamically those software components referenced in its configuration.
-Because the {\bf SSP} scheduler does not have any computational load,
+Scheduler in Perl ({\bf SSP}) and the Simple Scheduler in Python ({\bf SSPy}) do.
+% It is currently the standard
+%scheduler for G-3.
+{\bf SSPy} and {\bf SSP} exploit the sophistication of the
+Python and Perl scripting languages to load software components on demand and
+activate them from a configuration file. They achieve this by loading
+dynamically those software components referenced in their configuration.
+Because the scheduler does not have any computational load,
 its implementation is very simple and highly configurable. Other
-configurations can connect {\bf SSP} to different modelling services or
+configurations can connect {\bf SSPy} or {\bf SSP} to different modelling services or
 {\bf Solvers}.
 
-In summary, {\bf SSP} glues other software components together, synchronizes the activities of other components during a simulation, and is configurable. 
+In summary, {\bf SSPy} and {\bf SSP} glue other software components together, synchronize their activity during a simulation, and are highly configurable. 
 
 
-\paragraph{SSPy}
+%\paragraph{SSPy}
 
-G-3 is composed of several independent software components, each
-of which has a presence in Python. It is possible via the API of
-components such as the model containers and {\bf Heccer} to script
-simulations via Python (see below). However, this is not desirable as
-simulations would then be composed of code which determined their own control
-flow. Like GENESIS-2, this would often require a user to understand all the
-internals to be able to expand existing simulations. To avoid this, {\bf SSPy} is
-designed similarly to {\bf SSP}. It encapsulates the operations for
-loading and running a complete simulation while giving 
-control of simulation parameters and simulator options to a
-declarative configuration file. It also provides an easy plugin
-framework so that new modelling services, experimental protocols, and
-{\bf Solvers} can be dynamically loaded from a plugin directory. This extends simulator functionality without the need to change core code.
+%G-3 is composed of several independent software components, each
+%of which has a presence in Python. It is possible via the API of
+%components such as the model containers and {\bf Heccer} to script
+%simulations via Python (see below). However, this is not desirable as
+%simulations would then be composed of code which determined their own control
+%flow. Like GENESIS-2, this would often require a user to understand all the
+%internals to be able to expand existing simulations. To avoid this, {\bf SSPy} is
+%designed similarly to {\bf SSP}. It encapsulates the operations for
+%loading and running a complete simulation while giving 
+%control of simulation parameters and simulator options to a
+%declarative configuration file. It also provides an easy plugin
+%framework so that new modelling services, experimental protocols, and
+%{\bf Solvers} can be dynamically loaded from a plugin directory. This extends simulator functionality without the need to change core code.
 
 \paragraph{G-Shell}
 
