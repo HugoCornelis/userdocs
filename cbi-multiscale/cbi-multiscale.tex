@@ -862,7 +862,7 @@ The software architecture developed for G-3 supports a new and
 unique capacity for federated and modular software development that directly supports multi-scale modelling.  Furthermore, its structure also
 supports the direct interaction with, or embedding of, models at different
 levels of scale.  During model construction this is accomplished
-through the reconfiguration of the internal model storage format,
+through the reconfiguration\marginpar{give an example} of the internal model storage format,
 while during simulation run-time it occurs through
 specific software modules that create intermediary representations of
 variables present at multiple scales (described in more detail below).
@@ -874,7 +874,7 @@ aspects of {\bf Solvers} and their implementation and leads to better
 optimization, (2) the {\it Developer\,Package} facilitates integration of
 new {\bf Solvers} into the build system of G-3 enabling immediate regression
 testing, (3) easy extension of the configuration of the internal model
-storage format to establish new declarative model tokens and
+storage format to establish new declarative model tokens\marginpar{give an example} and
 parameters recognized by new {\bf Solvers}, (4) easy construction of an
 interface between the internal data storage format and the core of new
 {\bf Solvers}, and finally, (5) a communication
@@ -931,14 +931,14 @@ levels of scale.
 %  Technically, in the case of {\bf Chemesis-3} and the
 %linear cable solver, for example, these modules calculate weighted
 %space-time averages.
-It is for these reasons the {\bf Biology\,Model\,Container} is capable of
+It is for these reasons that the {\bf Biology\,Model\,Container} is capable of
 supporting the transparent construction of multi-scale models and
 simulations.
 
-Loosely based on GENESIS-2 elements \cite{bower98:_book_genes}, the {\bf Biology\,Model\,Container} supports tokens for: Grid3D, Populations, and Networks; VolumeConnect, Individual Connections; Single Cells and Morphology; HH-Channels and Synaptic (NMDA/AMPA) Channels, and Reaction--Diffusion.
+Loosely\marginpar{repitition of NDF below} based on GENESIS-2 elements \cite{bower98:_book_genes}, the {\bf Biology\,Model\,Container} supports tokens for: Grid3D, Populations, and Networks; VolumeConnect, Individual Connections; Single Cells and Morphology; HH-Channels and Synaptic (NMDA/AMPA) Channels, and Reaction--Diffusion.
 
 \paragraph{Experiment\,Model\,Container}
-Stores a model of a stimulus paradigm and desired output parameters. It also defines and stores a hierarchical sequence of stimulus-related actions (e.g. start and stop time of a current injection) and their dependencies.
+Stores\marginpar{is not fully developed} a model of a stimulus paradigm and desired output parameters. It also defines and stores a hierarchical sequence of stimulus-related actions (e.g. start and stop time of a current injection) and their dependencies.
 
 Finally, we note that the model containers define models in a purely declarative,
 extensible language.
@@ -1124,8 +1124,10 @@ In an NDF file calcium decay  is represented as follows:
 %\end{verbatim}
 %%END EQUATION_EXPONENTIAL
 
-Note that a parameter can either be a constant value, point to a parameter of
-another symbol, or have the value of a function.  For example:
+In the example above, each parameter has a value that is fixed during
+the model construction phase.  In the general case a parameter can
+either be a constant value, point to a parameter of another symbol, or
+have the value of a function.  For example:
 \begin{verbatim}
 PARAMETERS
    PARAMETER ( DIAMETER = 0.3 ),
@@ -1200,7 +1202,7 @@ models ranging from subcellular dynamics up to the network level.
 \subsubsection{A Single-Neuron Solver: Heccer}
 
 {\bf Heccer} is the G-3 reimplementation of the compartmental solver
-({\it hsolve}) used by the GENESIS-2 simulator \cite{cornelis02:_tutor}.  It employs the
+({\it hsolve}) of the GENESIS-2 simulator \cite{cornelis02:_tutor}.  It employs the
 Crank-Nicolson solution to integrate the cable equation of a neuronal
 morphology and the Hodgkin-Huxley equations of their transmembrane
 currents \cite{segev95:_theor_found_dendr_funct, hha52, cornelis02:_tutor}.
@@ -1282,6 +1284,9 @@ dynamics \cite{blackwell00:_eviden_distin_light_induc_calcium}.
 %  shared with other solvers).
 
 %- G-shell integration on July 17th and July 18th.
+
+The {\bf model-container} needs appropriate configuration to recognize
+the NDF tokens supported by {\bf Chemesis-3}\marginpar{incomplete}.
 
 The functions currently implemented in {\bf Chemesis-3} include: {\it rxnpool}--a concentration pool that interacts with
   reactions and diffuses to other pools, {\it conservepool}--a mass conservation based pool, it computes the
