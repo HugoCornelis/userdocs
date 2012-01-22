@@ -47,9 +47,9 @@ $^\ast$ E-mail: Corresponding Author Hugo.Cornelis@gmail.com
 
 Extension of simulator functionality may result in the unintentional creation of a monolithic software platform. This greatly increases the difficulty of extending simulator software code to support new functionality such as efficient multi-scale modelling. Analysis suggests that the difficulties of simulator extensibility faced by many software developers originates in a primary focus on the biological and mathematical implementation of a model, at the expense of considering the underlying software architecture. This limits software development efforts, thus simulator functionality, and ultimately simulator extensibility. Here, we employ axioms defining the domain of computational neuroscience to provide a logical framework that organizes our approach to multi-scale simulation. This framework underpins the modular design of the CBI federated software architecture employed to reconfigure the GENESIS simulator. This has resolved many problems associated with multi-scale modelling that previously existed with this simulator.  We outline our approach to development of simulator structure and function by describing components of the simulator essential for multi-scale modelling. Careful consideration of issues we identify greatly facilitates the development of a simulator capable of transparently supporting multi-scale biological modelling across levels ranging from the ionic and molecular to complete systems.
 
-%\newpage
-%
-%\tableofcontents
+\newpage
+
+\tableofcontents
 
 %\newpage
 
@@ -1343,20 +1343,20 @@ In summary, {\bf SSPy} and {\bf SSP} glue other software components together, sy
 
 \paragraph{G-Shell}
 
-When running from a command line, after G-3 has completed its startup procedure, a
-command prompt  ({\tt genesis\,$>$}) appears in the terminal window. This indicates the
-existence of a G-3 shell environment ({\bf G-Shell}) running an interactive
-G-3 session. To provide backward compatibility, the {\bf
-  G-Shell} interfaces with the GENESIS-2 Script Language Interpreter (SLI).
-  
-  \subsection{Interactive Query and Simulation}
-
 The {\bf G-Shell} integrates other G-3 components and makes their
 functions available through an interactive environment available from
-a command line.  Coded in Perl, the {\bf G-Shell} is a communication
-abstraction layer for the {\bf Model Container}, {\bf Heccer}, {\bf
-  SSP}, {\bf DES} and the {\bf Studio}, after the {\bf G-Shell} has
-been started from a system shell with the {\it  genesis-g3} command.
+a command line.  After the G-3 shell environment ({\bf G-Shell}) has completed its startup procedure, a
+command prompt  ({\tt genesis\,$>$}) appears in the terminal window. This indicates the
+existence of an interactive
+G-3 session. To provide backward compatibility, the {\bf
+  G-Shell} interfaces with the GENESIS-2 Script Language Interpreter (SLI).
+The {\bf G-Shell} is
+started from a system shell with the {\it genesis-g3} command  
+\subsection{Interactive Query and Simulation}
+
+Coded in Perl, the {\bf G-Shell} provides an integrated interactive
+environment to the {\bf Model Container}, {\bf Heccer}, {\bf SSP},
+{\bf DES} and the {\bf Studio}.
 
 %the list of loaded software components can be printed to the screen
 %with the command:
@@ -1391,10 +1391,10 @@ The command:
    ndf_load cells/purkinje/edsjb1994.ndf
 \end{verbatim}
 makes this model Purkinje cell available for interactive analysis.
-Similar commands exist for backward-compatible
-loading of GENESIS-2 SLI scripts with {\it sli\_load} or alternatively with {\it
-  pynn\_load} (to interface to
-the PyNN network modeling environment \cite{davison08:_pynn}).
+A similar command exist for backward-compatible
+loading of GENESIS-2 SLI scripts with {\it sli\_load}.  A {\it
+  pynn\_load} to interface to
+the PyNN network modeling environment \cite{davison08:_pynn} is in development.
 
 %Given the name of one of its dendritic segments, the number of branch
 %points between the segment and the soma can be determined. After
@@ -1575,8 +1575,8 @@ component.  Python bindings for {\bf DES} that facilitate network modelling also
 
 \subsection{Scripting Chemesis-3}
 
-The following example, {\it cal1.g}, shows how to implement a G-2
-Chemesis tutorial in G-3. It creates a single compartment that
+The following example, {\it cal1.ndf}, shows how to implement a G-2
+Chemesis tutorial in G-3.  It creates a single compartment that
 contains interaction between calcium and a buffer.
 
 %, {\it cal2.g} creates a two
@@ -1639,7 +1639,7 @@ take on their implicit default values of:
 \end{verbatim}
 
 The following commands illustrate how the {\bf G-Shell} and the {\bf Studio} may be employed
-to load  {\it cal1.ndf} into the {\bf Biology\,Model\,Container} for exploration of a model:
+to load  {\it cal1.ndf} into the {\bf Biology\,Model\,Container} for exploration of this model:
 
 \begin{verbatim}
   ndf_load chemesis/cal1.ndf
@@ -1670,12 +1670,13 @@ delivered to the post-synaptic targets of a connected neuron.
 propagation delay, synaptic weight, or other data specific for the
 model.
 
-From the viewpoint of the software architecture, {\bf DES} is a
-separate solver that simulates action potential propagation in an
-efficient way.  Splitting this functionality from the rest of the
-simulator facilitates customization for the modeling of sophisticated
-learning rules, especially those related to STDP, diffusion, and
-spillover.
+From the viewpoint of the CBI architecture, the {\bf DES} event queuer
+is a separate solver that simulates action potential propagation in an
+efficient way.  The {\bf DES} event distributor provides communication
+between the solvers during the simulation.  The separation of the discrete event
+functionality from the rest of the simulator facilitates customization
+for the modeling of sophisticated learning rules, especially those
+related to STDP, diffusion, and spillover\marginpar{need reference, check the G-3 grant application}.
 
 \subsection{Addressing Scheme Algorithm}
 
