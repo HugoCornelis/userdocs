@@ -270,7 +270,7 @@ The multidimensional framework implied by Figures \ref{fig:mental-model-simulati
 
 If it is accepted that: (1) a scale specific approximation can be abstracted at each level of a system and disjointly partitioned from its environment \cite{Bertalanffy:1973zr, Heylighen:2006vn}, and (2) the biological levels listed in Figure \ref{fig:mental-model-simulation-path} are plausible, then it is apparent that a realistic neuron model comprised of at least a soma and dendrites, that includes channels and synapses, is a multi-level model simulated at multiple scales. 
 
-Based on the foregoing descriptions of the multi-dimensional complexity associated with modelling biological structures and functions as `simple' as a single neuron, we describe the features  of the reconfigured GENESIS simulator (G-3--http://genesis-sim.org) relevant for multi-scale simulation. Together with several scripting examples, we show how primary components of G-3 transparently support multi-scale simulation at the biological levels of cells, channels, and synapses (see Fig. \ref{fig:mental-model-simulation-path}).
+Based on the foregoing descriptions of the multi-dimensional complexity associated with modelling biological structures and functions as `simple' as a single neuron, we describe the features  of the reconfigured GENESIS simulator (G-3--http://genesis-sim.org) relevant for multi-scale simulation. Together with several scripting examples, we show how primary components of G-3 transparently support multi-scale simulation at the biological levels of networks, cells, channels, and synapses (see Fig. \ref{fig:mental-model-simulation-path}).
 
 %\newpage
 %
@@ -696,10 +696,10 @@ connectivity provided by these individual modules. It is now described within th
 %necessarily within them.
 During the phase of model construction prior to simulation, users
 combine models from files and databases.  When the simulation runs,
-the numerical {\tt Solvers} perform the calculations of a simulation,
+the numerical {\bf Solvers} perform the calculations of a simulation,
 and save the output back to files and databases.  When these two steps
 are combined they imply a cyclic data flow from files and databases to
-the {\tt Solvers}.
+the {\bf Solvers}.
 %  Here we explain how user actions and data flows
 %relate to one another in the CBI architecture and define the overall
 %behavior of an implemented
@@ -862,7 +862,7 @@ The software architecture developed for G-3 supports a new and
 unique capacity for federated and modular software development that directly supports multi-scale modelling.  Furthermore, its structure also
 supports the direct interaction with, or embedding of, models at different
 levels of scale.  During model construction this is accomplished
-through the reconfiguration\marginpar{give an example} of the internal model storage format,
+through the reconfiguration of the internal model storage format,
 while during simulation run-time it occurs through
 specific software modules that create intermediary representations of
 variables present at multiple scales (described in more detail below).
@@ -874,13 +874,13 @@ aspects of {\bf Solvers} and their implementation and leads to better
 optimization, (2) the {\it Developer\,Package} facilitates integration of
 new {\bf Solvers} into the build system of G-3 enabling immediate regression
 testing, (3) easy extension of the configuration of the internal model
-storage format to establish new declarative model tokens\marginpar{give an example} and
+storage format to establish new declarative model tokens\marginpar{repitition of the above} and
 parameters recognized by new {\bf Solvers}, (4) easy construction of an
 interface between the internal data storage format and the core of new
 {\bf Solvers}, and finally, (5) a communication
 software component that creates simulation run-time interfaces between {\bf Solvers}.
 
-Solvers currently available in G-3, starting at the highest level, include: {\bf DES}, a discrete event queuing and distribution infrastructure for network modelling, {\bf Heccer}, a single neuron solver, {\bf Chemesis-3}, a simple reaction-diffusion system solver, and {\bf Experiment}, which provides current injections, time-tables, and output (not to be confused with the {\bf Experiment\,Model\,Container}).
+Solvers currently available in G-3, starting at the highest level, include: {\bf DES}, a discrete event queuing and distribution infrastructure for network modelling, {\bf Heccer}, a single neuron solver, {\bf Chemesis-3}, a simple reaction-diffusion system solver, and {\bf Experiment}, which provides simulation-time components for current injections, time-tables, and output (not to be confused with the {\bf Experiment\,Model\,Container}).
 
 %\subsubsection{Extending GENESIS-3}
 
@@ -936,24 +936,31 @@ supporting the transparent construction of multi-scale models and
 simulations.
 
 \paragraph{Experiment\,Model\,Container}
-Stores\marginpar{is not fully developed} a model of a stimulus paradigm and desired output parameters. It also defines and stores a hierarchical sequence of stimulus-related actions (e.g. start and stop time of a current injection) and their dependencies.
+Stores a model of a stimulus paradigm and desired output parameters.
+It also defines and stores a hierarchical sequence of stimulus-related
+actions (e.g. start and stop time of a current injection) and their
+dependencies.
 
 Finally, we note that the model containers define models in a purely declarative,
 extensible language.
 
+
 \subsubsection{The Neurospaces Description Format}
 
-The model container's Neurospaces Description Format (NDF) file format was originally designed as a file-based
-user-editable declarative interface to the {\it hsolve} method used by
-GENESIS-2 \cite{cornelis03:_neuros}\cite{beeman12:_years_comput_neuros}.  Subsequently, its single neuron modelling functionality was
-expanded with network modelling capabilities.
+The model containers Neurospaces Description Format (NDF) file format
+was originally designed as a file-based user-editable declarative
+interface to the {\it hsolve} method used by GENESIS-2
+\cite{cornelis03:_neuros}\cite{beeman12:_years_comput_neuros}.
+Subsequently, its single neuron modelling functionality was expanded
+with network modelling capabilities.
 
 The NDF file format is indicated by the {\tt .ndf} file name extension. This format
 integrates and extends the previous GENESIS {\tt .p} and {\tt .g}
 declarative file formats.  NDF files are purely declarative and can be stored in a model database. In an
   NDF file, a model exists as a hierarchy of tokens, each
 representing a biological component.  Each component is associated with a set of physical
-processes and can have parameters and shared variables. To introduce the format we now outline the general structure of an NDF file.
+processes and can have parameters and shared variables.
+% To introduce the format we now outline the general structure of an NDF file.
 
 \paragraph{Overview of an NDF File}
 \label{sec:overview-ndf-file}
@@ -1015,12 +1022,14 @@ defines models that are private to a single NDF file.  They may depend on import
 other files.
 
 The {\tt Public Models} section defines models that are visible to the NDF files into
-which they are imported.  Typically, for example, a neuron morphology
-would be located here.  Public models may depend on private models or
+which they are imported.
+%  Typically, for example, a neuron morphology
+%would be located here.
+  Public models may depend on private models or
 be hard coded.
 
-To simplify model development, G-3 supports construction of NDF files that define different components of a model.  These files
-may be thought of as library files.  To expedite model
+To simplify model development, G-3 supports the construction of NDF files that define different components of the same model.  These files
+may be thought of as NDF libraries.  To\marginpar{that's a weird sentence} expedite model
 development, all NDF files can be shared by being imported into
 other NDF files.
 
@@ -1041,9 +1050,10 @@ underlying the functional activity of biological entities by associating
 the physical processes with parameters (fixed during a simulation) and
 variables (computed during a simulation).
 
-A variety of techniques exist to model diffusion and concentrations of
-ions in a (segment of a) dendritic tree.  The simplest case is that of
-the concentration of an ion. For example, $\mathrm{Ca}^{2+}$ often 
+%A variety of techniques exist to model diffusion and concentrations of
+%ions in a (segment of a) dendritic tree.  The simplest case is that of
+%the concentration of an ion.
+As an example, consider a calcium pool $\mathrm{Ca}^{2+}$ whose concentration
 follows an exponential decay according to the equation:
 
 \begin{equation}
@@ -1054,8 +1064,8 @@ follows an exponential decay according to the equation:
 
 where $I_{\mathrm{Ca}^{2+}}$ is an ionic current flowing into a segment
 %(here expressed in amperes).  
-and $B$ is a decay constant (sometimes referred to as $\beta$), often found by
-fitting experimental data.
+and $B$ is a decay constant (sometimes referred to as $\beta$), often
+found by fitting experimental data\cite{bower98:_book_genes}.
 %  In some cases the above equation is used
 %as a model for the concentration in a thin shell near the surface of a
 %dendritic segment.  In that case $B$ can roughly be approximated with
@@ -1124,8 +1134,8 @@ In an NDF file calcium decay  is represented as follows:
 
 In the example above, each parameter has a value that is fixed during
 the model construction phase.  In the general case a parameter can
-either be a constant value, point to a parameter of another symbol, or
-have the value of a function.  For example:
+either be a constant value, point to a parameter of another component,
+or have the value of a function.  For example:
 \begin{verbatim}
 PARAMETERS
    PARAMETER ( DIAMETER = 0.3 ),
@@ -1133,16 +1143,15 @@ PARAMETERS
    PARAMETER ( SEED = SERIAL () )
 END PARAMETERS
 \end{verbatim}
-where {\tt DIAMETER} has a constant value, {\tt
-  LENGTH} is inherited from the parent component (the `$..$'
-notation is a reference to the parent symbol), and {\tt SEED} has a
-value defined by the function {\tt SERIAL()}.  Importantly, neither
-the NDF file format nor the model container make a syntactical
-distinction between the parameters and variables of a physical
-process.  For example, {\tt LENGTH} is neither defined as a parameter 
-with a fixed value nor as a solved variable.  This logic is employed 
-as a numerical value may be a parameter in one model 
-but a variable in another.
+where {\tt DIAMETER} has a constant value, {\tt LENGTH} is inherited
+from the parent component (the `$..$' notation is a reference to the
+parent component), and {\tt SEED} has a value defined by the function
+{\tt SERIAL()}.  Importantly, neither the NDF file format nor the
+model container make a syntactical distinction between the parameters
+and variables of a physical process.  For example, {\tt LENGTH} is
+neither defined as a parameter with a fixed value nor as a solved
+variable.  This logic is employed as a numerical value may be a
+parameter in one model but a variable in another.
 %We note that the NDF file
 %format supports both the '$..$', and $^\wedge$ notations to
 %reference the parent symbol.  (While non-technical people might
@@ -1153,7 +1162,7 @@ but a variable in another.
 When one biological entity modulates the behavior of another, their
 physical processes share one or more variables.  For example, in the
 case of a `pool' containing calcium ions, a transmembrane calcium current may
-raise the concentration of the pool. Under these circumstances, the current ({\tt I}) is a variable common to both the conductance and the pool.
+raise the concentration of the pool. In this example, the current ({\tt I}) is a variable common to both the conductance and the pool.
 Such variables, when shared between multiple physical
 processes, are declared using the {\tt BINDABLES} keyword.
 \begin{verbatim}
@@ -1193,6 +1202,7 @@ clause:
 
 \noindent {\bf Got this Far:}
 
+\paragraph{Multi-scale Models in NDF}
 The NDF file format is loosely based on GENESIS-2 objects
 \cite{bower98:_book_genes}, and supports an extensible set of tokens,
 including {\tt POOL}, {\tt CHANNEL}, {\tt SEGMENT}, {\tt CELL}, {\tt
@@ -1201,9 +1211,10 @@ that allow the construction of models ranging from subcellular
 dynamics up to the network level.  Other tokens are simple containers
 for the parameters of procedural algorithms that run inside the {\bf
   Biology\,Model\,Container} during the model construction phase.  For
-example these tokens can define a three dimensional layout of physical
-processes ({\tt Grid3D}) or bind variables of selected physical
-processes based on their parameterization ({\tt VolumeConnect}).
+instance these tokens can define a three dimensional layout of
+physical processes ({\tt Grid3D}) or bind variables of selected
+physical processes based on their parameterization ({\tt
+  VolumeConnect}).
 
 \subsubsection{A Single-Neuron Solver: Heccer}
 
