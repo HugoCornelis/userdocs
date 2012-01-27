@@ -48,32 +48,34 @@ filesystem.  I also don't know how long this has been happening on my
 machine because this type of error is not reported by
 neurospaces\_cron when not run from a crontab.
 
-
-\$ grep -v 't/died' /tmp/neurospaces\_cron.stdout | grep -v 't/dont\_overwrite\_die\_handler' | grep -v 't/subtest/die' | grep -v 't/Tester/tbt\_03die' | grep -B 15 die
+\begin{verbatim}
+\$ grep -v 't/died' /tmp/neurospaces_cron.stdout | grep -v 't/dont_overwrite_die_handler' | grep -v 't/subtest/die' | grep -v 't/Tester/tbt_03die' | grep -B 15 die
 make[2]: Entering directory
-`/home/cornelis/neurospaces\_project/ns-sli/source/snapshots/0/src'
- ( cd '/usr/local/bin' \&\& rm -f ns-sli )
+`/home/cornelis/neurospaces_project/ns-sli/source/snapshots/0/src'
+ ( cd '/usr/local/bin' && rm -f ns-sli )
 rm -rf /usr/local/ns-sli/
- ( cd '/usr/local/ns-sli/' \&\& rm -f startup/grey startup/xmacros.g startup/xtools.g startup/vclamp.g startup/redhot startup/rainbow2 startup/escapelist.g startup/schedule.g startup/rainbow startup/defaults.g~ startup/nxsimrc-ns-sli startup/minsimrc-ns-sli~ startup/Xdefaults.example startup/simrc-ns-sli.example startup/hot startup/defaults.g startup/Usermake startup/minsimrc-ns-sli startup/schedule.g~ startup/simrc~ startup/simrc-ns-sli~ startup/xstartup.g startup/simrc-ns-sli startup/nxsimrc~ startup/configrc startup/Libmake startup/Makefile startup/minschedule.g startup/minsimrc~ )
+ ( cd '/usr/local/ns-sli/' && rm -f startup/grey startup/xmacros.g startup/xtools.g startup/vclamp.g startup/redhot startup/rainbow2 startup/escapelist.g startup/schedule.g startup/rainbow startup/defaults.g~ startup/nxsimrc-ns-sli startup/minsimrc-ns-sli~ startup/Xdefaults.example startup/simrc-ns-sli.example startup/hot startup/defaults.g startup/Usermake startup/minsimrc-ns-sli startup/schedule.g~ startup/simrc~ startup/simrc-ns-sli~ startup/xstartup.g startup/simrc-ns-sli startup/nxsimrc~ startup/configrc startup/Libmake startup/Makefile startup/minschedule.g startup/minsimrc~ )
 /bin/bash: line 4: cd: /usr/local/ns-sli/: No such file or directory
-make[2]: *** [uninstall-nobase\_dist\_ns\_slistartupDATA] Error 1
+make[2]: *** [uninstall-nobase_dist_ns_slistartupDATA] Error 1
 make[2]: Leaving directory
-`/home/cornelis/neurospaces\_project/ns-sli/source/snapshots/0/src'
+`/home/cornelis/neurospaces_project/ns-sli/source/snapshots/0/src'
 make[1]: *** [uninstall-recursive] Error 1
 make[1]: Leaving directory
-`/home/cornelis/neurospaces\_project/ns-sli/source/snapshots/0/src'
+`/home/cornelis/neurospaces_project/ns-sli/source/snapshots/0/src'
 make: *** [uninstall-recursive] Error 1
-/usr/local/bin/neurospaces\_build: *** Error: package ns-sli: 512 at
-/usr/local/bin/neurospaces\_build line 4269.
- at /usr/local/bin/neurospaces\_build line 4269
-       main::operation\_execute('ARRAY(0x99b9668)', 'HASH(0x9a3f360)',
-'ARRAY(0x9a94e90)') called at /usr/local/bin/neurospaces\_build line
+/usr/local/bin/neurospaces_build: *** Error: package ns-sli: 512 at
+/usr/local/bin/neurospaces_build line 4269.
+ at /usr/local/bin/neurospaces_build line 4269
+       main::operation_execute('ARRAY(0x99b9668)', 'HASH(0x9a3f360)',
+'ARRAY(0x9a94e90)') called at /usr/local/bin/neurospaces_build line
 781
-       main::all\_operations\_execute() called at
-/usr/local/bin/neurospaces\_build line 546
-       main::main() called at /usr/local/bin/neurospaces\_build line 4344
-*** die: /usr/local/bin/neurospaces\_build: *** Error: package ns-sli:
-512 at /usr/local/bin/neurospaces\_build line 4269.
+       main::all_operations_execute() called at
+/usr/local/bin/neurospaces_build line 546
+       main::main() called at /usr/local/bin/neurospaces_build line 4344
+*** die: /usr/local/bin/neurospaces_build: *** Error: package ns-sli:
+512 at /usr/local/bin/neurospaces_build line 4269.
+
+\end{verbatim}
 
 
 \subsection{testing reconfiguration}
@@ -399,21 +401,6 @@ dn/dt = C * m + D * n
 In GENESIS 2, this is possible using forward integration methods only.
 
 
-\subsection{Populate the Model Library}
-
-Build up a library of cells that can be used with G2 or G3.
-
-\begin{itemize}
-\item Purkinje cell model edsjb1994 (present in the model container).
-\item Purkinje cell model Sergio (hopefully by email).
-\item Purkinje cell model Allan (may be included in dash).
-\item Rapp's passive model (must be reconstructed from the paper).
-\item Different species purkinje cell morphologies (gp, rat, turtle,
-  finch (present in project-browser).
-\item Rallpacks 1, 2, 3 (present in NS-SLI).
-\item Traub91 (present in NS-SLI).
-\end{itemize}
-
 \subsection{Level 4 Documentation: Technical Specifications}
 
 For each software component a set of (html) documents must be
@@ -509,7 +496,30 @@ Should be provided via a browser-based framework to give
 (following).
 
 
+\section{DONE List}
+
+\subsection{Populate the Model Library}
+
+{\bf Dave has been working on this, and populated the library with
+  useful models.  See the CNS 2011 report}
+
+Build up a library of cells that can be used with G2 or G3.
+
+\begin{itemize}
+\item Purkinje cell model edsjb1994 (present in the model container).
+\item Purkinje cell model Sergio (hopefully by email).
+\item Purkinje cell model Allan (may be included in dash).
+\item Rapp's passive model (must be reconstructed from the paper).
+\item Different species purkinje cell morphologies (gp, rat, turtle,
+  finch (present in project-browser).
+\item Rallpacks 1, 2, 3 (present in NS-SLI).
+\item Traub91 (present in NS-SLI).
+\end{itemize}
+
+
 \subsection{Progress Reports to the Supplement}
+
+{\bf The supplement funding period has past}
 
 Every three months a report about progress on the work of the
 administrative supplement must be submitted to NIH.
@@ -519,8 +529,6 @@ work proposed in the administrative supplement.
 
 First move conceptualized items from the supplement to this TODO list.
 
-
-\section{DONE List}
 
 \subsection{gshell help components}
 
