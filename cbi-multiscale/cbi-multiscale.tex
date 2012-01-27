@@ -952,8 +952,8 @@ The NDF file format is indicated by the {\tt .ndf} file name extension. This for
 integrates and extends the previous GENESIS {\tt .p} and {\tt .g}
 declarative file formats.  NDF files are purely declarative and can be stored in a model database. In an
   NDF file, a model exists as a hierarchy of tokens, each
-representing a biological component.  Each component is a physical
-process and can have parameters and shared variables. To introduce the format we now outline the general structure of an NDF file.
+representing a biological component.  Each component is associated with a set of physical
+processes and can have parameters and shared variables. To introduce the format we now outline the general structure of an NDF file.
 
 \paragraph{Overview of an NDF File}
 \label{sec:overview-ndf-file}
@@ -1193,10 +1193,17 @@ clause:
 
 \noindent {\bf Got this Far:}
 
-The NDF file format supports an extensible set of tokens, including {\tt
-  SEGMENT}, {\tt CHANNEL}, {\tt CELL}, {\tt
-  PROJECTION}, {\tt POPULATION}, and {\tt NETWORK}, amongst others, that allow the construction of
-models ranging from subcellular dynamics up to the network level. Loosely\marginpar{need to integrate this para.} based on GENESIS-2 elements \cite{bower98:_book_genes}, the {\bf Biology\,Model\,Container} supports tokens for: Grid3D, Populations, and Networks; VolumeConnect, Individual Connections; Single Cells and Morphology; HH-Channels and Synaptic (NMDA/AMPA) Channels, and Reaction--Diffusion.
+The NDF file format is loosely based on GENESIS-2 objects
+\cite{bower98:_book_genes}, and supports an extensible set of tokens,
+including {\tt POOL}, {\tt CHANNEL}, {\tt SEGMENT}, {\tt CELL}, {\tt
+  PROJECTION}, {\tt POPULATION}, and {\tt NETWORK}, amongst others,
+that allow the construction of models ranging from subcellular
+dynamics up to the network level.  Other tokens are simple containers
+for the parameters of procedural algorithms that run inside the {\bf
+  Biology\,Model\,Container} during the model construction phase.  For
+example these tokens can define a three dimensional layout of physical
+processes ({\tt Grid3D}) or bind variables of selected physical
+processes based on their parameterization ({\tt VolumeConnect}).
 
 \subsubsection{A Single-Neuron Solver: Heccer}
 
@@ -1250,9 +1257,24 @@ more elaborate calcium models must be interfaced with other {\bf Solvers}.
 
 \subsubsection{Chemesis-3}
 
-{\bf Chemesis-3} was adapted from a GENESIS-2 `add-on' library of objects for modelling
-biochemical reactions, second messengers, and calcium
-dynamics \cite{blackwell00:_eviden_distin_light_induc_calcium}. 
+{\bf Chemesis-3} was recently adapted from a GENESIS-2 `add-on'
+library of objects for modelling biochemical reactions, second
+messengers, and calcium dynamics
+\cite{blackwell00:_eviden_distin_light_induc_calcium}.  The separation
+of the mathematical function of the GENESIS-2 objects lead to the
+implementation of {\bf Chemesis-3} as a stand-alone {\bf Solver} of
+G-3.
+
+The functions currently implemented in the core of {\bf Chemesis-3}
+include: {\it rxnpool}--a concentration pool that interacts with
+reactions and diffuses to other pools, {\it conservepool}--a mass
+conservation based pool, it computes the difference between the total
+of all molecules (a model parameter, rest state) and diffused
+molecules, divided by compartment volume, {\it reaction}--provides
+standard forward/backward chemical reactions between pools of
+molecules, and {\it diffusion}--computes flux in molecules between two
+pools.
+
 %As a
 %test case for user-extensibility of G-3 we began implementing a
 %{\bf Chemesis-3} library as a G-3 software component, based on the G-2
@@ -1284,14 +1306,14 @@ dynamics \cite{blackwell00:_eviden_distin_light_induc_calcium}.
 
 %- G-shell integration on July 17th and July 18th.
 
-The {\bf model-container} needs appropriate configuration to recognize
-the NDF tokens supported by {\bf Chemesis-3}\marginpar{incomplete}.
-
-The functions currently implemented in {\bf Chemesis-3} include: {\it rxnpool}--a concentration pool that interacts with
-  reactions and diffuses to other pools, {\it conservepool}--a mass conservation based pool, it computes the
-  difference between the total of all molecules (a model parameter,
-  rest state) and diffused molecules, divided by compartment volume, {\it reaction}--provides standard forward/backward chemical reactions
-  between pools of molecules, and {\it diffusion}--computes flux in molecules between two pools.
+The second step in the integration of {\bf Chemesis-3} provides a set
+of appropriate definitions for the {\bf Model\,Container} to recognize
+the NDF tokens supported by {\bf Chemesis-3}.  These definitions are
+given in three small text based files: {\it kinetics.yml}: supports
+grouping pools of molecules and their chemical interactions, {\it
+  reaction.yml}: supports the definition of reaction between pools and
+{\it species.yml}: supports the definition of parameters of a chemical
+species).
 
 %Three of these functions map to a declarative token in the {\bf
 %  model-container}: {\bf rxnpool} and {\bf conservepool} map to the
