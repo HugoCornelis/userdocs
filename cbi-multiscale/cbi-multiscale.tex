@@ -1389,10 +1389,11 @@ started from a system shell with the {\it genesis-g3} command
 \paragraph{The Neurospaces Studio}
 
 The Neurospaces {\bf Studio} is a GUI front-end to the {\bf Model
-  Container} and allows browsing and visualization of a model.  Note
-that the {\bf Studio} is not a graphical editor or construction kit.
-External applications such as {\bf neuroConstruct} should be employed
-for these purposes\cite{gleeson07}.
+  Container} and allows browsing and visualization of a model and the
+concepts of its connectivity\cite{nordlie09:_visual}.  Note that the
+{\bf Studio} is not a graphical editor or construction kit.  External
+applications such as {\bf neuroConstruct} should be employed for these
+purposes\cite{gleeson07}.
 
 
 \subsection{Interactive Query and Simulation}
@@ -1703,24 +1704,24 @@ to load  {\it cal1.ndf} into the {\bf Biology\,Model\,Container} for exploration
 
 The Discrete Event System ({\bf DES}) is used for the abstract
 modelling of action potentials, a functionality required for the
-running of network simulations.  Internally, {\bf DES} contains two subcomponents, one
-for event distribution that contains a connectivity matrix, the second
-for event queuing.
-
-Action potentials generated at the
+running of network simulations.  Action potentials generated at the
 soma of one neuron are translated to a discrete event that is
-delivered to the post-synaptic targets of a connected neuron.
-{\bf DES} also associates 'secondary' data with a connection, for example,
-propagation delay, synaptic weight, or other data specific for the
-model.
+delivered to the post-synaptic targets of a connected neuron.  {\bf
+  DES} also associates 'secondary' data with a connection, for
+example, propagation delay, synaptic weight, or other data specific
+for the model.
 
-From the viewpoint of the CBI architecture, the {\bf DES} event queuer
-is a separate solver that simulates action potential propagation in an
+Internally, {\bf DES} contains two subcomponents, one for event
+distribution that contains a connectivity matrix, the second for event
+queuing.  In the CBI architecture, the {\bf DES} event queuer is a
+separate solver that simulates action potential propagation in an
 efficient way.  The {\bf DES} event distributor provides communication
-between the solvers during the simulation.  The separation of the discrete event
-functionality from the rest of the simulator facilitates customization
-for the modeling of sophisticated learning rules, especially those
-related to STDP, diffusion, and spillover\marginpar{need reference, check the G-3 grant application}.
+between the solvers during the simulation.
+
+The separation of the discrete event functionality from the rest of
+the simulator facilitates customization for the modeling of
+sophisticated learning rules, especially those related to STDP,
+diffusion, and spillover\cite{roberts02:_spike, nowotny03:_enhan}.
 
 \subsection{Addressing Scheme Algorithm}
 
