@@ -1271,20 +1271,19 @@ more elaborate calcium models must be interfaced with other {\bf Solvers}.
 {\bf Chemesis-3} was recently adapted from a GENESIS-2 `add-on'
 library of objects for modelling biochemical reactions, second
 messengers, and calcium dynamics
-\cite{blackwell00:_eviden_distin_light_induc_calcium}.  The separation
-of the mathematical function of the GENESIS-2 objects lead to the
-implementation of {\bf Chemesis-3} as a stand-alone {\bf Solver} of
-G-3.
+\cite{blackwell00:_eviden_distin_light_induc_calcium}.
 
-The functions currently implemented in the core of {\bf Chemesis-3}
-include: {\it rxnpool}--a concentration pool that interacts with
-reactions and diffuses to other pools, {\it conservepool}--a mass
-conservation based pool, it computes the difference between the total
-of all molecules (a model parameter, rest state) and diffused
-molecules, divided by compartment volume, {\it reaction}--provides
-standard forward/backward chemical reactions between pools of
-molecules, and {\it diffusion}--computes flux in molecules between two
-pools.
+The separation of the mathematical functions of the GENESIS-2 objects
+lead to the implementation of {\bf Chemesis-3} as a stand-alone {\bf
+  Solver} of G-3.  The functions currently implemented in the core of
+{\bf Chemesis-3} include: {\it rxnpool}--a concentration pool that
+interacts with reactions and diffuses to other pools, {\it
+  conservepool}--a mass conservation based pool, it computes the
+difference between the total of all molecules (a model parameter, rest
+state) and diffused molecules, divided by compartment volume, {\it
+  reaction}--provides standard forward/backward chemical reactions
+between pools of molecules, and {\it diffusion}--computes the flux in
+molecules between two pools.
 
 %As a
 %test case for user-extensibility of G-3 we began implementing a
@@ -1320,11 +1319,11 @@ pools.
 The second step in the integration of {\bf Chemesis-3} provides a set
 of appropriate definitions for the {\bf Model\,Container} to recognize
 the NDF tokens supported by {\bf Chemesis-3}.  These definitions are
-given in three small text based files: {\it kinetics.yml}: supports
-grouping pools of molecules and their chemical interactions, {\it
-  reaction.yml}: supports the definition of reaction between pools and
-{\it species.yml}: supports the definition of parameters of a chemical
-species).
+given in three small text files: {\it kinetics.yml}: supports the
+definition of groups of pools of molecules and their chemical
+interactions, {\it reaction.yml}: supports the definition of reactions
+between pools and {\it species.yml}: supports the definition of
+parameters of a chemical species.
 
 %Three of these functions map to a declarative token in the {\bf
 %  model-container}: {\bf rxnpool} and {\bf conservepool} map to the
@@ -1340,9 +1339,10 @@ species).
 \paragraph{SSPy and SSP}
 
 Both the model containers and {\bf Solvers} are stand-alone G-3
-components. To be useful, they must be `glued' together
-and activated correctly, such that they can coordinate during a single simulation. This is exactly what the Simple
-Scheduler in Perl ({\bf SSP}) and the Simple Scheduler in Python ({\bf SSPy}) do.
+components. To be useful, they must be `glued' together and activated
+correctly, such that they can coordinate during a single simulation.
+This is exactly what the Simple Scheduler in Python ({\bf SSPy}) and
+the Simple Scheduler in Perl ({\bf SSP}) do.
 % It is currently the standard
 %scheduler for G-3.
 {\bf SSPy} and {\bf SSP} exploit the sophistication of the
@@ -1354,7 +1354,7 @@ its implementation is very simple and highly configurable. Other
 configurations can connect {\bf SSPy} or {\bf SSP} to different modelling services or
 {\bf Solvers}.
 
-In summary, {\bf SSPy} and {\bf SSP} glue other software components together, synchronize their activity during a simulation, and are highly configurable. 
+In summary, {\bf SSPy} and {\bf SSP}  are highly configurable components that glue other software together and synchronize their activity during a simulation. 
 
 
 %\paragraph{SSPy}
@@ -1384,6 +1384,17 @@ G-3 session. To provide backward compatibility, the {\bf
   G-Shell} interfaces with the GENESIS-2 Script Language Interpreter (SLI).
 The {\bf G-Shell} is
 started from a system shell with the {\it genesis-g3} command  
+
+
+\paragraph{The Neurospaces Studio}
+
+The Neurospaces {\bf Studio} is a GUI front-end to the {\bf Model
+  Container} and allows browsing and visualization of a model.  Note
+that the {\bf Studio} is not a graphical editor or construction kit.
+External applications such as {\bf neuroConstruct} should be employed
+for these purposes\cite{gleeson07}.
+
+
 \subsection{Interactive Query and Simulation}
 
 Coded in Perl, the {\bf G-Shell} provides an integrated interactive
@@ -1423,7 +1434,7 @@ The command:
    ndf_load cells/purkinje/edsjb1994.ndf
 \end{verbatim}
 makes this model Purkinje cell available for interactive analysis.
-A similar command exist for backward-compatible
+A similar command exists for backward-compatible
 loading of GENESIS-2 SLI scripts with {\it sli\_load}.  A {\it
   pynn\_load} to interface to
 the PyNN network modeling environment \cite{davison08:_pynn} is in development.
@@ -1489,9 +1500,10 @@ models (not shown).
 \subsection{Simple Scripting}
 \label{ss-apens}
 
-Python is a high-level scripting language that uses modules to group related functions.  G-3 employs Python's
-module system to group the functions that provide an interface to each of
-the simulators software components.
+Python is a high-level scripting language that uses modules to group
+related functions.  G-3 employs Python's module system to group the
+functions that provide an interface to each of the simulator's
+software components.
 %G-3 scripting
 %bindings use modules to separate interfaces for simple models with
 %many default settings (e.g. to start a new research project) from more
@@ -1501,7 +1513,7 @@ As an example, the G-3 Python module {\it nmc} contains functions to
 simplify the storage of neuron models in computer memory.  The module
 is a simple front-end to the {\bf Biology\,Model\,Container}.
 Likewise, {\it Heccer} is a wrapper module for the {\bf Heccer}
-component.  Python bindings for {\bf DES} that facilitate network modelling also exist.
+component.  We note that Python bindings for {\bf DES} to facilitate network modelling are in development.
 
 %Here we show a simple example of a high-level Python script that runs a simulation of a single cylindrical segment. It
 %is defined by standard values for the parameters of membrane
