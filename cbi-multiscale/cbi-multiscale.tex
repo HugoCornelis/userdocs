@@ -907,17 +907,17 @@ Solvers currently available in G-3, starting at the highest level, include: {\bf
 \subsubsection{The Model Containers}
 
 \paragraph{Biology\,Model\,Container}
-Stores biological entities and
-end-user concepts and provides a solver-independent internal storage
-format for models.  It also annotates the structures and concepts of a
+Provides a solver-independent internal storage
+format for models. Stores biological entities and
+end-user concepts and annotates the structures and concepts of a
 model with biological, physical, and mathematical quantities. By
 `containing' the biological model, the {\bf Biology\,Model\,Container}
 relieves the implementation of the numerical core of a solver from the
 pressure of user-friendly model representation.
 
-Because all model components are an integrated part of a single
+Because all model components are interactive parts of a single
 model-container \cite{10.1371/journal.pone.0028956}, existing and
-new G-3 {\bf Solvers} can be integrated to simulate different aspects of the
+new G-3 {\bf Solvers} can be incorporated to simulate different aspects of the
 same model.  This {\em scale-linking} functionality of G-3
 instantiates dedicated run-time software components that contain
 intermediary representations of solved variables able to pass both
@@ -926,9 +926,8 @@ levels of scale.
 %  Technically, in the case of {\bf Chemesis-3} and the
 %linear cable solver, for example, these modules calculate weighted
 %space-time averages.
-It is for these reasons that the {\bf Biology\,Model\,Container} is capable of
-supporting the transparent construction of multi-scale models and
-simulations.
+It is through this computational mechanism the {\bf Biology\,Model\,Container} 
+supports transparent construction and simulation of multi-scale models.
 
 \paragraph{Experiment\,Model\,Container}
 Stores a model of a stimulus paradigm and desired output parameters.
@@ -938,7 +937,6 @@ dependencies.
 
 Finally, we note that the model containers define models in a purely declarative,
 extensible language.
-
 
 \subsubsection{The Neurospaces Description Format}
 
@@ -956,6 +954,16 @@ declarative file formats.  NDF files are purely declarative and can be stored in
 representing a biological component.  Each component is associated with a set of physical
 processes and can have parameters and shared variables.
 % To introduce the format we now outline the general structure of an NDF file.
+
+G-3 supports the construction of NDF files. These files define the different components of a model.  They simplify and expedite model development by being shared between and imported into other NDF files, or used to create NDF libraries. NDF libraries can be linked and used to store model lineages, thereby curating and representing different
+levels of neuronal morphology and/or electrophysiological function.
+%Models declared in an
+%NDF file can be `private' to that file, or `public' and
+%available to other NDF files. This mechanism prevents the use
+%of certain (private) components, while allowing reuse of other
+%(public) components.
+These relationships support and control the modular construction of multi-scale
+models as any given NDF file can depend on other NDF files.
 
 \paragraph{Overview of an NDF File}
 \label{sec:overview-ndf-file}
@@ -991,7 +999,7 @@ the following general form (described in more detail below).
 \end{center}
 
 The header section
-typically starts with a UNIX {\it interpreter} sequence that
+typically starts with a UNIX {\it interpreter} sequence. It
 gives the system specific absolute path to the {\bf Model\,Container} stand-alone executable.
 %\begin{verbatim}
 %    #!/usr/local/bin/neurospacesparse
@@ -1022,22 +1030,6 @@ which they are imported.
 %would be located here.
   Public models may depend on private models or
 be hard coded.
-
-To simplify model development, G-3 supports the construction of NDF files that define different components of the same model.  These files
-may be thought of as NDF libraries.  To\marginpar{that's a weird sentence} expedite model
-development, all NDF files can be shared by being imported into
-other NDF files.
-
-One important feature of an NDF file is that it can contain
-either a single model or a library of models that represent different
-levels of neuronal morphology and/or electrophysiological function.
-%Models declared in an
-%NDF file can be `private' to that file, or `public' and
-%available to other NDF files. This mechanism prevents the use
-%of certain (private) components, while allowing reuse of other
-%(public) components.
-This supports and controls the modular construction of a multi-scale
-model as a given NDF file can depend on other NDF files.
 
 \paragraph{Physical Processes and Model Parameters in NDF}
 Mathematical models can be used to describe physical processes
