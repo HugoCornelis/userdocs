@@ -940,7 +940,7 @@ extensible language.
 
 \subsubsection{The Neurospaces Description Format}
 
-The model containers Neurospaces Description Format (NDF) file format
+The Neurospaces Description Format (NDF) file format developed for the model containers
 was originally designed as a file-based user-editable declarative
 interface to the {\it hsolve} method used by GENESIS-2
 \cite{cornelis03:_neuros}\cite{beeman12:_years_comput_neuros}.
@@ -952,7 +952,7 @@ integrates and extends the previous GENESIS {\tt .p} and {\tt .g}
 declarative file formats.  NDF files are purely declarative and can be stored in a model database. In an
   NDF file, a model exists as a hierarchy of tokens, each
 representing a biological component.  Each component is associated with a set of physical
-processes and can have parameters and shared variables.
+processes and can have parameters and shared variables (described in more detail below).
 % To introduce the format we now outline the general structure of an NDF file.
 
 G-3 supports the construction of NDF files. These files define the different components of a model.  They simplify and expedite model development by being shared between and imported into other NDF files, or used to create NDF libraries. NDF libraries can be linked and used to store model lineages, thereby curating and representing different
@@ -1052,7 +1052,7 @@ follows an exponential decay according to the equation:
 where $I_{\mathrm{Ca}^{2+}}$ is an ionic current flowing into a segment
 %(here expressed in amperes).  
 and $B$ is a decay constant (sometimes referred to as $\beta$), often
-found by fitting experimental data\cite{bower98:_book_genes}.
+found by fitting experimental data \cite{bower98:_book_genes}.
 %  In some cases the above equation is used
 %as a model for the concentration in a thin shell near the surface of a
 %dendritic segment.  In that case $B$ can roughly be approximated with
@@ -1067,7 +1067,7 @@ found by fitting experimental data\cite{bower98:_book_genes}.
 %shell, here both expressed in meters (the outer diameter of the shell
 %is the same as the diameter of the segment).
 
-In an NDF file calcium decay  is represented as follows:
+In an NDF file calcium decay  can be represented as follows:
 %note: based on granule_ca.ndf
 \begin{verbatim}
   POOL Ca_concen
@@ -1187,8 +1187,6 @@ clause:
 %In this example, the order of the clauses of {\tt BINDABLES}, {\tt
 %  BINDINGS}, and {\tt PARAMETERS} was chosen for readibility.  
 
-\noindent {\bf Got this Far:}
-
 \paragraph{Multi-scale Models in NDF}
 The NDF file format is loosely based on GENESIS-2 objects
 \cite{bower98:_book_genes}, and supports an extensible set of tokens,
@@ -1262,7 +1260,7 @@ messengers, and calcium dynamics
 
 The separation of the mathematical functions of the GENESIS-2 objects
 lead to the implementation of {\bf Chemesis-3} as a stand-alone {\bf
-  Solver} of G-3.  The functions currently implemented in the core of
+  Solver} for G-3.  The functions currently implemented in
 {\bf Chemesis-3} include: {\it rxnpool}--a concentration pool that
 interacts with reactions and diffuses to other pools, {\it
   conservepool}--a mass conservation based pool, it computes the
@@ -1304,12 +1302,12 @@ molecules between two pools.
 %- G-shell integration on July 17th and July 18th.
 
 The second step in the integration of {\bf Chemesis-3} provides a set
-of appropriate definitions for the {\bf Model\,Container} to recognize
-the NDF tokens supported by {\bf Chemesis-3}.  These definitions are
-given in three small text files: {\it kinetics.yml}: supports the
-definition of groups of pools of molecules and their chemical
-interactions, {\it reaction.yml}: supports the definition of reactions
-between pools and {\it species.yml}: supports the definition of
+of appropriate definitions in the {\bf Model\,Containers} for {\bf Chemesis-3}
+to recognize supported NDF tokens. These definitions are
+given in three small text files: {\it kinetics.yml}: 
+defines groups of pools of molecules and their chemical
+interactions, {\it reaction.yml}: definies reactions
+between pools, and {\it species.yml}: supports the definition of
 parameters of a chemical species.
 
 %Three of these functions map to a declarative token in the {\bf
@@ -1362,31 +1360,28 @@ In summary, {\bf SSPy} and {\bf SSP}  are highly configurable components that gl
 
 \paragraph{G-Shell}
 
-The {\bf G-Shell} integrates other G-3 components and makes their
+The G-3 shell environment ({\bf G-Shell}) integrates G-3 components and makes their
 functions available through an interactive environment available from
-a command line.  After the G-3 shell environment ({\bf G-Shell}) has completed its startup procedure, a
+a command line.  It is
+started from a system shell with the {\it genesis-g3} command. After the {\bf G-Shell} completes its startup procedure, a
 command prompt  ({\tt genesis\,$>$}) appears in the terminal window. This indicates the
 existence of an interactive
 G-3 session. To provide backward compatibility, the {\bf
-  G-Shell} interfaces with the GENESIS-2 Script Language Interpreter (SLI).
-The {\bf G-Shell} is
-started from a system shell with the {\it genesis-g3} command  
-
+  G-Shell} interfaces with the GENESIS-2 Script Language Interpreter (SLI). 
 
 \paragraph{The Neurospaces Studio}
 
-The Neurospaces {\bf Studio} is a GUI front-end to the {\bf Model
-  Container} and allows browsing and visualization of a model and the
+The Neurospaces Studio ({\bf Studio}) is a GUI front-end to the {\bf Biology\,Model\,Container}. 
+It supports the browsing and visualization of a model and the
 concepts of its connectivity\cite{nordlie09:_visual}.  Note that the
 {\bf Studio} is not a graphical editor or construction kit.  External
 applications such as {\bf neuroConstruct} should be employed for these
-purposes\cite{gleeson07}.
-
+purposes \cite{gleeson07}.
 
 \subsection{Interactive Query and Simulation}
 
 Coded in Perl, the {\bf G-Shell} provides an integrated interactive
-environment to the {\bf Model Container}, {\bf Heccer}, {\bf SSP},
+environment for the model containers, {\bf Heccer}, {\bf SSP},
 {\bf DES} and the {\bf Studio}.
 
 %the list of loaded software components can be printed to the screen
@@ -1425,7 +1420,7 @@ makes this model Purkinje cell available for interactive analysis.
 A similar command exists for backward-compatible
 loading of GENESIS-2 SLI scripts with {\it sli\_load}.  A {\it
   pynn\_load} to interface to
-the PyNN network modeling environment \cite{davison08:_pynn} is in development.
+the PyNN network modeling environment \cite{davison08:_pynn} is currently under development.
 
 %Given the name of one of its dendritic segments, the number of branch
 %points between the segment and the soma can be determined. After
@@ -1694,7 +1689,7 @@ modelling of action potentials, a functionality required for the
 running of network simulations.  Action potentials generated at the
 soma of one neuron are translated to a discrete event that is
 delivered to the post-synaptic targets of a connected neuron.  {\bf
-  DES} also associates 'secondary' data with a connection, for
+  DES} also associates `secondary' data with a connection, for
 example, propagation delay, synaptic weight, or other data specific
 for the model.
 
@@ -1708,7 +1703,7 @@ between the solvers during the simulation.
 The separation of the discrete event functionality from the rest of
 the simulator facilitates customization for the modeling of
 sophisticated learning rules, especially those related to STDP,
-diffusion, and spillover\cite{roberts02:_spike, nowotny03:_enhan}.
+diffusion, and spillover \cite{roberts02:_spike, nowotny03:_enhan}.
 
 \subsection{Addressing Scheme Algorithm}
 
@@ -1725,42 +1720,48 @@ maximize run-time performance.
 
 The information required to identify a variable (and hence its address) is
 obtained from the model stored in the {\bf Biology\,Model\,Container}. To achieve this, the {\bf Biology\,Model\,Container} defines an addressing scheme
-that is able to refer or `address' the variables of every model component.  These addresses provide the `hooks' for attaching
+that is able to refer to or `address' the variables of every model component.  These addresses provide the `hooks' for attaching
 ``experimental protocols'' (e.g. stimulus and output specifications) to the {\bf Solvers}.  The addressing scheme is
 not necessarily dependent on the NDF format. It is more
 general in the sense that it provides an interface to external
 software applications such as GUIs and databases.
 
-In G-3 the algorithm for taking the address of a computed variable
-consists of three steps: (1) translate NDF names to a
-hierarchical namespace, (2) translate this hierarchical
-namespace to tuples of the form [integers, types].  The third step
-translates these tuples to tuples of the form [solver instance,
-internal ID].
+In G-3, the algorithm for taking the address of a computed variable
+consists of three steps.
 
-The first step defines a symbolic syntax for the hierarchical
+\paragraph{Step 1} The first step of the addressing scheme translates NDF names to a
+hierarchical namespace. It is only required during
+simulation construction, not during simulation run-time. The scheme defines a symbolic syntax for the hierarchical
 addressing of model components and their parameters and variables.
-This syntax allows a user to express the address of a variable, for
+The syntax allows a user to express the address of a variable, for
 example, the address of the $\mathrm{Ca}^{2+}$ concentration in a
-segment, with the name ``soma'':
+segment, with the name `soma':
 \begin{verbatim}
   /soma/Ca->conc
 \end{verbatim}
 
-The {\bf Biology\,Model\,Container} translates these symbolic references to
-simulation wide unique tuples of the form [integer, type] where the
-integer identifies the physical process (in this case the $\mathrm{Ca}^{2+}$ pool) 
-and the type identifies the concentration level.
+In G-3 the translation of symbolic references to IDs is implemented in
+the {\bf Biology\,Model\,Container} where symbolic references are translated to
+simulation wide unique tuples of the form [integer, type]. In this case (the $\mathrm{Ca}^{2+}$ pool), the
+integer identifies the physical process and the type identifies the concentration level.
 
-The second step of the algorithm defines an interface to identify the
-solver instance associated with the physical process.
+\paragraph{Step 2}  The second step translate the hierarchical
+namespace to tuples of the form [integer, type]. This defines an interface to identify the
+solver instance associated with the physical process. As it is free of symbolic references, it does not need the
+{\bf Biology\,Model\,Container}. 
 
-The third step defines an interface to obtain the communication port
-of this solver that attaches to the variables.  This interface allows
+\paragraph{Step 3}  The third step of the addressing algorithm translates [integer, type] tuples to tuples of the form [solver instance,
+internal ID]. This step is
+low-level and implemented in the {\bf Solvers}.  The
+advantage is that the {\bf Biology\,Model\,Container} does not have to be in memory
+during simulation run-time.
+
+At this step of the addressing scheme algorithm, an interface is defined that enables the communication port
+of the solver that attaches to the given variables to be obtained.  This interface allows
 a solver instance internal ID to be obtained for directly addressing the
 variable.  Software may choose to implement this interface using
 memory pointers for maximum efficiency, or, alternatively, using a
-low-level function that reads and writes the variable.  This may be
+low-level function that reads and writes the variable. This may be
 useful in a parallel implementation for example.
 
 The algorithm allows {\bf Solvers} to communicate through tuples of the
@@ -1768,20 +1769,9 @@ form [solver instance, internal ID]. This removes the requirement for
 expensive computation on symbolic or hierarchical addresses during
 simulation run-time.
 
-The first step of the addressing scheme is only required during
-simulation construction, and not during simulation run-time.  The
-second step is free of symbolic references, thus does not need the
-{\bf Biology\,Model\,Container}.
 %  However it may be required during
 %simulation run-time, depending on the model and stimulus
 %paradigm\marginpar{I don't see when?}.
-
-In G-3 the translation of symbolic references to IDs is implemented in
-the {\bf Biology\,Model\,Container}.  The third step of the addressing algorithm is
-low-level and is implemented in the {\bf Solvers}.  This has the
-advantage that the {\bf Biology\,Model\,Container} does not have to be in memory
-during simulation run-time.
-
 
 \subsection{Multi-Scale Scripting}
 
