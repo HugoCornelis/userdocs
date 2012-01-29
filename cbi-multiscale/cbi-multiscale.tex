@@ -1729,9 +1729,8 @@ software applications such as GUIs and databases.
 In G-3, the algorithm for taking the address of a computed variable
 consists of three steps.
 
-\paragraph{Step 1} The first step of the addressing scheme translates NDF names to a
-hierarchical namespace. It is only required during
-simulation construction, not during simulation run-time. The scheme defines a symbolic syntax for the hierarchical
+\paragraph{Step 1} Translates NDF names to a
+hierarchical namespace. The scheme defines a symbolic syntax for the hierarchical
 addressing of model components and their parameters and variables.
 The syntax allows a user to express the address of a variable, for
 example, the address of the $\mathrm{Ca}^{2+}$ concentration in a
@@ -1740,15 +1739,14 @@ segment, with the name `soma':
   /soma/Ca->conc
 \end{verbatim}
 
-In G-3 the translation of symbolic references to IDs is implemented in
-the {\bf Biology\,Model\,Container} where symbolic references are translated to
-simulation wide unique tuples of the form [integer, type]. In this case (the $\mathrm{Ca}^{2+}$ pool), the
-integer identifies the physical process and the type identifies the concentration level.
+\paragraph{Step 2}  The second step is the translation of symbolic references to IDs and is implemented in
+the {\bf Biology\,Model\,Container}. There, the hierarchical
+namespace (created during step 1) is translated to simulation wide unique tuples of the form [integer, type]. This constructs an interface that identifies the
+solver instance associated with each physical process (here the $\mathrm{Ca}^{2+}$ pool). The integer identifies the physical process and the type identifies the concentration level.
 
-\paragraph{Step 2}  The second step translate the hierarchical
-namespace to tuples of the form [integer, type]. This defines an interface to identify the
-solver instance associated with the physical process. As it is free of symbolic references, it does not need the
-{\bf Biology\,Model\,Container}. 
+This translation is only required during
+simulation construction, not during simulation run-time, thus it is free of symbolic references. Once constructed, it is independent of the
+{\bf Biology\,Model\,Container}.
 
 \paragraph{Step 3}  The third step of the addressing algorithm translates [integer, type] tuples to tuples of the form [solver instance,
 internal ID]. This step is
@@ -1756,16 +1754,16 @@ low-level and implemented in the {\bf Solvers}.  The
 advantage is that the {\bf Biology\,Model\,Container} does not have to be in memory
 during simulation run-time.
 
-At this step of the addressing scheme algorithm, an interface is defined that enables the communication port
+At this step of the algorithm, an interface is defined that enables the communication port
 of the solver that attaches to the given variables to be obtained.  This interface allows
 a solver instance internal ID to be obtained for directly addressing the
 variable.  Software may choose to implement this interface using
 memory pointers for maximum efficiency, or, alternatively, using a
-low-level function that reads and writes the variable. This may be
+low-level function that reads and writes the variable. This feature may be
 useful in a parallel implementation for example.
 
-The algorithm allows {\bf Solvers} to communicate through tuples of the
-form [solver instance, internal ID]. This removes the requirement for
+The addressing scheme algorithm allows {\bf Solvers} to communicate through the tuples created at this step (i.e. [solver instance, internal ID]). 
+This removes any requirement for
 expensive computation on symbolic or hierarchical addresses during
 simulation run-time.
 
@@ -1817,17 +1815,16 @@ model, for example:
 \subsection{Multi-Scale Network Modeling}
 
 Network modelling was previously possible in
-G-2\cite{cornelis02:_tutor}.  To simulate networks of cells the user
-must manually initialize the numerical solver of G-2 initialized for
-every cell in the network.  Careful G-2 script coding is required to
-prevent memory exhaustion errors.  Here we shortly compare this with
-the G-3 behaviour.
+G-2 \cite{cornelis02:_tutor}.  To simulate networks of cells the user
+must manually initialize the numerical solver of G-2 for
+every cell in the network. \marginpar{Hugo: Need an example below? Prior to DES example.}  Careful G-2 script coding was required to
+prevent memory exhaustion errors.  Below, we compare the G-2 addressing scheme with G-3 requirements.
 
 
 The {\bf SSP} software component defines several software regression
 tests with network models.  One of the simplest network models used in
-this test has a ``source'' neuron that delivers a spike to two
-``target'' neurons during the simulation .
+this test has a `source' neuron that delivers a spike to two
+`target' neurons during the simulation .
 
 To simulate this simple network, the simulation configuration has to
 associate each neuron model in the {\bf Model\,Container} with {\bf
