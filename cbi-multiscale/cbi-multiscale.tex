@@ -1742,10 +1742,10 @@ segment, with the name `soma':
 \paragraph{Step 2}  The second step is the translation of symbolic references to IDs and is implemented in
 the {\bf Biology\,Model\,Container}. There, the hierarchical
 namespace (created during step 1) is translated to simulation wide unique tuples of the form [integer, type]. This constructs an interface that identifies the
-solver instance associated with each physical process (here the $\mathrm{Ca}^{2+}$ pool). The integer identifies the physical process and the type identifies the concentration level.
+solver instance associated with each physical process (here the $\mathrm{Ca}^{2+}$ pool). The integer identifies the physical process and the type identifies the variable containing the concentration level.
 
 This translation is only required during
-simulation construction, not during simulation run-time, thus it is free of symbolic references. Once constructed, it is independent of the
+simulation construction, not during simulation run-time. Once constructed, the tuples are independent of the
 {\bf Biology\,Model\,Container}.
 
 \paragraph{Step 3}  The third step of the addressing algorithm translates [integer, type] tuples to tuples of the form [solver instance,
@@ -1817,8 +1817,8 @@ model, for example:
 Network modelling was previously possible in
 G-2 \cite{cornelis02:_tutor}.  To simulate networks of cells the user
 must manually initialize the numerical solver of G-2 for
-every cell in the network. \marginpar{Hugo: Need an example below? Prior to DES example.}  Careful G-2 script coding was required to
-prevent memory exhaustion errors.  Below, we compare the G-2 addressing scheme with G-3 requirements.
+every cell in the network.  Careful G-2 script coding was required to
+prevent memory exhaustion errors.  The complexity of the G-2 procedural scripts contrasts with the simplicity of the configuration of the G-3 addressing scheme given below.
 
 
 The {\bf SSP} software component defines several software regression
