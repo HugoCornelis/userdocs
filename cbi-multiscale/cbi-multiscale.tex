@@ -1682,6 +1682,86 @@ to load  {\it cal1.ndf} into the {\bf Biology\,Model\,Container} for exploration
 
 \section{Results}
 
+\subsection{Addressing Scheme Algorithm}
+
+The different solvers contributing to a multi-scale simulation can
+hold equivalent variables.  These variables exist because two or more
+physical processes of the model have been bound using the {\tt
+  BINDINGS} in an NDF file.  During a simulation, {\it the addressing
+  scheme algorithm} enables the {\bf Solvers} and the {\bf
+  Communication\,Infrastructure} to relate any equivalent variables
+these components contain.  As this happens during a simulation, {\it
+  the addressing scheme algorithm} must be highly optimized to
+maximize run-time performance.
+
+The information required to identify a variable (and hence its
+address) is obtained from the model stored in the {\bf
+  Biology\,Model\,Container}. To achieve this, the {\bf
+  Biology\,Model\,Container} defines an addressing scheme that is able
+to refer to or `address' the variables of every model component.
+These addresses provide the `hooks' for attaching ``experimental
+protocols'' (e.g. stimulus and output specifications) to the {\bf
+  Solvers}.  The addressing scheme is not necessarily dependent on the
+NDF format. It is more general in the sense that it provides an
+interface to external software applications such as GUIs and
+databases.
+
+In G-3, the algorithm for taking the simulation-time address of a
+computed variable consists of three steps.
+
+\paragraph{Step 1} Translates NDF names to a hierarchical namespace.
+The scheme defines a symbolic syntax for the hierarchical addressing
+of model components and their parameters and variables.  The syntax
+allows a user to express the address of a variable, for example, the
+address of the $\mathrm{Ca}^{2+}$ concentration in a segment, with the
+name `soma':
+\begin{verbatim}
+  /soma/Ca->conc
+\end{verbatim}
+
+\paragraph{Step 2} The second step is the translation of symbolic
+references to IDs and is implemented in the {\bf
+  Biology\,Model\,Container}. There, the hierarchical namespace
+(created during step 1) is translated to simulation wide unique tuples
+of the form [integer, type].  The integer identifies the physical
+process and the type identifies the variable containing the
+concentration level.
+
+%This constructs an interface that identifies the solver instance
+%associated with each physical process (here the $\mathrm{Ca}^{2+}$
+%pool).
+
+%This translation is only required during simulation construction, and
+%not during simulation run-time.  Once constructed, the tuples are
+%independent of the {\bf Biology\,Model\,Container}.
+
+\paragraph{Step 3} The third step of the addressing algorithm
+translates [integer, type] tuples to tuples of the form [solver
+instance, internal ID].  This step is low-level and implemented in the
+{\bf Solvers}.
+
+After this step of the algorithm, an interface is defined that enables
+the communication port of the solver that attaches to the given
+variables to be obtained.  This interface allows a solver instance
+internal ID to be obtained for directly addressing the variable.
+
+The addressing scheme algorithm allows {\bf Solvers} to communicate
+through the tuples [solver instance, internal ID].  The advantage is
+that the {\bf Biology\,Model\,Container} does not have to be in memory
+during simulation run-time.  This removes any requirement for
+expensive computation on symbolic or hierarchical addresses during
+simulation run-time.
+
+Software may choose to implement the interface between solvers using
+memory pointers for maximum efficiency, or, alternatively, using a
+low-level function that reads and writes the variable.  This feature
+may be useful in a parallel implementation for example.
+
+%  However it may be required during
+%simulation run-time, depending on the model and stimulus
+%paradigm\marginpar{I don't see when?}.
+
+
 \subsection{DES: Action Potential Propagation Abstraction}
 
 The Discrete Event System ({\bf DES}) is used for the abstract
@@ -1704,113 +1784,6 @@ The separation of the discrete event functionality from the rest of
 the simulator facilitates customization for the modeling of
 sophisticated learning rules, especially those related to STDP,
 diffusion, and spillover \cite{roberts02:_spike, nowotny03:_enhan}.
-
-\subsection{Addressing Scheme Algorithm}
-
-The different solvers contributing to a multi-scale simulation can
-hold equivalent variables.  These variables exist because
-two or more physical processes of the model have been bound using the
-{\tt BINDINGS} in an NDF file.
-
-During a simulation, the addressing scheme algorithm enables the {\bf
-Solvers} and the {\bf Communication\,Infrastructure} to relate 
-any equivalent variables these components contain.  As this happens during
-a simulation, the addressing scheme must be highly optimized to
-maximize run-time performance.
-
-The information required to identify a variable (and hence its address) is
-obtained from the model stored in the {\bf Biology\,Model\,Container}. To achieve this, the {\bf Biology\,Model\,Container} defines an addressing scheme
-that is able to refer to or `address' the variables of every model component.  These addresses provide the `hooks' for attaching
-``experimental protocols'' (e.g. stimulus and output specifications) to the {\bf Solvers}.  The addressing scheme is
-not necessarily dependent on the NDF format. It is more
-general in the sense that it provides an interface to external
-software applications such as GUIs and databases.
-
-In G-3, the algorithm for taking the address of a computed variable
-consists of three steps.
-
-\paragraph{Step 1} Translates NDF names to a
-hierarchical namespace. The scheme defines a symbolic syntax for the hierarchical
-addressing of model components and their parameters and variables.
-The syntax allows a user to express the address of a variable, for
-example, the address of the $\mathrm{Ca}^{2+}$ concentration in a
-segment, with the name `soma':
-\begin{verbatim}
-  /soma/Ca->conc
-\end{verbatim}
-
-\paragraph{Step 2}  The second step is the translation of symbolic references to IDs and is implemented in
-the {\bf Biology\,Model\,Container}. There, the hierarchical
-namespace (created during step 1) is translated to simulation wide unique tuples of the form [integer, type]. This constructs an interface that identifies the
-solver instance associated with each physical process (here the $\mathrm{Ca}^{2+}$ pool). The integer identifies the physical process and the type identifies the variable containing the concentration level.
-
-This translation is only required during
-simulation construction, not during simulation run-time. Once constructed, the tuples are independent of the
-{\bf Biology\,Model\,Container}.
-
-\paragraph{Step 3}  The third step of the addressing algorithm translates [integer, type] tuples to tuples of the form [solver instance,
-internal ID]. This step is
-low-level and implemented in the {\bf Solvers}.  The
-advantage is that the {\bf Biology\,Model\,Container} does not have to be in memory
-during simulation run-time.
-
-At this step of the algorithm, an interface is defined that enables the communication port
-of the solver that attaches to the given variables to be obtained.  This interface allows
-a solver instance internal ID to be obtained for directly addressing the
-variable.  Software may choose to implement this interface using
-memory pointers for maximum efficiency, or, alternatively, using a
-low-level function that reads and writes the variable. This feature may be
-useful in a parallel implementation for example.
-
-The addressing scheme algorithm allows {\bf Solvers} to communicate through the tuples created at this step (i.e. [solver instance, internal ID]). 
-This removes any requirement for
-expensive computation on symbolic or hierarchical addresses during
-simulation run-time.
-
-%  However it may be required during
-%simulation run-time, depending on the model and stimulus
-%paradigm\marginpar{I don't see when?}.
-
-\subsection{Multi-Scale Scripting}
-
-In  a typical multi-scale model
-different numerical solution methods are required to solve the different
-types of mathematical equations associated with the different scales of the
-model.  In G-3 the cable equation and ion currents are numerically solved with
-implicit Crank-Nicolson integration using {\bf Heccer}.  Calcium models are numerically solved with {\bf Chemesis-3}.
-The association between a given model and its {\bf Solvers} can be configured by the user.
-%Under planned extensions to the G-shell syntax, the correct syntax
-%for a loaded single neuron model with name "/Purkinje" would be:
-For example to associate the model named ``/Purkinje'' with the solver ``heccer'', the command is:
-\begin{verbatim}
-  solverset "/Purkinje => heccer"
-\end{verbatim}
-
-Biochemical pathways in neuronal modeling are complex networks of
-interacting ion concentration pools.  The G-3 implementation for
-simulation of biochemical pathways is called {\bf Chemesis-3} and has a
-dedicated optimized implementation to represent networks parameterized
-with biochemical pathways.  To simulate a complex network model of
-biochemical pathways, here called {\it cal1}, a user would
-typically type in the G-3 shell:
-
-\begin{verbatim}
-  solverset "/cal1 => chemesis3"
-\end{verbatim}
-
-In the case where a network of biochemical pathways is defined inside a
-single neuron model, a user would have to type two commands with
-wildcards to associate the correct solver with each component of the
-model, for example:
-
-\begin{verbatim}
-  solverset "/**/cal1 => chemesis3"
-  solverset "/Purkinje/**[!cal1] => heccer"
-\end{verbatim}
-
-%In later versions of G-3 these rules will be built in but still allow
-%the user to select a different method of solution for different
-%components of a model.
 
 \subsection{Multi-Scale Network Modeling}
 
@@ -1861,6 +1834,48 @@ The {\bf G-Shell} syntax is:
 %  { modelname => "/network/projection1",
 %    solverclass => "des", },
 %\end{verbatim}
+
+
+\subsection{Multi-Scale Scripting}
+
+In  a typical multi-scale model
+different numerical solution methods are required to solve the different
+types of mathematical equations associated with the different scales of the
+model.  In G-3 the cable equation and ion currents are numerically solved with
+implicit Crank-Nicolson integration using {\bf Heccer}.  Calcium models are numerically solved with {\bf Chemesis-3}.
+The association between a given model and its {\bf Solvers} can be configured by the user.
+%Under planned extensions to the G-shell syntax, the correct syntax
+%for a loaded single neuron model with name "/Purkinje" would be:
+For example to associate the model named ``/Purkinje'' with the solver ``heccer'', the command is:
+\begin{verbatim}
+  solverset "/Purkinje => heccer"
+\end{verbatim}
+
+Biochemical pathways in neuronal modeling are complex networks of
+interacting ion concentration pools.  The G-3 implementation for
+simulation of biochemical pathways is called {\bf Chemesis-3} and has a
+dedicated optimized implementation to represent networks parameterized
+with biochemical pathways.  To simulate a complex network model of
+biochemical pathways, here called {\it cal1}, a user would
+typically type in the G-3 shell:
+
+\begin{verbatim}
+  solverset "/cal1 => chemesis3"
+\end{verbatim}
+
+In the case where a network of biochemical pathways is defined inside a
+single neuron model, a user would have to type two commands with
+wildcards to associate the correct solver with each component of the
+model, for example:
+
+\begin{verbatim}
+  solverset "/**/cal1 => chemesis3"
+  solverset "/Purkinje/**[!cal1] => heccer"
+\end{verbatim}
+
+%In later versions of G-3 these rules will be built in but still allow
+%the user to select a different method of solution for different
+%components of a model.
 
 
 \section{Discusion}
