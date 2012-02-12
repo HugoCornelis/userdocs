@@ -22,7 +22,7 @@ general.
 
 The GENESIS 3 (G-3) project is a backwards compatible and modular
 reimplementation of the successful GENESIS 2 simulator.  G-3 is the
-first of a new generation of simulators with the goal to transparantly
+first of a new generation of simulators with the goal to transparently
 interface with current internet technologies such as wikis, bloggers,
 facebook and youtube for the dissemination of model-based knowledge
 and educational tutorials, and with future peer-review publication
