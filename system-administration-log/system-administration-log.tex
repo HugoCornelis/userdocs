@@ -48,7 +48,15 @@ System specs:
 
 \begin{itemize}
 
-
+\item
+  \begin{itemize}
+  \item[] {\bf Admin:} Mando
+  \item[] {\bf Date:} 2/21/2012
+  \item[] {\bf Actions:} Performed some installed and tests under the 'mando' account on the tester.
+  \item[] {\bf Reason:} Discovered that python is installing script only modules without the SWIG compiled code to /usr/local/lib/python2.5/site-packages, while simultaneously installing complete modules to /usr/lib/python2.5/site-packages. This is causing an import conflict for python tests that run from the installed location; i.e all sspy tests. It was also leaving a lot of egg-info files in the /usr/lib/python2.5/site-packages directory.
+  \item[] {\bf Impact:} Currently updating some of the book keeping in the uninstall scripts to make sure that all old meta data is removed. Also fixing the setup scripts to ensure that the module is only installed once.
+  \end{itemize}
+  
 \item
   \begin{itemize}
   \item[] {\bf Admin:} Mando
