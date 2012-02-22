@@ -51,6 +51,15 @@ System specs:
 \item
   \begin{itemize}
   \item[] {\bf Admin:} Mando
+  \item[] {\bf Date:} 2/22/2012
+  \item[] {\bf Actions:} Deleted some garbage files created when checking the errors with the python modules.
+  \item[] {\bf Reason:} Just ensuring that the files do not remain and cause any future problems.
+  \item[] {\bf Impact:} No effect.
+  \end{itemize}
+
+\item
+  \begin{itemize}
+  \item[] {\bf Admin:} Mando
   \item[] {\bf Date:} 2/21/2012
   \item[] {\bf Actions:} Performed some installed and tests under the 'mando' account on the tester.
   \item[] {\bf Reason:} Discovered that python is installing script only modules without the SWIG compiled code to /usr/local/lib/python2.5/site-packages, while simultaneously installing complete modules to /usr/lib/python2.5/site-packages. This is causing an import conflict for python tests that run from the installed location; i.e all sspy tests. It was also leaving a lot of egg-info files in the /usr/lib/python2.5/site-packages directory.
