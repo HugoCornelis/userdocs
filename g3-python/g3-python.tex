@@ -15,7 +15,7 @@
 
 \section*{GENESIS3 in Python}
 
-	To allow more flexible use of GENESIS, bindings in {\it Python} are available for each component of G3's \href{../cbi-architecture/cbi-architecture.tex}{CBI Architecture.} 
+	To allow more flexible use of GENESIS, bindings in {\it Python} are available for each component of G3's \href{../cbi-architecture/cbi-architecture.tex}{\bf CBI\,Architecture.} 
 
 \subsection*{Module hierarchy}
 
@@ -25,9 +25,9 @@
 
 \item[] {\bf neurospaces :}  The top level module is installed from the developer package. It contains functionality for determining which modules are installed and retrieving their current version numbers, revision tags, and dependencies. It also contains methods for upgrading and deleting existing modules. 
 
-\item[] {\bf model\_container :} A {\it Python} module for the \href{../model-container/model-container.tex}{Neurospaces Model Container}. It implements more object oriented abstractions to the underlying C code to make it easier to use in {\it Python} scripts.
+\item[] {\bf model\_container :} A {\it Python} module for the \href{../model-container/model-container.tex}{\bf Neurospaces\,Model\,Container}. It implements more object oriented abstractions to the underlying C code to make it easier to use in {\it Python} scripts.
 
-\item[]{\bf experiment :}  {\it Python} module for the \href{../experiment/experiment.tex}{Experiment} package. The Experiment package is a collection of simulation objects used to incorporate simulation protocols in an experiment and set up data recording. The corresponding {\it Python} bound simulation objects that are a part of the Experiment package are sub modules to this top level module.
+\item[]{\bf experiment :}  {\it Python} module for the \href{../experiment/experiment.tex}{\bf Experiment} package. The Experiment package is a collection of simulation objects used to incorporate simulation protocols in an experiment and set up data recording. The corresponding {\it Python} bound simulation objects that are a part of the Experiment package are sub modules to this top level module.
 
 \item[]{\bf experiment.output :} Allows for outputting simulation data to a file.
 
@@ -35,11 +35,11 @@
 
 \item[]{\bf experiment.pulsegen :} Applies pulsed currents into a simulation.
 
-\item[]{\bf heccer :} {\it Python} module for the \href{../heccer/heccer.tex}{Heccer solver}. 
+\item[]{\bf heccer :} {\it Python} module for the \href{../heccer/heccer.tex}{\bf Heccer\,solver}. 
 
-\item[]{\bf chemesis3:} {\it Python} module for the \href{../chemesis-3-log/chemesis-3-log.tex}{Chemesis3 solver}. 
+\item[]{\bf chemesis3:} {\it Python} module for the \href{../chemesis-3-log/chemesis-3-log.tex}{\bf Chemesis3\,solver}. 
 
-\item []{\bf sspy :} Simple Scheduler in Python. This module allows for setting up complex schedules without the need to know all of the internals of the model container, experiment, or heccer modules. The sspy module replicates the functionality of \href{../ssp/ssp.tex}{SSP} to allow scripting in {\it Python}.
+\item []{\bf sspy :} Simple Scheduler in Python. This module allows for setting up complex schedules without the need to know all of the internals of the model container, experiment, or heccer modules. The sspy module replicates the functionality of \href{../ssp/ssp.tex}{\bf SSP} to allow scripting in {\it Python}.
 
 \item[]{\bf gtube :} The G tube is a module which houses a GUI for creating basic simulations with project tracking, as well as a collection of miscellaneous GUIs for performing experiments and analysis. The goal is for the {\it gtube} to become a suite of visual tools that can be used to make interacting with G3 easier.
 
@@ -47,7 +47,7 @@
     
 \section*{Package Identification}
 
-	Each Python module that is a part of the \href{../cbi-architecture/cbi-architecture.tex}{CBI Architecture} contains a {\bf \_\_cbi\_\_} module that contains information about the package such as: name, version, revision, dependencies, and setup tools identifiers. For example, to print the current version for {\bf Heccer} you would write a script like this:
+	Each Python module that is a part of the \href{../cbi-architecture/cbi-architecture.tex}{\bf CBI\,Architecture} contains a {\bf \_\_cbi\_\_} module that contains information about the package such as: name, version, revision, dependencies, and setup tools identifiers. For example, to print the current version for {\bf Heccer} you would write a script like this:
 	
 \begin{verbatim}
 from heccer.__cbi__ import PackageInfo
@@ -60,7 +60,7 @@ print "The current Heccer version is %s" % _package_info.GetVersion()
 
 \section*{Downloading and installing in python}
 
-	To make installation of python modules easy, python eggs are available on \href{http://pypi.python.org/}{PyPi}, the python package index.  They can be installed via the {\it easy\_install} script that comes with python \href{http://pypi.python.org/pypi?:action=display&name=setuptools}{setuptools}. To install the {\bf model\_container} from PyPi simply type the following on the command line:
+	To make installation of python modules easy, python eggs are available on \href{http://pypi.python.org/}{\bf PyPi}, the python package index.  They can be installed via the {\it easy\_install} script that comes with python \href{http://pypi.python.org/pypi?:action=display&name=setuptools}{s\bf \tt etuptools}. To install the {\bf model\_container} from PyPi simply type the following on the command line:
 	
 \begin{verbatim}
 sudo easy_install model_container 
@@ -71,12 +71,12 @@ This retrieves the zipped python egg and installs it into your python {\it site-
 The PyPi pages for each component can be found via the following links:
 
 \begin{itemize}
-\item[] \href{http://pypi.python.org/pypi/neurospaces}{neurospaces}
-\item[] \href{http://pypi.python.org/pypi/model-container}{model-container}
-\item[] \href{http://pypi.python.org/pypi/experiment}{experiment}
-\item[] \href{http://pypi.python.org/pypi/heccer}{heccer}
-\item[] \href{http://pypi.python.org/pypi/chemesis3}{Chemesis3}
-\item[] \href{http://pypi.python.org/pypi/sspy}{sspy}
+\item[] \href{http://pypi.python.org/pypi/neurospaces}{\bf neurospaces}
+\item[] \href{http://pypi.python.org/pypi/model-container}{\bf model-container}
+\item[] \href{http://pypi.python.org/pypi/experiment}{\bf experiment}
+\item[] \href{http://pypi.python.org/pypi/heccer}{\bf heccer}
+\item[] \href{http://pypi.python.org/pypi/chemesis3}{\bf Chemesis3}
+\item[] \href{http://pypi.python.org/pypi/sspy}{\bf sspy}
 \end{itemize}
 
 \end{document}
