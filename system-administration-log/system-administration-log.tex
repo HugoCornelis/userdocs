@@ -50,6 +50,28 @@ System specs:
 
 \item
   \begin{itemize}
+  \item[] {\bf Admin:} Hugo
+  \item[] {\bf Date:} 3/19/2012
+  \item[] {\bf Actions:} Checking why there are conflicts in the model-container workspace of the tester account.  Turns out that the version numbers have changed, eg.:
+\begin{verbatim}
+============================================================
+--- Makefile.am 23764f4e166391a2e729ae52a3d864bb52de1194
++++ Makefile.am 424bec0e0f07d370a46c425183abe0a494f0f493
+@@ -392,7 +392,7 @@ internal-library:
+ 
+ internal-library:
+ # $Format: "   tar cfz library-${package}-${label}.tar.gz library/"$
+-       tar cfz library-model-container-alpha.tar.gz library/
++       tar cfz library-model-container-3.18.112.tar.gz library/
+ 
+\end{verbatim}
+  \item[] {\bf Reason:} Tester reports conflicts in the model-container workspace and cannot proceed.
+  \item[] {\bf Impact:} Nothing resolved, no effect, first mailing
+    with Mando.
+  \end{itemize}
+
+\item
+  \begin{itemize}
   \item[] {\bf Admin:} Mando
   \item[] {\bf Date:} 2/22/2012
   \item[] {\bf Actions:} Deleted some garbage files created when checking the errors with the python modules.
