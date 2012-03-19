@@ -48,6 +48,17 @@ System specs:
 
 \begin{itemize}
 
+
+\item
+  \begin{itemize}
+  \item[] {\bf Admin:} Mando
+  \item[] {\bf Date:} 3/19/2012
+  \item[] {\bf Actions:} Checked on the issue of a conflict in the model container workspace. Performed no actions.
+  \item[] {\bf Reason:} An workspace conflict occurred in the model container and was reported by Hugo. The cron run at noon performs a tag update using the current date, as well as a neurospaces\_revert at the tail end of its run, which seems to have "fixed" the workspace for the next cron run. Will need to reference a log file from a previous cron run to see if I can determine where the error occurs.
+  \item[] {\bf Impact:} Error resolved itself on this run due to the neurospaces\_revert, still unsure of what caused the tag update to report an error. Will check the tag operations on the model container, previous cron runs and monitor for the error if it reappears.
+  \end{itemize}
+  
+
 \item
   \begin{itemize}
   \item[] {\bf Admin:} Hugo
@@ -1261,6 +1272,15 @@ System specs:
 \end{itemize}
 
 \begin{itemize}
+
+\item
+\begin{itemize}
+\item[] {\bf Admin:} Mando
+\item[] {\bf Date:} 3/19/2012 
+\item[] {\bf Actions:}  Rebooted the mac tester.
+\item[] {\bf Reason:} A number of sleeping processes had accumulated and caused the 'fork' function to fail, thus making it incapable of running the cron script.
+\item[] {\bf Impact:}  Tester should proceed as normal. Will monitor for more stray perl processes.
+\end{itemize}
 
 \item
 \begin{itemize}
