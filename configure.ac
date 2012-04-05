@@ -133,7 +133,7 @@ case "$host_os" in
     AC_MSG_CHECKING([Checking the perl module installation path])	
     pmdir_relative_path=`\
       $PERL -MConfig \
-        -wle '($_ = $Config{installsitelib})
+        -wle '($_ = $Config{installsitelib}) \
               =~ s!^\Q$Config{siteprefix}/!!; \
               print'`
  
@@ -158,11 +158,17 @@ case "$host_os" in
 
     #-- Here we determine the install path for perl modules --
     AC_MSG_CHECKING([Checking the perl module installation path])	
-    pmdir_relative_path=`\
+
+dnl Commenting out the relative path call
+dnl     pmdir_relative_path=`\
+dnl       $PERL -MConfig \
+dnl         -wle '($_ = $Config{installsitelib})
+dnl               =~ s!^\Q$Config{siteprefix}/!!; \
+dnl               print'`
+
+    pmdir_path=`\
       $PERL -MConfig \
-        -wle '($_ = $Config{installsitelib})
-              =~ s!^\Q$Config{siteprefix}/!!; \
-              print'`
+        -wle '($_ = $Config{installsitelib});print'`
  
     AC_ARG_WITH(
       [pmdir],
@@ -170,7 +176,7 @@ case "$host_os" in
       [--with-pmdir=DIR],
       [Install Perl modules in DIR]),
       [PMDIR=${withval}],
-      [PMDIR='${prefix}'/"$pmdir_relative_path"])
+      [PMDIR="$pmdir_path"])
 
     AC_SUBST([PMDIR])
     AC_MSG_RESULT([ $PMDIR ])
