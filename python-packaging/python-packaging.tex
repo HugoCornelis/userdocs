@@ -1,0 +1,50 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Python Packaging}
+
+This document contains information for building {\bf Python} modules, eggs and other distributable packages using the built in setuptools and distutils frameworks.  
+
+
+
+\section*{Setup script}
+
+	Each {\bf GENESIS3} component with a {\bf Python} interface has a {\it setup.py} script in the {\it glue/swig/python} directory. The script is responsible for compiling the python source into a module, generating Python eggs, installing compiled modules, and registering and pushing eggs to PyPi. 
+
+
+\subsection*{Building a module}
+
+	To build a module you simply run the command:
+	
+\begin{verbatim}
+	python setup.py build
+\end{verbatim}
+
+The result of running this command will generate a 'build' directory that contains a 'lib' directory, which contains the importable module. And directory that contains any executable scripts. On some systems it may also contain a directory that has any pre-build data. After building the module you can import from build/lib so long as you add the path vis the sys.path variable. 
+
+
+
+\subsection*{Installing a module}
+
+
+\subsection*{Uninstalling a module}
+
+
+\subsection*{Registering on PyPi}
+
+
+\subsection*{Pushing an egg to PyPi}
+
+\end{document}
