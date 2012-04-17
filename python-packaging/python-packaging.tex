@@ -34,17 +34,68 @@ This document contains information for building {\bf Python} modules, eggs and o
 
 The result of running this command will generate a 'build' directory that contains a 'lib' directory, which contains the importable module. And directory that contains any executable scripts. On some systems it may also contain a directory that has any pre-build data. After building the module you can import from build/lib so long as you add the path vis the sys.path variable. 
 
+\subsection*{Creating a python egg}
 
+	The previous build command will just create a directory with all code that is to be compiled and packaged. An egg is a zipped version of this directory for ease of installation and distribution. To build a Python egg run the command:
+	
+\begin{verbatim}
+	python setup.py bdist_egg
+\end{verbatim}
+
+The script will generate a 'dist' directory that contains your python egg. 
 
 \subsection*{Installing a module}
+
+	Installing a build module is as simple as using the 'install' argument with your setup script. To install the module to python's system path you will need to use {\bf sudo} for admin privileges.
+	
+\begin{verbatim}
+	sudo python setup.py install
+\end{verbatim}
 
 
 \subsection*{Uninstalling a module}
 
+	There is no built in uninstall for packages built and installed with setuptools or distutils. To handle this each python package has a script named {\bf uninstall.py}. This script will delete the specified Python egg, any info metadata that it installs, and references to the egg in the Python .pth file. Calling the uninstall script must be done with admin privileges:
+	
+\begin{verbatim}
+	sudo python uninstall.py
+\end{verbatim}
+
 
 \subsection*{Registering on PyPi}
 
+	If you filled out all sections if you setup.py call correctly, and there are no naming conflicts with packages already present on PyPi, you can easily register your package by calling setup.py with the register argument:
+	
+\begin{verbatim}
+	python setup.py register
+\end{verbatim}
+
+It will prompt for a username and password to PyPi. To have this automatically login to PyPi, you need to create a .pypirc file in your home directory. The contents of a pypirc file consists of blocks of information with credentials, similar to mercurial {\bf .hgrc} files:
+
+\begin{verbatim}
+[distutils]
+index-servers =
+    pypi
+
+[pypi]
+username:myusername
+password:mypasswd
+
+[server-login]
+username:myusername
+password:mypasswd
+\end{verbatim}
+
+where {\it myusername} is your username login into PyPi, and {\it mypasswd} is your user password. The distutils block is needed if you intend to keep compatability with distutils for packaging. 
 
 \subsection*{Pushing an egg to PyPi}
+
+	To push the latest version of your Python module to PyPi, you simple run this command:
+	
+\begin{verbatim}
+	python setup.py release
+\end{verbatim}
+
+If you have a .pypirc file with valid credentials it will automatically log you in, otherwise, it prompts for a username and password. This will check the version number of the module present on PyPi (if any) and compare it with the recent one. If the newest version has a newer version number, then it pushes the egg so that it can be downloaded using {\it easy\_install}. Otherwise it will protest and ask you to enter in a valid version number (one that is higher than the one detected). 
 
 \end{document}
