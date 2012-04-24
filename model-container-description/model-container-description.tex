@@ -323,50 +323,57 @@ structure or quantity parameters:
 %\item Memory efficiency measure\marginpar{Complete}.
 \end{enumerate}
 
-Because of the node labels, the forestspace acts as a symbol table.
-It can be inspected via a small command-driven query engine, which is
-called the querymachine.  The purpose of the querymachine is to debug
-Neurospaces.  It supports completion on command names and node labels
-(via the GNU readline library), but does not allow sophisticated
-queries via logical connectives or aggregates.  Since the symbol table
-contains a mapped treespace, it can be addressed in a hierarchical
-way\:: the node labels separated with a '\texttt{/}' relate them via a
-parent-child relationship.  '\texttt{..}' and '\texttt{\^}' are
-pointers to the parent symbol while '\texttt{.}' is a pointer to the
-current symbol.  '\texttt{->}' selects a field of the current symbol
-(a field is a variable or a parameter, see below).  The process of
-following a chain of hierarchical relationships is called
-\emph{redirection}.  For example, if the current symbol is
-\texttt{Ca\_pool}, the redirection of \texttt{.}  gives simply
-\texttt{Ca\_pool}.
+%Because of the node labels, the forestspace acts as a symbol table.
+Inspection of graph structure and parameters is done a small
+command-driven query engine called the {\bf querymachine}.  The
+initial purpose of the {\bf querymachine} was to debug the
+model-container with an automated regression tester, but it is also
+useful for 'gluing' with scripting languages such as Python and Perl.
+The {\bf querymachine} supports completion on command names and node
+labels (via the GNU readline library), but does not allow
+sophisticated queries via logical connectives or aggregates as used in
+relational and XML databases.  The hierarchical of a stored
+neuroscience model can be addressed in a hierarchical way\:: the node
+labels separated with a '\texttt{/}' relate them via a parent-child
+relationship.  '\texttt{..}' and '\texttt{\^}' are pointers to the
+parent symbol while '\texttt{.}' is a pointer to the current symbol.
+'\texttt{->}' selects a field of the current symbol (a field is a
+variable or a parameter, see below).  The process of following a chain
+of hierarchical relationships is called \emph{redirection}.  For
+example, if the current symbol is \texttt{Ca\_pool}, the redirection
+of \texttt{.}  gives simply \texttt{Ca\_pool}.
 
-The complete software design overview is depicted in figure
-\ref{fig:neurospaces-overview}.  To the left is a specification of the
-model in a serialized form.  Currently only files are supported, but
-the files have a purely declarative nature such that they can be
-stored in a database.  A lexical analyzer transforms the file to a
-stream of tokens that is parsed by a syntax analyzer.  The syntax
-analyzer communicates the semantics of the data stream to Neurospaces
-using a set of system calls.  The last biological component in the
-data stream that has not fully been specified yet, is called the
-active symbol.  Algorithmic specifications of, or changes to a
-component are specified with tokens that reference the modules by name
-(see section~\ref{sec:neurospaces-loadable-modules} and
-section~\ref{sec:neurospaces-module-instances}).  The modules are
-activated by the parser and interact with Neurospaces via the system
-calls to get a reference to the active symbol.  The resulting token
-stream goes into Neurospaces and behaves as a declarative mathematical
-specification of the model to be simulated.  The system calls in
-Neurospaces allow further validation or graphical output of (parts of)
-the model and at the same time allow solvers\footnote{'Solvers' should
-  be interpreted in a broad sense here, i.e. a solver is anything that
-  communicates with Neurospaces to inspect a model.  So for
-  Neurospaces a graphical user interface is just a solver.} to inspect
-what they have to compute.  The numbering scheme of the forestspace is
-used to find computed variables and to set up communication between
-the solver instances.  Because the (forestspace) links are always in
-the discrete event domain, the communication between solvers is
-currently restricted to discrete events only.
+The\marginpar{replace with CBI architecture} complete software design
+overview is depicted in figure \ref{fig:neurospaces-overview}.  To the
+left is a specification of the model in an NDF formatted file.  A
+lexical analyzer transforms the file to a stream of tokens that is
+parsed by a syntax analyzer.  The syntax analyzer communicates the
+semantics of the data stream to the model-container using via an
+Application programmer's interface (API).  The biological component in
+the data stream that is beind specified, is called the ``active
+symbol''.  Specifications that cannot be represented in a declarative
+manner employ a builtin extensible library of algorithms.  Algorithmic
+specifications of, or changes to a component are specified with tokens
+that reference the algorithms in the library by name (see
+section~\ref{sec:neurospaces-loadable-modules} and
+section~\ref{sec:neurospaces-module-instances}).  The algorithms are
+activated by the parser and interact with the model-container via its
+API to get a reference to the active symbol.  After an algorithm has
+been active the resulting token stream is stored by the
+model-container and available through its API as a declarative
+mathematical specification of the model to be simulated.  The API
+allows further validation or graphical output of (parts of) the model
+and at the same time allow solvers\footnote{'Solvers' should be
+  interpreted in a broad sense here, i.e. a solver is anything that
+  communicates with the model-container to inspect a model.  In this
+  context a graphical user interface is similar to a solver.} to
+inspect what the mathematical equations they have to solve.
+%  The
+%numbering scheme of the forestspace is used to find computed variables
+%and to set up communication between the solver instances.  Because the
+%(forestspace) links are always in the discrete event domain, the
+%communication between solvers is currently restricted to discrete
+%events only.
 
 \begin{figure}[p]
   \center
@@ -377,8 +384,8 @@ currently restricted to discrete events only.
 \end{figure}
 \afterpage{\clearpage}
 
-In the next sections we discuss the different components in more
-detail.
+%In the next sections we discuss the different components in more
+%detail.
 
 \section{Description files}
 \label{sec:neurospaces-description-files}
