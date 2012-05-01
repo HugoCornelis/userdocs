@@ -185,19 +185,18 @@
 
 \section{Introduction}
 
-A modeling system is a software component that sits between a
-simulation system and the data that is used to build a model.  The
-ultimate requirement for a modeling system is that it is user-friendly
-for a modeler, the person who interacts with models and simulates
-them.  The context of a modeling system, given by the surrounding
-software components and the interactions with the users, imposes
-several constraints, as explained next.
+Neuroscience models are built from data that describe model structure
+and quantifies model parameters.  In the ideal case this data is
+stored in a database, but often parameters are taken directly from
+papers.  Running these models in simulators also requires a
+specification of the experimental protocol to be applied to the model
+of the biology in terms of inputs and outputs of the simulation.
 
-A model is built using data that describes the model structure and
-quantifies the model parameters.  Besides the model, a simulator
-requires a description, or better a model of the experimental protocol
-that should be applied during the simulation.  In the ideal case, all
-the data is fed transparantly from databases to the modeling system.
+A model-container is a software component that interfaces between
+biological data at the level of scientists and mathematical solvers
+that are optimized for performance.  It thereby is a convenient tool
+that integrates different modeling scales and makes models accessible
+with a single consistent and coherent API across scales.
 
 Research into a model must be supported in a variety of ways (simple
 visualization, statistical analysis, inspection of parameters, etc\ldots).
@@ -261,94 +260,120 @@ figure~\ref{fig:neurospaces-context}.
 
 \section{Design Overview}
 \label{sec:neurospaces-design-overview}
-The modeling system I have designed and implemented, is called
-Neurospaces.  It is a stand-alone application, but can be linked to
-Genesis.  This allows to simulate with Genesis the models that have
-been built with Neurospaces.
+The model-container can be run a stand-alone application, or can be
+builtin in a simulator of choice.  Here we describe the features of
+the model-container and its interface with the GENESIS-3 simulator.
+This allows to simulate with GENESIS-3 the models that have been
+constructed with the model-container.
 
-Neurospaces consists of collaborating software components.  For legacy
-reasons the implementation has been done in C, but use of techniques
-like nested \texttt{struct}s and function tables, gives the developer
-a feeling of the source code that comes close to object-oriented
-programming\cite{sessions92:_class_const_c_c}\cite[Chapter
-1]{stevens95:_tcp_ip_illus_volum}\cite{wiley90:_advan_c_progr}.  A
-highly disciplined coding style allowed to generate and process parts
-of the code using perl scripts.  These techniques reduce the code size
-to about 3.2MB, including realistic test cases and extensive inline
-documentation.
+The model-container consists of collaborating software components.
+The implementation in C uses techniques like nested \texttt{struct}s
+and pointers to function tables to allow extension of its core in
+classical object-oriented programming
+style\cite{sessions92:_class_const_c_c}\cite[Chapter
+1]{stevens95:_tcp_ip_illus_volum}\cite{wiley90:_advan_c_progr}.
+Specification of the supported objects and the relationships between
+them is done with YAML data structures which are parsed with perl
+scripts to produce the object-oriented class hierchies.  The scripts
+employs instrumentation and aspect-orientation to facilite extension
+with a couple of lines of YAML configuration.
 
-The core of the modeling system is an implementation of a multiple
-indexed forestspace data structure\::
+These techniques reduce the code size to about
+3.2MB\marginpar{update}, including realistic test cases and extensive
+inline documentation.
+
+Based on Bird numbers and Dataguides for semi-structure
+data\cite{DBLP:conf/xsym/WeigelSM05, goldman97dataguides,
+  goldman99approximate}, the functional core of the model-container is
+the implementation of a graph data structure that efficiently
+represents and stores repititive data with small variations in
+structure or quantity parameters:
 \begin{enumerate}
-\item The nodes of the forestspace represent biological components,
+\item The nodes in the graph represent biological components,
   (components for short) and sometimes they are implicitly associated
   with a mathematical formula.  This is explained further in
   section~\ref{sec:neurospaces-defin-biol-comp}.  The nodes contain
-  labels that identify the biological components.  Further every node
-  can act as a treespace node or a forestspace node.
-\item The (treespace) links between the nodes always represent
-  connections in the \index{discrete event domain}discrete event
-  domain i.e. connections between two neurons where a spike of the
-  first neuron is translated to a discrete event before it reaches the
-  second neuron.  There are also other types of links (i.e.
-  non-treespace links), but the support of these links is not part of
-  the implementation of the forestspace (see below,
-  section~\ref{sec:neurospaces-shared-variables}).
-\item The implementation supports the use of multiple roots as
-  discussed in section~\ref{sec:treespace-final-discussion},
-  page~\pageref{sec:treespace-final-discussion}.
-  Section~\ref{sec:neurospaces-impl-forestsp} explains the use of
-  multiple roots in more detail.  
+  labels that identify the biological components.
+%  Further every node
+%  can act as a treespace node or a forestspace node.
+\item Links between the nodes represent one of the following three
+  properties:
+  \begin{itemize}
+  \item The nodes are connected in a hierarchical parent-child
+    relationship.  For instance a dendritic segment can be the parent
+    of a transmembrane current.
+  \item The nodes are connected via a direct axonal connection.
+    Computationally this may mean that a spike of the first neuron is
+    translated to a discrete event before it reaches the synapse of
+    the second neuron.
+  \item The nodes are connected because they have a parameter in
+    common.  For instance the membrane potential of a dendritic
+    segment is a parameter of the segment (the parent) and of the
+    transmembrane current (the child) (see below,
+    section~\ref{sec:neurospaces-shared-variables}).
+  \end{itemize}
+%\item The implementation supports the use of multiple roots as
+%  discussed in section~\ref{sec:treespace-final-discussion},
+%  page~\pageref{sec:treespace-final-discussion}.
+%  Section~\ref{sec:neurospaces-impl-forestsp} explains the use of
+%  multiple roots in more detail.  
 \item The code contains various consistency checks as discussed in
   section~\ref{sec:treespaces-consistency-checking}
   (page~\pageref{sec:treespaces-consistency-checking}).
 %\item Memory efficiency measure\marginpar{Complete}.
 \end{enumerate}
 
-Because of the node labels, the forestspace acts as a \index{symbol
-  table}symbol table.  It can be inspected via a small command-driven
-query engine, which is called the querymachine.  The purpose of the
-querymachine is to debug Neurospaces.  It supports completion on
-command names and node labels (via the GNU readline library), but does
-not allow sophisticated queries via logical connectives or aggregates.
-Since the \index{symbol table}symbol table contains a mapped
-treespace, it can be addressed in a hierarchical way\:: the node
+%Because of the node labels, the forestspace acts as a symbol table.
+Inspection of graph structure and parameters is done a small
+command-driven query engine called the {\bf querymachine}.  The
+initial purpose of the {\bf querymachine} was to debug the
+model-container with an automated regression tester, but it is also
+useful for 'gluing' with scripting languages such as Python and Perl.
+The {\bf querymachine} supports completion on command names and node
+labels (via the GNU readline library), but does not allow
+sophisticated queries via logical connectives or aggregates as used in
+relational and XML databases.  The hierarchical of a stored
+neuroscience model can be addressed in a hierarchical way\:: the node
 labels separated with a '\texttt{/}' relate them via a parent-child
 relationship.  '\texttt{..}' and '\texttt{\^}' are pointers to the
 parent symbol while '\texttt{.}' is a pointer to the current symbol.
 '\texttt{->}' selects a field of the current symbol (a field is a
 variable or a parameter, see below).  The process of following a chain
 of hierarchical relationships is called \emph{redirection}.  For
-example, if the current symbol is \texttt{Ca\_pool}, the redirection of
-\texttt{.}  gives simply \texttt{Ca\_pool}.
+example, if the current symbol is \texttt{Ca\_pool}, the redirection
+of \texttt{.}  gives simply \texttt{Ca\_pool}.
 
-The complete software design overview is depicted in figure
-\ref{fig:neurospaces-overview}.  To the left is a specification of the
-model in a serialized form.  Currently only files are supported, but
-the files have a purely declarative nature such that they can be
-stored in a database.  A lexical analyzer transforms the file to a
-stream of tokens that is parsed by a syntax analyzer.  The syntax
-analyzer communicates the semantics of the data stream to Neurospaces
-using a set of system calls.  The last biological component in the
-data stream that has not fully been specified yet, is called the
-active symbol.  Algorithmic specifications of, or changes to a
-component are specified with tokens that reference the modules by name
-(see section~\ref{sec:neurospaces-loadable-modules} and
-section~\ref{sec:neurospaces-module-instances}).  The modules are
-activated by the parser and interact with Neurospaces via the system
-calls to get a reference to the active symbol.  The resulting token
-stream goes into Neurospaces and behaves as a declarative mathematical
-specification of the model to be simulated.  The system calls in
-Neurospaces allow further validation or graphical output of (parts of)
-the model and at the same time allow solvers\footnote{'Solvers' should
-  be interpreted in a broad sense here, i.e. a solver is anything that
-  communicates with Neurospaces to inspect a model.  So for
-  Neurospaces a graphical user interface is just a solver.} to inspect
-what they have to compute.  The numbering scheme of the forestspace is
-used to find computed variables and to set up communication between
-the solver instances.  Because the (forestspace) links are always in
-the discrete event domain, the communication between solvers is
-currently restricted to discrete events only.
+The\marginpar{replace with CBI architecture} complete software design
+overview is depicted in figure \ref{fig:neurospaces-overview}.  To the
+left is a specification of the model in an NDF formatted file.  A
+lexical analyzer transforms the file to a stream of tokens that is
+parsed by a syntax analyzer.  The syntax analyzer communicates the
+semantics of the data stream to the model-container using via an
+Application programmer's interface (API).  The biological component in
+the data stream that is beind specified, is called the ``active
+symbol''.  Specifications that cannot be represented in a declarative
+manner employ a builtin extensible library of algorithms.  Algorithmic
+specifications of, or changes to a component are specified with tokens
+that reference the algorithms in the library by name (see
+section~\ref{sec:neurospaces-loadable-modules} and
+section~\ref{sec:neurospaces-module-instances}).  The algorithms are
+activated by the parser and interact with the model-container via its
+API to get a reference to the active symbol.  After an algorithm has
+been active the resulting token stream is stored by the
+model-container and available through its API as a declarative
+mathematical specification of the model to be simulated.  The API
+allows further validation or graphical output of (parts of) the model
+and at the same time allow solvers\footnote{'Solvers' should be
+  interpreted in a broad sense here, i.e. a solver is anything that
+  communicates with the model-container to inspect a model.  In this
+  context a graphical user interface is similar to a solver.} to
+inspect what the mathematical equations they have to solve.
+%  The
+%numbering scheme of the forestspace is used to find computed variables
+%and to set up communication between the solver instances.  Because the
+%(forestspace) links are always in the discrete event domain, the
+%communication between solvers is currently restricted to discrete
+%events only.
 
 \begin{figure}[p]
   \center
@@ -359,8 +384,8 @@ currently restricted to discrete events only.
 \end{figure}
 \afterpage{\clearpage}
 
-In the next sections we discuss the different components in more
-detail.
+%In the next sections we discuss the different components in more
+%detail.
 
 \section{Description files}
 \label{sec:neurospaces-description-files}
