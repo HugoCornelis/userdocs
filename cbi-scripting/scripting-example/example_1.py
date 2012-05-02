@@ -22,7 +22,7 @@ import sys
 sys.path.append("/usr/local/glue/swig/python")
 
 
-from g3.nmc import ModelContainer
+from model_container import ModelContainer
 
 def run_simulation(simulation_time):
 
