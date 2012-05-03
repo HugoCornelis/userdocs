@@ -64,35 +64,214 @@ At the heart of the innovation represented by this project is the construction o
 
 \subsubsection*{B.1 The GENERAL NEURAL SIMULATION SYSTEM (GENESIS)}
 
-The GENESIS simulation system is at the core of the necessary technical innovation for this project. As such this project extends the long history of innovation in the GENESIS project (Bower and Beeman, 2006; 2007; Beeman, 2011). For example, GENESIS provided the first graphical modeling interface (Uhley et al., 1990; Bower and Hale 1991), the first computational neuroscience website (1994), and also the first use of virtual reality techniques for visualizing results (Leigh et al., 1995). The GENESIS group also established the first standards to judge the speed and reliability of neural simulators (Bhalla et al., 1992), and the first tools to quantify parameter searches and modeling results (Eichler-West, 1996; Baldi et al., 1998; Vanier and Bower, 1999). GENESIS was also one of the first computational modeling systems to be run on parallel computers (Nelson et al., 1989; De Schutter and Bower, 1992). Moreover, the GENESIS development group has also been deeply involved in efforts to provide interoperability between neural simulators (Beeman and Bower, 2004; Cannon, et al., 2007), beginning with the Modelers Workspace project (www.modelersworkspace.org) which drafted and promoted the first markup language for realistic neural modeling (Goddard, et al., 2001). These early efforts motivated the formation of the NeuroML project (Crook, et al., 2007), which has subsequently fostered the development of community modeling tools such as neuroConstruct (Gleeson, et. al., 2007) and will also be a core component of this project. The GENESIS group also pioneered the use of modeling databases as sources of biological data (Hucka, et al., 2002), spawning a major middleware software project, now called The System's Biology Workbench (Hucka, et al., 2001:http://www.sbw-sbml.org/), which has played an important role in the development of multi-scale models in molecular and cellular biology. GENESIS also served as the basis for the first set of simulation-based tutorials for education in neuroscience through the publication of The Book of GENESIS (Bower and Beeman, 1998) and has so far been used for instruction in neuroscience and computational neuroscience in more than 60 universities around the world (Beeman, 2011). This project will add another stage of innovation to GENESIS. Figure 2: This figure shows a graphical representation of the core structure of G-3. In sharp contrast to previous versions of GENESIS and other neuronal simulation platforms, the design of G-3 is fundamentally modular, separating different functional components of the simulator into their own modules. Importantly, G-3 separates model descriptions from the mathematical representations used in actual model simulation. This simplifies the implementation of new solvers and other simulationtime software components. The communication infrastructure connects different solvers simulating the same model and can 'upscale' or 'downscale' numerical data as needed. For additional detail see Cornelis et al. 2011a;b.\\
+The\marginpar{here need both technical and CS framework} GENESIS
+simulation system is at the core of the necessary technical innovation
+for this project. As such this project extends the long history of
+innovation in the GENESIS project (Bower and Beeman, 2006; 2007;
+Beeman, 2011). For example, GENESIS provided the first graphical
+modeling interface (Uhley et al., 1990; Bower and Hale 1991), the
+first computational neuroscience website (1994), and also the first
+use of virtual reality techniques for visualizing results (Leigh et
+al., 1995). The GENESIS group also established the first standards to
+judge the speed and reliability of neural simulators (Bhalla et al.,
+1992), and the first tools to quantify parameter searches and modeling
+results (Eichler-West, 1996; Baldi et al., 1998; Vanier and Bower,
+1999). GENESIS was also one of the first computational modeling
+systems to be run on parallel computers (Nelson et al., 1989; De
+Schutter and Bower, 1992). Moreover, the GENESIS development group has
+also been deeply involved in efforts to provide interoperability
+between neural simulators (Beeman and Bower, 2004; Cannon, et al.,
+2007), beginning with the Modelers Workspace project
+(www.modelersworkspace.org) which drafted and promoted the first
+markup language for realistic neural modeling (Goddard, et al., 2001).
+These early efforts motivated the formation of the NeuroML project
+(Crook, et al., 2007), which has subsequently fostered the development
+of community modeling tools such as neuroConstruct (Gleeson, et. al.,
+2007) and will also be a core component of this project. The GENESIS
+group also pioneered the use of modeling databases as sources of
+biological data (Hucka, et al., 2002), spawning a major middleware
+software project, now called The System's Biology Workbench (Hucka, et
+al., 2001:http://www.sbw-sbml.org/), which has played an important
+role in the development of multi-scale models in molecular and
+cellular biology. GENESIS also served as the basis for the first set
+of simulation-based tutorials for education in neuroscience through
+the publication of The Book of GENESIS (Bower and Beeman, 1998) and
+has so far been used for instruction in neuroscience and computational
+neuroscience in more than 60 universities around the world (Beeman,
+2011). %This project will add another stage of innovation to GENESIS.
+
 
 \noindent[CBI Figure here.]
 
+Figure 2: This figure shows a graphical representation of the core
+structure of G-3. In sharp contrast to previous versions of GENESIS
+and other neuronal simulation platforms, the design of G-3 is
+fundamentally modular, separating different functional components of
+the simulator into their own modules. Importantly, G-3 separates model
+descriptions from the mathematical representations used in actual
+model simulation. This simplifies the implementation of new solvers
+and other simulationtime software components. The communication
+infrastructure connects different solvers simulating the same model
+and can 'upscale' or 'downscale' numerical data as needed. For
+additional detail see Cornelis et al. 2011a;b.
+
+
+
 \subsubsection*{B.2 Multi-scale modeling.}
 
-Of direct relevance to the innovation represented by this grant, GENESIS was the first and remains the only simulation system specifically designed from the outset to support modeling at multiple levels of biological scale (Bower and Beeman, 2006; 2007; Brette et al., 2007). Reflecting this history, a recent survey of 324 peer-reviewed GENESIS publications (not involving the P.I. as an author) revealing that 50\% involved networklevel models with most describing large networks up to 10,000 neurons: 40\% were based on models of single neurons; and 10\% were constructed to explore the interaction of subcellular molecular components. This project will add significantly to the tools already available for subcellular level modeling (Bhalla and Iyengar, 1999; Bhalla, 2002; Sivakumaran, et al., 2003) while also adding additional capacity to build large scale network models. However, as described in the next section the most innovative as well as challenging technical aspect of this project involves the development of tools that cross link and embed finer scale models in cellular and network level simulations.
+Of direct relevance to the innovation represented by this grant,
+GENESIS was the first and remains the only simulation system
+specifically designed from the outset to support modeling at multiple
+levels of biological scale (Bower and Beeman, 2006; 2007; Brette et
+al., 2007). Reflecting this history, a recent survey of 324
+peer-reviewed GENESIS publications (not involving the P.I. as an
+author) revealing that 50\% involved networklevel models with most
+describing large networks up to 10,000 neurons: 40\% were based on
+models of single neurons; and 10\% were constructed to explore the
+interaction of subcellular molecular components.  This project will
+add significantly to the tools already available for subcellular level
+modeling (Bhalla and Iyengar, 1999; Bhalla, 2002; Sivakumaran, et al.,
+2003) while also adding additional capacity to build large scale
+network models. However, as described in the next section the most
+innovative as well as challenging technical aspect of this
+project\marginpar{way to many occurences of 'this project'} involves
+the development of tools that cross link and embed finer scale models
+in cellular and network level simulations\marginpar{introduce DES as a
+  first software component that includes scale-link, summarize the
+  addressing algorithm as integration of a single model-container with
+  multiple solvers for multi-scale simulation}.
+
 
 \subsubsection*{B.3 The new ``Scale-link'' functionality.}
 
-Over the last 5 years with support from the National Institute of Neurological Disorders and Stroke at NIH (R01 NS049288-05), the GENESIS development team has completely redesigned and modernized the core structure of GENESIS producing GENESIS version 3.0 or G-3. These changes are briefly described in the introduction of the ``Approach'' section of this grant, however, the important point with respect to innovation is that the new structure of G-3 provides a new and unique capacity for federated and modular software development in support of multi-scale modeling. Furthermore, G-3s structure also supports the direct real time interaction, or embedding of models at different levels of scale. As described in more detail below, this is accomplished through specific software modules that create intermediary representation of variables present at multiple scales as described in more detail in subsequent sections. It is important to note that while the structure of G-3 supports this kind of functionality, there is no support for the development of the tools necessary for multi-scale modeling in the current NIH grant. Instead that grant is focused on reorganizing and modernizing the core of the simulator, on user support, tutorial generation, and the necessary extensive documentation of the new system. Of course, the NINDS grant also does not support the specific scientific objective of constructing a multi-scale cerebellar model. Accordingly, although synergistic, there is no overlap between these two grants. This new project will, however, add a capability to G-3 anticipated to considerably expand its value to the computational neuroscience community.
+Over\marginpar{expand computer science background, describe innovation
+  as a paradigm shift, see cbi-multiscale} the last 5 years with
+support from the National Institute of Neurological Disorders and
+Stroke at NIH (R01 NS049288-05), the GENESIS development team has
+completely redesigned and modernized the core structure of GENESIS
+producing GENESIS version 3.0 or G-3. These changes are briefly
+described in the introduction of the ``Approach'' section of this
+grant, however, the important point with respect to innovation is that
+the new structure of G-3 provides a new and unique capacity for
+federated and modular software development in support of multi-scale
+modeling. Furthermore, G-3s structure also supports the direct real
+time interaction, or embedding of models at different levels of scale.
+As described in more detail below, this is accomplished through
+specific software modules that create intermediary representation of
+variables present at multiple scales as described in more detail in
+subsequent sections. It is important to note that while the structure
+of G-3 supports this kind of functionality, there is no
+support\marginpar{relate to CBI: there is only support for expansion
+  of the scope of the upper layer, but not for expansion of the scope
+  of the lower layer} the development of the tools necessary for
+multi-scale modeling in the current NIH grant. Instead that grant is
+focused on reorganizing and modernizing the core of the simulator, on
+user support, tutorial generation, and the necessary extensive
+documentation of the new system. Of course, the NINDS grant also does
+not support the specific scientific objective of constructing a
+multi-scale cerebellar model.  Accordingly, although synergistic,
+there is no overlap between these two grants. This new project will,
+however, add a capability to G-3 anticipated to considerably expand
+its value to the computational neuroscience community.
 
 {\centering \subsection*{C. Approach}}
 
 \subsubsection*{C.1 GENESIS as the basis for our approach.}
 
-Before considering our specific approach to each of the Specific Aims of this project, it is first necessary to describe the way in which G-3 specifically supports this multi-scale modeling effort. As described in more detail in Cornelis, et al, (2011a; b), a key component of G-3, which is also central to its use in multi-scale modeling, is a redesign around two workflows, one for the user and a second for developers. The user workflow now makes explicit the linkage between modeling and experimental results with support, for example, experimental protocols like RTXI (Cornelis and Coop, 2010). Because streamlining the process of adapting and extending GENESIS was also a key objective of the redesign, G-3 fundamentally modular structure now supports the independence but also the interoperability of different software components of the overall system. Of direct relevance to the current project, these changes: (1) reduce the complexity of software modules when compared to a more traditional monolithic system (prior versions of GENESIS and NEURON for example), (2) simplify documentation of modules in terms of inputs and outputs, (3) more easily incorporate new simulation modules like Chemsis and CDS for example (see below), and (4) simplify development and testing of modules as stand-alone components. Overall, the effect is to provide a much clearer delineation of the scope for new module development, including the addition of modules operating at different levels of modeling scale. The G3 architecture is also 'federated' as it extends the modular approach associated with the development of single applications to the functional integration of otherwise independent applications. As such it provides a single collaboration framework for modeling and software tool development. As described in the next section these changes have already been used to rapidly incorporate new molecular scale modeling capacity into the overall system. They will be essential to add additional modeling capacity at other levels of scale, as well as the software components necessary for models at different levels of scale to interact.
+Before considering our specific approach to each of the Specific Aims
+of this project, it is first necessary to describe the way in which
+G-3 specifically supports this multi-scale modeling effort. As
+described in more detail in Cornelis, et al, (2011a; b), a key
+component of G-3, which is also central to its use in multi-scale
+modeling, is a redesign around two workflows, one for the user and a
+second for developers. The user workflow now makes explicit the
+linkage between modeling and experimental results with support, for
+example, experimental protocols like RTXI (Cornelis and Coop,
+2010)\marginpar{this seems unnecessary}.  Because streamlining the
+process of adapting and extending GENESIS was also a key objective of
+the redesign, G-3 fundamentally modular structure now supports the
+independence but also the interoperability of different software
+components of the overall system. Of direct relevance to the current
+project, these changes: (1) reduce the complexity of software modules
+when compared to a more traditional monolithic system (prior versions
+of GENESIS and NEURON for example), (2) simplify documentation of
+modules in terms of inputs and outputs, (3) more easily incorporate
+new simulation modules like Chemsis and CDS for example (see below),
+and (4) simplify development and testing of modules as stand-alone
+components. Overall, the effect is to provide a much clearer
+delineation of the scope for new module development\marginpar{unclear
+  how the workflows do this, explain the workflows as complementary to
+  the CBI architecture}, including the addition of modules operating
+at different levels of modeling scale.  The G3 architecture is also
+'federated' as it extends the modular approach associated with the
+development of single applications to the functional integration of
+otherwise independent applications. As such it provides a single
+collaboration framework for modeling and software tool development. As
+described in the next section these changes have already been used to
+rapidly incorporate new molecular scale modeling capacity into the
+overall system. They will be essential to add additional modeling
+capacity at other levels of scale, as well as the software components
+necessary for models at different levels of scale to interact.
 
-\subsubsection*{C.2 Specific Aim 1: Develop the Technical Capability to scale-link biologically realistic simulations at multiple levels of scale using the new G-3 architecture.}
+\subsubsection*{C.2 Specific Aim 1: Develop the Technical Capability
+  to scale-link biologically realistic simulations at multiple levels
+  of scale using the new G-3 architecture.}
 
-Having described the overall new features of G-3 that make this project possible, in this section we will describe our specific approach to adding the capacity to construct detailed subcellular molecular/biochemical, and biophysical models, as well as large scale network of systems level models. Given limitations in space, we will not describe G-3s implementation of single compartmental neurons, or small-scale neuronal networks. GENESIS implementation for these models has been extensively described elsewhere (Bower and Beeman 2006; 2007). In addition, in this section we will briefly describe the technical approach to linking models at different levels of scale. With respect to time lines and outcomes, development of the technical capability to support these different modeling scales and their interaction will be continuous over the entire 5 years of the grant and will be coordinated by the Bower laboratory in partnership with the other collaborators. Individual time lines and expected outcomes will be described in section C.3 for specific components of the multi-scale cerebellar model which will be used as a test case for all technical implementations.
+Having described the overall new features of G-3 that make this
+project possible, in this section we will describe our specific
+approach to adding the capacity to construct detailed subcellular
+molecular/biochemical, and biophysical models, as well as large scale
+network of systems level models\marginpar{communication framework
+  description, embed in computer science background}. Given
+limitations in space, we will not describe G-3s implementation of
+single compartmental neurons, or small-scale neuronal networks.
+GENESIS implementation for these models has been extensively described
+elsewhere (Bower and Beeman 2006; 2007). In addition, in this section
+we will briefly describe the technical approach to linking models at
+different levels of scale.  With respect to time lines and outcomes,
+development of the technical capability to support these different
+modeling scales and their interaction will be continuous over the
+entire 5 years of the grant and will be coordinated by the Bower
+laboratory in partnership with the other collaborators. Individual
+time lines and expected outcomes will be described in section C.3 for
+specific components of the multi-scale cerebellar model which will be
+used as a test case for all technical implementations.
 
 \paragraph{C.2.1. Sub-cellular level modeling.} Key to the success of this project will be the expansion of tools for constructing sub-cellular level models. Accordingly, as a test of the new multi-scale modeling capacity of G-3 we began working in May of 2011 with Dr. Avrama Blackwell (now a collaborator on this grant) to incorporate the core functionality of Chemesis (Blackwell 2000, Blackwell and Kotleski 2002) into the structure into G-3. ``Chemesis'' which supports the modeling of biochemical reactions, second messengers, and calcium dynamics (Blackwell, 2000) was originally added on to GENESIS version 2.0 by adding user-contributed library over multiple years. In contrast, the core features of Chemesis-3 were added to G-3 in under 3 months with ``Chemesis-3'' now running almost three times faster than in GENESIS-2. This rapid and successful incorporation was a result of several explicit features of G-3, including: 1) the modular separation of the development of the core of new solvers from that of other software components, allowing full focus on the mathematical aspects of the solver and their implementation, and better optimization; 2) the G-3 Developer package facilitated integration of the Chemesis-3 solver into the build system of G-3 enabling immediate regression tests; 3) easy extension of the configuration of the model-container to establish new declarative model tokens and parameters recognized by the existing Chemesis-3 solvers; 4) easy construction of an interface between the model-container application programmers interface (API) and the core of the Chemesis3 solver and finally 5) the specific development of a software module that interfaces the new solver with the existing linear cable solver. In addition to the further implementation of Chemesis-3, we will use the same G-3 functionality to add biochemical kinetic modeling system being developed under MOOSE (Bhalla and Iyengar, 1999; Bhalla, 2002; Sivakumaran, et al., 2003; Ray and Bhala, 2008) to this project. \\
 
-\noindent With respect to the scientific objective of this project and thus Specific Aim \#2, these new sub-cellular modeling capabilities will allow us to model pre and postsynaptic molecular mechanisms involved in synaptic plasticity. Further, because each of these sub-cellular modeling components are an integrated part of a single `model' container (see Cornelis 2011a), the existing and new G-3 solvers can be integrated to simulate different aspects of the same model. This 'scale-linking' functionality of G-3 instantiates dedicated run-time software components that contain intermediary representations of solved variables that can pass both ``upscale'' and ``downscale'' values to simulations at different levels of scale. Technically, in the case of Chemesis-3 and the linear cable solver, for example, these modules calculate weighted space-time averages.
+\noindent With\marginpar{link with computer science} respect to the
+scientific objective of this project and thus Specific Aim \#2, these
+new sub-cellular modeling capabilities will allow us to model pre and
+postsynaptic molecular mechanisms involved in synaptic plasticity.
+Further, because each of these sub-cellular modeling components are an
+integrated part of a single `model' container (see Cornelis 2011a),
+the existing and new G-3 solvers can be integrated to simulate
+different aspects of the same model. This 'scale-linking'
+functionality of G-3 instantiates dedicated run-time software
+components that contain intermediary representations of solved
+variables that can pass both ``upscale'' and ``downscale'' values to
+simulations at different levels of scale.  Technically, in the case of
+Chemesis-3 and the linear cable solver, for example, these modules
+calculate weighted space-time averages.
 
 \paragraph{C.2.2 Biophysical models of calcium diffusion and buffering.} In support and in relationship to the new molecular kinetic modeling features that will be added to G-3, this project will also work to incorporate two types of 3-D Monte Carlo-based techniques for modeling reaction/diffusion kinetics. Specifically, Dr. Avrama Blackwell will work with the G-3 development team to implement NeuroRD (Oliveira et al., 2010), a computationally efficient approximate Monte Carlo approach to modeling reaction-diffusion systems. In addition, the G-3 development team will work with Dr. Yoshi Kubota to incorporate ``CDS'' (Cellular Dynamics Simulator: http://nba.uth.tmc.edu/cds/) a precise particle-based Monte Carlo simulator specifically supporting the modeling of Ca$^{2+}$ binding and diffusion dynamics within biochemical networks (Byrne et al. 2010; Kubota and Waxham 2011). CDS is based on the event-driven first passage time algorithm (Byrne et al. 2010) and is designed to serve as a flexible platform for multi-scale hybrid algorithms. For this reason, the CDS algorithm can be directly combined with any deterministic ODE/PDE (Reaction-Diffusion Equation) solvers (e.g., V-Cell used in Hernjak et al. 2005) including those already included in G-3. High-resolution cellular morphology including that of dendritic spines can be directly transported to CDS allowing electro-diffusion to be simulated by both deterministic (as in Lopreore et al. 2008) as well as particle-based 3-D stochastic methods. The CDS research team will work closely with NeuroRD and G-3 developing team to establish a series of hybrid algorithms applicable to several different model scales. This will allow us to compare different simulation algorithms for Ca$^{2+}$ binding diffusion, voltage clamp, and biochemical network within the same platform and will help derive and validate simplified macroscopic (biochemical) synaptic rules relevant to the objectives of Specific Aim 2.\\
 
-\noindent From a technical point of view, the incorporation of simulations modules that specifically involve spatial dimensions is, in principle, much more difficult than the integration of biochemical kinetic models. In fact the accurate representation of space and time for multi-scale simulations is an open research area and will be one of the core technical challenges in this project. However, the explicit provision of software modules for the intermediary representation of solved variables will allow us to compare and evaluate different methods of scale-linking, for instance by comparing different resolutions of a fixed grid with adaptive grid intermediary representations (Bernabeul et al., 2009). In effect, this will allow us to use multi-scale G-3 models as a framework to compare different technical strategies.\\
+\noindent From a technical point of view, the incorporation of
+simulations modules that specifically involve spatial dimensions is,
+in principle, much more difficult than the integration of biochemical
+kinetic models. In fact the accurate representation of space and time
+for multi-scale simulations is an open research area and will be one
+of the core technical challenges in this project. However, the
+explicit provision of software modules for the intermediary
+representation of solved variables will allow us to compare and
+evaluate different methods of scale-linking, for instance by comparing
+different resolutions of a fixed grid with adaptive grid intermediary
+representations (Bernabeul et al., 2009). In effect, this will allow
+us to use multi-scale G-3 models as a framework to compare different
+technical strategies\marginpar{single change in a configuration file
+  of the user workflow instantiates the same simulation with different
+  software components, producing alternative performance and other
+  results of the same simulated model}.
 
 \paragraph{C.2.3 Single compartmental neuronal models.} Since GENESIS was first launched it has been used extensively to construct compartmental models at the single cell level. This project, in fact, is based on a Purkinje cell model which has been extensively tested and used in multiple laboratories over the last 20 years (De Schutter and Bower, 1994a;b;c; Jaeger et al., 1997; Jaeger and Bower, 1999; Steuber and De Schutter, 2001; Miyasho et al., 2001; Coop and Reeke, 2001; Santamaria et al., 2002; 2007; Chono et al., 2003; Santamaria and Bower, 2005; Cornelis and Bower, 2007; Maux and Deschutter, 2007; Steuber et al., 2007; Shin et al., 2007; Traub et al., 2008; De Sousa et al., 2009; De Schutter and Steuber, 2009: Luthman et al., 2009; 2011; Maex \& Steuber, 2009; Santamaria et al., 2009; Coop et al., 2010; Anwar et al., 2010; Hendrickson et al., 2011a;b). This model, like most compartmental models, is based on the actual anatomical geometry of a mammalian Purkinje cell (Rapp et al., 1994) to which have been added the major synaptic and voltage related conductances in the form of equivalent circuit representations of Hodgkin-Huxley dynamics (Santamaria and Bower, 2008). As part of this project, and as described below, the conductances in this model will be updated and enhanced with newly available experimental data.
 
@@ -112,7 +291,20 @@ For the sake of overall clarity, we have chosen to divide our approach to Specif
 
 \paragraph{C.3.3 Compartmental Purkinje cell model.} While the single Purkinje cell model has been extensively studied previously (De Schutter and Bower, 1994a;b;c; Jaeger et al., 1997; Jaeger and Bower, 1999; Steuber and De Schutter, 2001; Miyasho et al., 2001; Coop and Reeke, 2001; Santamaria et al., 2002; 2007; Chono et al., 2003; Santamaria and Bower, 2005; Cornelis and Bower, 2007; Maux and Deschutter, 2007; Steuber et al., 2007; Shin et al., 2007; Traub et al., 2008; De Sousa et al., 2009; De Schutter and Steuber, 2009: Luthman et al., 2009; 2011; Maex \& Steuber, 2009; Santamaria et al., 2009; Coop et al., 2010; Anwar et al., 2010; Hendrickson et al., 2011a;b) it will be significantly enhanced and upgraded as part of this project. In particular, since it was originally published (De Schutter and Bower, 1994a;b;c) additional information has become available regarding both the kinetics of channels already included in the model, such as voltage-gated currents (Raman and Bean, 2001; Sacco and Tempia, 2002; Williams et al., 2002; Martina et al., 2003; Martina et al., 2007) and calcium gated potassium currents (Womack and Khodakhah, 2002b, 2003; Womack et al., 2004). In addition, new information is available on slow currents that have not yet been added to the model (Genet and Kado, 1997; Bushell et al., 2002; Genet and Delord, 2002; Womack and Khodakhah, 2002a). The update and addition of these conductances will allow experimental manipulations of the model to more closely parallel biological measurements and dynamics. In addition, because this model will serve as the context for the subcellular level modeling, these additions will also likely have effects on the sub-cellular processes, perhaps especially the introduction of the longer time course currents. These may be particularly important in studying the effects of aging.\\
 
-\noindent We expect that these enhancements and extensions of the Purkinje cell model will take place over the first year of the grant and will be the responsibility of the Bower, Santamaria and Jaeger laboratories. As with the original Purkinje cell model (De Schutter, 1994a), the enhanced model will be expected to replicate voltage and current clamp experimental data, and also respond appropriately to the use of specific channel blockers. An important part of this project will also be to confirm the previously published behavior of the model given the enhancements. While space does not allow a detailed description, G-3 has specific provisions for comparing updated models to previous behavior which is a natural part of model evolution.
+\noindent We expect that these enhancements and extensions of the
+Purkinje cell model will take place over the first year of the grant
+and will be the responsibility of the Bower, Santamaria and Jaeger
+laboratories. As with the original Purkinje cell model (De Schutter,
+1994a), the enhanced model will be expected to replicate voltage and
+current clamp experimental data, and also respond appropriately to the
+use of specific channel blockers. An important part of this project
+will also be to confirm the previously published behavior of the model
+given the enhancements. While space does not allow a detailed
+description, G-3 has specific provisions for comparing updated models
+to previous behavior which is a natural part of model
+evolution\marginpar{regression tester and its functionality to compare
+  signals, project browser for visual comparison of simulation
+  results}.
 
 \paragraph{C.3.4 Network level modeling, realistic patterns of pre-synaptic input.} Once the high resolution molecular and cellular level models have been implemented, the next important model-addressable set of parameters involves the actual biologically expected temporal and spatial patterns of excitatory and inhibitory synaptic input converging on the Purkinje cell dendrite. To simulate these more global patterns of activity, we will construct an exponential integrate-and-fire Purkinje cell model with additional conductance based currents. This more simplified model will be tuned to accurately reproduce the dynamics of the original Purkinje cell model, which itself reflects the dynamics of actual Purkinje cells with considerable precision (De Schutter and Bower, 19941; b; Fourcaud-Trocme et al., 2003; Richardson 2009). Parameters for this type of model can be adjusted to match the spiking dynamics of different cerebellar cell types and it will be used to construct a network with physiological ratios of and connectivity between cerebellar cortical cell types. Due to the simplicity of these cells, in this more abstracted network model, parameters such as axonal delays and synaptic strengths as well as the population characteristics of activated mossy fiber inputs can be adjusted using optimization techniques such as evolutionary searches (Vanier and Bower, 1999; Hendrickson, et al. 2011a) operating over several thousand cellular elements. The objective function for these searches will be a replication of spontaneous firing activity as well sensory responses of experimental data in individual neurons.\\ 
 
@@ -124,7 +316,38 @@ For the sake of overall clarity, we have chosen to divide our approach to Specif
 
 \subsubsection*{C.4. Specific Aim 2B: Testing competing hypotheses regarding the function of cerebellar cortical LTD.}
 
-The longest standing hypothesis regarding the functional significance of synaptic plasticity in the cerebellar cortex is that climbing fiber input acts as a teacher for synapse-specific LTD on parallel fibers, weakening those synapses that are co-active with climbing fiber input (Marr, 1969; Albus, 1971). In more abstract theoretical models (e.g. Ohyama et al., 2010) this form of plasticity drives behaviorally relevant modification of Purkinje cell activity by reducing the drive on neurons in the deep cerebellar nuclei and activating specific motor behaviors. While some experimental work would seem to confirm that climbing fiber inputs lead to a weakening of temporally associated parallel fiber synapses (Ito, 1982; 1989; Wang, et al.. 2000), these results remain controversial. For example, these studies typically use restricted input patterns such as parallel fiber beam stimulation and thus cannot exclude that other forms of input activity can also elicit parallel fiber plasticity. The multi-scale network model of a cerebellar cortical module is ideally suited to address this complexity, as the consequences of natural patterns of network activity and its influence on dendritic voltage dynamics in the realistic Purkinje cell inset of the network can be iterated through multiple plasticity scenarios. As an initial test and target for the multi-scale cerebellar model, we will specifically test questions raised by two different and conflicting views of the role of parallel fiber LTD in the cerebellum: one assuming that LTD is associated with synaptic learning (Marr 1969, Albus 1971, Ohyama et al., 2010), and the second that LTD reflects a more metabolic regulation of the total amount of parallel fiber synaptic input converging on Purkinje cell dendrites (De Schutter 1995; Bower 2011). While it is most likely that these simulations will generate even more and complex questions, for focus we will initially address the following:
+The\marginpar{link this as testing of individual simulation results to
+  testing behaviour result, ie. a step wise bottom-up approach to
+  cover the full scope of model comparison} longest standing
+hypothesis regarding the functional significance of synaptic
+plasticity in the cerebellar cortex is that climbing fiber input acts
+as a teacher for synapse-specific LTD on parallel fibers, weakening
+those synapses that are co-active with climbing fiber input (Marr,
+1969; Albus, 1971). In more abstract theoretical models (e.g.  Ohyama
+et al., 2010) this form of plasticity drives behaviorally relevant
+modification of Purkinje cell activity by reducing the drive on
+neurons in the deep cerebellar nuclei and activating specific motor
+behaviors. While some experimental work would seem to confirm that
+climbing fiber inputs lead to a weakening of temporally associated
+parallel fiber synapses (Ito, 1982; 1989; Wang, et al.. 2000), these
+results remain controversial. For example, these studies typically use
+restricted input patterns such as parallel fiber beam stimulation and
+thus cannot exclude that other forms of input activity can also elicit
+parallel fiber plasticity. The multi-scale network model of a
+cerebellar cortical module is ideally suited to address this
+complexity, as the consequences of natural patterns of network
+activity and its influence on dendritic voltage dynamics in the
+realistic Purkinje cell inset of the network can be iterated through
+multiple plasticity scenarios. As an initial test and target for the
+multi-scale cerebellar model, we will specifically test questions
+raised by two different and conflicting views of the role of parallel
+fiber LTD in the cerebellum: one assuming that LTD is associated with
+synaptic learning (Marr 1969, Albus 1971, Ohyama et al., 2010), and
+the second that LTD reflects a more metabolic regulation of the total
+amount of parallel fiber synaptic input converging on Purkinje cell
+dendrites (De Schutter 1995; Bower 2011). While it is most likely that
+these simulations will generate even more and complex questions, for
+focus we will initially address the following:
 
 \paragraph{C.4.1 Can molecular layer inhibition maintain membrane voltage control given parallel fiber activation?} A core prediction of the homeostatic model of parallel fiber function is that parallel fiber excitatory input, in combination with feedforward molecular layer inhibition, provides a kind of voltage clamp control over local regions of the Purkinje cell dendrite. Using the high-resolution model of small sections of the Purkinje cell dendrite, we will specifically test the ability of a single inhibitory synapse to maintain control over the dendritic membrane voltage as different numbers of parallel fiber synapses are activated in this dendritic region. Each of the unique geometries (dendritic widths for example) of each of the 40 available reconstructed dendritic segments will be tested.
 
