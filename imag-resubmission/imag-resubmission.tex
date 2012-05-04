@@ -125,33 +125,39 @@ neuroscience in more than 60 universities around the world (Beeman,
 
 
 
-Many neuroscience simulators, including G-2, allow to combine
-subcellular, cellular, and network scales in a simulation, but they
-are also restricted to these levels.  The monolithic nature of these
-simulators makes it almost impossible to extend the functionalities of
-these simulators beyond the levels they support.
+Many neuroscience simulators, including G-2, allow simulation at
+subcellular, cellular, or network scales, but they are also restricted
+to these scales.  The monolithic nature of these simulators makes it
+almost impossible to extend the functionalities of these simulators
+beyond the levels they support.
 
-The communication module of the CBI architecture is key to G-3's
-extensible multi-scale capabilities (described in more detail below).
-At its core, it transforms multiscale modeling from a somewhat ad hoc
-practice to a systematic technique with a solid software foundation.
+In contrast, the new modular structure and the communication module of
+G-3's are key to its extensible multi-scale capabilities (described in
+more detail below).
 
-From the viewpoint of numerical methods, there has already been a long
-history of using multiscale ideas in methods such as the multi-grid
-method, fast multipole method and adaptive mesh refinement. Wavelet
-representation makes explicit use of multiscale decomposition of
-functions and signals. So what is new in the new breed of multiscale
-methods, such as the quasi-continuum method and HMM? How are they
-different from the more traditional multiscale methods such as
-multi-grid [27, 180]?  The difference between traditional multiscale
-methods such as multi-grid, and the new multiscale methods such as HMM
-is that traditional multiscale methods are general purpose microscale
-solvers. Their purpose is to resolve the details of the solutions of
-the microscale model. The objective of the newly developed multiscale
-methods is to capture the macroscale behavior of the system with a
-cost that is much less than the cost of full microscale solvers.
-Speciffically the new multiscale methods are designed to satisfy the
-requirement
+Importantly because of its modular structure, G-3 allows in principle
+the incorporation of both traditional multi-scale techniques such as
+multi-grid method, fast multi-pole method, domain decomposition and
+adaptive mesh refinement and wavelet based methods, and more recent
+multi-scale techniques such as quasi-continuum method, heterogeneous
+multi-scale modeling and adaptive model refinement.  The distinction
+between these two methods is that the traditional multi-scale
+techniques capture the macroscale behaviour of a system by simulation
+of microscale models, while the more recent techniques capture system
+behaviour by coupling macroscale and microscale models.  This
+distinction puts them in different modules of the G-3 simulator
+architecture.
+
+The modular structure allows for the rapid incorporation of new
+solvers at a specific scale (see below for an example) while the
+communication module allows to implement different types of run-time
+interfaces between concurrent solvers, thereby effectively maintaining
+the scale-separation between these solvers, keeping them fundamentally
+compliant with the modular structure of G-3 and keeping them
+extensible to meet new user needs.  At its essence, these two new
+features of G-3 allow to transform multi-scale modeling in
+neuroscience from today's specific implementations to a systematic
+technique with a solid software foundation.
 
 
 \subsubsection*{B.2 Multi-scale modeling.}
