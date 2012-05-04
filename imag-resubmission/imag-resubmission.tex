@@ -175,14 +175,33 @@ interaction of subcellular molecular components.  This project will
 add significantly to the tools already available for subcellular level
 modeling (Bhalla and Iyengar, 1999; Bhalla, 2002; Sivakumaran, et al.,
 2003) while also adding additional capacity to build large scale
-network models. However, as described in the next section the most
-innovative as well as challenging technical aspect of this
+network models. 
+
+The Discrete Event System is a software of G-3 with the specific aim
+to support large scale network modeling by storing action potentials
+as discrete events that are delivered at post-synaptic target sites at
+appropriate times.
+
+With its translation function between the discrete event domain and
+continuous time, the DES system interfaces between mathematical
+solvers and event queues, and links across scales the simulation
+objects that run at their own specific scale.
+
+Critical in the implementation of this scale-link is the existence of
+a single model-container that integrates the model across scales
+during its construction phase.  The addressing algorithm of the
+model-container provides the capability to obtain the addresses of
+solved variables residing in different solvers independent of their
+scale\marginpar{this seems written upside down}.
+
+When combined the single model-container and the addressing algorithm
+allow to instantiate efficient communication components embedding any
+type of numerical scheme or algorithm required to run a simulation of
+an aspect of the integrated model.  As described in the next section,
+the most innovative as well as challenging technical aspect of this
 project\marginpar{way to many occurences of 'this project'} involves
 the development of tools that cross link and embed finer scale models
-in cellular and network level simulations\marginpar{introduce DES as a
-  first software component that includes scale-link, summarize the
-  addressing algorithm as integration of a single model-container with
-  multiple solvers for multi-scale simulation}.
+in cellular and network level simulations.
 
 
 \subsubsection*{B.3 The new ``Scale-link'' functionality.}
