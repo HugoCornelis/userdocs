@@ -101,20 +101,55 @@ neuroscience in more than 60 universities around the world (Beeman,
 2011). %This project will add another stage of innovation to GENESIS.
 
 
-\noindent[CBI Figure here.]
+\begin{figure}[ht]
+\begin{center}
+\includegraphics[width=5in]{figures/cbi-architecture-expanded.eps}
+\end{center}
+\caption{ {\bf Detailed view of the Computational Biology Initiative
+    federated software architecture.}  This figure shows a graphical
+  representation of the core structure of G-3. In sharp contrast to
+  previous versions of GENESIS and other neuronal simulation
+  platforms, the design of G-3 is fundamentally modular, separating
+  different functional components of the simulator into their own
+  modules. Importantly, G-3 separates model descriptions from the
+  mathematical representations used in actual model simulation. This
+  simplifies the implementation of new solvers and other
+  simulationtime software components. The communication infrastructure
+  connects different solvers simulating the same model and can
+  'upscale' or 'downscale' numerical data as needed. For additional
+  detail see Cornelis et al. 2011a;b.  }
+\label{fig:cbi-architecture-expanded}
+\end{figure}
 
-Figure 2: This figure shows a graphical representation of the core
-structure of G-3. In sharp contrast to previous versions of GENESIS
-and other neuronal simulation platforms, the design of G-3 is
-fundamentally modular, separating different functional components of
-the simulator into their own modules. Importantly, G-3 separates model
-descriptions from the mathematical representations used in actual
-model simulation. This simplifies the implementation of new solvers
-and other simulationtime software components. The communication
-infrastructure connects different solvers simulating the same model
-and can 'upscale' or 'downscale' numerical data as needed. For
-additional detail see Cornelis et al. 2011a;b.
 
+
+Many neuroscience simulators, including G-2, allow to combine
+subcellular, cellular, and network scales in a simulation, but they
+are also restricted to these levels.  The monolithic nature of these
+simulators makes it almost impossible to extend the functionalities of
+these simulators beyond the levels they support.
+
+The communication module of the CBI architecture is key to G-3's
+extensible multi-scale capabilities (described in more detail below).
+At its core, it transforms multiscale modeling from a somewhat ad hoc
+practice to a systematic technique with a solid software foundation.
+
+From the viewpoint of numerical methods, there has already been a long
+history of using multiscale ideas in methods such as the multi-grid
+method, fast multipole method and adaptive mesh refinement. Wavelet
+representation makes explicit use of multiscale decomposition of
+functions and signals. So what is new in the new breed of multiscale
+methods, such as the quasi-continuum method and HMM? How are they
+different from the more traditional multiscale methods such as
+multi-grid [27, 180]?  The difference between traditional multiscale
+methods such as multi-grid, and the new multiscale methods such as HMM
+is that traditional multiscale methods are general purpose microscale
+solvers. Their purpose is to resolve the details of the solutions of
+the microscale model. The objective of the newly developed multiscale
+methods is to capture the macroscale behavior of the system with a
+cost that is much less than the cost of full microscale solvers.
+Speciffically the new multiscale methods are designed to satisfy the
+requirement
 
 
 \subsubsection*{B.2 Multi-scale modeling.}
@@ -372,3 +407,47 @@ We believe that our multi-scale cerebellar model, once constructed and tested, a
 \paragraph{C 5.3 Could the age-related decrease in the number of cerebellar neurons lead to neural activity that has been linked to ataxic symptoms?} The Steuber team has recently used a biologically detailed model of a DCN neuron to study the effect of the irregular Purkinje cell activity that is found in ataxic tottering mice (Hoebeek et al., 2005) on the targets of the Purkinje cells in the DCN (Luthman et al., 2011). These recent results indicate that the accelerated spike rate in DCN neurons, which occurs in these ataxic mouse mutants (Hoebeek et al., 2008), can be a direct consequence of the irregular Purkinje cell firing (Luthman et al., 2011). Moreover, preliminary results show that a decrease in the number of Purkinje cells converging onto a DCN neuron accentuates this effect, increasing the DCN spiking further. As ataxic symptoms are among the behavioral changes that are linked to aging (ref) and a reduction in the number of Purkinje cells occurs during aging, we propose to study the potential link between cell numbers and neural activity patterns that have been associated with ataxia in the cerebellar network model. We will incrementally prune the network model by decreasing the number of neurons and synapses, and we will investigate the effect of this network pruning on the neural activity in Purkinje cells and the DCN model. Moreover, we will use subcellular models to link the age related disruption in Ca$^{2+}$ dynamics that can occur in Purkinje cells to the neuronal activity patterns that have been linked to motor deficits. To our knowledge this is the first attempt to apply a multi-scale model that spans levels ranging from molecular dynamics to network activity to a systems levels topic such as aging. This work will be carried out during years 3-4 of the grant in the Steuber lab, with the molecular level modeling taking part in the Kubota, Blackwell and Santamaria labs.
 
 \end{document}
+
+%Heterogeneous Multiscale Methods: A Review
+%Weinan E
+%Princeton University
+%Bjorn Engquist
+%University of Texas
+%Xiantao Li
+%Pennsylvania State University
+%Weiqing Ren
+%New York University
+%Eric Vanden-Eijnden
+%New York University
+
+
+% E W, Engquist B, Li X, et al. Heterogeneous multiscale
+%methods: a review. Commun Comput Phys 2007;2:367--450.
+
+% Ingram G, Cameron I, Hangos K. Classification and analysis
+%of integrating frameworks in multiscale modelling. Chem
+%Eng Sci 2004;59:2171--87.
+
+%Biophysical Journal
+%Volume 86
+%March 2004
+%1357--1372
+%Bridging the Gap between Stochastic and Deterministic Regimes
+%in the Kinetic Simulations of the Biochemical Reaction Networks
+%Jacek Pucha1ka and Andrzej M. Kierzek
+%Institute of Biochemistry and Biophysics, Polish Academy of Sciences, 02-106 Warsaw, Poland
+
+%Progress in Biophysics \& Molecular Biology 85 (2004) 217--234
+%A multi-scaled approach for simulating
+%chemical reaction systems
+%Kevin Burrage, Tianhai Tian, Pamela Burrage
+
+
+%Bioinformatics Vol. 20 no. 1 2004, pages 78--84
+%DOI: 10.1093/bioinformatics/btg376
+%Adaptive stochastic-deterministic chemical
+%kinetic simulations
+%Karan Vasudeva and Upinder S. Bhalla
+
+%\cite{bagrodia91:_unify_framew_distr_simul}
+
