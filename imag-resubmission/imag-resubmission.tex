@@ -5,6 +5,7 @@
 \usepackage{url}
 \usepackage[colorlinks=true]{hyperref}
 \usepackage[margin=0.5in]{geometry}
+\usepackage{sidecap}
 
 \begin{document}
 
@@ -102,12 +103,10 @@ has so far been used for instruction in neuroscience and computational
 neuroscience in more than 60 universities around the world (Beeman,
 2011). %This project will add another stage of innovation to GENESIS.
 
-
-\begin{figure}[ht]
-\begin{center}
-\includegraphics[width=5in]{figures/cbi-architecture-expanded.eps}
-\end{center}
-\caption{ {\bf Detailed view of the Computational Biology Initiative
+\begin{SCfigure}
+%\centering
+\includegraphics[scale=0.56]{figures/cbi-architecture-expanded.eps}
+\caption{\footnotesize {\bf Detailed view of the Computational Biology Initiative
     federated software architecture.}  This figure shows a graphical
   representation of the core structure of G-3. In sharp contrast to
   previous versions of GENESIS and other neuronal simulation
@@ -116,29 +115,40 @@ neuroscience in more than 60 universities around the world (Beeman,
   modules. Importantly, G-3 separates model descriptions from the
   mathematical representations used in actual model simulation. This
   simplifies the implementation of new solvers and other
-  simulationtime software components. The communication infrastructure
+  simulation time software components. The communication infrastructure
   connects different solvers simulating the same model and can
-  'upscale' or 'downscale' numerical data as needed. For additional
+  `upscale' or `downscale' numerical data as needed. For additional
   detail see Cornelis et al. 2011a;b.  }
 \label{fig:cbi-architecture-expanded}
-\end{figure}
+\end{SCfigure}
+%\hspace{0.5cm}
+%\begin{minipage}[b]{0.5\linewidth}
+%\centering
+%\includegraphics[scale=1]{filename2}
+%\caption{default}
+%\label{fig:figure2}
+%\end{minipage}
+%\begin{figure}[ht]
+%\begin{center}
+%\includegraphics[width=5in]{figures/cbi-architecture-expanded.eps}
+%\end{center}
 
 
 
 Many neuroscience simulators, including G-2, allow simulation at
-subcellular, cellular, or network scales, but they are also restricted
-to these scales.  The monolithic nature of these simulators makes it
-almost impossible to extend the functionalities of these simulators
-beyond the levels they support.
+subcellular, cellular, or network scales, but are also restricted
+to each level of scale.  The monolithic nature of these simulators makes it
+almost impossible to extend their functionalities
+beyond the particular levels they support.
 
 In contrast, the new modular structure and the communication module of
-G-3's are key to its extensible multi-scale capabilities (described in
+G-3 are key to its extensible multi-scale capabilities (described in
 more detail below).
 
-Importantly because of its modular structure, G-3 allows in principle
-the incorporation of both traditional multi-scale techniques such as
+Importantly, because of its modular structure, G-3 allows in principle
+the incorporation of both traditional multi-scale techniques such as:
 multi-grid method, fast multi-pole method, domain decomposition and
-adaptive mesh refinement and wavelet based methods, and more recent
+adaptive mesh refinement and wavelet based methods; and more recent
 multi-scale techniques such as quasi-continuum method, heterogeneous
 multi-scale modeling and adaptive model refinement.  The distinction
 between these two methods is that the traditional multi-scale
@@ -148,16 +158,20 @@ behaviour by coupling macroscale and microscale models.  This
 distinction puts them in different modules of the G-3 simulator
 architecture.
 
-The modular structure allows for the rapid incorporation of new
-solvers at a specific scale (see below for an example) while the
-communication module allows to implement different types of run-time
-interfaces between concurrent solvers, thereby effectively maintaining
-the scale-separation between these solvers, keeping them fundamentally
-compliant with the modular structure of G-3 and keeping them
-extensible to meet new user needs.  At its essence, these two new
-features of G-3 allow to transform multi-scale modeling in
-neuroscience from today's specific implementations to a systematic
-technique with a solid software foundation.
+The modular structure allows for rapid incorporation of new
+solvers at a specific scale (see below for an example) while,
+in compliance with the G-3 software architecture and this facilitated extensibility, scale-separation between solvers is maintained through the implementation of different types of run-time
+interfaces between concurrent solvers.
+%the
+%communication module allows implementation of different types of run-time
+%interfaces between concurrent solvers, thereby effectively maintaining
+%the scale-separation between these solvers, keeping them fundamentally
+%compliant with the modular structure of G-3 and keeping them
+%extensible to meet new user needs. 
+At its essence, these two new
+features of G-3 transform multi-scale modeling in
+neuroscience from today's implementation of individual models at specific levels of scale to a systematic
+technique where a comprehensive software foundation enables simulation across different levels.
 
 
 \subsubsection*{B.2 Multi-scale modeling.}
