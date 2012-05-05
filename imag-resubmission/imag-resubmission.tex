@@ -126,24 +126,9 @@ Many neuroscience simulators, including G-2, allow simulation at
 subcellular, cellular, or network scales, but are restricted
 to each level of scale.  The monolithic nature of these simulators makes it
 almost impossible to extend their functionalities
-beyond the levels they explicitly support. In contrast, the new modular structure of G-3, particularly its novel communication module, are key to the extensibility of multi-scale simulation capabilities (described in
-more detail below).
-
-Importantly, because of its modular structure, G-3 allows in principle
-the incorporation of both traditional multi-scale techniques such as the:
-multi-grid method, fast multi-pole method, domain decomposition and
-adaptive mesh refinement methods, and wavelet based methods; and more recent
-multi-scale techniques such as the quasi-continuum method, and heterogeneous
-multi-scale modeling and adaptive model refinement (reviewed in Weinan et al., 2007).  The distinction
-between these two approaches is that traditional multi-scale
-methods capture the macroscale behaviour of a system by simulation
-of microscale models, while the more recent methods capture system
-behaviour by coupling macroscale and microscale models.  This
-distinction locates them in different modules of the G-3 simulator
-architecture.
-
-The modular software structure allows for rapid incorporation of new
-solvers for responsible for specific scales (see below for an example) while,
+beyond the levels they explicitly support. In contrast, the new modular structure of G-3, particularly its novel communication module, are key to the extensibility of multi-scale simulation capabilities.
+Firstly it allows for rapid incorporation of new
+solvers for responsible for specific scales (see below for an example) and secondly,
 in compliance with the G-3 software architecture and its facilitated extensibility, scale-separation between solvers is maintained through the implementation of different types of run-time
 interfaces between any concurrently active solvers.
 %the
@@ -152,6 +137,7 @@ interfaces between any concurrently active solvers.
 %the scale-separation between these solvers, keeping them fundamentally
 %compliant with the modular structure of G-3 and keeping them
 %extensible to meet new user needs. 
+
 At its essence, these new
 features of G-3 transform multi-scale modeling in
 neuroscience from today's implementation of individual models at specific levels to a systematic
@@ -174,20 +160,18 @@ modeling (Bhalla and Iyengar, 1999; Bhalla, 2002; Sivakumaran, et al.,
 2003) while also adding additional capacity to build large scale
 network models. 
 
+A new feature of G-3 is the existence of
+a single model-container that stores a model across multiple spatial scales
+during the model construction phase.  The model-container provides an addressing algorithm to obtain the addresses of
+solved variables from the different solvers independently of their
+scale [see cbi-multiscale for details].  In principle this functionality
+allows instantiation of efficient communication components that can embed any required numerical scheme or algorithm necessary for upscaling or downscaling variables or other aspects of the integrated model.  This feature is essential for the implementation of scale-linking.
+
 The Discrete Event System (DES) is a G-3 software component  that specifically
  supports large scale network modeling by storing action potentials
 as discrete events that are delivered to post-synaptic target sites at the 
 appropriate time. It translates between the discrete event domain and 
 continuous time by providing an interface between mathematical solvers and event queues that links simulation objects, running at their own specific scale, across the different model scales.
-
-The existence of
-a single model-container that integrates a model across multiple spatial scales
-during the model construction phase is essential for the implementation of scale-linking.  When combined with an addressing algorithm in the
-model-container the addresses of
-solved variables can be obtained independently of their
-scale from different solvers. \marginpar{this seems written upside down} This functionality
-supports the instantiation of efficient communication components that can embed any required numerical scheme or algorithm necessary for simulation of
-an aspect of the integrated model. 
 
 As described in the next section,
 the most innovative and challenging technical aspect of this
@@ -212,6 +196,19 @@ As described in more detail in
 subsequent sections, this is accomplished through
 specific software modules that create intermediary representations of
 variables present at multiple scales.
+
+Importantly, because of its modular structure, G-3 allows in principle
+the incorporation of both traditional multi-scale techniques such as the:
+multi-grid method, fast multi-pole method, domain decomposition and
+adaptive mesh refinement methods, and wavelet based methods; and more recent
+multi-scale techniques such as the quasi-continuum method, and heterogeneous
+multi-scale modeling and adaptive model refinement (reviewed in Weinan et al., 2007).  The distinction
+between these two approaches is that traditional multi-scale
+methods capture the macroscale behaviour of a system by simulation
+of microscale models, while the more recent methods capture system
+behaviour by coupling macroscale and microscale models.  This
+distinction locates them in different modules of the G-3 simulator
+architecture\marginpar{needs improvement}.
 
 It is important to note that while the structure
 of G-3 supports this kind of functionality, at present there is only support for expansion
