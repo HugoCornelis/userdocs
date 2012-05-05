@@ -25,7 +25,7 @@ This highly collaborative multi-scale modeling project interweaves a number of d
 {\center \subsection*{SPECIFIC AIMS}}
 The overall objective of this proposal is to accomplish four interrelated and mutually supporting specific aims:
 
-\paragraph{Aim 1: Develop the capability to inter-link heterogeneous biologically realistic models across multiple levels of spatio-temporal scale within the new G-3 architecture.} One central design objective of the GENESIS system is to provide a common modeling platform to support the development of realistic biological models requiring different levels of scale. This has allowed GENESIS models to be built at all scales from molecular through large scale networks and systems. The original GENESIS architecture, however, did not readily support the necessary interaction amongst heterogeneous model components to efficiently connect them into a unified model and the incorporation of new components and simulator functionality was difficult and time consuming. Over the last several years, the core structure of the GENESIS simulator has been fundamentally redesigned to speed the process of adding new modeling capacity at different levels of scale.
+\paragraph{Aim 1: Develop simulator capability to inter-link heterogeneous biologically realistic models across multiple levels of spatio-temporal scale within the new G-3 architecture.} One central design objective of the GENESIS system is to provide a common modeling platform to support the development of realistic biological models requiring different levels of scale. This has allowed GENESIS models to be built at all scales from molecular through large scale networks and systems. The original GENESIS architecture, however, did not readily support the necessary interaction amongst heterogeneous model components to efficiently connect them into a unified model and the incorporation of new components and simulator functionality was difficult and time consuming. Over the last several years, the core structure of the GENESIS simulator has been fundamentally redesigned to speed the process of adding new modeling capacity at different levels of scale.
 %Additionally, the new software architecture of GENESIS explicitly supports interaction amongst heterogeneous model components.
 Accordingly, the primary computational objective of this project is to develop the capacity to inter-link biologically realistic models across different spatio-temporal scales as opposed to simulation of independent models at their individual scales.
 
@@ -118,7 +118,7 @@ neuroscience in more than 60 universities around the world (Beeman,
   simulation time software components. The communication infrastructure
   connects different solvers simulating the same model and can
   `upscale' or `downscale' numerical data as needed. For additional
-  detail see Cornelis et al. 2011a;b.  }
+  detail see Cornelis et al. 2011a;b.}
 \label{fig:cbi-architecture-expanded}
 \end{SCfigure}
 
@@ -199,30 +199,32 @@ in cellular and network level models.
 Over\marginpar{expand computer science background, describe innovation
   as a paradigm shift, see cbi-multiscale} the last 5 years with
 support from the National Institute of Neurological Disorders and
-Stroke at NIH (R01 NS049288-05), the GENESIS development team has
-completely redesigned and modernized the core structure of GENESIS
-producing GENESIS version 3.0 or G-3. These changes are briefly
+Stroke (NINDS) at NIH (R01 NS049288-05), the GENESIS development team has
+completely redesigned and modernized the core structure of GENESIS to
+develop GENESIS version 3.0 or G-3. These changes are briefly
 described in the introduction of the ``Approach'' section of this
-grant, however, the important point with respect to innovation is that
-the new structure of G-3 provides a new and unique capacity for
-federated and modular software development in support of multi-scale
-modeling. Furthermore, G-3s structure also supports the direct real
-time interaction, or embedding of models at different levels of scale.
-As described in more detail below, this is accomplished through
-specific software modules that create intermediary representation of
-variables present at multiple scales as described in more detail in
-subsequent sections. It is important to note that while the structure
-of G-3 supports this kind of functionality, there is no
-support\marginpar{relate to CBI: there is only support for expansion
-  of the scope of the upper layer, but not for expansion of the scope
-  of the lower layer} the development of the tools necessary for
-multi-scale modeling in the current NIH grant. Instead that grant is
+proposal, however, the important point with respect to innovation is that
+the structure of G-3 provides a new and unique capacity for
+federated and modular software development that supports multi-scale
+modeling. Furthermore, the structure of G-3 also supports the direct real
+time interaction, or embedding, of model components at different levels of scale.
+As described in more detail in
+subsequent sections, this is accomplished through
+specific software modules that create intermediary representations of
+variables present at multiple scales.
+
+It is important to note that while the structure
+of G-3 supports this kind of functionality, at present there is only support for expansion
+  of the scope of the upper or biological layer (see Fig.\,\ref{fig:cbi-architecture-expanded}). In the current NIH grant, there is neither direct
+support for expansion of the scope
+  of the lower or mathematical layer (see Fig.\,\ref{fig:cbi-architecture-expanded}) nor the associated development required for support of
+multi-scale modeling. Instead that grant is
 focused on reorganizing and modernizing the core of the simulator, on
 user support, tutorial generation, and the necessary extensive
 documentation of the new system. Of course, the NINDS grant also does
 not support the specific scientific objective of constructing a
 multi-scale cerebellar model.  Accordingly, although synergistic,
-there is no overlap between these two grants. This new project will,
+there is no overlap between these two projects. This new project will,
 however, add a capability to G-3 anticipated to considerably expand
 its value to the computational neuroscience community.
 
@@ -230,18 +232,18 @@ its value to the computational neuroscience community.
 
 \subsubsection*{C.1 GENESIS as the basis for our approach.}
 
-Before considering our specific approach to each of the Specific Aims
+Before considering our approach to each of the Specific Aims
 of this project, it is first necessary to describe the way in which
 G-3 specifically supports this multi-scale modeling effort. As
-described in more detail in Cornelis, et al, (2011a; b), a key
+given in more detail in Cornelis, et al, (2011a; b), a key
 component of G-3, which is also central to its use in multi-scale
-modeling, is a redesign around two workflows, one for the user and a
-second for developers. The user workflow now makes explicit the
+modeling, is a redesign around two workflows, one for the user and the
+other for developers. The user workflow makes explicit the
 linkage between modeling and experimental results with support, for
-example, experimental protocols like RTXI (Cornelis and Coop,
+example, of experimental protocols like RTXI (Cornelis and Coop,
 2010)\marginpar{this seems unnecessary}.  Because streamlining the
 process of adapting and extending GENESIS was also a key objective of
-the redesign, G-3 fundamentally modular structure now supports the
+the redesign, the fundamentally modular structure of G-3 now supports not only the
 independence but also the interoperability of different software
 components of the overall system. Of direct relevance to the current
 project, these changes: (1) reduce the complexity of software modules
@@ -250,46 +252,44 @@ of GENESIS and NEURON for example), (2) simplify documentation of
 modules in terms of inputs and outputs, (3) more easily incorporate
 new simulation modules like Chemsis and CDS for example (see below),
 and (4) simplify development and testing of modules as stand-alone
-components. Overall, the effect is to provide a much clearer
-delineation of the scope for new module development\marginpar{unclear
+components. Overall, as described by the developer workflow, the effect is to provide a much clearer
+delineation of scope for new module development\marginpar{unclear
   how the workflows do this, explain the workflows as complementary to
-  the CBI architecture}, including the addition of modules operating
-at different levels of modeling scale.  The G3 architecture is also
-'federated' as it extends the modular approach associated with the
+  the CBI architecture}, including the addition of functionality operating
+at different levels of model scale.  The G3 architecture is also
+`federated' as it extends the modular approach associated with the
 development of single applications to the functional integration of
 otherwise independent applications. As such it provides a single
-collaboration framework for modeling and software tool development. As
+collaboration framework for modeling and software development. As
 described in the next section these changes have already been used to
 rapidly incorporate new molecular scale modeling capacity into the
-overall system. They will be essential to add additional modeling
-capacity at other levels of scale, as well as the software components
-necessary for models at different levels of scale to interact.
+overall system. %They will be essential to add additional modeling
+%capacity at other levels of scale, as well as the software components
+%necessary for models at different levels of scale to interact.
 
-\subsubsection*{C.2 Specific Aim 1: Develop the Technical Capability
-  to scale-link biologically realistic simulations at multiple levels
-  of scale using the new G-3 architecture.}
+\subsubsection*{C.2 Specific Aim 1: Develop simulator capability to inter-link heterogeneous biologically realistic models across multiple levels of spatio-temporal scale within the new G-3 architecture.}
 
-Having described the overall new features of G-3 that make this
-project possible, in this section we will describe our specific
+Having described the new features of G-3 that make this
+project possible, in this section we describe our specific
 approach to adding the capacity to construct detailed subcellular
 molecular/biochemical, and biophysical models, as well as large scale
 network of systems level models\marginpar{communication framework
   description, embed in computer science background}. Given
-limitations in space, we will not describe G-3s implementation of
-single compartmental neurons, or small-scale neuronal networks.
+limitations in space, we do not describe the G-3 implementation of
+single compartmental neurons or small-scale neuronal networks.
 GENESIS implementation for these models has been extensively described
 elsewhere (Bower and Beeman 2006; 2007). In addition, in this section
-we will briefly describe the technical approach to linking models at
+we briefly describe the computational approach to linking simulation across
 different levels of scale.  With respect to time lines and outcomes,
-development of the technical capability to support these different
-modeling scales and their interaction will be continuous over the
+development of the computational capability to support these different scales 
+and their interaction will be continuous over the
 entire 5 years of the grant and will be coordinated by the Bower
 laboratory in partnership with the other collaborators. Individual
 time lines and expected outcomes will be described in section C.3 for
-specific components of the multi-scale cerebellar model which will be
-used as a test case for all technical implementations.
+specific components of the multi-scale cerebellar model to be
+used as a test case for all software implementation.
 
-\paragraph{C.2.1. Sub-cellular level modeling.} Key to the success of this project will be the expansion of tools for constructing sub-cellular level models. Accordingly, as a test of the new multi-scale modeling capacity of G-3 we began working in May of 2011 with Dr. Avrama Blackwell (now a collaborator on this grant) to incorporate the core functionality of Chemesis (Blackwell 2000, Blackwell and Kotleski 2002) into the structure into G-3. ``Chemesis'' which supports the modeling of biochemical reactions, second messengers, and calcium dynamics (Blackwell, 2000) was originally added on to GENESIS version 2.0 by adding user-contributed library over multiple years. In contrast, the core features of Chemesis-3 were added to G-3 in under 3 months with ``Chemesis-3'' now running almost three times faster than in GENESIS-2. This rapid and successful incorporation was a result of several explicit features of G-3, including: 1) the modular separation of the development of the core of new solvers from that of other software components, allowing full focus on the mathematical aspects of the solver and their implementation, and better optimization; 2) the G-3 Developer package facilitated integration of the Chemesis-3 solver into the build system of G-3 enabling immediate regression tests; 3) easy extension of the configuration of the model-container to establish new declarative model tokens and parameters recognized by the existing Chemesis-3 solvers; 4) easy construction of an interface between the model-container application programmers interface (API) and the core of the Chemesis3 solver and finally 5) the specific development of a software module that interfaces the new solver with the existing linear cable solver. In addition to the further implementation of Chemesis-3, we will use the same G-3 functionality to add biochemical kinetic modeling system being developed under MOOSE (Bhalla and Iyengar, 1999; Bhalla, 2002; Sivakumaran, et al., 2003; Ray and Bhala, 2008) to this project. \\
+\paragraph{C.2.1. Sub-cellular level modeling.} Key to the success of this project is the expansion of tools for constructing sub-cellular level models. Accordingly, as a test of the new multi-scale modeling capacity of G-3 we began working in May of 2011 with Dr. Avrama Blackwell (now a collaborator on this grant) to incorporate the core functionality of ``Chemesis'' (Blackwell 2000, Blackwell and Kotleski 2002) into G-3. ``Chemesis'' which supports the modeling of biochemical reactions, second messengers, and calcium dynamics (Blackwell, 2000) was originally added on to GENESIS version 2.0 by adding a user-contributed library over multiple years. In contrast, the core features of ``Chemesis-3'' were added to G-3 in under 3 months. It now runs almost three times faster than in GENESIS-2. This rapid and successful incorporation was a result of several explicit features of G-3, including: 1) the modular separation of the development of the core of new solvers from that of other software components, allowing full focus on the mathematical aspects of the solver and their implementation, and better optimization; 2) the G-3 Developer package facilitated integration of the ``Chemesis-3'' solver into the build system of G-3 enabling immediate regression tests; 3) easy extension of the configuration of the model-container to establish new declarative model tokens and parameters recognized by the existing ``Chemesis-3'' solvers; 4) easy construction of an interface between the model-container application programmers interface (API) and the core of the ``Chemesis-3'' solver, and finally 5) the specific development of a software module that interfaces the new solver with the existing linear cable solver. In addition to the further development of ``Chemesis-3'', we will use the same G-3 developer functionality to add a biochemical kinetic modeling system being developed for MOOSE (Bhalla and Iyengar, 1999; Bhalla, 2002; Sivakumaran, et al., 2003; Ray and Bhala, 2008). \\
 
 \noindent With\marginpar{link with computer science} respect to the
 scientific objective of this project and thus Specific Aim \#2, these
@@ -297,13 +297,13 @@ new sub-cellular modeling capabilities will allow us to model pre and
 postsynaptic molecular mechanisms involved in synaptic plasticity.
 Further, because each of these sub-cellular modeling components are an
 integrated part of a single `model' container (see Cornelis 2011a),
-the existing and new G-3 solvers can be integrated to simulate
-different aspects of the same model. This 'scale-linking'
+existing and new G-3 solvers can be integrated to simulate
+different aspects of the same model. This ``scale-linking''
 functionality of G-3 instantiates dedicated run-time software
 components that contain intermediary representations of solved
 variables that can pass both ``upscale'' and ``downscale'' values to
 simulations at different levels of scale.  Technically, in the case of
-Chemesis-3 and the linear cable solver, for example, these modules
+``Chemesis-3'' and the linear cable solver, for example, these modules
 calculate weighted space-time averages.
 
 \paragraph{C.2.2 Biophysical models of calcium diffusion and buffering.} In support and in relationship to the new molecular kinetic modeling features that will be added to G-3, this project will also work to incorporate two types of 3-D Monte Carlo-based techniques for modeling reaction/diffusion kinetics. Specifically, Dr. Avrama Blackwell will work with the G-3 development team to implement NeuroRD (Oliveira et al., 2010), a computationally efficient approximate Monte Carlo approach to modeling reaction-diffusion systems. In addition, the G-3 development team will work with Dr. Yoshi Kubota to incorporate ``CDS'' (Cellular Dynamics Simulator: http://nba.uth.tmc.edu/cds/) a precise particle-based Monte Carlo simulator specifically supporting the modeling of Ca$^{2+}$ binding and diffusion dynamics within biochemical networks (Byrne et al. 2010; Kubota and Waxham 2011). CDS is based on the event-driven first passage time algorithm (Byrne et al. 2010) and is designed to serve as a flexible platform for multi-scale hybrid algorithms. For this reason, the CDS algorithm can be directly combined with any deterministic ODE/PDE (Reaction-Diffusion Equation) solvers (e.g., V-Cell used in Hernjak et al. 2005) including those already included in G-3. High-resolution cellular morphology including that of dendritic spines can be directly transported to CDS allowing electro-diffusion to be simulated by both deterministic (as in Lopreore et al. 2008) as well as particle-based 3-D stochastic methods. The CDS research team will work closely with NeuroRD and G-3 developing team to establish a series of hybrid algorithms applicable to several different model scales. This will allow us to compare different simulation algorithms for Ca$^{2+}$ binding diffusion, voltage clamp, and biochemical network within the same platform and will help derive and validate simplified macroscopic (biochemical) synaptic rules relevant to the objectives of Specific Aim 2.\\
