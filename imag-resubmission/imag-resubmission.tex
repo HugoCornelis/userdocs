@@ -161,21 +161,21 @@ modeling (Bhalla and Iyengar, 1999; Bhalla, 2002; Sivakumaran, et al.,
 network models. 
 
 A new feature of G-3 is the existence of
-a single model-container that stores a model across multiple spatial scales
-during the model construction phase.  The model-container provides an addressing algorithm to obtain the addresses of
-solved variables from the different solvers independently of their
-scale [see cbi-multiscale for details].  In principle this functionality
-allows instantiation of efficient communication components that can embed any required numerical scheme or algorithm necessary for upscaling or downscaling variables or other aspects of the integrated model.  This feature is essential for the implementation of scale-linking.
+a single ``model-container'' that stores a model across multiple spatial scales
+during the model construction phase.  The model-container provides an addressing algorithm that obtains the addresses of
+solved variables from different solvers independently of their
+scale [see cbi-multiscale for details].  This functionality
+allows instantiation of efficient communication components that can embed any required numerical scheme or algorithm necessary for upscaling or downscaling variables or other aspects of the integrated model.  It is a feature essential to the implementation of scale-linking.
 
 The Discrete Event System (DES) is a G-3 software component  that specifically
  supports large scale network modeling by storing action potentials
 as discrete events that are delivered to post-synaptic target sites at the 
 appropriate time. It translates between the discrete event domain and 
-continuous time by providing an interface between mathematical solvers and event queues that links simulation objects, running at their own specific scale, across the different model scales.
+continuous time and provides an interface between mathematical solvers and event queues, across different model scales, that links simulation objects running at their own specific scale.
 
 As described in the next section,
-the most innovative and challenging technical aspect of this
-project\marginpar{way to many occurences of 'this project'} involves implementation of the tools to support cross linking and embedding of finer scale simulation
+the most innovative and challenging computational aspects of this
+project\marginpar{way to many occurences of 'this project'} involve implementation of the tools to support cross linking and embedding of finer scale simulation
 in cellular and network level models.
 
 \subsubsection*{B.3 The new ``Scale-link'' functionality.}
@@ -204,25 +204,25 @@ adaptive mesh refinement methods, and wavelet based methods; and more recent
 multi-scale techniques such as the quasi-continuum method, and heterogeneous
 multi-scale modeling and adaptive model refinement (reviewed in Weinan et al., 2007).  The distinction
 between these two approaches is that traditional multi-scale
-methods capture the macroscale behaviour of a system by simulation
+methods capture the macroscale behaviour of a system by simulation of details
 of microscale models, while the more recent methods capture system
-behaviour by coupling macroscale and microscale models.  This
-distinction locates them in different modules of the G-3 simulator
+behaviour by directly coupling macroscale and microscale model components.  This
+distinction allows specialized solvers to be independently incorporated as different components in the solver module of the G-3 simulator
 architecture\marginpar{needs improvement}.
 
 It is important to note that while the structure
 of G-3 supports this kind of functionality, at present there is only support for expansion
-  of the scope of the upper or biological layer (see Fig.\,\ref{fig:cbi-architecture-expanded}). In the current NIH grant, there is neither direct
+  of the scope of the upper or biological layer (see Fig.\,\ref{fig:cbi-architecture-expanded}) as the current NIH grant is
+focused on reorganizing and modernizing the simulator, and on
+user support, tutorial generation, and the necessary extensive
+documentation of the new system. There is neither direct
 support for expansion of the scope
   of the lower or mathematical layer (see Fig.\,\ref{fig:cbi-architecture-expanded}) nor the associated development required for support of
-multi-scale modeling. Instead that grant is
-focused on reorganizing and modernizing the core of the simulator, on
-user support, tutorial generation, and the necessary extensive
-documentation of the new system. Of course, the NINDS grant also does
+multi-scale modeling. Of course, the NINDS grant also does
 not support the specific scientific objective of constructing a
 multi-scale cerebellar model.  Accordingly, although synergistic,
-there is no overlap between these two projects. This new project will,
-however, add a capability to G-3 anticipated to considerably expand
+there is no overlap between these two projects. This new proposal,
+however, will add a capability to G-3 anticipated to considerably expand
 its value to the computational neuroscience community.
 
 {\centering \subsection*{C. Approach}}
