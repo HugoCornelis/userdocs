@@ -132,16 +132,17 @@ At present many neuroscience simulators, including G-2, allow
 simulation at subcellular, cellular, or network scales, but are
 restricted to each level of scale.  The monolithic nature of these
 simulators makes it almost impossible to extend their functionalities
-beyond the levels they explicitly support. In contrast, the new
-modular structure of G-3, particularly its novel communication module,
-are key to the extensibility of multi-scale simulation capabilities.
-Firstly it allows for rapid incorporation of new solvers responsible
-for specific scales (see below for an example) and secondly, in
-compliance with the G-3 software architecture and its facilitated
-extensibility, scale-separation between solvers is maintained through
-the provision of a module that supports the implementation of
-different types of run-time interfaces between any concurrently active
-solvers.
+beyond the levels they explicitly support.  In contrast, the new
+modular structure of G-3, particularly its ``model-container'' module
+and novel ``communication infrastructure'' module, are key to the
+extensibility of multi-scale simulation capabilities.  Firstly it
+allows for rapid incorporation of new solvers responsible for specific
+scales (see below for an example) and secondly, in compliance with the
+G-3 software architecture and its facilitated extensibility,
+scale-separation between solvers is maintained through the separation
+of biological data from mathematical data and the provision of a
+module that supports the implementation of different types of run-time
+interfaces between any concurrently active solvers.
 %the
 %communication module allows implementation of different types of run-time
 %interfaces between concurrent solvers, thereby effectively maintaining
@@ -159,7 +160,7 @@ across multiple spatio-temporal scales.
 
 \noindent Of direct relevance to the innovation represented by this
 grant, GENESIS was the first and remains the only simulation system
-specifically designed from the \underline{outset} to support modeling
+specifically designed \underline{from the outset} to support modeling
 at multiple levels of biological scale (Bower and Beeman, 2006; 2007;
 Brette et al., 2007). Reflecting this history, a recent survey of 324
 peer-reviewed GENESIS publications (not involving the P.I. as an
@@ -182,42 +183,40 @@ addresses of variables of other solvers independently of their scale
 instantiation of efficient communication components that can embed any
 required numerical scheme or algorithm necessary for upscaling or
 downscaling variables or other aspects of the integrated model.  It is
-a feature essential to the implementation of scale-linking.
+a feature that is essential to the implementation of scale-linking in
+G-3.
 
-As a simple use case of the addressing algorithm the Discrete Event
-System (DES) is a G-3 software component that specifically supports
-large scale network modeling.  For run-time performance it stores
-action potentials as simple discrete events that are delivered to
+A first use case of the addressing algorithm the Discrete Event System
+(DES) is a G-3 software component that specifically supports large
+scale network modeling.  For run-time performance it stores action
+potentials as simple discrete events that are delivered to
 post-synaptic target sites at the appropriate times. It translates
 between the discrete event domain and continuous time and provides an
 interface between mathematical solvers and event queues, across
 different model scales.
 %, that links simulation objects running at their
 %own specific scale.
-
 As described in the next section, the most innovative and challenging
-computational aspects of this project involve implementation of the
-tools to expand the support to cross link and embed finer scale simulation
-in cellular and network level models.
+computational aspect of this project involve implementation of the
+tools to expand the communication module to support cross-linking and
+embedding finer scale simulation in cellular and network level models.
 
 \subsubsection*{B.3 The new ``Scale-link'' functionality.}
 
-\noindent Over\marginpar{expand computer science background, describe innovation
-  as a paradigm shift, see cbi-multiscale} the last 5 years with
-support from the National Institute of Neurological Disorders and
-Stroke (NINDS) at NIH (R01 NS049288-05), the GENESIS development team has
-completely redesigned and modernized the core structure of GENESIS to
-develop GENESIS version 3.0 or G-3. These changes are briefly
-described in the introduction of the ``Approach'' section of this
-proposal, however, the important point with respect to innovation is that
-the structure of G-3 provides a new and unique capacity for
-federated and modular software development that supports multi-scale
-modeling. Furthermore, the structure of G-3 also supports the direct real
-time interaction, or embedding, of model components at different levels of scale.
-As described in more detail in
-subsequent sections, this is accomplished through
-specific software modules that create intermediary representations of
-variables present at multiple scales.
+\noindent Over the last 5 years with support from the National
+Institute of Neurological Disorders and Stroke (NINDS) at NIH (R01
+NS049288-05), the GENESIS development team has completely redesigned
+and modernized the core structure of GENESIS to develop GENESIS
+version 3.0 or G-3. These changes are briefly described in the
+introduction of the ``Approach'' section of this proposal, however,
+the important point with respect to innovation is that the structure
+of G-3 provides a new and unique capacity for federated and modular
+software development that supports multi-scale modeling. Furthermore,
+the structure of G-3 also supports the direct real time interaction,
+or embedding, of model components at different levels of scale.  As
+described in more detail in subsequent sections, this is accomplished
+through specific software modules that create intermediary
+representations of variables present at multiple scales.
 
 Traditional multi-scale techniques such as 
 %multi-grid method, fast
