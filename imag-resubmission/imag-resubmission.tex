@@ -157,32 +157,44 @@ G-3's multi-scale modeling capabilities.
 Institute of Neurological Disorders and Stroke (NINDS) at NIH (R01
 NS049288-05), the GENESIS development team has completely redesigned
 and modernized the core structure of GENESIS to develop GENESIS
-version 3.0 or G-3. These changes are briefly described in the
-introduction of the ``Approach'' section of this proposal, however,
-the important point with respect to innovation is that the structure
-of G-3 provides a new and unique capacity for federated and modular
-software development that supports multi-scale modeling. Furthermore,
-the structure of G-3 also supports the direct real time interaction,
-or embedding, of model components at different levels of scale.  As
-described in more detail in subsequent sections, this is accomplished
-through specific software modules that create intermediary
-representations of variables present at multiple scales.
+version 3.0 or G-3.  In contrast to the monolithic nature of
+GENESIS-2, the modular architecture of G-3 and it particular its
+``model-container'' module and novel ``communication infrastructure''
+module, are key to the extensibility of multi-scale simulation
+capabilities.  Firstly it allows for rapid incorporation of new
+solvers responsible for specific scales (see below for an example) and
+secondly, scale-separation between solvers is maintained through (1)
+the separation of biological data from mathematical data and (2) the
+provision of a module that supports the implementation of different
+types of run-time interfaces between any concurrently active solvers.
 
-At present many neuroscience simulators, including GENESIS-2, allow
-simulation at subcellular, cellular, or network scales, but are
-restricted to each level of scale.  The monolithic nature of these
-simulators makes it almost impossible to extend their functionalities
-beyond the levels they explicitly support.  In contrast, the new
-modular structure of G-3, particularly its ``model-container'' module
-and novel ``communication infrastructure'' module, are key to the
-extensibility of multi-scale simulation capabilities.  Firstly it
-allows for rapid incorporation of new solvers responsible for specific
-scales (see below for an example) and secondly, in compliance with the
-G-3 software architecture and its facilitated extensibility,
-scale-separation between solvers is maintained through the separation
-of biological data from mathematical data and the provision of a
-module that supports the implementation of different types of run-time
-interfaces between any concurrently active solvers.
+%These changes are briefly described in the
+%introduction of the ``Approach'' section of this proposal, however,
+%the important point with respect to innovation is that the structure
+%of G-3 provides a new and unique capacity for federated and modular
+%software development that supports multi-scale modeling.
+%Furthermore,
+%the structure of G-3 also supports the direct real time interaction,
+%or embedding, of model components at different levels of scale.  As
+%described in more detail in subsequent sections, this is accomplished
+%through specific software modules that create intermediary
+%representations of variables present at multiple scales.
+
+%At present many neuroscience simulators, including GENESIS-2, allow
+%simulation at subcellular, cellular, or network scales, but are
+%restricted to each level of scale.  The monolithic nature of these
+%simulators makes it almost impossible to extend their functionalities
+%beyond the levels they explicitly support.  In contrast, the new
+%modular structure of G-3, particularly its ``model-container'' module
+%and novel ``communication infrastructure'' module, are key to the
+%extensibility of multi-scale simulation capabilities.  Firstly it
+%allows for rapid incorporation of new solvers responsible for specific
+%scales (see below for an example) and secondly, in compliance with the
+%G-3 software architecture and its facilitated extensibility,
+%scale-separation between solvers is maintained through the separation
+%of biological data from mathematical data and the provision of a
+%module that supports the implementation of different types of run-time
+%interfaces between any concurrently active solvers.
 %the
 %communication module allows implementation of different types of run-time
 %interfaces between concurrent solvers, thereby effectively maintaining
