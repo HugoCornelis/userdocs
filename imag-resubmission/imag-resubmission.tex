@@ -297,30 +297,6 @@ overall system.\\ %They will be essential to add additional modeling
 
 \subsubsection*{C.2 Specific Aim 1: Develop simulator capability to inter-link heterogeneous biologically realistic models across multiple levels of spatio-temporal scale within the new G-3 architecture.}
 
-Important to G-3's multi-scale capacity is the existence of a single
-``model-container'' that stores a model across multiple spatial scales
-during the model construction phase.  The ``model-container'' provides
-an addressing algorithm that allows solvers to obtain the run-time
-addresses of variables of other solvers independently of their scale
-[see cbi-multiscale for details].  This functionality allows
-instantiation of efficient communication components that can embed any
-required numerical scheme or algorithm necessary for upscaling or
-downscaling variables or other aspects of the integrated model.
-%  It is
-%a feature that is essential to the implementation of scale-linking in
-%G-3.
-
-A first use case of the addressing algorithm the Discrete Event System
-(DES) is a G-3 software component that specifically supports large
-scale network modeling.  For run-time performance it stores action
-potentials as simple discrete events that are delivered to
-post-synaptic target sites at the appropriate times. It translates
-between the discrete event domain and continuous time and provides an
-interface between mathematical solvers and event queues, across
-different model scales.
-%, that links simulation objects running at their
-%own specific scale.
-
 \noindent Having described the new features of G-3 that make this
 project possible, here we describe our specific
 approach to adding the capacity to construct detailed subcellular
@@ -338,6 +314,30 @@ laboratory in partnership with the other collaborators. Individual
 time lines and expected outcomes will be described in section C.3 for
 specific components of the multi-scale cerebellar model to be
 used as a test case for all software implementation.
+
+A first important aspect of G-3's multi-scale capacity is the
+existence of a single ``model-container'' that stores a model across
+multiple spatial scales during the model construction phase.  An
+``addressing algorithm'', provided by the ``model-container'', allows
+solvers to obtain the run-time addresses of variables of other solvers
+independently of their scale [see cbi-multiscale for details].  This
+functionality allows instantiation of efficient communication
+components that can embed any required numerical scheme or algorithm
+necessary for upscaling or downscaling variables or other aspects of
+the integrated model.
+%  It is
+%a feature that is essential to the implementation of scale-linking in
+%G-3.
+A first test case of the addressing algorithm the Discrete Event
+System (DES) is a G-3 software component that specifically supports
+large scale network modeling.  For run-time performance it stores
+action potentials as simple discrete events that are delivered to
+post-synaptic target sites at the appropriate times. It translates
+between the discrete event domain and continuous time and provides an
+interface between mathematical solvers and event queues, across
+different model scales.
+%, that links simulation objects running at their
+%own specific scale.
 
 \paragraph{C.2.1. Sub-cellular level modeling.} Key to the success of this project is the expansion of tools for constructing sub-cellular level models. Accordingly, as a test of the new multi-scale modeling capacity of G-3 we began working in May of 2011 with Dr. Avrama Blackwell (now a collaborator on this grant) to incorporate the core functionality of ``Chemesis'' (Blackwell 2000, Blackwell and Kotleski 2002) into G-3. Chemesis supports the modeling of biochemical reactions, second messengers, and calcium dynamics (Blackwell, 2000). It was originally added on to GENESIS version 2.0 by adding a user-contributed library over multiple years. In contrast, the core features of ``Chemesis-3'' were added to G-3 in under 3 months. It now runs almost three times faster than in GENESIS-2. Several explicit features of G-3 enabled rapid and successful integration, including: 1) modular separation of new solver development from that of other software components, allowing full focus on the mathematical aspects of the solver and their implementation, and better optimization; 2) facilitated integration, via the G-3 Developer package, of the Chemesis-3 solver into the build system of G-3, which also enabled immediate regression tests; 3) easy extension of model-container configuration to establish new declarative model tokens and parameters recognized by pre-existing Chemesis-3 solvers; 4) easy construction of an interface between the model-container application programmers interface (API) and the core of the Chemesis-3 solver, and finally 5) specific development of a software module that interfaced the new solver with the pre-existing linear cable solver. In addition to the further development of Chemesis-3, the same G-3 developer functionality can be used to add a biochemical kinetic modeling system being developed for MOOSE (Bhalla and Iyengar, 1999; Bhalla, 2002; Sivakumaran, et al., 2003; Ray and Bhala, 2008).
 
