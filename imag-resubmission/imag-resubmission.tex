@@ -202,39 +202,6 @@ types of run-time interfaces between any concurrently active solvers.
 %compliant with the modular structure of G-3 and keeping them
 %extensible to meet new user needs. 
 
-At its essence, these new features of G-3 transform multi-scale
-modeling in neuroscience from today's implementation of individual
-models at specific levels to a systematic technique where the
-integration of different independent solvers support model simulation
-across multiple spatio-temporal scales.
-
-Important to G-3's multi-scale capacity is the existence of a single
-``model-container'' that stores a model across multiple spatial scales
-during the model construction phase.  The ``model-container'' provides
-an addressing algorithm that allows solvers to obtain the run-time
-addresses of variables of other solvers independently of their scale
-[see cbi-multiscale for details].  This functionality allows
-instantiation of efficient communication components that can embed any
-required numerical scheme or algorithm necessary for upscaling or
-downscaling variables or other aspects of the integrated model.  It is
-a feature that is essential to the implementation of scale-linking in
-G-3.
-
-A first use case of the addressing algorithm the Discrete Event System
-(DES) is a G-3 software component that specifically supports large
-scale network modeling.  For run-time performance it stores action
-potentials as simple discrete events that are delivered to
-post-synaptic target sites at the appropriate times. It translates
-between the discrete event domain and continuous time and provides an
-interface between mathematical solvers and event queues, across
-different model scales.
-%, that links simulation objects running at their
-%own specific scale.
-As described in the next section, the most innovative and challenging
-computational aspect of this project involve implementation of the
-tools to expand the communication module to support cross-linking and
-embedding finer scale simulation in cellular and network level models.
-
 Traditional multi-scale techniques such as 
 %multi-grid method, fast
 %multi-pole method,
@@ -248,6 +215,16 @@ et al., 2007).  They capture system behaviour by directly coupling
 macroscale and microscale model components.  This grant includes
 specific support for the incorporation of such techniques into G-3 as
 part of the 'Communication Infrastructure' module.
+
+As described in the next section, the most innovative and challenging
+computational aspect of this project involve implementation of the
+tools to expand the communication module to support cross-linking and
+embedding finer scale simulation in cellular and network level models.
+At its essence, these new features of G-3 will contribute to the
+transformation of multi-scale modeling in neuroscience from today's
+implementation of individual models at specific levels to a systematic
+technique where the integration of different independent solvers
+support model simulation across multiple spatio-temporal scales.
 
 %Importantly, because of its modular structure, G-3 allows in principle
 %the incorporation of both traditional multi-scale techniques and more recent multi-scale techniques the distinction
@@ -319,6 +296,30 @@ overall system.\\ %They will be essential to add additional modeling
 %necessary for models at different levels of scale to interact.
 
 \subsubsection*{C.2 Specific Aim 1: Develop simulator capability to inter-link heterogeneous biologically realistic models across multiple levels of spatio-temporal scale within the new G-3 architecture.}
+
+Important to G-3's multi-scale capacity is the existence of a single
+``model-container'' that stores a model across multiple spatial scales
+during the model construction phase.  The ``model-container'' provides
+an addressing algorithm that allows solvers to obtain the run-time
+addresses of variables of other solvers independently of their scale
+[see cbi-multiscale for details].  This functionality allows
+instantiation of efficient communication components that can embed any
+required numerical scheme or algorithm necessary for upscaling or
+downscaling variables or other aspects of the integrated model.
+%  It is
+%a feature that is essential to the implementation of scale-linking in
+%G-3.
+
+A first use case of the addressing algorithm the Discrete Event System
+(DES) is a G-3 software component that specifically supports large
+scale network modeling.  For run-time performance it stores action
+potentials as simple discrete events that are delivered to
+post-synaptic target sites at the appropriate times. It translates
+between the discrete event domain and continuous time and provides an
+interface between mathematical solvers and event queues, across
+different model scales.
+%, that links simulation objects running at their
+%own specific scale.
 
 \noindent Having described the new features of G-3 that make this
 project possible, here we describe our specific
