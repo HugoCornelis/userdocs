@@ -51,12 +51,12 @@ Accordingly, the primary computational objective of this project is to develop t
 
 \noindent It is a core principle of the P.I.'s laboratory and of the laboratories of the collaborators, that models will increasingly become essential tools to organize experimental data, direct new experimental designs, and eventually interpret the functional significance of the data generated. Further, it is a core principle of our efforts that the models that are most useful in performing these functions will be those that are built in close relationship to the existing experimental data (Bower, 1992; Bower, 2005; Bower and Beeman, 2007). Accordingly, the overarching aim of this project is to develop a multi-scale model of cerebellar cortical circuitry based on a new set of multi-scale modeling tools to be constructed within the GENESIS simulation system (Bower and Beeman, 2007). Through the GENESIS system these new tools, as well as the model itself, will be fully accessible and provide the basis for ongoing dialog and collaboration. In fact, this collaboration came together because members of the team have already been engaged in such a scientific model-based dialog developed through the elaboration of an original Purkinje cell model which was one of the first `community models' in computational neuroscience (Bower 2011a). That model, which is also at the core of this project, was based on a passive Purkinje cell model published by Rapp, Segev, and Yarom almost 15 years ago (Rapp et al.,1994), to which, after importing the model into GENESIS, the P.I. together with his then postdoctoral fellow, Erik De Schutter introduced active conductances (De Schutter and Bower, 1994a;b;c). Since 1994, the elaboration of this single Purkinje cell model has been the stimulus for a series of ongoing studies within the Bower laboratory (Jaeger et al., 1997; Jaeger and Bower, 1999; Santamaria et al., 2002; 2007; Santamaria and Bower, 2005; Cornelis and Bower, 2007). It has also served as the basis for ongoing collaborations and studies in and between the laboratories of the P.I.s former students and postdocs (Steuber and De Schutter, 2001; Salinas et a., 2006, 2007; Steuber et al., 2007; Shin et al., 2007; De Schutter and Steuber, 2009: Coop et al., 2010; Anwar et al., 2010; Hendrickson et al., 2011a;b). Importantly, the same model has also been used by other laboratories not directly related to the Bower lab (Miyasho et al., 2001; Coop and Reeke, 2001; Chono et al., 2003; Traub et al., 2008; De Sousa et al., 2009; Luthman et al., 2011). Of significance to the current proposal, this model was also employed in the construction of a model at the network level of scale (Luthman et al., 2009; Maex \& Steuber, 2009; Santamaria et al., 2009). With this history as an existence proof, this new project will enhance the Purkinje cell model at the subcellular level and, through open access policies, test an improved model at the network level to produce the first genuinely multi-scale community model in computational neuroscience.\\
 
-\begin{SCfigure}
+\begin{figure}
 \centering
 \includegraphics[scale=0.56]{figures/collaboration-structure.eps}
 \caption{\footnotesize {\bf Collaboration structure}}
 \label{fig:collaboration-structure}
-\end{SCfigure}
+\end{figure}
 
 \subsubsection*{A.2 Specific scientific context: What is the role of molecular-layer synaptic plasticity in cerebellar function?}
 
@@ -113,7 +113,7 @@ has so far been used for instruction in neuroscience and computational
 neuroscience in more than 60 universities around the world (Beeman,
 2011). %This project will add another stage of innovation to GENESIS.
 
-\begin{SCfigure}
+\begin{figure}
 %\centering
 \includegraphics[scale=0.56]{figures/cbi-architecture-expanded.eps}
 \caption{\footnotesize {\bf Detailed view of the Computational Biology Initiative
@@ -130,7 +130,7 @@ neuroscience in more than 60 universities around the world (Beeman,
   `upscale' or `downscale' numerical data as needed. (Additional
   detail in Cornelis et al. 2011a;b).}
 \label{fig:cbi-architecture-expanded}
-\end{SCfigure}
+\end{figure}
 
 \subsubsection*{B.2 Multi-scale modeling.}
 
@@ -296,15 +296,16 @@ its value to the computational neuroscience community.\\
 
 \noindent Before considering our approach to each of the Specific Aims
 of this project, initially the way in which G-3 specifically supports
-this multi-scale modeling effort is described.  As given in more detail in Cornelis et al.\,(2011a; b) a key component
-of G-3, also central to its use in multi-scale modeling, is a redesign
-around two workflows, one for the user and the other for developers.
-The user workflow makes explicit the linkage between modeling and
-experimental results with support, for example, of experimental
-protocols like RTXI (Cornelis and Coop, 2010).  Because streamlining
-the process of adapting and extending GENESIS was also a key objective
-of the redesign, the modular structure of G-3 now supports not only
-the independence but also the interoperability of different software
+this multi-scale modeling effort is described.  As given in more
+detail in Cornelis et al.\,(2011a; b) a key component of G-3, also
+central to its use in multi-scale modeling, is a redesign around two
+workflows, one for the user and the other for developers.  The user
+workflow makes explicit the linkage between modeling and experimental
+results with support, for example, of experimental protocols like RTXI
+(Cornelis and Coop, 2010).  Because streamlining the process of
+adapting and extending GENESIS was also a key objective of the
+redesign, the modular structure of G-3 now supports not only the
+independence but also the interoperability of different software
 components of the overall system. Of direct relevance to the current
 project, these changes: (1) reduce software module complexity when
 compared to more traditional monolithic systems (prior versions of
@@ -314,16 +315,15 @@ simulation modules (Chemsis and CDS for example, see below), and (4)
 simplify module development and testing as stand-alone components.
 Overall, as organized by the developer workflow, the effect is to
 provide a much clearer delineation of the scope of new module
-development\marginpar{unclear how the workflows do this, explain the
-  workflows as complementary to the CBI architecture}, including the
-addition of simulator functionality operating at different levels of
-model scale.  The G-3 architecture is also `federated' as it extends
-the modular approach associated with the development of single
-applications to the functional integration of otherwise independent
-applications. In doing so it provides a single collaboration framework
-for modeling and software development. As described in the next
-section these changes have already allowed new molecular scale
-modeling capacity to be rapidly incorporated into the overall
+development, including the addition of simulator functionality
+operating at different levels of model scale.  The G-3 architecture is
+also `federated' as it extends the modular approach associated with
+the development of single applications to the functional integration
+of otherwise independent applications. In doing so it provides a
+single collaboration framework for modeling and software development.
+As described in the next section these changes have already allowed
+new molecular scale modeling capacity to be rapidly incorporated into
+the overall
 system.\\ %They will be essential to add additional modeling
 %capacity at other levels of scale, as well as the software components
 %necessary for models at different levels of scale to interact.
@@ -334,8 +334,7 @@ system.\\ %They will be essential to add additional modeling
 project possible, here we describe our specific
 approach to adding the capacity to construct detailed subcellular
 molecular/biochemical, and biophysical models, as well as large scale
-network of systems level models\marginpar{communication framework
-  description, embed in computer science background}. Given
+network of systems level models.  Given
 space limitations, the G-3 implementation of
 single compartmental neurons or small-scale neuronal networks are not described in detail here (for extensive descriptions, see Bower and Beeman 2006; 2007). Additionally, in this section
 we briefly describe the computational approach to linking simulation across
@@ -350,7 +349,7 @@ used as a test case for all software implementation.
 
 \paragraph{C.2.1. Sub-cellular level modeling.} Key to the success of this project is the expansion of tools for constructing sub-cellular level models. Accordingly, as a test of the new multi-scale modeling capacity of G-3 we began working in May of 2011 with Dr. Avrama Blackwell (now a collaborator on this grant) to incorporate the core functionality of ``Chemesis'' (Blackwell 2000, Blackwell and Kotleski 2002) into G-3. Chemesis supports the modeling of biochemical reactions, second messengers, and calcium dynamics (Blackwell, 2000). It was originally added on to GENESIS version 2.0 by adding a user-contributed library over multiple years. In contrast, the core features of ``Chemesis-3'' were added to G-3 in under 3 months. It now runs almost three times faster than in GENESIS-2. Several explicit features of G-3 enabled rapid and successful integration, including: 1) modular separation of new solver development from that of other software components, allowing full focus on the mathematical aspects of the solver and their implementation, and better optimization; 2) facilitated integration, via the G-3 Developer package, of the Chemesis-3 solver into the build system of G-3, which also enabled immediate regression tests; 3) easy extension of model-container configuration to establish new declarative model tokens and parameters recognized by pre-existing Chemesis-3 solvers; 4) easy construction of an interface between the model-container application programmers interface (API) and the core of the Chemesis-3 solver, and finally 5) specific development of a software module that interfaced the new solver with the pre-existing linear cable solver. In addition to the further development of Chemesis-3, the same G-3 developer functionality can be used to add a biochemical kinetic modeling system being developed for MOOSE (Bhalla and Iyengar, 1999; Bhalla, 2002; Sivakumaran, et al., 2003; Ray and Bhala, 2008).
 
-With\marginpar{link with computer science} respect to the
+With respect to the
 scientific objective of this project and thus Specific Aim 2, these
 new sub-cellular modeling capabilities will allow us to model pre- and
 postsynaptic molecular mechanisms involved in synaptic plasticity.
@@ -379,10 +378,7 @@ evaluate different methods of scale-linking, for instance by comparing
 different resolutions of a fixed grid with adaptive grid intermediary
 representations (Bernabeul et al., 2009). In effect, this will allow
 us to use multi-scale G-3 models as a framework to compare different
-technical strategies\marginpar{single change in a configuration file
-  of the user workflow instantiates the same simulation with different
-  software components, producing alternative performance and other
-  results of the same simulated model}.
+technical strategies.
 
 \paragraph{C.2.3 Single compartmental neuronal models.} Since GENESIS was first launched it has been used extensively to construct compartmental models at the single cell level. This project, in fact, is based on a Purkinje cell model which has been extensively tested and used in multiple laboratories over the last 20 years (De Schutter and Bower, 1994a;b;c; Jaeger et al., 1997; Jaeger and Bower, 1999; Steuber and De Schutter, 2001; Miyasho et al., 2001; Coop and Reeke, 2001; Santamaria et al., 2002; 2007; Chono et al., 2003; Santamaria and Bower, 2005; Cornelis and Bower, 2007; Maux and Deschutter, 2007; Steuber et al., 2007; Shin et al., 2007; Traub et al., 2008; De Sousa et al., 2009; De Schutter and Steuber, 2009: Luthman et al., 2009; 2011; Maex \& Steuber, 2009; Santamaria et al., 2009; Coop et al., 2010; Anwar et al., 2010; Hendrickson et al., 2011a;b). This model, like most compartmental models, is based on the actual anatomical geometry of a mammalian Purkinje cell (Rapp et al., 1994) to which have been added the major synaptic and voltage related conductances in the form of equivalent circuit representations of Hodgkin-Huxley dynamics (Santamaria and Bower, 2008). As part of this project, and as described below, the conductances in this model will be updated and enhanced with newly available experimental data.
 
