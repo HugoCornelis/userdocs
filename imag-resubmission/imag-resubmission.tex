@@ -128,15 +128,20 @@ neuroscience in more than 60 universities around the world (Beeman,
 \label{fig:cbi-architecture-expanded}
 \end{SCfigure}
 
-Many neuroscience simulators, including G-2, allow simulation at
-subcellular, cellular, or network scales, but are restricted
-to each level of scale.  The monolithic nature of these simulators makes it
-almost impossible to extend their functionalities
-beyond the levels they explicitly support. In contrast, the new modular structure of G-3, particularly its novel communication module, are key to the extensibility of multi-scale simulation capabilities.
-Firstly it allows for rapid incorporation of new
-solvers for responsible for specific scales (see below for an example) and secondly,
-in compliance with the G-3 software architecture and its facilitated extensibility, scale-separation between solvers is maintained through the implementation of different types of run-time
-interfaces between any concurrently active solvers.
+At present many neuroscience simulators, including G-2, allow
+simulation at subcellular, cellular, or network scales, but are
+restricted to each level of scale.  The monolithic nature of these
+simulators makes it almost impossible to extend their functionalities
+beyond the levels they explicitly support. In contrast, the new
+modular structure of G-3, particularly its novel communication module,
+are key to the extensibility of multi-scale simulation capabilities.
+Firstly it allows for rapid incorporation of new solvers responsible
+for specific scales (see below for an example) and secondly, in
+compliance with the G-3 software architecture and its facilitated
+extensibility, scale-separation between solvers is maintained through
+the provision of a module that supports the implementation of
+different types of run-time interfaces between any concurrently active
+solvers.
 %the
 %communication module allows implementation of different types of run-time
 %interfaces between concurrent solvers, thereby effectively maintaining
@@ -144,45 +149,56 @@ interfaces between any concurrently active solvers.
 %compliant with the modular structure of G-3 and keeping them
 %extensible to meet new user needs. 
 
-At its essence, these new
-features of G-3 transform multi-scale modeling in
-neuroscience from today's implementation of individual models at specific levels to a systematic
-technique where the integration of different independent solvers support model simulation across multiple spatio-temporal scales.\\
+At its essence, these new features of G-3 transform multi-scale
+modeling in neuroscience from today's implementation of individual
+models at specific levels to a systematic technique where the
+integration of different independent solvers support model simulation
+across multiple spatio-temporal scales.
 
 \subsubsection*{B.2 Multi-scale modeling.}
 
-\noindent Of direct relevance to the innovation represented by this grant,
-GENESIS was the first and remains the only simulation system
-specifically designed from the outset to support modeling at multiple
-levels of biological scale (Bower and Beeman, 2006; 2007; Brette et
-al., 2007). Reflecting this history, a recent survey of 324
+\noindent Of direct relevance to the innovation represented by this
+grant, GENESIS was the first and remains the only simulation system
+specifically designed from the \underline{outset} to support modeling
+at multiple levels of biological scale (Bower and Beeman, 2006; 2007;
+Brette et al., 2007). Reflecting this history, a recent survey of 324
 peer-reviewed GENESIS publications (not involving the P.I. as an
 author) revealing that 50\% involved network level models with most
 describing large networks up to 10,000 neurons: 40\% were based on
 models of single neurons; and 10\% were constructed to explore the
-interaction of subcellular molecular components.  This project will
-add significantly to the computational tools already available for subcellular level
-modeling (Bhalla and Iyengar, 1999; Bhalla, 2002; Sivakumaran, et al.,
-2003) while also adding additional capacity to build large scale
-network models. 
+interaction of subcellular molecular components.  Firstly this project
+will add to the computational tools already available for subcellular
+level modeling (Bhalla and Iyengar, 1999; Bhalla, 2002; Sivakumaran,
+et al., 2003) while also adding additional capacity to build large
+scale network models.  More importantly this project will enhance
+G-3's multi-scale modeling capabilities.
 
-A new feature of G-3 is the existence of
-a single ``model-container'' that stores a model across multiple spatial scales
-during the model construction phase.  The model-container provides an addressing algorithm that obtains the addresses of
-solved variables from different solvers independently of their
-scale [see cbi-multiscale for details].  This functionality
-allows instantiation of efficient communication components that can embed any required numerical scheme or algorithm necessary for upscaling or downscaling variables or other aspects of the integrated model.  It is a feature essential to the implementation of scale-linking.
+Important to G-3's multi-scale capacity is the existence of a single
+``model-container'' that stores a model across multiple spatial scales
+during the model construction phase.  The ``model-container'' provides
+an addressing algorithm that allows solvers to obtain the run-time
+addresses of variables of other solvers independently of their scale
+[see cbi-multiscale for details].  This functionality allows
+instantiation of efficient communication components that can embed any
+required numerical scheme or algorithm necessary for upscaling or
+downscaling variables or other aspects of the integrated model.  It is
+a feature essential to the implementation of scale-linking.
 
-The Discrete Event System (DES) is a G-3 software component  that specifically
- supports large scale network modeling by storing action potentials
-as discrete events that are delivered to post-synaptic target sites at the 
-appropriate time. It translates between the discrete event domain and 
-continuous time and provides an interface between mathematical solvers and event queues, across different model scales, that links simulation objects running at their own specific scale.
+As a simple use case of the addressing algorithm the Discrete Event
+System (DES) is a G-3 software component that specifically supports
+large scale network modeling.  For run-time performance it stores
+action potentials as simple discrete events that are delivered to
+post-synaptic target sites at the appropriate times. It translates
+between the discrete event domain and continuous time and provides an
+interface between mathematical solvers and event queues, across
+different model scales.
+%, that links simulation objects running at their
+%own specific scale.
 
-As described in the next section,
-the most innovative and challenging computational aspects of this
-project\marginpar{way to many occurences of 'this project'} involve implementation of the tools to support cross linking and embedding of finer scale simulation
-in cellular and network level models.\\
+As described in the next section, the most innovative and challenging
+computational aspects of this project involve implementation of the
+tools to expand the support to cross link and embed finer scale simulation
+in cellular and network level models.
 
 \subsubsection*{B.3 The new ``Scale-link'' functionality.}
 
@@ -203,18 +219,34 @@ subsequent sections, this is accomplished through
 specific software modules that create intermediary representations of
 variables present at multiple scales.
 
-Importantly, because of its modular structure, G-3 allows in principle
-the incorporation of both traditional multi-scale techniques such as the:
-multi-grid method, fast multi-pole method, domain decomposition and
-adaptive mesh refinement methods, and wavelet based methods; and more recent
-multi-scale techniques such as the quasi-continuum method, and heterogeneous
-multi-scale modeling and adaptive model refinement (reviewed in Weinan et al., 2007).  The distinction
-between these two approaches is that traditional multi-scale
-methods capture the macroscale behaviour of a system by simulation of details
-of microscale models, while the more recent methods capture system
-behaviour by directly coupling macroscale and microscale model components.  This
-distinction allows specialized solvers to be independently incorporated as different components in the solver module of the G-3 simulator
-architecture\marginpar{needs improvement}.
+Traditional multi-scale techniques such as 
+%multi-grid method, fast
+%multi-pole method,
+domain decomposition, adaptive mesh refinement methods, and wavelet
+based methods, capture the macroscale behaviour of a system by the
+simulation of details of microscale models.  They are supported by the
+'Solvers' module in the G-3 architecture.  Recent multi-scale
+techniques include the quasi-continuum method, heterogeneous
+multi-scale modeling and adaptive model refinement (reviewed in Weinan
+et al., 2007).  They capture system behaviour by directly coupling
+macroscale and microscale model components.  This grant includes
+specific support for the incorporation of such techniques into G-3 as
+part of the 'Communication Infrastructure' module.
+
+%Importantly, because of its modular structure, G-3 allows in principle
+%the incorporation of both traditional multi-scale techniques and more recent multi-scale techniques the distinction
+%between these two approaches is that traditional multi-scale
+%methods capture the macroscale behaviour of a system by simulation of details
+%of microscale models, while the more recent methods capture system
+%behaviour by directly coupling macroscale and microscale model components.
+
+%such as the:
+%multi-grid method, fast multi-pole method, domain decomposition and
+%adaptive mesh refinement methods, and wavelet based methods; and more recent
+%multi-scale techniques such as the quasi-continuum method, and heterogeneous
+%multi-scale modeling and adaptive model refinement (reviewed in Weinan et al., 2007).  This
+%distinction allows specialized solvers to be independently incorporated as different components in the solver module of the G-3 simulator
+%architecture\marginpar{needs improvement}.
 
 It is important to note that while the structure
 of G-3 supports this kind of functionality, at present there is only support for expansion
