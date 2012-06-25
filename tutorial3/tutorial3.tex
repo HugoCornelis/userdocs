@@ -13,23 +13,20 @@
 % start: userdocs-tag-replace-items related-tutorial
 % end: userdocs-tag-replace-items related-tutorial
 
-\begin{itemize}
-   \item[]\href{../tutorial-python-scripting/tutorial-python-scripting.html}
-          {\bf Creating GENESIS 3 Simulations with Python}
-\end{itemize}
-
 \section*{Convert a GENESIS\,2 Simulation to GENESIS\,3}
 
 \subsection*{Background}
 
-In \href{../tutorial1/tutorial1.tex}{\bf Tutorial\,1}, you learned to use the GENESIS Interactive Shell (\href{../gshell/gshell.tex}{\bf G-Shell})
+In \href{../tutorial1/tutorial1.tex}{\bf Tutorial\,1}, you learned to use the GENESIS Interactive Shell (\href{../gshell/gshell.tex}{\bf G-shell})
 to create a simple cell, explore it, and run the simulation from the
 {\bf G-shell} command line.
 
-\href{../tutorial2/tutorial2.tex}{\bf Tutorial\,2} continues to show how to load and simulate predefined model
-neurons that come bundled with the GENESIS distribution in the single
-cell model library.  As with the Purkinje cell model used in the
-tutorial these have been saved in the library in \href{../ndf-file-format/ndf-file-format.tex}{\bf NDF\,format}.
+\href{../tutorial2/tutorial2.tex}{\bf Tutorial\,2} continues to show how to
+use the G-shell to load and simulate predefined model neurons that come
+bundled with the GENESIS distribution in the single cell model library.  As
+with the Purkinje cell model used in the tutorial these have been saved in
+the library in \href{../ndf-file-format/ndf-file-format.tex}{\bf
+NDF\,format}.
 
 Of course, as mentioned in Tutorial\,2, it would be very difficult to create a large multi-compartmental
 cell model by entering commands in the {\bf G-shell}.
@@ -72,10 +69,14 @@ and flexibility of scripted GENESIS simulations.
 Although GENESIS 3 aims for nearly complete backwards compatibility
 with GENESIS 2, this does not extend to the XODUS graphical objects and
 commands, which are based on 1990's X window system widgets.  Modern
-Python-based graphics are being developed for GENESIS 3, which will
-allow the scriptable construction of custom GUIs by the user.
-However, these will not be an attempt to reproduce the old XODUS
-widgets and commands.
+Python-based graphics have now been developed for GENESIS 3, which
+allows the scriptable construction of custom GUIs by the user.
+However, these do not attempt to reproduce the old XODUS
+widgets and command syntax to the point of allowing automatic conversion of
+existing scripts that use XODUS.  The scripting of XODUS-like GUIs for G-3
+simulations in Python is taken up in the tutorial
+\href{../tutorial-python-gui/tutorial-python-gui.html}{Creating a G-3 GUI
+with Python}.
 
 Also, the \href{../workflow-user/workflow-user.html}{GENESIS 3 User Workflow} makes a distinction
 between these different functionalities, based on a modeling or experimental paradigm involving an
@@ -150,7 +151,7 @@ The script defines and uses the functions
      an {\it asc\_file} object.
 
 \item {\it step\_tmax} Runs the simulation for a time {\tt tmax}, and optionally
-     echoes information to the {\bf G-Shell}, such as start and end times of a
+     echoes information to the {\bf G-shell}, such as start and end times of a
      run.
 \end{itemize}
 These are used in the main section of the simulation, which reads:
@@ -178,8 +179,10 @@ These are used in the main section of the simulation, which reads:
 \subsection*{Running the simulation in backwards compatibility mode}
 
 The first step in converting the simulation is to verify that
-it will execute without errors under the G-shell using the ns-sli
-module.  This runs the simulation under the backwards compatibility
+it will execute without errors under the G-shell using the {\it ns-sli}
+module.  
+% Note: ../ns-sli/ns-sli.tex ins "UNDER CONSTRUCTION" with no info
+This runs the simulation under the backwards compatibility
 mode.  This will be somewhat slower than in native G3 mode, and does not
 provide the advanced features of G3, but is recommended, to be sure that
 the model can be converted.  The steps are simply:
@@ -198,7 +201,7 @@ run properly in {\bf NS-SLI} mode.
 
 To make full use of the capabilities of GENESIS, the cell model should
 be converted into NDF format.  This can be done with the {\it sli\_load}
-and {\it ndf\_save} commands that are available in the {\bf G-Shell}:
+and {\it ndf\_save} commands that are available in the {\bf G-shell}:
 \begin{verbatim}
    $ genesis-g3
 
@@ -216,13 +219,13 @@ To be sure that you remember the name that was assigned to your cell model
    - /cell
 \end{verbatim}
 These are in fact the element trees that were created when the simulation
-was run in GENESIS 2, or with {\it sli\_run} in the {\bf G-Shell}.  If you like, you can
+was run in GENESIS 2, or with {\it sli\_run} in the {\bf G-shell}.  If you like, you can
 dig deeper with commands such as {\tt list\_elements /cell/soma}.
 
 
 At this point you can explore the loaded model with some of the other tools
-provided by the {\bf G-Shell}.  Don't forget to use {\tt help commands} to obtain
-a list of commands available in the current version of the {\bf G-Shell}, in
+provided by the {\bf G-shell}.  Don't forget to use {\tt help commands} to obtain
+a list of commands available in the current version of the {\bf G-shell}, in
 addition to those described in Tutorials 1 and 2.
 
 %[This could be filled out with more examples, e.g. how to use "explore".
@@ -235,7 +238,7 @@ specifying the file name for the saved representation:
    genesis > quit
 \end{verbatim}
 
-\subsection*{Running the converted cell model in the G-Shell}
+\subsection*{Running the converted cell model in the G-shell}
 
 Now, we are ready to load and run the model in NDF format.
 \begin{verbatim}
@@ -246,7 +249,7 @@ Now, we are ready to load and run the model in NDF format.
 At this point, you can explore the model as before, using the examples
 given in Tutorial 2 for the {\tt /Purkinje} model.  The simplest
 way to provide stimuli to the model and to output the results
-is to use the built-in {\bf G-Shell} tools for this, rather than scripting
+is to use the built-in {\bf G-shell} tools for this, rather than scripting
 your own input and output functions.  Some of these are also illustrated
 in Tutorial 2.
 
@@ -277,9 +280,10 @@ Finally, run the simulation on the model {\tt /cell} for 0.5 seconds:
 
 The \href{../g3plot/g3plot.html}{G3Plot} toolkit is a suite of Python-based tools under development
 for visualizing and analyzing the output of GENESIS simulations.  Many of the tools are based on
-\href{http://matplotlib.sourceforge.net/}{\bf Matplotlib} that allow analysis capabilities similar
-to Matlab to be provided within GENESIS.  In the future, these will be integrated into GENESIS for
-direct use without the necessity of creating files.
+\href{http://matplotlib.sourceforge.net/}{\bf Matplotlib} that allow
+analysis capabilities similar to Matlab to be provided within GENESIS.  As
+they are developed, they are being integrated into G-3 for direct use
+without the necessity of creating files.
 
 At present, if G3Plot has been installed, the results from {\it simplecell-g3.ndf} may be compared
 with those from the GENESIS 2 run of {\it simplecell-g3.g} with the command
@@ -289,14 +293,26 @@ with those from the GENESIS 2 run of {\it simplecell-g3.g} with the command
 
 \subsection*{Converting user-defined input and output functions}
 
-Although the G-Shell will continue to gain more paradigms for model
+Although the G-shell will continue to gain more paradigms for model
 input or output that will be sufficient for most single cell modeling,
 it will sometimes be necessary to script custom functions in GENESIS 2
 to provide unique capabilities.  This is particularly likely to be
-true with network simulations.
+true with network and subcellular level simulations.
 
-A future tutorial will demonstrate how to interface this model with objects in the Experiment module
-in order to import the {\it make\_input} and {\it make\_output} functions above into the the
-G-Shell, and save them as part of a complete GENESIS simulation.
+Recent advances in the development of the G-3
+\href{../SSPy/SSPy.html}{SSPy} module now include an Applications
+Programming Interface (API) for scripting G-3 simulation in Python.  This
+allows models to be interfaced with objects from the {\bf Experiment}
+module, including a variety of output objects and input objects such as
+pulse generators and voltage or current clamps.  Thus, there are no
+immediate plans to extend the capabilities of the G-shell {\it sli\_load}
+and {\it ndf\_save} commands to convert the {\it make\_input} and {\it
+make\_output} functions that are used in the script
+\href{figures/simplecell-g3.txt}{\bf simplecell-g3.g} into G-3.
+
+The next tutorial in this series
+\href{../tutorial-python-scripting/tutorial-python-scripting.html}
+{Creating GENESIS 3 Simulations with Python} demonstrates how to do the
+equivalent of these functions in Python, including the plotting of results.
 
 \end{document}
