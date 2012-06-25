@@ -6,7 +6,7 @@
     injection to the soma, and run the simulation, writing the soma Vm to
     a specified file.
 """
-import pdb
+import pdb   # the Python debugger
 import os
 import sys
 
@@ -16,8 +16,8 @@ import sys
 sys.path.append( os.path.join(os.environ['HOME'],
     'neurospaces_project/sspy/source/snapshots/0/tests/python'))
 
-# The location of model files to be loaded is set to the current directory
-os.environ['NEUROSPACES_NMC_MODELS']= '.'
+# The location of model files to be loaded
+os.environ['NEUROSPACES_NMC_MODELS']= '/usr/local/neurospaces/models/library'
 
 # The following four commands set up SSPy as the scheduler component
 
@@ -28,15 +28,13 @@ scheduler = SSPy(verbose=True)
 
 
 # Create a model container service and load an ndf file
-# needed to initialize the model container ???
-my_model_container = None    
 my_model_container = scheduler.CreateService(name="My Model Container",
     type="model_container", verbose=True)
 
 # The commands above are common to most G-3 Python simulation scripts
 
 # load a particular NDF cell model file
-my_model_container.Load('simplecell-nolib.ndf')
+my_model_container.Load('cells/simplecell-nolib.ndf')
 
 # set a model parameter, the INJECT field to provide constant current injection
 my_model_container.SetParameter('/cell/soma', 'INJECT', 0.3e-09)
@@ -44,16 +42,19 @@ my_model_container.SetParameter('/cell/soma', 'INJECT', 0.3e-09)
 # Create a solver, in this case heccer
 my_heccer = scheduler.CreateSolver('My solver', 'heccer', verbose=True)
 
-# Sets the segment of the model to run from
+# Sets the element of the model to run from
 my_heccer.SetModelName('/cell')
 
 # set the timestep for the entire scheduler (solvers, inputs and outputs)
 my_heccer.SetTimeStep(2e-05)
 
+
+#
 # Create Outputs
+#
 my_output = scheduler.CreateOutput('My output object', 'double_2_ascii')
 
-my_output.SetFilename('simplecell_soma_Vm')
+my_output.SetFilename('simplecell_soma_Vm.txt')
 
 # this adds to output to the output object
 my_output.AddOutput('/cell/soma', 'Vm')
