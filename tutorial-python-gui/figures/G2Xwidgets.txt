@@ -1,0 +1,95 @@
+'''
+
+Define G-3 widget classes that have the appearance and functionality of
+the XODUS widgets used with GENESIS 2 SLI scripts.  These are implemented
+as customized versions of wxPython generic widget classes.
+
+'''
+# Import the wxPython modules
+import wx
+
+# Import the modules for "generic widgets" implemented in Python
+import wx.lib.buttons as buttons
+from wx.lib.stattext import GenStaticText
+
+class XLabel(GenStaticText):
+    def __init__(self, parent, *args, **kwargs):
+	GenStaticText.__init__(self, parent, wx.ID_ANY, "default label", *args, **kwargs)
+        # GenStaticText.__init__(self, parent, *args, **kwargs)
+
+        # All label widgets will have white text on a 'blue3' background
+        self.SetBackgroundColour('#0000CD')
+        self.SetForegroundColour('white')
+        self.SetMinSize((-1,30))
+        # Increase readability by using a bold font the label text
+        self.SetFont(wx.Font(10, wx.DEFAULT, wx.NORMAL, wx.BOLD))
+        self.SetWindowStyleFlag(wx.ALIGN_CENTER)
+
+class XButton(buttons.GenButton):
+    def __init__(self, parent, *args, **kwargs):
+        buttons.GenButton.__init__(self, parent, *args, **kwargs)
+
+        # This decoration will be used for all button widgets
+        # The background color is 'rosybrown1' with default black text
+        # The bezel width is increased to give a more 3D appearance
+
+        self.SetBackgroundColour("#FFC1C1")
+        self.SetBezelWidth(5)
+
+class XToggle(buttons.GenToggleButton):
+    def __init__(self, parent, *args, **kwargs):
+	buttons.GenToggleButton.__init__(self, parent, *args, **kwargs)
+
+        # define the default colors and labels for the ON/OFF states 
+        self.onfg = "red"
+        self.offg = "blue"
+        self.offbg = "#98F5FF" # cadetblue1
+        self.onbg = "#98F5FF" # cadetblue1
+        self.offlabel = "OFF"
+        self.onlabel = "ON"
+        self.SetForegroundColour(self.offg)
+        self.SetBackgroundColour(self.offbg)
+        self.SetLabel(self.offlabel)
+        self.SetBezelWidth(5)
+
+    def OnToggle(self):
+        state =  self.GetValue()
+        if state:
+            self.SetLabel(self.onlabel)
+            self.SetForegroundColour(self.onfg)
+            self.SetBackgroundColour(self.onbg)
+        else:
+            self.SetLabel(self.offlabel)
+            self.SetForegroundColour(self.offg)
+            self.SetBackgroundColour(self.offbg)
+
+# create a G2 'dialog' or labeled text entry widget from a
+# GenStaticText label and wx.TextCtrl entry field
+# This is used to define a new 'G2Dialog' class
+
+class XDialog(wx.Panel):
+    def __init__(self, parent, *args, **kwargs):
+        wx.Panel.__init__(self, parent, *args, **kwargs)
+        #   def __init__(self, parent, id=wx.ID_ANY):
+        # wx.Panel.__init__(self, parent, id) 
+        # self.entry = wx.TextCtrl(parent, wx.ID_ANY, '')
+        #    label=" default label ", size=(-1,30), pos=(200,200))
+	self.entry_label = GenStaticText(self, wx.ID_ANY,
+            label=" default label ", size=(-1,30))
+        # Use the default width (-1) and 30 pixel height
+        # Set the background color to palegoldenrod
+        self.entry_label.SetBackgroundColour('#EEE8AA')
+
+        self.entry = wx.TextCtrl(self, wx.ID_ANY, '')
+        self.entry.SetBackgroundColour('#EEE8AA')
+        self.entry.SetWindowStyleFlag(wx.TE_PROCESS_ENTER)
+
+        # Arrange the widgets in a horizontal BoxSizer
+        dlg_sizer = wx.BoxSizer(wx.HORIZONTAL)
+
+        dlg_sizer.Add(self.entry_label, 1, border=0)
+        dlg_sizer.Add(self.entry, 1, wx.EXPAND, border=0)
+
+        self.SetSizer(dlg_sizer)
+        # dlg_sizer.Fit(self)
+        # self.Show(False)

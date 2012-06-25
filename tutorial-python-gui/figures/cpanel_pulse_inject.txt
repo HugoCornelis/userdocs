@@ -1,0 +1,107 @@
+#!/usr/bin/env python
+
+# Import the wxPython modules
+import wx
+
+# Import the custom widgets that mimic GENESIS 2 widgets import import
+import G2Xwidgets as gx
+
+# Create the class that defines the frame and the widgets that it contains
+
+class CPanelFrame(wx.Frame):
+    def __init__(self):
+        wx.Frame.__init__(self, None, -1, 'Control Panel')
+        # def __init__(self, parent, *args, **kwargs):
+        # wx.Frame.__init__(self, parent, *args, **kwargs)
+        # self.ClientSize = (400, 300)
+
+        # Make a panel within the frame to hold the widgets
+        self.panel = wx.Panel(self, wx.ID_ANY)
+        # self.panel = wx.Panel(self, wx.ID_ANY, size=(600,300))
+
+        ''' Create the widgets that will be displayed in the panel
+            Note the use of 'self' to make these global to functions
+            or classes defined outside of this 'init' function.
+        '''
+        # Create three Button widgets
+        self.reset_button = gx.XButton(self)
+        self.reset_button.SetLabel('RESET')
+
+        self.run_button = gx.XButton(self)
+        self.run_button.SetLabel('RUN')
+
+        self.quit_button = gx.XButton(self)
+        self.quit_button.SetLabel('QUIT')
+
+        self.tmax_dialog = gx.XDialog(self)
+        self.tmax_dialog.entry_label.SetLabel('Run time (sec)')
+        self.tmax_dialog.entry.ChangeValue(str(0.5))
+
+        # Add a label using custom wiget based on GenStaticText.
+        self.inj_label = gx.XLabel(self)
+        self.inj_label.SetLabel('Injection Parameters')
+
+        # The toggle buttons, in particular,  need to be globally accessible
+        self.inj_toggle = gx.XToggle(self)
+        # Initialize the labels
+        self.inj_toggle.SetLabel("Injection OFF")
+        self.inj_toggle.offlabel = "Injection OFF"
+        self.inj_toggle.onlabel = "Injection ON"
+        # As an example, change the default background color when ON
+	self.inj_toggle.onbg = 'yellow'
+
+        # The inj_dialog is a Panel formed from a G2Dialog
+        self.inj_dialog = gx.XDialog(self)
+        self.inj_dialog.entry_label.SetLabel('Injection (Amp)')
+        self.inj_dialog.entry.ChangeValue(str(0.3e-09))
+
+        self.delay_dialog = gx.XDialog(self)
+        self.delay_dialog.entry_label.SetLabel('Pulse Delay (sec)')
+        self.delay_dialog.entry.ChangeValue(str(0.05))
+
+        self.width_dialog = gx.XDialog(self)
+        self.width_dialog.entry_label.SetLabel('Pulse Width (sec)')
+        self.width_dialog.entry.ChangeValue(str(0.2))
+
+        self.interval_dialog = gx.XDialog(self)
+        self.interval_dialog.entry_label.SetLabel('Pulse Interval (sec)')
+        self.interval_dialog.entry.ChangeValue(str(0.5))
+
+	self.overlay_toggle = gx.XToggle(self)
+	# Initialize the labels
+        self.overlay_toggle.SetLabel("Overlay OFF")
+        self.overlay_toggle.offlabel = "Overlay OFF"
+        self.overlay_toggle.onlabel = "Overlay ON"
+
+        # Create the main vertical BoxSizer and the horizontal BoxSizers
+        # for the rows that it will contain (only one row in this case)
+        sizer = wx.BoxSizer(wx.VERTICAL)
+        self.row1sizer = wx.BoxSizer(wx.HORIZONTAL)
+
+        # Add the row of buttons to the horizontal BoxSizer
+        self.row1sizer.Add(self.reset_button, 1, wx.EXPAND|wx.ALL, border=1)
+        self.row1sizer.Add(self.run_button, 1, wx.EXPAND|wx.ALL, border=1)
+        self.row1sizer.Add(self.quit_button, 1, wx.EXPAND|wx.ALL, border=1)
+
+        # Now add the horizontal sizer  and widgets to the main vertical sizer
+        sizer.Add(self.row1sizer, 0, wx.EXPAND|wx.ALL, border=1)
+        sizer.Add(self.tmax_dialog, 0, wx.CENTER|wx.EXPAND|wx.ALL, border=1)
+        sizer.Add(self.inj_label, 0, wx.CENTER|wx.EXPAND|wx.ALL, border=1)
+        sizer.Add(self.inj_toggle, 0, wx.EXPAND|wx.ALL, border=1)
+        sizer.Add(self.inj_dialog, 0, wx.EXPAND|wx.ALL, border=1)
+        sizer.Add(self.delay_dialog, 0, wx.EXPAND|wx.ALL, border=1)
+        sizer.Add(self.width_dialog, 0, wx.EXPAND|wx.ALL, border=1)
+        sizer.Add(self.interval_dialog, 0, wx.EXPAND|wx.ALL, border=1)
+        sizer.Add(self.overlay_toggle, 0, wx.EXPAND|wx.ALL, border=1)
+
+        self.panel.SetSizerAndFit(sizer)
+        # self.panel.SetSizer(sizer)
+	sizer.Fit(self)
+        # self.Layout()
+
+if __name__ == '__main__':
+    app = wx.App()
+    # frame = CPanelFrame(None, title='Control Panel')
+    frame = CPanelFrame()
+    frame.Show()
+    app.MainLoop()

@@ -1,0 +1,134 @@
+#! /usr/bin/env python
+"""
+    simplecell_pulse_sim.py - test of the simplecell model in a simulation
+
+    Basic Python script to load a cell model NDF file, provide a pulse of
+    current injection to the soma, and run the simulation, writing the soma
+    Vm to a specified file, or to a 'live_output' list.
+
+"""
+import pdb   # the Python debugger
+import os
+import sys
+
+import time # for timing runs
+
+class G3Sim():
+    def __init__(self):
+      ''' "__init__" is invoked whenever an object is created from this class.
+          This defines and initializes all the parameters and methods
+          (defined functions) of the object.
+      '''
+      # -------------- default simulation parameters -------------
+
+      # Boolean flags used for simulation output - pick one or both
+      self.file_out = True  # output to file
+      self.live_out = True  # live output to list of lists
+
+      self.Vm_file = 'simplecell_pulse_Vm.txt'
+
+      self.tmax = 0.5 # default run time
+
+      # Injection pulse parameters
+      # for constant injection, use injwidth = tmax, injdelay = 0
+
+      self.injcurrent = 0.3e-9 # default injection current
+      self.injdelay = 0.05     # default delay before injection pulse
+      self.injwidth = 0.2     # default width of injection pulse
+      self.injinterval = 0.25 # use a large repetition interval for a single pulse
+
+      # The commands below are common to most G-3 Python simulation scripts
+
+      # This sets an environment to find the libraries needed for running SSPy
+      # It will likely not be required in later versions of G-3
+
+      sys.path.append( os.path.join(os.environ['HOME'],
+         'neurospaces_project/sspy/source/snapshots/0/tests/python'))
+
+      # The location of model files to be loaded
+      os.environ['NEUROSPACES_NMC_MODELS']= '/usr/local/neurospaces/models/library'
+      
+      # The following four commands set up SSPy as the scheduler component
+
+      from test_library import add_sspy_path
+      add_sspy_path()
+      from sspy import SSPy 
+      self.scheduler = SSPy(verbose=False)
+      # Use verbose=True for more information and debugging
+
+      # Create a model container service and load an ndf file
+      self.my_model_container = self.scheduler.CreateService(name="My Model Container",
+         type="model_container", verbose=False)
+
+      # The commands above are common to most G-3 Python simulation scripts
+
+      # load a particular NDF cell model file
+      self.my_model_container.Load('cells/simplecell-nolib.ndf')
+
+      # Create a solver, in this case heccer
+      my_heccer = self.scheduler.CreateSolver('My solver', 'heccer', verbose=True)
+
+      # Sets the element of the model to run from
+      my_heccer.SetModelName('/cell')
+
+      # set the timestep for the entire scheduler (solvers, inputs and outputs)
+      my_heccer.SetTimeStep(2e-05)
+
+      # Create a pulsegen object for current injection
+      # Make it externally accessible with 'self'
+
+      self.my_pulsegen = self.scheduler.CreateInput('pulsegen','pulsegen',verbose=True)
+      self.my_pulsegen.AddInput('/cell/soma', 'INJECT')
+
+      self.my_pulsegen.SetLevel1(self.injcurrent)
+      self.my_pulsegen.SetDelay1(self.injdelay)
+      self.my_pulsegen.SetWidth1(self.injwidth) 
+      self.my_pulsegen.SetLevel2(0.0)
+      self.my_pulsegen.SetWidth2(0.0)
+      self.my_pulsegen.SetDelay2(self.injinterval - self.injdelay)
+
+      # alternatively, give it a very long delay to prevent repeating
+      # self.my_pulsegen.SetDelay2(100.0)
+      self.my_pulsegen.SetBaseLevel(0.0)
+      self.my_pulsegen.SetTriggerMode(0) # zero is "free run"
+
+      # Create Outputs
+      if self.file_out:
+          self.Vm_file_out = self.scheduler.CreateOutput('File Out', 'double_2_ascii')
+          self.Vm_file_out.SetFilename(self.Vm_file)
+          self.Vm_file_out.AddOutput('/cell/soma', 'Vm')
+          # Provide output a multiple of the simulation time step
+          self.Vm_file_out.SetResolution(5)
+
+      # It is also possible to have two separate output objects
+      if self.live_out:
+	  self.Vm_live_out = self.scheduler.CreateOutput('Live Out', 'live_output')
+          self.Vm_live_out.AddOutput('/cell/soma', 'Vm')
+          # Provide output a multiple of the simulation time step
+          self.Vm_live_out.SetResolution(5)
+
+      print 'Completed setup: system time = ', time.time()
+
+    ##### end of __init__(self) #####
+
+    def set_inject_pulse(self, current, delay, width, interval):
+        self.my_pulsegen.SetLevel1(current)
+	self.my_pulsegen.SetDelay1(delay)
+	self.my_pulsegen.SetWidth1(width)
+	self.my_pulsegen.SetDelay2(interval - delay)
+
+    def run_simulation(self,simulationtime):
+          self.scheduler.Run(time=simulationtime, finish=False)
+
+if __name__ == '__main__':
+    mySim = G3Sim()
+    # run with default injection parameters
+    print 'Started run: system time = ', time.time()
+    mySim.run_simulation(mySim.tmax)
+    print 'Completed run: system time = ', time.time()
+
+    ## uncomment the following lines to change parameters, Reset, and re-Run
+    # mySim.set_inject_pulse(0.5e-09, 0.05, 0.4, 100.0)
+    # mySim.Vm_file_out.SetAppend(True)
+    # mySim.scheduler.Reset()
+    # mySim.run_simulation(mySim.tmax)

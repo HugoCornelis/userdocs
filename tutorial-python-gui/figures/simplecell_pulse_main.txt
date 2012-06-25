@@ -1,0 +1,154 @@
+#! /usr/bin/env python
+'''
+   Main script to link the simplecell_pulse_sim.py non-graphical simulation
+   with a Control Panel GUI.  The Control Panel provides for setting pulsed
+   current injection parameters, and running the simulation.
+'''
+
+import wx
+import time # for timing runs
+
+# import the non-graphical model simulation script
+import simplecell_pulse_sim
+
+# import the script defining the Control Panel frame used to control the simulation
+import cpanel_pulse_inject
+
+# import the script defining the Xgraph class for creating y vs. x plots
+import GXgraph
+
+# Define the class that links the model simulation to the control panel
+class simplecellApp(wx.App):
+
+    def OnInit(self):
+        # create an instance of the simulation with model and I/O interfaces
+        self.mySim = simplecell_pulse_sim.G3Sim()
+
+        # create the Control Panel frame to hold the buttons, and other widgets
+        self.frame = cpanel_pulse_inject.CPanelFrame()
+
+        # The Control Panel script is fairly general, so the definitions of the
+        # actions performed by the widgets (buttons, toggles, and labeled text entry
+        # "xdialogs") are given here in the main script
+
+        # Bind an event (e.g., a mouse click) in a widget to the method to be executed
+        self.frame.Bind(wx.EVT_BUTTON, self.OnReset, self.frame.reset_button)
+        self.frame.Bind(wx.EVT_BUTTON, self.OnRun, self.frame.run_button)
+        self.frame.Bind(wx.EVT_BUTTON, self.OnQuit, self.frame.quit_button)
+
+        self.frame.Bind(wx.EVT_TEXT_ENTER, self.OnTmaxEntry, self.frame.tmax_dialog.entry)
+
+        self.frame.Bind(wx.EVT_BUTTON, self.OnInjToggle, self.frame.inj_toggle)
+
+        # require an 'Enter' in the text entry
+        self.frame.Bind(wx.EVT_TEXT_ENTER, self.OnTmaxEntry, self.frame.tmax_dialog.entry)
+        self.frame.Bind(wx.EVT_TEXT_ENTER, self.OnInjEntry, self.frame.inj_dialog.entry)
+        self.frame.Bind(wx.EVT_TEXT_ENTER, self.OnDelayEntry, self.frame.delay_dialog.entry)
+        self.frame.Bind(wx.EVT_TEXT_ENTER, self.OnWidthEntry, self.frame.width_dialog.entry)
+        self.frame.Bind(wx.EVT_TEXT_ENTER, self.OnIntervalEntry, self.frame.interval_dialog.entry)
+
+        self.frame.Bind(wx.EVT_BUTTON, self.OnOverlayToggle, self.frame.overlay_toggle)
+
+        # Display the Control Panel GUI
+        self.frame.Show()
+
+        # Create a plot for the results
+        self.Vm_plotframe = GXgraph.Xgraph(title='Soma Membrane Voltage',
+            xmin=0.0, xmax=self.mySim.tmax, ymin=-0.1, ymax=0.05,
+            verbose = True)
+        self.Vm_plotframe.canvas.draw()       
+        self.Vm_plotframe.Show()       
+
+
+        # Initialize the Control Panel dialog entry fields
+        self.InitDialogs()
+
+        return True
+    # end of OnInit
+
+    # Define a method to initialize the Control Panel dialog entry fields
+    # to the default values used in the simulation
+
+    def InitDialogs(self):
+        self.frame.tmax_dialog.entry.ChangeValue(str(self.mySim.tmax))
+        self.frame.inj_dialog.entry.ChangeValue(str(self.mySim.injcurrent))
+        self.frame.delay_dialog.entry.ChangeValue(str(self.mySim.injdelay))
+        self.frame.width_dialog.entry.ChangeValue(str(self.mySim.injwidth))
+        self.frame.interval_dialog.entry.ChangeValue(str(self.mySim.injinterval))
+
+        # Also initialize the toggle states
+        self.frame.inj_toggle.SetValue(True)
+        self.OnInjToggle(wx.EVT_BUTTON) # Now act on the new state
+        self.frame.overlay_toggle.SetValue(False)
+        self.OnOverlayToggle(wx.EVT_BUTTON) # Now act on the new state
+
+    # Define actions for the GUI widgets - these generally involve
+    # calling methods that are defined in the imported model script
+
+    def OnQuit(self, event):
+        self.Exit()
+
+    def OnReset(self, event):
+	print "Resetting simulation to initial conditions"
+        self.mySim.scheduler.Reset()
+        self.Vm_plotframe.Reset()
+
+    # This will run the simulation with the given time
+    def OnRun(self,event):
+        simulation_time = self.mySim.tmax
+        print 'Starting simulation: system time = ', time.time()
+        self.mySim.run_simulation(simulation_time)
+        print 'Simulation Complete! system time = ', time.time()
+        data = self.mySim.Vm_live_out.GetData()
+        self.Vm_plotframe.PlotData(data)
+
+    def OnTmaxEntry(self, event):
+	self.mySim.tmax = float(self.frame.tmax_dialog.entry.GetValue())
+	print 'Setting run time to: ', self.mySim.tmax
+
+
+    def OnInjToggle(self, event):
+	state =  self.frame.inj_toggle.GetValue()
+	self.frame.inj_toggle.OnToggle()
+	if state:
+	    print("Injection is ON")
+            self.mySim.my_pulsegen.SetLevel1(self.mySim.injcurrent)
+	else:
+            print("Injection is OFF")
+            self.mySim.my_pulsegen.SetLevel1(0.0)
+
+    # Get and set the injection current
+    def OnInjEntry(self, event):
+        self.mySim.injcurrent = float(self.frame.inj_dialog.entry.GetValue())
+        print 'injection: ', self.mySim.injcurrent
+        self.mySim.my_pulsegen.SetLevel1(self.mySim.injcurrent)
+
+    def OnDelayEntry(self, event):
+        self.mySim.injdelay = float(self.frame.delay_dialog.entry.GetValue())
+        print 'Injection pulse delay: ', self.mySim.injdelay
+        self.mySim.my_pulsegen.SetDelay1(self.mySim.injdelay)
+
+    def OnWidthEntry(self, event):
+        self.mySim.injwidth = float(self.frame.width_dialog.entry.GetValue())
+        print 'Injection pulse width: ', self.mySim.injwidth
+        self.mySim.my_pulsegen.SetWidth1(self.mySim.injwidth)
+
+    def OnIntervalEntry(self, event):
+        self.mySim.injinterval = float(self.frame.interval_dialog.entry.GetValue())
+        print 'Injection pulse interval: ', self.mySim.injinterval
+        self.mySim.my_pulsegen.SetDelay2(self.mySim.injinterval - self.mySim.injdelay)
+
+    def OnOverlayToggle(self, event):
+	state =  self.frame.overlay_toggle.GetValue()
+	self.frame.overlay_toggle.OnToggle()
+	if state:
+            print("Overlay is ON")
+            self.Vm_plotframe.overlay = True
+	else:
+            self.Vm_plotframe.overlay = False
+            print("Overlay is OFF")
+
+if __name__ == '__main__':
+    app = simplecellApp(False)
+    app.MainLoop()
+
