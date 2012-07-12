@@ -33,13 +33,10 @@ Install the following packages:
    \item[]\href{http://monotone.ca/}{\bf monotone-0.44:} (or higher).
    \item[]{\bf Xcode Tools:} The Apple Development Toolset. Xcode is available on Disk 2 of the Mac OSX installer set of DVDs under optional install. The package is called {\it  XcodeTools.mpkg}. It is also available from the \href{http://developer.apple.com/technology/xcode.html}{\bf Apple Developer Website}. In the latter case  you will need a valid Apple ID to log in and access the developer page.
    
-  \item[]\href{http://python.org/}{Python:} OS X comes with python, however it does not come with the headers and libraries so that you can build SWIG libraries. To get the development libs and headers, you must go to the official python site and download the installer. It is recommended that you stick with Python versions 2.5 and 2.6. The mac installer should update your execution path to allow you to execute your newly installed python. If it does not then you can add a line like this to your {\it .bash\_profile} file:
+  \item[]\href{http://python.org/}{Python:} OS X comes with python and is located at {\it /usr/bin/python}, in the default path. You can also use the python from http://python.org, GENESIS 3 has been confirmed to compile on python versions 2.5, 2.6, and 2.7. 
   
- \begin{verbatim}
-    PATH="/Library/Frameworks/Python.framework/Versions/Current/bin:${PATH}"
- \end{verbatim}
    
-   {\bf WARNING:} The compilers available from MacPorts should NOT be used for installation (see below). Prior to installing the {\it DeveloperPackage} you should check which Perl libraries OSX uses with ``{\tt  which perl}''. This should return {\tt  /usr/bin/perl}. If the response is {\tt /opt/local/bin/perl}, there is a MacPorts installation of Perl. This is most easily corrected by removing the MacPorts path {\it /opt/local/bin} from your path in the {\it .profile} file in your home directory. To do this open the  {\it .profile} file in an editor and convert the line (or similar):
+   {\bf WARNING:} The compilers available from MacPorts should NOT be used for installation (see below). Prior to installing the {\it DeveloperPackage} you should check which Perl libraries OSX uses with ``{\tt  which perl}''. This should return {\tt  /usr/bin/perl}. If the response is {\tt /opt/local/bin/perl}, there is a MacPorts installation of Perl. This is most easily corrected by removing the MacPorts path {\it /opt/local/bin} from your path in the {\it .profile} file (or the {\it .bash\_profile}) in your home directory. To do this open the  {\it .profile} file in an editor and convert the line (or similar):
 \begin{verbatim}
    PATH=/opt/local/bin:/usr/local/bin:$PATH
 \end{verbatim}
@@ -48,39 +45,7 @@ by removing {\it /opt/local/bin} to give:
    PATH=/usr/local/bin:$PATH
 \end{verbatim}
 {\bf Note:} Only remove the MacPorts path and leave all others alone. If you do not make this change, running GENESIS may result in a bus error as the correct Perl libraries will not be found. It may also call MacPorts versions of build tools, which can result in some undesirable behavior.  
-
- {\bf Note:} Compiling from source will only produce executables and libraries for the host architecture. For example if you have a 64-bit system and 32-bit {\bf Perl}, the compiled {\bf SWIG} libraries will not load, giving an error similar to this:
-
-{\bf Note:} For information on how to properly compile Universal Binaries for OS X, see \href{http://developer.apple.com/library/mac/#technotes/tn2005/tn2137.html}{this link}.
-
-\begin{verbatim}
-	./SwiggableHeccer.dylib: mach-o, but wrong architecture at /System/Library/Perl/5.10.0/darwin-thread-multi-2level/DynaLoader.pm
-\end{verbatim}
    
-so when compiling on a machine make sure that {\bf Perl}, {\bf Python} and all of their loadable modules and libraries are of the same architecture as the host machine.
-
-   \item[]Install the following Perl dependencies via CPAN:
-      \begin{itemize}
-         \item YAML
-         \item Digest::SHA
-         \item Inline
-         \item Parse::RecDescent
-         \item Expect (and its dependency perl-IO)
-         \item ExtUtils::MakeMaker
-         \item Data::Utilities
-         \item File::Find::Rule
-         \item Term::ReadLine
-      \end{itemize}
-   \end{itemize}
-This can be done, for example, by entering the following at a terminal prompt:
-\begin{verbatim}
-   $ sudo perl -MCPAN -e shell
-\end{verbatim}
-Then at the {\tt cpan>} prompt enter:
-\begin{verbatim}
-   cpan> force install YAML
-   . . . 
-\end{verbatim}
    
 \subsection*{Download and Install the {\it DeveloperPackage}}
 
@@ -93,7 +58,30 @@ Download the latest version of the {\it DeveloperPackage}, available from the \h
    \item[] Compile and install the {\it DeveloperPackage}: ``{\tt sudo make install}'' (requires administrator privileges).
 \end{itemize}
 
+
 \subsection*{Install software packages}
+
+The developer package installs some needed perl packages but some are still needed. 
+
+Install the following Perl dependencies via CPAN:
+      \begin{itemize}
+         \item YAML
+         \item Parse::RecDescent
+         \item Expect (and its dependency perl-IO)
+         \item ExtUtils::MakeMaker
+         \item Term::ReadLine
+      \end{itemize}
+   \end{itemize}
+This can be done, for example, by entering the following at a terminal prompt:
+\begin{verbatim}
+   $ sudo perl -MCPAN -e shell
+\end{verbatim}
+Then at the {\tt cpan>} prompt enter:
+\begin{verbatim}
+   cpan> force install YAML
+   . . . 
+\end{verbatim}
+
 
 Once the above dependencies are installed source code can be pulled from the GENESIS repository and a build performed with the following commands:
 \begin{enumerate}
@@ -104,11 +92,28 @@ Once the above dependencies are installed source code can be pulled from the GEN
    \item{\it neurospaces\_install} (requires admin password) 
 \end{enumerate}
 
+If there are any mixed architectures on some of the programs on the machine then you must use the {\it --universal} flag. For instance if the current version of python in your path is 32-bit and the host machine is 64-bit, then you should use the universal flag. Easy way to tell what a programs architecture is is to use the lipo command on the executable file:
+
+\begin{verbatim}
+lipo -info `which python`
+Architectures in the fat file: /usr/bin/python are: x86_64 i386 ppc7400
+\end{verbatim}
+
+The architectures can be read as follows.
+
+\begin{itemize}
+   \item[] {\bf x86\_64}: 64-bit Intel 
+   \item[] {\bf i386, i486, i586, i686}: 32-bit Intel (with i386 being the most common)
+   \item[] {\bf ppc, ppc7400}: Power PC architecture
+\end{itemize}
+
+If you are using all pure apple programs for perl and python with no macports, then it is safe to use {\it --universal} for any calls to {\it neurospaces\_install} and {\it neurospaces\_upgrade}. However it should be noted that this will increase the compile time three fold.
+
 \subsection*{Check if installation was successful}
 
 Once these have completed the installation can be tested with the following command:
 \begin{itemize}
-   \item[]{\tt neurospaces\_check $>$/tmp/check.out 2$>$\&1}
+   \item[]{\tt neurospaces\_check $>$/tmp/check.out 2$>$\&1}3
 \end{itemize}
 This will perform a series of regression tests and save the output to file. The output can be checked by typing ``{\tt less /tmp/check.out}''. Importantly, search for lines containing the string {\tt error\_count} that will indicate any inconsistencies with the installation.
 
@@ -116,11 +121,6 @@ This will perform a series of regression tests and save the output to file. The 
 
 
 
-\section*{Installation From Packages}
-
-	Easiest method to install GENESIS 3 on Mac OSX is via installation packages available \href{http://repo-genesis3.cbi.utsa.edu/osx/}{\bf here}. The packages install all compiled programs and scripts. However the prerequisite modules for {\bf Perl} and {\bf Python} must still be installed. 
-	
-	Required modules are listed in the \href{../genesis-dependencies/genesis-dependencies.tex}{\bf GENESIS dependencies} document. Note the above rule about {\it macports} still applies and the standard perl for Mac OSX at {\bf /usr/bin/perl} should be the one invoked when pulling packages from {\bf CPAN}.
 
 
 \end{document}
