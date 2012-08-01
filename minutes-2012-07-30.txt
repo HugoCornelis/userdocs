@@ -1,0 +1,46 @@
+- Focus: technical aspects of getting people involved into G-3 development.
+  - Python API.
+    - Has good coverage.
+      - Dave's use cases (focused on single neuron simulations).
+      - 40% regression tests.
+      - Complies with the user-workflow (MC, Exp, Sim, Plot / DB's GUIs).
+      - Gives different entry points (scripted, config files).
+    - Consistency in the API.
+      - Different simulations for different models result in similarly structured scripts.
+    - Documentation
+      - Pages in the documentation system explain concepts.
+      - Dave's written:
+        - Naive user entry point documentation.
+          - Only about two experiments or so.
+          - Needs integration with BoG to explain more about the biology?
+      - Doxygen filled in documentation.
+        - Only for technical people / developers.
+        - About 75% complete (further completion considered unnecessary).
+        - No integration with the documentation written by Dave.
+        - But good enough for software engineers / technical people.
+    - Workshop todo list:
+      1. Network support needs to be completed.
+      2. Explanation / support for better debugging G-3 Python code.
+      3. Improved support for experiment definition.
+      4. Generics supporting model component creation inside the MC.
+         - See for instance G-Shell create command in perl.
+  - Installation for developers.
+    - We must communicate about all installations.
+      - whether successful or not.
+      - keep lists of OS's on which we installed G-3 / NS.
+        - Also for MacOS.
+    - Current documentation for MacOS needs to be revised.
+    - Python setup tools give good coverage of OS's / no problems currently known.
+    - Likely workaround for the gcc bug.
+  - Better coverage of use cases / tutorials.
+    - Dave working on this.
+    - Based on templates provided by Mando / Hugo.
+    - Should come up with a list of use cases.
+      - Biological levels each with their own typical stimuli and recordings.
+  - Documentation for extending G-3.
+    - Can be based on documentation of how Chemesis-3 was incorporated.
+    - Structured according the user-workflow.
+      - MC configuration (step 1, 2).
+      - Adding simulation objects (step 3).
+      - The addressing API concepts for I/O (step 2, 4).
+      - Integration with the developer package.
