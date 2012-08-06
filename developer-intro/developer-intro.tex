@@ -14,10 +14,33 @@
 
 \section*{Introduction to GENESIS for Developers}
 
-The documentation linked to here is for GENESIS users who want to contribute to the development of extended functionality of the GENESIS simulation platform, rather than for those users who want to do scientific simulations. (Although a single individual may want to do both.) Developer documentation provides links to more technical documentation supporting software development. It is assumed that you are familiar with the monotone version control software used by GENESIS (for more information see \href{../version-control/version-control.tex}{\bf Version\,Control}). Links to the more general user documentation can be found at the \href{http://www.genesis-sim.org/userdocs/contents-level1/contents-level1.html}{\bf Level\,1\,Documentation\,Contents\,Index}. 
+The documentation linked to here is for GENESIS users who want to
+contribute to the development of extended functionality of the GENESIS
+simulation platform, rather than for those users who want to do
+scientific simulations. (Although a single individual may want to do
+both.) Developer documentation provides links to more technical
+documentation supporting software development. It is assumed that you
+are familiar with the \href{http://monotone.ca/}{\it monotone version
+  control software} used by GENESIS (for more information see
+\href{../version-control/version-control.tex}{\bf Version\,Control}).
+Links to the more general user documentation can be found at the
+\href{http://www.genesis-sim.org/userdocs/contents-level1/contents-level1.html}{\bf
+  Level\,1\,Documentation\,Contents\,Index}.
 %The documentation linked to here is for the use by people who are involved in the development and extension of GENESIS functionality.
 
-The federated development of GENESIS software components proceeds via a software buildbot system that houses a \href{http://monotone.ca/}{monotone} server that is connectible over the internet. This allows source code changes to be properly merged using the functions available in\,{\it monotone}, regardless of the location where the changes have been made (at home, in your office, on the airplane). The build mechanism will always build the most up to date version of the code.
+The federated development of GENESIS software components proceeds via
+a set of \href{http://monotone.ca/}{monotone} source code servers that
+are accessible from the internet. {\it monotone} has functions to
+properly merge source code changes regardless of the location where
+they have been made: at home, in your office or on the airplane.  The
+functionality required for the integration of the {\it monotone}
+source code servers is available from the
+\href{../developer-package/developer-package.tex}{\it
+  DeveloperPackage}.  Several
+\href{../genesis-system/genesis-system.tex}{dedicated buildbot
+  systems} pull the latest version of the code to build, install and
+\href{../neurospaces-tester/neurospaces-tester.tex}{run regression
+  tests}.
 
 \section*{Becoming a GENESIS Developer}
 

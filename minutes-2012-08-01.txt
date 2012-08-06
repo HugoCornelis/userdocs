@@ -1,0 +1,80 @@
+- Parallelization
+  - how many neurons.
+  - We need a clear plan.
+    - levels:
+      - SUN grid engine.
+      - Coarsely grained between CBI components.
+      - Fine grained within CBI components.
+      - GPU support.
+    - May be ask whether Zhiwei can have one person spend a couple of weeks to implement a prototype?
+    - It may also be interesting to talk with Zhiwei about his experience with organizing workshops at CBI.
+- Workshop MUST DOs.
+  - Network support.
+    - Python support of existing and proposed commands will take 2 days to implement.
+    - Need for extending support for setting weights and delays, will take 2 days to implement.
+    - Validation of existing G-3 commands against G-2 -- unsure, 1 day.
+    - Conclusion: by next Friday we hope to have the network modeling support needed for the workshop.
+    - Dave said he needs this by August 17th, so next Friday we can evaluate where we are.
+  - G-3 netview.
+    - Output must be with a 'no-time' option.
+    - Output with a header option may be useful.
+    - Having these options available at the workshop may be useful.
+  - Network modeling template scripts.
+    - Target the benchmark of Brette et al.
+    - Takes 2 weeks to do properly (see deadline of August 17th).
+    - Adding inhibition may be a student project at the workshop.
+    - Is a well known benchmark.
+  - G-3 installation.
+    - Some installation documents should be taken offline or updated (assigned to Hugo).
+    - MacOS installation documents should be split, one document for each MacOS variant (assigned to Mando).
+    - Additional general instructions needed:
+      - How to find out the Linux variant of a target machine.
+      - Some OSs, eg. ubuntu, support multiple (conflicting) package managers, DON'T DO THAT.
+- Desirables.
+  - Support of modifying a cell model.
+    - Replace a current in an existing model.
+      - In the Purkinje cell model, replace the old H-current with the H-current documented by Sergio Solinas.
+      - Implementation is relatively easy, estimate 4 hours.
+    - UI of conversion of a passive model to an active model, populating a morphology with channels.
+      - Some of this explained in the technical guide to SSP.
+  - Need for a FAQ.
+    - Top 5 list of common things done at the workshop.
+  - One of Volker's student may come to the workshop and start implementing a partial Neuron HOC parser.
+    - We should send a note to Volker, start communicating about this.
+  - complete implementation of ndf_save and sli_load.
+    - low priority / complicated.
+    - difficult to estimate how long this will take.
+  - vclamp for traditional voltage clamp.
+    - Dave will prepare this.
+  - Other input paradigms.
+    - For synaptic input using composed objects.
+    - timetable.
+    - We will likely look into those after the workshop.
+    - Estimate to be finished before the end of November?
+  - Speed of G-3.
+  - Need for documents about best practices in G-3 scripting.
+  - G-2 showmsg equivalent in G-3.
+    - raised by Avrama at CNS, mentioned in Jim's email.
+    - Other related commands for debugging a model.
+    - We should obtain general feedback about debugging a model during the workshop.
+    - Need of integration documentation of existing model debugging tools.
+  - Python graphics.
+    - Live data output works.
+    - run-time interface for netview.
+    - Isyn / Gsyn should be 'current' and 'conductance' respectively.
+    - Axes configuration can be done using flags.
+    - control panel sizing.
+  - Documentation.
+    - Dave's bottom-up approach to writing tutorials.
+      - Fits with the G-3 developer workflow.
+    - G-3 extension documentation.
+      - Teach Avrama to extend G-3 during the workshop.
+      - Complete existing documentation based on this.
+      - Mid-workshop presentation about this.
+  - Generics support.
+    - Explicitly for dynamic extension of G-3.
+    - Modifications of / additions to the MC propagate automatically to the UIs.
+      - such as gshell and SSPy.
+- Next skype call.
+  - Thursday 11 am SA time.
+  - Evaluate status at that time, especially progress on network modeling support.
