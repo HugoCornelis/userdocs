@@ -1,0 +1,41 @@
+- hugo: two functions for network modeling still need implemented
+  - syntax for creation of projections
+  - stimulation of network models
+- Dave: volumeconnect, createprojection
+  - syntax
+  - need for documentation about the distinction between these two
+- Mando:
+  - python supports named parameters for function volumeconnect.
+- python bindings createprojection
+  - only a couple of hours of work?
+  - should be finished and working by tomorrow night.
+- distribution of delays, weights.
+  - incorporated in createprojection / volumeconnect
+    - currently no need for separate commands as in G-2
+  - workshop:
+    - need fixed weights
+    - need delay proportional to distance / velocity
+      - need test scripts
+        - Dave tests using netview
+        - delays seems off in G-3 simulations
+          - tested in model-container
+          - tested by running simulations / DES inspection.
+    - need for fixed delay
+  - future:
+    - exponential decay of weights with distance
+    - exponential decay of connection probability
+  - createprojection command
+    - syntax offers the possibility for user-friendly extensions
+- need for document about the createprojection command
+  - and related concepts in both the model-container and the gshell
+  - Hugo will do this.
+  - map existing G-2 documentation to G-3 createprojection documentation?
+  - clear understanding needed
+    - what useful commands are
+    - terminology about model components
+    - choose between createprojection or volumeconnect
+      - consistency needed for user.
+- next call: early next week
+  - Monday 11am San Antonio time.
+  - Evaluate status of network modeling support.
+  - Evaluate status of network modeling stimuli.
