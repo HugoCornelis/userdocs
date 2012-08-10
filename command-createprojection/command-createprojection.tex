@@ -1,0 +1,185 @@
+\documentclass[12pt]{article}
+\usepackage{verbatim}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:} \\
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Introduction}
+
+The {\tt createprojection} command of the {\bf gshell} allows
+convenient creation of {\bf projections} between two {\bf populations}
+of multicompartmental {\bf neurons}.  A {\bf projection} can have one
+or more {\bf connections}.
+
+\section*{Implementation}
+
+The {\tt createprojection} command is a user-friendly wrapper around
+the low-level command {\tt volumeconnect}.  Functionally these
+commands are the same and their implementation is based on the {\bf
+  GENESIS-2} (G-2) commands for the creation of connections (G-2
+\href{http://www.genesis-sim.org/GENESIS/UGTD/Tutorials/genprog/textDoc/planarconnect.doc.txt}{
+  {\tt planarconnect}}), and setting their weights (G-2
+\href{http://www.genesis-sim.org/GENESIS/UGTD/Tutorials/genprog/textDoc/planarweight.doc.txt}{
+  {planarweight}}) and delays (G-2
+\href{http://www.genesis-sim.org/GENESIS/UGTD/Tutorials/genprog/textDoc/planardelay.doc.txt}{
+  {planardelay}}).  It is instructive to read the
+\href{http://www.genesis-sim.org/GENESIS/UGTD/Tutorials/genprog/net-tut.html}{overview}
+of these G-2 functions to develop an understanding of their
+functionality.
+
+
+\section*{Specification}
+
+An example invocation of the {\tt createprojection}
+command\footnote{Note: the {\tt createprojection} command is still
+  under development.  What is written here is correct at moment of
+  writing, but may change in the future.  We expect only minor changes
+  at most.} is shown below:
+
+\begin{verbatim}
+createprojection
+    (
+     {
+      root => '/RSNet',
+      projection => {
+                     name => '/RSNet/projection',
+#                    source => '../population', # optional
+#                    target => '../population', # optional
+                    },
+      probability => '1.0',
+      random_seed => '1212.0',
+      source => {
+                 context => '/RSNet/population',
+                 include => {
+                             type => 'box', # type => 'all' would remove the need for the line below
+                             coordinates => [ '-1e10', '-1e10', '-1e10', '1e10', '1e10', '1e10', ],
+                            },
+                },
+      target => {
+                 context => '/RSNet/population',
+                 include => {
+                             type => 'ellipse',
+                             coordinates => [ 0, 0, 0, $SEP_X * 1.2, $SEP_Y * 1.2, $SEP_Z * 0.5, ],
+                            },
+                 exclude => {
+                             type => 'box',
+                             coordinates => [ - $SEP_X * 0.5, - $SEP_Y * 0.5, - $SEP_Z * 0.5, $SEP_X * 0.5, $SEP_Y * 0.5, $SEP_Z * 0.5, ],
+                            },
+                },
+      synapse => {
+                  pre => 'spike',
+                  post => 'Ex_channel',
+                  weight => {
+#                            type => 'fixed', # not sure yet, weight distribution example needed
+                             value => $syn_weight,
+                            },
+                  delay => {
+#                           type => 'fixed', # not sure yet, variable delay example needed
+                            value => $SEP_X / $cond_vel,
+#                           velocity => 0.5, # alternative to fixed delay?
+                           },
+                 },
+     },
+    );
+\end{verbatim}
+
+We call the items before the arrow signs ($=>$) dictionary keys or
+keys.  The invocation distinguishes four main of the parameterization
+of the command:
+
+\begin{itemize}
+\item Periphery configuration includes setting of the name of the
+  network ({\bf root}), the name of the projection that will be
+  created as part of the model (the {\bf name} key inside the {\bf
+    projection} key).
+
+  The ({\bf probability} and {\bf random\_seed} keys
+\begin{verbatim}
+      root => '/RSNet',
+      projection => {
+                     name => '/RSNet/projection',
+#                    source => '../population', # optional
+#                    target => '../population', # optional
+                    },
+      probability => '1.0',
+      random_seed => '1212.0',
+\end{verbatim}
+\item The {\bf source} key defines the model components that are
+  selected as candidates for outgoing connections.  In this case all
+  the neurons in the model component with name {\bf /RSNet/population}
+  are selected (more precisely all the neurons in a box shaped volume
+  with size $2e10$ meters).
+\begin{verbatim}
+      source => {
+                 context => '/RSNet/population',
+                 include => {
+                             type => 'box', # type => 'all' would remove the need for the line below
+                             coordinates => [ '-1e10', '-1e10', '-1e10', '1e10', '1e10', '1e10', ],
+                            },
+                },
+\end{verbatim}
+\item The {\bf target} key defines the model components that are
+  selected as candidates to receive connections.  In this case for
+  each neuron found in the source region, an attempt will be made to
+  pair it with any of the neurons found by the {\bf include} key,
+  except for the neurons that are excluded by the {\bf excluded} key.
+\begin{verbatim}
+      target => {
+                 context => '/RSNet/population',
+                 include => {
+                             type => 'ellipse',
+                             coordinates => [ 0, 0, 0, $SEP_X * 1.2, $SEP_Y * 1.2, $SEP_Z * 0.5, ],
+                            },
+                 exclude => {
+                             type => 'box',
+                             coordinates => [ - $SEP_X * 0.5, - $SEP_Y * 0.5, - $SEP_Z * 0.5, $SEP_X * 0.5, $SEP_Y * 0.5, $SEP_Z * 0.5, ],
+                            },
+                },
+\end{verbatim}
+\item The {\bf verbatim} key defines the properties of the individual
+  connections.  The {\bf pre} and {\bf post} keys specify the names of
+  the pre- and post-synaptic components in the model respectively.
+  Other names are excluded from the pairing process that instantiates
+  the connections.
+\begin{verbatim}
+      synapse => {
+                  pre => 'spike',
+                  post => 'Ex_channel',
+                  weight => {
+#                            type => 'fixed', # not sure yet, weight distribution example needed
+                             value => $syn_weight,
+                            },
+                  delay => {
+#                           type => 'fixed', # not sure yet, variable delay example needed
+                            value => $SEP_X / $cond_vel,
+#                           velocity => 0.5, # alternative to fixed delay?
+                           },
+                 },
+\end{verbatim}
+\end{itemize}
+
+
+\section*{Terminology}
+
+\begin{itemize}
+\item[] {\bf projection}: contains a set of {\bf connections}.  {\bf
+    Connections} can optionally be embedded in {\bf
+    connection\_groups}.
+\item[] {\bf population}: a set of {\bf neurons}.
+\item[] {\bf neuron}: a neuron model with or without a realistic
+  morphology.
+\item[] {\bf connection}: an attachment between a pre- and
+  post-synaptic component in a model.  A {\bf connection} can hold a
+  weight and a delay.
+\end{itemize}
+
+\end{document}
