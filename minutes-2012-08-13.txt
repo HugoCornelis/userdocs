@@ -1,0 +1,52 @@
+- situation: this week Hugo more available than next week.
+- functions
+  - fundamental:
+    - createmap
+      - python: yes
+        - run time casting needed for creating the network object.
+      - gshell: yes
+    - createprojection
+      - python: no
+        - run time casting needed for creating the network object.
+      - gshell: yes
+  - periphery:
+    - output resolution time step: output_time_step <seconds>
+      - python: no
+      - gshell: yes
+    - remove output time stamp
+      - python: yes
+      - gshell: yes
+    - current injection pulse
+      - python: yes, using pulsegen object
+      - gshell: no
+- validation
+  - steady current injection is good enough for testing and validation
+  - discrepancies
+    - G-2 changes default refractory period of spikegen?
+    - small refractory period in G-2 scripts.
+    - needs additional check.
+  - Dave Beeman sends G-2 of 4x4 script to Hugo.
+- NDF scripting vs editing.
+  - morphology editing, channel addition / modification.
+    - single cell modeling only.
+    - additional editing of NDF files needed.
+  - chemesis / network modeling different
+    - simple script leads to complicated pathways / networks
+  - NDF scripting for networks would be useful for the workshop
+    - Hugo will do analysis of the complexity.
+  - what are changes between rscell_nolib.ndf and rscell_nolib2.ndf
+    - likely related to ndf_save not working properly
+    - will be discussed during workshop between Dave and Hugo
+- Feedback about tutorials to respond to.
+- optimization can lead to problems with compilation of script bindings
+- gshell
+  - variations for the creation of projection
+    - createprojection: many connections
+    - creation of individual connections
+      - need for pythonesque syntax: createconnection
+      - sometimes read from ascii file
+        - capability already present in the model-container
+        - see tests/specifications/projectionquery.t test specification of the model-container.
+- next call
+  - coming Friday 11am SA time.
+    - depending on progress, status at that time.
