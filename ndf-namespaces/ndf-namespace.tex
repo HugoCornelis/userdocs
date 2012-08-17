@@ -1,0 +1,102 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{lineno}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+
+\href{../ndf-file-format/ndf-file-format.tex}{\bf The NDF File Format}
+
+\href{../model-variables/model-variables.tex}{\bf Physical Processes and Model Variables}
+
+\href{../ndf-procedural-description/ndf-procedural-description.tex}{\bf The NDF File Format and Procedural Model Descriptions}
+
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{Namespaces in the Model-Container and the Neurospaces Description Format}
+
+
+The '::' notation is defined by the model component space of the
+model-container (note: it is not python nor perl specific).  Neither
+the gshell nor ssp nor sspy know what this notation means.
+
+The model component space of the model-container defines the model.
+Every model can be defined in a hierarchical manner.  Two examples:
+
+1. In the G-2 version of the Purkinje cell model, the G-2 scripts
+construct prototypes of channels which are then mapped onto prototypes
+of dendritic sections which are then mapped onto the dendritic
+morphology.
+
+2. In the G-2 version of the cerebellar cortex network model, the G-2
+scripts construct prototypes of channels which are then mapped onto
+prototypes of either a single compartment Granule cell model or either
+a single compartment Golgi cell model, which are then mapped onto
+positions calculated by the createmap command.
+
+The '::' supports the concept of referencing prototypes independent of
+the level of the model, to facilitate the hierarchical construction of
+models.
+
+From the syntactical viewpoint the NDF file format supports
+hierarchical model construction using file references with the
+'IMPORT' command.  The 'IMPORT' command references a file and
+associates a name with it, called the namespace.  When used in model
+component references the name occuring after the '::' refers to a
+namespace that is associated with a file in the IMPORTS section of an
+NDF file.  For instance the snippet:
+
+\begin{verbatim}
+IMPORT
+        FILE Purk_spine "segments/spines/purkinje.ndf"
+END IMPORT
+\end{verbatim}
+
+defines {\tt ::Purk\_spine::} as a namespace.  After parsing every
+model defined as a public model in the file
+'segments/spines/purkinje.ndf' can be accessed as {\tt
+  ::Purk\_spine::<model-name>}.  The NDF file {\it
+  segments/spines/purkinje.ndf} defines the models {\tt Purk\_spine}
+and {\tt Purk\_spine2} (both are groups of segments defining two
+different variants of Purkinje cell spines), thus after parsing these
+two models become accessible as {\tt ::Purk\_spine::/Purk\_spine} and
+{\tt ::Purk\_spine::/Purk\_spine2}
+
+When referencing a model component in the model component space the
+notation can be understood as follows:
+
+\begin{itemize}
+\item[] {\tt /} means {\it ... who has as child ...}
+\item[] {\tt ->} means {\it ... who has as parameter ...}
+\item[] {\tt =} means {\it ... with the value ...}
+
+\item[]  and then
+
+\item[] {\tt ::} means {\it ... who has a namespace ...}
+\end{itemize}
+
+In the gshell, the command
+
+\begin{verbatim}
+ndf_load_library rscell cells/RScell-nolib2.ndf
+\end{verbatim}
+
+defines the namespace {\tt ::rscell::} and associates it with the file
+{\it cells/RScell-nolib2.ndf}.  All the (public) models in this file
+are now accessible from this namespace.  The statement
+
+\begin{verbatim}
+insert_alias ::rscell::/cell /two_cells/1
+\end{verbatim}
+
+creates the model component {\tt /two\_cells/1} as a reference to {\tt
+  /cell} underneath the namespace {\tt ::rscell::}.
+
+\end{document}
