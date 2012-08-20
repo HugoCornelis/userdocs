@@ -22,36 +22,51 @@
 
 \section*{Namespaces in the Model-Container and the Neurospaces Description Format}
 
+\subsection*{Introduction}
+\label{sec:introduction}
 
-The '::' notation is defined by the model component space of the
-model-container (note: it is not python nor perl specific).  Neither
-the gshell nor ssp nor sspy know what this notation means.
 
-The model component space of the model-container defines the model.
-Every model can be defined in a hierarchical manner.  Two examples:
+In scientific papers researchers often present a hierarchical top-down
+description of their models.  The {\bf NDF File Format} supports the
+integration of model libraries of prototype models and the
+hierarchical description of models through its {\it namespaces}.  A
+{\it namespace} is a labeled container of named model components and
+disambiguates them from model components with the same name contained
+in a different {\it namespace}.  Namespaces are indicated with the
+{\tt ::} two character sequence.
 
-1. In the G-2 version of the Purkinje cell model, the G-2 scripts
-construct prototypes of channels which are then mapped onto prototypes
-of dendritic sections which are then mapped onto the dendritic
-morphology.
+The {\tt ::} notation is defined by the model component space of the
+model-container (note: this notation is neither python nor perl
+specific).  The Gshell, SSP and SSPy transparantly support this
+notation.
 
-2. In the G-2 version of the cerebellar cortex network model, the G-2
-scripts construct prototypes of channels which are then mapped onto
-prototypes of either a single compartment Granule cell model or either
-a single compartment Golgi cell model, which are then mapped onto
-positions calculated by the createmap command.
 
-The '::' supports the concept of referencing prototypes independent of
-the level of the model, to facilitate the hierarchical construction of
-models.
+Two examples of a hierarchical model description:
 
-From the syntactical viewpoint the NDF file format supports
-hierarchical model construction using file references with the
-'IMPORT' command.  The 'IMPORT' command references a file and
+\begin{itemize}
+\item In the G-2 version of the Purkinje cell model, the G-2 scripts
+  construct prototypes of channels which are then mapped onto
+  prototypes of dendritic sections which are then mapped onto the
+  dendritic morphology.
+
+\item In the G-2 version of the cerebellar cortex network model, the
+  G-2 scripts construct prototypes of channels which are then mapped
+  onto prototypes of either a single compartment Granule cell model or
+  either a single compartment Golgi cell model, which are then mapped
+  onto positions calculated by the createmap command.
+\end{itemize}
+
+The {\tt ::} supports the concept of referencing prototypes
+independent of the level of the model, to facilitate the hierarchical
+construction of models.
+
+From the syntactical viewpoint the {\bf NDF File Format} supports
+hierarchical model construction using file references with the {\tt
+  IMPORT} command.  The {\tt IMPORT} command references a file and
 associates a name with it, called the namespace.  When used in model
-component references the name occuring after the '::' refers to a
-namespace that is associated with a file in the IMPORTS section of an
-NDF file.  For instance the snippet:
+component references the name occuring after the {\tt ::} refers to a
+namespace that is associated with a file in the {\tt IMPORT}s section
+of an {\bf NDF} file.  For instance the snippet:
 
 \begin{verbatim}
 IMPORT
@@ -60,8 +75,8 @@ END IMPORT
 \end{verbatim}
 
 defines {\tt ::Purk\_spine::} as a namespace.  After parsing every
-model defined as a public model in the file
-'segments/spines/purkinje.ndf' can be accessed as {\tt
+model defined as a public model in the file {\it
+  segments/spines/purkinje.ndf} can be accessed as {\tt
   ::Purk\_spine::<model-name>}.  The NDF file {\it
   segments/spines/purkinje.ndf} defines the models {\tt Purk\_spine}
 and {\tt Purk\_spine2} (both are groups of segments defining two
