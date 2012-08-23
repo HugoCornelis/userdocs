@@ -77,7 +77,68 @@ The connections in a network model can be stored in two different ways:
 
 
 
-\subsection*{Summary}
+\subsection*{Email}
+
+the labels returned by (keys \%\$connections)
+were already defined by the user script and can be chosen freely by
+the user.
+
+Because of our earlier conversation I currently assume you don't have
+any further questions about how connections are made.  The important
+aspects of connections can be summarized as:
+
+1. Memory efficient connections are instantiated using an algorithm
+that is embedded in the model-container such as volumeconnect.  These
+connections know a fixed set of parameters, currently pre- and
+post-synaptic target serial identifiers and delay and weight of the
+connection.  Memory efficient connections don't have a user-chosen
+label.
+
+2. Flexible connections are generic model components which can have
+well-known parameters such as pre- and post-synaptic serial
+identifiers and delay and weight of the connection, and also other
+parameters, for instance to tag certain connections for convenient
+identification.  Flexible connections can have a user-chosen label.
+
+
+> At some point after CNS, can you write up some notes on how connections are
+> numbered and kept track of?
+>
+
+As is done for all model components inside the model-container, after
+instantiation, connections are numbered with serial identification
+numbers.  For memory efficient connections these serial numbers are
+computed whenever they are needed (they are never stored inside the
+connection) while flexible connections store these numbers in their
+internal memory structure.  The serial numbers are, as far as I can
+tell never needed for connections.
+
+After all connections between model components have been instantiated,
+they are indexed on their pre- and post-synaptic identifiers, to
+accelerate the translation of the connections between model components
+to connections between run-time solvers.  The data structure that
+indexes projections, is called 'projectionquery' (although
+'projectionindex' would have been better).
+
+Technical note: the model-container implements both memory-efficient
+and flexible connections through the same interface, but memory
+efficient connections are regular C structures that cannot easily be
+converted to C++ classes without introducing the overhead associated
+with C++ classes (C structures don't have overhead).  A similar
+mechanism as for the memory-efficient connections is used for cached
+connections inside a projectionquery.
+
+When running a network model from SSP, the projectionquery is
+instantiated by the scheduler at the appropriate time by looking at
+the model components inside the model-container (projections) that are
+solved by DES (in the gshell this is set using the 'solverset'
+command).  The solvers (heccer and DES) are connected via efficient
+low-level communication ports after they have been compiled.  Here an
+addressing API is used to obtain the memory addresses of the
+communication ports.  This is the same addressing API that is also
+used to obtain memory addresses of solved variables for output to the
+file system using the OutputGenerator (asc\_file object in G-2).
+
 
 \end{document}
 
