@@ -10,6 +10,9 @@ Creating GENESIS 3 Simulations with Python
 
 `Creating a G-3 GUI with Python <../tutorial-python-gui/tutorial-python-gui.html>`_
 
+`Modeling Synaptic Connections and Large Networks with G-3
+<../tutorial-networks/tutorial-networks.html>`_
+
 Introduction
 ------------
 
@@ -17,6 +20,151 @@ This is an introduction to creating G-3 simulation scripts in Python,
 using the SSPy component of G-3.  It also provides information on the
 differences and similarities with `SSP (Simple Scheduler in Perl)
 <../ssp/ssp.html>`_ in the current G-3 Developers Release.
+
+**Some background on the G-shell and the NDF file format**
+
+This is the first in a series of tutorials describing how to create G-3
+simulations from scripts written in Python.  Python will be the primary
+scripting language for G-3 simulations, although the modular G-3 `CBI
+architecture <../genesis-overview/genesis-overview.html>`_ allows many
+other interfaces to the `G-3 software components
+<../genesis-components/genesis-components.html>`_.
+
+In principle, this tutorial should be the starting point for those
+who wish to use G-3 for neural modeling.  However, there is some
+useful (and sometimes necessary) background material in the links
+given below.
+
+The `G-shell <../gshell/gshell.html>`_ and the SSPy shell described here
+provide a useful interctive command line environment for trying out new G-3
+features.  During G-3 developmewnt, new features are first implemented in
+the G-shell test scripts, and then the Python bindings for the G-shell
+commands are tested with Python scripts.  The G-shell test scripts can be
+found in your directory
+*~/neurospaces_project/gshell/source/snapshots/0/tests/scripts*, and the
+Python test scripts can be found in
+*~/neurospaces_project/sspy/source/snapshots/0/tests/python*.  These may be
+useful for discovering new features that have not yet been incorporated
+into the tutorials.
+
+At present, the 'ns-sli' backwards compatibility module will continue
+to be a useful tool for using GENESIS 2 models that are described
+in SLI syntax scripts and converting the models into the G-3 NDF representation.
+
+For these reasons, this new series of tutorials based on Python will
+continue to make use of examples using commands invoked in the G-shell, and
+make references to the older tutorials that were based on the G-shell.
+Although these older tutorials are not strictly required as background for
+the Python tutorials, it may be useful to refer to the documentation in
+these links for clarification, as needed, for some of the examples given:
+
+* `Tutorial 1 <../tutorial1/tutorial1.html>`_ shows how to use the G-Shell to
+  create, run, save, and explore the output of a simple single compartment
+  model neuron.
+
+* `Tutorial 2 <../tutorial2/tutorial2.html>`_ shows how to load and
+  simulate predefined model neurons that come bundled with the GENESIS
+  distribution in the single cell model library. As with the Purkinje
+  cell model used in this tutorial, these have been saved in the library
+  in NDF format files.
+
+* `Tutorial 3 <../tutorial3/tutorial3.html>`_ (Convert a GENESIS 2 Simulation
+  to GENESIS 3) covers the process of loading existing GENESIS 2 simulation
+  scripts into the G-shell, saving the models in NDF files, and running them
+  in GENESIS 3 from the G-shell. At present, the best way to load a complex
+  single cell model into G-3 is to use this process to create an NDF
+  representation of the model, after creating it with the GENESIS 2
+  'readecll' command.
+
+For further information about cell models in the G-3 library that have been
+converted from GENESIS 2, see `Some NDF files of converted GENESIS 2 models
+<../models-library-additions/models-library-additions.html>`_.
+
+Information about the NDF representation of cell morphologies and channels
+can be found in the first two tutorials, and in the documentation for:
+
+* The `NDF file format <../ndf-file-format/ndf-file-format.html>`_.
+
+* `Technical User Guide 1 <../technical-guide-1/technical-guide-1.html>`_.
+
+* `Conversion From Physiological to SI Units in GENESIS
+  <../units-conversion/units-conversion.html>`_.
+  This will be particularly useful to those who are creating
+  new voltage acivated ('tabchannel') models in G-3, or are
+  converting models from GENESIS 2, other simulators, or published
+  descriptions.
+
+**Where are the example scripts and the graphical tools?**
+
+The *userdocs* documentation system is being extended to allow packaging
+of auxilary material such as scripts and data files with the documentation.
+Presently, there are these alternatives:
+
+The earlier tutorials (e.g. tutorial1) recommended cutting and pasting
+from the displayed HTML, such as the link to `Example script 1
+<../example-script1/example-script1.html>`_.  These are generally
+short, and cut/paste is a reasonable solution.
+
+A piece pf G-3 documentation is located in a directory such as
+'userdocs/tutorial-python/scripting'.  This directory will have a
+subdirectory 'figures' that is meant for image files to be displayed
+by the browser.  However this location be used for any file type that is
+recognized by the browser, such as plain text files.
+
+In order to for a browser to properly recognize and display the example script
+'simplecell-test.py' as a plain text file, it has been saved in the
+'figures' directory as a plain text file.
+Then, for example, when you follow the link in the Python scripting tutorial
+for this file, it will actually be to '/simplecell-test.txt', which
+you can save and rename as you like.
+
+Many browsers will recognise gzipped tar archive files.  If this
+is the case for your browser, you may download and save the file
+`python-scripting-examples.tar.gz
+<figures/python-scripting-examples.tar.gz>`_ and extract it with::
+
+    tar xvzf python-scripting-examples.tar.gz
+
+These tutorials also make use of several graphical tools for
+plotting and display of simulation results.  The following
+tools presently require the installation of the 'g-tube' module, which
+is an optional part of the G-3 installation procedure. After an
+installation or upgrade (with the ``--enable g-tube`` option), these will
+be available in '/usr/bin', '/usr/local/bin', or similar directory in your
+search path.  (NOTE: In the future, these files may be distributed
+independently of the g-tube component of G-3.)
+
+* g3plot - a plotting program for files of plain data consisting of
+  lines containing the time (or x-coordinate) and one or more columns of data
+  such as a membrane potential or other y-coordinate.
+
+* G3Plot.py - an enhanced version of g3plot that wraps Matplotlib
+  plots within a wxPython} GUI.  It has several fancy Help menu features
+  and plotting options, including the generation of labels.  It can plot
+  data from multiple files on a graph, but not multicolumn data.
+
+* rasterplot.py - creates raster plots of firing times for a group of neurons.
+
+* rowrateplot.py - a utility for analyzing network activity by
+  displaying a filled contour map of spike frequency vs. simulation time for
+  groups of neurons.
+
+* netview.py (coming soon) - a utility for viewing the activity of
+  a rectangular network of model neurons.
+
+Documentation for these utilities can be found in
+`The G3Plot package <../g3plot/g3plot.html>`_.  This tutorial and the next
+will make use of 'g3plot' and 'G3Plot.py'.  The `Network Modeling Tutorial
+<../tutorial-networks/tutorial-networks.html>`_ makes use of 'netview.py'
+for the visualization of network activity.
+
+These utilities also require the require the installation of the Matplotlib
+library for python, which can be downloaded from
+`http://sourceforge.net/projects/matplotlib
+<http://sourceforge.net/projects/matplotlib>`_, wxPython, and the numpy
+numerical package.  These are not presently required packages for the G-3
+installation.
+
 
 **Some background for beginners with Python**
 
@@ -89,10 +237,19 @@ be::
    run /cell 0.5
    quit
 
-To run this as an executable command line script, save it in a file, and
-add the line at the top::
+To run this as an executable command line script, save it in a file,
+for example 'simplecell-test.g3' and add the line at the top::
 
     #!/usr/local/bin/genesis-g3
+
+This will let the (unix/linux) command shell recognize it to
+be executed after invoking the G-shell 'genesis-g3'.
+You will need to give it permission to run as an 
+executeable program by changing the permissions with
+'chmod a+x simplecell-test.g3'.  Then you may simply
+run it from your console command line with::
+
+    $ simplecell-test.g3
 
 The following tutorial example shows how to run this model or similar ones
 with SSPy.
@@ -103,13 +260,11 @@ Using SSPy as a replacement for G-shell
 The `SSPy documentation <../sspy/sspy.html>`_ describes how
 to invoke the interactive shell with the ``--shell`` option to sspy,
 and how to use the 'help' command within the shell.
+The 'sspy' command will have been installed in a standard place on
+your search path when G-3 is installed or upgraded.
+To invoke the SSPy shell, issue the command::
 
-With the present Developers Release, the command ``sspy --shell`` must
-be given witin the '~/neurospaces_project/sspy/source/snapshots/0'
-directory.  To use it for models located in an arbitrary directory of
-your own, give the full path::
-
-  $ ~/neurospaces_project/sspy/source/snapshots/0/sspy --shell
+  $ sspy --shell
 
 Once you have done this, use the 'help' command to explore the commands
 available within the shell.  Although the commands listed by this command
@@ -124,9 +279,9 @@ in later releases.  They are offered for this preliminary documentation.
    'model_parameter_add' command.  At present, the distinction
    between a parameter that is intrinsic to the model ("model parameter")
    and one that is set at runtime ("runtime_parameter") is somewhat fuzzy.
-   They SSPy shell has a single 'model_parameter_add' that is used to
-   set model or runtime parameters.  Thus the injection should be set
-   with::
+   The SSPy shell has a single 'model_parameter_add' that is used to
+   set model or runtime parameters.  Thus, when entering the G-shell
+   command listed above, the injection should be set with::
 
        model_parameter_add /cell/soma INJECT 0.5e-9
 
@@ -175,10 +330,20 @@ in the G-shell.
 Scripting with Python
 ---------------------
 
-An interactive shell is very useful for debugging and testing out commands.
+An interactive shell is very useful for debugging and trying out commands
+to see how they are used, or to change model parameters on a command line.
 Both the G-shell and the newer SPPy shell will continue to be used for
 this.  However, you will typically use a text editor to edit executable
 scripts written in Python that import the necessary G-3 Python modules.
+First, you will use a text editor to modify your own copy of one of the
+example scripts and open a console window to run them.  Then you iterate the
+process of "edit, run, repeat until done".  Although the SSPy shell is
+not intended for this, there are tools that (with some limitations) allow
+you to load a Python script, interact with it via a command line Python
+shell, and inspect the Python objects and data structures via a graphical
+interface.  One of them is PyWrap, which is normally installed with
+wxPython.
+
 The script `simplecell-test.py <figures/simplecell-test.txt>`_ reproduces
 the result above, but allows the inclusion of any available Python modules
 and the use of any valid Python commands.
@@ -216,7 +381,7 @@ path with::
 
   os.environ['NEUROSPACES_NMC_MODELS']='/usr/local/neurospaces/models/library/cells'
 
-or alternatively if it is one of or own in another directory, such as the
+or alternatively if it is one of your own in another directory, such as the
 current one::
 
   os.environ['NEUROSPACES_NMC_MODELS']= '.'
@@ -297,8 +462,8 @@ To run the script, check to be sure that the file permissions are set as
 "executable" and simply type 'simplecell-test.py'.  This is made possible
 by the first line of the file, which indicates that Python is to be invoked
 to run the script.  After running the script, you may view the resulting file
-'simplecell_soma_Vm.txt' with the G-3 standalone application *g3plot* which
-is installed with the current G-3 distribution::
+'simplecell_soma_Vm.txt' with the G-3 standalone application *g3plot*, which
+was described earlier::
 
     $ g3plot simplecell_soma_Vm.txt
 
@@ -329,11 +494,12 @@ illustrate some variations on providing output::
 However, in the current series of tutorial examples, we will continue to
 invoke AddOutput() on the output object.
 
-By setting the output object type to 'line', the output will be sent
-to stdout, line by line as it would to an output file.  This is useful
-when piping the output to another program or Python object for
-analysis or plotting.  When the output object type is 'live_output',
-the data is output to a list of lists such as::
+By setting the output object type to 'line', instead of to
+'douyble_2_ascii', the output will be sent to stdout, line by line as it
+would to an output file.  (Be sure to remove the command that attempts to
+assign a filename.)  This is useful when piping the output to another
+program or Python object for analysis or plotting.  When the output object
+type is 'live_output', the data is output to a list of lists such as::
 
  [
    [value1, value2, value3] # value for all outputs at step 0
@@ -386,7 +552,7 @@ statements::
 
   for line in data:
       x_value = line[0]
-      y_value = line[1][0]
+      y_value = line[1]
       x.append(x_value)
       y.append(y_value)
 
@@ -426,7 +592,7 @@ contains definitions of a number of object classes that can be interfaced
 with a model in order to implement experimental protocols for model
 stimulation and recording of results.  The output objects used in the
 examples above are among these.  The `Perfect Clamp
-<../pclamp.pclamp.html>`_ and PulseGen are others.
+<../pclamp/pclamp.html>`_ and PulseGen are others.
 
 The example script `simplecell_pulse.py <figures/simplecell_pulse.txt>`_
 extends `simplecell-test.py <figures/simplecell-test.txt>`_ to create a
@@ -452,7 +618,7 @@ defines some default parameters to be used in the simulation::
   injcurrent = 0.3e-9 # default injection current
   injdelay = 0.05     # default delay before injection pulse
   injwidth = 0.2     # default width of injection pulse
-  injinterval = 0.25 # use a large repetition interval for a single pulse
+  injinterval = 0.25 # use larger interval >= tmax for a single pulse
 
 It then follows with the usual commands that that set up needed paths and
 that create a Scheduler, Model Container, and Solver.
