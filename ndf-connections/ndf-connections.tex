@@ -1,0 +1,149 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{lineno}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+{\bf Related Documentation:}
+
+\href{../ndf-variables/ndf-variables.tex}{\bf Physical Processes and Model Variables}
+
+% start: userdocs-tag-replace-items related-do-nothing
+% end: userdocs-tag-replace-items related-do-nothing
+
+\section*{The Model of a Connection}
+
+Connections are made between event-generators and event-receivers.
+The Neurospaces / GENESIS 3 model-container defines a template for
+event-receiving entities.  Projections then run
+\href{../ndf-procedural-description/ndf-procedural-description.tex}{algorithms}
+that instantiate these entities and attach them pre-synaptically to
+event-generators and post-synaptically to continuous-time state
+variables.  The template attributes of 'delay and 'weight' are
+inherited by the template instantiations created by the projection
+algorithms.
+
+%A change to the template changes the synapse model without changing the
+%projection structure nor the projection algorithm.
+
+
+\section*{Computing Connections}
+
+For most network models connections are algorithmically calculated,
+for example based on the distance between neurons and the synaptic
+contact points in the dendrite.  That is why the model-container
+contains special {algorithms} to compute the connections between
+neurons.
+
+\section*{Storing Connections}
+
+The connections in a network model can be stored in two different ways:
+
+\begin{itemize}
+\item Connections can be enumerated in the NDF file.  For example:
+\begin{verbatim}
+  CONNECTION_GROUP NMDA
+    CONNECTION n1
+      PARAMETERS
+        PARAMETER ( PRE = Fiber[0]/spikegen ),
+        PARAMETER ( POST = Granule[0]/Granule_soma/mf_NMDA/synapse ),
+        PARAMETER ( WEIGHT = 1.0 ),
+        PARAMETER ( DELAY = 0.0 ),
+      END PARAMETERS
+    END CONNECTION
+    CONNECTION n2
+      PARAMETERS
+        PARAMETER ( PRE = Fiber[1]/spikegen ),
+        PARAMETER ( POST = Granule[0]/Granule_soma/mf_NMDA/synapse ),
+        PARAMETER ( WEIGHT = 1.0 ),
+        PARAMETER ( DELAY = 0.0 ),
+      END PARAMETERS
+    END CONNECTION
+  END CONNECTION_GROUP
+\end{verbatim}
+\item Because connections in a large network model easily outnumber
+  the other components of a model, the model-container can store them
+  in a memory efficient way.  Most algorithms that compute the
+  connections in a network will store them in memory in a compact
+  manner.  Some algorithms may compute the connections on the fly when
+  they are needed.  This includes algorithms that compress the
+  connection matrix.
+\end{itemize}
+
+
+
+\subsection*{Email -- to be integrated}
+
+the labels returned by (keys \%\$connections)
+were already defined by the user script and can be chosen freely by
+the user.
+
+Because of our earlier conversation I currently assume you don't have
+any further questions about how connections are made.  The important
+aspects of connections can be summarized as:
+
+1. Memory efficient connections are instantiated using an algorithm
+that is embedded in the model-container such as volumeconnect.  These
+connections know a fixed set of parameters, currently pre- and
+post-synaptic target serial identifiers and delay and weight of the
+connection.  Memory efficient connections don't have a user-chosen
+label.
+
+2. Flexible connections are generic model components which can have
+well-known parameters such as pre- and post-synaptic serial
+identifiers and delay and weight of the connection, and also other
+parameters, for instance to tag certain connections for convenient
+identification.  Flexible connections can have a user-chosen label.
+
+
+> At some point after CNS, can you write up some notes on how connections are
+> numbered and kept track of?
+>
+
+As is done for all model components inside the model-container, after
+instantiation, connections are numbered with serial identification
+numbers.  For memory efficient connections these serial numbers are
+computed whenever they are needed (they are never stored inside the
+connection) while flexible connections store these numbers in their
+internal memory structure.  The serial numbers are, as far as I can
+tell never needed for connections.
+
+After all connections between model components have been instantiated,
+they are indexed on their pre- and post-synaptic identifiers, to
+accelerate the translation of the connections between model components
+to connections between run-time solvers.  The data structure that
+indexes projections, is called 'projectionquery' (although
+'projectionindex' would have been better).
+
+Technical note: the model-container implements both memory-efficient
+and flexible connections through the same interface, but memory
+efficient connections are regular C structures that cannot easily be
+converted to C++ classes without introducing the overhead associated
+with C++ classes (C structures don't have overhead).  A similar
+mechanism as for the memory-efficient connections is used for cached
+connections inside a projectionquery.
+
+When running a network model from SSP, the projectionquery is
+instantiated by the scheduler at the appropriate time by looking at
+the model components inside the model-container (projections) that are
+solved by DES (in the gshell this is set using the 'solverset'
+command).  The solvers (heccer and DES) are connected via efficient
+low-level communication ports after they have been compiled.  Here an
+addressing API is used to obtain the memory addresses of the
+communication ports.  This is the same addressing API that is also
+used to obtain memory addresses of solved variables for output to the
+file system using the OutputGenerator (asc\_file object in G-2).
+
+
+\end{document}
+
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 

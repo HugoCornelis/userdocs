@@ -1,0 +1,49 @@
+- Dave Beeman
+  - recent progress:
+    - namespaces documentation
+      - added as ndf-namespaces to userdocs
+    - createprojection well documented now
+    - netview in python
+- python createmap still in development
+  - network component is work correctly
+  - namespaces parsing has just been fixed
+    - was the bug that prevented createmap from working
+- questionaire
+  - useful for the schedule of the workshop
+- what is the schedule likely to be
+  - Hugo: CBI architecture description
+    - model-container
+    - user workflow
+    - first day, afternoon session
+  - Hugo: workflow paradigm description
+    - overview of workflows
+    - Thursday, afternoon session
+  - Jim: model publication
+  - Mando: python introduction
+- syntax two-cells.g3
+  - alias statement
+    - does not make new copies
+    - creates references
+      - what are consequences for setting parameters
+        - three different scenarios
+          - modify alias modifies all copies, when using namespace notation user expected
+          - modify alias modifies all copies, when not using namespace notation, not expected by user
+          - modify alias modifies a single copy, not the others, user expected
+    - model-container track dependencies between prototypes
+    - important for model publication
+  - create connection_symbol
+    - vs memory efficient connections
+  - ssp_save command
+    - currently only for testing
+  - solverset command
+    - used in two different scripts with different syntax
+      - two-cells1.g3
+      - rsnet-2x2-createprojection
+    - difference because of a 'ce' command
+  - relationship between g3 batch script and perl script
+- single cell NDF files
+  - cheat sheet needed
+    - for manual modification done to rscell-nolib2.ndf
+      - is rscell-nolib2.ndf without modification loadable using ndf_load?
+      - forward parameters have been removed
+- gshell inputclass_add and input_add statements
