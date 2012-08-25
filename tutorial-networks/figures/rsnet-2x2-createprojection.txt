@@ -1,0 +1,130 @@
+#!/usr/bin/perl -w
+#!/usr/bin/perl -d:ptkdb
+#!
+use strict;
+
+$ENV{NEUROSPACES_NMC_MODELS} = '/usr/local/neurospaces/models/library';
+
+$SIG{__DIE__}
+    = sub {
+	use Carp;
+	confess @_;
+    };
+
+require GENESIS3;
+package GENESIS3::Commands;
+
+##########
+# user workflow: create the model
+
+my $NX = 2; # number of cells = NX*NY
+my $NY = 2;
+
+my $SEP_X = 0.001; # 1 mm
+my $SEP_Y = 0.001;
+my $SEP_Z = 1.0e-6; # give it a tiny z range in case of round off errors
+
+my $syn_weight = 10; # synaptic weight, effectively multiplies gmax
+my $cond_vel = 0.5; # m/sec - determines delay, based on distance
+my $prop_delay = $SEP_X / $cond_vel;
+
+# create a prototype cell in the namespace '::rscel::'
+ndf_load_library('rscell', 'cells/RScell-nolib2.ndf');
+
+# modify it to our taste
+# with a soma area of 3.463609149e-08, this gives gmax = 1.5e-9
+model_parameter_add('::rscell::/cell/soma/Ex_channel', 'G_MAX',
+'0.04330736624');
+# give a more realistic reversal potential
+model_parameter_add('::rscell::/cell/soma/Ex_channel', 'Erev', '0');
+
+# Reduce the default refractory period to a more reasonable 4 msec
+model_parameter_add('::rscell::/cell/soma/spike', 'REFRACTORY', '0.004');
+
+create('network', '/RSNet');
+createmap('::rscell::/cell', '/RSNet/population', $NX, $NY, $SEP_X, $SEP_Y);
+
+createprojection
+    (
+     {
+      root => '/RSNet',
+      projection => {
+	  name => '/RSNet/projection',
+# 	  source => '../population', # optional
+# 	  target => '../population', # optional
+		    },
+      source => {
+	  context => '/RSNet/population',
+	  include => {
+		     type => 'box', # type => 'all' would remove need for line below
+		     coordinates => [ '-1', '-1', '-1', '1', '1', '1', ],
+		    },
+		},
+      target => {
+          context => '/RSNet/population',
+          include => {
+		     type => 'ellipse',
+		     coordinates => [ 0, 0, 0, $SEP_X * 1.2, $SEP_Y * 1.2, $SEP_Z * 0.5, ],
+		     },
+          exclude => {
+		     type => 'box',
+		     coordinates => [ - $SEP_X * 0.5, - $SEP_Y * 0.5, - $SEP_Z * 0.5, 
+                       $SEP_X * 0.5, $SEP_Y * 0.5, $SEP_Z * 0.5, ],
+		    },
+		},
+      synapse => {
+	  pre => 'spike',
+	  post => 'Ex_channel',
+	  weight => {
+		     value => $syn_weight,
+		    },
+	  delay => {
+		    value => $prop_delay,
+		   },
+		 },
+      probability => '1.0',
+      random_seed => '1212.0',
+     },
+    );
+
+
+##########
+# user workflow: create the experiment
+
+# create a current injection protocol
+inputclass_add('perfectclamp', 'current_injection_protocol', 'name', 'current_injection', 'command', '1e-9');
+# Inject a corner cell 3
+input_add('current_injection_protocol', '/RSNet/population/3/soma', 'INJECT');
+
+ce('/RSNet/population');
+
+for (my $counter = 0 ; $counter < $NX * $NY ; $counter++)
+{
+    output_add($counter . '/soma', 'Vm');
+}
+
+# The ndf_save funtion has not yet been fully implemented in the gshell
+# ndf_save("/**", "/tmp/network-simple.ndf");
+
+##########
+# user workflow: configure the simulation
+
+# configure the numerical solver
+
+heccer_set_config('disassem_simple');
+
+set_verbose('debug');
+
+ce('/RSNet/population');
+
+for (my $counter = 0 ; $counter < $NX * $NY ; $counter++)
+{
+    solverset($counter, 'heccer', '/RSNet');
+}
+
+solverset('/RSNet/projection', 'des', '/RSNet');
+
+# run the simulation
+run('/RSNet', '0.2');
+
+# explore();

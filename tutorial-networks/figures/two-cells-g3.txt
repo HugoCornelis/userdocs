@@ -1,0 +1,27 @@
+ndf_load_library rscell cells/RScell-nolib2.ndf
+model_parameter_add ::rscell::/cell/soma/Ex_channel G_MAX 0.04330736624
+model_parameter_add ::rscell::/cell/soma/Ex_channel Erev 0
+create network /two_cells
+insert_alias ::rscell::/cell /two_cells/1
+insert_alias ::rscell::/cell /two_cells/2
+create projection /two_cells/projection
+model_parameter_add /two_cells/projection SOURCE /two_cells
+model_parameter_add /two_cells/projection TARGET /two_cells
+create connection_symbol /two_cells/projection/1
+model_parameter_add /two_cells/projection/1 PRE 1/soma/spike
+model_parameter_add /two_cells/projection/1 POST 2/soma/Ex_channel/synapse
+model_parameter_add /two_cells/projection/1 WEIGHT 10.0
+model_parameter_add /two_cells/projection/1 DELAY 0.03
+inputclass_add perfectclamp current_injection_protocol name current_injection command 1e-9
+input_add current_injection_protocol /two_cells/1/soma INJECT
+output_add /two_cells/1/soma Vm
+output_add /two_cells/2/soma Vm
+output_add /two_cells/2/soma/Ex_channel Gsyn
+output_add /two_cells/2/soma/Ex_channel Isyn
+heccer_set_config disassem_simple
+des_set_config disassem_simple
+set_verbose debug
+solverset /two_cells/1 heccer
+solverset /two_cells/2 heccer
+solverset /two_cells/projection des
+run /two_cells 0.2

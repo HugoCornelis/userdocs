@@ -1,0 +1,37 @@
+
+Notes on using the Neurospaces Studio
+-------------------------------------
+
+*Provided by Hugo Cornelis*
+
+
+At the gsejj 'genesis prompt', type 'explore' to start the neurospaces
+studio.  The most useful menus that will appear are::
+
+1. The Information Extractor button: After clicking the 'Render'
+button without adjusting the settings, this button renders a
+conceptual diagram of the network showing the populations and
+projections.  This needs dependencies of GraphViz, perl-GraphViz and
+gv.
+
+2. The Explorer button: allows one to browse the model in its usual way.
+In each opened window, the left most panel shows model components that
+can be explored by double clicking them.  If SDL is installed, the
+scene can be rendered in 3D (although the 3D currently does not
+integrate well with the gshell).
+
+3. The Connection Matrix button: allows to inspect the connection
+matrix.	 First select one or more projections in the list of four
+(multi-selection by holding down the shift key).   The window with
+spiking related elements holds all spike generating elements in the
+selected projections on the left, and the spike receiving elements on
+the right.  Select a spike generating element, and the window with the
+result set will show the attached elements (it does not show important
+parameters such as weight and delay).
+
+4. The other buttons are different ways to explore the ndf files and
+the algorithms that have been loaded by the script.
+
+5. Use the 'Quit' menu button to close all the windows and
+return control to the command line shell.
+
