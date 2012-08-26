@@ -1,0 +1,119 @@
+#! /usr/bin/env python
+"""
+    RSnet0.py - template for network test with RScell model
+
+    Basic Python script to load a cell model NDF file into a library
+    namespace, build a network, provide a pulse of current injection to the
+    soma of one cell, and run the simulation, writing the soma Vm to a
+    specified file, or to a 'live_output' list.
+
+    The 'create network', 'createmap', and 'createprojection' commands
+    have yet to be added.
+
+"""
+import pdb   # the Python debugger
+import os
+import sys
+
+import time # for timing runs
+
+# -------------- default simulation parameters -------------
+
+# Boolean flags used for simulation output - pick one or both
+file_out = True  # output to file
+live_out = False  # live output to list of lists
+
+Vm_file = 'RSnet_Vm.txt'
+
+tmax = 0.5 # default run time
+
+# Injection pulse parameters
+# for constant injection, use injwidth = tmax, injdelay = 0
+
+injcurrent = 1.0e-9 # default injection current
+injdelay = 0.0    # default delay before injection pulse
+injwidth = 0.05     # default width of injection pulse
+injinterval = 10.0 # use larger interval >= tmax for a single pulse
+
+# The commands below are common to most G-3 Python simulation scripts
+
+# This sets an environment to find the libraries needed for running SSPy
+# It will likely not be required in later versions of G-3
+
+sys.path.append( os.path.join(os.environ['HOME'],
+         'neurospaces_project/sspy/source/snapshots/0/tests/python'))
+
+# The location of model files to be loaded
+os.environ['NEUROSPACES_NMC_MODELS']= '/usr/local/neurospaces/models/library'
+      
+# The following four commands set up SSPy as the scheduler component
+
+from test_library import add_sspy_path
+add_sspy_path()
+from sspy import SSPy 
+scheduler = SSPy(verbose=False)
+# Use verbose=True for more information and debugging
+
+# Create a model container service and load an ndf file
+my_model_container = scheduler.CreateService(name="My Model Container",
+         type="model_container", verbose=False)
+
+# The commands above are common to most G-3 Python simulation scripts
+
+# load a particular NDF cell model file
+# my_model_container.Load('cells/RScell-nolib2.ndf')
+
+# Create a solver, in this case heccer
+my_heccer = scheduler.CreateSolver('My solver', 'heccer', verbose=True)
+
+# Sets the element of the model to run from
+# my_heccer.SetModelName('/cell')
+
+# set the timestep for the entire scheduler (solvers, inputs and outputs)
+my_heccer.SetTimeStep(2e-05)
+
+# Create a pulsegen object for current injection
+my_pulsegen = scheduler.CreateInput('pulsegen','pulsegen',verbose=True)
+my_pulsegen.AddInput('/cell/soma', 'INJECT')
+
+my_pulsegen.SetLevel1(injcurrent)
+my_pulsegen.SetDelay1(injdelay)
+my_pulsegen.SetWidth1(injwidth) 
+my_pulsegen.SetLevel2(0.0)
+my_pulsegen.SetWidth2(0.0)
+my_pulsegen.SetDelay2(injinterval - injdelay)
+
+# alternatively, give it a very long delay to prevent repeating
+# my_pulsegen.SetDelay2(100.0)
+
+my_pulsegen.SetBaseLevel(0.0)
+my_pulsegen.SetTriggerMode(0) # zero is "free run"
+
+# Create Outputs
+if file_out:
+    Vm_file_out = scheduler.CreateOutput('File Out', 'double_2_ascii')
+ 
+
+# It is also possible to have two separate output objects
+if live_out:
+    Vm_live_out = scheduler.CreateOutput('Live Out', 'live_output')
+ 
+print 'Completed setup: system time = ', time.time()
+
+def set_inject_pulse(current, delay, width, interval):
+        my_pulsegen.SetLevel1(current)
+	my_pulsegen.SetDelay1(delay)
+	my_pulsegen.SetWidth1(width)
+	my_pulsegen.SetDelay2(interval - delay)
+
+def run_simulation(simulationtime):
+          scheduler.Run(time=simulationtime, finish=False)
+
+
+# run with default injection
+
+print 'UNDER CONSTRUCTION !!!'
+
+# print 'Started run: system time = ', time.time()
+# run_simulation(tmax)
+# print 'Completed run: system time = ', time.time()

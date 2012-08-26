@@ -31,7 +31,7 @@ them to a file, similar to the GENESIS 2 'asc_file' command.
 This first part of the tutorial is necessary background for
 the present tutorial, which illustrates how to build simple
 circuits and large networks from a prototype cell.  In particular,
-** be sure to read the sections in the Introduction on
+**be sure to read the sections in the Introduction on
 'Some background on the G-shell and the NDF file format'
 and 'Where are the example scripts and the graphical tools?'**
 
@@ -103,7 +103,7 @@ described in `Some NDF files of converted GENESIS 2 models
 
 This G-3 tutorial follows the organization of the two GENESIS 2 tutorials,
 beginning with a simple example of a cell-to-cell synaptic connection
-in the G-shell script `two-cell.g3 <figures/two-cell-g3.txt>`_.
+in the G-shell script `two-cells.g3 <figures/two-cells-g3.txt>`_.
 However, instead of using the 'simplecell' model that was used in
 the previous G-3 and GENESIS 2 scripts, it uses the 'RScell' model
 from the outset.
@@ -217,8 +217,8 @@ when using highly simplified neuron models, or create artificial inputs that nee
 to generate spikes with a specified minimum period.
 
 
-two-cells.g
------------
+two-cells.g3
+------------
 
 The G-shell script, `two-cells.g3 <figures/two-cells-g3.txt>`_ uses the RScell
 model with cell 1 having a steady injection current, and with soma action potentials
@@ -291,9 +291,9 @@ of cells::
   create network /two_cells
 
 The next two commands create the two components '/two_cells/1' and
-'/two_cells/2' as references to '::rscell::/cell', with the same:
+'/two_cells/2' as references to '::rscell::/cell', with the same
 parameters, including the values of the synchan G_MAX and Erev that were
-set previously in the namespace prototype.
+set previously in the namespace prototype::
 
   insert_alias ::rscell::/cell /two_cells/1
   insert_alias ::rscell::/cell /two_cells/2
@@ -414,7 +414,7 @@ example::
   - /two_cells/2/soma/Ex_channel
   - /two_cells/2/soma/spike
 
-The network can be explored in more detail by invoking the 'Studio
+The network can be explored in more detail by invoking the `Studio
 <../studio/studio.html>`_ from the G-shell using explore command::
 
   genesis > explore
@@ -427,7 +427,7 @@ element you are inspecting.  Use the 'Quit' menu button to close all the
 windows and return control to the command line shell.
 
 For some more information on the use of the Studio to explore connections.
-see the `Notes on using the Neurospaces Studio <../figures/studio-notes.txt>`_.
+see the `Notes on using the Neurospaces Studio <figures/studio-notes.txt>`_.
 
 When you are finished, give the command::
 
@@ -485,7 +485,7 @@ describes how synaptic connection information is stored in the NDF format.
 The rsnet-2x2-createprojection script
 -------------------------------------
 
-The gshell was not designed to be a full programming language with loops,
+The G-shell was not designed to be a full programming language with loops,
 conditionals, nor other features found in languages such as Perl or Python.
 When creating simulations that involve many cells, either a 'wildcard'
 notation is needed or a mechanism to interate over the cells in the
@@ -585,9 +585,9 @@ model can best be seen in this figure:
 
 .. image:: figures/createprojection_regions.png
 
-The figure illustrates how these options would be applied to a
-network of 64 cells with NX = NY = 8. The particular source cell for the
-connections shown (one of all in the sourcemask, i.e. all of cells) is
+The figure illustrates how these options would be applied to a network of
+64 cells with NX = NY = 8. The particular source cell for the connections
+shown (one of all in the source 'include' region, i.e. all of cells) is
 number 3 + 3*NX = 27.
 
 In this simulation, we want to connect each source spike generator to the
@@ -606,17 +606,17 @@ dendrite compartment that is displaced by some amount from the cell origin.
 In this case it is an ellipsoid centered on (0,0,0), and having principal
 axes of length equal to 1,2 times the cell separation.
 
-We also want to define a "target exclude" region that excludes the
+We also want to define a target 'exclude' region that excludes the
 source cell, so that it doesn't connect to itself.  This is done by
 defining the region to be a box centered on the source, with sides equal to
-the cell separation.
+the half cell separation in each direction.
 
 The probability of a connection is set to 1.0, so all connections will be
 made that fit this prescription.  A random number seed is set for
 making probabilistic connections, but it is not used in this case.
 
 To connect to nearest neighbors and the 4 diagonal neighbors, we would use
-a box for the target include, that is slighly larger than the desired
+a box for the target include that is slighly larger than the desired
 region, e.g.::
 
   include => {
@@ -704,8 +704,8 @@ take over a minute to complete.  In principle, the considerable setup time
 for storing the connection information could be avoided for subsequent runs
 that use the same connections, but different cell model parameters.  Often,
 much of the "tuning" of a network model involves modifying the synchan
-model conductance G_MAX its time constants.  This feature has not yet been
-implemented in the G-shell simulations.
+model conductance G_MAX or its time constants.  This feature has not yet been
+implemented in the G-shell simulation examples.
 
 The behavior of the 2x2 network can be understood by plotting the membrane
 potenial of the four cells with 'g3plot'.  In order to visualize the
@@ -718,7 +718,7 @@ widget, and will be installed with 'g3plot' and the other tools in the
 
 To use the viewer, give the command::
 
-  netview.py /tmp/output
+  $ netview.py /tmp/output
 
 and look at the Help/Usage menu for detailed instructions.  This explains
 the optional header line that a data file may have with necessary

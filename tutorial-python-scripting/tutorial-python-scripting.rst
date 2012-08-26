@@ -74,7 +74,7 @@ these links for clarification, as needed, for some of the examples given:
   in GENESIS 3 from the G-shell. At present, the best way to load a complex
   single cell model into G-3 is to use this process to create an NDF
   representation of the model, after creating it with the GENESIS 2
-  'readecll' command.
+  'readcell' command.
 
 For further information about cell models in the G-3 library that have been
 converted from GENESIS 2, see `Some NDF files of converted GENESIS 2 models
@@ -115,7 +115,7 @@ In order to for a browser to properly recognize and display the example script
 'simplecell-test.py' as a plain text file, it has been saved in the
 'figures' directory as a plain text file.
 Then, for example, when you follow the link in the Python scripting tutorial
-for this file, it will actually be to '/simplecell-test.txt', which
+for this file, it will actually be to 'simplecell-test.txt', which
 you can save and rename as you like.
 
 Many browsers will recognise gzipped tar archive files.  If this
@@ -855,5 +855,7 @@ continue with the next tutorial `Creating a G-3 GUI with Python
 <../tutorial-python-gui/tutorial-python-gui.html>`_.  In this tutorial we
 will add a Control Panel and a graph, using a set of G-3 Python widgets
 that mimic the appearance and functionality of those used in GENESIS 2 with
-XODUS.
-
+XODUS.  Alternatively, if you are eager to begin constructing cortical
+networks with G-3 and wish to leave the graphics until later, you can
+continue with `Modeling Synaptic Connections and Large Networks with G-3
+<../tutorial-networks/tutorial-networks.html>`_.
