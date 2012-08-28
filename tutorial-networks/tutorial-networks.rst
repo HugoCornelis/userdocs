@@ -380,7 +380,7 @@ is generated when the model is set up and run::
 
 This line will normally be commented out to prevent a flood of
 detail, or set to a lower verbosity level.  The use of this command
-is described in the G-shell documentation 'The GENESIS 3 Shell Software
+is described in the G-shell documentation `The GENESIS 3 Shell Software
 Component <../gshell/gshell.html>`_.
 
 Then, we assign the Heccer solver to the cells, and DES to the projection::
