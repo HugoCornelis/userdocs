@@ -18,10 +18,39 @@
 
 \subsection*{Introduction}
 
+Python is a dynamic programming language that started from conception in the 80's. It boasts a clean readable syntax, support for several programming paradigms, high level of extensibility, and a huge standard library. The high extensibility of the language has allowed Python to spread into several areas of computing such as web development, scientific computing, and enterprise application development. Thanks to its readability, Python is an excellent language for beginning programmers, but it's still powerful enough for just about any task.
+
+\subsection*{Extensibility}
+
+One of the main motivations behind creating a scripting language layer for a software library, is to take advantage of all of the resources of that scripting language. Python boasts arguably the largest and most diverse collection of modules of any scripting language. Python is able to interface with many languages such as C, C++, and Java; thus it can provide a scripting layer to any software libraries written in a compatible language. The core of the major components for GENESIS3: the model container, heccer, chemesis 3, and experiment protocols, are written in C. An abstraction layer encapsulates the functional aspects of the C code, which makes the Python representation take advantage of an object oriented approach. Available python packages for G3 are: 
+
+
+\begin{itemize}
+\item[]  {\bf model\_container:} A storage format for the biological representation of the model.
+\item[]{\bf heccer:} A fast compartmental solver that interfaces with the model container. 
+\item[] {\bf chemesis3:} A module of reaction objects for modeling calcium concentration (also interfaces with the model container).
+\item[] {\bf experiment:} A library of simulation and recording objects.
+\item[] {\bf sspy:} A scheduler for creating and running simulations.
+\item[] {\bf gtube:} A collection of gui objects for visualization and analysis, written in wxPython.
+\end{itemize}
+
+Many other software tools have Python modules that allow you to interface with them via their API such as the aforementioned wxPython (based on wxWidgets written in C++), PyQT (based on Qt written in C++), PyYaml, SciPy, NumPy, and Matplotlib. Thanks to G3 having a presence in this scripting format, it's possible to interface with any python module available. 
+
+
+\subsection*{Packaging}
+
+Python and it's modules are extremely portable. A Python interpreter can be embedded into other programs and has given interpretive capabilities to large software packages such as Blender, GIMP, and Abaqus. Library modules can also be distributed as Python 'eggs', which are zipped library files that can be placed in the Python executables library paths; allowing you to import them and use them in your own scripts. An egg built for Python 2.6 can be imported and run on any matching version for the same operating system. 
+
+An online repository of Python eggs known as PyPi, the Python Package Index, allows users to create modules and upload them for others to download and install with a single command.
+
 
 \subsection*{Structure}
 
+
+
 \subsection*{Common Data Types}
+
+
 
 
 \subsection*{Quick Examples}
@@ -29,70 +58,5 @@
 
 
 
-The three above headings are included in all documentation by default.
-
-\begin{itemize}
-\item[]  {\bf The Documentation Identifier:} This may be replaced by a descriptor of the type of documentation you have developed, for example {\bf Introduction} or {\bf Tutorial}, etc.
-\item[]{\bf Related Documentation Heading:} Followed by a hyperlink list of any related documentation.
-\item[] {\bf New Document Heading:} Should be replaced with the title of your document. {\bf Note:} In your document (the \LaTeX\,\,source documentation file--{\it NewDocument.tex}) all text below the {\bf New Document} heading should be replaced with your own content. See \href{../document-create/document-create.tex}{\bf Create\,Document} for further information.
-\end{itemize}
-
-\subsection*{Help with \LaTeX\,Documentation}
-
-\subsubsection*{Text color}
-
-Text in your document can be colorized  with the command
-\begin{verbatim}
-    \textcolor{red}{text}
-\end{verbatim}
-for example \textcolor{red}{\bf This is IMPORTANT}, \textcolor{green}{green} and \textcolor{blue}{blue} are also recognized arguments.
-
-\subsubsection*{Hyperlinks}
-
-Two classes of hyperlink exist in the GENESIS Documentation System:
-
-\begin{itemize}
-\item[{\bf A.}]{\bf Static Hyperlinks:} 
-   \begin{itemize}
-      \item{\bf Local links:} These are produced with the command:
-\begin{verbatim}
-   \href{../NewDocument/NewDocument.tex}{NewDocument}}
-\end{verbatim}
-for example \href{../NewDocument/NewDocument.tex}{NewDocument} references this document.
-Note that these links may not work in your \LaTeX\,{\tt pdf} file viewer, but should be testable with the \href{http://get.adobe.com/reader/}{Acrobat Reader} or \href{http://www.adobe.com/products/acrobatpro/tryout.html}{Acrobat Professional} packages.
-      \item {\bf Remote links:} These use the {\tt href} command in a slightly different way:
-\begin{verbatim}
-    \href{http://www.genesis-sim.org/documentation}{GENESIS Documentation}
-\end{verbatim}
-for example see \href{http://www.genesis-sim.org/documentation}{GENESIS Documentation}. Note that these links do not wrap automatically at the end of a line even outside of the {\tt verbatim} environment.
-\end{itemize}
-
-\item[{\bf B.}]{\bf Reference Hyperlinks:} See \href{../document-create/document-create.tex}{Document Creation} for further details on managing reference hyperlinks.
-
-\end{itemize}
-
-\subsubsection*{Figures}
-
-Figures can easily be added with the following code:
-
-\begin{verbatim}
-\begin{figure}[h]
-   \centering
-   \includegraphics[scale=0.6]{figures/dummyfig.eps}
-   \caption{{\bf A Dummy Figure:} Example of Latex code to incorporate
-      a figure into documentation.}
-   \label{fig:df-1}
-\end{figure}
-\end{verbatim}
-
-\begin{figure}[h]
-  \centering
-   \includegraphics[scale=0.5]{figures/dummyfig.eps}
-\caption{{\bf A Dummy Figure:} Example of \LaTeX\,\,\,code to incorporate a figure into documentation.}
-  \label{fig:df-2}
-\end{figure}
-
-\bibliographystyle{plain}
-\bibliography{../tex/bib/g3-refs.bib}
 
 \end{document}
