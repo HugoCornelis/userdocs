@@ -49,8 +49,31 @@ An online repository of Python eggs known as \href{http://pypi.python.org/}{PyPi
 
 Unlike most languages Python does not use brackets or any sort of paired delimiter to indicate the start and end of a block of code. Python uses indentation, otherwise known as the "off-side rule." A definition such as a function declaration defines it's scope as everything that is indented once following it and scope ends when it encounters a line that is at the same indentation level as the definition. 
 
+The following is a function simple definition:
+\begin{verbatim}
+
+def my_function(i):
+
+  print "The number I have is %i" % i
+
+print "Hello!"
+
+\end{verbatim}
+
+The line of code that prints "Hello!" is not part of the function definition since it is now out of scope.
 
 
+Here is an example of a loop:
+\begin{verbatim}
+
+for i in range(0,100):
+
+  print "%i" % i
+
+print "Done!"
+\end{verbatim}
+
+Again,the first print statement will print every value between 0 and 100, but the final line that prints out "Done!" will not print since it is out of scope of the loop.
 
 \subsection*{Common Data Types}
 
