@@ -1,0 +1,32 @@
+- We assume that everyone will be running G-3 on his own laptop
+  - For people using windows
+    - it is advisory to run G-3 over a virtual machine
+    - we will make a CD ROM image available with a useful Oracle Virtual Box snapshot
+- For those who don't use their laptop, lab PCs are available.
+  - Ask us for how to access the lab PCs with a login and password.
+- for dynamic upgrades of the tutorial scripts.
+  - workshop wireless LAN
+    - wireless name: neurospaces.com
+    - connecting will give IP address
+  - create the directory '/etc/neurospaces/developer'
+    - sudo mkdir /etc/neurospaces/developer
+  - create the file '/etc/neurospaces/developer/build.yml'
+    - sudo gedit /etc/neurospaces/developer/build.yml
+    - this file has the content:
+---
+all_packages:
+  luebeck-workshop-tutorials:
+    order: 1000
+    version_control:
+      port_number: 64738
+      server: 192.168.1.107
+
+   - NOTE: whitespace sensitive, use spaces, not tabs!!  And also include the three dashes!!
+
+   - to update the tutorials you type (e.g. every morning and at lunch time)
+neurospaces_upgrade --regex luebeck --repo-pull 192.168.1.143
+
+   - the IP address is dynamic, not fixed, we will keep you informed about the IP address each day.
+
+
+

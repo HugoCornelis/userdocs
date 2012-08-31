@@ -1,0 +1,173 @@
+- mail Dave about FAQ slide
+  - about tar files for the tutorials
+
+- check how to configure router and laptop for a private LAN
+  - must do IP forwarding
+  - runs all of G-3 in server mode
+  - buy bag / 10 slot ethernet router / bridge
+  - internet access
+    - connect wireless router to the internet via cable
+    - connect G-3 server to wireless
+    - others connect to wireless
+
+- prepare presentations
+  - G-3 introduction
+    - introduction: documentation system
+      - user workflow
+        - 5 steps
+        - leads to the implementation of software components each supporting one step
+        - leads to a modular software architecture
+      - show separation of concerns figure
+        - This is an analysis of the requirements for a neural simulator.
+      - show simplified cbi figure
+        - G-3 has a modular architecture.
+        - G-3 is implemented as a set of stand-alone software components
+        - I will give more details of the cbi-architecture at the evening session
+        - This session will be an interactive introduction to some of the G-3 software components
+    - neurospaces_packages
+      - list the components locally installed.
+      - The developer package provides common operation on the software components locally installed.
+        - neurospaces_repositories
+      - The advantages of a modular architecture is extensibility and customizability.
+        - By adding new components
+        - By extension of existing components
+      - I have software components on my laptop not available on other laptops.
+        - for instance the project-browser
+    - gshell -- a technical interface for developer's experiments
+      - help components
+      - component_load studio
+      - help facility
+        - help commands
+        - help command show_library
+      - component_load exchange
+        - makes available the command nineml_load and neuroml_load
+        - inspect those commands before and after the component_load command
+      - load cells/purkinje/edsjb.ndf
+        - explore / render
+        - configure experiment / run simulation
+          - model_parameter_add /Purkinje/segments/soma INJECT 1e-9
+          - output_add /Purkinje/segments/soma Vm
+      - backward compatibility
+        - sli_load PurkM9_model/CURRENT9.g
+        - sli_run PurkM9_model/CURRENT9.g
+        - explain relationship with the user workflow
+        - model_parameter_add /Purkinje/soma INJECT 1e-9
+        - output_add /Purkinje/soma Vm
+        - reset /Purkinje
+        - run /Purkinje 0.1
+      - more than a simulator: a framework for simulator development
+        - help facility again
+        - interface to documentation system
+          - 7 levels of documentation
+            - source code and models can be integrated with the documentation that describes them.
+            - in the future automated use cases will be used to generate figures.
+              - currently converted to HTML for use by level 1 and level 2 documentation developers
+          - supports many formats: latex, word, rst, etc.
+          - builds a local website.
+          - the documents are tagged with user chosen labels
+        - regression tester
+          - tests automated use cases
+        - developer package
+          - applies operations such as compile / install / sync / push / pull
+            - on a sequence of packages
+          - selectively compile a component
+          - the build.yml file
+            - setting options for debug / release
+
+  - CBI architecture
+    - why are we doing this, 1?
+      - available software packages
+      - what about interoperability between these software packages?
+      - reproducability of results?
+    - why are we doing this, 2?
+      - genesis 2 does not support the integration of different spatial domains
+    - I present a different solution here, but only G-3.
+    - two different guiding structures
+      - 5 step user-workflow
+      - separation of concerns
+    - separation between control data and biological data
+    - low-level vs high-level data
+    - four quadrants
+    - modules
+      - model-containers
+      - solvers
+      - scheduler / controllers
+    - principled advantages
+      - modules can be implemented and documented as independent components
+      - the documents of the independent components identify who can do their implementation
+        - chemesis-3: people with an interest in chemistry and physics
+        - model-container: people with an interest in informatics
+    - principled consequences for simulation
+      - guaranteed to run solvers independent of the original model representation
+      - solvers can be better optimized
+        - hsolve of G-2 was first (heccer still needs further optimization)
+        - chemesis
+    - consequences for multiscale modeling
+      - single model-container for all scales
+      - allows to store single model as a single scientific question
+
+    - explain biology-to-numerics translation
+      - cell: no translation needed
+      - set of dendritic segments: translated to numerical compartments
+      - projections with connections: connections must be often be regrouped -- graph algorithms required
+
+  - workflows
+    - documents that may be visited:
+      - workflow-intro
+      - workflow-user
+      - workflow-developer
+      - workflow-documentation
+      - neurospaces-tester
+      - document-create
+      - genesis-extend-functionality
+        - workflow 1
+          - genesis-addto-component-developerpackage
+          - genesis-create-test-heccer
+        - workflow 2
+          - genesis-extend-model-container
+          - genesis-add-object-solver
+          - genesis-add-swigbinding-heccer
+      - publication
+      - publication-review
+    - why? goals
+      - introduce or 'define' common terminology
+        - terms being defined within a context of a workflow
+          - for instance the meaning of 'model' within the context of the user-workflow
+        - between developers: smoothen development processes
+        - between developers and users: communication about requirements and support
+        - between mathematicians, biologists, physicists, neurologists etc.
+          - to identify global concepts and targets
+          - they may be encouraged to invent their own workflows or improve existing ones.
+      - community related: reduce the fear for stepping in
+      - sometimes overpedantic
+        - user-query workflow
+        - a deprecated documentation workflow
+    - user-workflow
+      - 5 steps
+    - documentation workflow
+      - includes automated regression tester
+      - connects software with users via (automated) use-cases
+    - developer workflows
+      - G-3 extension workflow
+    - scientific workflow
+    - publication workflow
+
+  - practical guide 11am till 11.15am
+    - slides with FAQ and instructions
+      - about the schedule
+        - Tuesday night: the bar night starting at 7.30pm. *no late lab hours there*
+        - Thursday night: dinner planned. Details will follow.
+      - lab procedures and opening hours
+        - how long in the evening will the lab be open? (at least until 12am)
+      - local login information
+        - accessing the workshop wireless
+          - no password / unencrypted
+          - need your wireless mac address
+            - how to learn your wireless mac address
+        - access to PC pool
+      - how does the software update on a nearly continuous basis?
+      - explain how to access and upgrade G-3 workshop tutorials.
+        - as a new G-3 software component
+        - monotone instructions?
+          - generating a key?
+      - other online resources
