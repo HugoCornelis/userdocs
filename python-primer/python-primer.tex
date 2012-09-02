@@ -196,25 +196,219 @@ Value 2 is 50
 
 \subsubsection*{Strings}
 
+Strings in Python are objects, and have accompanying methods like the previous objects shown do. 
+
+Here's some examples of string manipulation:
+\begin{verbatim}
+
+my_string = "  This is my string!  "
+
+print "The string is '%s'" % my_string.rstrip()
+
+print "The string is '%s'" % my_string.lstrip()
+
+print "The string is '%s'" % my_string.replace('my', 'the')
+
+string_parts = my_string.split()
+
+print "String parts are: '%s'" % ', '.join(string_parts)
+
+\end{verbatim}
+
+The output from this script is:
+\begin{verbatim}
+The string is '  This is my string!'
+The string is 'This is my string!  '
+The string is '  This is the string!  '
+String parts are: 'This, is, my, string!'
+\end{verbatim}
+
+
+Strings can also be concatenated via the '+' operator or using a join like the previous example:
+
+\begin{verbatim}
+string1 = "This is "
+
+string2 = "my string"
+
+string3 = string1 + string2
+
+print string3
+
+print ''.join([string1, string2])
+\end{verbatim}
+
+
+
+The output from this script is:
+
+\begin{verbatim}
+This is my string
+This is my string
+\end{verbatim}
+
 \subsubsection*{Lists}
+
+Lists are arrays of objects, they are used to store consecutive sequences of data. GENESIS3, and many other pieces of scientific computing software output data lists for analysis in the form of a python list.
+
+\begin{verbatim}
+
+my_list = ["one", "two", "three"]
+
+print "There are %s items in this list" % len(my_list)
+for l in my_list:
+
+  print "%s" % l
+
+my_list.append("four")
+
+print "\nThere are now %s items in this list" % len(my_list)
+for l in my_list:
+
+  print "%s" % l
+
+print "\nThe third element is %s\n" % my_list[2]
+
+print "The elements and their indexes are"
+
+for i, l in enumerate(my_list):
+
+  print "'%s' is at position '%i'" % (l,i)
+
+\end{verbatim}
+
+The output for the script is:
+
+\begin{verbatim}
+There are 3 items in this list
+one
+two
+three
+
+There are now 4 items in this list
+one
+two
+three
+four
+
+The third element is three
+
+The elements and their indexes are
+'one' is at position '0'
+'two' is at position '1'
+'three' is at position '2'
+'four' is at position '3'
+
+\end{verbatim}
+
+
 
 \subsubsection*{Dictionaries}
 
+A dictionary is a relational data structure that allows you to use keywords to hash to values. GENESIS3 uses some dict structures for input formats.
+
+\begin{verbatim}
 
 
+my_dict = { 'key1' : 100, 'key2' : 500, 'key3' : 10}
+
+print "The keys are: "
+
+
+    
+for k in my_dict.keys():
+
+    print "key '%s' holds value '%s'" % (k, my_dict[k])
+
+print "\n"
+
+
+my_dict['key4'] = 600
+
+for k in my_dict.keys():
+
+    print "key '%s' holds value '%s'" % (k, my_dict[k])
+
+print "\n"
+
+
+print "Removing the entry at 'key2'\n"
+
+my_dict.pop('key2')
+
+for k in my_dict.keys():
+
+    print "key '%s' holds value '%s'" % (k, my_dict[k])
+
+print "\n"
+
+if my_dict.has_key('key3'):
+
+    print "An entry with 'key3' is present"
+
+\end{verbatim}
 
 
 \subsection*{Quick Examples}
 
 
-\subsubsection*{Splitting and joining a string}
+\subsubsection*{Running a simple simulation in sspy}
+
+GENESIS3 has a scheduler in Python called SSPy (simple scheduler in python), that is used to drive simulations and allow the user to interface with Python. Below is an example 
+
+\begin{verbatim}
+from sspy import SSPy 
 
 
-\subsubsection*{Getting an index number from a list in a loop}
+scheduler = SSPy(verbose=True)
 
-\subsubsection*{Opening a file}
+my_model_container = None
+#
+# Create a model container service and load an ndf file
+#
+    
+my_model_container = scheduler.CreateService(name="My Model Container",
+                                             type="model_container",
+                                             verbose=True)
+
+my_model_container.Load('tests/cells/purk_test.ndf')
+
+my_model_container.SetParameter('/purk_test/segments/soma',
+                                'INJECT',
+                                2e-09)
+
+#
+# Must create solver.
+#
+my_heccer = scheduler.CreateSolver('My solver', 'heccer', verbose=True)
+
+# Sets the segment of the model to run from
+my_heccer.SetModelName('/purk_test')
+
+# set the timestep for the entire scheduler (solvers, inputs and outputs)
+my_heccer.SetTimeStep(2e-05)
 
 
+#
+# Create Outputs
+#
+my_output = scheduler.CreateOutput('My output object', 'live_output')
+
+my_output.AddOutput('/purk_test/segments/soma', 'Vm')
+my_output.AddOutput('/purk_test/segments/soma/ca_pool', 'Ca')
+
+scheduler.Run(steps=2500, finish=True)
+
+output_data = my_output.GetData()
+
+# you can put some sort of data manipulation here for the output_data
+
+print "Data at step 1, time '%f' is %s" % (output_data[1][0], ','.join(map(str, output_data[1][1:])))
+
+print "Done!"
+\end{verbatim}
+
+At the end of this simulation, the 'my\_output' object holds a python list with all of the data from the simulation that can be obtained via its GetData() method and can be used to feed data into plotters, spreadsheets, and other analysis tools.
 
 
 \end{document}
