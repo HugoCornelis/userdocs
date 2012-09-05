@@ -268,7 +268,7 @@ To invoke the SSPy shell, issue the command::
 
 Once you have done this, use the 'help' command to explore the commands
 available within the shell.  Although the commands listed by this command
-are very similar to the G-shell 'list commands' result, there are a few
+are very similar to the G-shell 'help commands' result, there are a few
 differences to be aware of.
 
 **NOTE:** These are true for the Current G-3 Developers Release, and
