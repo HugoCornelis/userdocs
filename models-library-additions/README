@@ -1,0 +1,145 @@
+New NDF cell library files and tests
+------------------------------------
+
+These are installation notes with a brief description of the files to be
+added to the G-3 distribution, and not intended as documentation.  Detailed
+descriptions will be added to userdocs/models-library-additions.  The NDF
+files also have short versions of the model description in comments
+at the beginning.
+
+With the exception of squidcell.ndf, all of these were generated from
+GENESIS 2 SLI scripts using readcell and a '.p' file, loaded into G-3
+with 'sli_load', and saved with 'ndf_save'.  Then, the saved NDF file
+was edited to replace FORWARDPARAMETERS blocks with equivalent PARAMETERS
+blocks within the elements that are named in the block.  In addition,
+the GROUP block was renamed CELL.  These changes allow them to be used
+in network simulations, and test scripts are provided to test them.
+
+With the exception of *squidcell.ndf*, all have synchans and spikegens
+to allow synaptic connecttions.
+
+**New Files**
+
+*squidcell.ndf* - basic axon segment used in the GENESIS 2 'Squid'
+tutorial, and to be used in the G-3 version.
+To be tested with: test-squidcell.g3
+
+------- Hugo
+
+I have converted the model in squidcell.ndf into a format that I
+believe makes more sense, leaving the old model in place.  The
+squidcell.ndf file now has two equivalent models.
+
+The format I used to is more sensible and should be a target format
+for the ndf_save command.
+
+The GENESIS2 function in the parameters prevents scaling of parameters
+to the lenght / surface / volume of a compartment, ie to prevent the
+mathematical transformation from specific to actual values.  In some
+cases ndf_save will find a relationship between these parameters and
+unscale the actual GENESIS-2 parameter values to their specific values
+and then write them to the NDF file without the GENESIS2 function.  In
+other cases ndf_save does not find such a relationship and writes the
+actual parameter values to the NDF file inside a GENESIS2 function to
+prevent scaling of parameter values that are already stored as scaled
+values in the NDF file.
+
+------- Hugo
+
+
+*VA_HHcell.ndf* - single compartment cell used in the network benchmark for
+the review by Brette et al. (2007).
+To be tested with: two-VAcells.g3
+
+------- Hugo
+
+I have seen that the segment in this model has redundancy in its
+parameters.  For instance LENGTH can be derived from rel_[XYX]
+parameters, SURFACE can be derived from LENGTH and DIA parameters.
+
+------- Hugo
+
+
+*baskcell.ndf* - simple model of a fast spiking inhibitory neocortical
+interneuron, such as a basket cell.
+To be tested with: two-baskcells.g3
+
+*deep_pyrcell.ndf* - 9 compartment deep pyramidal cell from primary auditory cortex
+To be tested with: two-pyrcells.g3
+
+------- Hugo
+
+This model seems like a good target to:
+
+1. Improve NDF save on tabulated channels -- with time I would like to
+remove as much as possible of the tabulated representation and keep
+the parameterized form similar to the form with the HH_* parameters.
+
+2. Implement ndf_namespace_save <channels|morphology|pools> that only
+saves one level of a model at a time.
+
+------- Hugo
+
+
+*simplecell.ndf* - the basic two compartment 'simplecell' model used in
+many tutorials and tests.  NOTE: the present simplecell-nolib.ndf should
+be replaced with a copy of simplecell.ndf, for compatibility with older
+tutorials.
+To be tested with: two-simplecells.g3
+
+*RScell.ndf* - this is simply a copy of RScell-nolib2.ndf, with added comments.
+NOTE: As with simplecell, both RScell-nolib.ndf and RScell-nolib2.ndf
+should be replaced with a copy of RScell.ndf.
+To be tested with: the current version of gshell tests/scripts/two-cells1.g3.
+
+*BDK5cell2.ndf* - a 'fixed' version of BDK5cell2-lib.ndf.
+NOTE: BDK5cell2-lib.ndf should be replaced with a copy of BDK5cell2.ndf.
+To be tested with: two-BDK5cells.g3
+
+------- Hugo
+
+Does replacing the content mean that all the existing tests must be
+updated too?  Don't understand why inserting new content is required
+for compatibility with older / existing tutorials?
+
+I saw a parameter 'output_amp' in a spikegen.  I don't think this
+parameter is already supported.
+
+------- Hugo
+
+
+**Test Scripts**
+
+The tests scripts are in *new-models-library-files/test-scripts*.
+The 'ndf_load' and 'ndf_namespace_load' commands assume that the
+NDF files have been installed in the library 'cells'.  All produce
+output in /tmp/output.  I suggest that they be with the gshell
+tests, rather than ns-sli (as is the case with the traub model tests),
+because they don't directly use ns-sli.  Also, most are based on
+the gshell network tests.
+
+------- Hugo
+
+I agree they are tests of the gshell.  It would not be possible to
+test these scripts from the ns-sli because the gshell is not
+guaranteed to be available when the regression tests of the ns-sli are
+executed.
+
+I have added all the scripts to the gshell and integrated them with
+the regression tester.
+
+------- Hugo
+
+
+*test-squidcell.g3* plots the Na activation and inactication variables
+(state_m and state_h) and the K activation (state_n) during a steady
+current injection.
+
+The other tests are based upon the gshell test script *two-cells1.g3*,
+but modified to use filenames and suitable injection currents for
+the particular model.  As with *two-cells1.g3*, the artificially
+large 0.03 sec conduction delay makes it easy to see when cell 1
+produces excitation in cell 2.
+
+Dave Beeman
+Fri Sep 28 15:26:29 MDT 2012
