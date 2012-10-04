@@ -33,13 +33,13 @@ the software tools required for G-3 development.  If you do not plan to
 check in changes to the software, it is not necessary to create a monotone
 passphrase.
 
-The document 
-\href {../genesis-dependencies/genesis-dependencies.html}{\bf GENESIS Software
-Dependencies} describes the system software tools required for a developer
-installation of G-3 on any Unix/Linux platform.  In general, you will want
-to install a full set of software development tools such as the gcc
-compiler and Perl.  Python is required for use of the new 
-\href {../sspy/sspy.html}{\bf SSPy} (Simple Scheduler in Python) scheduler.
+%The document 
+%\href {../genesis-dependencies/genesis-dependencies.html}{\bf GENESIS Software
+%Dependencies} describes the system software tools required for a developer
+%installation of G-3 on any Unix/Linux platform.  In general, you will want
+%to install a full set of software development tools such as the gcc
+%compiler and Perl.  Python is required for use of the new 
+%\href {../sspy/sspy.html}{\bf SSPy} (Simple Scheduler in Python) scheduler.
 
 \section*{Installation Steps}
 
@@ -135,27 +135,27 @@ dependencies must be installed:
    \item Install by typing ``{\tt sudo make install}''  (requires administrator privileges). 
 \end{enumerate}
 
-\subsection*{Install the dependencies for running tests}
+%\subsection*{Install the dependencies for running tests}
 
-Check for the packages needed for running tests.  Most of these will
-have been installed  by the developer package. For those that have not,
-issue these commands as root:
+%Check for the packages needed for running tests.  Most of these will
+%have been installed  by the developer package. For those that have not,
+%issue these commands as root:
 
-      \begin{itemize}
-         \item {\tt perl -MCPAN -e 'install Test::More}'
-         \item {\tt perl -MCPAN -e 'install Clone}'
-         \item {\tt perl -MCPAN -e 'install Data::Utilities}'
-         \item {\tt perl -MCPAN -e 'install File::Find::Rule}'
-         \item {\tt perl -MCPAN -e 'install Digest::SHA}' 
-      \end{itemize}
-      {\bf Note:} The running of tests is optional, but strongly advised.
+%      \begin{itemize}
+%         \item {\tt perl -MCPAN -e 'install Test::More}'
+%         \item {\tt perl -MCPAN -e 'install Clone}'
+%         \item {\tt perl -MCPAN -e 'install Data::Utilities}'
+%         \item {\tt perl -MCPAN -e 'install File::Find::Rule}'
+%         \item {\tt perl -MCPAN -e 'install Digest::SHA}' 
+%      \end{itemize}
+%      {\bf Note:} The running of tests is optional, but strongly advised.
 
-To search for a Perl module that might have been previously installed
-through CPAN or other than via an rpm, you can use "locate" if it was
-installed before the (usually nightly) refresh of the database.	 For
-example, to look for the module "Digest::SHA", type "locate Digest/SHA".
-This may show it to be in /usr/lib64/perl5/Digest/SHA.pm on a 64 bit
-version of linux, or return nothing if hasn't been installed.
+%To search for a Perl module that might have been previously installed
+%through CPAN or other than via an rpm, you can use "locate" if it was
+%installed before the (usually nightly) refresh of the database.	 For
+%example, to look for the module "Digest::SHA", type "locate Digest/SHA".
+%This may show it to be in /usr/lib64/perl5/Digest/SHA.pm on a 64 bit
+%version of linux, or return nothing if hasn't been installed.
 
 \subsection*{Install software packages}
 
