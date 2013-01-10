@@ -37,6 +37,45 @@ This TODO list was built on \today, \thistime.
 \section{TODO List}
 
 
+\subsection{experimental protocols}
+
+From email https://mail.google.com/mail/?shva=1\#inbox/136ac121461e31ab
+
+--------
+
+What I would like to see implemented in the longer term is something like:
+
+\begin{verbatim}
+ndf_load <purkinjecell>
+inputclass_add perfectclamp current_injection_protocol
+current_injectioncommand 0.5e-9
+... more commands of the stimulation protocol ...
+
+output_add /purkinje/segments/soma Vm
+... more commands for recording
+
+exp_save /tmp/current_injection.exp
+
+run /purkinje 1.0
+\end{verbatim}
+
+\textless new session: apply the same protocol to a different
+model\textgreater
+
+\begin{verbatim}
+ndf_load <another cell>
+exp_load /tmp/current_injection.exp
+
+run /<othercell> 1.0
+\end{verbatim}
+
+Which then allows to compare outputs of the two cells.
+
+SSP has provisions to implement this, but as I said above, these
+functions don't propagate to the gshell yet.  Likely they will also
+need to be generalized.
+
+
 \subsection{heccer compile}
 
 Looks like 'neurospaces\_install heccer' currently fails because the
