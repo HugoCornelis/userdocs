@@ -1,0 +1,43 @@
+\documentclass[12pt]{article}
+\usepackage[dvips]{epsfig}
+\usepackage{color}
+\usepackage{url}
+\usepackage[colorlinks=true]{hyperref}
+
+\begin{document}
+
+\section*{GENESIS: Documentation}
+
+\section*{Interoperability in the GENESIS 3.0 Software Federation: the
+  NEURON Simulator as an Example}
+
+\subsubsection*{Hugo Cornelis, Dimitris Bampasakis, Volker Steuber and
+  James M.  Bower}
+
+The idea of ``interoperability'' of neuroscience modeling software was instigated by the problems associated with incomplete model specifications in published papers and incremental model extensions through research projects across laboratories.  \cite{cannon07:_inter} defined interoperability as ``all mechanisms that allow two or more simulators to use the same model description or to collaborate by evaluating different parts of a large neural model''.  As an example, the adoption of common declarative model definition languages such as SBML (http://sbml.org/, \cite{Hucka-M:2004bh}), NeuroML (http://www.neuroml.org/, \cite{Gleeson:2010cr}), and NineML (http://software.incf.org/software/nineml), allows to simulate the same model on different simulator environments.  Run-time interoperability allows different simulators to compute different aspects of the same model at run-time either by direct coupling via simulator script languages (e.g. pyMOOSE \cite{ray08:_pymoos}) http://moose.ncbs.res.in/component/option,com\_wrapper/Itemid,86/; MUSIC \cite{Djurfeldt:2010fk}), indirect coupling via interpreted languages (e.g. PyNN http://neuralensemble.org/trac/PyNN, \cite{davison08:_pynn}), or coupling via object oriented frameworks (e.g.  Catacomb2 http://www.compneuro.org/catacomb/ccmb\_help/index.html, \cite{cannon03:_from}).
+
+The Computational Biology Initiative federated software architecture (referred to here as the CBI Architecture) is a software architecture that transparently supports both interoperability and ``extensibility'' for model building, simulation, and result analysis.  It is a modular meta-framework for software development that integrates all the functions necessary for a fully functioning simulator.  The modular nature of the CBI Architecture provides several advantages for multiple independent contributions to software development including: (1) Reduction in complexity of individual simulator components when compared to the complexity of a complete simulator, (2) Easy removal or replacement of unnecessary or obsoleted components, and (3) Clear delineation of the development scope of new components.
+
+The CBI Architecture is designed to support alternative paradigms of interoperability and extensibility through the provision of logical relationships between its modules.  The definition of a common information exchange reference model allows software modules to automatically interpret the information exchanged meaningfully and accurately in order to produce useful results as defined by end users such that any appropriately configured software component or application can be incorporated into the simulator.
+
+GENESIS 3.0 (G-3) is a major reconfiguration and update of the GENESIS simulation system.  G-3 is the first neural simulator to comply to the modular design of the CBI Architecture.  It embodies many software components, each of which has been developed in full isolation.  These include, the {\bf Model Container} that efficiently stores a representation of a model in computer memory and has simple bindings to the NeuroML and NineML declarative modeling languages, {\bf Heccer}: A fast compartmental solver based on the GENESIS {\it hsolve} object that can be instantiated from C, Python, Perl or other scripting languages.  The {\bf NS-SLI}: is the G-3 component that provides backward compatibility for the GENESIS-2 SLI.
+
+In this presentation we report on our recent efforts to reconfigure the NEURON simulator as an independent CBI compliant software component and to integrate its scripting interfaces with other CBI compliant software components of the GENESIS 3.0 neural simulation framework.  The integration of selected aspects of the NEURON simulator into G-3 will allow to seamlessly integrate HOC model components with G-2 or G-3 model components.  Employed in this way, the modular paradigm of the CBI Architecture supports interoperability by facilitating the functional integration of otherwise independent applications.
+
+
+\subsection*{Acknowledgements}
+Hugo Cornelis is partially supported by NIH grant 3 R01 NS049288-06 to
+James M. Bower.
+
+
+\subsection*{References}
+1. Coop AD, Cornelis H, Rodriguez M, Bower JM: Using GENESIS 3 for single neuron modeling. BMC Neurosci 2009, 10(S1):52.
+
+\end{document}
+
+%%% Local Variables: 
+%%% mode: latex
+%%% TeX-master: t
+%%% End: 
+
+
