@@ -137,7 +137,7 @@ TESTS = /usr/local/bin/neurospaces_harness
 test: check
 
 html-upload-prepare:
-	( cd tests && ./tests_2_html --introduction introduction.html )
+	( cd tests && neurospaces_harness_2_html --introduction introduction.html )
 	$(srcdir)/install-sh -d html
 	$(srcdir)/install-sh -d html/htdocs
 	$(srcdir)/install-sh -d html/htdocs/neurospaces_project
