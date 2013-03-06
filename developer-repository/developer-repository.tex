@@ -34,15 +34,23 @@ or
 \begin {verbatim}
    neurospaces_pull --repo-pull <ip-address-of-your-laptop>
 \end{verbatim}
-All these commands accept a ``{\tt --regex <package-regex>}'' option to select packages to {\it serve}, {\it sync} and {\it pull} respectively. To interrupt the server and kill all the server processes, use ``{\tt neurospaces\_kill\_servers}''.
+All these commands accept a ``{\tt --regex <package-regex>}'' option
+to select packages to {\it serve}, {\it sync} and {\it pull}
+respectively. To interrupt the server and kill all the server
+processes, use ``{\tt neurospaces\_kill\_servers}''.
 
 \subsection*{Checking out Code Manually}
 
-To check out the latest version of the GENESIS code you must first initialize a local monotone repository via this command:
+To check out the latest version of the GENESIS code you must first
+initialize a local monotone repository via this command:
 \begin{verbatim}
    mtn --db=myrepo.mtn db init 
 \end{verbatim}
-There are monotone instances running for different parts of GENESIS on different ports. To target the correct component of our GENESIS system you need to use the following arguments for the remote server. The server address and port number are accessed by, for example, for the backward compatibility layer
+There are monotone instances running for different parts of GENESIS on
+different ports. To target the correct component of our GENESIS system
+you need to use the following arguments for the remote server. The
+server address and port number are accessed by, for example, for the
+backward compatibility layer
 \begin{verbatim}
    repo-genesis3.cbi.utsa.edu:4692
 \end{verbatim}
