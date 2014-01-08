@@ -39,15 +39,6 @@ my_model_container.Load('cells/simplecell-nolib.ndf')
 # set a model parameter, the INJECT field to provide constant current injection
 my_model_container.SetParameter('/cell/soma', 'INJECT', 0.3e-09)
 
-# Create a solver, in this case heccer
-my_heccer = scheduler.CreateSolver('My solver', 'heccer', verbose=True)
-
-# Sets the element of the model to run from
-my_heccer.SetModelName('/cell')
-
-# set the timestep for the entire scheduler (solvers, inputs and outputs)
-my_heccer.SetTimeStep(2e-05)
-
 
 #
 # Create Outputs
@@ -68,6 +59,17 @@ my_output.AddOutput('/cell/soma', 'Vm')
 
 # Optionally, provide output a multiple of the simulation time step
 my_output.SetResolution(5)
+
+
+# Create a solver, in this case heccer
+my_heccer = scheduler.CreateSolver('My solver', 'heccer', verbose=True)
+
+# Sets the element of the model to run from
+my_heccer.SetModelName('/cell')
+
+# set the timestep for the entire scheduler (solvers, inputs and outputs)
+my_heccer.SetTimeStep(2e-05)
+
 
 # finally run the simulation for a specified time or number of steps
 scheduler.Run(time=0.5)
