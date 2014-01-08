@@ -72,8 +72,8 @@ Note that passing an integer value will run the simulation in steps mode, passin
 \begin{verbatim}
 sspy> ndf_load tests/cells/purk_test.ndf
 sspy> model_parameter_add /purk_test/segments/soma INJECT 2e-09
-sspy> heccer_set_timestep 2e-05
 sspy> output_add /purk_test/segments/soma Vm
+sspy> heccer_set_timestep 2e-05
 sspy> run /purk_test 2500
 \end{verbatim}
 
@@ -82,7 +82,7 @@ in the file {\it /tmp/OutputGenerator}.
 
 \section*{API}
 
-	If you wish to create more customized simulations and interfaces, you may access the top level API of SSPy. The API makes it very easy to interface with GUI toolkits, websites, and customized shells (the shell previously covered makes use of the API). This example performs the same purk\_test example shown previously in the shell example:
+If you wish to create more customized simulations and interfaces, you may access the top level API of SSPy. The API makes it very easy to interface with GUI toolkits, websites, and customized shells (the shell previously covered makes use of the API). This example performs the same purk\_test example shown previously in the shell example:
 	
 \begin{verbatim}
 from sspy import SSPy 
@@ -106,7 +106,17 @@ my_model_container.SetParameter('/purk_test/segments/soma',
                                 2e-09)
 
 #
-# Must create solver.
+# Create Outputs
+#
+my_output = scheduler.CreateOutput('My output object', 'double_2_ascii')
+
+my_output.SetFilename('/tmp/output')
+
+my_output.AddOutput('/purk_test/segments/soma', 'Vm')
+
+
+#
+# create solver.
 #
 my_heccer = scheduler.CreateSolver('My solver', 'heccer', verbose=True)
 
@@ -117,20 +127,11 @@ my_heccer.SetModelName('/purk_test')
 my_heccer.SetTimeStep(2e-05)
 
 
-#
-# Create Outputs
-#
-my_output = scheduler.CreateOutput('My output object', 'double_2_ascii')
-
-my_output.SetFilename('/tmp/output')
-
-my_output.AddOutput('/purk_test/segments/soma', 'Vm')
-
-
 scheduler.Run(steps=2500)
 
 \end{verbatim}
 
-Should note that the {\bf model\_container} and {\bf heccer} that are called are plugin abstractions over the \href{../model-container/model-container.tex}{Model Container} and \href{../heccer/heccer.tex}{Heccer} packages, not the objects themselves. The core objects are accessible via a method call. 
+Should note that the {\bf model\_container} and {\bf heccer} that are called are wrapper plugins for the \href{../model-container/model-container.tex}{Model Container} and \href{../heccer/heccer.tex}{Heccer} packages, not the objects themselves. The core objects are accessible via a method call. 
+
 
 \end{document}
