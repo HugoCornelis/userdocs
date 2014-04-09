@@ -250,7 +250,7 @@ sub compile
 
     # read the descriptor
 
-    my $descriptor_error = $self->read_descriptor();
+    my $descriptor_error = $self->descriptor_read();
 
     if ($descriptor_error)
     {
@@ -1475,7 +1475,7 @@ sub check
 
     print "$0: Checking $self->{name}\n";
 
-    my $descriptor_error = $self->read_descriptor();
+    my $descriptor_error = $self->descriptor_read();
 
     if ($descriptor_error)
     {
@@ -1599,6 +1599,35 @@ sub copy
     chdir '..';
 
     return $result;
+}
+
+
+sub descriptor_read
+{
+    my $self = shift;
+
+    my $filename = $self->{name} . "/descriptor.yml";
+
+    if ($self->{descriptor})
+    {
+	return '';
+    }
+
+    eval
+    {
+	$self->{descriptor} = YAML::LoadFile($filename);
+    };
+
+    if ($@)
+    {
+	return $@;
+    }
+    else
+    {
+	bless $self->{descriptor}, "GENESIS3::Documentation::Descriptor";
+
+	return undef;
+    }
 }
 
 
@@ -1825,7 +1854,7 @@ sub has_tag
 
     my $tag = shift;
 
-    my $descriptor_error = $self->read_descriptor();
+    my $descriptor_error = $self->descriptor_read();
 
     if ($descriptor_error)
     {
@@ -1916,7 +1945,7 @@ sub is_redirect
 {
     my $self = shift;
 
-    my $descriptor_error = $self->read_descriptor();
+    my $descriptor_error = $self->descriptor_read();
 
     if ($descriptor_error)
     {
@@ -2041,7 +2070,7 @@ sub publish
 
     # read the descriptor
 
-    my $descriptor_error = $self->read_descriptor();
+    my $descriptor_error = $self->descriptor_read();
 
     if ($descriptor_error)
     {
@@ -2136,42 +2165,13 @@ sub publish
 }
 
 
-sub read_descriptor
-{
-    my $self = shift;
-
-    my $filename = $self->{name} . "/descriptor.yml";
-
-    if ($self->{descriptor})
-    {
-	return '';
-    }
-
-    eval
-    {
-	$self->{descriptor} = YAML::LoadFile($filename);
-    };
-
-    if ($@)
-    {
-	return $@;
-    }
-    else
-    {
-	bless $self->{descriptor}, "GENESIS3::Documentation::Descriptor";
-
-	return undef;
-    }
-}
-
-
 sub related_tags
 {
     my $self = shift;
 
     my $result;
 
-    my $descriptor_error = $self->read_descriptor();
+    my $descriptor_error = $self->descriptor_read();
 
     if ($descriptor_error)
     {
