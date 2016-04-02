@@ -15,9 +15,9 @@
 % end: userdocs-tag-replace-items related-do-nothing
 
 
-\section*{Developer Installation From Source On Mac OSX -- Lion}
+\section*{Developer Installation From Source On Mac OSX -- Yosemite}
 
-The procedure for the installation of GENESIS on a Mac OSX is similar to that for a Linux build on a regular PC. The major difference is that it requires build tools for the Mac. These are somewhat hidden on disk 2 of the Mac OS installation disks. Installation requires administrator privileges. ({\bf Note:} Some installation must be done from the Terminal). If you do not have administrator privileges you should contact your system administrator for help. The Terminal can be found in the Applications --$>$ Utilities folder. For regular use of GENESIS it is convenient to place a Terminal in the dock for easy access.
+The procedure for the installation of GENESIS on a Mac OSX is similar to that for a Linux build on a regular PC. The major difference is that it requires build tools for the Mac as explained below. Installation requires administrator privileges. ({\bf Note:} Some installation must be done from the Terminal). If you do not have administrator privileges you should contact your system administrator for help. The Terminal can be found in the Applications --$>$ Utilities folder. For regular use of GENESIS it is convenient to place a Terminal in the dock for easy access.
 Installation requires executing the following major steps:
 \begin{itemize}
    \item[] Prepare and upgrade the system software.
@@ -30,23 +30,33 @@ Installation requires executing the following major steps:
 
 Install the following packages:
 \begin{itemize}
-   \item[]\href{http://monotone.ca/}{\bf monotone-0.44:} (or higher).
-   \item[]{\bf Xcode Tools:} The Apple Development Toolset. Xcode is available on Disk 2 of the Mac OSX installer set of DVDs under optional install. The package is called {\it  XcodeTools.mpkg}. It is also available from the \href{http://developer.apple.com/technology/xcode.html}{\bf Apple Developer Website}. In the latter case  you will need a valid Apple ID to log in and access the developer page.
+\item[] \href{https://coolestguidesontheplanet.com/installing-homebrew-os-x-yosemite-10-10-package-manager-unix-apps/}{HomeBrew} is a de facto standard package manager for Apple Development.
+\begin{verbatim}
+ruby -e '$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)'
+\end{verbatim}
+
+\item[]\href{http://monotone.ca/}{\bf monotone-0.44:} or higher is required to pull code from the global G-3 source code servers.  It is installed with the shell command "brew install monotone".
+
+\item[] Automake is a tool required for the configuration and build of G-3.  It can be installed by typing ``brew install automake'' from the shell command line.
+
+\item[] SWIG is a interface generator to bind low-level system code to high-level scripting languages.  It can be installed by typing ``brew install swig'' from the shell command line.
+
+\item[] PIP is a python package manager.  It can be installed by typing ``sudo easy\_install pip'' from the shell command line.
+
+\item[] Cpanm is a minimal interface to the Perl Archive required to install CPAN packages.  It can be installed by typing ``brew install cpanm'' from the shell command line.
+
+\item[] YAML is a language for declarative descriptions.  Its perl bindings can be installed by typing ``cpanm YAML'' from the shell command line.  Its python bindings can be installed by typing ``sudo pip install pyyaml''.
+
+\item[] Cairo is a vector graphics library.  Pango is a library for text rendering.  Gtk+ is a widget library.  They can be installed using the command line ``brew install Cairo'' and ``brew install pango'' and ``brew install Gtk+''.
+
+\item[] Threads, glib and Gtk+ bindings to perl are needed to usefully use the Neurospaces Studio.  They can be installed using the system shell command ``sudo cpanm threads'', ``sudo cpanm Glib'' and ``sudo cpanm --force Gtk2''.
+
+\item[]{\bf Xcode Tools:} The Apple Development Toolset. Xcode is available through the search facility from the the App Store. It is also available from the \href{http://developer.apple.com/technology/xcode.html}{\bf Apple Developer Website}. In the latter case  you will need a valid Developer Apple ID to log in and access the developer page.
    
-  \item[]\href{http://python.org/}{Python:} OS X comes with python and is located at {\it /usr/bin/python}, in the default path. You can also use the python from http://python.org, GENESIS 3 has been confirmed to compile on python versions 2.5, 2.6, and 2.7. 
+\item[]Note about \href{http://python.org/}{Python:} OS X Yosemite comes with python version 2.7.10.
 \end{itemize}
    
-   {\bf WARNING:} The compilers available from MacPorts should NOT be used for installation (see below). Prior to installing the {\it DeveloperPackage} you should check which Perl libraries OSX uses with ``{\tt  which perl}''. This should return {\tt  /usr/bin/perl}. If the response is {\tt /opt/local/bin/perl}, there is a MacPorts installation of Perl. This is most easily corrected by removing the MacPorts path {\it /opt/local/bin} from your path in the {\it .profile} file (or the {\it .bash\_profile}) in your home directory. To do this open the  {\it .profile} file in an editor and convert the line (or similar):
-\begin{verbatim}
-   PATH=/opt/local/bin:/usr/local/bin:$PATH
-\end{verbatim}
-by removing {\it /opt/local/bin} to give:
-\begin{verbatim}
-   PATH=/usr/local/bin:$PATH
-\end{verbatim}
-{\bf Note:} Only remove the MacPorts path and leave all others alone. If you do not make this change, running GENESIS may result in a bus error as the correct Perl libraries will not be found. It may also call MacPorts versions of build tools, which can result in some undesirable behavior.  
-   
-   
+
 \subsection*{Download and Install the {\it DeveloperPackage}}
 
 Download the latest version of the {\it DeveloperPackage}, available from the \href{http://repo-genesis3.cbi.utsa.edu/src/}{\bf GENESIS package archive}.  It is called {\it developer-release-label.tar.gz}, where {\it release-label} is the current release identifier. ({\bf Note:} If downloading via your browser, do not unpack the package during the download as it will be placed into its own subdirectory).
@@ -55,7 +65,7 @@ Download the latest version of the {\it DeveloperPackage}, available from the \h
    \item[] Unpack archive: ``{\tt tar xfz developer-release-label.tar.gz}''.
    \item[] Change to the directory with the content of the archive: ``{\tt cd developer-release-label}''.
    \item[] Configure the {\it DeveloperPackage}: ``{\tt ./configure}''.
-   \item[] Compile and install the {\it DeveloperPackage}: ``{\tt make \&\& sudo make install}'' (requires administrator privileges).
+   \item[] Compile and install the {\it DeveloperPackage}: ``{\tt make \&\& sudo make install}'' (the sudo command will require administrator privileges).
 \end{itemize}
 
 
