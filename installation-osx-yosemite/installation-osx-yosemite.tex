@@ -99,22 +99,22 @@ Download the and install the \href{../../developer-package/developer-package.tex
    \item{\it neurospaces\_install} (requires admin password) 
 \end{enumerate}
 
-If there are any mixed architectures on some of the programs on the machine then you must use the {\it --universal} flag. For instance if the current version of python in your path is 32-bit and the host machine is 64-bit, then you should use the universal flag. Easy way to tell what a programs architecture is is to use the lipo command on the executable file:
+%If there are any mixed architectures on some of the programs on the machine then you must use the {\it --universal} flag. For instance if the current version of python in your path is 32-bit and the host machine is 64-bit, then you should use the universal flag. Easy way to tell what a programs architecture is is to use the lipo command on the executable file:
 
-\begin{verbatim}
-lipo -info `which python`
-Architectures in the fat file: /usr/bin/python are: x86_64 i386 ppc7400
-\end{verbatim}
+%\begin{verbatim}
+%lipo -info `which python`
+%Architectures in the fat file: /usr/bin/python are: x86_64 i386 ppc7400
+%\end{verbatim}
 
-The architectures can be read as follows.
+%The architectures can be read as follows.
 
-\begin{itemize}
-   \item[] {\bf x86\_64}: 64-bit Intel 
-   \item[] {\bf i386, i486, i586, i686}: 32-bit Intel (with i386 being the most common)
-   \item[] {\bf ppc, ppc7400}: Power PC architecture
-\end{itemize}
+%\begin{itemize}
+%   \item[] {\bf x86\_64}: 64-bit Intel 
+%   \item[] {\bf i386, i486, i586, i686}: 32-bit Intel (with i386 being the most common)
+%   \item[] {\bf ppc, ppc7400}: Power PC architecture
+%\end{itemize}
 
-If you are using all pure apple programs for perl and python with no macports, then it is safe to use {\it --universal} for any calls to {\it neurospaces\_install} and {\it neurospaces\_upgrade}. However it should be noted that this will increase the compile time three fold.
+%If you are using all pure apple programs for perl and python with no macports, then it is safe to use {\it --universal} for any calls to {\it neurospaces\_install} and {\it neurospaces\_upgrade}. However it should be noted that this will increase the compile time three fold.
 
 \subsection*{Check if installation was successful}
 
