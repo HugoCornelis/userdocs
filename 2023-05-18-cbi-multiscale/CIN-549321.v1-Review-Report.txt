@@ -1,0 +1,61 @@
+CIN/549321.v1 Review Report
+Subject Appropriateness of the Manuscript
+The topic of this manuscript falls within the scope of Computational Intelligence and Neuroscience
+Recommendation
+Reject (Paper is seriously flawed; do not encourage resubmission.)
+Comments
+Referee report on "CBI Simulator Framework: Multiscale modelling with multiple solvers" by Hugo Cornelis et al.
+
+The hallmark of science is the systematic testing of precisely formulated hypothesis through well-defined and adequate experiments. Scientific publications serve to inform the learned community about such testing. Key elements of scientific publications are thus clearly defined hypotheses, precisely described methods, concrete results and a thorough discussion of ansatz and results in relation to previously existing knowledge.
+
+Publications on scientific methodology deviate necessarily from this pattern to some degree, as they do not test hypotheses, but present new methods to perform experiments. To qualify as scientific publications, reports on novel methods must still follow scientific principles: A clear statement of purpose and limitations of the method, a detailed description of the method, a clear demonstration that the method is fit for its purpose and reliable, evidence for the superiority of the method over existing methods, and a well-substantiated discussion of the method in relation to existing work.
+
+As holds for all scientific publications, methods papers should present novel content, extending previous publications in a significant way.
+
+Regrettably, the present manuscript by Cornelis et al falls significantly short on all accounts and is thus not suitable for publication in "Computational Intelligence and Neuroscience". To make the manuscript fit for publication would require significant original work and would lead to an essentially new paper. I will thus only give the major arguments supporting my judgement and refrain from any comments on minor issues.
+
+Cornelis et al claim that their CBI Simulator Framework is superior to "monolithic" simulators when it comes to multiscale modeling. At present, the most ambitious multiscale modeling effort in neuroscience is the Blue Brain project, which aims to reconstruct an entire cortical column in great detail based on comprehensive experimental evidence. This project uses NEURON, a monolithic simulator, which has proven to be adaptable to the requirements of large-scale multiscale modeling. So the essential question that Cornelis et al should have answered is: What does the CBI Simulator Framework provide that NEURON cannot? In which way is it better? More performant? More flexible? More extensible? Answers to these questions should have been given based on specific, relevant examples. Unfortunately, the questions are not addressed in any concrete way in the manuscript.
+
+1. Novelty
+The manuscript does not present significant novel material compared to recent publications by the same group (Cornelis et al, PLoS ONE 7(1):e28956 and e29018, 2012). Indeed, out of the five figures in the present manuscript, Figs. 3 and 4 are identical to Figs. 3 and 4 in PLoS ONE 7(1):e28956, while Fig. 5 is identical to Fig. 3 in PLoS ONE 7(1):e29018.
+
+2. Purpose and limitations
+Cornelis et al make broad claims that the CBI Simulator Framework "greatly facilitates the development of a simulator capable if transparently supporting multi-scale biological modeling across levels ranging from the ionic and molecular to complete systems. Unfortunately, they do not make precise what their Framework is suitable for and what not. They only provide superficial descriptions of individual components of their model and a rough overview of how the components fit together. From the examples given in the manusscript, it is unclear to this referee whether, and if how, the Simulator presented can simulate more levels than a dendritic segment with a calcium pool.
+
+3. Method description
+The description of the CBI Simulator Framework is spread across the Methods and Results sections for reasons unclear to this referee (why is the addressing scheme algorithm a result, while the model containers are methods?). The central problem with the method description, though, is the lack thereof. While the manuscript contains lengthy code examples that would better fit a user manual, including details on file naming conventions, important technical aspects are only stated in the text. Some examples are
+p 12: "this encourages full focus on the mathematical aspects of Solvers and their implementation and leads to better optimization"---how does it lead to better optimization?
+p 13: "This scale-linking functionality of G-3 instantiates dedicated run-time software components that contain intermediary representations of solved variables ..."---how does the instantiation happen and what intermediary representations are used?
+Sec 3.1: How is te Addressing Scheme Algorithm actually implemented to work efficiently wrt to both time and memory? Which parts of the software hold the relevant data?
+Sec 3.2: This results section on the Discrete Event System for Action Potential Propagation does not provide ANY details about the algorithm and data structures used beyond the statement that the "DES contains two subcomponents, one for event distribution that contains a connectivity matrix, the second for event queuing." In the experience of this reviewer, storage of connectivity information and event queueing are the two most essential components of a neural simulator with respect to memory footprint and simulation times. They *must* be explained in detail.
+
+4. Capability, performance and reliability
+The manuscript does not give any description of what precisely the CBI Simulator Framework as implemented today is actually able to simulate, nor how fast it does so, which memory footprint it has, how it scales in parallel simulations or how exact its solutions are. At the very least, the authors would have to demonstrate that several existing models from the literature have been implemented and simulated, and report the performance achieved. For examples of papers providing thorough evaluation of simulator properties, Cornelis and colleagues may want to consider some of the following:
+
+Brette, R. et al. Simulation of networks of spiking neurons: A review of tools and strategies. J Comput Neurosci, 2007, 23:349-398
+
+Hanuschkin, A.; Kunkel, S.; Helias, M.; Morrison, A. & Diesmann, M. A general and efficient method for incorporating exact spike times in globally time-driven simulations. Front Neuroinformatics, 2010, 4:113
+
+Hines, M.; Kumar, S. & Schürmann, F. Comparison of neuronal spike exchange methods on a Blue Gene/P supercomputer. Front Comput Neurosci, 2011, 5:49
+
+Henker, S.; Partzsch, J. & Schüffny, R. Accuracy evaluation of numerical methods used in state-of-the-art simulators for spiking neural networks. J Comput Neurosci, 2012, 32:309-326
+
+Kunkel, S.; Potjans, T. C.; Eppler, J. M.; Plesser, H. E.; Morrison, A. & Diesmann, M. Meeting the memory challenges of brain-scale network simulation. Front. Neuroinform., 2011, 5:35
+
+and document the capabilities of the CBI Simulator Framework with comparabel thoroughness.
+
+5. Relation to other work
+Cornelis et al claim that their CBI Simulator Framework is relevant for computational neuroscience and superior to existing simulators since it affords the user with a flexibility to combine models at different scales, while at the same time reflecting the scientific workflow better than other simulators. They claim multiple times that their approach is superior to "monolithic simulators". While Cornelis et al do not name any specific "monolithic" simulators, it appears natural to infer that Cornelis et al refer to NEURON in the first place (as NEURON provides support for compartmental models and networks thereof), possibly also to point-neuron simulators such as NEST, Brian or PCSim.
+
+Unfortunately, Cornelis et al do not at all discuss or demonstrate in precisely which way the CBI Simulator Framework is superior to, e.g., NEURON. They indeed do not cite any of the numerous papers documenting the constant stream of improvements and significant extensions to NEURON, eg
+
+Hines, M. L.; Eichner, H. & Schürmann, F. Neuron splitting in compute-bound parallel network simulations enables runtime scaling with twice as many processors. J Comput Neurosci, 2008, 25:203-210
+
+Hines, M. L.; Davison, A. P. & Muller, E. NEURON and Python. Front Neuroinformatics, 2009, 3:1
+
+King, J. G.; Hines, M.; Hill, S.; Goodman, P. H.; Markram, H. & Schürmann, F. A Component-Based Extension Framework for Large-Scale Parallel Simulations in NEURON. Front Neuroinform, 2009, 3:10
+
+and discuss and document what CBI provides that NEURON (or other simulators) do not.
+
+They also largely ignore the wide range of tools for workflow management, simulator interaction and model specification that has come into being in recent years, such as PyNN (they only mention that a PyNN interface for CBI is under development), MUSIC, NeuroML, Sumatra and the like. Reference [18] on the other hand, seems to be misplaced and to have no relation to the matter covered in the present manuscript.
+
