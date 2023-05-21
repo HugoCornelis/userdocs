@@ -1,0 +1,247 @@
+from	PLoS ONE plosone@plos.org via editorialmanager.com 
+to	[Available] Hugo Cornelis <hugo.cornelis@gmail.com>
+date	Tue, May 31, 2011 at 9:41 PM
+subject	PLoS ONE Decision: Revise [PONE-D-11-06475]
+mailed-by	editorialmanager.com
+	
+hide details May 31
+	
+PONE-D-11-06475
+A Federated Design for a Neurobiological Simulation Engine: The CBI federated software architecture.
+PLoS ONE
+
+Dear Dr. Cornelis,
+
+Thank you very much for submitting your manuscript for review to PLoS ONE. After careful consideration, we have concluded that your manuscript has the potential to be published although some aspects of the manuscript will need to be changed prior to formal acceptance. We therefore ask that you revise your manuscript paying close attention to the specific points detailed below: 
+
+This is the first of two-papers that describe your recent work on developing an integrated approach to computational biology simulations. The reviewers have a number of comments that can be easily addressed by minor revision of the text. Some very constructive feedback has been provided by Reviewer #2 that will require some attention. I believe that incorporating changes in your revised manuscript will improve the readability and impact of your manuscript.
+
+We encourage you to submit your revision within sixty days of the date of this decision but you are welcome to take more time if you require it.
+
+Please attend closely to our "Guidelines for Authors" and "Submission Checklist" when revising your manuscript. Your rebuttal letter should be uploaded as a Response to Reviewers file.
+
+Please also provide a marked-up copy of the changes made from the previous article file as a Manuscript with Tracked Changes file. This can be done using 'track changes' in programs such as MS Word and/or highlighting any changes in the new document.
+
+When your files are ready, please log on to http://pone.edmgr.com/ and submit as a revision following the menu link called Submission Needing Revision. Please do not submit a revised manuscript as a new submission. 
+
+Yours sincerely, 
+Kelvin E Jones, Ph.D.
+Academic Editor
+PLoS ONE
+
+Reviewers' comments:
+
+[NOTE: If reviewer comments were submitted as an attachment file, they will only be accessible via the submission site. Please log into your account, locate the manuscript record, and check for the action link "View Attachments". If this link does not appear, there are no attachment files to be viewed.]
+
+Reviewer #1: The paper describes a software architecture intended to facilitate the conduct of simulation-based research. As such, it is somewhat difficult to classify against the first criterion of PLoS One as presenting results of primary scientific research. However, in a field which is currently in desperate need of methodological and procedural advances in the way it carries out research before it can hope to generate large volumes of high quality primary results, there is a clear need for work such as this, and consequently a need for it to be published in the research literature.
+
+Most of the review criteria are well met. My only comments are fairly minor and relate to point 5, concerning the presentation of the material.
+
+1) What is the Computational Biology Initiative mentioned in the first line of the abstract? Does it exist independently of the software architecture presented here, or is the whole entity (the CBI federated software architecture) to be taken as a single term.
+This needs clarifying in the abstract and introduction.
+
+
+*** Reword:
+
+Simulator interoperability and extensibility has become a growing
+requirement in computational biology.  To address this, we have
+developed a federated software architecture.
+
+Page 4: 
+
+... The first developments of this architecture took place at the Computational Biology Initiative at the University of Texas in San Antonio.
+
+
+2) Page 4 line 38: "are then described..."  After what? This sentence appears to be out of place.
+
+*** Addressed.
+
+
+3) Page 6, line 48: it isn't clear what the two concerns are. Is one "separation between data" and one "control through the use of data layering". Or is the first "separation between data and control" which makes more sense, but then what is the other one?
+
+
+*** Reword: last sentence
+
+(1) Separation between data and control, (2) separation of biology and
+mathematics through the use of data-layering.
+
+
+4) Page 15, line 3: "considerably reduces...". The comparison needs to say what it is being compared with. Federated architectures are not the only ones in which one would expect minimal duplication of one-off data which is not part of the state of the system. Indeed, if anything, one might expect them to introduce rather more duplication than a well-written monolithic tool.
+
+*** Add sentence:
+
+To solve this problem, existing monolithic simulators such as Neuron
+and Genesis-2 currently require the user to explicitly code his
+scripts to avoid duplication of one-off data.  In contrast to this,
+Genesis-3, in compliance with the CBI architecture, automatically
+detects duplicate parameterization of channel gate kinetics and
+dynamically shares their tabulated form as necessary.
+
+
+5) Page 20, line 37: As far as I can see, the terms "Type 1" and "Type 2" are used here without having previously been defined.
+
+*** Type 1 and type 2 interoperability are defined on page 3 in the introduction
+
+(Type 1 and Type 2 interoperability are defined in the introduction)
+
+
+6) Page 23. The term "Philosophical workflow" is a bit confusing. "Design philosophy" or even "Workflow philosophy" might be better
+as a way to convey that this section is about the way the authors think about their task.
+
+*** Workflow philosophy already there.
+
+
+
+
+Reviewer #2: The authors propose to modularize software components in Modeling & Simulation (M&S) system, which has been monolithically developed for computational research in the field of neurobiology. The main goal of their architectural design is to improve both interoperability and extensibility of neuroscience M&S software. The four principle entities of their software architecture are identified by the separation of the model (i.e. data) from the experimental frame (i.e. control) as well as the separation of high (i.e. biological) from low level (i.e. mathematical) of data detail. Within this framework, the primitive semantic entities are further subdivided and definitized to support ideal user tasks that would be expected during the computational neuroscience research.
+
+In the perspective of software engineering, the scope, main missions and design objectives & principles of the proposed software system look clear. However, the description of the software architecture presented by authors needs to be systematically specified to better communicate with others and get peer feedback. My concern is if it is possible to fully evaluate important qualities of the proposed software system such as feasibility, efficiency and reliability without additional descriptions.
+
+
+Major concerns:
+
+1.      Computer software modules (or components) and their functionalities were clearly described in the manuscript. However the relationships and connections between primary modules or submodules were not clearly shown in the manuscript as well as in Figure 3. For instance, how are submodules in ScriptingLibraries&Applications related and connected to each other? Are there any relationship and interaction between GUI and ScriptingLibraries&Applications, or ScriptingLibraries&Applications and DatabaseInterface and so on? The specification of transmitted information and constraints for the interaction between modules is also important to assess the overall system behaviours.
+
+2.      The need of multiple views to describe software architecture is widely recognized in the literature. Since the present description was focused on a view of software structure (i.e. structural view), it is not quite obvious how individual software components work together to achieve the system missions (i.e. behavioural view). For instance, the authors selected an ideal user workflow (i.e. Step 1-5) as a representative usecase of their software system. In this usecase the user must conduct all five steps in a sequential manner to complete the computational research loop (Figure 1), interacting with the software system. In this stage of system development, the system capacity to conduct any usecases of concern should be investigated by evaluating what and how individual software modules are activated or deactivated through the mutual interaction.
+
+3.      The present software modules were identified primarily based on the usecases for Step 1-3. However the usecases for Step 4 (i.e. Process Output) and 5 (i.e. Iterate) seem to be opposite to those for Step 1-3 since all information used and produced in the low-level layer might be required to flow back to the high-level layer. Complementary software modules or functionalities might need to be added for Step 4 & 5 in the structural view and the cooperation of such modules should be checked in the behavioral view. It is unknown whether software modules might need to be diagonally coupled for other usecases associated with Step 4 or Step 5.
+
+
+Minor concerns:
+
+1.      The names of the submodules in the GraphicalUserInterface (GUI) are not shown explicitly in a typewriter font (Page 10-11).
+2.      "Databases, parameter searches, and model analysis" in Page 11 are external sources that ModelTools may connect to?
+
+*** clarification:
+
+The ModelTools submodule may provide functionality to connect to
+external database, to connect to parameter search engines that
+generate different versions of a single model or to otherwise explore
+and analyse the structure of a model.
+
+3.      Are the GUI and SimulationControl considered to be independent in Page 11?
+
+*** figure 4 now clarifies the scope of the GUI.  The GUI may provide an interface to SimulationControl.
+
+
+4.      Are the Biology Concept Translation and Connectivity Translation in Page 12 submodules of the BiologyModelContainer?
+
+*** Yes.  Parts of the paragraph have been rewritten to improve clarity.
+
+
+5.      Is the ModelContainer in Page 14 & 15 different from the Biological and ExperimentModelContainer?
+6.      I might miss something here but I do not quite understand which module provides a sequence of stimulus actions and output definitions to the FunctionBindings in Page 16. If the source of that information is the ExperimentModelContainer then does this mean a diagonal coupling? I am not sure how the use of FunctionBindings gives a rise to both non-parallel and parallel architectures in Page 16.
+
+*** it looks like there has been confusion between data bindings (stimulus) and function bindings (user and application actions.
+
+stimulus events originate a command sequence executor and propage to solvers as appropriate for a given simulation (including the model and the experiment to apply).
+
+
+7.      Some typos here and there, e.g. compartimentalization and transparant in Page 14 & 15.
+
+
+
+
+Reviewer #3: This manuscript describes a software architecture (the CBI federated software architecture) which is intended to facilitate the design of modular simulation platforms for computational neuroscience. The structure of the architecture is derived from investigating the user workflow in creating and performing simulation experiments with computational models and is intended to separate the biological aspects of the models as much as possible from the underlying numerical representations.
+
+This is a useful investigation of the principles behind simulation platform design. It offers a number of insights into how to structure interacting software programs for maximum modularity. It is difficult to see how easy or difficult it would be to implement these principles in practice though, but I believe this is the subject of an accompanying paper. The authors should consider referencing this paper (perhaps this needs to be discussed with the editor). Also a lot of these ideas are most likely implemented in the GENESIS 3 packages which the authors work on. While the paper is a description of a general framework without being specific to any one implementation, it would be helpful to know which parts of this have been put into practice (again, this is probably covered by the accompanying paper, but an indication here of where to see an example of the architecture would be useful).
+
+*** Insert forward reference, make note to the editor
+
+This architecture provides the basis for a recently reconfigured
+GENESIS (Cornelis et al 2011).
+
+
+A fourth figure would be useful to give an overview of the submodules (e.g. BiologyModelContainer) of each of the modules in figure 3.
+
+*** Insert detailed overview figure of the CBI architecture just
+*** before the section on implementation.  Write caption with
+*** reference to figure 3.
+
+*** Insert section 'details of the CBI architecture'
+
+Figure 4 illustrates an expansion of figure 3 giving more substantial
+detail of the CBI architecture and the relationships between the
+different modules and submodules.
+
+
+Type 1 & Type 2 interoperability seem to be mixed up in the earlier & later parts of the manuscript.
+
+*** Corrections: Type 1 and type 2 should be switched over, replace on
+*** page 20:
+
+A CBI compliant simulator easily supports Type\,1 interoperability
+through implementation of the appropriate database interface software
+component.  Such an interface maps the concepts of declarative
+languages to concepts supported by the {\tt Biology\,Model\,Container}
+and can be used to connect the simulator to external databases that
+provide support for these declarative languages.
+
+Type\,2 interoperability has recently been implemented as the
+capability to communicate simulation data at run-time between
+different simulators using procedural paradigms\cite{ray08:_pymoos,
+davison08:_pynn}.  However, this approach requires the modeler to
+understand some of the internals of the model, the simulator, and the
+implementation of the procedural paradigm.  While monolithic software
+applications are typically too complicated to extend, this additional
+layer of complexity connects the mathematical and biological layers of
+the simulation via control statements.  This approach is equivalent to
+the implementation of a diagonal flow in figure 2, and makes the
+modeler's task next to impossible.
+
+The communication infrastructure of the CBI architecture addresse the
+run-time communication of simulation data and implement Type\,2
+interoperability.  They allow the solvers to interact via dedicated
+communication ports efficiently.  The advantage of the CBI
+architecture is that it contains Type\,2 interoperability within one
+layer of the simulator software.
+
+Ultimately, the CBI architecture moves interoperability problems from
+a context of communication between large monolithic applications to
+communication between well defined and simpler software components.
+It is within the context of the CBI architecture, that the support of
+both Type\,1 and 2 interoperability becomes a practical possibility.
+
+
+=================
+
+
+Minor comments on the text are:
+
+Explanation of the italicized text etc. in the Introduction might be better elsewhere, or as a footnote.
+
+*** Allan will do this.
+
+
+MUSIC should be mentioned in the second last paragraph of the Introduction as a Type 2 approach.
+
+*** has already been take care off.
+
+Neuroinformatics
+8:43-60 (2010)
+Run-Time Interoperability Between Neuronal Network Simulators Based on the MUSIC Framework
+Djurfeldt M, Hjorth J, Eppler JM, Dudani N, Helias M, Potjans T, Bhalla US, Diesmann M, Hellgren Kotaleski J and Ekeberg Ö
+
+
+Supplementary materials were mentioned in the Results section, but was not present in the manuscript pdf. This seems to only refer to NEURON & GENESIS code examples which may not be necessary to illustrate the point about mixing numerical operations & biology.
+
+*** reply to reviewer:
+
+We were not aware that the supplementary materials would not be
+provided with the manuscript.  For the more general audience we
+believe that it is necessary to provide explicit examples.
+
+
+More detail is needed in the Implementation Libraries section.
+
+*** it is unclear what detail the reviewer is expecting
+*** Correction, in the section ScriptingLibraries&Applications:
+item 2: {\tt Scripting\,Libraries} should be {\tt Applications}
+
+*** Reword first sentence:
+These libraries provide functionality for a common application,
+e.g. the investigation of a synaptic learning rule.
+
+
+
+

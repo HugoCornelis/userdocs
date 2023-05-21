@@ -1,0 +1,158 @@
+from	PLoS ONE plosone@plos.org via editorialmanager.com 
+to	Hugo Cornelis <hugo.cornelis@gmail.com>
+date	Tue, May 31, 2011 at 9:47 PM
+subject	PLoS ONE Decision: Revise [PONE-D-11-06506]
+mailed-by	editorialmanager.com
+	
+hide details May 31
+	
+PONE-D-11-06506
+Python as a Federation Tool for GENESIS 3.0
+PLoS ONE
+
+Dear Dr. Cornelis,
+
+Thank you very much for submitting your manuscript for review to PLoS ONE. After careful consideration, we have concluded that your manuscript has the potential to be published although some aspects of the manuscript will need to be changed prior to formal acceptance. We therefore ask that you revise your manuscript paying close attention to the specific points detailed below: 
+
+Some of the preliminary comments by Reviewer #3 (who did not review the first paper in this pair) may be covered in your other manuscript. Please respond to these comments and indicate where you have made changes and where you defer the reader to the preceding paper. Please consider including additional figures to satisfy some of Rev#3's comments.
+
+We encourage you to submit your revision within sixty days of the date of this decision but you are welcome to take more time if you require it.
+
+Please attend closely to our "Guidelines for Authors" and "Submission Checklist" when revising your manuscript. Your rebuttal letter should be uploaded as a Response to Reviewers file.
+
+Please also provide a marked-up copy of the changes made from the previous article file as a Manuscript with Tracked Changes file. This can be done using 'track changes' in programs such as MS Word and/or highlighting any changes in the new document.
+
+When your files are ready, please log on to http://pone.edmgr.com/ and submit as a revision following the menu link called Submission Needing Revision. Please do not submit a revised manuscript as a new submission. 
+
+Yours sincerely, 
+Kelvin E Jones, Ph.D.
+Academic Editor
+PLoS ONE
+
+Reviewers' comments:
+
+[NOTE: If reviewer comments were submitted as an attachment file, they will only be accessible via the submission site. Please log into your account, locate the manuscript record, and check for the action link "View Attachments". If this link does not appear, there are no attachment files to be viewed.]
+
+Reviewer #1: p.8 In the examples both the concept of a 'segment' as well as a 'compartment' is used in the example scripts. Maybe it would be useful to elaborate a bit in the text about what these terms exactly mean because it's always confusing between the contexts of different simulators.
+
+*** We have added a footnote: We use the segment for a dendritic
+*** extension and a the term compartment for its numerical
+*** representation
+
+
+p.8 l. 21-? The exact values between the left and right column differ, it would look cleaner if they would be exactly the same.
+
+*** We have replaced the values in left column with the correct
+*** values.  The values originate from the soma compartment of a model
+*** Purkinje cell.
+
+
+p.9 l. 18 'Neurospaces' appears out of the blue, without any introduction. I think a small description of Neurospacse in the Introduction would be useful.
+
+As a general remark: it would be better for the reader to move the Method's section in between Introduction and Results, because now many elements in the Results section are not properly introduced. (Or at least Figure G3arch.eps could be moved more to the front)
+
+p.11 l.21 Again, 'Studio' is not introduced
+
+p.11 l.34 I would remove this sentence
+
+p.12 l.40-48 This paragraph describes in a lot of detail the first lines of code in the example script, but then the description stops. I wonder if the first sentence wouldn't t be enough.
+
+p.13-14 It seem that different coding styles are used for the variable names in the different scripts, one uniform style would make things clearer, for example consistent use of camelCase, etc.
+
+*** We have camelCased variable and method names in all Python
+*** scripts.  We have adopted the convention that custom method names
+*** are ucasefirst.  Python builtin method names, such 'append' to an
+*** array, are lcasefirst.  Also, for clarity, we have given the
+*** variables that have a direct relationship with the underlying G-3
+*** software architecture the prefix 'my_'.  We did not change the
+*** casing of perl method names.  Perl method names commonly use the
+*** underscore convention.
+
+
+p.16 l.16 I don't see where this 'read' and 'run' methods are defined
+
+*** We have corrected a mistake referencing the Neurospaces project
+*** instead of the model-container.  We have also correctly camelCased
+*** the Read method name.  The 'run' method is built into the G-shell
+*** interactive environment.
+
+p.17 l.46 put reference to Neuron and Nest
+
+p.20 l.13 "ref to BOG" ?
+
+p.20 l.36 Is VB a scripting language ? Maybe rather a high level language.
+
+*** We agree with the reviewer that VB (and C#) are difficult to
+*** classify.  We have removed VB from the list.
+
+p.20 l.30 I'm not sure that this paragraph is actually describing features of "Scripting languages", rather of "High level languages"
+
+*** The distinction between high-level and low-level languages can be
+*** considered contemporary, fi. in the past, the C programming
+*** language was considered a high-level language.  We have tried to
+*** avoid these contemporary meanings by distinguishing between system
+*** programming languages and scripting languages.
+
+
+p.21 l.44 and p.22 l. 23: If this refers to the 'Tiobe index', this is wrong, this index is based on the number of websites referring to this different programming languages, not the total amount of code that was written using these languages.
+
+p.21 l.53 Is this using also the Tiobe index ? Maybe also a reference
+
+p.21 l.38 A reference should be made to the versions of python that are supported v2 <-> v3
+
+*** G-3 currently supports only Python v2.
+
+
+p.22 l.16 Reference to CPAN ?
+
+Table 1: Maybe mention the 'units', I guess this is 'lines of code' ? How were these number calculated ? I downloaded the ModelContainer and Heccer packages from the Genesis3 website, and I didn't get these large numbers.
+Commands like
+find . -name "*.c" -type f -print | xargs file | grep ASCII | cut -d: -f 1 | xargs cat -v | wc -l
+for the different file types, gave me numbers in the range of hundred thousands, not millions. But maybe it's for a different version ?
+
+*** The G-3 developer package has a script 'neurospaces_countcode'
+*** that automates gathering statistics of the code under version
+*** control and code that is generated.  The caption of the table
+*** needs to be corrected for lines of code, the units are actually in
+*** byte counts.
+
+
+Spelling:
+p.2 l.47: "behavor"
+
+p.17 l.37,41 half of 'neuro'Construct  is in an italic font
+
+p.19 l.7 : "development"
+
+p.19 l.15 :  wrong reference format
+
+*** it is unclear what the reviewer refers to.
+
+
+p.21 l.19 "programing"
+
+p.9 l. 8 Python 'module' example
+
+p.23 l. 3: "Table ??"
+
+p.31 l. 5 "programing"
+
+
+
+
+Reviewer #3: This manuscript introduces the new architecture for the GENESIS simulator, which is based on the Computational Biology Initiative federation architecture. This is designed to be a component-based system in which a scripting language is used to access features of available components, building simulations, GUIs etc. GENESIS has been a major open-source simulation package for computational neuroscience for over 20 years. Consequently it is valuable to advertise this major change to its structure in the open-access literature.
+As it stands, the manuscript is somewhat hard work on the reader, particularly on anyone unfamiliar with GENESIS and compartmental modelling of neurons. However, some straight-forward changes could make it much more accessible to a wide audience of readers interested in computer simulation in computational biology.  The difficulty lies in that much introductory material has been placed in the "Materials and Methods" section. The reader needs much more information about the new G-3 architecture before being able to make sense of the examples in the "Results" section. I would like to see the background info on GENESIS 1 & 2, the details of the component modules of G-3 and the outline of the CBI architecture all moved to the introduction (including Figure 4). New text could be required too to give the reader a solid grasp of what each of the components of G-3 is for and what features are therefore made available to be bound together via a scripting language.
+
+The first Python example needs more commentary on what each line of script is doing. The scheduling of objects is particularly opaque without any further explanation.
+
+*** We have improved the comments of the first script.  We also added
+*** comments where the output is connected to the solver and also
+*** where the simulation objects are scheduled.
+
+It would be nice to see a screenshot of the GUI example using the Python wxWidgets library.
+
+*** We have added a screenshot of the GUI generated by the wxWidgets
+*** library example.
+
+A couple of times it is mentioned that examples are given in both Python and Perl, but only Python examples are actually provided (and they are all that are necessary here). So delete references to Perl, beyond simply saying that Perl is available as an alternative.
+Pg 20 first paragraph: missing reference: "(ref to BOG)"
